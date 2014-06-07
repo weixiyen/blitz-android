@@ -1,2 +1,2 @@
-snapdraft-android
+blitz-android
 =================
