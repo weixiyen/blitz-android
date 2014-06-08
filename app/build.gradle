@@ -21,4 +21,23 @@ android {
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
+
+    // Android support libraries.
+    compile 'com.android.support:appcompat-v7:19.+'
+    compile 'com.android.support:support-v4:+'
+
+    // Android XML view injections.
+    compile 'com.jakewharton:butterknife:4.0.+'
+
+    // Android facebook SDK.
+    compile 'com.facebook:facebook-android-sdk:3.14.1'
+
+    // Library for dots under view pager.
+    compile 'com.viewpagerindicator:library:2.4.1@aar'
+
+    // Library for custom fonts.
+    compile 'uk.co.chrisjenx:calligraphy:0.7.+'
+
+    // Library for circle image views.
+    compile 'de.hdodenhof:circleimageview:1.1.0'
 }
