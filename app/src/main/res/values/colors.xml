@@ -1,0 +1,13 @@
+<resources>
+    <color name="background_primary">#383a4c</color>
+    <color name="background_inner">#0cffffff</color>
+
+    <color name="button_color_0">#898fc7</color>
+    <color name="button_color_1">#1Affffff</color>
+    <color name="button_color_2">#a19d8f</color>
+    <color name="button_color_3">#f0f0f0</color>
+
+    <color name="text_color_light">#ffffff</color>
+    <color name="text_color_dark">#474747</color>
+    <color name="text_color_dark_alt">#666666</color>
+</resources>

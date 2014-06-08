@@ -1,8 +1,19 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="android:Theme.Holo">
-        <!-- Customize your theme here. -->
+    <style name="AppTheme" parent="@android:style/Theme.Holo.NoActionBar">
+        <item name="android:windowBackground">@color/background_primary</item>
+
+        <!-- View pager indicator style. -->
+        <item name="vpiCirclePageIndicatorStyle">@style/TabStyle</item>
     </style>
 
+    <!-- View pager indicator style. -->
+    <style name="TabStyle" parent="Widget">
+        <item name="android:background">@android:color/transparent</item>
+        <item name="fillColor">@color/button_color_0</item>
+        <item name="pageColor">@color/text_color_light</item>
+        <item name="strokeWidth">0dp</item>
+        <item name="radius">4dp</item>
+    </style>
 </resources>
