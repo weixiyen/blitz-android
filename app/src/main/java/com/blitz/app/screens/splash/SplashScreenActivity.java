@@ -7,7 +7,6 @@ import android.support.v4.view.ViewPager;
 import com.blitz.app.R;
 import com.blitz.app.base.activity.BaseActivity;
 import com.blitz.app.base.config.BaseConfig;
-import com.blitz.app.dialogs.info.InfoDialog;
 import com.blitz.app.screens.main.MainScreenActivity;
 import com.blitz.app.utilities.facebook.FacebookHelper;
 import com.blitz.app.utilities.viewpager.ViewPagerDepthTransformer;
@@ -153,13 +152,8 @@ public class SplashScreenActivity extends BaseActivity {
             authenticateWithFacebook();
         } else {
 
-
-            InfoDialog dialogFragment = new InfoDialog();
-
-            dialogFragment.show(getSupportFragmentManager(), "InfoDialog");
-
             // Otherwise just go.
-            //transitionNextScreen();
+            transitionNextScreen();
         }
     }
 }
