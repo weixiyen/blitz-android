@@ -11,18 +11,5 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:contentDescription="@string/empty_string"
-        android:src="@drawable/icon_logo" />
-
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="6dp"
-        android:fontFamily="@string/app_font_regular"
-        android:gravity="center"
-        android:text="@string/app_name"
-        android:textAllCaps="true"
-        android:textColor="@color/text_color_light"
-        android:textSize="20sp" />
+        android:src="@drawable/icon_blitz" />
 </LinearLayout>

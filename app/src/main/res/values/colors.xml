@@ -1,6 +1,6 @@
 <resources>
     <color name="background_primary">#000d20</color>
-    <color name="background_inner">#0cffffff</color>
+    <color name="background_inner">#082951</color>
 
     <color name="button_color_0">#898fc7</color>
     <color name="button_color_1">#1Affffff</color>
