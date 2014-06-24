@@ -1,0 +1,70 @@
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.karma.app.screens.splash.SplashScreenActivity">
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_margin="10dp"
+        android:layout_weight="1"
+        android:background="@color/background_inner">
+
+        <android.support.v4.view.ViewPager
+            android:id="@+id/splash_screen_pager"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/splash_screen_indicator"/>
+
+        <com.viewpagerindicator.CirclePageIndicator
+            android:id="@+id/splash_screen_indicator"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_margin="10dp"
+            android:padding="10dp" />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/splash_screen_register"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_marginBottom="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:background="#44619d"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:layout_width="60dp"
+            android:layout_height="match_parent"
+            android:contentDescription="@string/empty_string"
+            android:src="@drawable/icon_facebook" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="-6dp"
+            android:layout_marginRight="6dp"
+            android:fontFamily="@string/app_font_light"
+            android:gravity="center"
+            android:text="@string/sign_in_via"
+            android:textColor="@color/text_color_light"
+            android:textSize="18sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginRight="24dp"
+            android:fontFamily="@string/app_font_bold"
+            android:gravity="center"
+            android:text="@string/facebook"
+            android:textColor="@color/text_color_light"
+            android:textSize="18sp"/>
+
+    </LinearLayout>
+</LinearLayout>

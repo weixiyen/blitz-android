@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="${packageName}.${activityClass}">
+
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_margin="10dp"
+        android:background="@color/button_color_1">
+
+        <Button
+            android:id="@+id/post_screen_back"
+            android:layout_width="75dp"
+            android:layout_height="match_parent"
+            android:background="@android:color/transparent"
+            android:fontFamily="@string/app_font_regular"
+            android:text="@string/Back"
+            android:textAllCaps="true"
+            android:textColor="@color/button_color_0"
+            android:textSize="14sp" />
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:background="@color/background_primary"/>
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:fontFamily="@string/app_font_bold"
+            android:gravity="center"
+            android:text="@string/post"
+            android:textAllCaps="true"
+            android:textColor="@color/button_color_3"
+            android:textSize="18sp" />
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:background="@color/background_primary"/>
+
+        <Button
+            android:id="@+id/main_screen_post"
+            android:layout_width="75dp"
+            android:layout_height="match_parent"
+            android:background="@android:color/transparent"
+            android:fontFamily="@string/app_font_regular"
+            android:text="@string/submit"
+            android:textAllCaps="true"
+            android:textColor="@color/button_color_0"
+            android:textSize="14sp" />
+    </LinearLayout>
+
+    <EditText
+        android:id="@+id/editText"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_weight="1"
+        android:background="#ffffff"
+        android:fontFamily="@string/app_font_light"
+        android:gravity="top"
+        android:hint="@string/post_your_favor"
+        android:inputType="textMultiLine"
+        android:padding="10dp"
+        android:textSize="24sp"
+        android:textColor="@color/text_color_dark"
+        android:textColorHint="@color/text_color_dark_alt" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:layout_margin="10dp"
+        android:background="#BFffffff">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/post_screen_avatar"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_alignParentLeft="true"
+            android:layout_gravity="center"
+            android:layout_margin="10dp"
+            android:src="@drawable/placeholder_avatar"
+            app:border_color="@color/button_color_0"
+            app:border_width="2dp"/>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="10dp"
+            android:layout_toLeftOf="@+id/post_screen_distance"
+            android:layout_toRightOf="@+id/post_screen_avatar"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:fontFamily="@string/app_font_regular"
+                android:text="@string/lorum_ipsum_tiny"
+                android:textColor="@color/text_color_dark"
+                android:textSize="20sp"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:fontFamily="@string/app_font_light"
+                android:text="Friend of Bobby"
+                android:textColor="@color/text_color_dark_alt"
+                android:textSize="12sp"/>
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/post_screen_distance"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:layout_marginBottom="10dp"
+            android:layout_marginRight="10dp"
+            android:fontFamily="@string/app_font_light"
+            android:gravity="bottom"
+            android:text="9 miles away"
+            android:textColor="@color/text_color_dark_alt"
+            android:textSize="12sp"/>
+    </RelativeLayout>
+</LinearLayout>
