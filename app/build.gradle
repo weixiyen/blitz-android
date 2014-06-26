@@ -29,6 +29,10 @@ dependencies {
     // Android XML view injections.
     compile 'com.jakewharton:butterknife:4.0.+'
 
+    // Custom HTTP client that is better than the default.
+    compile 'com.squareup.okhttp:okhttp-urlconnection:2.0.0'
+    compile 'com.squareup.okhttp:okhttp:2.0.0'
+
     // Library for making REST calls.
     compile 'com.squareup.retrofit:retrofit:1.6.0'
 
