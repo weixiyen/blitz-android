@@ -10,6 +10,12 @@ package com.blitz.app.base.config;
 @SuppressWarnings("unused")
 public class BaseConfig {
 
+    // Should we authenticate with Facebook.
     public static final boolean AUTH_WITH_FACEBOOK = false;
+
+    // Should we jump to an arbitrary activity on start.
     public static final Class JUMP_TO_ACTIVITY = null;
+
+    // Endpoint URL for RESTful API.
+    public static final String API_URL = "https://snapdraft.us/api";
 }
