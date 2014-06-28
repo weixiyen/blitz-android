@@ -83,13 +83,13 @@ public class SplashScreen extends BaseActivity {
     }
 
     //==============================================================================================
-    // Public Methods
+    // Private Methods
     //==============================================================================================
 
     /**
      * Start next activity in the flow.
      */
-    public void transitionNextScreen() {
+    private void transitionNextScreen() {
 
         // Create intent for main screen activity.
         Intent intent = new Intent(this, MainScreen.class);
@@ -101,7 +101,7 @@ public class SplashScreen extends BaseActivity {
      * Get facebook session token then launch
      * next activity.
      */
-    public void authenticateWithFacebook() {
+    private void authenticateWithFacebook() {
 
         // Create a new facebook helper object.
         final FacebookHelper facebookHelper = new FacebookHelper(this);
@@ -125,7 +125,7 @@ public class SplashScreen extends BaseActivity {
      * Create and setup the viewpager and associated
      * elements.
      */
-    public void setupViewPager() {
+    private void setupViewPager() {
 
         // Create adapter for the view pager.
         mPager.setAdapter(new SplashScreenPagerAdapter(getSupportFragmentManager()));
@@ -144,7 +144,7 @@ public class SplashScreen extends BaseActivity {
     /**
      * Register user and take them to main screen.
      */
-    @OnClick(R.id.splash_screen_register) @SuppressWarnings("unused")
+    @OnClick(R.id.splash_screen_sign_up) @SuppressWarnings("unused")
     public void register() {
 
         // Authenticate if needed.

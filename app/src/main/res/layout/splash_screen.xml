@@ -4,7 +4,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.karma.app.screens.splash.SplashScreenActivity">
+    tools:context=".screens.access_code.AccessCodeScreen"
+    tools:ignore="ButtonStyle,HardcodedText">
 
     <RelativeLayout
         android:layout_width="wrap_content"
@@ -29,42 +30,38 @@
     </RelativeLayout>
 
     <LinearLayout
-        android:id="@+id/splash_screen_register"
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:layout_marginBottom="10dp"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
-        android:background="#44619d"
         android:gravity="center"
         android:orientation="horizontal">
 
-        <ImageView
-            android:layout_width="60dp"
+        <Button
+            android:id="@+id/splash_screen_sign_up"
+            android:layout_width="0dp"
             android:layout_height="match_parent"
+            android:layout_marginRight="5dp"
+            android:layout_weight=".5"
+            android:background="@color/button_color_0"
             android:contentDescription="@string/empty_string"
-            android:src="@drawable/icon_facebook" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_marginLeft="-6dp"
-            android:layout_marginRight="6dp"
             android:fontFamily="@string/app_font_light"
-            android:gravity="center"
-            android:text="@string/sign_in_via"
+            android:text="Sign Up"
             android:textColor="@color/text_color_light"
-            android:textSize="18sp" />
+            android:textSize="12sp" />
 
-        <TextView
-            android:layout_width="wrap_content"
+        <Button
+            android:id="@+id/splash_screen_sign_in"
+            android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_marginRight="24dp"
-            android:fontFamily="@string/app_font_bold"
-            android:gravity="center"
-            android:text="@string/facebook"
+            android:layout_marginLeft="5dp"
+            android:layout_weight=".5"
+            android:background="@color/button_color_0"
+            android:contentDescription="@string/empty_string"
+            android:fontFamily="@string/app_font_light"
+            android:text="Sign In"
             android:textColor="@color/text_color_light"
-            android:textSize="18sp"/>
-
+            android:textSize="12sp" />
     </LinearLayout>
 </LinearLayout>
