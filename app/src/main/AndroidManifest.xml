@@ -20,19 +20,18 @@
             android:name="com.facebook.LoginActivity"
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />
 
-        <activity android:name=".screens.splash.SplashScreenActivity">
+        <activity android:name=".screens.splash.SplashScreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
 
-        <activity android:name=".screens.main.MainScreenActivity" />
-        <activity
-            android:name=".screens.post.PostScreenActivity"
-            android:windowSoftInputMode="adjustResize" />
-        <activity android:name=".screens.helper_found.HelperFoundScreen" />
+        <activity android:name=".screens.access_code.AccessCodeScreen" />
+        <activity android:name=".screens.queue.QueueScreen" />
+        <activity android:name=".screens.sign_in.SignInScreen" />
+        <activity android:name=".screens.sign_up.SignUpScreen" />
+        <activity android:name=".screens.main.MainScreen" />
 
     </application>
-
 </manifest>

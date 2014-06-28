@@ -1,4 +1,4 @@
-package com.blitz.app.screens.post;
+package com.blitz.app.screens.sign_up;
 
 import com.blitz.app.R;
 import com.blitz.app.base.activity.BaseActivity;
@@ -8,7 +8,7 @@ import butterknife.OnClick;
 /**
  * Created by Miguel Gaeta on 6/1/14.
  */
-public class PostScreenActivity extends BaseActivity {
+public class SignUpScreen extends BaseActivity {
 
     //==============================================================================================
     // Click Methods

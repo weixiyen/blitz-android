@@ -7,7 +7,7 @@ import android.support.v4.view.ViewPager;
 import com.blitz.app.R;
 import com.blitz.app.base.activity.BaseActivity;
 import com.blitz.app.base.config.BaseConfig;
-import com.blitz.app.screens.main.MainScreenActivity;
+import com.blitz.app.screens.main.MainScreen;
 import com.blitz.app.utilities.facebook.FacebookHelper;
 import com.blitz.app.utilities.viewpager.ViewPagerDepthTransformer;
 import com.facebook.Request;
@@ -19,10 +19,11 @@ import com.viewpagerindicator.CirclePageIndicator;
 import butterknife.InjectView;
 import butterknife.OnClick;
 
-public class SplashScreenActivity extends BaseActivity {
+public class SplashScreen extends BaseActivity {
 
     @InjectView(R.id.splash_screen_pager) ViewPager mPager;
     @InjectView(R.id.splash_screen_indicator)
+
     CirclePageIndicator mPagerIndicator;
 
     //==============================================================================================
@@ -91,7 +92,7 @@ public class SplashScreenActivity extends BaseActivity {
     public void transitionNextScreen() {
 
         // Create intent for main screen activity.
-        Intent intent = new Intent(this, MainScreenActivity.class);
+        Intent intent = new Intent(this, MainScreen.class);
 
         startActivity(intent);
     }
