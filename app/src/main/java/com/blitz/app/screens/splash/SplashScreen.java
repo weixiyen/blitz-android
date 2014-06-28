@@ -39,16 +39,6 @@ public class SplashScreen extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        // If we want to jump to some activity.
-        if (BaseConfig.JUMP_TO_ACTIVITY != null) {
-
-            // Do it - this would only really be done for debugging.
-            startActivity(new Intent(this, BaseConfig.JUMP_TO_ACTIVITY));
-        }
-
-        // Disable custom transitions.
-        setCustomTransitions(false);
-
         // Setup view pager.
         setupViewPager();
     }

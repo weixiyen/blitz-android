@@ -20,13 +20,14 @@
             android:name="com.facebook.LoginActivity"
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />
 
-        <activity android:name=".screens.queue.QueueScreen">
+        <activity android:name=".screens.loading.LoadingScreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
 
+        <activity android:name=".screens.queue.QueueScreen" />
         <activity android:name=".screens.splash.SplashScreen" />
         <activity android:name=".screens.access_code.AccessCodeScreen" />
         <activity android:name=".screens.sign_in.SignInScreen" />
