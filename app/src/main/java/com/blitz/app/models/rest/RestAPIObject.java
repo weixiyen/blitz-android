@@ -1,5 +1,7 @@
 package com.blitz.app.models.rest;
 
+import com.blitz.app.models.rest_objects.JsonObject;
+
 /**
  * Created by Miguel Gaeta on 6/29/14.
  */
@@ -10,7 +12,7 @@ public class RestAPIObject implements RestAPIObjectInterface {
     //==============================================================================================
 
     // The api object this class represents.
-    public RestAPI.BaseApiObject mApiObject;
+    public JsonObject mJsonObject;
 
     //==============================================================================================
     // Overwritten Methods
@@ -25,17 +27,17 @@ public class RestAPIObject implements RestAPIObjectInterface {
     @Override
     public boolean hasErrors() {
 
-        return mApiObject != null &&
-               mApiObject.hasErrors();
+        return mJsonObject != null &&
+               mJsonObject.hasErrors();
     }
 
     /**
-     * Set the api object.
+     * Set the json object.
      *
-     * @param apiObject Provided object.
+     * @param jsonObject Provided object.
      */
     @Override
-    public void setApiObject(RestAPI.BaseApiObject apiObject) {
-        mApiObject = apiObject;
+    public void setJsonObject(JsonObject jsonObject) {
+        mJsonObject = jsonObject;
     }
 }

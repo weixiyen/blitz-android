@@ -1,6 +1,7 @@
 package com.blitz.app.models.rest;
 
 import com.blitz.app.models.operation.ModelOperationInterface;
+import com.blitz.app.models.rest_objects.JsonObject;
 
 import retrofit.Callback;
 import retrofit.RetrofitError;
@@ -44,14 +45,14 @@ public class RestAPICallback<T> implements Callback<T> {
     /**
      * Successful REST call is made.
      *
-     * @param t Resulting JSON parsed object.
+     * @param jsonObject Resulting JSON parsed object.
      * @param response Response.
      */
     @Override
-    public void success(T t, Response response) {
+    public void success(T jsonObject, Response response) {
 
         // Set the api object which we receive on success.
-        mRestAPIObjectInterface.setApiObject((RestAPI.BaseApiObject) t);
+        mRestAPIObjectInterface.setJsonObject((JsonObject) jsonObject);
 
         // Report success or failure.
         if (mRestAPIObjectInterface.hasErrors()) {

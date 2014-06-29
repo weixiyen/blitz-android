@@ -2,8 +2,8 @@ package com.blitz.app.models.objects;
 
 import android.util.Log;
 
-import com.blitz.app.models.rest.RestAPI;
 import com.blitz.app.models.rest.RestAPIClient;
+import com.blitz.app.models.rest_objects.JsonObjectPreference;
 
 import retrofit.Callback;
 import retrofit.RetrofitError;
@@ -17,10 +17,10 @@ public class ObjectModelPreferences {
 
     public void TestCall() {
 
-        RestAPIClient.getAPI().preferences(new Callback<RestAPI.Preference>() {
+        RestAPIClient.getAPI().preferences(new Callback<JsonObjectPreference>() {
 
             @Override
-            public void success(RestAPI.Preference preference, Response response) {
+            public void success(JsonObjectPreference preference, Response response) {
 
                 Log.e("TEST2", "success " + preference.current_week + " year: " + preference.current_year);
             }

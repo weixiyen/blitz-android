@@ -1,10 +1,10 @@
 package com.blitz.app.models.objects;
 
 import com.blitz.app.models.operation.ModelOperationInterface;
-import com.blitz.app.models.rest.RestAPI;
+import com.blitz.app.models.rest.RestAPICallback;
 import com.blitz.app.models.rest.RestAPIClient;
 import com.blitz.app.models.rest.RestAPIObject;
-import com.blitz.app.models.rest.RestAPICallback;
+import com.blitz.app.models.rest_objects.JsonObjectCode;
 
 /**
  * Created by Miguel Gaeta on 6/28/14.
@@ -36,8 +36,8 @@ public class ObjectModelCode {
         mValue = value;
     }
 
-    private RestAPI.Code getCode() {
-        return (RestAPI.Code)mCode.mApiObject;
+    private JsonObjectCode getCode() {
+        return (JsonObjectCode)mCode.mJsonObject;
     }
 
     //==============================================================================================
@@ -65,11 +65,11 @@ public class ObjectModelCode {
     public void redeemCode(final ModelOperationInterface operation) {
 
         // Construct POST body.
-        RestAPI.Code.Body body = new RestAPI.Code.Body();
+        JsonObjectCode.Body body = new JsonObjectCode.Body();
 
         body.value = mValue;
 
         // Make rest call for code.
-        RestAPIClient.getAPI().code(body, new RestAPICallback<RestAPI.Code>(mCode, operation));
+        RestAPIClient.getAPI().code(body, new RestAPICallback<JsonObjectCode>(mCode, operation));
     }
 }
