@@ -4,7 +4,7 @@ import android.content.Intent;
 
 import com.blitz.app.R;
 import com.blitz.app.base.activity.BaseActivity;
-import com.blitz.app.screens.sign_up.SignUpScreen;
+import com.blitz.app.screens.splash.SplashScreen;
 
 import butterknife.OnClick;
 
@@ -17,13 +17,10 @@ public class AccessCodeScreen extends BaseActivity {
     // Click Methods
     //==============================================================================================
 
-    /**
-     * Transition to sign up screen.
-     */
     @OnClick(R.id.access_code_screen_continue_with_code) @SuppressWarnings("unused")
     public void haveCode() {
 
         // Transition to access code screen.
-        startActivity(new Intent(this, SignUpScreen.class));
+        startActivity(new Intent(this, SplashScreen.class));
     }
 }
