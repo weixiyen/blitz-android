@@ -1,7 +1,5 @@
 package com.blitz.app.base.config;
 
-import com.blitz.app.screens.main.MainScreen;
-
 /**
  * Intended to setup configuration constants for the App.
  * Currently hard coded but eventually will pull
@@ -16,7 +14,7 @@ public class BaseConfig {
     public static final boolean AUTH_WITH_FACEBOOK = false;
 
     // Should we jump to an arbitrary activity on start.
-    public static final Class JUMP_TO_ACTIVITY = MainScreen.class;
+    public static final Class JUMP_TO_ACTIVITY = null;
 
     // Endpoint URL for RESTful API.
     public static final String API_URL = "https://snapdraft.us/api";
