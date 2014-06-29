@@ -1,5 +1,6 @@
 package com.blitz.app.base.activity;
 
+import android.app.ActionBar;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
@@ -35,6 +36,8 @@ public class BaseActivity extends FragmentActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        setupActionBar();
 
         if (mCustomTransitions) {
 
@@ -113,5 +116,24 @@ public class BaseActivity extends FragmentActivity {
      */
     public void setCustomTransitions(boolean customTransitions) {
         mCustomTransitions = customTransitions;
+    }
+
+    //==============================================================================================
+    // Private Methods
+    //==============================================================================================
+
+    /**
+     * Setup the action bar.  For the time being,
+     * we do not want it to display and only use
+     * it for the purpose of tabs.
+     */
+    private void setupActionBar() {
+
+        ActionBar actionBar = getActionBar();
+
+        if (actionBar != null) {
+            actionBar.setDisplayShowHomeEnabled(false);
+            actionBar.setDisplayShowTitleEnabled(false);
+        }
     }
 }
