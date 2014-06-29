@@ -32,7 +32,7 @@
         <activity android:name=".screens.access_code.AccessCodeScreen" />
         <activity android:name=".screens.sign_in.SignInScreen" />
         <activity android:name=".screens.sign_up.SignUpScreen" />
-        <activity android:name=".screens.main.MainScreen" />
+        <activity android:name=".screens.main.MainScreen" android:theme="@style/AppTheme.ActionBar" />
 
     </application>
 </manifest>

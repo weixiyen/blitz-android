@@ -1,11 +1,24 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="@android:style/Theme.Holo.NoActionBar">
+    <style name="AppTheme" parent="@android:style/Theme.Holo">
         <item name="android:windowBackground">@color/background_primary</item>
+
+        <!-- No action bar on the main theme -->
+        <item name="android:actionBarStyle">@null</item>
 
         <!-- View pager indicator style. -->
         <item name="vpiCirclePageIndicatorStyle">@style/TabStyle</item>
+    </style>
+
+    <style name="AppTheme.ActionBar" parent="AppTheme">
+
+        <!-- Provide custom action bar style -->
+        <item name="android:actionBarStyle">@style/MyActionBar</item>
+    </style>
+
+    <style name="MyActionBar" parent="@android:style/Widget.Holo.ActionBar">
+        <item name="android:background">@drawable/asset_action_bar</item>
     </style>
 
     <!-- View pager indicator style. -->
