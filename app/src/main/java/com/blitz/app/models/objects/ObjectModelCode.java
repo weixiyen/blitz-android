@@ -4,7 +4,7 @@ import com.blitz.app.models.operation.ModelOperationInterface;
 import com.blitz.app.models.rest.BlitzRestAPI;
 import com.blitz.app.models.rest.BlitzRestAPIClient;
 import com.blitz.app.models.rest.BlitzRestAPIObject;
-import com.blitz.app.models.rest.BlitzRestAPICallbackz;
+import com.blitz.app.models.rest.BlitzRestAPICallback;
 
 /**
  * Created by Miguel Gaeta on 6/28/14.
@@ -70,6 +70,6 @@ public class ObjectModelCode {
         body.value = mValue;
 
         // Make rest call for code.
-        BlitzRestAPIClient.getAPI().code(body, new BlitzRestAPICallbackz<BlitzRestAPI.Code>(mCode, operation));
+        BlitzRestAPIClient.getAPI().code(body, new BlitzRestAPICallback<BlitzRestAPI.Code>(mCode, operation));
     }
 }

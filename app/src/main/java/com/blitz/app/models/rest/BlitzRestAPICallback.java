@@ -9,12 +9,12 @@ import retrofit.client.Response;
 /**
  * Created by Miguel Gaeta on 6/29/14.
  */
-public class BlitzRestAPICallbackz<T> implements Callback<T> {
+public class BlitzRestAPICallback<T> implements Callback<T> {
 
     private BlitzRestAPIObjectInterface mObjectModelCode;
     private ModelOperationInterface mOperation;
 
-    public BlitzRestAPICallbackz(BlitzRestAPIObjectInterface fart, ModelOperationInterface operation) {
+    public BlitzRestAPICallback(BlitzRestAPIObjectInterface fart, ModelOperationInterface operation) {
         mOperation = operation;
         mObjectModelCode = fart;
     }
