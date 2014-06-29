@@ -1,9 +1,9 @@
-package com.blitz.app.models.rest;
+package com.blitz.app.models.objects;
 
 import android.util.Log;
 
-import com.blitz.app.models.api.BlitzAPI;
-import com.blitz.app.models.api.BlitzAPIClient;
+import com.blitz.app.models.rest.BlitzRestAPI;
+import com.blitz.app.models.rest.BlitzRestAPIClient;
 
 import retrofit.Callback;
 import retrofit.RetrofitError;
@@ -12,14 +12,14 @@ import retrofit.client.Response;
 /**
  * Created by Miguel Gaeta on 6/26/14.
  */
-public class BlitzAPIPreferences extends BlitzAPIClient {
+public class ObjectModelPreferences extends BlitzRestAPIClient {
 
     public void TestCall() {
 
-        getAPI().preferences(new Callback<BlitzAPI.Preference>() {
+        getAPI().preferences(new Callback<BlitzRestAPI.Preference>() {
 
             @Override
-            public void success(BlitzAPI.Preference preference, Response response) {
+            public void success(BlitzRestAPI.Preference preference, Response response) {
 
                 Log.e("TEST2", "success " + preference.current_week + " year: " + preference.current_year);
             }
