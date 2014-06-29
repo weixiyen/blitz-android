@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".screens.access_code.AccessCodeScreen"
+    tools:context="${packageName}.${activityClass}"
     tools:ignore="ButtonStyle,HardcodedText">
 
     <LinearLayout
