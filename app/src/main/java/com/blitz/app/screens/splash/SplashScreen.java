@@ -6,14 +6,10 @@ import android.support.v4.view.ViewPager;
 
 import com.blitz.app.R;
 import com.blitz.app.base.activity.BaseActivity;
-import com.blitz.app.base.config.BaseConfig;
-import com.blitz.app.screens.main.MainScreen;
-import com.blitz.app.utilities.facebook.FacebookHelper;
+import com.blitz.app.screens.sign_in.SignInScreen;
+import com.blitz.app.screens.sign_up.SignUpScreen;
 import com.blitz.app.utilities.viewpager.ViewPagerDepthTransformer;
-import com.facebook.Request;
-import com.facebook.Response;
 import com.facebook.Session;
-import com.facebook.model.GraphUser;
 import com.viewpagerindicator.CirclePageIndicator;
 
 import butterknife.InjectView;
@@ -79,36 +75,12 @@ public class SplashScreen extends BaseActivity {
     /**
      * Start next activity in the flow.
      */
-    private void transitionNextScreen() {
+    private void transitionNextScreen(Class targetScreen) {
 
         // Create intent for main screen activity.
-        Intent intent = new Intent(this, MainScreen.class);
+        Intent intent = new Intent(this, targetScreen);
 
         startActivity(intent);
-    }
-
-    /**
-     * Get facebook session token then launch
-     * next activity.
-     */
-    private void authenticateWithFacebook() {
-
-        // Create a new facebook helper object.
-        final FacebookHelper facebookHelper = new FacebookHelper(this);
-
-        // Authorize the user and launch main screen.
-        facebookHelper.authorizeUser(new Request.GraphUserCallback() {
-
-            @Override
-            public void onCompleted(GraphUser graphUser, Response response) {
-
-                String accessToken = facebookHelper.getAccessToken(graphUser);
-
-                if (accessToken != null) {
-                    transitionNextScreen();
-                }
-            }
-        });
     }
 
     /**
@@ -131,20 +103,15 @@ public class SplashScreen extends BaseActivity {
     // Click Methods
     //==============================================================================================
 
-    /**
-     * Register user and take them to main screen.
-     */
+    @OnClick(R.id.splash_screen_sign_in) @SuppressWarnings("unused")
+    public void sign_in() {
+
+        transitionNextScreen(SignInScreen.class);
+    }
+
     @OnClick(R.id.splash_screen_sign_up) @SuppressWarnings("unused")
-    public void register() {
+    public void sign_up() {
 
-        // Authenticate if needed.
-        if (BaseConfig.AUTH_WITH_FACEBOOK) {
-
-            authenticateWithFacebook();
-        } else {
-
-            // Otherwise just go.
-            transitionNextScreen();
-        }
+        transitionNextScreen(SignUpScreen.class);
     }
 }
