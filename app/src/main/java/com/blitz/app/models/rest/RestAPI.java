@@ -9,7 +9,7 @@ import retrofit.http.POST;
 /**
  * Created by Miguel Gaeta on 6/26/14.
  */
-public interface BlitzRestAPI {
+public interface RestAPI {
 
     /**
      * All API rest objects can potentially

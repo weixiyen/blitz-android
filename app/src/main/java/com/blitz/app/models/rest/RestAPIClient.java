@@ -2,14 +2,14 @@ package com.blitz.app.models.rest;
 
 import com.blitz.app.base.api.BaseAPIClient;
 
-public class BlitzRestAPIClient extends BaseAPIClient {
+public class RestAPIClient extends BaseAPIClient {
 
     //==============================================================================================
     // Member Variables
     //==============================================================================================
 
     // Singleton instance.
-    private static BlitzRestAPI api = null;
+    private static RestAPI api = null;
 
     //==============================================================================================
     // Public Methods
@@ -20,12 +20,12 @@ public class BlitzRestAPIClient extends BaseAPIClient {
      *
      * @return Singleton object.
      */
-    public static BlitzRestAPI getAPI() {
+    public static RestAPI getAPI() {
 
         if (api == null) {
-            synchronized (BlitzRestAPIClient.class) {
+            synchronized (RestAPIClient.class) {
                 if (api == null) {
-                    api = getInstance().getRestAdapter().create(BlitzRestAPI.class);
+                    api = getInstance().getRestAdapter().create(RestAPI.class);
                 }
             }
         }

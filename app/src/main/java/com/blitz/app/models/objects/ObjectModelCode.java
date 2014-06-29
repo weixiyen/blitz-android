@@ -1,10 +1,10 @@
 package com.blitz.app.models.objects;
 
 import com.blitz.app.models.operation.ModelOperationInterface;
-import com.blitz.app.models.rest.BlitzRestAPI;
-import com.blitz.app.models.rest.BlitzRestAPIClient;
-import com.blitz.app.models.rest.BlitzRestAPIObject;
-import com.blitz.app.models.rest.BlitzRestAPICallback;
+import com.blitz.app.models.rest.RestAPI;
+import com.blitz.app.models.rest.RestAPIClient;
+import com.blitz.app.models.rest.RestAPIObject;
+import com.blitz.app.models.rest.RestAPICallback;
 
 /**
  * Created by Miguel Gaeta on 6/28/14.
@@ -19,7 +19,7 @@ public class ObjectModelCode {
     private String mValue;
 
     // Rest api code object.
-    private BlitzRestAPIObject mCode;
+    private RestAPIObject mCode;
 
     //==============================================================================================
     // Constructors
@@ -29,15 +29,15 @@ public class ObjectModelCode {
      * Empty constructor disallowed.
      */
     public ObjectModelCode() {
-        mCode = new BlitzRestAPIObject();
+        mCode = new RestAPIObject();
     }
 
     public void setValue(String value) {
         mValue = value;
     }
 
-    private BlitzRestAPI.Code getCode() {
-        return (BlitzRestAPI.Code)mCode.mApiObject;
+    private RestAPI.Code getCode() {
+        return (RestAPI.Code)mCode.mApiObject;
     }
 
     //==============================================================================================
@@ -65,11 +65,11 @@ public class ObjectModelCode {
     public void redeemCode(final ModelOperationInterface operation) {
 
         // Construct POST body.
-        BlitzRestAPI.Code.Body body = new BlitzRestAPI.Code.Body();
+        RestAPI.Code.Body body = new RestAPI.Code.Body();
 
         body.value = mValue;
 
         // Make rest call for code.
-        BlitzRestAPIClient.getAPI().code(body, new BlitzRestAPICallback<BlitzRestAPI.Code>(mCode, operation));
+        RestAPIClient.getAPI().code(body, new RestAPICallback<RestAPI.Code>(mCode, operation));
     }
 }
