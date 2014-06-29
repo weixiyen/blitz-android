@@ -12,11 +12,11 @@ import retrofit.client.Response;
 /**
  * Created by Miguel Gaeta on 6/26/14.
  */
-public class ObjectModelPreferences extends BlitzRestAPIClient {
+public class ObjectModelPreferences extends ObjectModel {
 
     public void TestCall() {
 
-        getAPI().preferences(new Callback<BlitzRestAPI.Preference>() {
+        BlitzRestAPIClient.getAPI().preferences(new Callback<BlitzRestAPI.Preference>() {
 
             @Override
             public void success(BlitzRestAPI.Preference preference, Response response) {

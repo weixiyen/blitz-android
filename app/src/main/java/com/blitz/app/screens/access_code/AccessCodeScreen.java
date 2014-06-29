@@ -1,12 +1,11 @@
 package com.blitz.app.screens.access_code;
 
 import android.content.Intent;
-import android.util.Log;
 
 import com.blitz.app.R;
 import com.blitz.app.base.activity.BaseActivity;
 import com.blitz.app.models.objects.ObjectModelCode;
-import com.blitz.app.models.objects.ObjectModelOperation;
+import com.blitz.app.models.operation.ModelOperation;
 import com.blitz.app.screens.splash.SplashScreen;
 
 import butterknife.OnClick;
@@ -26,28 +25,18 @@ public class AccessCodeScreen extends BaseActivity {
     public void haveCode() {
 
         mObjectModelCode = new ObjectModelCode("123456");
-        mObjectModelCode.redeemCode(new Test() {
+        mObjectModelCode.redeemCode(new ModelOperation() {
 
             @Override
-            public void complete(boolean success) {
-                super.complete(success);
+            public void success() {
+                super.success();
 
-                Log.e("Parrot", "Intercepted" + success +  " " + mObjectModelCode.isValidCode());
-
-                if (success && mObjectModelCode.isValidCode()) {
+                if (mObjectModelCode.isValidCode()) {
 
                     // Transition to access code screen.
                     startActivity(new Intent(AccessCodeScreen.this, SplashScreen.class));
                 }
             }
         });
-    }
-
-    public class Test implements ObjectModelOperation {
-
-        @Override
-        public void complete(boolean success) {
-            Log.e("Parrot", "Intercepted");
-        }
     }
 }

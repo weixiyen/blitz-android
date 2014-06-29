@@ -1,5 +1,6 @@
 package com.blitz.app.models.objects;
 
+import com.blitz.app.models.operation.ModelOperationInterface;
 import com.blitz.app.models.rest.BlitzRestAPI;
 import com.blitz.app.models.rest.BlitzRestAPIClient;
 import com.blitz.app.models.rest.BlitzRestApiCallback;
@@ -7,7 +8,7 @@ import com.blitz.app.models.rest.BlitzRestApiCallback;
 /**
  * Created by Miguel Gaeta on 6/28/14.
  */
-public class ObjectModelCode {
+public class ObjectModelCode extends ObjectModel {
 
     //==============================================================================================
     // Member Variables
@@ -65,7 +66,7 @@ public class ObjectModelCode {
      *
      * @param operation Operation callback model.
      */
-    public void redeemCode(final ObjectModelOperation operation) {
+    public void redeemCode(final ModelOperationInterface operation) {
 
         // Construct POST body.
         BlitzRestAPI.Code.Body body = new BlitzRestAPI.Code.Body();

@@ -37,9 +37,8 @@ public interface BlitzRestAPI {
          */
         public boolean hasErrors() {
 
-            return errors != null &&
+            return errors       != null &&
                    errors.value != null;
-
         }
     }
 
