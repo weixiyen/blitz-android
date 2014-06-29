@@ -24,7 +24,11 @@ public class AccessCodeScreen extends BaseActivity {
     @OnClick(R.id.access_code_screen_continue_with_code) @SuppressWarnings("unused")
     public void haveCode() {
 
-        mObjectModelCode = new ObjectModelCode("123456");
+        if (mObjectModelCode == null) {
+            mObjectModelCode = new ObjectModelCode();
+        }
+
+        mObjectModelCode.setValue("123456");
         mObjectModelCode.redeemCode(new ModelOperation() {
 
             @Override

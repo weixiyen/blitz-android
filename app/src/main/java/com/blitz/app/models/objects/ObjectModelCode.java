@@ -3,12 +3,13 @@ package com.blitz.app.models.objects;
 import com.blitz.app.models.operation.ModelOperationInterface;
 import com.blitz.app.models.rest.BlitzRestAPI;
 import com.blitz.app.models.rest.BlitzRestAPIClient;
-import com.blitz.app.models.rest.BlitzRestApiCallback;
+import com.blitz.app.models.rest.BlitzRestAPIObject;
+import com.blitz.app.models.rest.BlitzRestAPICallbackz;
 
 /**
  * Created by Miguel Gaeta on 6/28/14.
  */
-public class ObjectModelCode extends ObjectModel {
+public class ObjectModelCode {
 
     //==============================================================================================
     // Member Variables
@@ -18,7 +19,7 @@ public class ObjectModelCode extends ObjectModel {
     private String mValue;
 
     // Rest api code object.
-    private BlitzRestAPI.Code mCode;
+    private BlitzRestAPIObject mCode;
 
     //==============================================================================================
     // Constructors
@@ -27,26 +28,21 @@ public class ObjectModelCode extends ObjectModel {
     /**
      * Empty constructor disallowed.
      */
-    @SuppressWarnings("unused")
-    private ObjectModelCode() {
-
+    public ObjectModelCode() {
+        mCode = new BlitzRestAPIObject();
     }
 
-    public ObjectModelCode(String value) {
+    public void setValue(String value) {
         mValue = value;
+    }
+
+    private BlitzRestAPI.Code getCode() {
+        return (BlitzRestAPI.Code)mCode.mApiObject;
     }
 
     //==============================================================================================
     // Public Methods
     //==============================================================================================
-
-    public BlitzRestAPI.Code getApiObject() {
-        return mCode;
-    }
-
-    public void setApiObject(BlitzRestAPI.Code apiObject) {
-        mCode = apiObject;
-    }
 
     /**
      * Is this a valid code.
@@ -55,10 +51,10 @@ public class ObjectModelCode extends ObjectModel {
      */
     public boolean isValidCode() {
 
-        return mCode                  != null &&
-               mCode.result           != null &&
-               mCode.result.code_type != null &&
-               mCode.result.code_type.equals("ACCESS_1");
+        return getCode()                  != null &&
+               getCode().result           != null &&
+               getCode().result.code_type != null &&
+               getCode().result.code_type.equals("ACCESS_1");
     }
 
     /**
@@ -74,6 +70,6 @@ public class ObjectModelCode extends ObjectModel {
         body.value = mValue;
 
         // Make rest call for code.
-        BlitzRestAPIClient.getAPI().code(body, new BlitzRestApiCallback<BlitzRestAPI.Code>(this, operation));
+        BlitzRestAPIClient.getAPI().code(body, new BlitzRestAPICallbackz<BlitzRestAPI.Code>(mCode, operation));
     }
 }

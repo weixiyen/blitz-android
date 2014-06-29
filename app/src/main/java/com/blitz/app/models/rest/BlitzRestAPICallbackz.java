@@ -1,6 +1,5 @@
 package com.blitz.app.models.rest;
 
-import com.blitz.app.models.objects.ObjectModelCode;
 import com.blitz.app.models.operation.ModelOperationInterface;
 
 import retrofit.Callback;
@@ -10,12 +9,12 @@ import retrofit.client.Response;
 /**
  * Created by Miguel Gaeta on 6/29/14.
  */
-public class BlitzRestApiCallback<T> implements Callback<T> {
+public class BlitzRestAPICallbackz<T> implements Callback<T> {
 
-    private ObjectModelCode mObjectModelCode;
+    private BlitzRestAPIObjectInterface mObjectModelCode;
     private ModelOperationInterface mOperation;
 
-    public BlitzRestApiCallback(ObjectModelCode fart, ModelOperationInterface operation) {
+    public BlitzRestAPICallbackz(BlitzRestAPIObjectInterface fart, ModelOperationInterface operation) {
         mOperation = operation;
         mObjectModelCode = fart;
     }
@@ -23,9 +22,9 @@ public class BlitzRestApiCallback<T> implements Callback<T> {
     @Override
     public void success(T t, Response response) {
 
-        mObjectModelCode.setApiObject((BlitzRestAPI.Code)t);
+        mObjectModelCode.setApiObject((BlitzRestAPI.BaseApiObject) t);
 
-        if (mObjectModelCode.getApiObject().hasErrors()) {
+        if (mObjectModelCode.hasErrors()) {
             mOperation.failure();
         } else {
             mOperation.success();

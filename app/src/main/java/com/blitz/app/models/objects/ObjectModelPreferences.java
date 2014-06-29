@@ -12,7 +12,8 @@ import retrofit.client.Response;
 /**
  * Created by Miguel Gaeta on 6/26/14.
  */
-public class ObjectModelPreferences extends ObjectModel {
+@SuppressWarnings("unused")
+public class ObjectModelPreferences {
 
     public void TestCall() {
 
