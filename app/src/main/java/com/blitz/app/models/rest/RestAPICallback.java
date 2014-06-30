@@ -36,6 +36,9 @@ public class RestAPICallback<T> implements Callback<T> {
 
         mRestAPIObjectInterface = restAPIObjectInterface;
         mOperation = operation;
+
+        // Start operation as soon as initialized.
+        mOperation.start();
     }
 
     //==============================================================================================
@@ -54,8 +57,12 @@ public class RestAPICallback<T> implements Callback<T> {
         // Set the api object which we receive on success.
         mRestAPIObjectInterface.setJsonObject((JsonObject) jsonObject);
 
+        // Operation is finished.
+        mOperation.finish();
+
         // Report success or failure.
         if (mRestAPIObjectInterface.hasErrors()) {
+
             mOperation.failure();
         } else {
             mOperation.success();
@@ -70,6 +77,10 @@ public class RestAPICallback<T> implements Callback<T> {
     @Override
     public void failure(RetrofitError retrofitError) {
 
+        // Operation is finished.
+        mOperation.finish();
+
+        // Operation has failed.
         mOperation.failure();
     }
 }

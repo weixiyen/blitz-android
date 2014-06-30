@@ -5,6 +5,9 @@ package com.blitz.app.models.operation;
  */
 public interface ModelOperationInterface {
 
+    void start();
+    void finish();
+
     void success();
     void failure();
 }

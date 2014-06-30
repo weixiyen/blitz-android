@@ -33,7 +33,6 @@ public class AccessCodeScreen extends BaseActivity {
 
             @Override
             public void success() {
-                super.success();
 
                 if (mObjectModelCode.isValidCode()) {
 
