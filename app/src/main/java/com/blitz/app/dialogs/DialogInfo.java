@@ -1,4 +1,4 @@
-package com.blitz.app.dialogs.info;
+package com.blitz.app.dialogs;
 
 import android.os.Bundle;
 import android.util.Log;
@@ -11,7 +11,7 @@ import butterknife.OnClick;
 /**
  * Created by Miguel Gaeta on 6/4/14.
  */
-public class InfoDialog extends BaseDialog {
+public class DialogInfo extends BaseDialog {
 
     public void onCreateView(Bundle savedInstanceState) {
         setCancelable(true);
