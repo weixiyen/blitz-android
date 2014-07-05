@@ -3,6 +3,7 @@
     <CLASSES>
       <root url="jar://$PROJECT_DIR$/build/intermediates/exploded-aar/com.facebook/facebook-android-sdk/3.14.1/classes.jar!/" />
       <root url="file://$PROJECT_DIR$/build/intermediates/exploded-aar/com.facebook/facebook-android-sdk/3.14.1/res" />
+      <root url="jar://$PROJECT_DIR$/build/intermediates/exploded-aar/com.facebook/facebook-android-sdk/3.14.1/libs/bolts.jar!/" />
     </CLASSES>
     <JAVADOC />
     <SOURCES />
