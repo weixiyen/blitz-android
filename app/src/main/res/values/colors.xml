@@ -1,6 +1,7 @@
 <resources>
     <color name="background_primary">#000d20</color>
     <color name="background_inner">#082951</color>
+    <color name="background_dialog">#80000000</color>
 
     <color name="button_color_0">#32587c</color>
     <color name="button_color_1">#1Affffff</color>
