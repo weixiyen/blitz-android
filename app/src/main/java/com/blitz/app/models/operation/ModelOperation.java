@@ -1,9 +1,10 @@
 package com.blitz.app.models.operation;
 
 import android.app.Activity;
-import android.util.Log;
 
 import com.blitz.app.dialogs.DialogLoading;
+import com.blitz.app.dialogs.DialogError;
+
 
 /**
  * Created by Miguel Gaeta on 6/29/14.
@@ -19,6 +20,7 @@ public abstract class ModelOperation implements ModelOperationInterface {
 
     // Loading dialog.
     private DialogLoading mDialogLoading;
+    private DialogError mDialogError;
 
     //==============================================================================================
     // Overwritten Methods
@@ -95,13 +97,26 @@ public abstract class ModelOperation implements ModelOperationInterface {
      */
     public void failure() {
 
-        // TODO: On failure, show error dialog.
-        Log.e("ModelOperation", "Operation failure.");
+        // Show the error dialog.
+        getDialogError().show();
     }
 
     //==============================================================================================
     // Private Methods
     //==============================================================================================
+
+    /**
+     * Lazy load the error dialog.
+     *
+     * @return Error dialog.
+     */
+    private DialogError getDialogError() {
+        if (mDialogError == null) {
+            mDialogError = new DialogError(mActivity);
+        }
+
+        return mDialogError;
+    }
 
     /**
      * Lazy load the loading dialog.
