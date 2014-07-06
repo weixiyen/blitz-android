@@ -57,25 +57,37 @@ public abstract class ModelOperation implements ModelOperationInterface {
     }
 
     /**
-     * Triggered when a model operation finishes.
+     * Finish helper method that handles
+     * finishing the operation in sync with
+     * any dialogs/running UI events, etc.
+     *
+     * @param success Operation status.
      */
     @Override
-    public void finish() {
+    public void finish(boolean success) {
 
         // Hide loading dialog.
         getDialogLoading().hide();
+
+        if (success) {
+            success();
+        } else {
+            failure();
+        }
     }
+
+    //==============================================================================================
+    // Public Methods
+    //==============================================================================================
 
     /**
      * Triggered when a model operation is successful.
      */
-    @Override
     public abstract void success();
 
     /**
      * Triggered when a model operation fails.
      */
-    @Override
     public void failure() {
 
         // TODO: On failure, show error dialog.
