@@ -29,7 +29,7 @@ public class AccessCodeScreen extends BaseActivity {
         }
 
         mObjectModelCode.setValue("123456");
-        mObjectModelCode.redeemCode(new ModelOperation() {
+        mObjectModelCode.redeemCode(new ModelOperation(this) {
 
             @Override
             public void success() {
