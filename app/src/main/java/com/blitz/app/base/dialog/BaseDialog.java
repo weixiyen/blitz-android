@@ -72,6 +72,9 @@ public class BaseDialog {
                 ButterKnife.reset(this);
             }
         });
+
+        // Inject butter knife into the content view.
+        ButterKnife.inject(this, mPopupWindow.getContentView());
     }
 
     //==============================================================================================
@@ -83,9 +86,7 @@ public class BaseDialog {
      */
     public void show() {
 
-        // Inject butter knife into the content view.
-        ButterKnife.inject(this, mPopupWindow.getContentView());
-
+        // Show at top corner of the window.
         mPopupWindow.showAtLocation(mActivity.getWindow().getDecorView(),
                 Gravity.NO_GRAVITY, 0, 0);
     }
