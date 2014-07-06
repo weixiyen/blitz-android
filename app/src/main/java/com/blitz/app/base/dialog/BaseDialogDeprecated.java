@@ -17,7 +17,7 @@ import butterknife.ButterKnife;
 /**
  * Created by Miguel Gaeta on 6/4/14.
  */
-public class BaseDialog extends DialogFragment {
+public class BaseDialogDeprecated extends DialogFragment {
 
     @SuppressWarnings("unused")
     private Integer mLayoutResID;
