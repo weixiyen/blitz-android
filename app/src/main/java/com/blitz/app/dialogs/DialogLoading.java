@@ -4,13 +4,14 @@ import android.app.Activity;
 import android.util.Log;
 
 import com.blitz.app.R;
+import com.blitz.app.base.dialog.BaseDialog;
 
 import butterknife.OnClick;
 
 /**
  * Created by Miguel Gaeta on 6/29/14.
  */
-public class DialogLoading extends BlitzDialog {
+public class DialogLoading extends BaseDialog {
 
     public DialogLoading(Activity activity) {
         super(activity);

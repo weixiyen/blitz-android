@@ -1,4 +1,4 @@
-package com.blitz.app.dialogs;
+package com.blitz.app.base.dialog;
 
 import android.app.Activity;
 import android.graphics.Color;
@@ -16,7 +16,7 @@ import butterknife.ButterKnife;
 /**
  * Created by Miguel Gaeta on 6/29/14.
  */
-public class BlitzDialog {
+public class BaseDialog {
 
     //==============================================================================================
     // Member Variables
@@ -36,7 +36,7 @@ public class BlitzDialog {
      * Do not allow empty constructor.
      */
     @SuppressWarnings("unused")
-    private BlitzDialog() {
+    private BaseDialog() {
 
     }
 
@@ -46,7 +46,7 @@ public class BlitzDialog {
      *
      * @param activity Associated activity.
      */
-    public BlitzDialog(Activity activity) {
+    public BaseDialog(Activity activity) {
 
         // Use reflection to fetch the associated view resource id and set content view.
         int layoutResourceId = ReflectionHelper.getResourceId(this.getClass(), R.layout.class);
