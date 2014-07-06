@@ -64,16 +64,21 @@ public abstract class ModelOperation implements ModelOperationInterface {
      * @param success Operation status.
      */
     @Override
-    public void finish(boolean success) {
+    public void finish(final boolean success) {
 
         // Hide loading dialog.
-        getDialogLoading().hide();
+        getDialogLoading().hide(new DialogLoading.HideListener() {
 
-        if (success) {
-            success();
-        } else {
-            failure();
-        }
+            @Override
+            public void didHide() {
+
+                if (success) {
+                    success();
+                } else {
+                    failure();
+                }
+            }
+        });
     }
 
     //==============================================================================================
