@@ -37,7 +37,8 @@ public class ObjectModelCode {
     }
 
     private JsonObjectCode getCode() {
-        return (JsonObjectCode)mCode.mJsonObject;
+
+        return mCode.getJsonObject(JsonObjectCode.class);
     }
 
     //==============================================================================================

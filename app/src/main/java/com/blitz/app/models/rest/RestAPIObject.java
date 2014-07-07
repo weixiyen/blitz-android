@@ -12,7 +12,7 @@ public class RestAPIObject implements RestAPIObjectInterface {
     //==============================================================================================
 
     // The api object this class represents.
-    public JsonObject mJsonObject;
+    private JsonObject mJsonObject;
 
     //==============================================================================================
     // Overwritten Methods
@@ -39,5 +39,22 @@ public class RestAPIObject implements RestAPIObjectInterface {
     @Override
     public void setJsonObject(JsonObject jsonObject) {
         mJsonObject = jsonObject;
+    }
+
+    //==============================================================================================
+    // Public Methods
+    //==============================================================================================
+
+    /**
+     * Get json object, casted to appropriate class.
+     *
+     * @param type Json class type (up to callee to provide the correct serialized class).
+     * @param <T> Return JsonObject class.
+     *
+     * @return Casted JsonObject.
+     */
+    public <T extends JsonObject>T getJsonObject(Class<T> type) {
+
+        return type.cast(mJsonObject);
     }
 }
