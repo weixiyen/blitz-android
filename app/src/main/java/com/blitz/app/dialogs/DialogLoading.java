@@ -21,7 +21,7 @@ public class DialogLoading extends BaseDialog {
     // Member Variables
     //==============================================================================================
 
-    @InjectView(R.id.dialog_loading_content) RelativeLayout mLoadingView;
+    @InjectView(R.id.dialog_content) RelativeLayout mLoadingView;
 
     private static final long ANIMATION_TIME = 250;
     private static final long MINIMUM_LOADING_TIME = 1000;
