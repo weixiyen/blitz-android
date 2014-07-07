@@ -55,7 +55,7 @@ public abstract class ModelOperation implements ModelOperationInterface {
     public void start() {
 
         // Show loading dialog.
-        getDialogLoading().show();
+        getDialogLoading().delayedShow();
     }
 
     /**

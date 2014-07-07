@@ -1,5 +1,7 @@
 package com.blitz.app.base.dialog;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
 import android.app.Activity;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -15,6 +17,8 @@ import butterknife.ButterKnife;
 
 /**
  * Created by Miguel Gaeta on 6/29/14.
+ *
+ * TODO: Split animation related code into BaseDialogAnimations
  */
 public class BaseDialog {
 
@@ -22,11 +26,27 @@ public class BaseDialog {
     // Member Variables
     //==============================================================================================
 
+    // State of dialog content.
+    private enum DialogContentState {
+        HIDDEN, ANIMATING, VISIBLE
+    }
+
+    // Constants.
+    private static final long ANIMATION_TIME = 250;
+
+    // All dialogs should have a content view.
+    private ViewGroup mDialogContent;
+    private DialogContentState mDialogContentState;
+
     // Dialog is represented by a popup window.
-    PopupWindow mPopupWindow;
+    private PopupWindow mPopupWindow;
 
     // Parent activity.
-    Activity mActivity;
+    private Activity mActivity;
+
+    // Hide related variables.
+    private boolean mHidePending;
+    private HideListener mHideListener;
 
     //==============================================================================================
     // Constructors
@@ -73,8 +93,15 @@ public class BaseDialog {
             }
         });
 
+        // Fetch the content window.  This is required of all dialogs.
+        mDialogContent = ButterKnife.findById(mPopupWindow.getContentView(), R.id.dialog_content);
+        mDialogContent.setVisibility(View.GONE);
+
         // Inject butter knife into the content view.
         ButterKnife.inject(this, mPopupWindow.getContentView());
+
+        // State initially set to hidden.
+        mDialogContentState = DialogContentState.HIDDEN;
     }
 
     //==============================================================================================
@@ -83,19 +110,134 @@ public class BaseDialog {
 
     /**
      * Show the popup.
+     *
+     * @param showContent Should also display it's content?
      */
-    public void show() {
+    public void show(boolean showContent) {
 
-        // Show at top corner of the window.
-        mPopupWindow.showAtLocation(mActivity.getWindow().getDecorView(),
-                Gravity.NO_GRAVITY, 0, 0);
+        // If window exists and not already showing.
+        if (mPopupWindow != null && !mPopupWindow.isShowing()) {
+
+            // Show at top corner of the window.
+            mPopupWindow.showAtLocation(mActivity.getWindow().getDecorView(),
+                    Gravity.NO_GRAVITY, 0, 0);
+        }
+
+        // If asked to show content and not currently hidden.
+        if (showContent && mDialogContentState == DialogContentState.HIDDEN) {
+
+            // Show the content.
+            toggleDialogContent(true);
+        }
     }
 
     /**
-     * Hide the popup.
+     * Show the popup.
      */
-    public void hide() {
-        mPopupWindow.dismiss();
+    public void show() {
+
+        show(true);
+    }
+
+    /**
+     * Additional hide method that provides a
+     * callback function.
+     *
+     * @param hideListener Callback function.
+     */
+    public void hide(HideListener hideListener) {
+
+        // Assign callback, if changed.
+        if (mHideListener != hideListener) {
+            mHideListener = hideListener;
+        }
+
+        switch (mDialogContentState) {
+            case HIDDEN:
+
+                // No longer pending.
+                mHidePending = false;
+
+                // Hide immediately.
+                mPopupWindow.dismiss();
+
+                // Execute callback.
+                if (mHideListener != null) {
+                    mHideListener.didHide();
+                }
+
+                break;
+            case ANIMATING:
+
+                // Set pending hide.
+                mHidePending = true;
+
+                break;
+            case VISIBLE:
+
+                // Set pending hide.
+                mHidePending = true;
+
+                // Hide dialog content.
+                toggleDialogContent(false);
+
+                break;
+        }
+    }
+
+    //==============================================================================================
+    // Private Methods
+    //==============================================================================================
+
+    /**
+     * Toggle the dialog content view.
+     *
+     * @param visible Show or hide flag.
+     */
+    private void toggleDialogContent(final boolean visible) {
+
+        // Set the state to be animating.
+        mDialogContentState = DialogContentState.ANIMATING;
+
+        // Make sure the loading view is visible.
+        mDialogContent.setVisibility(View.VISIBLE);
+
+        // Initialize the alpha.
+        mDialogContent.setAlpha(visible ? 0f : 1f);
+
+        // Define animation end callback.
+        AnimatorListenerAdapter adapter = new AnimatorListenerAdapter() {
+
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                super.onAnimationEnd(animation);
+
+                // Update the state flag.
+                mDialogContentState = visible ?
+                        DialogContentState.VISIBLE :
+                        DialogContentState.HIDDEN;
+
+                // If hide pending.
+                if (mHidePending) {
+
+                    if (visible) {
+
+                        // Hide it, and leave pending flag on.
+                        toggleDialogContent(false);
+
+                    } else {
+
+                        hide(mHideListener);
+                    }
+                }
+            }
+        };
+
+        // Perform the animation.
+        mDialogContent.animate()
+                .alpha(visible ? 1f : 0f)
+                .setDuration(ANIMATION_TIME)
+                .setListener(adapter);
     }
 
     //==============================================================================================
@@ -128,5 +270,19 @@ public class BaseDialog {
         // Provide a drawable if dismissible.
         mPopupWindow.setBackgroundDrawable
                 (dismissible ? new ColorDrawable(Color.TRANSPARENT) : null);
+    }
+
+    //==============================================================================================
+    // Interfaces
+    //==============================================================================================
+
+    /**
+     * Listener for hide event.  Sometimes we cannot hide
+     * this dialog immediately because of pending animations.
+     */
+    public interface HideListener {
+
+        // Hide executed.
+        void didHide();
     }
 }
