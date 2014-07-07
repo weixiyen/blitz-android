@@ -1,6 +1,8 @@
 package com.blitz.app.models.operation;
 
 import android.app.Activity;
+import android.os.Handler;
+import android.util.Log;
 
 import com.blitz.app.dialogs.DialogLoading;
 import com.blitz.app.dialogs.DialogError;
@@ -21,6 +23,10 @@ public abstract class ModelOperation implements ModelOperationInterface {
     // Loading dialog.
     private DialogLoading mDialogLoading;
     private DialogError mDialogError;
+
+    private static boolean mOperationThrottle;
+    private static Handler mOperationThrottleHandler;
+    private static Runnable mOperatonThrottleRunnable;
 
     //==============================================================================================
     // Overwritten Methods
@@ -53,6 +59,9 @@ public abstract class ModelOperation implements ModelOperationInterface {
      */
     @Override
     public void start() {
+
+        // Setup operation throttling.
+        setOperationThrottle();
 
         // Show loading dialog.
         getDialogLoading().delayedShow();
@@ -101,9 +110,49 @@ public abstract class ModelOperation implements ModelOperationInterface {
         getDialogError().show();
     }
 
+    public static boolean shouldThrottle() {
+
+        // In progress if loading or error dialog is on screen.
+        return mOperationThrottle;
+    }
+
     //==============================================================================================
     // Private Methods
     //==============================================================================================
+
+    /**
+     * Set a throttle that can be checked externally
+     * and prevent operation spam.
+     */
+    private void setOperationThrottle() {
+        Log.e("Parrot", "Throttle on");
+
+        // Enable the throttle.
+        mOperationThrottle = true;
+
+        // Clear any existing callbacks, and init.
+        if (mOperationThrottleHandler != null) {
+            mOperationThrottleHandler.removeCallbacks(mOperatonThrottleRunnable);
+        } else {
+            mOperationThrottleHandler = new Handler();
+        }
+
+        // Initialize the runnable callback.
+        if (mOperatonThrottleRunnable == null) {
+            mOperatonThrottleRunnable = new Runnable() {
+
+                @Override
+                public void run() {
+
+                    // No longer throttling.
+                    mOperationThrottle = false;
+                }
+            };
+        }
+
+        // Set the de-throttle callback.
+        mOperationThrottleHandler.postDelayed(mOperatonThrottleRunnable, 250);
+    }
 
     /**
      * Lazy load the error dialog.

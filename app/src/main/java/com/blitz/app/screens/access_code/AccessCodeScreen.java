@@ -24,6 +24,10 @@ public class AccessCodeScreen extends BaseActivity {
     @OnClick(R.id.access_code_screen_continue_with_code) @SuppressWarnings("unused")
     public void haveCode() {
 
+        if (ModelOperation.shouldThrottle()) {
+            return;
+        }
+
         if (mObjectModelCode == null) {
             mObjectModelCode = new ObjectModelCode();
         }
