@@ -2,6 +2,7 @@ package com.blitz.app.base.activity;
 
 import android.app.ActionBar;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 
@@ -24,6 +25,8 @@ public class BaseActivity extends FragmentActivity {
     // Set custom transitions.
     private boolean mCustomTransitions = true;
 
+    private boolean mHistoryCleared = false;
+
     //==============================================================================================
     // Overwritten Methods
     //==============================================================================================
@@ -39,11 +42,8 @@ public class BaseActivity extends FragmentActivity {
 
         setupActionBar();
 
-        if (mCustomTransitions) {
-
-            // Opening transition animations.
-            overridePendingTransition(R.anim.activity_open_translate, R.anim.activity_close_scale);
-        }
+        // Run transitions, we are entering.
+        runCustomTransitions(getIntent(), true);
 
         // Fetch the class name string in the format of resource view.
         String underscoredClassName = StringHelper.camelCaseToLowerCaseUnderscores(getClass().getSimpleName());
@@ -59,11 +59,8 @@ public class BaseActivity extends FragmentActivity {
     protected void onPause() {
         super.onPause();
 
-        if (mCustomTransitions) {
-
-            // Closing transition animations.
-            overridePendingTransition(R.anim.activity_open_scale, R.anim.activity_close_translate);
-        }
+        // Run transitions, we are exiting.
+        runCustomTransitions(null, false);
     }
 
     /**
@@ -89,6 +86,26 @@ public class BaseActivity extends FragmentActivity {
     @Override
     protected void attachBaseContext(Context baseContext) {
         super.attachBaseContext(new CalligraphyContextWrapper(baseContext));
+    }
+
+    /**
+     * Intercept start activity in order to make sure that
+     * if the history stack is cleared, we still run
+     * animations in the proper direction.
+     *
+     * @param intent Parameters.
+     * @param options Options.
+     */
+    @Override
+    public void startActivity(Intent intent, Bundle options) {
+        super.startActivity(intent, options);
+
+        // If history is cleared.
+        if (isHistoryCleared(intent)) {
+
+            // Flip the flag.
+            mHistoryCleared = true;
+        }
     }
 
     //==============================================================================================
@@ -134,6 +151,53 @@ public class BaseActivity extends FragmentActivity {
         if (actionBar != null) {
             actionBar.setDisplayShowHomeEnabled(false);
             actionBar.setDisplayShowTitleEnabled(false);
+        }
+    }
+
+    /**
+     * Given an optional intent, find out if the
+     * history has been cleared - either via intent
+     * or the cleared flag.
+     *
+     * @param intent Intent.
+     *
+     * @return True if cleared.
+     */
+    private boolean isHistoryCleared(Intent intent) {
+
+        return intent != null &&
+               intent.getFlags() == (Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK)
+
+                || mHistoryCleared;
+
+    }
+
+    /**
+     * Run custom transitions between switching activities.
+     *
+     * @param intent Intent - used to check for cleared history.
+     * @param entering Is activity entering or existing.
+     */
+    private void runCustomTransitions(Intent intent, boolean entering) {
+
+        if (mCustomTransitions) {
+
+            if (isHistoryCleared(intent)) {
+
+                mHistoryCleared = false;
+
+                // Reverse sequence.
+                overridePendingTransition(
+                        entering ? R.anim.activity_open_scale      : R.anim.activity_open_translate,
+                        entering ? R.anim.activity_close_translate : R.anim.activity_close_scale);
+
+            } else {
+
+                // Standard sequence.
+                overridePendingTransition(
+                        entering ? R.anim.activity_open_translate : R.anim.activity_open_scale,
+                        entering ? R.anim.activity_close_scale    : R.anim.activity_close_translate);
+            }
         }
     }
 }
