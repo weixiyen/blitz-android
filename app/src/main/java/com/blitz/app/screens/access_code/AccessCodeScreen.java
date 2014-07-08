@@ -1,6 +1,7 @@
 package com.blitz.app.screens.access_code;
 
 import android.content.Intent;
+import android.widget.EditText;
 
 import com.blitz.app.R;
 import com.blitz.app.base.activity.BaseActivity;
@@ -9,12 +10,15 @@ import com.blitz.app.models.operation.ModelOperation;
 import com.blitz.app.screens.splash.SplashScreen;
 import com.blitz.app.utilities.appdata.AppDataObject;
 
+import butterknife.InjectView;
 import butterknife.OnClick;
 
 /**
  * Created by Miguel Gaeta on 6/28/14.
  */
 public class AccessCodeScreen extends BaseActivity {
+
+    @InjectView(R.id.access_code_screen_code) EditText mCode;
 
     private ObjectModelCode mObjectModelCode;
 
@@ -33,7 +37,7 @@ public class AccessCodeScreen extends BaseActivity {
             mObjectModelCode = new ObjectModelCode();
         }
 
-        mObjectModelCode.setValue("123456");
+        mObjectModelCode.setValue(mCode.getText().toString());
         mObjectModelCode.redeemCode(new ModelOperation(this) {
 
             @Override
