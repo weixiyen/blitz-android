@@ -2,10 +2,9 @@ package com.blitz.app.models.operation;
 
 import android.app.Activity;
 import android.os.Handler;
-import android.util.Log;
 
-import com.blitz.app.dialogs.DialogLoading;
 import com.blitz.app.dialogs.DialogError;
+import com.blitz.app.dialogs.DialogLoading;
 
 
 /**
@@ -125,7 +124,6 @@ public abstract class ModelOperation implements ModelOperationInterface {
      * and prevent operation spam.
      */
     private void setOperationThrottle() {
-        Log.e("Parrot", "Throttle on");
 
         // Enable the throttle.
         mOperationThrottle = true;
