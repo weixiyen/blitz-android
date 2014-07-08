@@ -56,6 +56,23 @@ public class AppData {
     }
 
     /**
+     * Clear all app data.
+     */
+    @SuppressLint("CommitPrefEdits")
+    public static void clear() {
+
+        // Fetch shared preferences.
+        SharedPreferences sharedPreferences = PreferenceManager
+                .getDefaultSharedPreferences(mContext);
+
+        // Open for editing.
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+
+        editor.clear();
+        editor.apply();
+    }
+
+    /**
      * Fetch boolean app data.
      *
      * @return Boolean, or throws exception on user error.

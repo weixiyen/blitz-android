@@ -8,6 +8,7 @@ import com.blitz.app.base.activity.BaseActivity;
 import com.blitz.app.base.config.BaseConfig;
 import com.blitz.app.screens.queue.QueueScreen;
 import com.blitz.app.screens.splash.SplashScreen;
+import com.blitz.app.utilities.appdata.AppData;
 import com.blitz.app.utilities.appdata.AppDataObject;
 
 /**
@@ -37,6 +38,12 @@ public class LoadingScreen extends BaseActivity {
 
         // Disable custom transitions.
         setCustomTransitions(false);
+
+        // Clear app data if configured.
+        if (BaseConfig.CLEAR_APP_DATA_ON_LAUNCH) {
+
+            AppData.clear();
+        }
 
         // If we want to jump to some activity.
         if (BaseConfig.JUMP_TO_ACTIVITY != null) {

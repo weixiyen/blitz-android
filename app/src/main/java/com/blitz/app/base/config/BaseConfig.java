@@ -18,4 +18,7 @@ public class BaseConfig {
 
     // Endpoint URL for RESTful API.
     public static final String API_URL = "https://snapdraft.us/api";
+
+    // Should we clear app data on launch.
+    public static final boolean CLEAR_APP_DATA_ON_LAUNCH = false;
 }
