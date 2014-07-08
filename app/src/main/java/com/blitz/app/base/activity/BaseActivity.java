@@ -113,6 +113,24 @@ public class BaseActivity extends FragmentActivity {
     //==============================================================================================
 
     /**
+     * Convenience method for starting an activity
+     * and also clearing the history.
+     *
+     * @param intent Intent.
+     * @param clearHistory Clear history flag.
+     */
+    public void startActivity(Intent intent, boolean clearHistory) {
+
+        if (clearHistory) {
+
+            // Set flags to clear the history.
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        }
+
+        super.startActivity(intent);
+    }
+
+    /**
      * Expose an overloaded set content view that also allows
      * for toggling of custom transitions.
      *

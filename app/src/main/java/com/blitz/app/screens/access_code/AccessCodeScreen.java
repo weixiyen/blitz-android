@@ -7,6 +7,7 @@ import com.blitz.app.base.activity.BaseActivity;
 import com.blitz.app.models.objects.ObjectModelCode;
 import com.blitz.app.models.operation.ModelOperation;
 import com.blitz.app.screens.splash.SplashScreen;
+import com.blitz.app.utilities.appdata.AppDataObject;
 
 import butterknife.OnClick;
 
@@ -40,8 +41,11 @@ public class AccessCodeScreen extends BaseActivity {
 
                 if (mObjectModelCode.isValidCode()) {
 
-                    // Transition to access code screen.
-                    startActivity(new Intent(AccessCodeScreen.this, SplashScreen.class));
+                    // User now has access.
+                    AppDataObject.hasAccess.set(true);
+
+                    // Transition to splash screen, clear history.
+                    startActivity(new Intent(AccessCodeScreen.this, SplashScreen.class), true);
                 }
             }
         });
