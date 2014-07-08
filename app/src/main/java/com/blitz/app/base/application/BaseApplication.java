@@ -3,6 +3,7 @@ package com.blitz.app.base.application;
 import android.app.Application;
 
 import com.blitz.app.R;
+import com.blitz.app.utilities.appdata.AppData;
 
 import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
 
@@ -17,6 +18,9 @@ public class BaseApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+
+        // Initialize app-data.
+        AppData.init(this);
 
         // Set the regular font weight to be the default.
         CalligraphyConfig.initDefault(getResources().getString(R.string.app_font_light));
