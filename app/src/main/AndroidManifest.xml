@@ -29,10 +29,12 @@
 
         <activity android:name=".screens.queue.QueueScreen" />
         <activity android:name=".screens.splash.SplashScreen" />
-        <activity android:name=".screens.access_code.AccessCodeScreen" />
+        <activity android:name=".screens.access_code.AccessCodeScreen"
+            android:windowSoftInputMode="adjustResize" />
         <activity android:name=".screens.sign_in.SignInScreen" />
         <activity android:name=".screens.sign_up.SignUpScreen" />
-        <activity android:name=".screens.main.MainScreen" android:theme="@style/AppTheme" />
+        <activity android:name=".screens.main.MainScreen"
+            android:theme="@style/AppTheme" />
 
     </application>
 </manifest>
