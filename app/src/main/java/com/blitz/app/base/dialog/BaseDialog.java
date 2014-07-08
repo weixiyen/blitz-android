@@ -93,15 +93,10 @@ public class BaseDialog {
             }
         });
 
-        // Fetch the content window.  This is required of all dialogs.
-        mDialogContent = ButterKnife.findById(mPopupWindow.getContentView(), R.id.dialog_content);
-        mDialogContent.setVisibility(View.GONE);
-
         // Inject butter knife into the content view.
         ButterKnife.inject(this, mPopupWindow.getContentView());
 
-        // State initially set to hidden.
-        mDialogContentState = DialogContentState.HIDDEN;
+        setupDialogContent();
     }
 
     //==============================================================================================
@@ -238,6 +233,33 @@ public class BaseDialog {
                 .alpha(visible ? 1f : 0f)
                 .setDuration(ANIMATION_TIME)
                 .setListener(adapter);
+    }
+
+    /**
+     * Setup the dialog content view (find it),
+     * hide it, and set click listeners, etc.
+     */
+    private void setupDialogContent() {
+
+        // Fetch the content window.  This is required of all dialogs.
+        mDialogContent = ButterKnife.findById(mPopupWindow.getContentView(), R.id.dialog_content);
+        mDialogContent.setVisibility(View.GONE);
+        mDialogContent.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View view) {
+
+                // Only hide if dismissible, this is done by
+                // providing a background drawable to popup.
+                if (mPopupWindow.getBackground() != null) {
+
+                    hide(null);
+                }
+            }
+        });
+
+        // State initially set to hidden.
+        mDialogContentState = DialogContentState.HIDDEN;
     }
 
     //==============================================================================================
