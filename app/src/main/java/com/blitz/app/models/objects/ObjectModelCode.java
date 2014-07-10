@@ -66,9 +66,7 @@ public class ObjectModelCode {
     public void redeemCode(ModelOperationInterface operation) {
 
         // Construct POST body.
-        JsonObjectCode.Body body = new JsonObjectCode.Body();
-
-        body.value = mValue;
+        JsonObjectCode.Body body = new JsonObjectCode.Body(mValue);
 
         // Make rest call for code.
         RestAPIClient.getAPI().code(body, new RestAPICallback<JsonObjectCode>(mCode, operation));
