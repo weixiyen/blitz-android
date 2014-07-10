@@ -1,15 +1,14 @@
 package com.blitz.app.models.objects;
 
-import com.blitz.app.models.rest.RestAPIOperation;
 import com.blitz.app.models.rest.RestAPICallback;
 import com.blitz.app.models.rest.RestAPIClient;
-import com.blitz.app.models.rest.RestAPIObject;
+import com.blitz.app.models.rest.RestAPIOperation;
 import com.blitz.app.models.rest_objects.JsonObjectCode;
 
 /**
  * Created by Miguel Gaeta on 6/28/14.
  */
-public class ObjectModelCode {
+public class ObjectModelCode extends ObjectModel {
 
     //==============================================================================================
     // Member Variables
@@ -18,32 +17,28 @@ public class ObjectModelCode {
     // User provided code.
     private String mValue;
 
-    // Rest api code object.
-    private RestAPIObject mCode;
-
     //==============================================================================================
     // Constructors
     //==============================================================================================
 
-    /**
-     * Empty constructor disallowed.
-     */
-    public ObjectModelCode() {
-        mCode = new RestAPIObject();
-    }
-
-    public void setValue(String value) {
-        mValue = value;
-    }
-
     private JsonObjectCode getCode() {
 
-        return mCode.getJsonObject(JsonObjectCode.class);
+        return mRestApiObject.getJsonObject(JsonObjectCode.class);
     }
 
     //==============================================================================================
     // Public Methods
     //==============================================================================================
+
+    /**
+     * Set code value.
+     *
+     * @param value Code value.
+     */
+    public void setValue(String value) {
+
+        mValue = value;
+    }
 
     /**
      * Is this a valid code.
@@ -69,6 +64,6 @@ public class ObjectModelCode {
         JsonObjectCode.Body body = new JsonObjectCode.Body(mValue);
 
         // Make rest call for code.
-        RestAPIClient.getAPI().code(body, new RestAPICallback<JsonObjectCode>(mCode, operation));
+        RestAPIClient.getAPI().code(body, new RestAPICallback<JsonObjectCode>(mRestApiObject, operation));
     }
 }
