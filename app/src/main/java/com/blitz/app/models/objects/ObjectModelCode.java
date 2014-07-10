@@ -18,15 +18,6 @@ public class ObjectModelCode extends ObjectModel {
     private String mValue;
 
     //==============================================================================================
-    // Constructors
-    //==============================================================================================
-
-    private JsonObjectCode getCode() {
-
-        return mRestApiObject.getJsonObject(JsonObjectCode.class);
-    }
-
-    //==============================================================================================
     // Public Methods
     //==============================================================================================
 
@@ -46,11 +37,12 @@ public class ObjectModelCode extends ObjectModel {
      * @return True/false.
      */
     public boolean isValidCode() {
+        JsonObjectCode jsonObject = getJsonObject(JsonObjectCode.class);
 
-        return getCode()                  != null &&
-               getCode().result           != null &&
-               getCode().result.code_type != null &&
-               getCode().result.code_type.equals("ACCESS_1");
+        return jsonObject                  != null &&
+               jsonObject.result           != null &&
+               jsonObject.result.code_type != null &&
+               jsonObject.result.code_type.equals("ACCESS_1");
     }
 
     /**
