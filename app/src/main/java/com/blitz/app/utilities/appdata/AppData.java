@@ -7,6 +7,8 @@ import android.preference.PreferenceManager;
 
 /**
  * Created by mrkcsc on 7/7/14.
+ *
+ * TODO: Improve security: https://github.com/sveinungkb/encrypted-userprefs
  */
 public class AppData {
 
