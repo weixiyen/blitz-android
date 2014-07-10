@@ -63,7 +63,7 @@ public class ObjectModelCode {
      *
      * @param operation Operation callback model.
      */
-    public void redeemCode(final ModelOperationInterface operation) {
+    public void redeemCode(ModelOperationInterface operation) {
 
         // Construct POST body.
         JsonObjectCode.Body body = new JsonObjectCode.Body();
