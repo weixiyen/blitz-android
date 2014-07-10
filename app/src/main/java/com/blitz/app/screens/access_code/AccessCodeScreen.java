@@ -6,7 +6,7 @@ import android.widget.EditText;
 import com.blitz.app.R;
 import com.blitz.app.base.activity.BaseActivity;
 import com.blitz.app.models.objects.ObjectModelCode;
-import com.blitz.app.models.operation.ModelOperation;
+import com.blitz.app.models.rest.RestAPIOperation;
 import com.blitz.app.screens.splash.SplashScreen;
 import com.blitz.app.utilities.appdata.AppDataObject;
 
@@ -29,7 +29,7 @@ public class AccessCodeScreen extends BaseActivity {
     @OnClick(R.id.access_code_screen_continue_with_code) @SuppressWarnings("unused")
     public void haveCode() {
 
-        if (ModelOperation.shouldThrottle()) {
+        if (RestAPIOperation.shouldThrottle()) {
             return;
         }
 
@@ -38,7 +38,7 @@ public class AccessCodeScreen extends BaseActivity {
         }
 
         mObjectModelCode.setValue(mCode.getText().toString());
-        mObjectModelCode.redeemCode(new ModelOperation(this) {
+        mObjectModelCode.redeemCode(new RestAPIOperation(this) {
 
             @Override
             public void success() {

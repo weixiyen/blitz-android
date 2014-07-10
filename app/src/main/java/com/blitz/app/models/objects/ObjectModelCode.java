@@ -1,6 +1,6 @@
 package com.blitz.app.models.objects;
 
-import com.blitz.app.models.operation.ModelOperation;
+import com.blitz.app.models.rest.RestAPIOperation;
 import com.blitz.app.models.rest.RestAPICallback;
 import com.blitz.app.models.rest.RestAPIClient;
 import com.blitz.app.models.rest.RestAPIObject;
@@ -63,7 +63,7 @@ public class ObjectModelCode {
      *
      * @param operation Operation callback model.
      */
-    public void redeemCode(ModelOperation operation) {
+    public void redeemCode(RestAPIOperation operation) {
 
         // Construct POST body.
         JsonObjectCode.Body body = new JsonObjectCode.Body(mValue);

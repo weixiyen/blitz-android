@@ -1,4 +1,4 @@
-package com.blitz.app.models.operation;
+package com.blitz.app.models.rest;
 
 import android.app.Activity;
 import android.os.Handler;
@@ -10,7 +10,7 @@ import com.blitz.app.dialogs.DialogLoading;
 /**
  * Created by Miguel Gaeta on 6/29/14.
  */
-public abstract class ModelOperation {
+public abstract class RestAPIOperation {
 
     //==============================================================================================
     // Member Variables
@@ -35,7 +35,7 @@ public abstract class ModelOperation {
      * Empty constructor not allowed (for now).
      */
     @SuppressWarnings("unused")
-    private ModelOperation() {
+    private RestAPIOperation() {
 
     }
 
@@ -45,7 +45,7 @@ public abstract class ModelOperation {
      *
      * @param activity Target activity.
      */
-    public ModelOperation(Activity activity) {
+    public RestAPIOperation(Activity activity) {
         mActivity = activity;
     }
 
