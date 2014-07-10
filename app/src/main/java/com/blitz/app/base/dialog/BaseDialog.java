@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.PopupWindow;
 
 import com.blitz.app.R;
+import com.blitz.app.utilities.keyboard.KeyboardUtility;
 import com.blitz.app.utilities.reflection.ReflectionHelper;
 
 import butterknife.ButterKnife;
@@ -112,6 +113,9 @@ public class BaseDialog {
 
         // If window exists and not already showing.
         if (mPopupWindow != null && !mPopupWindow.isShowing()) {
+
+            // Hide the keyboard.
+            KeyboardUtility.hideKeyboard(mActivity);
 
             // Show at top corner of the window.
             mPopupWindow.showAtLocation(mActivity.getWindow().getDecorView(),

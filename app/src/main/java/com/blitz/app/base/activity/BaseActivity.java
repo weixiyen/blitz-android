@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 
 import com.blitz.app.R;
+import com.blitz.app.utilities.keyboard.KeyboardUtility;
 import com.blitz.app.utilities.reflection.ReflectionHelper;
 import com.blitz.app.utilities.string.StringHelper;
 
@@ -50,6 +51,17 @@ public class BaseActivity extends FragmentActivity {
 
         // Use reflection to fetch the associated view resource id and set content view.
         setContentView(ReflectionHelper.getResourceId(underscoredClassName, R.layout.class));
+    }
+
+    /**
+     * Update the keyboard utility listener.
+     */
+    @Override
+    protected void onStart () {
+        super.onStart();
+
+        // Update the layout listener.
+        KeyboardUtility.setGlobalLayoutListener(this);
     }
 
     /**

@@ -21,10 +21,12 @@ public class SignUpScreen extends BaseActivity {
     // Member Variables
     //==============================================================================================
 
+    // Mapped views.
     @InjectView(R.id.sign_up_screen_email)    EditText mEmail;
     @InjectView(R.id.sign_up_screen_username) EditText mUsername;
     @InjectView(R.id.sign_up_screen_password) EditText mPassword;
 
+    // Model object.
     private ObjectModelUser mObjectModelUser;
 
     //==============================================================================================
