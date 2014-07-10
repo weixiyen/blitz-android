@@ -1,6 +1,6 @@
 package com.blitz.app.base.api;
 
-import com.blitz.app.base.config.BaseConfig;
+import com.blitz.app.utilities.appconfig.AppConfig;
 import com.squareup.okhttp.OkHttpClient;
 
 import java.security.cert.CertificateException;
@@ -22,7 +22,7 @@ import retrofit.client.OkClient;
 public class BaseAPIClient {
 
     // Endpoint URL for the REST API.
-    private static final String API_URL = BaseConfig.API_URL;
+    private static final String API_URL = AppConfig.API_URL;
 
     // Singleton instance.
     private static BaseAPIClient instance = null;
@@ -47,7 +47,7 @@ public class BaseAPIClient {
                     .setClient(new OkClient(getOkHttpClient()))
                     .setEndpoint(API_URL);
 
-            if (BaseConfig.ENABLE_REST_DEBUGGING) {
+            if (AppConfig.ENABLE_REST_DEBUGGING) {
 
                 // Add logging if enabled.
                 builder.setLogLevel(RestAdapter.LogLevel.FULL)

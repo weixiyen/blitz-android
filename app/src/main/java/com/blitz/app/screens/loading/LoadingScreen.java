@@ -5,7 +5,7 @@ import android.os.Bundle;
 import android.os.Handler;
 
 import com.blitz.app.base.activity.BaseActivity;
-import com.blitz.app.base.config.BaseConfig;
+import com.blitz.app.utilities.appconfig.AppConfig;
 import com.blitz.app.screens.queue.QueueScreen;
 import com.blitz.app.screens.splash.SplashScreen;
 import com.blitz.app.utilities.appdata.AppData;
@@ -40,16 +40,16 @@ public class LoadingScreen extends BaseActivity {
         setCustomTransitions(false);
 
         // Clear app data if configured.
-        if (BaseConfig.CLEAR_APP_DATA_ON_LAUNCH) {
+        if (AppConfig.CLEAR_APP_DATA_ON_LAUNCH) {
 
             AppData.clear();
         }
 
         // If we want to jump to some activity.
-        if (BaseConfig.JUMP_TO_ACTIVITY != null) {
+        if (AppConfig.JUMP_TO_ACTIVITY != null) {
 
             // Do it - this would only really be done for debugging.
-            startActivity(new Intent(this, BaseConfig.JUMP_TO_ACTIVITY));
+            startActivity(new Intent(this, AppConfig.JUMP_TO_ACTIVITY));
         } else {
 
             setupLoadingScreenTimeout();

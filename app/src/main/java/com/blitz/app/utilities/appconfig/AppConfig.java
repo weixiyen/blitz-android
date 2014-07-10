@@ -1,4 +1,4 @@
-package com.blitz.app.base.config;
+package com.blitz.app.utilities.appconfig;
 
 /**
  * Intended to setup configuration constants for the App.
@@ -8,7 +8,7 @@ package com.blitz.app.base.config;
  * Created by Miguel Gaeta on 6/1/14.
  */
 @SuppressWarnings("unused")
-public class BaseConfig {
+public class AppConfig {
 
     // Should we authenticate with Facebook.
     public static final boolean AUTH_WITH_FACEBOOK = false;
