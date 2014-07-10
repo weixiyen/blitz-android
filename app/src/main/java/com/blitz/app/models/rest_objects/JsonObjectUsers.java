@@ -20,9 +20,7 @@ public class JsonObjectUsers extends JsonObject {
 
     public static class Result {
         public String id;
-        public String email;
         public String username;
-        public String password;
     }
 
     public Result result;

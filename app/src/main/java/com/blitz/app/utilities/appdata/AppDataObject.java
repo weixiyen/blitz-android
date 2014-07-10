@@ -12,6 +12,11 @@ public class AppDataObject extends AppData {
     // Does the user have access to the main app (passed queue wall).
     public static final AppData hasAccess = new AppData(Boolean.class, "HAS_ACCESS");
 
+    public static final AppData userId       = new AppDataObject(String.class, "USER_ID");
+    public static final AppData userEmail    = new AppDataObject(String.class, "USER_EMAIL");
+    public static final AppData userName     = new AppDataObject(String.class, "USER_NAME");
+    public static final AppData userPassword = new AppDataObject(String.class, "USER_PASSWORD");
+
     //==============================================================================================
     // Constructors
     //==============================================================================================

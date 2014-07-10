@@ -21,7 +21,7 @@ public class SignUpScreen extends BaseActivity {
     // Member Variables
     //==============================================================================================
 
-    @InjectView(R.id.sign_up_screen_email) EditText mEmail;
+    @InjectView(R.id.sign_up_screen_email)    EditText mEmail;
     @InjectView(R.id.sign_up_screen_username) EditText mUsername;
     @InjectView(R.id.sign_up_screen_password) EditText mPassword;
 
@@ -31,6 +31,9 @@ public class SignUpScreen extends BaseActivity {
     // Click Methods
     //==============================================================================================
 
+    /**
+     * Register the user.
+     */
     @OnClick(R.id.sign_up_screen_sign_up) @SuppressWarnings("unused")
     public void sign_up() {
 
@@ -48,6 +51,8 @@ public class SignUpScreen extends BaseActivity {
 
             @Override
             public void success() {
+
+                mObjectModelUser.persistUserInfo();
 
                 startActivity(new Intent(SignUpScreen.this, MainScreen.class));
             }

@@ -6,6 +6,7 @@ import com.blitz.app.models.rest.RestAPICallback;
 import com.blitz.app.models.rest.RestAPIClient;
 import com.blitz.app.models.rest.RestAPIOperation;
 import com.blitz.app.models.rest_objects.JsonObjectUsers;
+import com.blitz.app.utilities.appdata.AppDataObject;
 
 /**
  * Created by mrkcsc on 7/9/14.
@@ -23,6 +24,20 @@ public class ObjectModelUser extends ObjectModel {
     //==============================================================================================
     // Public Methods
     //==============================================================================================
+
+    /**
+     * Persist user information (for subsequent
+     * login calls).
+     */
+    public void persistUserInfo() {
+        JsonObjectUsers jsonObject = getJsonObject(JsonObjectUsers.class);
+
+        AppDataObject.userId.set(jsonObject.result.id);
+        AppDataObject.userName.set(jsonObject.result.username);
+
+        AppDataObject.userEmail.set(mEmail);
+        AppDataObject.userPassword.set(mPassword);
+    }
 
     /**
      * Set information needed for registration.
