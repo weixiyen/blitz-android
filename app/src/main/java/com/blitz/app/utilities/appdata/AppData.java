@@ -5,6 +5,11 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
+import java.util.HashMap;
+
 /**
  * Created by mrkcsc on 7/7/14.
  *
@@ -75,6 +80,17 @@ public class AppData {
     }
 
     /**
+     * Fetch dictionary app data.
+     *
+     * @return Dictionary, or throws exception.
+     */
+    @SuppressWarnings("unchecked")
+    public HashMap<String, String> getDictionary() {
+
+        return (HashMap<String, String>)get();
+    }
+
+    /**
      * Fetch boolean app data.
      *
      * @return Boolean, or throws exception on user error.
@@ -123,6 +139,16 @@ public class AppData {
         if (mType == Long.class) {
 
             editor.putLong(mKey, (Long)value);
+        } else
+
+        if (mType == HashMap.class) {
+
+            // Convert dictionary into JSON string.
+            String newValue = new Gson().toJsonTree(value).toString();
+
+            // Persist into editor.
+            editor.putString(mKey, newValue);
+
         } else {
 
             throw new ClassCastException("AppDataObject is not of supported type.");
@@ -169,6 +195,20 @@ public class AppData {
         if (mType == Long.class) {
 
             return sharedPreferences.getLong(mKey, 0);
+        } else
+
+        if (mType == HashMap.class) {
+
+            // Fetch raw JSON string.
+            String jsonDictionary = sharedPreferences.getString(mKey, null);
+
+            // Convert to dictionary.
+            HashMap<String, String> dictionary =
+                    new Gson().fromJson(jsonDictionary,
+                    new TypeToken<HashMap<String, String>>() {}.getType());
+
+            // Convert to dictionary and return.
+            return dictionary != null ? dictionary : new HashMap<String, String>();
         } else {
 
             throw new ClassCastException("AppDataObject is not of supported type.");
