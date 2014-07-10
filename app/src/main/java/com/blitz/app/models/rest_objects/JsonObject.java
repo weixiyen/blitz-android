@@ -1,6 +1,7 @@
 package com.blitz.app.models.rest_objects;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 /**
  * Created by Miguel Gaeta on 6/29/14.
@@ -10,18 +11,8 @@ import java.util.ArrayList;
  */
 public class JsonObject {
 
-    /**
-     * Contains a list of strings
-     * pertaining to the error.
-     */
-    public static class Errors {
-
-        // Error string payload.
-        public ArrayList<String> value;
-    }
-
     // Errors object.
-    public Errors errors;
+    public Map<String, ArrayList<String>> errors;
 
     /**
      * Find out if any errors exist.
@@ -30,7 +21,7 @@ public class JsonObject {
      */
     public boolean hasErrors() {
 
-        return errors       != null &&
-                errors.value != null;
+        return errors != null &&
+               errors.size() > 0;
     }
 }

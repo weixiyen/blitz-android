@@ -32,11 +32,11 @@ public class ObjectModelUser extends ObjectModel {
     public void persistUserInfo() {
         JsonObjectUsers jsonObject = getJsonObject(JsonObjectUsers.class);
 
-        AppDataObject.userId.set(jsonObject.result.id);
-        AppDataObject.userName.set(jsonObject.result.username);
+            AppDataObject.userId.set(jsonObject.result.id);
+            AppDataObject.userName.set(jsonObject.result.username);
 
-        AppDataObject.userEmail.set(mEmail);
-        AppDataObject.userPassword.set(mPassword);
+            AppDataObject.userEmail.set(mEmail);
+            AppDataObject.userPassword.set(mPassword);
     }
 
     /**
