@@ -20,6 +20,7 @@
             android:name="com.facebook.LoginActivity"
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />
 
+        <!-- Main loading screen -->
         <activity android:name=".screens.loading.LoadingScreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -27,13 +28,23 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".screens.queue.QueueScreen" />
-        <activity android:name=".screens.splash.SplashScreen" />
+        <activity android:name=".screens.queue.QueueScreen"
+            android:windowSoftInputMode="adjustResize" />
+
+        <activity android:name=".screens.splash.SplashScreen"
+            android:windowSoftInputMode="adjustResize" />
+
         <activity android:name=".screens.access_code.AccessCodeScreen"
             android:windowSoftInputMode="adjustResize" />
-        <activity android:name=".screens.sign_in.SignInScreen" />
-        <activity android:name=".screens.sign_up.SignUpScreen" />
+
+        <activity android:name=".screens.sign_in.SignInScreen"
+            android:windowSoftInputMode="adjustResize" />
+
+        <activity android:name=".screens.sign_up.SignUpScreen"
+            android:windowSoftInputMode="adjustResize" />
+
         <activity android:name=".screens.main.MainScreen"
+            android:windowSoftInputMode="adjustResize"
             android:theme="@style/AppTheme" />
 
     </application>
