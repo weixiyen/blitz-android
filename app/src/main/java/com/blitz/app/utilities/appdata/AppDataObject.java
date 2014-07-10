@@ -1,5 +1,7 @@
 package com.blitz.app.utilities.appdata;
 
+import java.util.HashMap;
+
 /**
  * Created by mrkcsc on 7/7/14.
  */
@@ -11,6 +13,9 @@ public class AppDataObject extends AppData {
 
     // Does the user have access to the main app (passed queue wall).
     public static final AppData hasAccess = new AppData(Boolean.class, "HAS_ACCESS");
+
+    // Set of various keyboard heights.
+    public static final AppData keyboardHeights = new AppData(HashMap.class, "KEYBOARD_HEIGHTS");
 
     public static final AppData userId       = new AppDataObject(String.class, "USER_ID");
     public static final AppData userEmail    = new AppDataObject(String.class, "USER_EMAIL");
