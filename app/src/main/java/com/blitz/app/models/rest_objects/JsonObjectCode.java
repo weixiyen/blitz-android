@@ -6,10 +6,10 @@ package com.blitz.app.models.rest_objects;
 public class JsonObjectCode extends JsonObject {
 
     public static class Body {
-        public String mValue;
+        public String value;
 
         public Body(String value) {
-            mValue = value;
+            this.value = value;
         }
     }
 
