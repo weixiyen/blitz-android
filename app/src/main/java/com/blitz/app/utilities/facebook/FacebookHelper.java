@@ -18,6 +18,7 @@ import java.security.NoSuchAlgorithmException;
  * Created by Miguel Gaeta on 5/31/14. Encapsulates
  * common facebook SDK functionality.
  */
+@SuppressWarnings("unused")
 public class FacebookHelper {
 
     private Activity mActivity;
@@ -36,7 +37,6 @@ public class FacebookHelper {
      *
      * @param callback Callback method.
      */
-    @SuppressWarnings("unused")
     public void authorizeUser(final Request.GraphUserCallback callback) {
 
         // Start Facebook Login
@@ -61,7 +61,6 @@ public class FacebookHelper {
     /**
      * Is user authorized through facebook.
      */
-    @SuppressWarnings("unused")
     public boolean isUserLoggedIntoFacebook() {
 
         // Try to fetch facebook session object.
@@ -90,7 +89,6 @@ public class FacebookHelper {
      *
      * @return Key hash, null if not found or error.
      */
-    @SuppressWarnings("unused")
     public String getFacebookKeyHash() {
 
         try {
