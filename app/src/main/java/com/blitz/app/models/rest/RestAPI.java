@@ -2,8 +2,10 @@ package com.blitz.app.models.rest;
 
 import com.blitz.app.models.rest_objects.JsonObjectCode;
 import com.blitz.app.models.rest_objects.JsonObjectPreference;
+import com.blitz.app.models.rest_objects.JsonObjectUsers;
 
 import retrofit.Callback;
+import retrofit.http.Body;
 import retrofit.http.GET;
 import retrofit.http.POST;
 
@@ -22,7 +24,13 @@ public interface RestAPI {
 
     @POST("/code")
     void code(
-            @retrofit.http.Body JsonObjectCode.Body body,
+            @Body JsonObjectCode.Body body,
 
             Callback<JsonObjectCode> callback);
+
+    @POST("/users")
+    void users(
+            @Body JsonObjectUsers.Body body,
+
+            Callback<JsonObjectUsers> callback);
 }
