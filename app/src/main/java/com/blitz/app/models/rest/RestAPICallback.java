@@ -1,6 +1,6 @@
 package com.blitz.app.models.rest;
 
-import com.blitz.app.models.operation.ModelOperationInterface;
+import com.blitz.app.models.operation.ModelOperation;
 import com.blitz.app.models.rest_objects.JsonObject;
 
 import retrofit.Callback;
@@ -20,7 +20,7 @@ public class RestAPICallback<T> implements Callback<T> {
     private RestAPIObjectInterface mRestAPIObjectInterface;
 
     // The model operation object.
-    private ModelOperationInterface mOperation;
+    private ModelOperation mOperation;
 
     //==============================================================================================
     // Constructor
@@ -32,7 +32,7 @@ public class RestAPICallback<T> implements Callback<T> {
      * @param restAPIObjectInterface Interface object.
      * @param operation Operation object.
      */
-    public RestAPICallback(RestAPIObjectInterface restAPIObjectInterface, ModelOperationInterface operation) {
+    public RestAPICallback(RestAPIObjectInterface restAPIObjectInterface, ModelOperation operation) {
 
         mRestAPIObjectInterface = restAPIObjectInterface;
         mOperation = operation;

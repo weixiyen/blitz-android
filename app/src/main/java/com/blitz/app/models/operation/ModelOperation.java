@@ -10,7 +10,7 @@ import com.blitz.app.dialogs.DialogLoading;
 /**
  * Created by Miguel Gaeta on 6/29/14.
  */
-public abstract class ModelOperation implements ModelOperationInterface {
+public abstract class ModelOperation {
 
     //==============================================================================================
     // Member Variables
@@ -25,7 +25,7 @@ public abstract class ModelOperation implements ModelOperationInterface {
 
     private static boolean mOperationThrottle;
     private static Handler mOperationThrottleHandler;
-    private static Runnable mOperatonThrottleRunnable;
+    private static Runnable mOperationThrottleRunnable;
 
     //==============================================================================================
     // Overwritten Methods
@@ -56,7 +56,6 @@ public abstract class ModelOperation implements ModelOperationInterface {
     /**
      * Triggered when a model operation begins.
      */
-    @Override
     public void start() {
 
         // Setup operation throttling.
@@ -73,7 +72,6 @@ public abstract class ModelOperation implements ModelOperationInterface {
      *
      * @param success Operation status.
      */
-    @Override
     public void finish(final boolean success) {
 
         // Hide loading dialog.
@@ -130,14 +128,14 @@ public abstract class ModelOperation implements ModelOperationInterface {
 
         // Clear any existing callbacks, and init.
         if (mOperationThrottleHandler != null) {
-            mOperationThrottleHandler.removeCallbacks(mOperatonThrottleRunnable);
+            mOperationThrottleHandler.removeCallbacks(mOperationThrottleRunnable);
         } else {
             mOperationThrottleHandler = new Handler();
         }
 
         // Initialize the runnable callback.
-        if (mOperatonThrottleRunnable == null) {
-            mOperatonThrottleRunnable = new Runnable() {
+        if (mOperationThrottleRunnable == null) {
+            mOperationThrottleRunnable = new Runnable() {
 
                 @Override
                 public void run() {
@@ -149,7 +147,7 @@ public abstract class ModelOperation implements ModelOperationInterface {
         }
 
         // Set the de-throttle callback.
-        mOperationThrottleHandler.postDelayed(mOperatonThrottleRunnable, 250);
+        mOperationThrottleHandler.postDelayed(mOperationThrottleRunnable, 250);
     }
 
     /**
