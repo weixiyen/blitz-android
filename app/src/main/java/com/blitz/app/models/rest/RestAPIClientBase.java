@@ -1,4 +1,4 @@
-package com.blitz.app.base.api;
+package com.blitz.app.models.rest;
 
 import com.blitz.app.utilities.appconfig.AppConfig;
 import com.squareup.okhttp.OkHttpClient;
@@ -19,13 +19,13 @@ import retrofit.client.OkClient;
 /**
  * Created by Miguel Gaeta on 6/25/14.
  */
-public class BaseAPIClient {
+public class RestAPIClientBase {
 
     // Endpoint URL for the REST API.
     private static final String API_URL = AppConfig.API_URL;
 
     // Singleton instance.
-    private static BaseAPIClient instance = null;
+    private static RestAPIClientBase instance = null;
 
     private RestAdapter mRestAdapter;
 
@@ -66,12 +66,12 @@ public class BaseAPIClient {
      *
      * @return Singleton instance.
      */
-    public static BaseAPIClient getInstance() {
+    public static RestAPIClientBase getInstance() {
 
         if (instance == null) {
-            synchronized (BaseAPIClient.class) {
+            synchronized (RestAPIClientBase.class) {
                 if (instance == null) {
-                    instance = new BaseAPIClient();
+                    instance = new RestAPIClientBase();
                 }
             }
         }

@@ -1,8 +1,6 @@
 package com.blitz.app.models.rest;
 
-import com.blitz.app.base.api.BaseAPIClient;
-
-public class RestAPIClient extends BaseAPIClient {
+public class RestAPIClient extends RestAPIClientBase {
 
     //==============================================================================================
     // Member Variables
