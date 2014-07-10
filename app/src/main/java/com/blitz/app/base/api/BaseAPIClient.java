@@ -13,6 +13,7 @@ import javax.net.ssl.TrustManager;
 import javax.net.ssl.X509TrustManager;
 
 import retrofit.RestAdapter;
+import retrofit.android.AndroidLog;
 import retrofit.client.OkClient;
 
 /**
@@ -40,10 +41,21 @@ public class BaseAPIClient {
     public RestAdapter getRestAdapter() {
 
         if (mRestAdapter == null) {
-            mRestAdapter = new RestAdapter.Builder()
+
+            // Initialize the builder.
+            RestAdapter.Builder builder = new RestAdapter.Builder()
                     .setClient(new OkClient(getOkHttpClient()))
-                    .setEndpoint(API_URL)
-                    .build();
+                    .setEndpoint(API_URL);
+
+            if (BaseConfig.ENABLE_REST_DEBUGGING) {
+
+                // Add logging if enabled.
+                builder.setLogLevel(RestAdapter.LogLevel.FULL)
+                       .setLog(new AndroidLog("REST"));
+            }
+
+            // Create the adapter.
+            mRestAdapter = builder.build();
         }
 
         return mRestAdapter;

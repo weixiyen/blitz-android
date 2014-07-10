@@ -21,4 +21,7 @@ public class BaseConfig {
 
     // Should we clear app data on launch.
     public static final boolean CLEAR_APP_DATA_ON_LAUNCH = false;
+
+    // Should we have rest debugging.
+    public static final boolean ENABLE_REST_DEBUGGING = false;
 }
