@@ -2,11 +2,12 @@ package com.blitz.app.screens.main;
 
 import android.app.ActionBar;
 import android.app.FragmentTransaction;
-import android.content.Intent;
 import android.os.Bundle;
 
+import com.blitz.app.R;
 import com.blitz.app.base.activity.BaseActivity;
-import com.blitz.app.screens.sign_up.SignUpScreen;
+
+import butterknife.OnClick;
 
 public class MainScreen extends BaseActivity implements ActionBar.TabListener {
 
@@ -32,17 +33,6 @@ public class MainScreen extends BaseActivity implements ActionBar.TabListener {
     // Public Methods
     //==============================================================================================
 
-    /**
-     * Start next activity in the flow.
-     */
-    public void transitionNextScreen() {
-
-        // Create intent for main screen activity.
-        Intent intent = new Intent(this, SignUpScreen.class);
-
-        startActivity(intent);
-    }
-
     @Override
     public void onTabSelected(ActionBar.Tab tab, FragmentTransaction ft) {
 
@@ -55,6 +45,16 @@ public class MainScreen extends BaseActivity implements ActionBar.TabListener {
 
     @Override
     public void onTabReselected(ActionBar.Tab tab, FragmentTransaction ft) {
+
+    }
+
+    //==============================================================================================
+    // Click Methods
+    //==============================================================================================
+
+    @OnClick(R.id.main_screen_play) @SuppressWarnings("unused")
+    public void main_screen_play() {
+
 
     }
 }
