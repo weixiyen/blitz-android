@@ -81,8 +81,6 @@ public class AppData {
 
     /**
      * Fetch dictionary app data.
-     *
-     * @return Dictionary, or throws exception.
      */
     @SuppressWarnings("unchecked")
     public HashMap<String, String> getDictionary() {
@@ -92,12 +90,20 @@ public class AppData {
 
     /**
      * Fetch boolean app data.
-     *
-     * @return Boolean, or throws exception on user error.
      */
+    @SuppressWarnings("unused")
     public boolean getBoolean() {
 
         return (Boolean)get();
+    }
+
+    /**
+     * Fetch string app data.
+     */
+    @SuppressWarnings("unused")
+    public String getString() {
+
+        return (String)get();
     }
 
     /**

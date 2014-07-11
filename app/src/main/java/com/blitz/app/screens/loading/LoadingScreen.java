@@ -5,9 +5,10 @@ import android.os.Bundle;
 import android.os.Handler;
 
 import com.blitz.app.base.activity.BaseActivity;
-import com.blitz.app.utilities.appconfig.AppConfig;
+import com.blitz.app.screens.main.MainScreen;
 import com.blitz.app.screens.queue.QueueScreen;
 import com.blitz.app.screens.splash.SplashScreen;
+import com.blitz.app.utilities.appconfig.AppConfig;
 import com.blitz.app.utilities.appdata.AppData;
 import com.blitz.app.utilities.appdata.AppDataObject;
 
@@ -76,8 +77,16 @@ public class LoadingScreen extends BaseActivity {
 
                 if (AppDataObject.hasAccess.getBoolean()) {
 
-                    // User can go to splash screen and sign-in/register.
-                    startActivity(new Intent(LoadingScreen.this, SplashScreen.class));
+                    if (AppDataObject.userId.getString() == null) {
+
+                        // User can go to splash screen and sign-in/register.
+                        startActivity(new Intent(LoadingScreen.this, SplashScreen.class));
+
+                    } else {
+
+                        // User is already logged in, go to main app.
+                        startActivity(new Intent(LoadingScreen.this, MainScreen.class));
+                    }
 
                 } else {
 
