@@ -29,22 +29,22 @@
         </activity>
 
         <activity android:name=".screens.queue.QueueScreen"
-            android:windowSoftInputMode="adjustResize" />
+            android:windowSoftInputMode="adjustResize|stateHidden" />
 
         <activity android:name=".screens.splash.SplashScreen"
-            android:windowSoftInputMode="adjustResize" />
+            android:windowSoftInputMode="adjustResize|stateHidden" />
 
         <activity android:name=".screens.access_code.AccessCodeScreen"
-            android:windowSoftInputMode="adjustResize" />
+            android:windowSoftInputMode="adjustResize|stateHidden" />
 
         <activity android:name=".screens.sign_in.SignInScreen"
-            android:windowSoftInputMode="adjustResize" />
+            android:windowSoftInputMode="adjustResize|stateHidden" />
 
         <activity android:name=".screens.sign_up.SignUpScreen"
-            android:windowSoftInputMode="adjustResize" />
+            android:windowSoftInputMode="adjustResize|stateHidden" />
 
         <activity android:name=".screens.main.MainScreen"
-            android:windowSoftInputMode="adjustResize"
+            android:windowSoftInputMode="adjustResize|stateHidden"
             android:theme="@style/AppTheme" />
 
     </application>
