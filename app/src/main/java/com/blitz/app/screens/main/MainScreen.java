@@ -6,9 +6,9 @@ import android.os.Bundle;
 import android.util.Log;
 
 import com.blitz.app.R;
-import com.blitz.app.utilities.android.BaseActivity;
 import com.blitz.app.models.objects.ObjectModelPreferences;
 import com.blitz.app.models.rest.RestAPIOperation;
+import com.blitz.app.utilities.android.BaseActivity;
 
 import butterknife.OnClick;
 

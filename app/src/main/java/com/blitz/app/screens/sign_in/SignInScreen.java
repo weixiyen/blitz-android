@@ -3,8 +3,8 @@ package com.blitz.app.screens.sign_in;
 import android.content.Intent;
 
 import com.blitz.app.R;
-import com.blitz.app.utilities.android.BaseActivity;
 import com.blitz.app.screens.main.MainScreen;
+import com.blitz.app.utilities.android.BaseActivity;
 
 import butterknife.OnClick;
 

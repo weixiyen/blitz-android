@@ -5,9 +5,9 @@ import android.content.Intent;
 import android.widget.TextView;
 
 import com.blitz.app.R;
-import com.blitz.app.utilities.android.BaseDialog;
 import com.blitz.app.models.objects.ObjectModelUser;
 import com.blitz.app.screens.loading.LoadingScreen;
+import com.blitz.app.utilities.android.BaseDialog;
 
 import butterknife.InjectView;
 import butterknife.OnClick;

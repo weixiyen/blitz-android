@@ -4,10 +4,10 @@ import android.content.Intent;
 import android.widget.EditText;
 
 import com.blitz.app.R;
-import com.blitz.app.utilities.android.BaseActivity;
 import com.blitz.app.models.objects.ObjectModelCode;
 import com.blitz.app.models.rest.RestAPIOperation;
 import com.blitz.app.screens.splash.SplashScreen;
+import com.blitz.app.utilities.android.BaseActivity;
 import com.blitz.app.utilities.app.AppDataObject;
 
 import butterknife.InjectView;
