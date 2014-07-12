@@ -1,7 +1,5 @@
 package com.blitz.app.models.rest;
 
-import android.util.Log;
-
 import com.blitz.app.utilities.app.AppDataObject;
 
 import retrofit.RequestInterceptor;
@@ -43,8 +41,6 @@ public class RestAPIClient extends RestAPIClientBase {
                 String cookie = AppDataObject.userCookie.getString();
 
                 if (cookie != null) {
-
-                    Log.e("Parrot", "Adding cookie");
 
                     // Add to header if exists.
                     request.addHeader("Cookie", cookie);
@@ -92,8 +88,6 @@ public class RestAPIClient extends RestAPIClientBase {
             }
 
             if (cookie != null) {
-
-                Log.e("Parrot", "Setting cookie: " + cookie);
 
                 // Persist the cookie.
                 AppDataObject.userCookie.set(cookie);
