@@ -1,11 +1,8 @@
 package com.blitz.app.models.rest;
 
 import com.blitz.app.utilities.appconfig.AppConfig;
-import com.blitz.app.utilities.cookiestore.PersistentCookieStore;
 import com.squareup.okhttp.OkHttpClient;
 
-import java.net.CookieManager;
-import java.net.CookiePolicy;
 import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
 import java.security.cert.CertificateException;
@@ -32,6 +29,7 @@ public class RestAPIClientBase {
     // Singleton instance.
     private static RestAPIClientBase instance = null;
 
+    // Adapter for REST client.
     private RestAdapter mRestAdapter;
 
     //==============================================================================================
@@ -43,21 +41,12 @@ public class RestAPIClientBase {
      *
      * @return Rest adapter.
      */
-    public RestAdapter getRestAdapter() {
+    protected RestAdapter getRestAdapter() {
 
         if (mRestAdapter == null) {
 
             // Initialize the builder.
-            RestAdapter.Builder builder = new RestAdapter.Builder()
-                    .setClient(new OkClient(getOkHttpClient()))
-                    .setEndpoint(API_URL);
-
-            if (AppConfig.ENABLE_REST_DEBUGGING) {
-
-                // Add logging if enabled.
-                builder.setLogLevel(RestAdapter.LogLevel.FULL)
-                       .setLog(new AndroidLog("REST"));
-            }
+            RestAdapter.Builder builder = getRestBuilder();
 
             // Create the adapter.
             mRestAdapter = builder.build();
@@ -67,11 +56,34 @@ public class RestAPIClientBase {
     }
 
     /**
+     * Fetch a builder for the rest adapter.
+     *
+     * @return Rest adapter builder.
+     */
+    protected RestAdapter.Builder getRestBuilder() {
+
+        // Initialize the builder.
+        RestAdapter.Builder builder = new RestAdapter.Builder()
+                .setClient(new OkClient(getOkHttpClient()))
+                .setEndpoint(API_URL);
+
+        // If rest debugging turned on.
+        if (AppConfig.ENABLE_REST_DEBUGGING) {
+
+            // Add logging if enabled.
+            builder.setLogLevel(RestAdapter.LogLevel.FULL)
+                    .setLog(new AndroidLog("REST"));
+        }
+
+        return builder;
+    }
+
+    /**
      * Get instance of the base API client.
      *
      * @return Singleton instance.
      */
-    public static RestAPIClientBase getInstance() {
+    protected static RestAPIClientBase getInstance() {
 
         if (instance == null) {
             synchronized (RestAPIClientBase.class) {
@@ -106,9 +118,6 @@ public class RestAPIClientBase {
 
             // Setup SSL.
             setupSSL(okHttpClient);
-
-            // Setup cookie handler.
-            setupCookieHandler(okHttpClient);
 
             return okHttpClient;
 
@@ -176,24 +185,5 @@ public class RestAPIClientBase {
 
         // Assign it to the client.
         okHttpClient.setSslSocketFactory(sslSocketFactory);
-    }
-
-    /**
-     * Setup a custom cookie handler to
-     * store and persist all cookies.
-     *
-     * @param okHttpClient Target client.
-     */
-    private void setupCookieHandler(OkHttpClient okHttpClient) {
-
-        // Create a persistent cookie store.
-        PersistentCookieStore persistentCookieStore = new PersistentCookieStore();
-
-        // Accept all cookies.
-        CookieManager cookieManager = new CookieManager
-                (persistentCookieStore, CookiePolicy.ACCEPT_ALL);
-
-        // Set the cookie manager as handler.
-        okHttpClient.setCookieHandler(cookieManager);
     }
 }
