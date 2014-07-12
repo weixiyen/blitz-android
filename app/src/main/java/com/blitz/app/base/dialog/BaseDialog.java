@@ -105,10 +105,23 @@ public class BaseDialog {
     //==============================================================================================
 
     /**
+     * Set a dismiss listener.
+     *
+     * @param onDismissListener Dismiss listener.
+     */
+    @SuppressWarnings("unused")
+    public void setOnDismissListener(OnDismissListener onDismissListener) {
+
+        // Assign the dismiss listener.
+        mPopupWindow.setOnDismissListener(onDismissListener);
+    }
+
+    /**
      * Show the popup.
      *
      * @param showContent Should also display it's content?
      */
+    @SuppressWarnings("unused")
     public void show(boolean showContent) {
 
         // If window exists and not already showing.
@@ -131,19 +144,12 @@ public class BaseDialog {
     }
 
     /**
-     * Show the popup.
-     */
-    public void show() {
-
-        show(true);
-    }
-
-    /**
      * Additional hide method that provides a
      * callback function.
      *
      * @param hideListener Callback function.
      */
+    @SuppressWarnings("unused")
     public void hide(HideListener hideListener) {
 
         // Assign callback, if changed.
@@ -299,8 +305,25 @@ public class BaseDialog {
     }
 
     //==============================================================================================
-    // Interfaces
+    // Interfaces / Inner Classes
     //==============================================================================================
+
+    /**
+     * Custom on dismiss listener.
+     */
+    public abstract class OnDismissListener implements PopupWindow.OnDismissListener {
+
+        @Override
+        public void onDismiss() {
+
+            // Probably not needed, but good practice.
+            ButterKnife.reset(this);
+
+            onDismiss(mActivity);
+        }
+
+        public abstract void onDismiss(Activity activity);
+    }
 
     /**
      * Listener for hide event.  Sometimes we cannot hide
