@@ -2,18 +2,26 @@ package com.blitz.app.dialogs;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.widget.TextView;
 
 import com.blitz.app.R;
 import com.blitz.app.base.dialog.BaseDialog;
 import com.blitz.app.models.objects.ObjectModelUser;
 import com.blitz.app.screens.loading.LoadingScreen;
 
+import butterknife.InjectView;
 import butterknife.OnClick;
 
 /**
  * Created by mrkcsc on 7/6/14.
  */
 public class DialogError extends BaseDialog {
+
+    //==============================================================================================
+    // Member Variables
+    //==============================================================================================
+
+    @InjectView(R.id.dialog_error_message) TextView mDialogErrorMessage;
 
     //==============================================================================================
     // Constructors
@@ -47,6 +55,9 @@ public class DialogError extends BaseDialog {
         super.show(showContent);
 
         if (logout) {
+
+            // Provide unauthorized message.
+            mDialogErrorMessage.setText(R.string.error_unauthorized);
 
             // Remove user information.
             new ObjectModelUser().removeUserInfo();

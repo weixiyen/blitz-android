@@ -17,4 +17,5 @@
     <string name="lorum_ipsum_tiny">Lorem Ipsum</string>
 
     <string name="error_generic">Oops! Something went wrong!</string>
+    <string name="error_unauthorized">Oops! Something went wrong!\n\nPlease try logging in again.</string>
 </resources>
