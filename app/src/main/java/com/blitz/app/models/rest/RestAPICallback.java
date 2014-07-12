@@ -68,7 +68,7 @@ public class RestAPICallback<T> implements Callback<T> {
     @Override
     public void failure(RetrofitError retrofitError) {
 
-        // Operation is finished.
-        mOperation.finish(false);
+        // Operation is finished, provide http status code.
+        mOperation.finish(false, retrofitError.getResponse().getStatus());
     }
 }

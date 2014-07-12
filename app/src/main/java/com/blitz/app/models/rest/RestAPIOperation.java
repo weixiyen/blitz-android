@@ -74,6 +74,19 @@ public abstract class RestAPIOperation {
      */
     public void finish(final boolean success) {
 
+        finish(success, null);
+    }
+
+    /**
+     * Finish helper method that handles
+     * finishing the operation in sync with
+     * any dialogs/running UI events, etc.
+     *
+     * @param success Operation status.
+     * @param httpStatusCode HTTP status code.
+     */
+    public void finish(final boolean success, final Integer httpStatusCode) {
+
         // Hide loading dialog.
         getDialogLoading().hide(new DialogLoading.HideListener() {
 
@@ -83,7 +96,8 @@ public abstract class RestAPIOperation {
                 if (success) {
                     success();
                 } else {
-                    failure();
+                    failure(httpStatusCode != null &&
+                            httpStatusCode == 401);
                 }
             }
         });
@@ -98,13 +112,16 @@ public abstract class RestAPIOperation {
      */
     public abstract void success();
 
+
     /**
      * Triggered when a model operation fails.
+     *
+     * @param logout Should also log out the user.
      */
-    public void failure() {
+    public void failure(boolean logout) {
 
         // Show the error dialog.
-        getDialogError().show();
+        getDialogError().show(true, logout);
     }
 
     public static boolean shouldThrottle() {
