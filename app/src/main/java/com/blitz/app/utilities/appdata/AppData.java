@@ -65,17 +65,28 @@ public class AppData {
     /**
      * Clear all app data.
      */
-    @SuppressLint("CommitPrefEdits")
+    @SuppressWarnings("unused") @SuppressLint("CommitPrefEdits")
     public static void clear() {
 
-        // Fetch shared preferences.
-        SharedPreferences sharedPreferences = PreferenceManager
-                .getDefaultSharedPreferences(mContext);
-
-        // Open for editing.
-        SharedPreferences.Editor editor = sharedPreferences.edit();
+        // Get editor.
+        SharedPreferences.Editor editor = getEditor();
 
         editor.clear();
+        editor.apply();
+    }
+
+    /**
+     * Clear app data for specific app data object.
+     *
+     * @param appData App data object.
+     */
+    @SuppressWarnings("unused") @SuppressLint("CommitPrefEdits")
+    public static void clear(AppData appData) {
+
+        // Get editor.
+        SharedPreferences.Editor editor = getEditor();
+
+        editor.remove(appData.mKey);
         editor.apply();
     }
 
@@ -115,12 +126,8 @@ public class AppData {
     @SuppressLint("CommitPrefEdits")
     public void set(Object value) {
 
-        // Fetch shared preferences.
-        SharedPreferences sharedPreferences = PreferenceManager
-                .getDefaultSharedPreferences(mContext);
-
-        // Open for editing.
-        SharedPreferences.Editor editor = sharedPreferences.edit();
+        // Get editor.
+        SharedPreferences.Editor editor = getEditor();
 
         if (mType == String.class) {
 
@@ -166,6 +173,21 @@ public class AppData {
     //==============================================================================================
     // Private Methods
     //==============================================================================================
+
+    /**
+     * Fetch android preferences editor.
+     *
+     * @return Preferences editor.
+     */
+    private static SharedPreferences.Editor getEditor() {
+
+        // Fetch shared preferences.
+        SharedPreferences sharedPreferences = PreferenceManager
+                .getDefaultSharedPreferences(mContext);
+
+        // Open for editing.
+        return sharedPreferences.edit();
+    }
 
     /**
      *  Get app data value.
