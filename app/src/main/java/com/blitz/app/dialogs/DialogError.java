@@ -1,9 +1,12 @@
 package com.blitz.app.dialogs;
 
 import android.app.Activity;
+import android.content.Intent;
 
 import com.blitz.app.R;
 import com.blitz.app.base.dialog.BaseDialog;
+import com.blitz.app.models.objects.ObjectModelUser;
+import com.blitz.app.screens.loading.LoadingScreen;
 
 import butterknife.OnClick;
 
@@ -27,6 +30,38 @@ public class DialogError extends BaseDialog {
 
         setTouchable(true);
         setDismissible(true);
+    }
+
+    //==============================================================================================
+    // Public Methods
+    //==============================================================================================
+
+    /**
+     * Add to default dialog show and also provide
+     * a flag for if a logout should occur.
+     *
+     * @param showContent Show dialog content.
+     * @param logout Should log out user.
+     */
+    public void show(boolean showContent, boolean logout) {
+        super.show(showContent);
+
+        if (logout) {
+
+            // Remove user information.
+            new ObjectModelUser().removeUserInfo();
+
+            // Set a dismiss listener.
+            setOnDismissListener(new OnDismissListener() {
+
+                @Override
+                public void onDismiss(Activity activity) {
+
+                    // Bounce user back to the loading screen.
+                    activity.startActivity(new Intent(activity, LoadingScreen.class));
+                }
+            });
+        }
     }
 
     //==============================================================================================
