@@ -4,7 +4,7 @@ import android.content.Intent;
 import android.widget.EditText;
 
 import com.blitz.app.R;
-import com.blitz.app.base.activity.BaseActivity;
+import com.blitz.app.utilities.android.BaseActivity;
 import com.blitz.app.models.objects.ObjectModelUser;
 import com.blitz.app.models.rest.RestAPIOperation;
 import com.blitz.app.screens.main.MainScreen;

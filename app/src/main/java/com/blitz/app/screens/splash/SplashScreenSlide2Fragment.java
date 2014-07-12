@@ -1,6 +1,6 @@
 package com.blitz.app.screens.splash;
 
-import com.blitz.app.base.fragment.BaseFragment;
+import com.blitz.app.utilities.android.BaseFragment;
 
 public class SplashScreenSlide2Fragment extends BaseFragment {
 

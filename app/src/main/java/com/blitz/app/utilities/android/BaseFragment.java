@@ -1,4 +1,4 @@
-package com.blitz.app.base.fragment;
+package com.blitz.app.utilities.android;
 
 import android.content.Intent;
 import android.os.Bundle;

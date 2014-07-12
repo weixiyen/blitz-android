@@ -3,7 +3,7 @@ package com.blitz.app.screens.queue;
 import android.content.Intent;
 
 import com.blitz.app.R;
-import com.blitz.app.base.activity.BaseActivity;
+import com.blitz.app.utilities.android.BaseActivity;
 import com.blitz.app.screens.access_code.AccessCodeScreen;
 import com.blitz.app.screens.sign_in.SignInScreen;
 

@@ -4,7 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 
-import com.blitz.app.base.activity.BaseActivity;
+import com.blitz.app.utilities.android.BaseActivity;
 import com.blitz.app.screens.main.MainScreen;
 import com.blitz.app.screens.queue.QueueScreen;
 import com.blitz.app.screens.splash.SplashScreen;

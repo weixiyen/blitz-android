@@ -5,7 +5,7 @@ import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 
 import com.blitz.app.R;
-import com.blitz.app.base.activity.BaseActivity;
+import com.blitz.app.utilities.android.BaseActivity;
 import com.blitz.app.screens.sign_in.SignInScreen;
 import com.blitz.app.screens.sign_up.SignUpScreen;
 import com.blitz.app.utilities.viewpager.ViewPagerDepthTransformer;

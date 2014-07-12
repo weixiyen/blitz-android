@@ -2,7 +2,7 @@ package com.blitz.app.dialogs;
 
 import android.app.Activity;
 
-import com.blitz.app.base.dialog.BaseDialog;
+import com.blitz.app.utilities.android.BaseDialog;
 
 /**
  * Created by Miguel Gaeta on 6/4/14.

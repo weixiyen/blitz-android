@@ -1,4 +1,4 @@
-package com.blitz.app.base.activity;
+package com.blitz.app.utilities.android;
 
 import android.app.ActionBar;
 import android.content.Context;

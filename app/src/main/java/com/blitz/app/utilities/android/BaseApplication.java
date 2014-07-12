@@ -1,4 +1,4 @@
-package com.blitz.app.base.application;
+package com.blitz.app.utilities.android;
 
 import android.app.Application;
 

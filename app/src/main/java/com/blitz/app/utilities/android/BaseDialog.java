@@ -1,4 +1,4 @@
-package com.blitz.app.base.dialog;
+package com.blitz.app.utilities.android;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
