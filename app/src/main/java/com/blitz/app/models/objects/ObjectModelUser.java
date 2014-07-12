@@ -6,6 +6,7 @@ import com.blitz.app.models.rest.RestAPICallback;
 import com.blitz.app.models.rest.RestAPIClient;
 import com.blitz.app.models.rest.RestAPIOperation;
 import com.blitz.app.models.rest_objects.JsonObjectUsers;
+import com.blitz.app.utilities.appdata.AppData;
 import com.blitz.app.utilities.appdata.AppDataObject;
 
 /**
@@ -26,8 +27,19 @@ public class ObjectModelUser extends ObjectModel {
     //==============================================================================================
 
     /**
-     * Persist user information (for subsequent
-     * login calls).
+     * Un-persist user information.
+     */
+    public void removeUserInfo() {
+
+        AppData.clear(AppDataObject.userId);
+        AppData.clear(AppDataObject.userName);
+
+        AppData.clear(AppDataObject.userEmail);
+        AppData.clear(AppDataObject.userPassword);
+    }
+
+    /**
+     * Persist user information.
      */
     public void persistUserInfo() {
         JsonObjectUsers jsonObject = getJsonObject(JsonObjectUsers.class);
