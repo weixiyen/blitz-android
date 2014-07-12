@@ -2,6 +2,7 @@ package com.blitz.app.models.rest;
 
 import com.blitz.app.models.rest_objects.JsonObjectCode;
 import com.blitz.app.models.rest_objects.JsonObjectPreference;
+import com.blitz.app.models.rest_objects.JsonObjectQueue;
 import com.blitz.app.models.rest_objects.JsonObjectUsers;
 
 import retrofit.Callback;
@@ -33,4 +34,10 @@ public interface RestAPI {
             @Body JsonObjectUsers.Body body,
 
             Callback<JsonObjectUsers> callback);
+
+    @POST("/queue")
+    void queue(
+            @Body JsonObjectQueue.Body body,
+
+            Callback<JsonObjectQueue> callback);
 }
