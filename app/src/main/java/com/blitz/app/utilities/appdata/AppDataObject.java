@@ -17,6 +17,8 @@ public class AppDataObject extends AppData {
     // Set of various keyboard heights.
     public static final AppData keyboardHeights = new AppData(HashMap.class, "KEYBOARD_HEIGHTS");
 
+    // Set of user information.
+    public static final AppData userCookie   = new AppDataObject(String.class, "USER_COOKIES");
     public static final AppData userId       = new AppDataObject(String.class, "USER_ID");
     public static final AppData userEmail    = new AppDataObject(String.class, "USER_EMAIL");
     public static final AppData userName     = new AppDataObject(String.class, "USER_NAME");
