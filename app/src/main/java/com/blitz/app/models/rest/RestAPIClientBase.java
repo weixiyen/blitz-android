@@ -26,9 +26,6 @@ public class RestAPIClientBase {
     // Endpoint URL for the REST API.
     private static final String API_URL = AppConfig.API_URL;
 
-    // Singleton instance.
-    private static RestAPIClientBase instance = null;
-
     // Adapter for REST client.
     private RestAdapter mRestAdapter;
 
@@ -76,24 +73,6 @@ public class RestAPIClientBase {
         }
 
         return builder;
-    }
-
-    /**
-     * Get instance of the base API client.
-     *
-     * @return Singleton instance.
-     */
-    protected static RestAPIClientBase getInstance() {
-
-        if (instance == null) {
-            synchronized (RestAPIClientBase.class) {
-                if (instance == null) {
-                    instance = new RestAPIClientBase();
-                }
-            }
-        }
-
-        return instance;
     }
 
     //==============================================================================================

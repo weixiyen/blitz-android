@@ -21,23 +21,39 @@ public class RestAPICallback<T> implements Callback<T> {
     // The model operation object.
     private RestAPIOperation mOperation;
 
+    // Is this an auth call.
+    private boolean mIsAuthentication;
+
     //==============================================================================================
     // Constructor
     //==============================================================================================
+
+    /**
+     * @see com.blitz.app.models.rest.RestAPICallback
+     */
+    public RestAPICallback(RestAPIObjectInterface restAPIObjectInterface, RestAPIOperation operation) {
+
+        // Not authenticated by default.
+        this(restAPIObjectInterface, operation, false);
+    }
 
     /**
      * Assign our member variables.
      *
      * @param restAPIObjectInterface Interface object.
      * @param operation Operation object.
+     * @param isAuthentication Is this an authentication call.
      */
-    public RestAPICallback(RestAPIObjectInterface restAPIObjectInterface, RestAPIOperation operation) {
+    public RestAPICallback(RestAPIObjectInterface restAPIObjectInterface, RestAPIOperation operation, boolean isAuthentication) {
 
         mRestAPIObjectInterface = restAPIObjectInterface;
         mOperation = operation;
 
         // Start operation as soon as initialized.
         mOperation.start();
+
+        // Set authentication flag.
+        mIsAuthentication = isAuthentication;
     }
 
     //==============================================================================================
@@ -52,6 +68,12 @@ public class RestAPICallback<T> implements Callback<T> {
      */
     @Override
     public void success(T jsonObject, Response response) {
+
+        if (mIsAuthentication) {
+
+            // Set user cookies if they exist.
+            RestAPIClient.trySetUserCookies(response);
+        }
 
         // Set the api object which we receive on success.
         mRestAPIObjectInterface.setJsonObject((JsonObject) jsonObject);
