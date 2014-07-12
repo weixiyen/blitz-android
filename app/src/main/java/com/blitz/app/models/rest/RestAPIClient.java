@@ -2,7 +2,7 @@ package com.blitz.app.models.rest;
 
 import android.util.Log;
 
-import com.blitz.app.utilities.appdata.AppDataObject;
+import com.blitz.app.utilities.app.AppDataObject;
 
 import retrofit.RequestInterceptor;
 import retrofit.RestAdapter;

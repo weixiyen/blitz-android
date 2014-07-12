@@ -1,4 +1,4 @@
-package com.blitz.app.utilities.appconfig;
+package com.blitz.app.utilities.app;
 
 /**
  * Intended to setup configuration constants for the App.

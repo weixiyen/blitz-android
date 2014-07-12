@@ -1,6 +1,6 @@
 package com.blitz.app.models.rest;
 
-import com.blitz.app.utilities.appconfig.AppConfig;
+import com.blitz.app.utilities.app.AppConfig;
 import com.squareup.okhttp.OkHttpClient;
 
 import java.security.KeyManagementException;

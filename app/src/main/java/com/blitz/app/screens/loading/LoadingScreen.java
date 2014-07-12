@@ -8,9 +8,9 @@ import com.blitz.app.base.activity.BaseActivity;
 import com.blitz.app.screens.main.MainScreen;
 import com.blitz.app.screens.queue.QueueScreen;
 import com.blitz.app.screens.splash.SplashScreen;
-import com.blitz.app.utilities.appconfig.AppConfig;
-import com.blitz.app.utilities.appdata.AppData;
-import com.blitz.app.utilities.appdata.AppDataObject;
+import com.blitz.app.utilities.app.AppConfig;
+import com.blitz.app.utilities.app.AppData;
+import com.blitz.app.utilities.app.AppDataObject;
 
 /**
  * Created by Miguel Gaeta on 6/28/14.

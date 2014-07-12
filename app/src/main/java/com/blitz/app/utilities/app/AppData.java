@@ -1,4 +1,4 @@
-package com.blitz.app.utilities.appdata;
+package com.blitz.app.utilities.app;
 
 import android.annotation.SuppressLint;
 import android.content.Context;

@@ -6,8 +6,8 @@ import com.blitz.app.models.rest.RestAPICallback;
 import com.blitz.app.models.rest.RestAPIClient;
 import com.blitz.app.models.rest.RestAPIOperation;
 import com.blitz.app.models.rest_objects.JsonObjectUsers;
-import com.blitz.app.utilities.appdata.AppData;
-import com.blitz.app.utilities.appdata.AppDataObject;
+import com.blitz.app.utilities.app.AppData;
+import com.blitz.app.utilities.app.AppDataObject;
 
 /**
  * Created by mrkcsc on 7/9/14.

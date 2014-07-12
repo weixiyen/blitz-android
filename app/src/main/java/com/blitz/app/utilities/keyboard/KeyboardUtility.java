@@ -10,7 +10,7 @@ import android.view.View;
 import android.view.ViewTreeObserver;
 import android.view.inputmethod.InputMethodManager;
 
-import com.blitz.app.utilities.appdata.AppDataObject;
+import com.blitz.app.utilities.app.AppDataObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;

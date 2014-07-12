@@ -8,7 +8,7 @@ import com.blitz.app.base.activity.BaseActivity;
 import com.blitz.app.models.objects.ObjectModelCode;
 import com.blitz.app.models.rest.RestAPIOperation;
 import com.blitz.app.screens.splash.SplashScreen;
-import com.blitz.app.utilities.appdata.AppDataObject;
+import com.blitz.app.utilities.app.AppDataObject;
 
 import butterknife.InjectView;
 import butterknife.OnClick;
