@@ -77,6 +77,7 @@ public class ObjectModelUser extends ObjectModel {
         JsonObjectUsers.Body body = new JsonObjectUsers.Body(mEmail, mUsername, mPassword);
 
         // Make rest call for code.
-        RestAPIClient.getAPI().users(body, new RestAPICallback<JsonObjectUsers>(mRestApiObject, operation));
+        RestAPIClient.getAPI().users(body,
+                new RestAPICallback<JsonObjectUsers>(mRestApiObject, operation, true));
     }
 }
