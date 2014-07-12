@@ -3,13 +3,18 @@ package com.blitz.app.screens.main;
 import android.app.ActionBar;
 import android.app.FragmentTransaction;
 import android.os.Bundle;
+import android.util.Log;
 
 import com.blitz.app.R;
 import com.blitz.app.base.activity.BaseActivity;
+import com.blitz.app.models.objects.ObjectModelPreferences;
+import com.blitz.app.models.rest.RestAPIOperation;
 
 import butterknife.OnClick;
 
 public class MainScreen extends BaseActivity implements ActionBar.TabListener {
+
+    private ObjectModelPreferences mModelPreferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,6 +60,22 @@ public class MainScreen extends BaseActivity implements ActionBar.TabListener {
     @OnClick(R.id.main_screen_play) @SuppressWarnings("unused")
     public void main_screen_play() {
 
+        if (RestAPIOperation.shouldThrottle()) {
+            return;
+        }
 
+        if (mModelPreferences == null) {
+            mModelPreferences = new ObjectModelPreferences();
+        }
+
+        // Set desired registration fields.
+        mModelPreferences.TestCall(new RestAPIOperation(this) {
+
+            @Override
+            public void success() {
+
+                Log.e("Blitz", "Test");
+            }
+        });
     }
 }

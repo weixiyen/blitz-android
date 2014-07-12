@@ -1,13 +1,9 @@
 package com.blitz.app.models.objects;
 
-import android.util.Log;
-
+import com.blitz.app.models.rest.RestAPICallback;
 import com.blitz.app.models.rest.RestAPIClient;
-import com.blitz.app.models.rest_objects.JsonObjectPreference;
-
-import retrofit.Callback;
-import retrofit.RetrofitError;
-import retrofit.client.Response;
+import com.blitz.app.models.rest.RestAPIOperation;
+import com.blitz.app.models.rest_objects.JsonObjectQueue;
 
 /**
  * Created by Miguel Gaeta on 6/26/14.
@@ -15,21 +11,12 @@ import retrofit.client.Response;
 @SuppressWarnings("unused")
 public class ObjectModelPreferences extends ObjectModel {
 
-    public void TestCall() {
+    public void TestCall(RestAPIOperation operation) {
 
-        RestAPIClient.getAPI().preferences(new Callback<JsonObjectPreference>() {
+        // Construct POST body.
+        JsonObjectQueue.Body body = new JsonObjectQueue.Body("football_heads_up_draft_free");
 
-            @Override
-            public void success(JsonObjectPreference preference, Response response) {
-
-                Log.e("TEST2", "success " + preference.current_week + " year: " + preference.current_year);
-            }
-
-            @Override
-            public void failure(RetrofitError retrofitError) {
-
-                Log.e("TEST2", "fail");
-            }
-        });
+        // Make rest call for code.
+        RestAPIClient.getAPI().queue(body, new RestAPICallback<JsonObjectQueue>(mRestApiObject, operation));
     }
 }
