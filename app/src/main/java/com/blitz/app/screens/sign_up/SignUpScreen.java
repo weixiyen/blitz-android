@@ -56,7 +56,7 @@ public class SignUpScreen extends BaseActivity {
 
                 mObjectModelUser.persistUserInfo();
 
-                startActivity(new Intent(SignUpScreen.this, MainScreen.class));
+                startActivity(new Intent(SignUpScreen.this, MainScreen.class), true);
             }
         });
     }
