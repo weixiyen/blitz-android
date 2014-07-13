@@ -16,10 +16,10 @@ public class JsonObjectAuth extends JsonObject {
         }
     }
 
-    public static class Result {
+    public static class User {
         public String id;
         public String username;
     }
 
-    public Result result;
+    public User user;
 }

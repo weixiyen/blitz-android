@@ -76,7 +76,7 @@
             android:fontFamily="@string/app_font_regular"
             android:gravity="center_vertical"
             android:hint="Password"
-            android:inputType="textNoSuggestions|textVisiblePassword"
+            android:inputType="textPassword"
             android:padding="10dp"
             android:textColor="@color/text_color_light"
             android:textSize="14sp" />

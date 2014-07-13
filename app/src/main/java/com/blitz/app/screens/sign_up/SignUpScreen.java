@@ -48,13 +48,15 @@ public class SignUpScreen extends BaseActivity {
         }
 
         // Set desired registration fields.
-        mObjectModelUser.signUpSetInfo(mEmail, mUsername, mPassword);
+        mObjectModelUser.setEmail(mEmail);
+        mObjectModelUser.setUsername(mUsername);
+        mObjectModelUser.setPassword(mPassword);
         mObjectModelUser.signUp(new RestAPIOperation(this) {
 
             @Override
             public void success() {
 
-                mObjectModelUser.persistUserInfo();
+                mObjectModelUser.persistAfterSignUp();
 
                 startActivity(new Intent(SignUpScreen.this, MainScreen.class), true);
             }

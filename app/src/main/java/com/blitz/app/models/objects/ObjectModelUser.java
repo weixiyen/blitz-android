@@ -5,6 +5,7 @@ import android.widget.EditText;
 import com.blitz.app.models.rest.RestAPICallback;
 import com.blitz.app.models.rest.RestAPIClient;
 import com.blitz.app.models.rest.RestAPIOperation;
+import com.blitz.app.models.rest_objects.JsonObjectAuth;
 import com.blitz.app.models.rest_objects.JsonObjectUsers;
 import com.blitz.app.utilities.app.AppData;
 import com.blitz.app.utilities.app.AppDataObject;
@@ -39,9 +40,9 @@ public class ObjectModelUser extends ObjectModel {
     }
 
     /**
-     * Persist user information.
+     * Persist user information and sign up.
      */
-    public void persistUserInfo() {
+    public void persistAfterSignUp() {
         JsonObjectUsers jsonObject = getJsonObject(JsonObjectUsers.class);
 
         AppDataObject.userId.set(jsonObject.result.id);
@@ -52,18 +53,43 @@ public class ObjectModelUser extends ObjectModel {
     }
 
     /**
-     * Set information needed for registration.
-     *
-     * @param email Desired email.
-     * @param username Desired username.
-     * @param password Desired password.
+     * Persist user information after sign in.
      */
-    public void signUpSetInfo(EditText email, EditText username, EditText password) {
+    public void persistAfterSignIn() {
+        JsonObjectAuth jsonObjectAuth = getJsonObject(JsonObjectAuth.class);
 
-        mUsername = username.getText().toString();
-        mPassword = password.getText().toString();
+        AppDataObject.userId.set(jsonObjectAuth.user.id);
+        AppDataObject.userName.set(jsonObjectAuth.user.username);
 
+        AppDataObject.userEmail.set(mEmail);
+        AppDataObject.userPassword.set(mPassword);
+    }
+
+    /**
+     * Set email.
+     *
+     * @param email Email.
+     */
+    public void setEmail(EditText email) {
         mEmail = email.getText().toString();
+    }
+
+    /**
+     * Set username.
+     *
+     * @param username Username.
+     */
+    public void setUsername(EditText username) {
+        mUsername = username.getText().toString();
+    }
+
+    /**
+     * Set password.
+     *
+     * @param password Passowrd
+     */
+    public void setPassword(EditText password) {
+        mPassword = password.getText().toString();
     }
 
     /**
@@ -79,5 +105,20 @@ public class ObjectModelUser extends ObjectModel {
         // Make rest call for code.
         RestAPIClient.getAPI().users(body,
                 new RestAPICallback<JsonObjectUsers>(mRestApiObject, operation, true));
+    }
+
+    /**
+     * Sign in the user.
+     *
+     * @param operation Rest operation.
+     */
+    public void signIn(RestAPIOperation operation) {
+
+        // Construct POST body.
+        JsonObjectAuth.Body body = new JsonObjectAuth.Body(mUsername, mPassword);
+
+        // Make auth rest call.
+        RestAPIClient.getAPI().auth(body,
+                new RestAPICallback<JsonObjectAuth>(mRestApiObject, operation, true));
     }
 }
