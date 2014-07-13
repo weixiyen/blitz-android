@@ -40,6 +40,7 @@
             android:textSize="16sp" />
 
         <EditText
+            android:id="@+id/sign_in_screen_username_or_email"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_gravity="center_horizontal"
@@ -48,10 +49,11 @@
             android:fontFamily="@string/app_font_regular"
             android:gravity="center_vertical"
             android:hint="Username or Email"
-            android:inputType="number"
+            android:inputType="textNoSuggestions|textVisiblePassword"
             android:padding="10dp"
             android:textColor="@color/text_color_light"
-            android:textSize="14sp" />
+            android:textSize="14sp"
+            tools:ignore="TextFields" />
 
         <TextView
             android:layout_width="match_parent"
@@ -65,6 +67,7 @@
             android:textSize="16sp" />
 
         <EditText
+            android:id="@+id/sign_in_screen_password"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_gravity="center_horizontal"
@@ -73,7 +76,7 @@
             android:fontFamily="@string/app_font_regular"
             android:gravity="center_vertical"
             android:hint="Password"
-            android:inputType="number"
+            android:inputType="textNoSuggestions|textVisiblePassword"
             android:padding="10dp"
             android:textColor="@color/text_color_light"
             android:textSize="14sp" />
