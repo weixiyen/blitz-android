@@ -1,5 +1,6 @@
 package com.blitz.app.models.rest;
 
+import com.blitz.app.models.rest_objects.JsonObjectAuth;
 import com.blitz.app.models.rest_objects.JsonObjectCode;
 import com.blitz.app.models.rest_objects.JsonObjectPreference;
 import com.blitz.app.models.rest_objects.JsonObjectQueue;
@@ -40,4 +41,10 @@ public interface RestAPI {
             @Body JsonObjectQueue.Body body,
 
             Callback<JsonObjectQueue> callback);
+
+    @POST("/auth")
+    void auth(
+            @Body JsonObjectAuth.Body body,
+
+            Callback<JsonObjectAuth> callback);
 }
