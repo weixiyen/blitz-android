@@ -9,7 +9,6 @@ import com.blitz.app.screens.sign_in.SignInScreen;
 import com.blitz.app.screens.sign_up.SignUpScreen;
 import com.blitz.app.utilities.android.BaseActivity;
 import com.blitz.app.utilities.viewpager.ViewPagerDepthTransformer;
-import com.facebook.Session;
 import com.viewpagerindicator.CirclePageIndicator;
 
 import butterknife.InjectView;
@@ -37,18 +36,6 @@ public class SplashScreen extends BaseActivity {
 
         // Setup view pager.
         setupViewPager();
-    }
-
-    /**
-     * When activity returns from a facebook authentication
-     * activity, pass results into session object.
-     */
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-        // Pass results into facebook session object.
-        Session.getActiveSession().onActivityResult(this, requestCode, resultCode, data);
     }
 
     /**
