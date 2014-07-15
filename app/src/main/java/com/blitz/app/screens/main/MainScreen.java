@@ -25,6 +25,9 @@ public class MainScreen extends BaseActivity implements ActionBar.TabListener {
     // Adapter for view pager.
     private MainScreenPagerAdapter mAdapter;
 
+    // Action bar.
+    private ActionBar mActionBar;
+
     //==============================================================================================
     // Overwritten Methods
     //==============================================================================================
@@ -60,25 +63,26 @@ public class MainScreen extends BaseActivity implements ActionBar.TabListener {
         }
     }
 
-    //==============================================================================================
-    // Public Methods
-    //==============================================================================================
-
+    /**
+     * When a tab is selected update
+     *
+     * the view pager.
+     *
+     * @param tab Selected tab.
+     * @param ft Fragment transaction.
+     */
     @Override
     public void onTabSelected(ActionBar.Tab tab, FragmentTransaction ft) {
 
-        //startActivity(new Intent(this, MainScreen.class));
+        // Sync with view pager when selected.
+        mPager.setCurrentItem((Integer) tab.getTag());
     }
 
     @Override
-    public void onTabUnselected(ActionBar.Tab tab, FragmentTransaction ft) {
-
-    }
+    public void onTabUnselected(ActionBar.Tab tab, FragmentTransaction ft) { }
 
     @Override
-    public void onTabReselected(ActionBar.Tab tab, FragmentTransaction ft) {
-
-    }
+    public void onTabReselected(ActionBar.Tab tab, FragmentTransaction ft) { }
 
     //==============================================================================================
     // Private Methods
@@ -98,6 +102,21 @@ public class MainScreen extends BaseActivity implements ActionBar.TabListener {
 
         // Add a custom page transition effect.
         mPager.setPageTransformer(true, new ViewPagerDepthTransformer());
+
+        mPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int i, float v, int i2) { }
+
+            @Override
+            public void onPageScrollStateChanged(int i) { }
+
+            @Override
+            public void onPageSelected(int i) {
+
+                // Set action bar item.
+                mActionBar.setSelectedNavigationItem(i);
+            }
+        });
     }
 
     /**
@@ -107,16 +126,16 @@ public class MainScreen extends BaseActivity implements ActionBar.TabListener {
      * TODO: Use custom widget.
      */
     private void setupViewPagerTabs() {
-        ActionBar bar = getActionBar();
+        mActionBar = getActionBar();
 
-        if (bar != null) {
-            bar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
+        if (mActionBar != null) {
+            mActionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
 
             // Iterate over each tab.
             for (int tabIndex = 0; tabIndex < mAdapter.getCount(); tabIndex++) {
 
                 // Initialize a tab.
-                ActionBar.Tab tab = bar.newTab();
+                ActionBar.Tab tab = mActionBar.newTab();
 
                 // Configure it.
                 tab.setTag(tabIndex);
@@ -124,7 +143,7 @@ public class MainScreen extends BaseActivity implements ActionBar.TabListener {
                 tab.setText(mAdapter.getPageTitle(tabIndex));
 
                 // Add it.
-                bar.addTab(tab);
+                mActionBar.addTab(tab);
             }
         }
     }
