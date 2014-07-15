@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 
 import com.blitz.app.R;
+import com.blitz.app.utilities.background.EnteredBackground;
 import com.blitz.app.utilities.keyboard.KeyboardUtility;
 import com.blitz.app.utilities.reflection.ReflectionHelper;
 import com.blitz.app.utilities.string.StringHelper;
@@ -26,6 +27,7 @@ public class BaseActivity extends FragmentActivity {
     // Set custom transitions.
     private boolean mCustomTransitions = true;
 
+    // Track if activity history is cleared.
     private boolean mHistoryCleared = false;
 
     //==============================================================================================
@@ -65,7 +67,20 @@ public class BaseActivity extends FragmentActivity {
     }
 
     /**
-     * Run custom transitions if needed.
+     * Figure out if application has returned
+     * from the background.
+     */
+    @Override
+    protected void onResume () {
+        super.onResume();
+
+        // Stop timer to detect entering the background.
+        EnteredBackground.stopActivityTransitionTimer();
+    }
+
+    /**
+     * Run custom transitions if needed, also
+     * start timer to detect entering background.
      */
     @Override
     protected void onPause() {
@@ -73,6 +88,9 @@ public class BaseActivity extends FragmentActivity {
 
         // Run transitions, we are exiting.
         runCustomTransitions(null, false);
+
+        // Start timer to detect entering the background.
+        EnteredBackground.startActivityTransitionTimer();
     }
 
     /**
