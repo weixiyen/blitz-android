@@ -19,11 +19,11 @@ public class SplashScreenPagerAdapter extends FragmentStatePagerAdapter {
     public Fragment getItem(int position) {
         switch (position) {
             case 0:
-                return new SplashScreenSlide1Fragment();
+                return new SplashScreenFragmentSlide1();
             case 1:
-                return new SplashScreenSlide2Fragment();
+                return new SplashScreenFragmentSlide2();
             case 2:
-                return new SplashScreenSlide3Fragment();
+                return new SplashScreenFragmentSlide3();
             default:
                 return null;
         }
