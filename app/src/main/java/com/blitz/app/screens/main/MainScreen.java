@@ -3,34 +3,60 @@ package com.blitz.app.screens.main;
 import android.app.ActionBar;
 import android.app.FragmentTransaction;
 import android.os.Bundle;
-import android.util.Log;
+import android.support.v4.view.ViewPager;
 
 import com.blitz.app.R;
-import com.blitz.app.models.objects.ObjectModelPreferences;
-import com.blitz.app.models.rest.RestAPIOperation;
 import com.blitz.app.utilities.android.BaseActivity;
+import com.blitz.app.utilities.viewpager.ViewPagerDepthTransformer;
 
-import butterknife.OnClick;
+import butterknife.InjectView;
 
+/**
+ * Created by mrkcsc on 7/14/14.
+ */
 public class MainScreen extends BaseActivity implements ActionBar.TabListener {
 
-    private ObjectModelPreferences mModelPreferences;
+    //==============================================================================================
+    // Member Variables
+    //==============================================================================================
 
+    @InjectView(R.id.main_screen_pager) ViewPager mPager;
+
+    // Adapter for view pager.
+    private MainScreenPagerAdapter mAdapter;
+
+    //==============================================================================================
+    // Overwritten Methods
+    //==============================================================================================
+
+    /**
+     * Setup main navigational interface.
+     *
+     * @param savedInstanceState Instance parameters.
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        ActionBar bar = getActionBar();
+        // Setup view pager.
+        setupViewPager();
 
-        if (bar != null) {
-            bar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
+        // Setup view pager tabs.
+        setupViewPagerTabs();
+    }
 
-            for (int i=1; i <= 3; i++) {
-                ActionBar.Tab tab = bar.newTab();
-                tab.setText("Tab " + i);
-                tab.setTabListener(this);
-                bar.addTab(tab);
-            }
+    /**
+     * Bounce user back to first page
+     * "featured" before backing out.
+     */
+    @Override
+    public void onBackPressed() {
+
+        if (mPager.getCurrentItem() > 0) {
+            mPager.setCurrentItem(0);
+        } else {
+
+            super.onBackPressed();
         }
     }
 
@@ -41,6 +67,7 @@ public class MainScreen extends BaseActivity implements ActionBar.TabListener {
     @Override
     public void onTabSelected(ActionBar.Tab tab, FragmentTransaction ft) {
 
+        //startActivity(new Intent(this, MainScreen.class));
     }
 
     @Override
@@ -54,28 +81,51 @@ public class MainScreen extends BaseActivity implements ActionBar.TabListener {
     }
 
     //==============================================================================================
-    // Click Methods
+    // Private Methods
     //==============================================================================================
 
-    @OnClick(R.id.main_screen_play) @SuppressWarnings("unused")
-    public void main_screen_play() {
+    /**
+     * Create and setup the viewpager and associated
+     * elements.
+     */
+    private void setupViewPager() {
 
-        if (RestAPIOperation.shouldThrottle()) {
-            return;
-        }
+        // Create adapter.
+        mAdapter = new MainScreenPagerAdapter(getSupportFragmentManager());
 
-        if (mModelPreferences == null) {
-            mModelPreferences = new ObjectModelPreferences();
-        }
+        // Create adapter for the view pager.
+        mPager.setAdapter(mAdapter);
 
-        // Set desired registration fields.
-        mModelPreferences.TestCall(new RestAPIOperation(this) {
+        // Add a custom page transition effect.
+        mPager.setPageTransformer(true, new ViewPagerDepthTransformer());
+    }
 
-            @Override
-            public void success() {
+    /**
+     * Setup tabs associated with view pager. Uses
+     * a custom widget for total customization.
+     *
+     * TODO: Use custom widget.
+     */
+    private void setupViewPagerTabs() {
+        ActionBar bar = getActionBar();
 
-                Log.e("Blitz", "Test");
+        if (bar != null) {
+            bar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
+
+            // Iterate over each tab.
+            for (int tabIndex = 0; tabIndex < mAdapter.getCount(); tabIndex++) {
+
+                // Initialize a tab.
+                ActionBar.Tab tab = bar.newTab();
+
+                // Configure it.
+                tab.setTag(tabIndex);
+                tab.setTabListener(this);
+                tab.setText(mAdapter.getPageTitle(tabIndex));
+
+                // Add it.
+                bar.addTab(tab);
             }
-        });
+        }
     }
 }
