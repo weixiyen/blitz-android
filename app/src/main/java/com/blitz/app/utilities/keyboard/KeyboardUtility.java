@@ -3,6 +3,7 @@ package com.blitz.app.utilities.keyboard;
 import android.app.Activity;
 import android.content.Context;
 import android.content.res.Resources;
+import android.os.Build;
 import android.os.Handler;
 import android.provider.Settings;
 import android.util.TypedValue;
@@ -90,7 +91,12 @@ public class KeyboardUtility {
     static public void setGlobalLayoutListener(final Activity activity) {
 
         if (mRootView != null) {
-            mRootView.getViewTreeObserver().removeOnGlobalLayoutListener(mOnGlobalLayoutListener);
+
+            if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+                mRootView.getViewTreeObserver().removeOnGlobalLayoutListener(mOnGlobalLayoutListener);
+            } else {
+                mRootView.getViewTreeObserver().removeGlobalOnLayoutListener(mOnGlobalLayoutListener);
+            }
         }
 
         // Every time we make a new global listener,
