@@ -21,8 +21,11 @@ public class SoundHelper {
     // Application level context.
     private Context mContext;
 
-    // Media player.5
+    // Media player.
     private MediaPlayer mMediaPlayer;
+
+    // Is music disabled.
+    private boolean mMusicDisabled;
 
     //==============================================================================================
     // Public Methods
@@ -62,6 +65,10 @@ public class SoundHelper {
      */
     @SuppressWarnings("unused")
     public void startMusic(int resourceId) {
+        if (mMusicDisabled) {
+            return;
+        }
+
         initializePlayer();
 
         try {
@@ -96,6 +103,9 @@ public class SoundHelper {
      */
     @SuppressWarnings("unused")
     public void stopMusic() {
+        if (mMusicDisabled) {
+            return;
+        }
 
         initializePlayer();
     }
@@ -105,6 +115,10 @@ public class SoundHelper {
      */
     @SuppressWarnings("unused")
     public void pauseMusic() {
+        if (mMusicDisabled) {
+            return;
+        }
+
         if (mMediaPlayer != null) {
             mMediaPlayer.pause();
         }
@@ -115,9 +129,23 @@ public class SoundHelper {
      */
     @SuppressWarnings("unused")
     public void resumeMusic() {
+        if (mMusicDisabled) {
+            return;
+        }
+
         if (mMediaPlayer != null) {
             mMediaPlayer.start();
         }
+    }
+
+    /**
+     * Is the entire music player disabled.
+     *
+     * @param musicDisabled Disabled flag.
+     */
+    @SuppressWarnings("unused")
+    public void setMusicDisabled(boolean musicDisabled) {
+        mMusicDisabled = musicDisabled;
     }
 
     //==============================================================================================
