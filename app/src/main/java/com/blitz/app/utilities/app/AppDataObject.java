@@ -24,6 +24,10 @@ public class AppDataObject extends AppData {
     public static final AppData userName     = new AppDataObject(String.class, "USER_NAME");
     public static final AppData userPassword = new AppDataObject(String.class, "USER_PASSWORD");
 
+    // General settings.
+    public static final AppData settingsMusicDisabled = new AppDataObject(Boolean.class, "SETTINGS_MUSIC");
+    public static final AppData settingsSoundDisabled = new AppDataObject(Boolean.class, "SETTINGS_SOUND");
+
     //==============================================================================================
     // Constructors
     //==============================================================================================

@@ -12,15 +12,40 @@
     tools:context="${packageName}.${activityClass}"
     tools:ignore="ButtonStyle,HardcodedText">
 
-    <Button
+    <Switch
+        android:id="@+id/main_screen_fragment_settings_toggle_sound"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_margin="10dp"
+        android:background="@color/button_color_1"
+        android:padding="10dp"
+        android:text="Play Sound"
+        android:textColor="@color/text_color_light"
+        android:textSize="12sp"/>
+
+    <Switch
         android:id="@+id/main_screen_fragment_settings_toggle_music"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginBottom="10dp"
+        android:background="@color/button_color_1"
+        android:padding="10dp"
+        android:text="Play Music"
+        android:textColor="@color/text_color_light"
+        android:textSize="12sp"/>
+
+    <Button
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:layout_margin="10dp"
         android:background="@drawable/button_main"
         android:contentDescription="@string/empty_string"
         android:fontFamily="@string/app_font_light"
-        android:text="Toggle Music"
+        android:text="Reset"
         android:textColor="@color/text_color_light"
         android:textSize="12sp" />
 </LinearLayout>
