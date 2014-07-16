@@ -89,6 +89,10 @@ public class BaseFragment extends Fragment {
         return view;
     }
 
+    //==============================================================================================
+    // Protected Methods
+    //==============================================================================================
+
     /**
      * @see android.app.Fragment#startActivity(android.content.Intent)
      *
@@ -99,10 +103,6 @@ public class BaseFragment extends Fragment {
         getActivity().startActivity(intent);
     }
 
-    //==============================================================================================
-    // Public Methods
-    //==============================================================================================
-
     /**
      * A simpler version of on create view.  Can be used
      * as a convenience method which abstracts away
@@ -112,7 +112,7 @@ public class BaseFragment extends Fragment {
      * @param savedInstanceState The saved instance state.
      */
     @SuppressWarnings("unused")
-    public void onCreateView(Bundle savedInstanceState) {
+    protected void onCreateView(Bundle savedInstanceState) {
 
     }
 
@@ -121,7 +121,7 @@ public class BaseFragment extends Fragment {
      *
      * @param layoutResID Layout resource.
      */
-    public void setContentView (int layoutResID) {
+    protected void setContentView (int layoutResID) {
 
         // Inflate and store the content view.
         mContentView = mInflater.inflate(layoutResID, mContainer, false);
