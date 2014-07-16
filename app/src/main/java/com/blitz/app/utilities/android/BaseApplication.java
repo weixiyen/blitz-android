@@ -34,7 +34,7 @@ public class BaseApplication extends Application implements EnteredBackgroundInt
         KeyboardUtility.init(this);
 
         // Initialize sound helper.
-        SoundHelper.init(this);
+        SoundHelper.instance().init(this);
 
         // Initialize background timer.
         EnteredBackground.init(this);
@@ -45,11 +45,11 @@ public class BaseApplication extends Application implements EnteredBackgroundInt
 
     @Override
     public void onEnterBackground() {
-
+        SoundHelper.instance().pauseMusic();
     }
 
     @Override
     public void onExitBackground() {
-
+        SoundHelper.instance().resumeMusic();
     }
 }
