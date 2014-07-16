@@ -65,9 +65,6 @@ public class SoundHelper {
      */
     @SuppressWarnings("unused")
     public void startMusic(int resourceId) {
-        if (mMusicDisabled) {
-            return;
-        }
 
         initializePlayer();
 
@@ -93,7 +90,12 @@ public class SoundHelper {
             @Override
             public void onPrepared(MediaPlayer mediaPlayer) {
 
-                mediaPlayer.start();
+                if (!mMusicDisabled) {
+
+                    // Start playing music.
+                    mediaPlayer.start();
+                }
+
             }
         });
     }
@@ -103,11 +105,11 @@ public class SoundHelper {
      */
     @SuppressWarnings("unused")
     public void stopMusic() {
-        if (mMusicDisabled) {
-            return;
-        }
+        if (!mMusicDisabled) {
 
-        initializePlayer();
+            // Re-initialize.
+            initializePlayer();
+        }
     }
 
     /**
@@ -115,11 +117,8 @@ public class SoundHelper {
      */
     @SuppressWarnings("unused")
     public void pauseMusic() {
-        if (mMusicDisabled) {
-            return;
-        }
 
-        if (mMediaPlayer != null) {
+        if (mMediaPlayer != null && !mMusicDisabled) {
             mMediaPlayer.pause();
         }
     }
@@ -129,11 +128,8 @@ public class SoundHelper {
      */
     @SuppressWarnings("unused")
     public void resumeMusic() {
-        if (mMusicDisabled) {
-            return;
-        }
 
-        if (mMediaPlayer != null) {
+        if (mMediaPlayer != null && !mMusicDisabled) {
             mMediaPlayer.start();
         }
     }
@@ -145,6 +141,22 @@ public class SoundHelper {
      */
     @SuppressWarnings("unused")
     public void setMusicDisabled(boolean musicDisabled) {
+
+        // Enable for a moment.
+        if (mMusicDisabled) {
+            mMusicDisabled = false;
+        }
+
+        if (musicDisabled) {
+
+            // Pause if disabled.
+            pauseMusic();
+        } else {
+
+            // Just resume.
+            resumeMusic();
+        }
+
         mMusicDisabled = musicDisabled;
     }
 
