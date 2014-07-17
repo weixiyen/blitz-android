@@ -28,14 +28,14 @@ dependencies {
     compile 'com.android.support:support-v4:20.+'
 
     // Android XML view injections.
-    compile 'com.jakewharton:butterknife:4.0.+'
+    compile 'com.jakewharton:butterknife:5.1.+'
 
     // Custom HTTP client that is better than the default.
     compile 'com.squareup.okhttp:okhttp-urlconnection:2.0.0'
     compile 'com.squareup.okhttp:okhttp:2.0.0'
 
     // Library for making REST calls.
-    compile 'com.squareup.retrofit:retrofit:1.6.1'
+    compile 'com.squareup.retrofit:retrofit:1.6.+'
 
     // WebSocket library for real-time calls.
     compile 'org.java-websocket:Java-WebSocket:1.3.0'
