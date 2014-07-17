@@ -90,7 +90,13 @@ public class RestAPICallback<T> implements Callback<T> {
     @Override
     public void failure(RetrofitError retrofitError) {
 
-        // Operation is finished, provide http status code.
-        mOperation.finish(false, retrofitError.getResponse().getStatus());
+        // Fetch response.
+        Response response = retrofitError.getResponse();
+
+        if (response == null) {
+            mOperation.finish(false);
+        } else {
+            mOperation.finish(false, response.getStatus());
+        }
     }
 }
