@@ -36,7 +36,6 @@ public class EnteredBackground {
         instance().mEnteredBackgroundInterface = enteredBackgroundInterface;
     }
 
-
     /**
      * When we leave an activity, start a timer.  If
      * timer hits, we know we have entered background.
