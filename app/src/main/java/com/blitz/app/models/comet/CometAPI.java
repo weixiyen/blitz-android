@@ -7,26 +7,16 @@ import android.view.View;
 
 import com.blitz.app.utilities.app.AppConfig;
 import com.blitz.app.utilities.app.AppDataObject;
+import com.blitz.app.utilities.ssl.SSLHelper;
 
 import org.java_websocket.client.WebSocketClient;
 import org.java_websocket.handshake.ServerHandshake;
 
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.security.KeyManagementException;
-import java.security.KeyStore;
-import java.security.KeyStoreException;
-import java.security.NoSuchAlgorithmException;
-import java.security.UnrecoverableKeyException;
-import java.security.cert.CertificateException;
 
-import javax.net.ssl.KeyManagerFactory;
-import javax.net.ssl.SSLContext;
 import javax.net.ssl.SSLSocketFactory;
-import javax.net.ssl.TrustManagerFactory;
 
 /**
  * Created by Miguel on 7/17/2014.
@@ -53,7 +43,7 @@ public class CometAPI {
     private Handler          mWebSocketReconnectHandler;
     private Runnable         mWebSocketReconnectRunnable;
     private boolean          mWebSocketReconnectPending;
-    private final static int mWebSocketReconnectInterval = 10000;
+    private final static int mWebSocketReconnectInterval = 30000;
 
     // Web socket client.
     private WebSocketClient mWebSocketClient;
@@ -112,27 +102,11 @@ public class CometAPI {
     /**
      * Create an instance of the WebSocket client.
      */
-    public void createWebSocketClient() throws IOException, CertificateException, NoSuchAlgorithmException, KeyStoreException, UnrecoverableKeyException, KeyManagementException {
+    public void createWebSocketClient() {
 
         // Fetch URI from provided URL.
         URI webSocketURI = createWebSocketURI(AppConfig.WEBSOCKET_URL
                 + AppDataObject.userId.getString());
-
-        Log.e("Websocket", "Url: " + webSocketURI);
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
         // Initialize the client.
         mWebSocketClient = new WebSocketClient(webSocketURI) {
@@ -159,7 +133,7 @@ public class CometAPI {
                 mWebSocketConnected = true;
 
                 // Start pinging.
-                enableWebSocketPings();
+                //enableWebSocketPings();
 
                 mWebSocketClient.send("Hello from " + Build.MANUFACTURER + " " + Build.MODEL);
             }
@@ -183,64 +157,17 @@ public class CometAPI {
             }
         };
 
-        // load up the key store
-        String STORETYPE = "JKS";
-        String KEYSTORE = "keystore.jks";
-        String STOREPASSWORD = "storepassword";
-        String KEYPASSWORD = "keypassword";
+        // Create an ssl socket factory with our all-trusting manager.
+        SSLSocketFactory sslSocketFactory = SSLHelper.createInsecureSSLSocketFactory();
 
-        KeyStore ks = KeyStore.getInstance( STORETYPE );
-        File kf = new File( KEYSTORE );
-        ks.load( new FileInputStream( kf ), STOREPASSWORD.toCharArray() );
+        try {
 
-        KeyManagerFactory kmf = KeyManagerFactory.getInstance( "SunX509" );
-        kmf.init( ks, KEYPASSWORD.toCharArray() );
-        TrustManagerFactory tmf = TrustManagerFactory.getInstance( "SunX509" );
-        tmf.init( ks );
+            if (sslSocketFactory != null) {
 
-        SSLContext sslContext = null;
-        sslContext = SSLContext.getInstance( "TLS" );
-        sslContext.init( kmf.getKeyManagers(), tmf.getTrustManagers(), null );
-
-        // sslContext.init( null, null, null );
-        // will use java's default key and trust store which is sufficient unless you deal with self-signed certificates
-
-        SSLSocketFactory factory = sslContext.getSocketFactory();// (SSLSocketFactory) SSLSocketFactory.getDefault();
-
-        mWebSocketClient.setSocket(factory.createSocket());
-    }
-
-    class WebSocketChatClient extends WebSocketClient {
-
-        public WebSocketChatClient( URI serverUri ) {
-            super( serverUri );
-        }
-
-        @Override
-        public void onOpen( ServerHandshake handshakedata ) {
-            System.out.println( "Connected" );
-
-        }
-
-        @Override
-        public void onMessage( String message ) {
-            System.out.println( "got: " + message );
-
-        }
-
-        @Override
-        public void onClose( int code, String reason, boolean remote ) {
-            System.out.println( "Disconnected" );
-            System.exit( 0 );
-
-        }
-
-        @Override
-        public void onError( Exception ex ) {
-            ex.printStackTrace();
-
-        }
-
+                // Provide SSL socket to the client.
+                mWebSocketClient.setSocket(sslSocketFactory.createSocket());
+            }
+        } catch (IOException ignored) { }
     }
 
     /**
