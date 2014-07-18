@@ -34,7 +34,7 @@ public class BaseApplication extends Application implements EnteredBackgroundInt
         KeyboardUtility.init(this);
 
         // Initialize sound helper.
-        SoundHelper.instance().init(this);
+        SoundHelper.init(this);
 
         // Initialize background timer.
         EnteredBackground.init(this);
