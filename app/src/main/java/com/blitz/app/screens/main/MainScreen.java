@@ -6,6 +6,7 @@ import android.view.View;
 import android.widget.Button;
 
 import com.blitz.app.R;
+import com.blitz.app.models.comet.CometAPI;
 import com.blitz.app.utilities.android.BaseActivity;
 import com.blitz.app.utilities.viewpager.ViewPagerDepthTransformer;
 
@@ -44,6 +45,9 @@ public class MainScreen extends BaseActivity {
 
         // Setup view pager.
         setupViewPager();
+
+        // Connect to web socket.
+        CometAPI.openWebSocket();
     }
 
     /**

@@ -38,7 +38,7 @@ dependencies {
     compile 'com.squareup.retrofit:retrofit:1.6.+'
 
     // WebSocket library for real-time calls.
-    compile 'org.java-websocket:Java-WebSocket:1.3.0'
+    compile 'org.java-websocket:Java-WebSocket:1.3.+'
 
     // Android facebook SDK.
     compile 'com.facebook:facebook-android-sdk:3.14.1'
