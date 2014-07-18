@@ -37,9 +37,6 @@ dependencies {
     // Library for making REST calls.
     compile 'com.squareup.retrofit:retrofit:1.6.+'
 
-    // WebSocket library for real-time calls.
-    compile 'org.java-websocket:Java-WebSocket:1.3.+'
-
     // Android facebook SDK.
     compile 'com.facebook:facebook-android-sdk:3.14.1'
 
@@ -51,4 +48,7 @@ dependencies {
 
     // Library for circle image views.
     compile 'de.hdodenhof:circleimageview:1.1.0'
+
+    // WebSocket library for real-time calls.
+    compile files('libs/Java-WebSocket-7c3b223.jar')
 }
