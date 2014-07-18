@@ -1,18 +1,12 @@
 package com.blitz.app.models.rest;
 
 import com.blitz.app.utilities.app.AppConfig;
+import com.blitz.app.utilities.ssl.SSLHelper;
 import com.squareup.okhttp.OkHttpClient;
 
-import java.security.KeyManagementException;
-import java.security.NoSuchAlgorithmException;
-import java.security.cert.CertificateException;
-
 import javax.net.ssl.HostnameVerifier;
-import javax.net.ssl.SSLContext;
 import javax.net.ssl.SSLSession;
 import javax.net.ssl.SSLSocketFactory;
-import javax.net.ssl.TrustManager;
-import javax.net.ssl.X509TrustManager;
 
 import retrofit.RestAdapter;
 import retrofit.android.AndroidLog;
@@ -87,7 +81,6 @@ public class RestAPIClientBase {
      */
     private OkHttpClient getOkHttpClient() {
 
-        try {
 
             // Create a new client.
             OkHttpClient okHttpClient = new OkHttpClient();
@@ -99,11 +92,6 @@ public class RestAPIClientBase {
             setupSSL(okHttpClient);
 
             return okHttpClient;
-
-        } catch (Exception e) {
-
-            throw new RuntimeException(e);
-        }
     }
 
     /**
@@ -133,36 +121,16 @@ public class RestAPIClientBase {
      * validate certificates.
      *
      * @param okHttpClient Target client.
-     *
-     * @throws KeyManagementException
-     * @throws NoSuchAlgorithmException
      */
-    private void setupSSL(OkHttpClient okHttpClient) throws KeyManagementException, NoSuchAlgorithmException {
-
-        // Create trust manager that does not validate certs chains.
-        final TrustManager[] trustAllCerts = new TrustManager[] {
-
-                new X509TrustManager() {
-                    @Override
-                    public void checkClientTrusted(java.security.cert.X509Certificate[] chain, String authType) throws CertificateException { }
-
-                    @Override
-                    public void checkServerTrusted(java.security.cert.X509Certificate[] chain, String authType) throws CertificateException { }
-
-                    @Override
-                    public java.security.cert.X509Certificate[] getAcceptedIssuers() { return null; }
-                }
-        };
-
-        // Install the all-trusting trust manager.
-        final SSLContext sslContext = SSLContext.getInstance("SSL");
-
-        sslContext.init(null, trustAllCerts, new java.security.SecureRandom());
+    private void setupSSL(OkHttpClient okHttpClient) {
 
         // Create an ssl socket factory with our all-trusting manager.
-        final SSLSocketFactory sslSocketFactory = sslContext.getSocketFactory();
+        SSLSocketFactory sslSocketFactory = SSLHelper.createInsecureSSLSocketFactory();
 
-        // Assign it to the client.
-        okHttpClient.setSslSocketFactory(sslSocketFactory);
+        if (sslSocketFactory != null) {
+
+            // Assign it to the client.
+            okHttpClient.setSslSocketFactory(sslSocketFactory);
+        }
     }
 }

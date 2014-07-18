@@ -14,6 +14,10 @@ import javax.net.ssl.X509TrustManager;
  */
 public class SSLHelper {
 
+    //==============================================================================================
+    // Public Methods
+    //==============================================================================================
+
     /**
      * Creates a socket factory that does not
      * validate and certificates.
@@ -21,7 +25,7 @@ public class SSLHelper {
      * @return Socket factory, null on error.
      */
     @SuppressWarnings("unused")
-    private SSLSocketFactory createInsecureSSLSocketFactory() {
+    public static SSLSocketFactory createInsecureSSLSocketFactory() {
 
         // Create trust manager that does not validate certs chains.
         final TrustManager[] trustAllCerts = new TrustManager[] {
