@@ -32,7 +32,7 @@ public class CometAPI {
     // User to ping the socket for keep-alive.
     private Handler          mWebSocketPingHandler;
     private Runnable         mWebSocketPingRunnable;
-    private final static int mWebSocketPingInterval = 1000;
+    private final static int mWebSocketPingInterval = 60000;
 
     // Time to reconnect on failures.
     private Handler          mWebSocketReconnectHandler;
@@ -197,8 +197,6 @@ public class CometAPI {
                     // Re-connect if pending.
                     if (mWebSocketReconnectPending) {
                         mWebSocketReconnectPending = false;
-
-                        Log.e("Websocket", "Re-connect me");
 
                         // Open connection.
                         openWebSocket();
