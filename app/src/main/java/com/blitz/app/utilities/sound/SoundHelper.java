@@ -54,8 +54,8 @@ public class SoundHelper {
      *
      * @param context Context object (preferably application level).
      */
-    public void init(Context context) {
-        mContext = context;
+    public static void init(Context context) {
+        instance().mContext = context;
     }
 
     /**
