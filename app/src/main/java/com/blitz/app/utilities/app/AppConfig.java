@@ -19,6 +19,9 @@ public class AppConfig {
     // Endpoint URL for RESTful API.
     public static final String API_URL = "https://snapdraft.us/api";
 
+    // Endpoint URL for Comet Server.
+    public static final String WEBSOCKET_URL = "wss://snapdraft.us/comet/u/";
+
     // Should we clear app data on launch.
     public static final boolean CLEAR_APP_DATA_ON_LAUNCH = false;
 
