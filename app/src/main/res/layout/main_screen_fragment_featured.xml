@@ -3,9 +3,58 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/background_inner"
     android:orientation="vertical"
     tools:context="${packageName}.${activityClass}"
     tools:ignore="ButtonStyle,HardcodedText">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="10dp"
+        android:background="@color/button_color_1"
+        android:fontFamily="@string/app_font_regular"
+        android:gravity="center"
+        android:padding="10dp"
+        android:text="Miguel Gaeta"
+        android:textColor="@color/text_color_light"
+        android:textSize="24sp"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:background="@color/button_color_1"
+        android:padding="10dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:text="WINS"
+            android:textColor="@color/text_color_light"/>
+
+        <TextView
+            android:layout_width="125dp"
+            android:layout_height="40dp"
+            android:layout_centerHorizontal="true"
+            android:background="@color/button_color_1"
+            android:gravity="center"
+            android:text="2200"
+            android:textSize="28sp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:text="LOSS"
+            android:textColor="@color/text_color_light"/>
+    </RelativeLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -17,103 +66,27 @@
         android:background="@color/background_inner"
         android:orientation="vertical">
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:fontFamily="@string/app_font_regular"
-            android:gravity="center"
-            android:text="Miguel Gaeta"
-            android:textColor="@color/text_color_light"
-            android:textSize="32sp"/>
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
-            android:layout_marginTop="40dp">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_centerVertical="true"
-                android:text="WINS"
-                android:textColor="@color/text_color_light"/>
-
-            <TextView
-                android:layout_width="150dp"
-                android:layout_height="50dp"
-                android:layout_centerHorizontal="true"
-                android:background="@color/button_color_1"
-                android:gravity="center"
-                android:text="2200"
-                android:textSize="32sp"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:text="LOSS"
-                android:textColor="@color/text_color_light"/>
-        </RelativeLayout>
-
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
-            android:layout_marginTop="40dp"
-            android:background="@color/button_color_3"/>
+            android:layout_marginTop="10dp"
+            android:background="@color/background_primary"/>
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:gravity="center"
+            android:padding="10dp"
             android:text="Bet $5 to win up to $25,000"
             android:textColor="@color/text_color_light"
-            android:textSize="12sp"/>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:gravity="center"
-            android:orientation="horizontal">
-
-            <Button
-                android:layout_width="100dp"
-                android:layout_height="wrap_content"
-                android:contentDescription="@string/empty_string"
-                android:text="Practice"
-                android:textColor="@color/text_color_light"
-                android:textSize="12sp"/>
-
-            <Button
-                android:layout_width="100dp"
-                android:layout_height="wrap_content"
-                android:contentDescription="@string/empty_string"
-                android:text="$1 Dollar"
-                android:textColor="@color/text_color_light"
-                android:textSize="12sp"/>
-
-            <Button
-                android:layout_width="100dp"
-                android:layout_height="wrap_content"
-                android:contentDescription="@string/empty_string"
-                android:text="$5 Dollar"
-                android:textColor="@color/text_color_light"
-                android:textSize="12sp"/>
-        </LinearLayout>
+            android:textSize="16sp"/>
 
     </LinearLayout>
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="30dp"
+        android:layout_height="50dp"
         android:layout_margin="10dp"
         android:background="@color/background_inner"
         android:paddingLeft="10dp"
@@ -137,6 +110,51 @@
             android:textColor="@color/text_color_light"
             android:textSize="12sp"/>
     </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginBottom="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/button_main"
+            android:contentDescription="@string/empty_string"
+            android:gravity="center"
+            android:text="Practice"
+            android:textColor="@color/text_color_light"
+            android:textSize="12sp"/>
+
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_weight="1"
+            android:background="@drawable/button_main"
+            android:contentDescription="@string/empty_string"
+            android:gravity="center"
+            android:text="$1 Dollar"
+            android:textColor="@color/text_color_light"
+            android:textSize="12sp"/>
+
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/button_main"
+            android:contentDescription="@string/empty_string"
+            android:gravity="center"
+            android:text="$5 Dollar"
+            android:textColor="@color/text_color_light"
+            android:textSize="12sp"/>
+    </LinearLayout>
 
     <Button
         android:id="@+id/main_screen_play"
