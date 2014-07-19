@@ -1,6 +1,5 @@
 package com.blitz.app.models.comet;
 
-import android.os.Build;
 import android.os.Handler;
 import android.util.Log;
 import android.view.View;
@@ -70,6 +69,9 @@ public class CometAPI {
 
         // Enable re-connect.
         instance().enableWebSocketReconnect();
+
+        // Enable pinging.
+        instance().enableWebSocketPings();
     }
 
     /**
@@ -88,10 +90,15 @@ public class CometAPI {
 
         // Disable re-connect.
         instance().disableWebSocketReconnect();
+
+        // Disable pinging.
+        instance().disableWebSocketPings();
     }
 
     @SuppressWarnings("unused")
     public void sendMessage(View view) {
+
+        // TODO: Do something with this.
         mWebSocketClient.send("Test message");
     }
 
@@ -114,34 +121,19 @@ public class CometAPI {
             @Override
             public void onMessage(String s) {
 
+                // TODO: Do stuff with this.
                 Log.i("Websocket", "Message received: " + s);
-
-                /*
-                mActivity.runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {  }
-                });
-                */
             }
 
             @Override
             public void onOpen(ServerHandshake serverHandshake) {
 
-                Log.i("Websocket", "Opened");
-
                 // Now connected.
                 mWebSocketConnected = true;
-
-                // Start pinging.
-                //enableWebSocketPings();
-
-                mWebSocketClient.send("Hello from " + Build.MANUFACTURER + " " + Build.MODEL);
             }
 
             @Override
             public void onClose(int code, String reason, boolean remote) {
-
-                Log.i("Websocket", "Closed " + reason);
 
                 // Cleanup connection.
                 cleanupWebSocket(mWebSocketConnecting);
@@ -149,8 +141,6 @@ public class CometAPI {
 
             @Override
             public void onError(Exception e) {
-
-                Log.i("Websocket", "Error " + e.getMessage());
 
                 // Cleanup connection.
                 cleanupWebSocket(mWebSocketConnecting);
@@ -182,9 +172,6 @@ public class CometAPI {
 
         // Set a pending re-connect if requested.
         mWebSocketReconnectPending = reconnect;
-
-        // Stop pinging.
-        disableWebSocketPings();
     }
 
     /**
