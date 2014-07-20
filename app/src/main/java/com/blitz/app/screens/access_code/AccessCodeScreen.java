@@ -18,6 +18,10 @@ import butterknife.OnClick;
  */
 public class AccessCodeScreen extends BaseActivity {
 
+    //==============================================================================================
+    // Member Variables
+    //==============================================================================================
+
     @InjectView(R.id.access_code_screen_code) EditText mCode;
 
     private ObjectModelCode mObjectModelCode;
@@ -27,7 +31,7 @@ public class AccessCodeScreen extends BaseActivity {
     //==============================================================================================
 
     @OnClick(R.id.access_code_screen_continue_with_code) @SuppressWarnings("unused")
-    public void haveCode() {
+    public void continueWithCode() {
 
         if (RestAPIOperation.shouldThrottle()) {
             return;
@@ -37,12 +41,16 @@ public class AccessCodeScreen extends BaseActivity {
             mObjectModelCode = new ObjectModelCode();
         }
 
+        // Provide code user inputted.
         mObjectModelCode.setValue(mCode.getText().toString());
-        mObjectModelCode.redeemCode(new RestAPIOperation(this) {
+
+        // Attempt to redeem it.
+        mObjectModelCode.redeemCode(this, new ObjectModelCode.RedeemCodeCallback() {
 
             @Override
-            public void success() {
+            public void onRedeemCode() {
 
+                // If code is valid.
                 if (mObjectModelCode.isValidCode()) {
 
                     // User now has access.
