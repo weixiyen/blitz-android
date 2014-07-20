@@ -3,6 +3,7 @@ package com.blitz.app.utilities.keyboard;
 import android.app.Activity;
 import android.content.Context;
 import android.content.res.Resources;
+import android.graphics.Rect;
 import android.os.Build;
 import android.os.Handler;
 import android.provider.Settings;
@@ -10,8 +11,10 @@ import android.util.TypedValue;
 import android.view.View;
 import android.view.ViewTreeObserver;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.FrameLayout;
 
 import com.blitz.app.utilities.app.AppDataObject;
+import com.blitz.app.utilities.logging.LogHelper;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -170,7 +173,7 @@ public class KeyboardUtility {
         };
 
         // Update the root view and set a global layout listener.
-        mRootView = activity.findViewById(android.R.id.content);
+        mRootView = ((FrameLayout)activity.findViewById(android.R.id.content)).getChildAt(0);
         mRootView.getViewTreeObserver().addOnGlobalLayoutListener(mOnGlobalLayoutListener);
     }
 
@@ -312,12 +315,22 @@ public class KeyboardUtility {
      * using the current root view and window height.
      */
     private static int getCurrentKeyboardHeight() {
-        int rootViewHeight = mRootView.getHeight();
+
+        // Rect holder.
+        Rect rect = new Rect();
+
+        // Fetch current height.
+        mRootView.getWindowVisibleDisplayFrame(rect);
+
+        // Compute the height from rect holder.
+        int rootViewHeight = (rect.bottom - rect.top);
 
         // Track the window height.
         if (mWindowHeight < rootViewHeight) {
             mWindowHeight = rootViewHeight;
         }
+
+        LogHelper.log("Current height: " + (mWindowHeight - rootViewHeight));
 
         // Fetch current height of the keyboard.
         return mWindowHeight - rootViewHeight;
