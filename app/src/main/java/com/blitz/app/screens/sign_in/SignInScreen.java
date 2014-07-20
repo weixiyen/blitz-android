@@ -46,13 +46,12 @@ public class SignInScreen extends BaseActivity {
         // Set desired registration fields.
         mObjectModelUser.setUsername(mUsername);
         mObjectModelUser.setPassword(mPassword);
-        mObjectModelUser.signIn(new RestAPIOperation(this) {
+        mObjectModelUser.signIn(this, new ObjectModelUser.CallbackSignIn() {
 
             @Override
-            public void success() {
+            public void onSignIn() {
 
-                mObjectModelUser.persistAfterSignIn();
-
+                // Enter main screen.
                 startActivity(new Intent(SignInScreen.this, MainScreen.class), true);
             }
         });

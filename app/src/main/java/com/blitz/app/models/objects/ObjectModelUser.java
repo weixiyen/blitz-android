@@ -1,5 +1,6 @@
 package com.blitz.app.models.objects;
 
+import android.app.Activity;
 import android.widget.EditText;
 
 import com.blitz.app.models.rest.RestAPICallback;
@@ -40,32 +41,6 @@ public class ObjectModelUser extends ObjectModel {
     }
 
     /**
-     * Persist user information and sign up.
-     */
-    public void persistAfterSignUp() {
-        JsonObjectUsers jsonObject = getJsonObject(JsonObjectUsers.class);
-
-        AppDataObject.userId.set(jsonObject.result.id);
-        AppDataObject.userName.set(jsonObject.result.username);
-
-        AppDataObject.userEmail.set(mEmail);
-        AppDataObject.userPassword.set(mPassword);
-    }
-
-    /**
-     * Persist user information after sign in.
-     */
-    public void persistAfterSignIn() {
-        JsonObjectAuth jsonObjectAuth = getJsonObject(JsonObjectAuth.class);
-
-        AppDataObject.userId.set(jsonObjectAuth.user.id);
-        AppDataObject.userName.set(jsonObjectAuth.user.username);
-
-        AppDataObject.userEmail.set(mEmail);
-        AppDataObject.userPassword.set(mPassword);
-    }
-
-    /**
      * Set email.
      *
      * @param email Email.
@@ -95,9 +70,32 @@ public class ObjectModelUser extends ObjectModel {
     /**
      * Sign up (register) a user.
      *
-     * @param operation Rest operation.
+     * @param activity Activity for dialogs.
+     * @param callback Callback.
      */
-    public void signUp(RestAPIOperation operation) {
+    public void signUp(Activity activity, final CallbackSignUp callback) {
+
+        // Rest operation.
+        RestAPIOperation operation = new RestAPIOperation(activity) {
+
+            @Override
+            public void success() {
+
+                // Fetch json result.
+                JsonObjectUsers jsonObject = getJsonObject(JsonObjectUsers.class);
+
+                // Set id, and username from result.
+                AppDataObject.userId.set(jsonObject.result.id);
+                AppDataObject.userName.set(jsonObject.result.username);
+
+                // Rest is user provided.
+                AppDataObject.userEmail.set(mEmail);
+                AppDataObject.userPassword.set(mPassword);
+
+                // Now signed up.
+                callback.onSignUp();
+            }
+        };
 
         // Construct POST body.
         JsonObjectUsers.Body body = new JsonObjectUsers.Body(mEmail, mUsername, mPassword);
@@ -110,9 +108,32 @@ public class ObjectModelUser extends ObjectModel {
     /**
      * Sign in the user.
      *
-     * @param operation Rest operation.
+     * @param activity Activity for dialogs.
+     * @param callback Callback.
      */
-    public void signIn(RestAPIOperation operation) {
+    public void signIn(Activity activity, final CallbackSignIn callback) {
+
+        // Rest operation.
+        RestAPIOperation operation = new RestAPIOperation(activity) {
+
+            @Override
+            public void success() {
+
+                // Fetch json result.
+                JsonObjectAuth jsonObjectAuth = getJsonObject(JsonObjectAuth.class);
+
+                // Set id, and username from result.
+                AppDataObject.userId.set(jsonObjectAuth.user.id);
+                AppDataObject.userName.set(jsonObjectAuth.user.username);
+
+                // Rest is user provided.
+                AppDataObject.userEmail.set(mEmail);
+                AppDataObject.userPassword.set(mPassword);
+
+                // Now signed in.
+                callback.onSignIn();
+            }
+        };
 
         // Construct POST body.
         JsonObjectAuth.Body body = new JsonObjectAuth.Body(mUsername, mPassword);
@@ -121,4 +142,11 @@ public class ObjectModelUser extends ObjectModel {
         RestAPIClient.getAPI().auth(body,
                 new RestAPICallback<JsonObjectAuth>(mRestApiObject, operation, true));
     }
+
+    //==============================================================================================
+    // Callbacks
+    //==============================================================================================
+
+    public interface CallbackSignUp { public void onSignUp(); }
+    public interface CallbackSignIn { public void onSignIn(); }
 }

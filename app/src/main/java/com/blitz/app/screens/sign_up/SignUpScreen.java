@@ -51,13 +51,12 @@ public class SignUpScreen extends BaseActivity {
         mObjectModelUser.setEmail(mEmail);
         mObjectModelUser.setUsername(mUsername);
         mObjectModelUser.setPassword(mPassword);
-        mObjectModelUser.signUp(new RestAPIOperation(this) {
+        mObjectModelUser.signUp(this, new ObjectModelUser.CallbackSignUp() {
 
             @Override
-            public void success() {
+            public void onSignUp() {
 
-                mObjectModelUser.persistAfterSignUp();
-
+                // Enter main screen.
                 startActivity(new Intent(SignUpScreen.this, MainScreen.class), true);
             }
         });
