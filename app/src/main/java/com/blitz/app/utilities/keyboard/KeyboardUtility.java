@@ -10,11 +10,11 @@ import android.provider.Settings;
 import android.util.TypedValue;
 import android.view.View;
 import android.view.ViewTreeObserver;
+import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.FrameLayout;
 
 import com.blitz.app.utilities.app.AppDataObject;
-import com.blitz.app.utilities.logging.LogHelper;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -33,11 +33,15 @@ public class KeyboardUtility {
 
     // Current root activity view.
     private static View mRootView;
+    private static FrameLayout.LayoutParams mRootViewLayoutParams;
 
     // Used to track keyboard state internally.
     private static int mKeyboardHeight;
     private static int mKeyboardHeightCached;
     private static int mWindowHeight;
+
+    // Are we running in fullscreen/
+    private static boolean mIsFullscreen;
 
     // Is the keyboard open.
     private static boolean mKeyboardOpen;
@@ -106,6 +110,10 @@ public class KeyboardUtility {
         // we want to re-initialize keyboard to closed.
         mKeyboardOpen = false;
 
+        // Figure out if running in fullscreen.
+        mIsFullscreen = (activity.getWindow().getAttributes().flags
+                & WindowManager.LayoutParams.FLAG_FULLSCREEN) != 0;
+
         // Define the layout listener for window height changes.
         mOnGlobalLayoutListener = new ViewTreeObserver.OnGlobalLayoutListener() {
 
@@ -168,12 +176,20 @@ public class KeyboardUtility {
                         mKeyboardHeight = mCurrentKeyboardHeight;
                         mKeyboardHandler.postDelayed(mKeyboardRunnable, 300);
                     }
+
+                    if (mIsFullscreen) {
+
+                        // Update and resize the view if in fullscreen mode.
+                        mRootViewLayoutParams.height = mWindowHeight - mCurrentKeyboardHeight;
+                        mRootView.requestLayout();
+                    }
                 }
             }
         };
 
         // Update the root view and set a global layout listener.
         mRootView = ((FrameLayout)activity.findViewById(android.R.id.content)).getChildAt(0);
+        mRootViewLayoutParams = (FrameLayout.LayoutParams) mRootView.getLayoutParams();
         mRootView.getViewTreeObserver().addOnGlobalLayoutListener(mOnGlobalLayoutListener);
     }
 
@@ -300,6 +316,14 @@ public class KeyboardUtility {
         callbacks.clear();
     }
 
+    /**
+     * Convert DP to pixels.
+     *
+     * @param context Context object.
+     * @param densityPixels Target DP.
+     *
+     * @return Converted pixel value.
+     */
     private static int densityPixelsToPixels(Context context, int densityPixels) {
 
         // Grab the resources object.
@@ -329,8 +353,6 @@ public class KeyboardUtility {
         if (mWindowHeight < rootViewHeight) {
             mWindowHeight = rootViewHeight;
         }
-
-        LogHelper.log("Current height: " + (mWindowHeight - rootViewHeight));
 
         // Fetch current height of the keyboard.
         return mWindowHeight - rootViewHeight;
