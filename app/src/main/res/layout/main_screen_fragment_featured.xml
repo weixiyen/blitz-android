@@ -157,7 +157,7 @@
     </LinearLayout>
 
     <Button
-        android:id="@+id/main_screen_play"
+        android:id="@+id/main_featured_play"
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:layout_marginBottom="10dp"
