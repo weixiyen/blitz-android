@@ -1,18 +1,12 @@
 package com.blitz.app.utilities.authentication;
 
+import com.blitz.app.utilities.app.AppData;
 import com.blitz.app.utilities.app.AppDataObject;
 
 /**
  * Created by mrkcsc on 7/20/14.
  */
 public class AuthHelper {
-
-    //==============================================================================================
-    // Member Variables
-    //==============================================================================================
-
-    // Instance object.
-    private static AuthHelper mInstance;
 
     //==============================================================================================
     // Public Methods
@@ -36,25 +30,34 @@ public class AuthHelper {
         return AppDataObject.hasAccess.getBoolean();
     }
 
-    //==============================================================================================
-    // Private Methods
-    //==============================================================================================
+    /**
+     * Sign in the user.
+     *
+     * @param userId Id.
+     * @param userName Name.
+     * @param email Email.
+     * @param password Password.
+     */
+    public static void signIn(String userId, String userName, String email, String password) {
+
+        // Set id, and username from result.
+        AppDataObject.userId.set(userId);
+        AppDataObject.userName.set(userName);
+
+        // Rest is user provided.
+        AppDataObject.userEmail.set(email);
+        AppDataObject.userPassword.set(password);
+    }
 
     /**
-     * Fetch singleton.
-     *
-     * @return Singleton object.
+     * Sign out the user.
      */
-    private static AuthHelper instance() {
+    public static void signOut() {
 
-        if (mInstance == null) {
-            synchronized (AuthHelper.class) {
-                if (mInstance == null) {
-                    mInstance = new AuthHelper();
-                }
-            }
-        }
+        AppData.clear(AppDataObject.userId);
+        AppData.clear(AppDataObject.userName);
 
-        return mInstance;
+        AppData.clear(AppDataObject.userEmail);
+        AppData.clear(AppDataObject.userPassword);
     }
 }

@@ -5,9 +5,9 @@ import android.content.Intent;
 import android.widget.TextView;
 
 import com.blitz.app.R;
-import com.blitz.app.models.objects.ObjectModelUser;
 import com.blitz.app.screens.loading.LoadingScreen;
 import com.blitz.app.utilities.android.BaseDialog;
+import com.blitz.app.utilities.authentication.AuthHelper;
 
 import butterknife.InjectView;
 import butterknife.OnClick;
@@ -59,8 +59,8 @@ public class DialogError extends BaseDialog {
             // Provide unauthorized message.
             mDialogErrorMessage.setText(R.string.error_unauthorized);
 
-            // Remove user information.
-            new ObjectModelUser().removeUserInfo();
+            // Sign out user.
+            AuthHelper.signOut();
 
             // Set a dismiss listener.
             setOnDismissListener(new OnDismissListener() {

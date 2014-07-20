@@ -8,8 +8,7 @@ import com.blitz.app.models.rest.RestAPIClient;
 import com.blitz.app.models.rest.RestAPIOperation;
 import com.blitz.app.models.rest_objects.JsonObjectAuth;
 import com.blitz.app.models.rest_objects.JsonObjectUsers;
-import com.blitz.app.utilities.app.AppData;
-import com.blitz.app.utilities.app.AppDataObject;
+import com.blitz.app.utilities.authentication.AuthHelper;
 
 /**
  * Created by mrkcsc on 7/9/14.
@@ -27,18 +26,6 @@ public class ObjectModelUser extends ObjectModel {
     //==============================================================================================
     // Public Methods
     //==============================================================================================
-
-    /**
-     * Un-persist user information.
-     */
-    public void removeUserInfo() {
-
-        AppData.clear(AppDataObject.userId);
-        AppData.clear(AppDataObject.userName);
-
-        AppData.clear(AppDataObject.userEmail);
-        AppData.clear(AppDataObject.userPassword);
-    }
 
     /**
      * Set email.
@@ -84,13 +71,9 @@ public class ObjectModelUser extends ObjectModel {
                 // Fetch json result.
                 JsonObjectUsers jsonObject = getJsonObject(JsonObjectUsers.class);
 
-                // Set id, and username from result.
-                AppDataObject.userId.set(jsonObject.result.id);
-                AppDataObject.userName.set(jsonObject.result.username);
-
-                // Rest is user provided.
-                AppDataObject.userEmail.set(mEmail);
-                AppDataObject.userPassword.set(mPassword);
+                // Sign in the user.
+                AuthHelper.signIn(jsonObject.result.id,
+                                  jsonObject.result.username, mEmail, mPassword);
 
                 // Now signed up.
                 callback.onSignUp();
@@ -120,15 +103,11 @@ public class ObjectModelUser extends ObjectModel {
             public void success() {
 
                 // Fetch json result.
-                JsonObjectAuth jsonObjectAuth = getJsonObject(JsonObjectAuth.class);
+                JsonObjectAuth jsonObject = getJsonObject(JsonObjectAuth.class);
 
-                // Set id, and username from result.
-                AppDataObject.userId.set(jsonObjectAuth.user.id);
-                AppDataObject.userName.set(jsonObjectAuth.user.username);
-
-                // Rest is user provided.
-                AppDataObject.userEmail.set(mEmail);
-                AppDataObject.userPassword.set(mPassword);
+                // Sign in the user.
+                AuthHelper.signIn(jsonObject.user.id,
+                                  jsonObject.user.username, mEmail, mPassword);
 
                 // Now signed in.
                 callback.onSignIn();
