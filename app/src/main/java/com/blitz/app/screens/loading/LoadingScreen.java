@@ -12,6 +12,7 @@ import com.blitz.app.utilities.android.BaseActivity;
 import com.blitz.app.utilities.app.AppConfig;
 import com.blitz.app.utilities.app.AppData;
 import com.blitz.app.utilities.app.AppDataObject;
+import com.blitz.app.utilities.authentication.AuthHelper;
 import com.blitz.app.utilities.sound.SoundHelper;
 
 /**
@@ -112,11 +113,9 @@ public class LoadingScreen extends BaseActivity {
             startActivity(new Intent(LoadingScreen.this, AppConfig.JUMP_TO_ACTIVITY));
         } else {
 
-            // If use has access to the main app.
-            if (AppDataObject.hasAccess.getBoolean()) {
+            if (AuthHelper.isPassedQueue()) {
 
-                // And user already has an associated id.
-                if (AppDataObject.userId.getString() != null) {
+                if (AuthHelper.isSignedIn()) {
 
                     // User is already logged in, go to main app.
                     startActivity(new Intent(LoadingScreen.this, MainScreen.class));
