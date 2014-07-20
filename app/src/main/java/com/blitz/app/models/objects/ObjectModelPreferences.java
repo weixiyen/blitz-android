@@ -35,6 +35,15 @@ public class ObjectModelPreferences extends ObjectModel {
     //==============================================================================================
 
     /**
+     * Fetch active queue (time based).
+     *
+     * @return Active queue.
+     */
+    public String currentActiveQueue() {
+        return mCurrentActiveQueue;
+    }
+
+    /**
      * Sync user preferences.
      *
      * @param mActivity Context for loading/error dialogs.
