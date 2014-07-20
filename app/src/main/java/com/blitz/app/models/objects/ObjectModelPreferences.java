@@ -1,9 +1,12 @@
 package com.blitz.app.models.objects;
 
+import android.app.Activity;
+
 import com.blitz.app.models.rest.RestAPICallback;
 import com.blitz.app.models.rest.RestAPIClient;
 import com.blitz.app.models.rest.RestAPIOperation;
-import com.blitz.app.models.rest_objects.JsonObjectQueue;
+import com.blitz.app.models.rest_objects.JsonObjectPreference;
+import com.blitz.app.utilities.app.AppConfig;
 
 /**
  * Created by Miguel Gaeta on 6/26/14.
@@ -11,12 +14,77 @@ import com.blitz.app.models.rest_objects.JsonObjectQueue;
 @SuppressWarnings("unused")
 public class ObjectModelPreferences extends ObjectModel {
 
-    public void TestCall(RestAPIOperation operation) {
+    //==============================================================================================
+    // Member Variables
+    //==============================================================================================
 
-        // Construct POST body.
-        JsonObjectQueue.Body body = new JsonObjectQueue.Body("football_heads_up_draft_free");
+    // Current year.
+    private int mCurrentYear;
 
-        // Make rest call for code.
-        RestAPIClient.getAPI().queue(body, new RestAPICallback<JsonObjectQueue>(mRestApiObject, operation));
+    // Current draft week.
+    private int mCurrentWeek;
+
+    // Is a queue available.
+    private boolean mQueueAvailable;
+
+    // What queue are we in.
+    private String mCurrentActiveQueue;
+
+    //==============================================================================================
+    // Public Methods
+    //==============================================================================================
+
+    /**
+     * Sync user preferences.
+     *
+     * @param mActivity Context for loading/error dialogs.
+     *
+     * @param syncCallback Completion callback.
+     */
+    public void Sync(Activity mActivity, final SyncCallback syncCallback) {
+
+        // Define operation, call onSync when complete.
+        RestAPIOperation operation = new RestAPIOperation(mActivity) {
+
+            @Override
+            public void success() {
+
+                // Fetch json result.
+                JsonObjectPreference jsonObject = getJsonObject(JsonObjectPreference.class);
+
+                if (AppConfig.IS_PRODUCTION) {
+
+                    // Assign from result.
+                    mCurrentYear        = jsonObject.current_year;
+                    mCurrentWeek        = jsonObject.current_week;
+                    mQueueAvailable     = jsonObject.queue_available;
+                    mCurrentActiveQueue = jsonObject.current_active_queue;
+
+                } else {
+
+                    // Assign test data.
+                    mCurrentYear        = 2013;
+                    mCurrentWeek        = 5 + (int)(Math.random() * ((10 - 5) + 1));
+                    mQueueAvailable     = true;
+                    mCurrentActiveQueue = "football_heads_up_draft_free";
+                }
+
+                // Sync successful.
+                syncCallback.onSync();
+            }
+        };
+
+        // Make api call.
+        RestAPIClient.getAPI().preferences
+                (new RestAPICallback<JsonObjectPreference>(mRestApiObject, operation));
+    }
+
+    //==============================================================================================
+    // Callbacks
+    //==============================================================================================
+
+    public interface SyncCallback {
+
+        public void onSync();
     }
 }
