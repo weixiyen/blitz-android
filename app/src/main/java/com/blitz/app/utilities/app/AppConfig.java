@@ -10,6 +10,9 @@ package com.blitz.app.utilities.app;
 @SuppressWarnings("unused")
 public class AppConfig {
 
+    // Production flag.
+    public static final boolean IS_PRODUCTION = false;
+
     // Should we authenticate with Facebook.
     public static final boolean AUTH_WITH_FACEBOOK = false;
 
