@@ -1,10 +1,10 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="@android:style/Theme.Holo.NoActionBar">
+    <style name="AppTheme" parent="@android:style/Theme.Holo.NoActionBar.Fullscreen">
 
         <!-- Set a theme window background -->
-        <item name="android:windowBackground">@color/background_primary</item>
+        <item name="android:windowBackground">@drawable/asset_bg</item>
 
         <!-- View pager indicator style. -->
         <item name="vpiCirclePageIndicatorStyle">@style/TabStyle</item>
