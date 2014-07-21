@@ -20,6 +20,7 @@
         android:textSize="16sp"/>
 
     <TextView
+        android:id="@+id/main_featured_queued_timer"
         android:layout_width="match_parent"
         android:layout_height="100dp"
         android:background="@color/button_color_1"
