@@ -1,11 +1,14 @@
 package com.blitz.app.screens.main;
 
+import android.view.View;
+
 import com.blitz.app.R;
 import com.blitz.app.models.objects.ObjectModelPlay;
 import com.blitz.app.models.rest.RestAPIOperation;
 import com.blitz.app.utilities.android.BaseFragment;
 import com.blitz.app.utilities.logging.LogHelper;
 
+import butterknife.InjectView;
 import butterknife.OnClick;
 
 /**
@@ -17,6 +20,10 @@ public class MainScreenFragmentFeatured extends BaseFragment {
     // Member Variables
     //==============================================================================================
 
+    // Container views.
+    @InjectView(R.id.main_featured_timeline_container) View mTimelineContainer;
+    @InjectView(R.id.main_featured_queued_container)   View   mQueuedContainer;
+
     private ObjectModelPlay mModelPlay;
 
     //==============================================================================================
@@ -24,7 +31,7 @@ public class MainScreenFragmentFeatured extends BaseFragment {
     //==============================================================================================
 
     @OnClick(R.id.main_featured_play) @SuppressWarnings("unused")
-    public void main_screen_play() {
+    public void main_featured_play() {
 
         if (RestAPIOperation.shouldThrottle()) {
             return;
@@ -40,8 +47,20 @@ public class MainScreenFragmentFeatured extends BaseFragment {
             @Override
             public void onEnterQueue() {
 
-                LogHelper.log("In queue! - Show the dialog!");
+                // Show the queued container UI.
+                mTimelineContainer.setVisibility(View.GONE);
+                  mQueuedContainer.setVisibility(View.VISIBLE);
             }
         });
+    }
+
+    @OnClick(R.id.main_featured_cancel) @SuppressWarnings("unused")
+    public void main_featured_cancel() {
+
+        LogHelper.log("TODO: Send the cancel call.");
+
+        // Show the timeline container UI.
+        mTimelineContainer.setVisibility(View.VISIBLE);
+          mQueuedContainer.setVisibility(View.GONE);
     }
 }

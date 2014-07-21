@@ -1,172 +1,149 @@
-<LinearLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/background_inner"
-    android:orientation="vertical"
     tools:context="${packageName}.${activityClass}"
     tools:ignore="ButtonStyle,HardcodedText">
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:layout_marginTop="10dp"
-        android:background="@color/button_color_1"
-        android:fontFamily="@string/app_font_regular"
-        android:gravity="center"
-        android:padding="10dp"
-        android:text="Miguel Gaeta"
-        android:textColor="@color/text_color_light"
-        android:textSize="24sp"/>
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:background="@color/button_color_1"
-        android:padding="10dp">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_centerVertical="true"
-            android:text="WINS"
-            android:textColor="@color/text_color_light"/>
-
-        <TextView
-            android:layout_width="125dp"
-            android:layout_height="40dp"
-            android:layout_centerHorizontal="true"
-            android:background="@color/button_color_1"
-            android:gravity="center"
-            android:text="2200"
-            android:textSize="28sp"/>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:text="LOSS"
-            android:textColor="@color/text_color_light"/>
-    </RelativeLayout>
-
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:layout_marginTop="10dp"
-        android:layout_weight="1"
-        android:background="@color/background_inner"
+        android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_marginTop="10dp"
-            android:background="@color/background_primary"/>
-
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:gravity="center"
-            android:padding="10dp"
-            android:text="Bet $5 to win up to $25,000"
-            android:textColor="@color/text_color_light"
-            android:textSize="16sp"/>
-
-    </LinearLayout>
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_margin="10dp"
-        android:background="@color/background_inner"
-        android:paddingLeft="10dp"
-        android:paddingRight="10dp">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_alignParentLeft="true"
-            android:gravity="center"
-            android:text="You have $15.00"
-            android:textColor="@color/text_color_light"
-            android:textSize="12sp"/>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_alignParentRight="true"
-            android:gravity="center"
-            android:text="Add Money"
-            android:textColor="@color/text_color_light"
-            android:textSize="12sp"/>
-    </RelativeLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:layout_marginBottom="10dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:gravity="center"
-        android:orientation="horizontal">
-
-        <Button
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:background="@drawable/button_main"
-            android:contentDescription="@string/empty_string"
-            android:gravity="center"
-            android:text="Practice"
-            android:textColor="@color/text_color_light"
-            android:textSize="12sp"/>
-
-        <Button
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
-            android:layout_weight="1"
-            android:background="@drawable/button_main"
-            android:contentDescription="@string/empty_string"
+            android:layout_marginTop="10dp"
+            android:background="@color/button_color_1"
+            android:fontFamily="@string/app_font_regular"
             android:gravity="center"
-            android:text="$1 Dollar"
+            android:padding="10dp"
+            android:text="Miguel Gaeta"
             android:textColor="@color/text_color_light"
-            android:textSize="12sp"/>
+            android:textSize="24sp"/>
 
-        <Button
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:background="@drawable/button_main"
-            android:contentDescription="@string/empty_string"
-            android:gravity="center"
-            android:text="$5 Dollar"
-            android:textColor="@color/text_color_light"
-            android:textSize="12sp"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:background="@color/button_color_1"
+            android:orientation="horizontal"
+            android:padding="10dp">
+
+            <RelativeLayout
+                android:layout_width="60dp"
+                android:layout_height="match_parent"
+                android:background="@color/button_color_1"
+                android:padding="3dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    android:fontFamily="@string/app_font_bold"
+                    android:gravity="center"
+                    android:text="@string/number_small"
+                    android:textColor="@color/text_color_light"
+                    android:textSize="12sp"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:fontFamily="@string/app_font_light"
+                    android:gravity="center"
+                    android:text="WINS"
+                    android:textColor="@color/text_color_light"
+                    android:textSize="13sp"/>
+            </RelativeLayout>
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_weight="1"
+                android:background="@color/button_color_1"
+                android:gravity="center"
+                android:text="2200"
+                android:textSize="28sp"/>
+
+            <RelativeLayout
+                android:layout_width="60dp"
+                android:layout_height="match_parent"
+                android:background="@color/button_color_1"
+                android:padding="3dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    android:fontFamily="@string/app_font_bold"
+                    android:gravity="center"
+                    android:text="@string/number_small"
+                    android:textColor="@color/text_color_light"
+                    android:textSize="12sp"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:fontFamily="@string/app_font_light"
+                    android:gravity="center"
+                    android:text="LOSSES"
+                    android:textColor="@color/text_color_light"
+                    android:textSize="13sp"/>
+            </RelativeLayout>
+
+        </LinearLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_margin="10dp"
+            android:background="@color/button_color_1"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_alignParentLeft="true"
+                android:gravity="center"
+                android:text="You have $15.00"
+                android:textColor="@color/text_color_light"
+                android:textSize="12sp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_alignParentRight="true"
+                android:gravity="center"
+                android:text="Add Money"
+                android:textColor="@color/text_color_light"
+                android:textSize="12sp"/>
+        </RelativeLayout>
     </LinearLayout>
 
-    <Button
-        android:id="@+id/main_featured_play"
+    <include
+        layout="@layout/main_screen_fragment_featured_timeline"
+        android:id="@+id/main_featured_timeline_container"
         android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:layout_marginBottom="10dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:background="@drawable/button_main"
-        android:contentDescription="@string/empty_string"
-        android:fontFamily="@string/app_font_light"
-        android:text="Play"
-        android:textColor="@color/text_color_light"
-        android:textSize="12sp" />
-</LinearLayout>
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_margin="10dp"/>
+
+    <include
+        layout="@layout/main_screen_fragment_featured_queued"
+        android:id="@+id/main_featured_queued_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_margin="10dp"
+        android:visibility="gone"/>
+</RelativeLayout>
