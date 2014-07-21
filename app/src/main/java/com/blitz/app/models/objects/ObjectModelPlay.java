@@ -62,12 +62,30 @@ public class ObjectModelPlay {
         });
     }
 
+    /**
+     * User cancelled the queue.
+     *
+     * @param activity Activity for dialogs.
+     * @param callback Callback.
+     */
+    public void cancelQueue(final Activity activity, final CancelQueueCallback callback) {
+
+        // Leave the draft queue.
+        mModelQueue.leaveQueue(activity, new ObjectModelQueue.LeaveQueueCallback() {
+
+            @Override
+            public void onLeaveQueue() {
+
+                // Queue now cancelled.
+                callback.onCancelQueue();
+            }
+        });
+    }
+
     //==============================================================================================
     // Callbacks
     //==============================================================================================
 
-    public interface EnterQueueCallback {
-
-        public void onEnterQueue();
-    }
+    public interface EnterQueueCallback  { public void onEnterQueue();  }
+    public interface CancelQueueCallback { public void onCancelQueue(); }
 }

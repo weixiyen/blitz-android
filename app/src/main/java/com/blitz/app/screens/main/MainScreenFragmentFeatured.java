@@ -1,5 +1,6 @@
 package com.blitz.app.screens.main;
 
+import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
 import android.widget.TextView;
@@ -8,7 +9,6 @@ import com.blitz.app.R;
 import com.blitz.app.models.objects.ObjectModelPlay;
 import com.blitz.app.models.rest.RestAPIOperation;
 import com.blitz.app.utilities.android.BaseFragment;
-import com.blitz.app.utilities.logging.LogHelper;
 
 import butterknife.InjectView;
 import butterknife.OnClick;
@@ -36,6 +36,23 @@ public class MainScreenFragmentFeatured extends BaseFragment {
     private int      mSecondsInQueue;
     private Handler  mSecondsInQueueHandler;
     private Runnable mSecondsInQueueRunnable;
+
+    //==============================================================================================
+    // Overwritten Methods
+    //==============================================================================================
+
+    /**
+     * Initialize the fragment.
+     *
+     * @param savedInstanceState The saved instance state.
+     */
+    protected void onCreateView(Bundle savedInstanceState) {
+        super.onCreateView(savedInstanceState);
+
+        if (mModelPlay == null) {
+            mModelPlay = new ObjectModelPlay();
+        }
+    }
 
     //==============================================================================================
     // Private Methods
@@ -118,13 +135,7 @@ public class MainScreenFragmentFeatured extends BaseFragment {
     @OnClick(R.id.main_featured_play) @SuppressWarnings("unused")
     public void main_featured_play() {
 
-        if (RestAPIOperation.shouldThrottle()) {
-            return;
-        }
-
-        if (mModelPlay == null) {
-            mModelPlay = new ObjectModelPlay();
-        }
+        if (RestAPIOperation.shouldThrottle()) { return; }
 
         // Enter the queue.
         mModelPlay.enterQueue(getActivity(), new ObjectModelPlay.EnterQueueCallback() {
@@ -144,12 +155,20 @@ public class MainScreenFragmentFeatured extends BaseFragment {
     @OnClick(R.id.main_featured_cancel) @SuppressWarnings("unused")
     public void main_featured_cancel() {
 
-        // Hide the timeline UI.
-        showContainer(mQueuedContainer, mTimelineContainer);
+        if (RestAPIOperation.shouldThrottle()) { return; }
 
-        // Stop timer.
-        stopQueueTimer();
+        // Leave the queue.
+        mModelPlay.cancelQueue(getActivity(), new ObjectModelPlay.CancelQueueCallback() {
 
-        LogHelper.log("TODO: Send the cancel call.");
+            @Override
+            public void onCancelQueue() {
+
+                // Hide the timeline UI.
+                showContainer(mQueuedContainer, mTimelineContainer);
+
+                // Stop timer.
+                stopQueueTimer();
+            }
+        });
     }
 }

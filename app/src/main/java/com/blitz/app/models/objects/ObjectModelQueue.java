@@ -59,12 +59,64 @@ public class ObjectModelQueue extends ObjectModel {
                 (body, new RestAPICallback<JsonObjectQueue>(mRestApiObject, operation));
     }
 
+    /**
+     * Remove user from the draft queue.  Requires a
+     * draft key to be set.
+     *
+     * @param activity Activity for dialogs.
+     * @param callback Callback.
+     */
+    public void leaveQueue(Activity activity, final LeaveQueueCallback callback) {
+
+        // Operation callbacks.
+        RestAPIOperation operation = new RestAPIOperation(activity) {
+
+            @Override
+            public void success() {
+
+                // Now left queue.
+                callback.onLeaveQueue();
+            }
+        };
+
+        // Make api call.
+        RestAPIClient.getAPI().queue
+                (mDraftKey, new RestAPICallback<JsonObjectQueue>(mRestApiObject, operation));
+    }
+
+    /**
+     * Confirm user match in the draft queue. Requires
+     * a draft key to be set.
+     *
+     * @param activity Activity for dialogs.
+     * @param callback Callback.
+     */
+    public void confirmQueue(Activity activity, final ConfirmQueueCallback callback) {
+
+        // Operation callbacks.
+        RestAPIOperation operation = new RestAPIOperation(activity) {
+
+            @Override
+            public void success() {
+
+                // Now confirmed queue.
+                callback.onConfirmQueue();
+            }
+        };
+
+        // Construct PUT body.
+        JsonObjectQueue.BodyPUT body = new JsonObjectQueue.BodyPUT(mDraftKey);
+
+        // Make api call.
+        RestAPIClient.getAPI().queue
+                (body, new RestAPICallback<JsonObjectQueue>(mRestApiObject, operation));
+    }
+
     //==============================================================================================
     // Callbacks
     //==============================================================================================
 
-    public interface QueueUpCallback {
-
-        public void onQueueUp();
-    }
+    public interface QueueUpCallback      { public void onQueueUp();      }
+    public interface LeaveQueueCallback   { public void onLeaveQueue();   }
+    public interface ConfirmQueueCallback { public void onConfirmQueue(); }
 }
