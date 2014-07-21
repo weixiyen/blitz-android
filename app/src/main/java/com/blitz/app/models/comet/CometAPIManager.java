@@ -37,6 +37,7 @@ public class CometAPIManager {
      */
     public static void addChannelCallback(String channel, boolean global, CallbackChannel callback) {
 
+        // Callbacks dictionaries.
     }
 
     public interface CallbackChannel {
