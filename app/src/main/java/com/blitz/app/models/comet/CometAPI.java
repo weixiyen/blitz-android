@@ -81,7 +81,7 @@ public class CometAPI {
     public static void closeWebSocket() {
 
         if (instance().mWebSocketConnected &&
-                instance().mWebSocketClient != null) {
+            instance().mWebSocketClient != null) {
 
             // Send close command.
             instance().mWebSocketClient.close();
@@ -96,7 +96,7 @@ public class CometAPI {
     }
 
     @SuppressWarnings("unused")
-    public void sendMessage(View view) {
+    public void sendMessageToWebSocket(View view) {
 
         // TODO: Do something with this.
         mWebSocketClient.send("Test message");
