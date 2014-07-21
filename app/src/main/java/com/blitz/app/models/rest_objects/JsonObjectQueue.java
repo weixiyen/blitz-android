@@ -5,6 +5,9 @@ package com.blitz.app.models.rest_objects;
  */
 public class JsonObjectQueue extends JsonObject {
 
+    /**
+     * Body parameters for POST request.
+     */
     public static class Body {
         public String draft_key;
 
@@ -14,9 +17,15 @@ public class JsonObjectQueue extends JsonObject {
         }
     }
 
-    public static class Result {
+    /**
+     * Body parameters for PUT request.
+     */
+    public static class BodyPUT {
+        public String draft_key;
 
+        public BodyPUT(String draft_key) {
+
+            this.draft_key = draft_key;
+        }
     }
-
-    public Result result;
 }
