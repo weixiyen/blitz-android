@@ -1,10 +1,10 @@
 package com.blitz.app.models.comet;
 
 import android.os.Handler;
-import android.util.Log;
 
 import com.blitz.app.utilities.app.AppConfig;
 import com.blitz.app.utilities.app.AppDataObject;
+import com.blitz.app.utilities.logging.LogHelper;
 import com.blitz.app.utilities.ssl.SSLHelper;
 
 import org.java_websocket.client.WebSocketClient;
@@ -13,6 +13,7 @@ import org.java_websocket.handshake.ServerHandshake;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.ArrayList;
 
 import javax.net.ssl.SSLSocketFactory;
 
@@ -42,6 +43,22 @@ class CometAPIWebsocket {
 
     // Web socket client.
     private WebSocketClient mWebSocketClient;
+
+    // Messages that need to be sent when connected.
+    private ArrayList<String> mPendingWebSocketMessages;
+
+    //==============================================================================================
+    // Constructor
+    //==============================================================================================
+
+    /**
+     * Default constructor.
+     */
+    public CometAPIWebsocket() {
+
+        // Initialize pending messages.
+        mPendingWebSocketMessages = new ArrayList<String>();
+    }
 
     //==============================================================================================
     // Public Methods
@@ -103,6 +120,10 @@ class CometAPIWebsocket {
 
             // Send message to the web socket.
             mWebSocketClient.send(jsonMessage);
+        } else {
+
+            // Add to pending if not connected.
+            mPendingWebSocketMessages.add(jsonMessage);
         }
     }
 
@@ -123,10 +144,10 @@ class CometAPIWebsocket {
         mWebSocketClient = new WebSocketClient(webSocketURI) {
 
             @Override
-            public void onMessage(String s) {
+            public void onMessage(String message) {
 
                 // TODO: Do stuff with this.
-                Log.i("Websocket", "Message received: " + s);
+                LogHelper.log("Websocket message: " + message);
             }
 
             @Override
@@ -134,6 +155,13 @@ class CometAPIWebsocket {
 
                 // Now connected.
                 mWebSocketConnected = true;
+
+                // Iterate over any pending messages.
+                for (String jsonMessage : mPendingWebSocketMessages) {
+
+                    // Send to web socket.
+                    sendMessageToWebSocket(jsonMessage);
+                }
             }
 
             @Override
