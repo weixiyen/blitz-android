@@ -20,14 +20,14 @@ import javax.net.ssl.SSLSocketFactory;
 /**
  * Created by Miguel on 7/17/2014.
  */
-public class CometAPI {
+public class CometAPIWebsocket {
 
     //==============================================================================================
     // Member Variables
     //==============================================================================================
 
     // Singleton instance.
-    private static CometAPI instance = null;
+    private static CometAPIWebsocket instance = null;
 
     // Connection status.
     private boolean mWebSocketConnected;
@@ -294,12 +294,12 @@ public class CometAPI {
      *
      * @return Singleton instance.
      */
-    private static CometAPI instance() {
+    private static CometAPIWebsocket instance() {
 
         if (instance == null) {
-            synchronized (CometAPI.class) {
+            synchronized (CometAPIWebsocket.class) {
                 if (instance == null) {
-                    instance = new CometAPI();
+                    instance = new CometAPIWebsocket();
                 }
             }
         }
