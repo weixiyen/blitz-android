@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 
 import com.blitz.app.R;
+import com.blitz.app.models.comet.CometAPIManager;
 import com.blitz.app.utilities.background.EnteredBackground;
 import com.blitz.app.utilities.keyboard.KeyboardUtility;
 import com.blitz.app.utilities.reflection.ReflectionHelper;
@@ -76,6 +77,9 @@ public class BaseActivity extends FragmentActivity {
 
         // Stop timer to detect entering the background.
         EnteredBackground.stopActivityTransitionTimer();
+
+        // Add current activity.
+        CometAPIManager.configAddActivity(this);
     }
 
     /**
@@ -91,6 +95,9 @@ public class BaseActivity extends FragmentActivity {
 
         // Start timer to detect entering the background.
         EnteredBackground.startActivityTransitionTimer();
+
+        // Clear our current activity.
+        CometAPIManager.configRemoveActivity(this);
     }
 
     /**
