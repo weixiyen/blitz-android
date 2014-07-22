@@ -99,8 +99,11 @@ class CometAPIWebsocket {
     @SuppressWarnings("unused")
     public void sendMessageToWebSocket(String jsonMessage) {
 
-        // Send message to the web socket.
-        mWebSocketClient.send(jsonMessage);
+        if (mWebSocketConnected) {
+
+            // Send message to the web socket.
+            mWebSocketClient.send(jsonMessage);
+        }
     }
 
     //==============================================================================================
