@@ -2,7 +2,6 @@ package com.blitz.app.models.comet;
 
 import android.os.Handler;
 import android.util.Log;
-import android.view.View;
 
 import com.blitz.app.utilities.app.AppConfig;
 import com.blitz.app.utilities.app.AppDataObject;
@@ -92,11 +91,16 @@ class CometAPIWebsocket {
         disableWebSocketPings();
     }
 
+    /**
+     * Sends a message to the socket.
+     *
+     * @param jsonMessage Message should be in json format.
+     */
     @SuppressWarnings("unused")
-    public void sendMessageToWebSocket(View view) {
+    public void sendMessageToWebSocket(String jsonMessage) {
 
-        // TODO: Do something with this.
-        mWebSocketClient.send("Test message");
+        // Send message to the web socket.
+        mWebSocketClient.send(jsonMessage);
     }
 
     //==============================================================================================
