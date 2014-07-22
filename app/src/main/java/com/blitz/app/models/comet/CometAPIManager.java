@@ -1,7 +1,9 @@
 package com.blitz.app.models.comet;
 
 import android.app.Activity;
+import android.support.v4.app.Fragment;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
@@ -19,15 +21,15 @@ public class CometAPIManager {
     // Websocket used for comet calls.
     private CometAPIWebsocket mWebsocket;
 
-    // Current activity being displayed,
+    // Current activities, fragments displayed,
     // can be null if app not active.
-    private Activity mCurrentActivity;
+    private ArrayList<Object> mCurrentActivityAndFragments;
 
     // Active channels user is subscribed to.
     private HashMap<String, CometAPIChannel> mActiveChannels;
 
     //==============================================================================================
-    // Public Methods
+    // Public Methods - Config
     //==============================================================================================
 
     /**
@@ -45,17 +47,70 @@ public class CometAPIManager {
             instance().mActiveChannels = new HashMap<String, CometAPIChannel>();
         }
 
+        // Initialize activities and fragments.
+        if (instance().mCurrentActivityAndFragments == null) {
+            instance().mCurrentActivityAndFragments = new ArrayList<Object>();
+        }
+
         // Open the web socket.
         instance().mWebsocket.openWebSocket();
     }
 
-    public void setCurrentActivity(Activity activity) {
+    /**
+     * Add activity to current list.
+     *
+     * @param activity Target activity.
+     */
+    public static void configAddActivity(Activity activity) {
 
-        // TODO: If activity = null, clear all non-global callbacks.
-
-        // Update current activity.
-        mCurrentActivity = activity;
+        // Add if not already present.
+        if (!instance().mCurrentActivityAndFragments.contains(activity)) {
+             instance().mCurrentActivityAndFragments.add(activity);
+        }
     }
+
+    /**
+     * Remove activity from current list.
+     *
+     * @param activity Target activity.
+     */
+    public static void configRemoveActivity(Activity activity) {
+
+        // Remove if present.
+        if (instance().mCurrentActivityAndFragments.contains(activity)) {
+            instance().mCurrentActivityAndFragments.remove(activity);
+        }
+    }
+
+    /**
+     * Add fragment to current list.
+     *
+     * @param fragment Target fragment.
+     */
+    public static void configAddFragment(Fragment fragment) {
+
+        // Add if not already present.
+        if (!instance().mCurrentActivityAndFragments.contains(fragment)) {
+             instance().mCurrentActivityAndFragments.add(fragment);
+        }
+    }
+
+    /**
+     * Remove fragment from current list.
+     *
+     * @param fragment Target fragment.
+     */
+    public static void configRemoveFragment(Fragment fragment) {
+
+        // Remove if present.
+        if (instance().mCurrentActivityAndFragments.contains(fragment)) {
+            instance().mCurrentActivityAndFragments.remove(fragment);
+        }
+    }
+
+    //==============================================================================================
+    // Public Methods
+    //==============================================================================================
 
     /**
      * Given a channel name, subscribe to that
@@ -102,6 +157,30 @@ public class CometAPIManager {
         }
     }
 
+    public static <T> void addChannelCallback(T receivingClass, CometAPICallback<T> callback, String channelName) {
+
+
+        /*
+        Activity activity = instance().mCurrentActivity;
+
+        Class c = receivingClass.getClass();
+
+        Class a = activity.getClass();
+
+        if (receivingClass.getClass().isAssignableFrom(activity.getClass())) {
+
+        }
+
+        if (c.equals(activity.getClass())) {
+
+            callback.messageReceived((T) activity, "Test message: " + channelName);
+        } else {
+
+            callback.messageReceived(null, "Test message: " + channelName);
+        }
+        */
+    }
+
     /**
      * Add a callback to receive messages for a specified channel.
      * Assumes user is already subscribed to this channel.
@@ -111,12 +190,16 @@ public class CometAPIManager {
      * @param global Is this a global callback.  Global callbacks will NOT
      *               be cleaned up across activities, so make sure anything
      *               in a global callback will not cause a memory leak.
+     *               Local callbacks will automatically be cleared when
+     *               an activity or fragment resumes in order to help guard
+     *               against memory leaks.  It is up to the user to make
+     *               sure to re-initialize them.
      *
      * @param callback Callback.
      * @param callbackIdentifier Callback identifier, used to remove callback.
      */
     @SuppressWarnings("unused")
-    public static void addChannelCallback(String channelName, boolean global, CallbackChannel callback, String callbackIdentifier) {
+    private static void addChannelCallback(String channelName, boolean global, CallbackChannel callback, String callbackIdentifier) {
 
         // Look for channel in active channel list.
         CometAPIChannel channel = instance().mActiveChannels.get(channelName);
@@ -131,7 +214,7 @@ public class CometAPIManager {
      * Add channel shorthand.
      */
     @SuppressWarnings("unused")
-    public static void addChannelCallback(String channelName, boolean global, CallbackChannel callback) {
+    private static void addChannelCallback(String channelName, boolean global, CallbackChannel callback) {
 
         // Call with no identifier specified.
         addChannelCallback(channelName, global, callback, null);
@@ -144,7 +227,7 @@ public class CometAPIManager {
      * @param callbackIdentifier Callback identifier, used to remove callback.
      */
     @SuppressWarnings("unused")
-    public static void removeChannelCallback(String channelName, String callbackIdentifier) {
+    private static void removeChannelCallback(String channelName, String callbackIdentifier) {
 
         // Look for channel in active channel list.
         CometAPIChannel channel = instance().mActiveChannels.get(channelName);
@@ -170,6 +253,9 @@ public class CometAPIManager {
             synchronized (CometAPIManager.class) {
                 if (mInstance == null) {
                     mInstance = new CometAPIManager();
+
+                    // Init.
+                    init();
                 }
             }
         }
