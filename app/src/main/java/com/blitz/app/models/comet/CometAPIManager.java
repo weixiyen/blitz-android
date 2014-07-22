@@ -11,15 +11,47 @@ public class CometAPIManager {
     // Member Variables
     //==============================================================================================
 
+    // Instance object.
+    private static CometAPIManager mInstance;
+
+    // Websocket used for comet calls.
+    private CometAPIWebsocket mWebsocket;
+
     // Current activity being displayed,
     // can be null if app not active.
     private Activity mCurrentActivity;
+
+    //==============================================================================================
+    // Public Methods
+    //==============================================================================================
+
+    /**
+     * Initializes the manager.
+     */
+    public static void init() {
+
+        // Initialize a web socket.
+        if (instance().mWebsocket == null) {
+            instance().mWebsocket = new CometAPIWebsocket();
+        }
+
+        // Open the web socket.
+        instance().mWebsocket.openWebSocket();
+    }
+
+    public void setCurrentActivity(Activity activity) {
+
+        // TODO: If activity = null, clear all non-global callbacks.
+
+        // Update current activity.
+        mCurrentActivity = activity;
+    }
 
     public static void setChannelSubscribed(String channel) {
 
     }
 
-    public static void unsubscribeFromChannel(String channel) {
+    public static void setChannelUnsubscribed(String channel) {
 
     }
 
@@ -40,52 +72,34 @@ public class CometAPIManager {
         // Callbacks dictionaries.
     }
 
+    //==============================================================================================
+    // Private Methods
+    //==============================================================================================
+
+    /**
+     * Instance method.
+     *
+     * @return Manager singleton.
+     */
+    private static CometAPIManager instance() {
+
+        if (mInstance == null) {
+            synchronized (CometAPIManager.class) {
+                if (mInstance == null) {
+                    mInstance = new CometAPIManager();
+                }
+            }
+        }
+
+        return mInstance;
+    }
+
+    //==============================================================================================
+    // Interface
+    //==============================================================================================
+
     public interface CallbackChannel {
 
         public void messageReceived(Activity activity);
-    }
-
-    private static CometAPIManager instance() {
-
-        return null;
-    }
-
-    //==============================================================================================
-    // Configuration
-    //==============================================================================================
-
-    // Configuration object.
-    private Config mConfig;
-
-    /**
-     * Fetch config object.
-     *
-     * @return Config obkect.
-     */
-    public static Config config() {
-
-        // Fetch from singleton.
-        return instance().getConfig();
-    }
-
-    private Config getConfig() {
-        if (mConfig == null) {
-            mConfig = new Config();
-        }
-
-        return mConfig;
-    }
-
-    public class Config {
-
-        private Config() {  }
-
-        public void setCurrentActivity(Activity activity) {
-
-            // If activity = null, clear all non-global callbacks.
-
-            // Update current activity.
-            mCurrentActivity = activity;
-        }
     }
 }

@@ -20,14 +20,11 @@ import javax.net.ssl.SSLSocketFactory;
 /**
  * Created by Miguel on 7/17/2014.
  */
-public class CometAPIWebsocket {
+class CometAPIWebsocket {
 
     //==============================================================================================
     // Member Variables
     //==============================================================================================
-
-    // Singleton instance.
-    private static CometAPIWebsocket instance = null;
 
     // Connection status.
     private boolean mWebSocketConnected;
@@ -55,44 +52,44 @@ public class CometAPIWebsocket {
      * Open the web socket asynchronously.
      */
     @SuppressWarnings("unused")
-    public static void openWebSocket()  {
+    public void openWebSocket()  {
 
-        if (!instance().mWebSocketConnected) {
+        if (!mWebSocketConnected) {
 
             // Create a client every time.
-            instance().createWebSocketClient();
+            createWebSocketClient();
 
             // Send connect command.
-            instance().mWebSocketClient.connect();
-            instance().mWebSocketConnecting = true;
+            mWebSocketClient.connect();
+            mWebSocketConnecting = true;
         }
 
         // Enable re-connect.
-        instance().enableWebSocketReconnect();
+        enableWebSocketReconnect();
 
         // Enable pinging.
-        instance().enableWebSocketPings();
+        enableWebSocketPings();
     }
 
     /**
      * Close the web socket asynchronously.
      */
     @SuppressWarnings("unused")
-    public static void closeWebSocket() {
+    public void closeWebSocket() {
 
-        if (instance().mWebSocketConnected &&
-            instance().mWebSocketClient != null) {
+        if (mWebSocketConnected &&
+            mWebSocketClient != null) {
 
             // Send close command.
-            instance().mWebSocketClient.close();
-            instance().mWebSocketConnecting = false;
+            mWebSocketClient.close();
+            mWebSocketConnecting = false;
         }
 
         // Disable re-connect.
-        instance().disableWebSocketReconnect();
+        disableWebSocketReconnect();
 
         // Disable pinging.
-        instance().disableWebSocketPings();
+        disableWebSocketPings();
     }
 
     @SuppressWarnings("unused")
@@ -287,23 +284,5 @@ public class CometAPIWebsocket {
             // Remove callbacks which stops the ping cycle.
             mWebSocketPingHandler.removeCallbacks(mWebSocketPingRunnable);
         }
-    }
-
-    /**
-     * Fetch singleton instance.
-     *
-     * @return Singleton instance.
-     */
-    private static CometAPIWebsocket instance() {
-
-        if (instance == null) {
-            synchronized (CometAPIWebsocket.class) {
-                if (instance == null) {
-                    instance = new CometAPIWebsocket();
-                }
-            }
-        }
-
-        return instance;
     }
 }
