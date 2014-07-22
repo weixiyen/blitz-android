@@ -6,9 +6,12 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.blitz.app.R;
+import com.blitz.app.models.comet.CometAPICallback;
+import com.blitz.app.models.comet.CometAPIManager;
 import com.blitz.app.models.objects.ObjectModelPlay;
 import com.blitz.app.models.rest.RestAPIOperation;
 import com.blitz.app.utilities.android.BaseFragment;
+import com.blitz.app.utilities.app.AppDataObject;
 
 import butterknife.InjectView;
 import butterknife.OnClick;
@@ -46,12 +49,17 @@ public class MainScreenFragmentFeatured extends BaseFragment {
      *
      * @param savedInstanceState The saved instance state.
      */
+    @Override
     protected void onCreateView(Bundle savedInstanceState) {
         super.onCreateView(savedInstanceState);
 
+        // Lazy load the model.
         if (mModelPlay == null) {
             mModelPlay = new ObjectModelPlay();
         }
+
+        // Setup comet.
+        setupCometCallbacks();
     }
 
     //==============================================================================================
@@ -126,6 +134,30 @@ public class MainScreenFragmentFeatured extends BaseFragment {
                 containerTo.animate().alpha(1.0f).setDuration(250);
             }
         });
+    }
+
+    /**
+     * Listen on user channel for callbacks
+     * related to joining the game.
+     */
+    private void setupCometCallbacks() {
+
+        // Fetch comet channel for this user.
+        String userCometChannel = "user:" + AppDataObject.userId.getString();
+
+        // Subscribe to channel.
+        CometAPIManager.setChannelSubscribed(userCometChannel);
+
+        // Add a callback.
+        CometAPIManager.addChannelCallback(this, new CometAPICallback<MainScreenFragmentFeatured>() {
+
+            @Override
+            public void messageReceived(MainScreenFragmentFeatured receivingClass, String message) {
+
+                // TODO: Update state based on confirmed/cancelled.
+            }
+
+        }, userCometChannel);
     }
 
     //==============================================================================================
