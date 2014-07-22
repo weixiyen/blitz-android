@@ -72,12 +72,12 @@ class CometAPIChannel {
     public String getJsonString(boolean subscribe) {
 
         // Initialize dictionary.
-        HashMap<String, String> jsonDictionary = new HashMap<String, String>();
+        HashMap<String, Object> jsonDictionary = new HashMap<String, Object>();
 
         // Place parameters into dictionary.
         jsonDictionary.put("action", subscribe ? "subscribe" : "unsubscribe");
         jsonDictionary.put("channel", mName);
-        jsonDictionary.put("cursor", Integer.toString(mCursor));
+        jsonDictionary.put("cursor", mCursor);
 
         // Convert to json string.
         return new Gson().toJsonTree(jsonDictionary).toString();
