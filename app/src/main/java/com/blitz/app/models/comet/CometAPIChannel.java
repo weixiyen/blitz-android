@@ -9,6 +9,7 @@ import com.google.gson.JsonObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by Miguel on 7/21/2014.
@@ -25,10 +26,9 @@ public class CometAPIChannel {
     // Channel cursor.
     private int mCursor;
 
-    // Channel callbacks.
+    // Channel callbacks and queued messages.
+    // TODO: Use a single map, use custom class, not a pair.
     private HashMap<String, Pair<CometAPICallback, Class>> mCallbacks;
-
-    // Messages queued for this channel.
     private HashMap<String, ArrayList<JsonObject>> mCallbacksQueuedMessages;
 
     //==============================================================================================
@@ -181,21 +181,6 @@ public class CometAPIChannel {
     }
 
     /**
-     * Fetch callback.
-     *
-     * @param callbackIdentifier Callback identifier.
-     *
-     * @return Returns a pair, first item is the callback object,
-     *         second object is the receiving class.
-     */
-    @SuppressWarnings("unused")
-    Pair<CometAPICallback, Class> getCallback(String callbackIdentifier) {
-
-        // Return associated callback.
-        return mCallbacks.get(callbackIdentifier);
-    }
-
-    /**
      * Return all callbacks, mapped
      * by their identifiers.
      *
@@ -228,5 +213,42 @@ public class CometAPIChannel {
 
         // Convert to json string.
         return new Gson().toJsonTree(jsonDictionary).toString();
+    }
+
+    /**
+     * Try to send off queued messages, when
+     * an activity or fragment becomes active.
+     *
+     * @param activityOrFragment Activity or fragment.
+     */
+    @SuppressWarnings("unchecked")
+    void trySendQueuedMessages(Object activityOrFragment) {
+
+        // Iterate over each callback associated with the channel.
+        for (Map.Entry<String, Pair<CometAPICallback, Class>> callbackEntry : mCallbacks.entrySet()) {
+
+            // Fetch callback activityOrFragment pair (receiving class, to callback).
+            Pair<CometAPICallback, Class> callback = callbackEntry.getValue();
+
+            // If callbackEntry receiving class matched.
+            if (callback.second.equals(activityOrFragment.getClass())) {
+
+                // Attempt to fetch queued json objects.
+                ArrayList<JsonObject> jsonObjects = mCallbacksQueuedMessages.get(callbackEntry.getKey());
+
+                if (jsonObjects != null) {
+
+                    // Iterate over queued messages.
+                    for (JsonObject jsonObject :jsonObjects) {
+
+                        // Send the callbackEntry with current activity/fragment as the receiving class.
+                        callback.first.messageReceived(activityOrFragment, jsonObject.getAsJsonObject("data"));
+                    }
+
+                    // Remove message for key from queue.
+                    mCallbacksQueuedMessages.remove(callbackEntry.getKey());
+                }
+            }
+        }
     }
 }

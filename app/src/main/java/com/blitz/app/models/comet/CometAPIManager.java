@@ -67,10 +67,19 @@ public class CometAPIManager implements CometAPIWebsocket.OnMessageCallback {
      */
     public static void configAddActivity(Activity activity) {
 
-        // Add if not already present.
-        if (!instance().mCurrentActivityAndFragments.contains(activity)) {
-             instance().mCurrentActivityAndFragments.add(activity);
-        }
+        // Add it.
+        instance().configAddActivityOrFragment(activity);
+    }
+
+    /**
+     * Add fragment to current list.
+     *
+     * @param fragment Target fragment.
+     */
+    public static void configAddFragment(Fragment fragment) {
+
+        // Add it.
+        instance().configAddActivityOrFragment(fragment);
     }
 
     /**
@@ -83,19 +92,6 @@ public class CometAPIManager implements CometAPIWebsocket.OnMessageCallback {
         // Remove if present.
         if (instance().mCurrentActivityAndFragments.contains(activity)) {
             instance().mCurrentActivityAndFragments.remove(activity);
-        }
-    }
-
-    /**
-     * Add fragment to current list.
-     *
-     * @param fragment Target fragment.
-     */
-    public static void configAddFragment(Fragment fragment) {
-
-        // Add if not already present.
-        if (!instance().mCurrentActivityAndFragments.contains(fragment)) {
-             instance().mCurrentActivityAndFragments.add(fragment);
         }
     }
 
@@ -175,6 +171,10 @@ public class CometAPIManager implements CometAPIWebsocket.OnMessageCallback {
      * Method cannot be accessed from outside
      * of the manager so it is private.
      *
+     * TODO: The body of this should be a channel method, not
+     *       only that the channel method should be merged
+     *       with sending a queued message.
+     *
      * @param jsonObject JSON sent.
      */
     @Override
@@ -221,6 +221,29 @@ public class CometAPIManager implements CometAPIWebsocket.OnMessageCallback {
                     // Add a queued message for this particular callback identifier.
                     channelObject.addQueuedMessage(callbackEntry.getKey(), jsonObject);
                 }
+            }
+        }
+    }
+
+    /**
+     * When an activity or fragment is added, iterate
+     * over all active channels and attempt to send
+     * queued messages.
+     *
+     * @param object Activity or fragment that
+     *               just became active.
+     */
+    private void configAddActivityOrFragment(Object object) {
+
+        // Add if not already present.
+        if (!mCurrentActivityAndFragments.contains(object)) {
+             mCurrentActivityAndFragments.add(object);
+
+            // Iterate over active channels.
+            for (CometAPIChannel channelObject : mActiveChannels.values()) {
+
+                // Attempt to send queued messages.
+                channelObject.trySendQueuedMessages(object);
             }
         }
     }
