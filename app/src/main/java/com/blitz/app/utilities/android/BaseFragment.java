@@ -9,7 +9,6 @@ import android.view.ViewGroup;
 
 import com.blitz.app.R;
 import com.blitz.app.models.comet.CometAPIManager;
-import com.blitz.app.utilities.logging.LogHelper;
 import com.blitz.app.utilities.reflection.ReflectionHelper;
 import com.blitz.app.utilities.string.StringHelper;
 
@@ -108,8 +107,6 @@ public class BaseFragment extends Fragment {
     @Override
     public void onPause () {
         super.onPause();
-
-        LogHelper.log("Fragment paused " + this);
 
         // Remove fragment.
         CometAPIManager.configRemoveFragment(this);
