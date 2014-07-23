@@ -2,6 +2,8 @@ package com.blitz.app.models.comet;
 
 import android.util.Pair;
 
+import com.blitz.app.utilities.android.BaseActivity;
+import com.blitz.app.utilities.android.BaseFragment;
 import com.google.gson.Gson;
 
 import java.util.ArrayList;
@@ -97,8 +99,13 @@ public class CometAPIChannel {
     @SuppressWarnings("unused")
     public <T> void addCallback(Class<T> receivingClass, CometAPICallback<T> callback, String callbackIdentifier) {
 
-        // TODO: Enforce supported classes.
-        // TODO: Execute callbacks.
+        // Verify receiving class is supported.
+        if (!BaseActivity.class.isAssignableFrom(receivingClass) &&
+            !BaseFragment.class.isAssignableFrom(receivingClass)) {
+
+            // Throw exception.
+            throw new RuntimeException("Receiving class must be a fragment or activity.");
+        }
 
         // If identifier provided.
         if (callbackIdentifier != null) {
@@ -107,26 +114,6 @@ public class CometAPIChannel {
             mCallbacks.put(callbackIdentifier,
                     new Pair<CometAPICallback, Class>(callback, receivingClass));
         }
-
-        /*
-        Activity activity = instance().mCurrentActivity;
-
-        Class c = receivingClassObject.getClass();
-
-        Class a = activity.getClass();
-
-        if (receivingClassObject.getClass().isAssignableFrom(activity.getClass())) {
-
-        }
-
-        if (c.equals(activity.getClass())) {
-
-            callback.messageReceived((T) activity, "Test message: " + channelName);
-        } else {
-
-            callback.messageReceived(null, "Test message: " + channelName);
-        }
-        */
     }
 
     /**
