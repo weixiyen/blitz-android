@@ -117,9 +117,11 @@ public class CometAPIManager {
      * channel if not already subscribed.
      *
      * @param channelName Specified channel.
+     *
+     * @return Subscribed channel object, guaranteed to not be null.
      */
     @SuppressWarnings("unused")
-    public static void setChannelSubscribed(String channelName) {
+    public static CometAPIChannel setChannelSubscribed(String channelName) {
 
         // Look for channel in active channel list.
         CometAPIChannel channel = instance().mActiveChannels.get(channelName);
@@ -133,6 +135,9 @@ public class CometAPIManager {
 
         // Send subscribe message to the websocket.
         instance().mWebsocket.sendMessageToWebSocket(channel.getJsonString(true));
+
+        // Return channel.
+        return channel;
     }
 
     /**
