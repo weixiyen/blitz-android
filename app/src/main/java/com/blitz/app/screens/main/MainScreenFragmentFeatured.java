@@ -145,19 +145,21 @@ public class MainScreenFragmentFeatured extends BaseFragment {
         // Fetch comet channel for this user.
         String userCometChannel = "user:" + AppDataObject.userId.getString();
 
-        // Subscribe to channel.
-        CometAPIManager.setChannelSubscribed(userCometChannel);
+        // Subscribe to channel, set callback.
+        CometAPIManager
 
-        // Add a callback.
-        CometAPIManager.addChannelCallback(this, new CometAPICallback<MainScreenFragmentFeatured>() {
+                // Subscribe to user channel.
+                .subscribeToChannel(userCometChannel)
 
-            @Override
-            public void messageReceived(MainScreenFragmentFeatured receivingClass, String message) {
+                // Set callback action.
+                .addCallback(this, new CometAPICallback<MainScreenFragmentFeatured>() {
 
-                // TODO: Update state based on confirmed/cancelled.
-            }
+                    @Override
+                    public void messageReceived(MainScreenFragmentFeatured receivingClass, String message) {
 
-        }, userCometChannel);
+                        // TODO: Update state based on confirmed/cancelled.
+                    }
+                }, "draftUserCallback");
     }
 
     //==============================================================================================

@@ -121,7 +121,7 @@ public class CometAPIManager {
      * @return Subscribed channel object, guaranteed to not be null.
      */
     @SuppressWarnings("unused")
-    public static CometAPIChannel setChannelSubscribed(String channelName) {
+    public static CometAPIChannel subscribeToChannel(String channelName) {
 
         // Look for channel in active channel list.
         CometAPIChannel channel = instance().mActiveChannels.get(channelName);
@@ -147,7 +147,7 @@ public class CometAPIManager {
      * @param channelName Specified channel.
      */
     @SuppressWarnings("unused")
-    public static void setChannelUnsubscribed(String channelName) {
+    public static void unsubscribeFromChannel(String channelName) {
 
         // Look for channel in active channel list.
         CometAPIChannel channel = instance().mActiveChannels.get(channelName);
@@ -159,87 +159,6 @@ public class CometAPIManager {
 
             // Remove from active channels.
             instance().mActiveChannels.remove(channelName);
-        }
-    }
-
-    public static <T> void addChannelCallback(T receivingClass, CometAPICallback<T> callback, String channelName) {
-
-
-        /*
-        Activity activity = instance().mCurrentActivity;
-
-        Class c = receivingClass.getClass();
-
-        Class a = activity.getClass();
-
-        if (receivingClass.getClass().isAssignableFrom(activity.getClass())) {
-
-        }
-
-        if (c.equals(activity.getClass())) {
-
-            callback.messageReceived((T) activity, "Test message: " + channelName);
-        } else {
-
-            callback.messageReceived(null, "Test message: " + channelName);
-        }
-        */
-    }
-
-    /**
-     * Add a callback to receive messages for a specified channel.
-     * Assumes user is already subscribed to this channel.
-     *
-     * @param channelName Channel to attach callback to.
-     *
-     * @param global Is this a global callback.  Global callbacks will NOT
-     *               be cleaned up across activities, so make sure anything
-     *               in a global callback will not cause a memory leak.
-     *               Local callbacks will automatically be cleared when
-     *               an activity or fragment resumes in order to help guard
-     *               against memory leaks.  It is up to the user to make
-     *               sure to re-initialize them.
-     *
-     * @param callback Callback.
-     * @param callbackIdentifier Callback identifier, used to remove callback.
-     */
-    @SuppressWarnings("unused")
-    private static void addChannelCallback(String channelName, boolean global, CallbackChannel callback, String callbackIdentifier) {
-
-        // Look for channel in active channel list.
-        CometAPIChannel channel = instance().mActiveChannels.get(channelName);
-
-        // Add callback.
-        if (channel != null) {
-            channel.addCallback(callback, callbackIdentifier);
-        }
-    }
-
-    /**
-     * Add channel shorthand.
-     */
-    @SuppressWarnings("unused")
-    private static void addChannelCallback(String channelName, boolean global, CallbackChannel callback) {
-
-        // Call with no identifier specified.
-        addChannelCallback(channelName, global, callback, null);
-    }
-
-    /**
-     * Remove channel callback.
-     *
-     * @param channelName Channel name.
-     * @param callbackIdentifier Callback identifier, used to remove callback.
-     */
-    @SuppressWarnings("unused")
-    private static void removeChannelCallback(String channelName, String callbackIdentifier) {
-
-        // Look for channel in active channel list.
-        CometAPIChannel channel = instance().mActiveChannels.get(channelName);
-
-        // Remove callback.
-        if (channel != null) {
-            channel.removeCallback(callbackIdentifier);
         }
     }
 
@@ -266,14 +185,5 @@ public class CometAPIManager {
         }
 
         return mInstance;
-    }
-
-    //==============================================================================================
-    // Interface
-    //==============================================================================================
-
-    public interface CallbackChannel {
-
-        public void messageReceived(Activity activity);
     }
 }
