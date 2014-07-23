@@ -206,7 +206,7 @@ public class CometAPIManager {
 
         // Add callback.
         if (channel != null) {
-            channel.addCallback(callback, callbackIdentifier, global);
+            channel.addCallback(callback, callbackIdentifier);
         }
     }
 

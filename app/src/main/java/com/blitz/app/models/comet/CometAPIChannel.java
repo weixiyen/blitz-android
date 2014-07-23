@@ -6,12 +6,11 @@ import com.google.gson.Gson;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.UUID;
 
 /**
  * Created by Miguel on 7/21/2014.
  */
-class CometAPIChannel {
+public class CometAPIChannel {
 
     //==============================================================================================
     // Member Variables
@@ -41,12 +40,12 @@ class CometAPIChannel {
     }
 
     /**
-     * Public channel initialized.
+     * Initialize a channel.
      *
      * @param name Channel name.
      * @param cursor Channel cursor.
      */
-    public CometAPIChannel(String name, int cursor) {
+     CometAPIChannel(String name, int cursor) {
         super();
 
         // Set channel name.
@@ -61,46 +60,21 @@ class CometAPIChannel {
     //==============================================================================================
 
     /**
-     * Get a json string of this channel to
-     * send to the websocket.
-     *
-     * @param subscribe Subscribe or unsubscribe.
-     *
-     * @return Json string.
-     */
-    @SuppressWarnings("unused")
-    public String getJsonString(boolean subscribe) {
-
-        // Initialize dictionary.
-        HashMap<String, Object> jsonDictionary = new HashMap<String, Object>();
-
-        // Place parameters into dictionary.
-        jsonDictionary.put("action", subscribe ? "subscribe" : "unsubscribe");
-        jsonDictionary.put("channel", mName);
-        jsonDictionary.put("cursor", mCursor);
-
-        // Convert to json string.
-        return new Gson().toJsonTree(jsonDictionary).toString();
-    }
-
-    /**
      * Add a callback to this channel.
      *
      * @param callback Callback.
      * @param callbackIdentifier Callback identifier.
-     * @param global Is callback global.
      */
     @SuppressWarnings("unused")
-    public void addCallback(CometAPIManager.CallbackChannel callback, String callbackIdentifier, boolean global) {
+    public void addCallback(CometAPIManager.CallbackChannel callback, String callbackIdentifier) {
 
-        // Random identifier if null.
-        if (callbackIdentifier == null) {
-            callbackIdentifier = UUID.randomUUID().toString();
+        // If identifier provided.
+        if (callbackIdentifier != null) {
+
+            // Add callback.
+            mCallbacks.put(callbackIdentifier,
+                    new Pair<CometAPIManager.CallbackChannel, Boolean>(callback, false));
         }
-
-        // Add callback.
-        mCallbacks.put(callbackIdentifier,
-                new Pair<CometAPIManager.CallbackChannel, Boolean>(callback, global));
     }
 
     /**
@@ -125,6 +99,10 @@ class CometAPIChannel {
         mCallbacks.clear();
     }
 
+    //==============================================================================================
+    // Private/Package Only Methods
+    //==============================================================================================
+
     /**
      * Fetch a specified callback by identifier.
      *
@@ -133,7 +111,7 @@ class CometAPIChannel {
      * @return Callback, or null if not found.
      */
     @SuppressWarnings("unused")
-    public CometAPIManager.CallbackChannel getCallback(String callbackIdentifier) {
+    CometAPIManager.CallbackChannel getCallback(String callbackIdentifier) {
 
         // Fetch requested callback.
         Pair<CometAPIManager.CallbackChannel, Boolean> callback =
@@ -151,7 +129,7 @@ class CometAPIChannel {
      * @return List of callbacks.
      */
     @SuppressWarnings("unused")
-    public ArrayList<CometAPIManager.CallbackChannel> getCallbacks(boolean global) {
+    ArrayList<CometAPIManager.CallbackChannel> getCallbacks(boolean global) {
 
         // Create list of callbacks.
         ArrayList<CometAPIManager.CallbackChannel> callbacks =
@@ -168,5 +146,28 @@ class CometAPIChannel {
         }
 
         return callbacks;
+    }
+
+    /**
+     * Get a json string of this channel to
+     * send to the websocket.
+     *
+     * @param subscribe Subscribe or unsubscribe.
+     *
+     * @return Json string.
+     */
+    @SuppressWarnings("unused")
+    String getJsonString(boolean subscribe) {
+
+        // Initialize dictionary.
+        HashMap<String, Object> jsonDictionary = new HashMap<String, Object>();
+
+        // Place parameters into dictionary.
+        jsonDictionary.put("action", subscribe ? "subscribe" : "unsubscribe");
+        jsonDictionary.put("channel", mName);
+        jsonDictionary.put("cursor", mCursor);
+
+        // Convert to json string.
+        return new Gson().toJsonTree(jsonDictionary).toString();
     }
 }
