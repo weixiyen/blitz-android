@@ -5,6 +5,7 @@ import android.util.Pair;
 import com.blitz.app.utilities.android.BaseActivity;
 import com.blitz.app.utilities.android.BaseFragment;
 import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -27,6 +28,9 @@ public class CometAPIChannel {
     // Channel callbacks.
     private HashMap<String, Pair<CometAPICallback, Class>> mCallbacks;
 
+    // Messages queued for this channel.
+    private HashMap<String, ArrayList<JsonObject>> mCallbacksQueuedMessages;
+
     //==============================================================================================
     // Constructors
     //==============================================================================================
@@ -39,6 +43,9 @@ public class CometAPIChannel {
 
         // Initialize hash map of callbacks.
         mCallbacks = new HashMap<String, Pair<CometAPICallback, Class>>();
+
+        // Initialize array of queued messages.
+        mCallbacksQueuedMessages = new HashMap<String, ArrayList<JsonObject>>();
     }
 
     /**
@@ -126,6 +133,9 @@ public class CometAPIChannel {
 
         // Remove requested callbacks.
         mCallbacks.remove(callbackIdentifier);
+
+        // Also remove queued messages.
+        mCallbacksQueuedMessages.remove(callbackIdentifier);
     }
 
     /**
@@ -136,11 +146,39 @@ public class CometAPIChannel {
 
         // Clear callbacks.
         mCallbacks.clear();
+
+        // And queued messages.
+        mCallbacksQueuedMessages.clear();
     }
 
     //==============================================================================================
     // Private/Package Only Methods
     //==============================================================================================
+
+    /**
+     * Add a message to the queue.  Each message is
+     * associated with a particular callback.
+     *
+     * @param callbackIdentifier Callback identifier.
+     *
+     * @param message Message to queue.
+     */
+    void addQueuedMessage(String callbackIdentifier, JsonObject message) {
+
+        // Fetch queued messages for this callback identifier.
+        ArrayList<JsonObject> queuedMessages = mCallbacksQueuedMessages.get(callbackIdentifier);
+
+        // Initialize if needed.
+        if (queuedMessages == null) {
+            queuedMessages = new ArrayList<JsonObject>();
+        }
+
+        // Add to queue.
+        queuedMessages.add(message);
+
+        // Insert into dictionary.
+        mCallbacksQueuedMessages.put(callbackIdentifier, queuedMessages);
+    }
 
     /**
      * Fetch callback.
@@ -158,25 +196,15 @@ public class CometAPIChannel {
     }
 
     /**
-     * Fetch all callbacks.
+     * Return all callbacks, mapped
+     * by their identifiers.
      *
-     * @return List of callbacks, each callback is a
-     *         pair of callback, receiving class objects.
+     * @return All callbacks.
      */
     @SuppressWarnings("unused")
-    ArrayList<Pair<CometAPICallback, Class>> getCallbacks() {
+    HashMap<String, Pair<CometAPICallback, Class>> getCallbacks() {
 
-        // Create list of callbacks.
-        ArrayList<Pair<CometAPICallback, Class>> callbacks =
-                new ArrayList<Pair<CometAPICallback, Class>>();
-
-        for (Pair<CometAPICallback, Class> callback : mCallbacks.values()) {
-
-            // Add to list of callbacks.
-            callbacks.add(callback);
-        }
-
-        return callbacks;
+        return mCallbacks;
     }
 
     /**
