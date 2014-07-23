@@ -12,6 +12,7 @@ import com.blitz.app.models.objects.ObjectModelPlay;
 import com.blitz.app.models.rest.RestAPIOperation;
 import com.blitz.app.utilities.android.BaseFragment;
 import com.blitz.app.utilities.app.AppDataObject;
+import com.google.gson.JsonObject;
 
 import butterknife.InjectView;
 import butterknife.OnClick;
@@ -155,7 +156,7 @@ public class MainScreenFragmentFeatured extends BaseFragment {
                 .addCallback(this, new CometAPICallback<MainScreenFragmentFeatured>() {
 
                     @Override
-                    public void messageReceived(MainScreenFragmentFeatured receivingClass, String message) {
+                    public void messageReceived(MainScreenFragmentFeatured receivingClass, JsonObject message) {
 
                         // TODO: Update state based on confirmed/cancelled.
                     }
