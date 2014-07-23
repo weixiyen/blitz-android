@@ -2,6 +2,7 @@ package com.blitz.app.models.comet;
 
 import android.app.Activity;
 import android.support.v4.app.Fragment;
+import android.util.Pair;
 
 import com.blitz.app.utilities.logging.LogHelper;
 import com.google.gson.JsonObject;
@@ -177,9 +178,48 @@ public class CometAPIManager implements CometAPIWebsocket.OnMessageCallback {
      * @param jsonObject JSON sent.
      */
     @Override
+    @SuppressWarnings("unchecked")
     public void onMessage(JsonObject jsonObject) {
 
-        LogHelper.log("Message received: " + jsonObject);
+        // Fetch channel message was sent to.
+        String channel = jsonObject.get("channel").getAsString();
+
+        // Try to fetch associated channel object.
+        CometAPIChannel channelObject = mActiveChannels.get(channel);
+
+        if (channelObject != null) {
+
+            // Iterate over each callback associated with the channel.
+            for (Pair<CometAPICallback, Class> callback : channelObject.getCallbacks()) {
+
+                // If we cannot find a current activity
+                // or fragment that matches the callbacks
+                // receiving class, we need to store it
+                // to be sent later.
+                boolean callbackShouldBeQueued = true;
+
+                // Iterate over active activity and fragments.
+                for (Object currentActivityOrFragment : mCurrentActivityAndFragments) {
+
+                  //  LogHelper.log("Current: " + currentActivityOrFragment + " looking for: " + callback.second);
+
+                    // If callback receiving class matched.
+                    if (callback.second.equals(currentActivityOrFragment.getClass())) {
+
+                        // Send the callback with current activity/fragment as the receiving class.
+                        callback.first.messageReceived(currentActivityOrFragment, jsonObject.getAsJsonObject("data"));
+
+                        // Callback ran, no need to queue.
+                        callbackShouldBeQueued = false;
+                    }
+                }
+
+                if (callbackShouldBeQueued) {
+
+                    LogHelper.log("Queue this message: " + jsonObject);
+                }
+            }
+        }
     }
 
     /**
