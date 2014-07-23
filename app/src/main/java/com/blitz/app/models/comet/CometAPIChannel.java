@@ -46,7 +46,7 @@ public class CometAPIChannel {
      * @param cursor Channel cursor.
      */
      CometAPIChannel(String name, int cursor) {
-        super();
+        this();
 
         // Set channel name.
         mName = name;
