@@ -3,13 +3,16 @@ package com.blitz.app.models.comet;
 import android.app.Activity;
 import android.support.v4.app.Fragment;
 
+import com.blitz.app.utilities.logging.LogHelper;
+import com.google.gson.JsonObject;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
  * Created by Miguel on 7/21/2014.
  */
-public class CometAPIManager {
+public class CometAPIManager implements CometAPIWebsocket.OnMessageCallback {
 
     //==============================================================================================
     // Member Variables
@@ -39,7 +42,7 @@ public class CometAPIManager {
 
         // Initialize a web socket.
         if (instance().mWebsocket == null) {
-            instance().mWebsocket = new CometAPIWebsocket();
+            instance().mWebsocket = new CometAPIWebsocket(instance());
         }
 
         // Initialize active channels map.
@@ -165,6 +168,19 @@ public class CometAPIManager {
     //==============================================================================================
     // Private Methods
     //==============================================================================================
+
+    /**
+     * When a message is received via the websocket.
+     * Method cannot be accessed from outside
+     * of the manager so it is private.
+     *
+     * @param jsonObject JSON sent.
+     */
+    @Override
+    public void onMessage(JsonObject jsonObject) {
+
+        LogHelper.log("Message received: " + jsonObject);
+    }
 
     /**
      * Instance method.

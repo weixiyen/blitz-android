@@ -4,8 +4,9 @@ import android.os.Handler;
 
 import com.blitz.app.utilities.app.AppConfig;
 import com.blitz.app.utilities.app.AppDataObject;
-import com.blitz.app.utilities.logging.LogHelper;
 import com.blitz.app.utilities.ssl.SSLHelper;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 
 import org.java_websocket.client.WebSocketClient;
 import org.java_websocket.handshake.ServerHandshake;
@@ -47,17 +48,32 @@ class CometAPIWebsocket {
     // Messages that need to be sent when connected.
     private ArrayList<String> mPendingWebSocketMessages;
 
+    // Interface for receiving messages.
+    private OnMessageCallback mOnMessageCallback;
+
     //==============================================================================================
     // Constructor
     //==============================================================================================
 
     /**
+     * Empty constructor disallowed.
+     */
+    @SuppressWarnings("unused")
+    private CometAPIWebsocket() {
+
+    }
+
+    /**
      * Default constructor.
      */
-    public CometAPIWebsocket() {
+    @SuppressWarnings("unused")
+    public CometAPIWebsocket(OnMessageCallback callback) {
 
         // Initialize pending messages.
         mPendingWebSocketMessages = new ArrayList<String>();
+
+        // Set callback.
+        mOnMessageCallback = callback;
     }
 
     //==============================================================================================
@@ -143,11 +159,19 @@ class CometAPIWebsocket {
         // Initialize the client.
         mWebSocketClient = new WebSocketClient(webSocketURI) {
 
+            /**
+             * When a message is received, send it
+             * through the callback interface.
+             *
+             * @param message Message assumed to be a JSON string.
+             */
             @Override
             public void onMessage(String message) {
 
-                // TODO: Do stuff with this.
-                LogHelper.log("Websocket message: " + message);
+                // Send message via callback.
+                if (mOnMessageCallback != null) {
+                    mOnMessageCallback.onMessage(new JsonParser().parse(message).getAsJsonObject());
+                }
             }
 
             @Override
@@ -319,5 +343,18 @@ class CometAPIWebsocket {
             // Remove callbacks which stops the ping cycle.
             mWebSocketPingHandler.removeCallbacks(mWebSocketPingRunnable);
         }
+    }
+
+    //==============================================================================================
+    // Interface
+    //==============================================================================================
+
+    /**
+     * Callback for when a websocket
+     * message is received.
+     */
+    interface OnMessageCallback {
+
+        public void onMessage(JsonObject jsonObject);
     }
 }
