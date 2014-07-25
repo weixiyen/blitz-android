@@ -253,6 +253,13 @@ public class BaseDialog {
 
         // Fetch the content window.  This is required of all dialogs.
         mDialogContent = ButterKnife.findById(mPopupWindow.getContentView(), R.id.dialog_content);
+
+        if (mDialogContent == null) {
+
+            // Throw exception if content view not found.
+            throw new RuntimeException("Dialog must have a content view.");
+        }
+
         mDialogContent.setVisibility(View.GONE);
         mDialogContent.setOnClickListener(new View.OnClickListener() {
 
