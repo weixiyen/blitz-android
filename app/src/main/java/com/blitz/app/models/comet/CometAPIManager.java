@@ -2,13 +2,11 @@ package com.blitz.app.models.comet;
 
 import android.app.Activity;
 import android.support.v4.app.Fragment;
-import android.util.Pair;
 
 import com.google.gson.JsonObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Map;
 
 /**
  * Created by Miguel on 7/21/2014.
@@ -187,41 +185,9 @@ public class CometAPIManager implements CometAPIWebsocket.OnMessageCallback {
         // Try to fetch associated channel object.
         CometAPIChannel channelObject = mActiveChannels.get(channel);
 
+        // Attempt to send messages.
         if (channelObject != null) {
-
-            // Iterate over each callback associated with the channel.
-            for (Map.Entry<String, Pair<CometAPICallback, Class>> callbackEntry
-                    : channelObject.getCallbacks().entrySet()) {
-
-                // Fetch callback object pair (receiving class, to callback).
-                Pair<CometAPICallback, Class> callback = callbackEntry.getValue();
-
-                // If we cannot find a current activity
-                // or fragment that matches the callbacks
-                // receiving class, we need to store it
-                // to be sent later.
-                boolean callbackShouldBeQueued = true;
-
-                // Iterate over active activity and fragments.
-                for (Object currentActivityOrFragment : mCurrentActivityAndFragments) {
-
-                    // If callbackEntry receiving class matched.
-                    if (callback.second.equals(currentActivityOrFragment.getClass())) {
-
-                        // Send the callbackEntry with current activity/fragment as the receiving class.
-                        callback.first.messageReceived(currentActivityOrFragment, jsonObject.getAsJsonObject("data"));
-
-                        // Callback ran, no need to queue.
-                        callbackShouldBeQueued = false;
-                    }
-                }
-
-                if (callbackShouldBeQueued) {
-
-                    // Add a queued message for this particular callback identifier.
-                    channelObject.addQueuedMessage(callbackEntry.getKey(), jsonObject);
-                }
-            }
+            channelObject.trySendMessages(jsonObject, mCurrentActivityAndFragments);
         }
     }
 

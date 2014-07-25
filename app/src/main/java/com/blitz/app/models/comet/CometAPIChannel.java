@@ -1,5 +1,6 @@
 package com.blitz.app.models.comet;
 
+import android.app.Activity;
 import android.util.Pair;
 
 import com.blitz.app.utilities.android.BaseActivity;
@@ -152,7 +153,7 @@ public class CometAPIChannel {
     }
 
     //==============================================================================================
-    // Private/Package Only Methods
+    // Private Methods
     //==============================================================================================
 
     /**
@@ -163,7 +164,7 @@ public class CometAPIChannel {
      *
      * @param message Message to queue.
      */
-    void addQueuedMessage(String callbackIdentifier, JsonObject message) {
+    private void addQueuedMessage(String callbackIdentifier, JsonObject message) {
 
         // Fetch queued messages for this callback identifier.
         ArrayList<JsonObject> queuedMessages = mCallbacksQueuedMessages.get(callbackIdentifier);
@@ -180,17 +181,40 @@ public class CometAPIChannel {
         mCallbacksQueuedMessages.put(callbackIdentifier, queuedMessages);
     }
 
-    /**
-     * Return all callbacks, mapped
-     * by their identifiers.
-     *
-     * @return All callbacks.
-     */
-    @SuppressWarnings("unused")
-    HashMap<String, Pair<CometAPICallback, Class>> getCallbacks() {
+    @SuppressWarnings({"unchecked", "ConstantConditions"})
+    private void sendMessage(final CometAPICallback callback, final Object activityOrFragment, final JsonObject jsonObject) {
 
-        return mCallbacks;
+        Activity associatedActivity = null;
+
+        // If object is activity.
+        if (BaseActivity.class.isAssignableFrom(activityOrFragment.getClass())) {
+
+            associatedActivity = (BaseActivity)activityOrFragment;
+        }
+
+        // If object is fragment.
+        if (BaseFragment.class.isAssignableFrom(activityOrFragment.getClass())) {
+
+            associatedActivity = ((BaseFragment)activityOrFragment).getActivity();
+        }
+
+        // Since the message will always be sent to
+        // an activity or fragment, make it easy on
+        // the callee and run result on UI thread.
+        associatedActivity.runOnUiThread(new Runnable() {
+
+            @Override
+            public void run() {
+
+                // Send the callbackEntry with current activity/fragment as the receiving class.
+                callback.messageReceived(activityOrFragment, jsonObject.getAsJsonObject("data"));
+            }
+        });
     }
+
+    //==============================================================================================
+    // Package Only Methods
+    //==============================================================================================
 
     /**
      * Get a json string of this channel to
@@ -239,15 +263,57 @@ public class CometAPIChannel {
                 if (jsonObjects != null) {
 
                     // Iterate over queued messages.
-                    for (JsonObject jsonObject :jsonObjects) {
+                    for (JsonObject jsonObject : jsonObjects) {
 
-                        // Send the callbackEntry with current activity/fragment as the receiving class.
-                        callback.first.messageReceived(activityOrFragment, jsonObject.getAsJsonObject("data"));
+                        // Send the message.
+                        sendMessage(callback.first, activityOrFragment, jsonObject);
                     }
 
                     // Remove message for key from queue.
                     mCallbacksQueuedMessages.remove(callbackEntry.getKey());
                 }
+            }
+        }
+    }
+
+    /**
+     * Try to send message to callbacks that are
+     * listening on a current active activity or fragment.
+     *
+     * @param jsonObject Json message.
+     * @param activityOrFragments Activity or fragment.
+     */
+    void trySendMessages(JsonObject jsonObject, ArrayList<Object> activityOrFragments) {
+
+        for (Map.Entry<String, Pair<CometAPICallback, Class>> callbackEntry : mCallbacks.entrySet()) {
+
+            // Fetch callback object pair (receiving class, to callback).
+            Pair<CometAPICallback, Class> callback = callbackEntry.getValue();
+
+            // If we cannot find a current activity
+            // or fragment that matches the callbacks
+            // receiving class, we need to store it
+            // to be sent later.
+            boolean callbackShouldBeQueued = true;
+
+            // Iterate over active activity and fragments.
+            for (Object currentActivityOrFragment : activityOrFragments) {
+
+                // If callbackEntry receiving class matched.
+                if (callback.second.equals(currentActivityOrFragment.getClass())) {
+
+                    // Send the message.
+                    sendMessage(callback.first, currentActivityOrFragment, jsonObject);
+
+                    // Callback ran, no need to queue.
+                    callbackShouldBeQueued = false;
+                }
+            }
+
+            if (callbackShouldBeQueued) {
+
+                // Add a queued message for this particular callback identifier.
+                addQueuedMessage(callbackEntry.getKey(), jsonObject);
             }
         }
     }
