@@ -7,44 +7,68 @@
     tools:context="${packageName}.${activityClass}"
     tools:ignore="ButtonStyle,HardcodedText">
 
-    <ImageView
+    <FrameLayout
+        android:id="@+id/dialog_content"
         android:layout_width="match_parent"
-        android:layout_height="64dp"
-        android:background="#898fc7"
-        android:contentDescription="@string/app_name"
-        android:scaleType="center" />
-    <EditText
-        android:id="@+id/username"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="4dp"
-        android:layout_marginLeft="4dp"
-        android:layout_marginRight="4dp"
-        android:layout_marginTop="16dp"
-        android:inputType="textEmailAddress" />
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
-        android:layout_marginLeft="4dp"
-        android:layout_marginRight="4dp"
-        android:layout_marginTop="4dp"
-        android:fontFamily="sans-serif"
-        android:inputType="textPassword"/>
+        android:layout_height="match_parent"
+        android:background="@color/background_dialog"
+        tools:ignore="UselessParent">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:fontFamily="@string/app_font_regular"
-        android:text="New Text" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:background="@color/background_inner"
+            android:minHeight="200dp"
+            android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/info_dialog_password"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:background="#000000"
-        android:fontFamily="@string/app_font_bold"
-        android:text="New Text" />
+            <TextView
+                android:id="@+id/dialog_info_text"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_margin="10dp"
+                android:layout_weight="1"
+                android:fontFamily="@string/app_font_light"
+                android:gravity="center"
+                android:text="@string/lorum_ipsum_long"
+                android:textColor="@color/text_color_light"
+                android:textSize="14sp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:layout_marginRight="10dp"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/dialog_info_left_button"
+                    android:layout_width="0dp"
+                    android:layout_height="60dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/button_main"
+                    android:contentDescription="@string/empty_string"
+                    android:fontFamily="@string/app_font_light"
+                    android:text="@string/lorum_ipsum_tiny"
+                    android:textColor="@color/text_color_light"
+                    android:textSize="12sp" />
+
+                <Button
+                    android:id="@+id/dialog_info_right_button"
+                    android:layout_width="0dp"
+                    android:layout_height="60dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/button_main"
+                    android:contentDescription="@string/empty_string"
+                    android:fontFamily="@string/app_font_light"
+                    android:text="@string/lorum_ipsum_tiny"
+                    android:textColor="@color/text_color_light"
+                    android:textSize="12sp" />
+            </LinearLayout>
+        </LinearLayout>
+    </FrameLayout>
 </LinearLayout>
