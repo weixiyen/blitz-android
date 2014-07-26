@@ -170,10 +170,32 @@ public class MainScreenFragmentFeatured extends BaseFragment {
                     @Override
                     public void messageReceived(MainScreenFragmentFeatured receivingClass, JsonObject message) {
 
-                        // TODO: Update state based on confirmed/cancelled.
-                        LogHelper.log("Received message in featured fragment! " + message);
+                        // Handle the action.
+                        receivingClass.handleDraftAction(receivingClass, message);
                     }
                 }, "draftUserCallback");
+    }
+
+    /**
+     * Handle a draft callback action.
+     *
+     * @param receivingClass Instance of this activity.
+     * @param message Json message sent.
+     */
+    private void handleDraftAction(MainScreenFragmentFeatured receivingClass, JsonObject message) {
+
+        // Fetch sent action.
+        String action = message.get("action").getAsString();
+
+        // If left the queue.
+        if (action.equals("left_queue")) {
+
+            // Hide the timeline UI.
+            receivingClass.showContainer(mQueuedContainer, mTimelineContainer);
+
+            // Stop timer.
+            receivingClass.stopQueueTimer();
+        }
     }
 
     //==============================================================================================
@@ -206,17 +228,6 @@ public class MainScreenFragmentFeatured extends BaseFragment {
         if (RestAPIOperation.shouldThrottle()) { return; }
 
         // Leave the queue.
-        mModelPlay.cancelQueue(getActivity(), new ObjectModelPlay.CancelQueueCallback() {
-
-            @Override
-            public void onCancelQueue() {
-
-                // Hide the timeline UI.
-                showContainer(mQueuedContainer, mTimelineContainer);
-
-                // Stop timer.
-                stopQueueTimer();
-            }
-        });
+        mModelPlay.cancelQueue(getActivity(), null);
     }
 }
