@@ -77,7 +77,9 @@ public class ObjectModelPlay {
             public void onLeaveQueue() {
 
                 // Queue now cancelled.
-                callback.onCancelQueue();
+                if (callback != null) {
+                    callback.onCancelQueue();
+                }
             }
         });
     }
