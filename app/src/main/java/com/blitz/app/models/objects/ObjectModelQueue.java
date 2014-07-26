@@ -47,7 +47,9 @@ public class ObjectModelQueue extends ObjectModel {
             public void success() {
 
                 // Now in queue.
-                callback.onQueueUp();
+                if (callback != null) {
+                    callback.onQueueUp();
+                }
             }
         };
 
@@ -75,7 +77,9 @@ public class ObjectModelQueue extends ObjectModel {
             public void success() {
 
                 // Now left queue.
-                callback.onLeaveQueue();
+                if (callback != null) {
+                    callback.onLeaveQueue();
+                }
             }
         };
 
@@ -100,7 +104,9 @@ public class ObjectModelQueue extends ObjectModel {
             public void success() {
 
                 // Now confirmed queue.
-                callback.onConfirmQueue();
+                if (callback != null) {
+                    callback.onConfirmQueue();
+                }
             }
         };
 
