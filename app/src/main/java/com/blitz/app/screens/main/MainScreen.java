@@ -185,9 +185,14 @@ public class MainScreen extends BaseActivity {
 
             // Dismiss dialog.
             receivingClass.hideConfirmDraftDialog();
-        }
 
-        LogHelper.log("Action: " + action);
+        } else if (action.equals("enter_draft")) {
+
+            // View model, enter the draft
+            // draft model contains an
+            // active draft singleton (or auth manager).
+            LogHelper.log("Action: " + action);
+        }
     }
 
     /**
