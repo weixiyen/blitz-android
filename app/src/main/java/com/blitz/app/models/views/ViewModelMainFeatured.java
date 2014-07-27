@@ -27,12 +27,16 @@ public class ViewModelMainFeatured extends ViewModel {
     private TextView mTimerTextView;
 
     // Queue timer variables.
-    private int      mSecondsInQueue;
+    private int      mSecondsAtSuspension;
+    private int      mSecondsInQueue = -1;
     private Handler  mSecondsInQueueHandler;
     private Runnable mSecondsInQueueRunnable;
 
     // Object model.
     private ObjectModelQueue mModelQueue;
+
+    static final String STATE_SECONDS = "stateSeconds";
+    static final String STATE_TIME_SUSPENDED = "timeSuspected";
 
     //==============================================================================================
     // Overwritten Methods
@@ -47,13 +51,12 @@ public class ViewModelMainFeatured extends ViewModel {
     @Override
     public void restoreInstanceState(Bundle savedInstanceState) {
 
-        // TODO: Restore state.
+        if (savedInstanceState != null) {
 
-        // Initialize container state.
-        showQueueContainer(null);
-
-        // Setup comet.
-        setupCometCallbacks();
+            // Restore state primitives.
+            mSecondsInQueue = savedInstanceState.getInt(STATE_SECONDS);
+            mSecondsAtSuspension = savedInstanceState.getInt(STATE_TIME_SUSPENDED);
+        }
     }
 
     /**
@@ -66,12 +69,39 @@ public class ViewModelMainFeatured extends ViewModel {
     @Override
     public Bundle saveInstanceState(Bundle savedInstanceState) {
 
-        // TODO: Save state.
+        // Set seconds at suspension.
+        mSecondsAtSuspension = (int) (System.currentTimeMillis() / 1000);
+
+        // Save info needed to restore state.
+        savedInstanceState.putInt(STATE_TIME_SUSPENDED, mSecondsAtSuspension);
+        savedInstanceState.putInt(STATE_SECONDS, mSecondsInQueue);
 
         // Stop timer.
-        stopQueueTimer();
+        stopQueueTimer(false);
 
         return savedInstanceState;
+    }
+
+    /**
+     * Initialize the view model.
+     */
+    @Override
+    public void initialize() {
+
+        if (mSecondsInQueue != -1) {
+
+            // Get seconds since state saved.
+            int secondsSinceSinceSaved = (int)
+                    ((System.currentTimeMillis() / 1000) - mSecondsAtSuspension);
+
+            mSecondsInQueue += secondsSinceSinceSaved;
+        }
+
+        // Initialize container state.
+        showQueueContainer(null, false);
+
+        // Setup comet.
+        setupCometCallbacks();
     }
 
     //==============================================================================================
@@ -104,7 +134,7 @@ public class ViewModelMainFeatured extends ViewModel {
             @Override
             public void onQueueUp() {
 
-                showQueueContainer(true);
+                showQueueContainer(true, true);
             }
         });
     }
@@ -129,18 +159,28 @@ public class ViewModelMainFeatured extends ViewModel {
      * @param showQueueContainer Boolean toggle, if null uses internal
      *                           state synchronize UI with that state.
      */
-    private void showQueueContainer(Boolean showQueueContainer) {
+    private void showQueueContainer(Boolean showQueueContainer, boolean animate) {
 
         if (showQueueContainer == null) {
-            showQueueContainer = mSecondsInQueue > 0;
+            showQueueContainer = mSecondsInQueue != -1;
         }
 
         if (showQueueContainer) {
-            showContainer(mTimelineContainer, mQueuedContainer);
+
+            if (mQueuedContainer.getVisibility() != View.VISIBLE) {
+
+                showContainer(mTimelineContainer, mQueuedContainer, animate);
+            }
             startQueueTimer(mTimerTextView);
-        } else {
-            showContainer(mQueuedContainer, mTimelineContainer);
-            stopQueueTimer();
+
+        } else  {
+
+            if (mTimelineContainer.getVisibility() != View.VISIBLE) {
+
+                showContainer(mQueuedContainer, mTimelineContainer, animate);
+            }
+
+            stopQueueTimer(true);
         }
     }
 
@@ -185,7 +225,7 @@ public class ViewModelMainFeatured extends ViewModel {
         // If left the queue.
         if (action.equals("left_queue")) {
 
-            receivingClass.getViewModel().showQueueContainer(false);
+            receivingClass.getViewModel().showQueueContainer(false, true);
         }
     }
 
@@ -217,20 +257,25 @@ public class ViewModelMainFeatured extends ViewModel {
 
         // Start the timer.
         mSecondsInQueueHandler.post(mSecondsInQueueRunnable);
-        mSecondsInQueue = -1;
     }
 
     /**
      * Stop timer and reset seconds
      * in the queue.
      */
-    private void stopQueueTimer() {
+    private void stopQueueTimer(boolean resetSecondsInQueue) {
 
         if (mSecondsInQueueHandler  != null &&
             mSecondsInQueueRunnable != null) {
 
             // Stop the timer.
             mSecondsInQueueHandler.removeCallbacks(mSecondsInQueueRunnable);
+        }
+
+        if (resetSecondsInQueue) {
+
+            // Reset seconds.
+            mSecondsInQueue = -1;
         }
     }
 
@@ -240,10 +285,13 @@ public class ViewModelMainFeatured extends ViewModel {
      * @param containerFrom Animating from.
      * @param containerTo Animating to.
      */
-    private void showContainer(final View containerFrom, final View containerTo) {
+    private void showContainer(final View containerFrom, final View containerTo, boolean animate) {
+
+        // Duration based on animate flag.
+        final int duration = animate ? 250 : 0;
 
         // First fade out the from container.
-        containerFrom.animate().alpha(0.0f).setDuration(250).withEndAction(new Runnable() {
+        containerFrom.animate().alpha(0.0f).setDuration(duration).withEndAction(new Runnable() {
 
             @Override
             public void run() {
@@ -254,7 +302,7 @@ public class ViewModelMainFeatured extends ViewModel {
                 // Then fade in the to container.
                 containerTo.setVisibility(View.VISIBLE);
                 containerTo.setAlpha(0.0f);
-                containerTo.animate().alpha(1.0f).setDuration(250);
+                containerTo.animate().alpha(1.0f).setDuration(duration);
             }
         });
     }

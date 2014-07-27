@@ -49,4 +49,11 @@ public abstract class ViewModel {
      */
     @SuppressWarnings("unused")
     public abstract Bundle  saveInstanceState(Bundle savedInstanceState);
+
+    /**
+     * Initialize the view model.  Setup all UI
+     * here (non expensive calls please).
+     */
+    @SuppressWarnings("unused")
+    public abstract void initialize();
 }

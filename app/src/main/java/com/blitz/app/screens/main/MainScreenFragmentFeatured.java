@@ -53,6 +53,14 @@ public class MainScreenFragmentFeatured extends BaseFragment {
         mViewModel.restoreInstanceState(savedInstanceState);
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        // Initialize view model.
+        mViewModel.initialize();
+    }
+
     /**
      * Save this screen fragments state.
      *
