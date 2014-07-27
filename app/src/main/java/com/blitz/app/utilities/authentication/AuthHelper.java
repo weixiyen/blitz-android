@@ -47,6 +47,9 @@ public class AuthHelper {
         // Rest is user provided.
         AppDataObject.userEmail.set(email);
         AppDataObject.userPassword.set(password);
+
+        // Make sure user passed the queue.
+        AppDataObject.hasAccess.set(true);
     }
 
     /**
