@@ -9,8 +9,10 @@ import com.blitz.app.R;
 import com.blitz.app.dialogs.DialogInfo;
 import com.blitz.app.models.comet.CometAPICallback;
 import com.blitz.app.models.comet.CometAPIManager;
+import com.blitz.app.models.objects.ObjectModelQueue;
 import com.blitz.app.utilities.android.BaseActivity;
 import com.blitz.app.utilities.app.AppDataObject;
+import com.blitz.app.utilities.logging.LogHelper;
 import com.blitz.app.utilities.viewpager.ViewPagerDepthTransformer;
 import com.google.gson.JsonObject;
 
@@ -37,6 +39,9 @@ public class MainScreen extends BaseActivity {
     // Info dialog.
     private DialogInfo mDialogInfo;
 
+    // Queue model.
+    private ObjectModelQueue mModelQueue;
+
     //==============================================================================================
     // Overwritten Methods
     //==============================================================================================
@@ -55,6 +60,10 @@ public class MainScreen extends BaseActivity {
 
         // Setup callbacks.
         setupDraftCallbacks();
+
+        if (mModelQueue == null) {
+            mModelQueue = new ObjectModelQueue();
+        }
     }
 
     /**
@@ -92,15 +101,20 @@ public class MainScreen extends BaseActivity {
                 @Override
                 public void run() {
 
-                    // TODO: Cancel the queue.
+                    // Leave the queue.
+                    mModelQueue.leaveQueue(MainScreen.this, null);
+                    mDialogInfo.hide(null);
                 }
             });
+
             mDialogInfo.setInfoRightButton("Join!", new Runnable() {
 
                 @Override
                 public void run() {
 
-                    // TODO: Join the draft.
+                    // Confirm the draft.
+                    mModelQueue.confirmQueue(MainScreen.this, null);
+                    mDialogInfo.hide(null);
                 }
             });
         }
@@ -172,6 +186,8 @@ public class MainScreen extends BaseActivity {
             // Dismiss dialog.
             receivingClass.hideConfirmDraftDialog();
         }
+
+        LogHelper.log("Action: " + action);
     }
 
     /**

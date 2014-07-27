@@ -8,11 +8,10 @@ import android.widget.TextView;
 import com.blitz.app.R;
 import com.blitz.app.models.comet.CometAPICallback;
 import com.blitz.app.models.comet.CometAPIManager;
-import com.blitz.app.models.objects.ObjectModelPlay;
+import com.blitz.app.models.objects.ObjectModelQueue;
 import com.blitz.app.models.rest.RestAPIOperation;
 import com.blitz.app.utilities.android.BaseFragment;
 import com.blitz.app.utilities.app.AppDataObject;
-import com.blitz.app.utilities.logging.LogHelper;
 import com.google.gson.JsonObject;
 
 import butterknife.InjectView;
@@ -35,7 +34,7 @@ public class MainScreenFragmentFeatured extends BaseFragment {
     @InjectView(R.id.main_featured_queued_timer) TextView mQueuedTimerTextView;
 
     // View model.
-    private ObjectModelPlay mModelPlay;
+    private ObjectModelQueue mModelQueue;
 
     // Queue timer variables.
     private int      mSecondsInQueue;
@@ -56,8 +55,8 @@ public class MainScreenFragmentFeatured extends BaseFragment {
         super.onCreateView(savedInstanceState);
 
         // Lazy load the model.
-        if (mModelPlay == null) {
-            mModelPlay = new ObjectModelPlay();
+        if (mModelQueue == null) {
+            mModelQueue = new ObjectModelQueue();
         }
 
         // Setup comet.
@@ -208,10 +207,10 @@ public class MainScreenFragmentFeatured extends BaseFragment {
         if (RestAPIOperation.shouldThrottle()) { return; }
 
         // Enter the queue.
-        mModelPlay.enterQueue(getActivity(), new ObjectModelPlay.EnterQueueCallback() {
+        mModelQueue.queueUp(getActivity(), new ObjectModelQueue.QueueUpCallback() {
 
             @Override
-            public void onEnterQueue() {
+            public void onQueueUp() {
 
                 // Show the queue UI.
                 showContainer(mTimelineContainer, mQueuedContainer);
@@ -228,6 +227,6 @@ public class MainScreenFragmentFeatured extends BaseFragment {
         if (RestAPIOperation.shouldThrottle()) { return; }
 
         // Leave the queue.
-        mModelPlay.cancelQueue(getActivity(), null);
+        mModelQueue.leaveQueue(getActivity(), null);
     }
 }

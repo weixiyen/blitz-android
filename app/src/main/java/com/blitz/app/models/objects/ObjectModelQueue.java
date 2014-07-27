@@ -16,20 +16,16 @@ public class ObjectModelQueue extends ObjectModel {
     // Member Variables
     //==============================================================================================
 
-    private String mDraftKey;
+    // Current active draft key,
+    // static to preserve state.
+    private static String mDraftKey;
+
+    // Preferences model used to sync.
+    private ObjectModelPreferences mModelPreferences;
 
     //==============================================================================================
-    // Callbacks
+    // Public Methods
     //==============================================================================================
-
-    /**
-     * Set the draft key (what kind of draft
-     * are we joining).
-     */
-    public void setDraftKey(String draftKey) {
-
-        mDraftKey = draftKey;
-    }
 
     /**
      * Add user to draft queue.  Requires a draft
@@ -38,27 +34,42 @@ public class ObjectModelQueue extends ObjectModel {
      * @param activity Activity for dialogs.
      * @param callback Callback.
      */
-    public void queueUp(Activity activity, final QueueUpCallback callback) {
+    public void queueUp(final Activity activity, final QueueUpCallback callback) {
 
-        // Define operation, call on queue up when complete.
-        RestAPIOperation operation = new RestAPIOperation(activity) {
+        if (mModelPreferences == null) {
+            mModelPreferences = new ObjectModelPreferences();
+        }
+
+        // First sync preferences to get the active draft key.
+        mModelPreferences.Sync(activity, new ObjectModelPreferences.SyncCallback() {
 
             @Override
-            public void success() {
+            public void onSync() {
 
-                // Now in queue.
-                if (callback != null) {
-                    callback.onQueueUp();
-                }
+                // Set draft key to the active queue.
+                mDraftKey =  mModelPreferences.currentActiveQueue();
+
+                // Define operation, call on queue up when complete.
+                RestAPIOperation operation = new RestAPIOperation(activity) {
+
+                    @Override
+                    public void success() {
+
+                        // Now in queue.
+                        if (callback != null) {
+                            callback.onQueueUp();
+                        }
+                    }
+                };
+
+                // Construct POST body.
+                JsonObjectQueue.Body body = new JsonObjectQueue.Body(mDraftKey);
+
+                // Make api call.
+                RestAPIClient.getAPI().queue
+                        (body, new RestAPICallback<JsonObjectQueue>(mRestApiObject, operation));
             }
-        };
-
-        // Construct POST body.
-        JsonObjectQueue.Body body = new JsonObjectQueue.Body(mDraftKey);
-
-        // Make api call.
-        RestAPIClient.getAPI().queue
-                (body, new RestAPICallback<JsonObjectQueue>(mRestApiObject, operation));
+        });
     }
 
     /**
@@ -69,6 +80,10 @@ public class ObjectModelQueue extends ObjectModel {
      * @param callback Callback.
      */
     public void leaveQueue(Activity activity, final LeaveQueueCallback callback) {
+
+        if (mDraftKey == null) {
+            return;
+        }
 
         // Operation callbacks.
         RestAPIOperation operation = new RestAPIOperation(activity) {
@@ -96,6 +111,10 @@ public class ObjectModelQueue extends ObjectModel {
      * @param callback Callback.
      */
     public void confirmQueue(Activity activity, final ConfirmQueueCallback callback) {
+
+        if (mDraftKey == null) {
+            return;
+        }
 
         // Operation callbacks.
         RestAPIOperation operation = new RestAPIOperation(activity) {
