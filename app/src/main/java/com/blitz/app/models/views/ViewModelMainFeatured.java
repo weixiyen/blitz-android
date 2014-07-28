@@ -227,8 +227,8 @@ public class ViewModelMainFeatured extends ViewModel {
         // Fetch sent action.
         String action = message.get("action").getAsString();
 
-        // If left the queue.
-        if (action.equals("left_queue")) {
+        // If left the queue or entered the draft.
+        if (action.equals("left_queue") || action.equals("enter_draft")) {
 
             receivingClass.getViewModel(ViewModelMainFeatured.class)
                     .showQueueContainer(false, true);
