@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 
 import com.blitz.app.R;
 import com.blitz.app.models.comet.CometAPIManager;
+import com.blitz.app.models.views.ViewModel;
 import com.blitz.app.utilities.reflection.ReflectionHelper;
 import com.blitz.app.utilities.string.StringHelper;
 
@@ -17,7 +18,7 @@ import butterknife.ButterKnife;
 /**
  * Shared base functionality across all fragments.
  */
-public class BaseFragment extends Fragment {
+public class BaseFragment extends Fragment implements ViewModel.ViewModelCallbacks {
 
     //==============================================================================================
     // Member Variables
@@ -26,6 +27,9 @@ public class BaseFragment extends Fragment {
     private View mContentView;
     private ViewGroup mContainer;
     private LayoutInflater mInflater;
+
+    // View model for each fragment.
+    private ViewModel mViewModel = null;
 
     //==============================================================================================
     // Overwritten Methods
@@ -99,6 +103,11 @@ public class BaseFragment extends Fragment {
 
         // Add a new fragment.
         CometAPIManager.configAddFragment(this);
+
+        // Initialize the view model.
+        if (mViewModel != null) {
+            mViewModel.initialize(getActivity(), this);
+        }
     }
 
     /**
@@ -112,9 +121,59 @@ public class BaseFragment extends Fragment {
         CometAPIManager.configRemoveFragment(this);
     }
 
+    /**
+     * Save this screen fragments state.
+     *
+     * @param outState Outbound state bundle.
+     */
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+
+        // Save state.
+        if (mViewModel != null) {
+            mViewModel.saveInstanceState(outState);
+        }
+    }
+
+    //==============================================================================================
+    // Public Methods
+    //==============================================================================================
+
+    /**
+     * Fetch the view model, assumes user
+     * knows the type.
+     *
+     * @param type View model type.
+     * @param <T> Type.
+     *
+     * @return Casted view model.
+     */
+    public <T extends ViewModel> T getViewModel(Class<T> type) {
+
+        return type.cast(mViewModel);
+    }
+
     //==============================================================================================
     // Protected Methods
     //==============================================================================================
+
+    /**
+     * Set the view model (initializes it).
+     *
+     * @param viewModel View model instance.
+     * @param savedInstanceState Saved state.
+     */
+    protected void setViewModel(ViewModel viewModel, Bundle savedInstanceState) {
+
+        // Set the model.
+        mViewModel = viewModel;
+
+        // Restore state.
+        if (mViewModel != null) {
+            mViewModel.restoreInstanceState(savedInstanceState);
+        }
+    }
 
     /**
      * @see android.app.Fragment#startActivity(android.content.Intent)

@@ -8,6 +8,7 @@ import android.support.v4.app.FragmentActivity;
 
 import com.blitz.app.R;
 import com.blitz.app.models.comet.CometAPIManager;
+import com.blitz.app.models.views.ViewModel;
 import com.blitz.app.utilities.background.EnteredBackground;
 import com.blitz.app.utilities.keyboard.KeyboardUtility;
 import com.blitz.app.utilities.reflection.ReflectionHelper;
@@ -19,7 +20,7 @@ import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 /**
  * Shared base functionality across all activities.
  */
-public class BaseActivity extends FragmentActivity {
+public class BaseActivity extends FragmentActivity implements ViewModel.ViewModelCallbacks {
 
     //==============================================================================================
     // Member Variables
@@ -30,6 +31,9 @@ public class BaseActivity extends FragmentActivity {
 
     // Track if activity history is cleared.
     private boolean mHistoryCleared = false;
+
+    // View model for each activity.
+    private ViewModel mViewModel = null;
 
     //==============================================================================================
     // Overwritten Methods
@@ -60,7 +64,7 @@ public class BaseActivity extends FragmentActivity {
      * Update the keyboard utility listener.
      */
     @Override
-    protected void onStart () {
+    protected void onStart() {
         super.onStart();
 
         // Update the layout listener.
@@ -68,11 +72,11 @@ public class BaseActivity extends FragmentActivity {
     }
 
     /**
-     * Figure out if application has returned
-     * from the background.
+     * Runs when activity has been
+     * presented to the user.
      */
     @Override
-    protected void onResume () {
+    protected void onResume() {
         super.onResume();
 
         // Stop timer to detect entering the background.
@@ -80,6 +84,26 @@ public class BaseActivity extends FragmentActivity {
 
         // Add current activity.
         CometAPIManager.configAddActivity(this);
+
+        // Initialize the view model.
+        if (mViewModel != null) {
+            mViewModel.initialize(this, this);
+        }
+    }
+
+    /**
+     * Save this screens state.
+     *
+     * @param outState State values.
+     */
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+
+        // Save state.
+        if (mViewModel != null) {
+            mViewModel.saveInstanceState(outState);
+        }
     }
 
     /**
@@ -188,6 +212,42 @@ public class BaseActivity extends FragmentActivity {
      */
     public void setCustomTransitions(boolean customTransitions) {
         mCustomTransitions = customTransitions;
+    }
+
+
+    /**
+     * Fetch the view model, assumes user
+     * knows the type.
+     *
+     * @param type View model type.
+     * @param <T> Type.
+     *
+     * @return Casted view model.
+     */
+    public <T extends ViewModel> T getViewModel(Class<T> type) {
+
+        return type.cast(mViewModel);
+    }
+
+    //==============================================================================================
+    // Protected Methods
+    //==============================================================================================
+
+    /**
+     * Set the view model (initializes it).
+     *
+     * @param viewModel View model instance.
+     * @param savedInstanceState Saved state.
+     */
+    protected void setViewModel(ViewModel viewModel, Bundle savedInstanceState) {
+
+        // Set the model.
+        mViewModel = viewModel;
+
+        // Restore state.
+        if (mViewModel != null) {
+            mViewModel.restoreInstanceState(savedInstanceState);
+        }
     }
 
     //==============================================================================================
