@@ -2,6 +2,7 @@ package com.blitz.app.utilities.android;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 
@@ -46,6 +47,9 @@ public class BaseActivity extends FragmentActivity implements ViewModel.ViewMode
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        // Portrait mode only.
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
         // Run transitions, we are entering.
         runCustomTransitions(getIntent(), true);
