@@ -49,7 +49,9 @@ public class DialogLoading extends BaseDialog {
         super.hide(hideListener);
 
         // Remove any pending callbacks.
-        mHandler.removeCallbacks(mRunnable);
+        if (mHandler != null) {
+            mHandler.removeCallbacks(mRunnable);
+        }
     }
 
     //==============================================================================================
