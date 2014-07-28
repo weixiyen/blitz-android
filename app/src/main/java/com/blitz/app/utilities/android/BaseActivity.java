@@ -9,6 +9,7 @@ import android.support.v4.app.FragmentActivity;
 import com.blitz.app.R;
 import com.blitz.app.models.comet.CometAPIManager;
 import com.blitz.app.models.views.ViewModel;
+import com.blitz.app.utilities.app.AppConfig;
 import com.blitz.app.utilities.background.EnteredBackground;
 import com.blitz.app.utilities.keyboard.KeyboardUtility;
 import com.blitz.app.utilities.reflection.ReflectionHelper;
@@ -48,8 +49,11 @@ public class BaseActivity extends FragmentActivity implements ViewModel.ViewMode
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        // Portrait mode only.
-        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        if (AppConfig.PORTRAIT_ONLY) {
+
+            // Portrait mode only.
+            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        }
 
         // Run transitions, we are entering.
         runCustomTransitions(getIntent(), true);

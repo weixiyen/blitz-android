@@ -26,8 +26,11 @@ public class AppConfig {
     public static final String WEBSOCKET_URL = "wss://snapdraft.us/comet/u/";
 
     // Should we clear app data on launch.
-    public static final boolean CLEAR_APP_DATA_ON_LAUNCH = false;
+    public static final boolean CLEAR_APP_DATA_ON_LAUNCH = true;
 
     // Should we have rest debugging.
     public static final boolean ENABLE_REST_DEBUGGING = false;
+
+    // Allow landscape for debugging purposes.
+    public static final boolean PORTRAIT_ONLY = true;
 }
