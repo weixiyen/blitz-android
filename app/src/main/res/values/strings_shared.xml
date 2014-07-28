@@ -2,12 +2,6 @@
     <string name="app_name">Blitz</string>
     <string name="app_id">249246648608400</string>
 
-    <string name="app_font_light">fonts/Roboto-Light.ttf</string>
-    <string name="app_font_regular">fonts/Roboto-Regular.ttf</string>
-    <string name="app_font_bold">fonts/Roboto-Medium.ttf</string>
-
-    <string name="app_font_sports">fonts/SF-Sports-Night-NS.ttf</string>
-
     <string name="number_small">9</string>
     <string name="number_large">999</string>
 
