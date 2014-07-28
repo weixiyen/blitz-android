@@ -10,4 +10,7 @@
     <string name="Back">Back</string>
     <string name="post_your_favor">Post your favor…</string>
     <string name="Ok">OK</string>
+    <string name="match_found">Match Found! Join the match!</string>
+    <string name="cancel">Cancel</string>
+    <string name="join">Join!</string>
 </resources>
