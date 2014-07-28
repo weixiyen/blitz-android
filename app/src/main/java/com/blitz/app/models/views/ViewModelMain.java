@@ -47,19 +47,28 @@ public class ViewModelMain extends ViewModel {
     /**
      * Leave the draft queue.
      */
-    public void leaveQueue(Runnable runnable) {
+    public void leaveQueue() {
 
         // Leave the queue.
-        getModelQueue().leaveQueue(mActivity, runnable);
+        getModelQueue().leaveQueue(mActivity, null);
     }
 
     /**
      * Join the draft queue.
      */
-    public void confirmQueue(Runnable runnable) {
+    public void confirmQueue() {
 
         // Join the draft.
-        getModelQueue().confirmQueue(mActivity, runnable);
+        getModelQueue().confirmQueue(mActivity, new Runnable() {
+
+            @Override
+            public void run() {
+
+                if (getCallbacks(ViewModelMainCallbacks.class) != null) {
+                    getCallbacks(ViewModelMainCallbacks.class).onConfirmQueue(ViewModelMain.this);
+                }
+            }
+        });
     }
 
     //==============================================================================================
@@ -130,7 +139,13 @@ public class ViewModelMain extends ViewModel {
                     @Override
                     public void run() {
 
-                        // Send back model and draft id.
+                        // Fetch comet channel for this user.
+                        String userCometChannel = "user:" + AppDataObject.userId.getString();
+
+                        // Unsubscribe them from it.
+                        CometAPIManager.unsubscribeFromChannel(userCometChannel);
+
+                        // Run UI callback.
                         callbacks.onEnterDraft(ViewModelMain.this);
                     }
                 });
@@ -160,6 +175,7 @@ public class ViewModelMain extends ViewModel {
     public interface ViewModelMainCallbacks extends ViewModelCallbacks {
 
         public void onConfirmDraft(ViewModelMain viewModel);
+        public void onConfirmQueue(ViewModelMain viewModel);
         public void    onLeftQueue(ViewModelMain viewModel);
         public void   onEnterDraft(ViewModelMain viewModel);
     }

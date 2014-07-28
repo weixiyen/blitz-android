@@ -157,7 +157,7 @@ public class MainScreen extends BaseActivity implements ViewModelMain.ViewModelM
                 public void run() {
 
                     // Leave the queue.
-                    viewModel.leaveQueue(null);
+                    viewModel.leaveQueue();
                 }
             });
 
@@ -167,32 +167,37 @@ public class MainScreen extends BaseActivity implements ViewModelMain.ViewModelM
                 public void run() {
 
                     // Confirm the draft.
-                    viewModel.confirmQueue(new Runnable() {
-
-                        @Override
-                        public void run() {
-
-                            // Initialize loading dialog.
-                            if (mDialogLoading == null) {
-                                mDialogLoading = new DialogLoading(MainScreen.this);
-                            }
-
-                            // Hide info dialog and show loading one.
-                            mDialogInfo.hide(new BaseDialog.HideListener() {
-
-                                @Override
-                                public void didHide() {
-
-                                    mDialogLoading.show(true);
-                                }
-                            });
-                        }
-                    });
+                    viewModel.confirmQueue();
                 }
             });
         }
 
         mDialogInfo.show(true);
+    }
+
+    /**
+     * When draft queue confirmed, setup a loading state
+     * while we wait for the draft enter confirmation.
+     *
+     * @param viewModel View model.
+     */
+    @Override
+    public void onConfirmQueue(ViewModelMain viewModel) {
+
+        // Initialize loading dialog.
+        if (mDialogLoading == null) {
+            mDialogLoading = new DialogLoading(MainScreen.this);
+        }
+
+        // Hide info dialog and show loading one.
+        mDialogInfo.hide(new BaseDialog.HideListener() {
+
+            @Override
+            public void didHide() {
+
+                mDialogLoading.show(true);
+            }
+        });
     }
 
     /**
@@ -206,6 +211,11 @@ public class MainScreen extends BaseActivity implements ViewModelMain.ViewModelM
         // Hide if needed.
         if (mDialogInfo != null) {
             mDialogInfo.hide(null);
+        }
+
+        // Hide if needed.
+        if (mDialogLoading != null) {
+            mDialogLoading.hide(null);
         }
     }
 
