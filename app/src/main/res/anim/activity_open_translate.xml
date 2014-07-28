@@ -8,9 +8,9 @@
         android:duration="@integer/config_screen_translation_time" />
 
     <scale
-        android:fromXScale="80%p"
+        android:fromXScale="90%p"
         android:toXScale="100%p"
-        android:fromYScale="80%p"
+        android:fromYScale="90%p"
         android:toYScale="100%p"
         android:pivotX="50%p"
         android:pivotY="50%p"
