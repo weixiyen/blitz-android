@@ -1,4 +1,4 @@
-<LinearLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -7,38 +7,88 @@
     tools:context="${packageName}.${activityClass}"
     tools:ignore="ButtonStyle,HardcodedText">
 
-    <RelativeLayout
+    <ImageView
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_margin="10dp"
-        android:layout_weight="1"
-        android:background="@color/background_inner"
-        android:gravity="center"
+        android:layout_height="match_parent"
+        android:src="@drawable/asset_bg_queue"
+        android:scaleType="centerCrop"
+        android:contentDescription="@string/empty_string" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
+            android:layout_margin="10dp"
+            android:layout_weight="1"
+            android:gravity="center"
             android:orientation="vertical">
-
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:contentDescription="@string/empty_string"
-                android:src="@drawable/icon_blitz" />
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_margin="10dp"
-                android:background="@color/background_primary"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:contentDescription="@string/empty_string"
+                    android:src="@drawable/icon_blitz" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_margin="10dp"
+                    android:background="@color/background_primary"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_margin="10dp">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="10dp"
+                        android:fontFamily="@string/app_font_light"
+                        android:gravity="center"
+                        android:text="Your place in the line has been reserved!"
+                        android:textColor="@color/text_color_light"
+                        android:textSize="16sp"/>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="10dp"
+                        android:fontFamily="@string/app_font_light"
+                        android:gravity="center"
+                        android:text="You're on your way to a whole new Fantasy Football Experience!"
+                        android:textColor="@color/text_color_light"
+                        android:textSize="16sp"/>
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_alignParentBottom="true"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:layout_margin="10dp">
+                android:layout_margin="10dp"
+                android:background="@color/button_color_1">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@string/app_font_regular"
+                    android:gravity="center"
+                    android:text="134,324"
+                    android:textColor="@color/text_color_light"
+                    android:textSize="40sp"/>
 
                 <TextView
                     android:layout_width="match_parent"
@@ -46,104 +96,67 @@
                     android:layout_margin="10dp"
                     android:fontFamily="@string/app_font_light"
                     android:gravity="center"
-                    android:text="Your place in the line has been reserved!"
+                    android:text="players in front of you."
                     android:textColor="@color/text_color_light"
                     android:textSize="16sp"/>
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:fontFamily="@string/app_font_regular"
+                    android:gravity="center"
+                    android:text="324"
+                    android:textColor="@color/text_color_light"
+                    android:textSize="30sp"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_margin="10dp"
                     android:fontFamily="@string/app_font_light"
                     android:gravity="center"
-                    android:text="You're on your way to a whole new Fantasy Football Experience!"
+                    android:text="players beind you."
                     android:textColor="@color/text_color_light"
                     android:textSize="16sp"/>
             </LinearLayout>
-        </LinearLayout>
+        </RelativeLayout>
 
         <LinearLayout
-            android:layout_alignParentBottom="true"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_margin="10dp"
-            android:background="@color/button_color_1">
+            android:layout_height="60dp"
+            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:gravity="center"
+            android:orientation="horizontal">
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:fontFamily="@string/app_font_regular"
-                android:gravity="center"
-                android:text="134,324"
-                android:textColor="@color/text_color_light"
-                android:textSize="40sp"/>
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="10dp"
+            <Button
+                android:id="@+id/queue_screen_have_code"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginRight="5dp"
+                android:layout_weight=".5"
+                android:background="@drawable/button_main"
+                android:contentDescription="@string/empty_string"
                 android:fontFamily="@string/app_font_light"
-                android:gravity="center"
-                android:text="players in front of you."
+                android:text="I have an Access Code"
                 android:textColor="@color/text_color_light"
-                android:textSize="16sp"/>
+                android:textSize="12sp" />
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:fontFamily="@string/app_font_regular"
-                android:gravity="center"
-                android:text="324"
-                android:textColor="@color/text_color_light"
-                android:textSize="30sp"/>
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="10dp"
+            <Button
+                android:id="@+id/queue_screen_have_account"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="5dp"
+                android:layout_weight=".5"
+                android:background="@drawable/button_main"
+                android:contentDescription="@string/empty_string"
                 android:fontFamily="@string/app_font_light"
-                android:gravity="center"
-                android:text="players beind you."
+                android:text="I already have an Account"
                 android:textColor="@color/text_color_light"
-                android:textSize="16sp"/>
+                android:textSize="12sp" />
         </LinearLayout>
-    </RelativeLayout>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:layout_marginBottom="10dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:gravity="center"
-        android:orientation="horizontal">
-
-        <Button
-            android:id="@+id/queue_screen_have_code"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_marginRight="5dp"
-            android:layout_weight=".5"
-            android:background="@drawable/button_main"
-            android:contentDescription="@string/empty_string"
-            android:fontFamily="@string/app_font_light"
-            android:text="I have an Access Code"
-            android:textColor="@color/text_color_light"
-            android:textSize="12sp" />
-
-        <Button
-            android:id="@+id/queue_screen_have_account"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_marginLeft="5dp"
-            android:layout_weight=".5"
-            android:background="@drawable/button_main"
-            android:contentDescription="@string/empty_string"
-            android:fontFamily="@string/app_font_light"
-            android:text="I already have an Account"
-            android:textColor="@color/text_color_light"
-            android:textSize="12sp" />
     </LinearLayout>
+</RelativeLayout>
 
-</LinearLayout>
