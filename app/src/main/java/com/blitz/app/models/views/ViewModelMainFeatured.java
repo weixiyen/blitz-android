@@ -133,10 +133,10 @@ public class ViewModelMainFeatured extends ViewModel {
     public void queueUp() {
 
         // Enter the queue.
-        getModelQueue().queueUp(mActivity, new ObjectModelQueue.QueueUpCallback() {
+        getModelQueue().queueUp(mActivity, new Runnable() {
 
             @Override
-            public void onQueueUp() {
+            public void run() {
 
                 showQueueContainer(true, true);
             }

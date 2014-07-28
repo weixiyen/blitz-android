@@ -8,9 +8,11 @@ import android.widget.Button;
 
 import com.blitz.app.R;
 import com.blitz.app.dialogs.DialogInfo;
+import com.blitz.app.dialogs.DialogLoading;
 import com.blitz.app.models.views.ViewModelMain;
 import com.blitz.app.screens.draft_preview.DraftPreviewScreen;
 import com.blitz.app.utilities.android.BaseActivity;
+import com.blitz.app.utilities.android.BaseDialog;
 import com.blitz.app.utilities.viewpager.ViewPagerDepthTransformer;
 
 import butterknife.InjectView;
@@ -33,8 +35,9 @@ public class MainScreen extends BaseActivity implements ViewModelMain.ViewModelM
     @InjectView(R.id.main_screen_nav_recent_active)   View mNavRecentActive;
     @InjectView(R.id.main_screen_nav_settings_active) View mNavSettingsActive;
 
-    // Info dialog.
+    // Info/loading dialog.
     private DialogInfo mDialogInfo;
+    private DialogLoading mDialogLoading;
 
     //==============================================================================================
     // Overwritten Methods
@@ -154,7 +157,7 @@ public class MainScreen extends BaseActivity implements ViewModelMain.ViewModelM
                 public void run() {
 
                     // Leave the queue.
-                    viewModel.leaveQueue();
+                    viewModel.leaveQueue(null);
                 }
             });
 
@@ -164,7 +167,27 @@ public class MainScreen extends BaseActivity implements ViewModelMain.ViewModelM
                 public void run() {
 
                     // Confirm the draft.
-                    viewModel.confirmQueue();
+                    viewModel.confirmQueue(new Runnable() {
+
+                        @Override
+                        public void run() {
+
+                            // Initialize loading dialog.
+                            if (mDialogLoading == null) {
+                                mDialogLoading = new DialogLoading(MainScreen.this);
+                            }
+
+                            // Hide info dialog and show loading one.
+                            mDialogInfo.hide(new BaseDialog.HideListener() {
+
+                                @Override
+                                public void didHide() {
+
+                                    mDialogLoading.show(true);
+                                }
+                            });
+                        }
+                    });
                 }
             });
         }
@@ -194,13 +217,18 @@ public class MainScreen extends BaseActivity implements ViewModelMain.ViewModelM
     @Override
     public void onEnterDraft(ViewModelMain viewModel) {
 
-        // Hide info dialog.
-        if (mDialogInfo != null) {
-            mDialogInfo.hide(null);
-        }
+        // Hide loading dialog.
+        if (mDialogLoading != null) {
+            mDialogLoading.hide(new BaseDialog.HideListener() {
 
-        // Enter draft preview and clear history.
-        startActivity(new Intent(this, DraftPreviewScreen.class), true);
+                @Override
+                public void didHide() {
+
+                    // Enter draft preview and clear history.
+                    startActivity(new Intent(MainScreen.this, DraftPreviewScreen.class), true);
+                }
+            });
+        }
     }
 
     //==============================================================================================

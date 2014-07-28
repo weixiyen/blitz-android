@@ -47,19 +47,19 @@ public class ViewModelMain extends ViewModel {
     /**
      * Leave the draft queue.
      */
-    public void leaveQueue() {
+    public void leaveQueue(Runnable runnable) {
 
         // Leave the queue.
-        getModelQueue().leaveQueue(mActivity, null);
+        getModelQueue().leaveQueue(mActivity, runnable);
     }
 
     /**
      * Join the draft queue.
      */
-    public void confirmQueue() {
+    public void confirmQueue(Runnable runnable) {
 
         // Join the draft.
-        getModelQueue().confirmQueue(mActivity, null);
+        getModelQueue().confirmQueue(mActivity, runnable);
     }
 
     //==============================================================================================

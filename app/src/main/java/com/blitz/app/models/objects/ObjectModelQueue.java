@@ -34,7 +34,7 @@ public class ObjectModelQueue extends ObjectModel {
      * @param activity Activity for dialogs.
      * @param callback Callback.
      */
-    public void queueUp(final Activity activity, final QueueUpCallback callback) {
+    public void queueUp(final Activity activity, final Runnable callback) {
 
         if (mModelPreferences == null) {
             mModelPreferences = new ObjectModelPreferences();
@@ -57,7 +57,7 @@ public class ObjectModelQueue extends ObjectModel {
 
                         // Now in queue.
                         if (callback != null) {
-                            callback.onQueueUp();
+                            callback.run();
                         }
                     }
                 };
@@ -79,7 +79,7 @@ public class ObjectModelQueue extends ObjectModel {
      * @param activity Activity for dialogs.
      * @param callback Callback.
      */
-    public void leaveQueue(Activity activity, final LeaveQueueCallback callback) {
+    public void leaveQueue(Activity activity, final Runnable callback) {
 
         if (mDraftKey == null) {
             return;
@@ -93,7 +93,7 @@ public class ObjectModelQueue extends ObjectModel {
 
                 // Now left queue.
                 if (callback != null) {
-                    callback.onLeaveQueue();
+                    callback.run();
                 }
             }
         };
@@ -110,7 +110,7 @@ public class ObjectModelQueue extends ObjectModel {
      * @param activity Activity for dialogs.
      * @param callback Callback.
      */
-    public void confirmQueue(Activity activity, final ConfirmQueueCallback callback) {
+    public void confirmQueue(Activity activity, final Runnable callback) {
 
         if (mDraftKey == null) {
             return;
@@ -124,7 +124,7 @@ public class ObjectModelQueue extends ObjectModel {
 
                 // Now confirmed queue.
                 if (callback != null) {
-                    callback.onConfirmQueue();
+                    callback.run();
                 }
             }
         };
@@ -136,12 +136,4 @@ public class ObjectModelQueue extends ObjectModel {
         RestAPIClient.getAPI().queue
                 (body, new RestAPICallback<JsonObjectQueue>(mRestApiObject, operation));
     }
-
-    //==============================================================================================
-    // Callbacks
-    //==============================================================================================
-
-    public interface QueueUpCallback      { public void onQueueUp();      }
-    public interface LeaveQueueCallback   { public void onLeaveQueue();   }
-    public interface ConfirmQueueCallback { public void onConfirmQueue(); }
 }
