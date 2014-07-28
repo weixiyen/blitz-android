@@ -4,15 +4,10 @@
     <style name="AppTheme" parent="@android:style/Theme.Holo.NoActionBar.Fullscreen">
 
         <!-- Set a theme window background -->
-        <item name="android:windowBackground">@drawable/asset_bg</item>
+        <item name="android:windowBackground">@null</item>
 
         <!-- View pager indicator style. -->
         <item name="vpiCirclePageIndicatorStyle">@style/TabStyle</item>
-    </style>
-
-    <!-- Action bar styles here -->
-    <style name="AppActionBar" parent="@android:style/Widget.Holo.ActionBar">
-
     </style>
 
     <!-- View pager indicator style. -->
