@@ -59,7 +59,7 @@ public interface RestAPI {
 
                Callback<JsonObjectAuth> callback);
 
-    @GET("draft/{draft_id")
+    @GET("/draft/{draft_id}")
     void draft(@Path("draft_id") String draftId,
 
                Callback<JsonObjectDraft> callback);
