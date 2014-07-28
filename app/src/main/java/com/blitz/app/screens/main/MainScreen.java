@@ -17,7 +17,7 @@ import butterknife.OnClick;
 /**
  * Created by mrkcsc on 7/14/14.
  */
-public class MainScreen extends BaseActivity {
+public class MainScreen extends BaseActivity implements ViewModelMain.ViewModelMainCallbacks {
 
     //==============================================================================================
     // Member Variables
@@ -34,9 +34,6 @@ public class MainScreen extends BaseActivity {
     // Info dialog.
     private DialogInfo mDialogInfo;
 
-    // View model.
-    private ViewModelMain mViewModel;
-
     //==============================================================================================
     // Overwritten Methods
     //==============================================================================================
@@ -51,36 +48,10 @@ public class MainScreen extends BaseActivity {
         super.onCreate(savedInstanceState);
 
         // Initialize view model.
-        mViewModel = new ViewModelMain();
-        mViewModel.restoreInstanceState(savedInstanceState);
+        setViewModel(new ViewModelMain(), savedInstanceState);
 
         // Setup view pager.
-        setupViewPager();
-    }
-
-    /**
-     * When visible to user,
-     * initialize the mode.
-     */
-    @Override
-    protected void onResume() {
-        super.onResume();
-
-        // Initialize the view model.
-        mViewModel.initialize();
-    }
-
-    /**
-     * Save this screens state.
-     *
-     * @param outState State values.
-     */
-    @Override
-    public void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-
-        // Save state.
-        mViewModel.saveInstanceState(outState);
+        setViewPager();
     }
 
     /**
@@ -99,67 +70,6 @@ public class MainScreen extends BaseActivity {
     }
 
     //==============================================================================================
-    // Public Methods
-    //==============================================================================================
-
-    /**
-     * Show a confirmation dialog for the draft.
-     */
-    public void showConfirmDraftDialog() {
-
-        // Initialize dialog.
-        if (mDialogInfo == null) {
-            mDialogInfo = new DialogInfo(this);
-
-            // Configure the dialog.
-            mDialogInfo.setInfoText(R.string.match_found);
-            mDialogInfo.setInfoLeftButton(R.string.cancel, new Runnable() {
-
-                @Override
-                public void run() {
-
-                    // Leave the queue.
-                    mViewModel.leaveQueue();
-                    mDialogInfo.hide(null);
-                }
-            });
-
-            mDialogInfo.setInfoRightButton(R.string.join, new Runnable() {
-
-                @Override
-                public void run() {
-
-                    // Confirm the draft.
-                    mViewModel.confirmQueue();
-                    mDialogInfo.hide(null);
-                }
-            });
-        }
-
-        mDialogInfo.show(true);
-    }
-
-    /**
-     * Hide the confirmation dialog for the draft.
-     */
-    public void hideConfirmDraftDialog() {
-
-        // Hide if needed.
-        if (mDialogInfo != null) {
-            mDialogInfo.hide(null);
-        }
-    }
-
-    /**
-     * Fetch the view model.
-     *
-     * @return View model.
-     */
-    public ViewModelMain getViewModel() {
-        return mViewModel;
-    }
-
-    //==============================================================================================
     // Private Methods
     //==============================================================================================
 
@@ -167,7 +77,7 @@ public class MainScreen extends BaseActivity {
      * Create and setup the viewpager and associated
      * elements.
      */
-    private void setupViewPager() {
+    private void setViewPager() {
 
         // Create adapter.
         MainScreenPagerAdapter adapter = new
@@ -216,6 +126,66 @@ public class MainScreen extends BaseActivity {
         mNavFeaturedActive.setVisibility(View.GONE);
         mNavRecentActive  .setVisibility(View.GONE);
         mNavSettingsActive.setVisibility(View.GONE);
+    }
+
+    //==============================================================================================
+    // View Model Callbacks
+    //==============================================================================================
+
+    /**
+     * Show a confirmation dialog for the draft.
+     */
+    @Override
+    public void onConfirmDraft(final ViewModelMain viewModel) {
+
+        // Initialize dialog.
+        if (mDialogInfo == null) {
+            mDialogInfo = new DialogInfo(this);
+
+            // Configure the dialog.
+            mDialogInfo.setInfoText(R.string.match_found);
+            mDialogInfo.setInfoLeftButton(R.string.cancel, new Runnable() {
+
+                @Override
+                public void run() {
+
+                    // Leave the queue.
+                    viewModel.leaveQueue();
+                    mDialogInfo.hide(null);
+                }
+            });
+
+            mDialogInfo.setInfoRightButton(R.string.join, new Runnable() {
+
+                @Override
+                public void run() {
+
+                    // Confirm the draft.
+                    viewModel.confirmQueue();
+                    mDialogInfo.hide(null);
+                }
+            });
+        }
+
+        mDialogInfo.show(true);
+    }
+
+    /**
+     * Hide the confirmation dialog for the draft.
+     */
+    @Override
+    public void onLeftQueue(ViewModelMain viewModel) {
+
+        // Hide if needed.
+        if (mDialogInfo != null) {
+            mDialogInfo.hide(null);
+        }
+    }
+
+    @Override
+    public void onEnterDraft(ViewModelMain viewModel) {
+
+        // TODO: Draft entered.
     }
 
     //==============================================================================================

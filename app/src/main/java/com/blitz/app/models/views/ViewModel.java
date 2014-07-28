@@ -15,21 +15,10 @@ public abstract class ViewModel {
     // Activity instance.
     protected Activity mActivity;
 
+    private ViewModelCallbacks mCallbacks;
+
     //==============================================================================================
     // Public Methods
-    //==============================================================================================
-
-    /**
-     * Sets activity.
-     *
-     * @param activity Activity,
-     */
-    public void setActivity(Activity activity) {
-        mActivity = activity;
-    }
-
-    //==============================================================================================
-    // Abstract Methods
     //==============================================================================================
 
     /**
@@ -38,7 +27,9 @@ public abstract class ViewModel {
      * @param savedInstanceState State bundle.
      */
     @SuppressWarnings("unused")
-    public abstract void restoreInstanceState(Bundle savedInstanceState);
+    public void restoreInstanceState(Bundle savedInstanceState) {
+
+    }
 
     /**
      * Saves state of the view model.
@@ -48,12 +39,50 @@ public abstract class ViewModel {
      * @return State bundle.
      */
     @SuppressWarnings("unused")
-    public abstract Bundle  saveInstanceState(Bundle savedInstanceState);
+    public Bundle saveInstanceState(Bundle savedInstanceState) {
+
+        mActivity  = null;
+        mCallbacks = null;
+
+        return savedInstanceState;
+    }
 
     /**
      * Initialize the view model.  Setup all UI
      * here (non expensive calls please).
      */
     @SuppressWarnings("unused")
-    public abstract void initialize();
+    public void initialize(Activity activity, ViewModelCallbacks callbacks) {
+
+        mActivity  = activity;
+        mCallbacks = callbacks;
+    }
+
+    //==============================================================================================
+    // Protected Methods
+    //==============================================================================================
+
+    /**
+     * Fetch callbacks for this view model.
+     *
+     * @param type Callback type class.
+     * @param <T> Callback type.
+     *
+     * @return Casted callbacks.
+     */
+    protected  <T extends ViewModelCallbacks> T getCallbacks(Class<T> type) {
+
+        return type.cast(mCallbacks);
+    }
+
+    //==============================================================================================
+    // Callbacks
+    //==============================================================================================
+
+    /**
+     * Base callback interface.
+     */
+    public interface ViewModelCallbacks {
+
+    }
 }

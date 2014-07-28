@@ -28,9 +28,6 @@ public class MainScreenFragmentFeatured extends BaseFragment {
     // Queue timer.
     @InjectView(R.id.main_featured_queued_timer) TextView mQueuedTimerTextView;
 
-    // Associated view model.
-    private ViewModelMainFeatured mViewModel;
-
     //==============================================================================================
     // Overwritten Methods
     //==============================================================================================
@@ -45,42 +42,11 @@ public class MainScreenFragmentFeatured extends BaseFragment {
         super.onCreateView(savedInstanceState);
 
         // Initialize view model.
-        mViewModel = new ViewModelMainFeatured();
-        mViewModel.setActivity(getActivity());
-        mViewModel.setViews(mTimelineContainer, mQueuedContainer, mQueuedTimerTextView);
+        setViewModel(new ViewModelMainFeatured(), savedInstanceState);
 
-        // Restore state.
-        mViewModel.restoreInstanceState(savedInstanceState);
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-
-        // Initialize view model.
-        mViewModel.initialize();
-    }
-
-    /**
-     * Save this screen fragments state.
-     *
-     * @param outState Outbound state bundle.
-     */
-    @Override
-    public void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-
-        // Save state.
-        mViewModel.saveInstanceState(outState);
-    }
-
-    /**
-     * Fetch the view model.
-     *
-     * @return View model.
-     */
-    public ViewModelMainFeatured getViewModel() {
-        return mViewModel;
+        // Set the views.
+        getViewModel(ViewModelMainFeatured.class)
+                .setViews(mTimelineContainer, mQueuedContainer, mQueuedTimerTextView);
     }
 
     //==============================================================================================
@@ -98,7 +64,7 @@ public class MainScreenFragmentFeatured extends BaseFragment {
         }
 
         // Enter the queue.
-        mViewModel.queueUp();
+        getViewModel(ViewModelMainFeatured.class).queueUp();
     }
 
     /**
@@ -112,6 +78,6 @@ public class MainScreenFragmentFeatured extends BaseFragment {
         }
 
         // Leave the queue.
-        mViewModel.leaveQueue();
+        getViewModel(ViewModelMainFeatured.class).leaveQueue();
     }
 }

@@ -1,13 +1,12 @@
 package com.blitz.app.models.views;
 
-import android.os.Bundle;
+import android.app.Activity;
 
 import com.blitz.app.models.comet.CometAPICallback;
 import com.blitz.app.models.comet.CometAPIManager;
 import com.blitz.app.models.objects.ObjectModelQueue;
 import com.blitz.app.screens.main.MainScreen;
 import com.blitz.app.utilities.app.AppDataObject;
-import com.blitz.app.utilities.logging.LogHelper;
 import com.google.gson.JsonObject;
 
 /**
@@ -26,20 +25,15 @@ public class ViewModelMain extends ViewModel {
     // Overwritten Methods
     //==============================================================================================
 
+    /**
+     * Setup comet.
+     *
+     * @param activity Target activity.
+     * @param callbacks Target callbacks.
+     */
     @Override
-    public void restoreInstanceState(Bundle savedInstanceState) {
-        // TODO: Restore.
-    }
-
-    @Override
-    public Bundle saveInstanceState(Bundle savedInstanceState) {
-
-        // TODO: Save.
-        return null;
-    }
-
-    @Override
-    public void initialize() {
+    public void initialize(Activity activity, ViewModelCallbacks callbacks) {
+        super.initialize(activity, callbacks);
 
         // Setup callbacks.
         setupCometCallbacks();
@@ -92,7 +86,8 @@ public class ViewModelMain extends ViewModel {
                     @Override
                     public void messageReceived(MainScreen receivingClass, JsonObject message) {
 
-                        receivingClass.getViewModel().handleDraftAction(receivingClass, message);
+                        receivingClass.getViewModel(ViewModelMain.class)
+                                .handleDraftAction(message);
                     }
                 }, "draftUserCallbackMainScreen");
     }
@@ -102,33 +97,32 @@ public class ViewModelMain extends ViewModel {
      * show or hide a confirmation dialog, or
      * simply enter the draft.
      *
-     * @param receivingClass Instance of this activity.
      * @param message Json message sent.
      */
-    private void handleDraftAction(MainScreen receivingClass, JsonObject message) {
+    private void handleDraftAction(JsonObject message) {
 
         // Fetch sent action.
         String action = message.get("action").getAsString();
 
-        if (action.equals("confirm_draft")) {
+        // Fetch callbacks.
+        ViewModelMainCallbacks callbacks = getCallbacks(ViewModelMainCallbacks.class);
 
-            // Present confirmation dialog to user.
-            receivingClass.showConfirmDraftDialog();
+        if (callbacks != null) {
 
-        } else if (action.equals("left_queue")) {
+            if (action.equals("confirm_draft")) {
 
-            // Dismiss dialog.
-            receivingClass.hideConfirmDraftDialog();
+                callbacks.onConfirmDraft(this);
 
-        } else if (action.equals("enter_draft")) {
+            } else if (action.equals("left_queue")) {
 
-            // View model, enter the draft
-            // draft model contains an
-            // active draft singleton (or auth manager).
-            LogHelper.log("Action: " + action);
+                callbacks.onLeftQueue(this);
+
+            } else if (action.equals("enter_draft")) {
+
+                callbacks.onEnterDraft(this);
+            }
         }
     }
-
 
     /**
      * Fetch queue model instance.
@@ -143,5 +137,16 @@ public class ViewModelMain extends ViewModel {
         }
 
         return mModelQueue;
+    }
+
+    //==============================================================================================
+    // Callbacks Interface
+    //==============================================================================================
+
+    public interface ViewModelMainCallbacks extends ViewModelCallbacks {
+
+        public void onConfirmDraft(ViewModelMain viewModel);
+        public void    onLeftQueue(ViewModelMain viewModel);
+        public void   onEnterDraft(ViewModelMain viewModel);
     }
 }

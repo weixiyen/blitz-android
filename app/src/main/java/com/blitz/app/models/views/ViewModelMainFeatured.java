@@ -1,5 +1,6 @@
 package com.blitz.app.models.views;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
@@ -50,6 +51,7 @@ public class ViewModelMainFeatured extends ViewModel {
      */
     @Override
     public void restoreInstanceState(Bundle savedInstanceState) {
+        super.restoreInstanceState(savedInstanceState);
 
         if (savedInstanceState != null) {
 
@@ -68,6 +70,7 @@ public class ViewModelMainFeatured extends ViewModel {
      */
     @Override
     public Bundle saveInstanceState(Bundle savedInstanceState) {
+        super.saveInstanceState(savedInstanceState);
 
         // Set seconds at suspension.
         mSecondsAtSuspension = (int) (System.currentTimeMillis() / 1000);
@@ -86,7 +89,8 @@ public class ViewModelMainFeatured extends ViewModel {
      * Initialize the view model.
      */
     @Override
-    public void initialize() {
+    public void initialize(Activity activity, ViewModelCallbacks callbacks) {
+        super.initialize(activity, callbacks);
 
         if (mSecondsInQueue != -1) {
 
@@ -206,7 +210,8 @@ public class ViewModelMainFeatured extends ViewModel {
                     public void messageReceived(MainScreenFragmentFeatured receivingClass, JsonObject message) {
 
                         // Handle the action.
-                        receivingClass.getViewModel().handleDraftAction(receivingClass, message);
+                        receivingClass.getViewModel(ViewModelMainFeatured.class)
+                                .handleDraftAction(receivingClass, message);
                     }
                 }, "draftUserCallback");
     }
@@ -225,7 +230,8 @@ public class ViewModelMainFeatured extends ViewModel {
         // If left the queue.
         if (action.equals("left_queue")) {
 
-            receivingClass.getViewModel().showQueueContainer(false, true);
+            receivingClass.getViewModel(ViewModelMainFeatured.class)
+                    .showQueueContainer(false, true);
         }
     }
 
