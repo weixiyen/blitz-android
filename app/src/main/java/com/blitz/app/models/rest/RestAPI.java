@@ -2,6 +2,7 @@ package com.blitz.app.models.rest;
 
 import com.blitz.app.models.rest_objects.JsonObjectAuth;
 import com.blitz.app.models.rest_objects.JsonObjectCode;
+import com.blitz.app.models.rest_objects.JsonObjectDraft;
 import com.blitz.app.models.rest_objects.JsonObjectPreference;
 import com.blitz.app.models.rest_objects.JsonObjectQueue;
 import com.blitz.app.models.rest_objects.JsonObjectUsers;
@@ -57,4 +58,9 @@ public interface RestAPI {
     void auth(@Body JsonObjectAuth.Body body,
 
                Callback<JsonObjectAuth> callback);
+
+    @GET("draft/{draft_id")
+    void draft(@Path("draft_id") String draftId,
+
+               Callback<JsonObjectDraft> callback);
 }
