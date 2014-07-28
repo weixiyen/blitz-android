@@ -7,6 +7,7 @@ import com.blitz.app.models.comet.CometAPIManager;
 import com.blitz.app.models.objects.ObjectModelQueue;
 import com.blitz.app.screens.main.MainScreen;
 import com.blitz.app.utilities.app.AppDataObject;
+import com.blitz.app.utilities.authentication.AuthHelper;
 import com.google.gson.JsonObject;
 
 /**
@@ -105,7 +106,7 @@ public class ViewModelMain extends ViewModel {
         String action = message.get("action").getAsString();
 
         // Fetch callbacks.
-        ViewModelMainCallbacks callbacks = getCallbacks(ViewModelMainCallbacks.class);
+        final ViewModelMainCallbacks callbacks = getCallbacks(ViewModelMainCallbacks.class);
 
         if (callbacks != null) {
 
@@ -119,7 +120,20 @@ public class ViewModelMain extends ViewModel {
 
             } else if (action.equals("enter_draft")) {
 
-                callbacks.onEnterDraft(this);
+                // Fetch the draft id.
+                final String draftId = message.get("draft_id").getAsString();
+
+                // Setup and sync the current draft.
+                AuthHelper.getCurrentDraft().setDraftId(draftId);
+                AuthHelper.getCurrentDraft().sync(mActivity, new Runnable() {
+
+                    @Override
+                    public void run() {
+
+                        // Send back model and draft id.
+                        callbacks.onEnterDraft(ViewModelMain.this);
+                    }
+                });
             }
         }
     }

@@ -1,5 +1,6 @@
 package com.blitz.app.screens.main;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.view.View;
@@ -8,6 +9,7 @@ import android.widget.Button;
 import com.blitz.app.R;
 import com.blitz.app.dialogs.DialogInfo;
 import com.blitz.app.models.views.ViewModelMain;
+import com.blitz.app.screens.draft_preview.DraftPreviewScreen;
 import com.blitz.app.utilities.android.BaseActivity;
 import com.blitz.app.utilities.viewpager.ViewPagerDepthTransformer;
 
@@ -134,6 +136,8 @@ public class MainScreen extends BaseActivity implements ViewModelMain.ViewModelM
 
     /**
      * Show a confirmation dialog for the draft.
+     *
+     * @param viewModel View model.
      */
     @Override
     public void onConfirmDraft(final ViewModelMain viewModel) {
@@ -151,7 +155,6 @@ public class MainScreen extends BaseActivity implements ViewModelMain.ViewModelM
 
                     // Leave the queue.
                     viewModel.leaveQueue();
-                    mDialogInfo.hide(null);
                 }
             });
 
@@ -162,7 +165,6 @@ public class MainScreen extends BaseActivity implements ViewModelMain.ViewModelM
 
                     // Confirm the draft.
                     viewModel.confirmQueue();
-                    mDialogInfo.hide(null);
                 }
             });
         }
@@ -172,6 +174,8 @@ public class MainScreen extends BaseActivity implements ViewModelMain.ViewModelM
 
     /**
      * Hide the confirmation dialog for the draft.
+     *
+     * @param viewModel View model.
      */
     @Override
     public void onLeftQueue(ViewModelMain viewModel) {
@@ -182,10 +186,21 @@ public class MainScreen extends BaseActivity implements ViewModelMain.ViewModelM
         }
     }
 
+    /**
+     * Transition into the main draft flow.
+     *
+     * @param viewModel View model.
+     */
     @Override
     public void onEnterDraft(ViewModelMain viewModel) {
 
-        // TODO: Draft entered.
+        // Hide info dialog.
+        if (mDialogInfo != null) {
+            mDialogInfo.hide(null);
+        }
+
+        // Enter draft preview and clear history.
+        startActivity(new Intent(this, DraftPreviewScreen.class), true);
     }
 
     //==============================================================================================
