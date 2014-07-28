@@ -1,5 +1,6 @@
 package com.blitz.app.utilities.authentication;
 
+import com.blitz.app.models.objects.ObjectModelDraft;
 import com.blitz.app.utilities.app.AppData;
 import com.blitz.app.utilities.app.AppDataObject;
 
@@ -7,6 +8,13 @@ import com.blitz.app.utilities.app.AppDataObject;
  * Created by mrkcsc on 7/20/14.
  */
 public class AuthHelper {
+
+    //==============================================================================================
+    // Member Variables
+    //==============================================================================================
+
+    // There can be only one current draft.
+    private static ObjectModelDraft mCurrentDraft;
 
     //==============================================================================================
     // Public Methods
@@ -62,5 +70,18 @@ public class AuthHelper {
 
         AppData.clear(AppDataObject.userEmail);
         AppData.clear(AppDataObject.userPassword);
+    }
+
+    /**
+     * Fetch the current draft model object.
+     *
+     * @return Current draft object.
+     */
+    public static ObjectModelDraft getCurrentDraft() {
+        if (mCurrentDraft == null) {
+            mCurrentDraft = new ObjectModelDraft();
+        }
+
+        return mCurrentDraft;
     }
 }
