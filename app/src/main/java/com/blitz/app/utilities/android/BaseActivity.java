@@ -1,6 +1,5 @@
 package com.blitz.app.utilities.android;
 
-import android.app.ActionBar;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -47,8 +46,6 @@ public class BaseActivity extends FragmentActivity implements ViewModel.ViewMode
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        setupActionBar();
 
         // Run transitions, we are entering.
         runCustomTransitions(getIntent(), true);
@@ -253,21 +250,6 @@ public class BaseActivity extends FragmentActivity implements ViewModel.ViewMode
     //==============================================================================================
     // Private Methods
     //==============================================================================================
-
-    /**
-     * Setup the action bar.  For the time being,
-     * we do not want it to display and only use
-     * it for the purpose of tabs.
-     */
-    private void setupActionBar() {
-
-        ActionBar actionBar = getActionBar();
-
-        if (actionBar != null) {
-            actionBar.setDisplayShowHomeEnabled(false);
-            actionBar.setDisplayShowTitleEnabled(false);
-        }
-    }
 
     /**
      * Given an optional intent, find out if the
