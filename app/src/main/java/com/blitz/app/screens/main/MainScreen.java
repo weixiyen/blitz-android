@@ -7,14 +7,9 @@ import android.widget.Button;
 
 import com.blitz.app.R;
 import com.blitz.app.dialogs.DialogInfo;
-import com.blitz.app.models.comet.CometAPICallback;
-import com.blitz.app.models.comet.CometAPIManager;
 import com.blitz.app.models.views.ViewModelMain;
 import com.blitz.app.utilities.android.BaseActivity;
-import com.blitz.app.utilities.app.AppDataObject;
-import com.blitz.app.utilities.logging.LogHelper;
 import com.blitz.app.utilities.viewpager.ViewPagerDepthTransformer;
-import com.google.gson.JsonObject;
 
 import butterknife.InjectView;
 import butterknife.OnClick;
@@ -55,23 +50,31 @@ public class MainScreen extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        // Setup view pager.
-        setupViewPager();
-
-        // Setup callbacks.
-        setupDraftCallbacks();
-
+        // Initialize view model.
         mViewModel = new ViewModelMain();
         mViewModel.restoreInstanceState(savedInstanceState);
+
+        // Setup view pager.
+        setupViewPager();
     }
 
+    /**
+     * When visible to user,
+     * initialize the mode.
+     */
     @Override
     protected void onResume() {
         super.onResume();
 
+        // Initialize the view model.
         mViewModel.initialize();
     }
 
+    /**
+     * Save this screens state.
+     *
+     * @param outState State values.
+     */
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
@@ -147,67 +150,18 @@ public class MainScreen extends BaseActivity {
         }
     }
 
+    /**
+     * Fetch the view model.
+     *
+     * @return View model.
+     */
+    public ViewModelMain getViewModel() {
+        return mViewModel;
+    }
+
     //==============================================================================================
     // Private Methods
     //==============================================================================================
-
-    /**
-     * Setup callbacks for the draft
-     * powered by the comet manager.
-     */
-    private void setupDraftCallbacks() {
-
-        // Fetch comet channel for this user.
-        String userCometChannel = "user:" + AppDataObject.userId.getString();
-
-        // Subscribe to channel, set callback.
-        CometAPIManager
-
-                // Subscribe to user channel.
-                .subscribeToChannel(userCometChannel)
-
-                // Set callback action.
-                .addCallback(this, new CometAPICallback<MainScreen>() {
-
-                    @Override
-                    public void messageReceived(MainScreen receivingClass, JsonObject message) {
-
-                        receivingClass.handleDraftAction(receivingClass, message);
-                    }
-                }, "draftUserCallbackMainScreen");
-    }
-
-    /**
-     * Handle a draft callback action.  Either
-     * show or hide a confirmation dialog, or
-     * simply enter the draft.
-     *
-     * @param receivingClass Instance of this activity.
-     * @param message Json message sent.
-     */
-    private void handleDraftAction(MainScreen receivingClass, JsonObject message) {
-
-        // Fetch sent action.
-        String action = message.get("action").getAsString();
-
-        if (action.equals("confirm_draft")) {
-
-            // Present confirmation dialog to user.
-            receivingClass.showConfirmDraftDialog();
-
-        } else if (action.equals("left_queue")) {
-
-            // Dismiss dialog.
-            receivingClass.hideConfirmDraftDialog();
-
-        } else if (action.equals("enter_draft")) {
-
-            // View model, enter the draft
-            // draft model contains an
-            // active draft singleton (or auth manager).
-            LogHelper.log("Action: " + action);
-        }
-    }
 
     /**
      * Create and setup the viewpager and associated
