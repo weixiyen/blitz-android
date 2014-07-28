@@ -3,10 +3,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_margin="10dp"
-    android:background="@color/background_inner"
     tools:context="${packageName}.${activityClass}"
     tools:ignore="ButtonStyle,HardcodedText">
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:contentDescription="@string/empty_string"
+        android:scaleType="centerCrop"
+        android:src="@drawable/asset_bg_standard" />
 
     <ImageView
         android:layout_width="wrap_content"
