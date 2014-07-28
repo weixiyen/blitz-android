@@ -9,7 +9,7 @@ import com.blitz.app.R;
 import com.blitz.app.dialogs.DialogInfo;
 import com.blitz.app.models.comet.CometAPICallback;
 import com.blitz.app.models.comet.CometAPIManager;
-import com.blitz.app.models.objects.ObjectModelQueue;
+import com.blitz.app.models.views.ViewModelMain;
 import com.blitz.app.utilities.android.BaseActivity;
 import com.blitz.app.utilities.app.AppDataObject;
 import com.blitz.app.utilities.logging.LogHelper;
@@ -39,8 +39,8 @@ public class MainScreen extends BaseActivity {
     // Info dialog.
     private DialogInfo mDialogInfo;
 
-    // Queue model.
-    private ObjectModelQueue mModelQueue;
+    // View model.
+    private ViewModelMain mViewModel;
 
     //==============================================================================================
     // Overwritten Methods
@@ -61,9 +61,23 @@ public class MainScreen extends BaseActivity {
         // Setup callbacks.
         setupDraftCallbacks();
 
-        if (mModelQueue == null) {
-            mModelQueue = new ObjectModelQueue();
-        }
+        mViewModel = new ViewModelMain();
+        mViewModel.restoreInstanceState(savedInstanceState);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        mViewModel.initialize();
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+
+        // Save state.
+        mViewModel.saveInstanceState(outState);
     }
 
     /**
@@ -95,25 +109,25 @@ public class MainScreen extends BaseActivity {
             mDialogInfo = new DialogInfo(this);
 
             // Configure the dialog.
-            mDialogInfo.setInfoText("Match Found! Join the match!");
-            mDialogInfo.setInfoLeftButton("Cancel", new Runnable() {
+            mDialogInfo.setInfoText(R.string.match_found);
+            mDialogInfo.setInfoLeftButton(R.string.cancel, new Runnable() {
 
                 @Override
                 public void run() {
 
                     // Leave the queue.
-                    mModelQueue.leaveQueue(MainScreen.this, null);
+                    mViewModel.leaveQueue();
                     mDialogInfo.hide(null);
                 }
             });
 
-            mDialogInfo.setInfoRightButton("Join!", new Runnable() {
+            mDialogInfo.setInfoRightButton(R.string.join, new Runnable() {
 
                 @Override
                 public void run() {
 
                     // Confirm the draft.
-                    mModelQueue.confirmQueue(MainScreen.this, null);
+                    mViewModel.confirmQueue();
                     mDialogInfo.hide(null);
                 }
             });

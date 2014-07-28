@@ -43,23 +43,23 @@ public class DialogInfo extends BaseDialog {
     /**
      * Set info text of dialog.
      *
-     * @param text Text.
+     * @param resourceId Text.
      */
     @SuppressWarnings("unused")
-    public void setInfoText(String text) {
-        mInfoText.setText(text);
+    public void setInfoText(int resourceId) {
+        mInfoText.setText(resourceId);
         mInfoText.setVisibility(View.VISIBLE);
     }
 
     /**
      * Setup left button of info dialog.
      *
-     * @param text Text.
+     * @param resourceId Text.
      * @param clickAction Click action.
      */
     @SuppressWarnings("unused")
-    public void setInfoLeftButton(String text, final Runnable clickAction) {
-        mInfoLButton.setText(text);
+    public void setInfoLeftButton(int resourceId, final Runnable clickAction) {
+        mInfoLButton.setText(resourceId);
         mInfoLButton.setVisibility(View.VISIBLE);
         mInfoLButton.setOnClickListener(new View.OnClickListener() {
 
@@ -75,12 +75,12 @@ public class DialogInfo extends BaseDialog {
     /**
      * Setup right button of info dialog.
      *
-     * @param text Text.
+     * @param resourceId Text.
      * @param clickAction Click action.
      */
     @SuppressWarnings("unused")
-    public void setInfoRightButton(String text, final Runnable clickAction) {
-        mInfoRButton.setText(text);
+    public void setInfoRightButton(int resourceId, final Runnable clickAction) {
+        mInfoRButton.setText(resourceId);
         mInfoRButton.setVisibility(View.VISIBLE);
         mInfoRButton.setOnClickListener(new View.OnClickListener() {
 
