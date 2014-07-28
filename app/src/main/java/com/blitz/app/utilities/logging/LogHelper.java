@@ -24,6 +24,6 @@ public class LogHelper {
      * @param log Log statement.
      */
     public static void log(String log) {
-        Log.i(TAG, log);
+        Log.e(TAG, log);
     }
 }
