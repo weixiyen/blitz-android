@@ -43,6 +43,9 @@ public class BaseActivity extends FragmentActivity implements ViewModel.ViewMode
     // View model for each activity.
     private ViewModel mViewModel = null;
 
+    // Are we going back an activity.
+    private static boolean mGoingBack = false;
+
     //==============================================================================================
     // Overwritten Methods
     //==============================================================================================
@@ -61,9 +64,6 @@ public class BaseActivity extends FragmentActivity implements ViewModel.ViewMode
             // Portrait mode only.
             setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         }
-
-        // Run transitions, we are entering.
-        runCustomTransitions(getIntent(), true);
 
         // Fetch the class name string in the format of resource view.
         String underscoredClassName = StringHelper.camelCaseToLowerCaseUnderscores(getClass().getSimpleName());
@@ -101,6 +101,14 @@ public class BaseActivity extends FragmentActivity implements ViewModel.ViewMode
         if (mViewModel != null) {
             mViewModel.initialize(this, this);
         }
+
+        if (mGoingBack) {
+            mGoingBack = false;
+        } else {
+
+            // Run transitions, we are entering.
+            runCustomTransitions(getIntent(), true);
+        }
     }
 
     /**
@@ -126,8 +134,11 @@ public class BaseActivity extends FragmentActivity implements ViewModel.ViewMode
     protected void onPause() {
         super.onPause();
 
-        // Run transitions, we are exiting.
-        runCustomTransitions(null, false);
+        if (mGoingBack) {
+
+            // Run transitions, we are exiting.
+            runCustomTransitions(null, false);
+        }
 
         // Start timer to detect entering the background.
         EnteredBackground.startActivityTransitionTimer();
@@ -179,6 +190,18 @@ public class BaseActivity extends FragmentActivity implements ViewModel.ViewMode
             // Flip the flag.
             mHistoryCleared = true;
         }
+    }
+
+    /**
+     * Track if we are going back
+     * with a static flag.
+     */
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+
+        // Now going back.
+        mGoingBack = true;
     }
 
     //==============================================================================================
@@ -296,19 +319,41 @@ public class BaseActivity extends FragmentActivity implements ViewModel.ViewMode
 
             if (isHistoryCleared(intent)) {
 
+                // Unset history flag.
                 mHistoryCleared = false;
 
-                // Reverse sequence.
-                overridePendingTransition(
-                        entering ? R.anim.activity_open_scale      : R.anim.activity_open_translate,
-                        entering ? R.anim.activity_close_translate : R.anim.activity_close_scale);
+                switch (mCustomTransitions) {
+                    case T_STANDARD:
 
+                        overridePendingTransition(
+                                entering ? R.anim.activity_open_scale      : R.anim.activity_open_translate,
+                                entering ? R.anim.activity_close_translate : R.anim.activity_close_scale);
+                        break;
+
+                    case T_SLIDE_HORIZONTAL:
+
+                        overridePendingTransition(
+                                entering ? R.anim.activity_slide_close_in  : R.anim.activity_slide_open_in,
+                                entering ? R.anim.activity_slide_close_out : R.anim.activity_slide_open_out);
+                        break;
+                }
             } else {
 
-                // Standard sequence.
-                overridePendingTransition(
-                        entering ? R.anim.activity_open_translate : R.anim.activity_open_scale,
-                        entering ? R.anim.activity_close_scale    : R.anim.activity_close_translate);
+                switch (mCustomTransitions) {
+                    case T_STANDARD:
+
+                        overridePendingTransition(
+                                entering ? R.anim.activity_open_translate : R.anim.activity_open_scale,
+                                entering ? R.anim.activity_close_scale    : R.anim.activity_close_translate);
+                        break;
+
+                    case T_SLIDE_HORIZONTAL:
+
+                        overridePendingTransition(
+                                entering ? R.anim.activity_slide_open_in  : R.anim.activity_slide_close_in,
+                                entering ? R.anim.activity_slide_open_out : R.anim.activity_slide_close_out);
+                        break;
+                }
             }
         }
     }
