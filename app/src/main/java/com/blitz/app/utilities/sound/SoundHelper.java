@@ -4,6 +4,8 @@ import android.content.Context;
 import android.content.res.AssetFileDescriptor;
 import android.media.MediaPlayer;
 
+import com.blitz.app.utilities.app.AppConfig;
+
 import java.io.IOException;
 
 /**
@@ -87,10 +89,12 @@ public class SoundHelper {
         mMediaPlayer.setVolume(100, 100);
         mMediaPlayer.prepareAsync();
         mMediaPlayer.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+
             @Override
+            @SuppressWarnings({"PointlessBooleanExpression", "ConstantConditions"})
             public void onPrepared(MediaPlayer mediaPlayer) {
 
-                if (!mMusicDisabled) {
+                if (!mMusicDisabled && AppConfig.SOUND_ENABLED) {
 
                     // Start playing music.
                     mediaPlayer.start();
