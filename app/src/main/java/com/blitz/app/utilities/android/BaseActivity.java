@@ -27,8 +27,15 @@ public class BaseActivity extends FragmentActivity implements ViewModel.ViewMode
     // Member Variables
     //==============================================================================================
 
-    // Set custom transitions.
-    private boolean mCustomTransitions = true;
+    // Custom transition type.
+    public enum CustomTransition {
+        T_STANDARD,
+        T_SLIDE_HORIZONTAL,
+        T_SLIDE_VERTICAL
+    }
+
+    // Custom transitions flag.
+    private CustomTransition mCustomTransitions = CustomTransition.T_STANDARD;
 
     // Track if activity history is cleared.
     private boolean mHistoryCleared = false;
@@ -201,11 +208,11 @@ public class BaseActivity extends FragmentActivity implements ViewModel.ViewMode
      * for toggling of custom transitions.
      *
      * @param layoutResID Layout resource id.
-     * @param customTransitions Custom transitions.
+     * @param customTransition Custom transition.
      */
     @SuppressWarnings("unused")
-    public void setContentView(int layoutResID, boolean customTransitions) {
-        mCustomTransitions = customTransitions;
+    public void setContentView(int layoutResID, CustomTransition customTransition) {
+        mCustomTransitions = customTransition;
 
         setContentView(layoutResID);
     }
@@ -213,10 +220,10 @@ public class BaseActivity extends FragmentActivity implements ViewModel.ViewMode
     /**
      * Set custom transitions on or off.
      *
-     * @param customTransitions Custom transitions.
+     * @param customTransition Custom transition.
      */
-    public void setCustomTransitions(boolean customTransitions) {
-        mCustomTransitions = customTransitions;
+    public void setCustomTransitions(CustomTransition customTransition) {
+        mCustomTransitions = customTransition;
     }
 
 
@@ -285,7 +292,7 @@ public class BaseActivity extends FragmentActivity implements ViewModel.ViewMode
      */
     private void runCustomTransitions(Intent intent, boolean entering) {
 
-        if (mCustomTransitions) {
+        if (mCustomTransitions != null) {
 
             if (isHistoryCleared(intent)) {
 

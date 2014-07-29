@@ -41,7 +41,7 @@ public class LoadingScreen extends BaseActivity {
         super.onCreate(savedInstanceState);
 
         // Disable custom transitions.
-        setCustomTransitions(false);
+        setCustomTransitions(null);
 
         // Clear app data if configured.
         if (AppConfig.CLEAR_APP_DATA_ON_LAUNCH) {
