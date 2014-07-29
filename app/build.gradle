@@ -23,6 +23,9 @@ android {
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
 
+    // Support annotations (mainly unsed for @NonNull).
+    compile 'com.android.support:support-annotations:+'
+
     // Android XML view injections.
     compile 'com.jakewharton:butterknife:5.1.+'
 
