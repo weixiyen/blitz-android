@@ -1,17 +1,18 @@
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="${packageName}.${activityClass}"
     tools:ignore="ButtonStyle,HardcodedText">
 
-    <ImageView
+    <com.blitz.app.utilities.imageview_plus.ImageViewPlus
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:contentDescription="@string/empty_string"
-        android:scaleType="centerCrop"
-        android:src="@drawable/asset_bg_queue" />
+        android:src="@drawable/asset_bg_queue"
+        app:scaleType="topCrop" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -21,27 +22,30 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="30dp"
+            android:layout_marginTop="25dp"
             android:orientation="vertical">
 
-            <TextView
+            <me.grantland.widget.AutofitTextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="@string/app_font_bold"
                 android:gravity="right"
+                android:singleLine="true"
                 android:text="Your place in line has been reserved!"
                 android:textColor="@color/text_color_light"
-                android:textSize="19sp"/>
+                android:textSize="20sp"/>
 
-            <TextView
+            <me.grantland.widget.AutofitTextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="40dp"
                 android:layout_marginTop="10dp"
                 android:fontFamily="@string/app_font_light"
                 android:gravity="right"
-                android:text="You're on your way to a whole new\n Fantasy Football Experience!"
+                android:lines="2"
+                android:text="You're on your way to a whole new\nFantasy Football Experience!"
                 android:textColor="@color/text_color_light"
                 android:textSize="16sp"/>
         </LinearLayout>

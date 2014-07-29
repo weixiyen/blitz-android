@@ -48,6 +48,9 @@ dependencies {
     // Library for circle image views.
     compile 'de.hdodenhof:circleimageview:1.1.0'
 
+    // Library for a text view that fits text.
+    compile 'me.grantland:autofittextview:0.1.+'
+
     // WebSocket library for real-time calls.
     compile files('libs/Java-WebSocket-7c3b223.jar')
 }
