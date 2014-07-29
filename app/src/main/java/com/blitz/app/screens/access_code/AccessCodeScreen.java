@@ -1,6 +1,7 @@
 package com.blitz.app.screens.access_code;
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.widget.EditText;
 
 import com.blitz.app.R;
@@ -25,6 +26,23 @@ public class AccessCodeScreen extends BaseActivity {
     @InjectView(R.id.access_code_screen_code) EditText mCode;
 
     private ObjectModelCode mObjectModelCode;
+
+    //==============================================================================================
+    // Overwritten Methods
+    //==============================================================================================
+
+    /**
+     * Setup the screen.
+     *
+     * @param savedInstanceState Instance parameters.
+     */
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        // This screen uses a slide animation.
+        setCustomTransitions(CustomTransition.T_SLIDE_HORIZONTAL);
+    }
 
     //==============================================================================================
     // Click Methods
