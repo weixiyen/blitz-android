@@ -21,7 +21,7 @@ public class EnteredBackground {
     private TimerTask mActivityTransitionTimerTask;
 
     // Track background state.
-    private boolean mWasInBackground = true;
+    private boolean mIsInBackground = true;
 
     private EnteredBackgroundInterface mEnteredBackgroundInterface;
 
@@ -49,7 +49,7 @@ public class EnteredBackground {
             public void run() {
 
                 // Set background flag.
-                instance().mWasInBackground = true;
+                instance().mIsInBackground = true;
 
                 // Now entered the background.
                 instance().mEnteredBackgroundInterface.onEnterBackground();
@@ -67,12 +67,23 @@ public class EnteredBackground {
     public static void stopActivityTransitionTimer() {
         instance().clearTimer();
 
-        if (instance().mWasInBackground) {
-            instance().mWasInBackground = false;
+        if (instance().mIsInBackground) {
+            instance().mIsInBackground = false;
 
             // Now exited the background.
             instance().mEnteredBackgroundInterface.onExitBackground();
         }
+    }
+
+    /**
+     * Are we currently in the background.
+     *
+     * @return True or false.
+     */
+    public static boolean isInBackground() {
+
+        // Return flag.
+        return instance().mIsInBackground;
     }
 
     //==============================================================================================
