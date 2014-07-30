@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="${packageName}.${activityClass}"
-    tools:ignore="ButtonStyle,HardcodedText">
+    tools:ignore="ButtonStyle">
 
     <com.blitz.app.utilities.imageview_plus.ImageViewPlus
         android:layout_width="match_parent"
@@ -16,132 +16,188 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="25dp"
         android:orientation="vertical">
+
+        <me.grantland.widget.AutofitTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@string/app_font_bold"
+            android:gravity="right"
+            android:shadowColor="@color/text_color_shadow"
+            android:shadowDx="1"
+            android:shadowDy="1"
+            android:shadowRadius="2"
+            android:singleLine="true"
+            android:text="@string/place_reserved"
+            android:textColor="@color/text_color_light"
+            android:textSize="20sp"/>
+
+        <me.grantland.widget.AutofitTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="40dp"
+            android:layout_marginTop="10dp"
+            android:fontFamily="@string/app_font_light"
+            android:gravity="right"
+            android:lines="2"
+            android:shadowColor="@color/text_color_shadow"
+            android:shadowDx="1"
+            android:shadowDy="1"
+            android:shadowRadius="2"
+            android:text="@string/on_your_way"
+            android:textColor="@color/text_color_light"
+            android:textSize="16sp"/>
+    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
-            android:layout_marginTop="25dp"
-            android:orientation="vertical">
-
-            <me.grantland.widget.AutofitTextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:fontFamily="@string/app_font_bold"
-                android:gravity="right"
-                android:singleLine="true"
-                android:text="Your place in line has been reserved!"
-                android:textColor="@color/text_color_light"
-                android:textSize="20sp"/>
-
-            <me.grantland.widget.AutofitTextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="40dp"
-                android:layout_marginTop="10dp"
-                android:fontFamily="@string/app_font_light"
-                android:gravity="right"
-                android:lines="2"
-                android:text="You're on your way to a whole new\nFantasy Football Experience!"
-                android:textColor="@color/text_color_light"
-                android:textSize="16sp"/>
-        </LinearLayout>
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_margin="10dp"
-            android:layout_weight="1"
-            android:gravity="center"
             android:orientation="vertical">
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:layout_margin="10dp"
-                android:background="@color/button_color_1"
-                android:orientation="vertical">
+                android:layout_height="160dp"
+                android:layout_marginTop="75dp"
+                android:background="@drawable/asset_bg_queue_container"
+                android:gravity="center_vertical"
+                android:orientation="vertical"
+                android:paddingBottom="10dp"
+                android:paddingLeft="120dp"
+                android:paddingRight="20dp"
+                android:paddingTop="10dp">
 
-                <TextView
+                <me.grantland.widget.AutofitTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@string/app_font_sports"
+                    android:gravity="center"
+                    android:shadowColor="@color/text_color_shadow_light"
+                    android:shadowDx="1"
+                    android:shadowDy="1"
+                    android:shadowRadius="8"
+                    android:singleLine="true"
+                    android:text="@string/number_large"
+                    android:textColor="@color/text_color_link"
+                    android:textSize="40sp"/>
+
+                <me.grantland.widget.AutofitTextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:fontFamily="@string/app_font_regular"
                     android:gravity="center"
-                    android:text="134,324"
-                    android:textColor="@color/text_color_light"
-                    android:textSize="40sp"/>
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="10dp"
-                    android:fontFamily="@string/app_font_light"
-                    android:gravity="center"
-                    android:text="players in front of you."
+                    android:padding="5dp"
+                    android:shadowColor="@color/text_color_shadow"
+                    android:shadowDx="1"
+                    android:shadowDy="1"
+                    android:shadowRadius="2"
+                    android:singleLine="true"
+                    android:text="@string/players_in_front"
                     android:textColor="@color/text_color_light"
                     android:textSize="16sp"/>
 
-                <TextView
+                <me.grantland.widget.AutofitTextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@string/app_font_regular"
+                    android:fontFamily="@string/app_font_sports"
                     android:gravity="center"
-                    android:text="324"
+                    android:shadowColor="@color/text_color_shadow_light"
+                    android:shadowDx="1"
+                    android:shadowDy="1"
+                    android:shadowRadius="8"
+                    android:singleLine="true"
+                    android:text="@string/number_small"
                     android:textColor="@color/text_color_light"
                     android:textSize="30sp"/>
 
-                <TextView
+                <me.grantland.widget.AutofitTextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="10dp"
-                    android:fontFamily="@string/app_font_light"
+                    android:fontFamily="@string/app_font_regular"
                     android:gravity="center"
-                    android:text="players beind you."
+                    android:padding="5dp"
+                    android:shadowColor="@color/text_color_shadow"
+                    android:shadowDx="1"
+                    android:shadowDy="1"
+                    android:shadowRadius="2"
+                    android:singleLine="true"
+                    android:text="@string/players_behind_you"
                     android:textColor="@color/text_color_light"
                     android:textSize="16sp"/>
             </LinearLayout>
-        </RelativeLayout>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:layout_marginBottom="10dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:gravity="center"
-            android:orientation="horizontal">
+            <me.grantland.widget.AutofitTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="40dp"
+                android:layout_marginLeft="100dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginTop="10dp"
+                android:contentDescription="@string/empty_string"
+                android:fontFamily="@string/app_font_regular"
+                android:gravity="center_vertical|right"
+                android:shadowColor="@color/text_color_shadow"
+                android:shadowDx="1"
+                android:shadowDy="1"
+                android:shadowRadius="2"
+                android:singleLine="true"
+                android:text="@string/send_reminder"
+                android:textColor="@color/text_color_link"
+                android:textSize="14sp" />
 
-            <Button
+            <me.grantland.widget.AutofitTextView
                 android:id="@+id/queue_screen_have_code"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_marginRight="5dp"
-                android:layout_weight=".5"
-                android:background="@drawable/button_main"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:background="@drawable/asset_bg_queue_button"
                 android:contentDescription="@string/empty_string"
-                android:fontFamily="@string/app_font_light"
-                android:text="I have an Access Code"
+                android:fontFamily="@string/app_font_regular"
+                android:gravity="center"
+                android:paddingBottom="2dp"
+                android:shadowColor="@color/text_color_shadow"
+                android:shadowDx="1"
+                android:shadowDy="1"
+                android:shadowRadius="2"
+                android:singleLine="true"
+                android:text="@string/have_code"
                 android:textColor="@color/text_color_light"
-                android:textSize="12sp" />
+                android:textSize="22sp" />
 
-            <Button
+            <me.grantland.widget.AutofitTextView
                 android:id="@+id/queue_screen_have_account"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_marginLeft="5dp"
-                android:layout_weight=".5"
-                android:background="@drawable/button_main"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="30dp"
+                android:layout_marginTop="10dp"
+                android:background="@android:color/transparent"
                 android:contentDescription="@string/empty_string"
                 android:fontFamily="@string/app_font_light"
-                android:text="I already have an Account"
+                android:gravity="center"
+                android:padding="10dp"
+                android:shadowColor="@color/text_color_shadow"
+                android:shadowDx="1"
+                android:shadowDy="1"
+                android:shadowRadius="2"
+                android:singleLine="true"
+                android:text="@string/already_have_account"
                 android:textColor="@color/text_color_light"
-                android:textSize="12sp" />
+                android:textSize="18sp" />
+
         </LinearLayout>
 
-    </LinearLayout>
+        <ImageView
+            android:layout_width="170dp"
+            android:layout_height="285dp"
+            android:contentDescription="@string/empty_string"
+            android:src="@drawable/asset_bg_queue_player" />
+    </RelativeLayout>
 </RelativeLayout>
-

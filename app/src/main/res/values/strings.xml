@@ -13,4 +13,11 @@
     <string name="match_found">Match Found! Join the match!</string>
     <string name="cancel">Cancel</string>
     <string name="join">Join!</string>
+    <string name="on_your_way">You\'re on your way to a whole new\nFantasy Football Experience!</string>
+    <string name="place_reserved">Your place in line has been reserved!</string>
+    <string name="already_have_account">Already have an account? Login</string>
+    <string name="have_code">I have an Access Code</string>
+    <string name="send_reminder">Send me a reminder when Blitz is ready</string>
+    <string name="players_behind_you">Players behind you</string>
+    <string name="players_in_front">Players in front of you</string>
 </resources>
