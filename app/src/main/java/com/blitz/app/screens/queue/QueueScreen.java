@@ -2,10 +2,7 @@ package com.blitz.app.screens.queue;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
 import android.view.View;
-import android.view.ViewTreeObserver;
-import android.widget.FrameLayout;
 
 import com.blitz.app.R;
 import com.blitz.app.screens.access_code.AccessCodeScreen;
@@ -14,8 +11,6 @@ import com.blitz.app.utilities.android.BaseActivity;
 import com.blitz.app.utilities.animations.AnimationHelper;
 import com.blitz.app.utilities.animations.AnimationHelperView;
 import com.blitz.app.utilities.logging.LogHelper;
-import com.facebook.rebound.SimpleSpringListener;
-import com.facebook.rebound.Spring;
 
 import butterknife.InjectView;
 import butterknife.OnClick;
@@ -31,13 +26,7 @@ public class QueueScreen extends BaseActivity {
 
     @InjectView(R.id.queue_promo_text) View mQueuePromoText;
 
-    private Spring mSpring;
-
-    private final OpeningAnimations mSpringListener = new OpeningAnimations();
-
-    private Integer mYTranslationOffset;
-
-    private AnimationHelperView aQueuePromoText;
+    private AnimationHelper mPageAnimations;
 
     //==============================================================================================
     // Overwritten Methods
@@ -47,61 +36,36 @@ public class QueueScreen extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        AnimationHelperView
         aQueuePromoText = new AnimationHelperView(mQueuePromoText);
+        aQueuePromoText.setTranslationYRange(
+                AnimationHelperView.TranslationPosition.SCREEN_TOP,
+                AnimationHelperView.TranslationPosition.CURRENT_POSITION);
 
-        // Initialize spring.
-        mSpring = AnimationHelper.createSpring(40, 1);
+        // Initialize animations.
+        mPageAnimations = new AnimationHelper(40, 1);
+        mPageAnimations.initialize(this);
 
-        final View rootView = ((FrameLayout)findViewById(android.R.id.content)).getChildAt(0);
-
-        rootView.getViewTreeObserver().addOnGlobalLayoutListener(
-                new ViewTreeObserver.OnGlobalLayoutListener() {
-                    @Override
-                    public void onGlobalLayout() {
-
-                        aQueuePromoText.setCoordinates();
-                        aQueuePromoText.setTranslationYRange(
-                                AnimationHelperView.TranslationPosition.SCREEN_TOP,
-                                AnimationHelperView.TranslationPosition.CURRENT_POSITION);
-
-                        rootView.getViewTreeObserver().removeOnGlobalLayoutListener(this);
-                    }
-                });
+        // Add views.
+        mPageAnimations.addHelperView(aQueuePromoText);
     }
 
     @Override
     protected void onResume() {
         super.onResume();
 
-        LogHelper.log("Ready, waiting to play animations.");
+        LogHelper.log("resumed");
 
-        mSpring.addListener(mSpringListener);
-
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                mSpring.setEndValue(1);
-
-                LogHelper.log("Now playing");
-            }
-        }, 1000);
+        // Enable.
+        mPageAnimations.enable();
     }
 
     @Override
     protected void onPause() {
         super.onPause();
 
-        mSpring.removeAllListeners();
-        mSpring.setEndValue(0);
-    }
-
-    private class OpeningAnimations extends SimpleSpringListener {
-
-        @Override
-        public void onSpringUpdate(Spring spring) {
-
-            aQueuePromoText.translateY(spring);
-        }
+        // Disable.
+        mPageAnimations.disable();
     }
 
     //==============================================================================================

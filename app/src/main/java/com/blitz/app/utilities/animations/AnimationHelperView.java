@@ -2,7 +2,6 @@ package com.blitz.app.utilities.animations;
 
 import android.view.View;
 
-import com.blitz.app.utilities.logging.LogHelper;
 import com.facebook.rebound.Spring;
 import com.facebook.rebound.SpringUtil;
 
@@ -17,6 +16,9 @@ public class AnimationHelperView {
 
     private int mTranslationYFrom;
     private int mTranslationYTo;
+
+    private TranslationPosition mFrom;
+    private TranslationPosition mTo;
 
     private Integer mHeight;
     private Integer mTop;
@@ -40,21 +42,11 @@ public class AnimationHelperView {
     }
 
     public void setTranslationYRange(TranslationPosition from, TranslationPosition to) {
-        switch (from) {
-            case SCREEN_TOP:
-                mTranslationYFrom = -(mTop + mHeight + OFF_SCREEN_PADDING);
-        }
-
-        switch (to) {
-            case CURRENT_POSITION:
-                mTranslationYTo = 0;
-        }
-
-        // Initialize the value.
-        translateY(mTranslationYFrom);
+        mFrom = from;
+        mTo   = to;
     }
 
-    public void translateY(Spring spring) {
+    void translateY(Spring spring) {
 
         float yTranslation = (float) SpringUtil.mapValueFromRangeToRange
                 (spring.getCurrentValue(), 0, 1, mTranslationYFrom, mTranslationYTo);
@@ -62,11 +54,11 @@ public class AnimationHelperView {
         translateY(yTranslation);
     }
 
-    public void translateY(float yTranslation) {
+    void translateY(float yTranslation) {
         mView.setTranslationY(yTranslation);
     }
 
-    public void setCoordinates() {
+    void setCoordinates() {
         if (mTop == null) {
 
             int[] location = new int[2];
@@ -78,8 +70,25 @@ public class AnimationHelperView {
 
         if (mHeight == null) {
             mHeight = mView.getHeight();
+
+            tryInitialize();
+        }
+    }
+
+    private void tryInitialize() {
+        switch (mFrom) {
+            case SCREEN_TOP:
+                mTranslationYFrom = -(mTop + mHeight + OFF_SCREEN_PADDING);
+                break;
         }
 
-        LogHelper.log("Coordinate: " + mTop + " " + mHeight);
+        switch (mTo) {
+            case CURRENT_POSITION:
+                mTranslationYTo = 0;
+                break;
+        }
+
+        // Initialize the value.
+        translateY(mTranslationYFrom);
     }
 }
