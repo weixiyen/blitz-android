@@ -10,7 +10,6 @@ import com.blitz.app.screens.sign_in.SignInScreen;
 import com.blitz.app.utilities.android.BaseActivity;
 import com.blitz.app.utilities.animations.AnimationHelper;
 import com.blitz.app.utilities.animations.AnimationHelperView;
-import com.blitz.app.utilities.logging.LogHelper;
 
 import butterknife.InjectView;
 import butterknife.OnClick;
@@ -42,19 +41,16 @@ public class QueueScreen extends BaseActivity {
                 AnimationHelperView.TranslationPosition.SCREEN_TOP,
                 AnimationHelperView.TranslationPosition.CURRENT_POSITION);
 
-        // Initialize animations.
-        mPageAnimations = new AnimationHelper(40, 1);
-        mPageAnimations.initialize(this);
+        // Initialize helper animations.
+        mPageAnimations = new AnimationHelper(this);
 
-        // Add views.
+        // Add helper animation views.
         mPageAnimations.addHelperView(aQueuePromoText);
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-
-        LogHelper.log("resumed");
 
         // Enable.
         mPageAnimations.enable();

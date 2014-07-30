@@ -47,72 +47,43 @@ public class AnimationHelper {
      *
      * @param tension Associated tension.
      * @param friction Associated friction.
+     *
+     * @param activity Target activity. We must wait until
+     *                 the views are rendered before we can
+     *                 initialize them.
      */
-    public AnimationHelper(int tension, int friction) {
+    public AnimationHelper(Activity activity, int tension, int friction) {
 
-        // Create a spring config with provided parameters.
-        SpringConfig springConfig = SpringConfig
-                .fromOrigamiTensionAndFriction(tension, friction);
+        // First configure.
+        configure(activity, tension, friction);
 
-        mSpring = SpringSystem
-                .create()
-                .createSpring()
-                .setSpringConfig(springConfig)
-                .setAtRest();
+        // Initialize.
+        initialize();
+    }
 
-        // Initialize list of animation views.
-        mViews = new ArrayList<AnimationHelperView>();
+    /**
+     * Initialize an animation helper class
+     * with some default values.
+     *
+     * @param activity Target activity. We must wait until
+     *                 the views are rendered before we can
+     *                 initialize them.
+     */
+    public AnimationHelper(Activity activity) {
+
+        // Default tension and friction.
+        new AnimationHelper(activity, 40, 1);
     }
 
     //==============================================================================================
     // Public Methods
     //==============================================================================================
 
-
     /**
-     * Initialize animation helper object. Should be
-     * called on activity creation.
+     * Add a animation helper view.
      *
-     * @param activity Target activity. We must wait until
-     *                 the views are rendered before we can
-     *                 initialize them.
+     * @param helperView Helper view.
      */
-    public void initialize(Activity activity) {
-
-        // Save activity.
-        mActivity = activity;
-
-        // Fetch associated root view.
-        final View rootView = ((FrameLayout)mActivity.findViewById
-                (android.R.id.content)).getChildAt(0);
-
-        // Wait for layout pass to finish before setting coordinate.
-        rootView.getViewTreeObserver().addOnGlobalLayoutListener(
-
-                new ViewTreeObserver.OnGlobalLayoutListener() {
-
-                    @Override
-                    public void onGlobalLayout() {
-
-                        // Now initialized.
-                        mInitialized = true;
-
-                        // Enable if pending.
-                        if (mEnablePendingInitialization) {
-                            mEnablePendingInitialization = false;
-
-                            enable();
-                        }
-
-                        // Try to initialize.
-                        tryInitializeViews(mViews);
-
-                        // Remove the listener.
-                        rootView.getViewTreeObserver().removeOnGlobalLayoutListener(this);
-                    }
-                });
-    }
-
     @SuppressWarnings("unused")
     public void addHelperView(AnimationHelperView helperView) {
 
@@ -123,6 +94,11 @@ public class AnimationHelper {
         mViews.add(helperView);
     }
 
+    /**
+     * Add a list of animation helper views.
+     *
+     * @param helperViews Helper views list.
+     */
     @SuppressWarnings("unused")
     public void addHelperViews(ArrayList<AnimationHelperView> helperViews) {
 
@@ -133,6 +109,10 @@ public class AnimationHelper {
         mViews.addAll(helperViews);
     }
 
+    /**
+     * Disable the animation helper, also
+     * resets the animation state.
+     */
     public void disable() {
 
         // Clear listeners and reset.
@@ -140,7 +120,12 @@ public class AnimationHelper {
         mSpring.setEndValue(0);
     }
 
-
+    /**
+     * Enable the animation helper.  Initializes
+     * and then plays animations.  Must wait
+     * until activity has rendered all views
+     * before starting.
+     */
     public void enable() {
 
         if (!mInitialized) {
@@ -194,6 +179,69 @@ public class AnimationHelper {
     //==============================================================================================
     // Private Methods
     //==============================================================================================
+
+    /**
+     * Configure this helper.
+     *
+     * @param activity Target activity.
+     * @param tension Desired tension.
+     * @param friction Desired friction.
+     */
+    private void configure(Activity activity, int tension, int friction) {
+
+        // Save activity.
+        mActivity = activity;
+
+        // Create a spring config with provided parameters.
+        SpringConfig springConfig = SpringConfig
+                .fromOrigamiTensionAndFriction(tension, friction);
+
+        mSpring = SpringSystem
+                .create()
+                .createSpring()
+                .setSpringConfig(springConfig)
+                .setAtRest();
+
+        // Initialize list of animation views.
+        mViews = new ArrayList<AnimationHelperView>();
+    }
+
+    /**
+     * Initialize animation helper object. Should be
+     * called on activity creation.
+     */
+    private void initialize() {
+
+        // Fetch associated root view.
+        final View rootView = ((FrameLayout)mActivity.findViewById
+                (android.R.id.content)).getChildAt(0);
+
+        // Wait for layout pass to finish before setting coordinate.
+        rootView.getViewTreeObserver().addOnGlobalLayoutListener(
+
+                new ViewTreeObserver.OnGlobalLayoutListener() {
+
+                    @Override
+                    public void onGlobalLayout() {
+
+                        // Now initialized.
+                        mInitialized = true;
+
+                        // Enable if pending.
+                        if (mEnablePendingInitialization) {
+                            mEnablePendingInitialization = false;
+
+                            enable();
+                        }
+
+                        // Try to initialize.
+                        tryInitializeViews(mViews);
+
+                        // Remove the listener.
+                        rootView.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+                    }
+                });
+    }
 
     /**
      * Initialize a collection of helper views.  Attempts
