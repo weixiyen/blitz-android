@@ -23,8 +23,10 @@ public class QueueScreen extends BaseActivity {
     // Member Variables
     //==============================================================================================
 
-    @InjectView(R.id.queue_promo_text) View mQueuePromoText;
+    @InjectView(R.id.queue_promo_text)      View mQueuePromoText;
+    @InjectView(R.id.queue_calls_to_action) View mQueueCallsToAction;
 
+    // Page animations.
     private AnimationHelper mPageAnimations;
 
     //==============================================================================================
@@ -36,16 +38,23 @@ public class QueueScreen extends BaseActivity {
         super.onCreate(savedInstanceState);
 
         AnimationHelperView
-        aQueuePromoText = new AnimationHelperView(mQueuePromoText);
-        aQueuePromoText.setTranslationYRange(
-                AnimationHelperView.TranslationPosition.SCREEN_TOP,
-                AnimationHelperView.TranslationPosition.CURRENT_POSITION);
+            aQueuePromoText = new AnimationHelperView(mQueuePromoText);
+            aQueuePromoText.setTranslationYRange(
+                    AnimationHelperView.TranslationPosition.SCREEN_TOP,
+                    AnimationHelperView.TranslationPosition.CURRENT_POSITION);
+
+        AnimationHelperView
+            aQueueCallsToAction = new AnimationHelperView(mQueueCallsToAction);
+            aQueueCallsToAction.setTranslationYRange(
+                    AnimationHelperView.TranslationPosition.SCREEN_BOTTOM,
+                    AnimationHelperView.TranslationPosition.CURRENT_POSITION);
 
         // Initialize helper animations.
         mPageAnimations = new AnimationHelper(this);
 
         // Add helper animation views.
         mPageAnimations.addHelperView(aQueuePromoText);
+        mPageAnimations.addHelperView(aQueueCallsToAction);
     }
 
     @Override

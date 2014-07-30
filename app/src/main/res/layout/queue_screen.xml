@@ -139,7 +139,7 @@
             <me.grantland.widget.AutofitTextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="40dp"
+
                 android:layout_marginLeft="100dp"
                 android:layout_marginRight="20dp"
                 android:layout_marginTop="10dp"
@@ -155,44 +155,51 @@
                 android:textColor="@color/text_color_link"
                 android:textSize="14sp" />
 
-            <me.grantland.widget.AutofitTextView
-                android:id="@+id/queue_screen_have_code"
-                android:layout_width="match_parent"
-                android:layout_height="60dp"
-                android:background="@drawable/asset_bg_queue_button"
-                android:contentDescription="@string/empty_string"
-                android:fontFamily="@string/app_font_regular"
-                android:gravity="center"
-                android:paddingBottom="2dp"
-                android:shadowColor="@color/text_color_shadow"
-                android:shadowDx="1"
-                android:shadowDy="1"
-                android:shadowRadius="2"
-                android:singleLine="true"
-                android:text="@string/have_code"
-                android:textColor="@color/text_color_light"
-                android:textSize="22sp" />
-
-            <me.grantland.widget.AutofitTextView
-                android:id="@+id/queue_screen_have_account"
+            <LinearLayout
+                android:id="@+id/queue_calls_to_action"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="30dp"
-                android:layout_marginTop="10dp"
-                android:background="@android:color/transparent"
-                android:contentDescription="@string/empty_string"
-                android:fontFamily="@string/app_font_light"
-                android:gravity="center"
-                android:padding="10dp"
-                android:shadowColor="@color/text_color_shadow"
-                android:shadowDx="1"
-                android:shadowDy="1"
-                android:shadowRadius="2"
-                android:singleLine="true"
-                android:text="@string/already_have_account"
-                android:textColor="@color/text_color_light"
-                android:textSize="18sp" />
+                android:orientation="vertical">
 
+                <me.grantland.widget.AutofitTextView
+                    android:id="@+id/queue_screen_have_code"
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:layout_marginTop="40dp"
+                    android:background="@drawable/asset_bg_queue_button"
+                    android:contentDescription="@string/empty_string"
+                    android:fontFamily="@string/app_font_regular"
+                    android:gravity="center"
+                    android:paddingBottom="2dp"
+                    android:shadowColor="@color/text_color_shadow"
+                    android:shadowDx="1"
+                    android:shadowDy="1"
+                    android:shadowRadius="2"
+                    android:singleLine="true"
+                    android:text="@string/have_code"
+                    android:textColor="@color/text_color_light"
+                    android:textSize="22sp" />
+
+                <me.grantland.widget.AutofitTextView
+                    android:id="@+id/queue_screen_have_account"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="30dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@android:color/transparent"
+                    android:contentDescription="@string/empty_string"
+                    android:fontFamily="@string/app_font_light"
+                    android:gravity="center"
+                    android:padding="10dp"
+                    android:shadowColor="@color/text_color_shadow"
+                    android:shadowDx="1"
+                    android:shadowDy="1"
+                    android:shadowRadius="2"
+                    android:singleLine="true"
+                    android:text="@string/already_have_account"
+                    android:textColor="@color/text_color_light"
+                    android:textSize="18sp" />
+            </LinearLayout>
         </LinearLayout>
 
         <ImageView
