@@ -231,16 +231,16 @@ public class AnimationHelper {
                         // Now initialized.
                         mInitialized = true;
 
+                        // Set window dimensions.
+                        mWindowWidth  = rootView.getWidth();
+                        mWindowHeight = rootView.getHeight();
+
                         // Enable if pending.
                         if (mEnablePendingInitialization) {
                             mEnablePendingInitialization = false;
 
                             enable();
                         }
-
-                        // Set window dimensions.
-                        mWindowWidth  = rootView.getWidth();
-                        mWindowHeight = rootView.getHeight();
 
                         // Remove the listener.
                         rootView.getViewTreeObserver().removeOnGlobalLayoutListener(this);
@@ -277,7 +277,7 @@ public class AnimationHelper {
     private void tryInitializeView(AnimationHelperView helperView) {
 
         if (helperView != null && mInitialized) {
-            helperView.setCoordinates();
+            helperView.setCoordinates(mWindowWidth, mWindowHeight);
         }
     }
 }

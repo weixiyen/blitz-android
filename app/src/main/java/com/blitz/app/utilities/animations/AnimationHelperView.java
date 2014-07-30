@@ -2,6 +2,7 @@ package com.blitz.app.utilities.animations;
 
 import android.view.View;
 
+import com.blitz.app.utilities.logging.LogHelper;
 import com.facebook.rebound.Spring;
 import com.facebook.rebound.SpringUtil;
 
@@ -22,6 +23,9 @@ public class AnimationHelperView {
 
     private Integer mHeight;
     private Integer mTop;
+
+    private int mWindowHeight;
+    private int mWindowWidth;
 
     public enum TranslationPosition {
         CURRENT_POSITION,
@@ -58,7 +62,12 @@ public class AnimationHelperView {
         mView.setTranslationY(yTranslation);
     }
 
-    void setCoordinates() {
+    void setCoordinates(int windowWidth, int windowHeight) {
+
+        // Set window dimensions.
+        mWindowWidth = windowWidth;
+        mWindowHeight = windowHeight;
+
         if (mTop == null) {
 
             int[] location = new int[2];
@@ -76,9 +85,17 @@ public class AnimationHelperView {
     }
 
     private void tryInitialize() {
+
         switch (mFrom) {
             case SCREEN_TOP:
                 mTranslationYFrom = -(mTop + mHeight + OFF_SCREEN_PADDING);
+                break;
+            case SCREEN_BOTTOM:
+
+
+                mTranslationYFrom =  mWindowHeight - mTop;
+
+                LogHelper.log("Translating from " + mTranslationYFrom + " " + mWindowHeight + " " + mTop);
                 break;
         }
 
