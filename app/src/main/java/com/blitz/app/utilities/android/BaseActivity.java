@@ -91,6 +91,15 @@ public class BaseActivity extends FragmentActivity implements ViewModel.ViewMode
     protected void onResume() {
         super.onResume();
 
+        if (mGoingBack) {
+            mGoingBack = false;
+
+        } else if (!EnteredBackground.isInBackground()) {
+
+            // Run transitions, we are entering.
+            runCustomTransitions(getIntent(), true);
+        }
+
         // Stop timer to detect entering the background.
         EnteredBackground.stopActivityTransitionTimer();
 
@@ -100,14 +109,6 @@ public class BaseActivity extends FragmentActivity implements ViewModel.ViewMode
         // Initialize the view model.
         if (mViewModel != null) {
             mViewModel.initialize(this, this);
-        }
-
-        if (mGoingBack) {
-            mGoingBack = false;
-        } else {
-
-            // Run transitions, we are entering.
-            runCustomTransitions(getIntent(), true);
         }
     }
 
