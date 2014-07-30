@@ -32,17 +32,57 @@ public class AnimationHelperView {
     private int mWindowHeight;
     private int mWindowWidth;
 
+    //==============================================================================================
+    // Constructors
+    //==============================================================================================
+
+    /**
+     * Unused private constructor.
+     */
     @SuppressWarnings("unused")
     private AnimationHelperView() {
 
     }
 
-    public AnimationHelperView(View view) {
+    /**
+     * Internal constructor for initializing
+     * a new instance of the helper.
+     *
+     * @param view The view to operate on.
+     */
+    private AnimationHelperView(View view) {
         mView = view;
     }
 
-    public void animationPreset(AnimationHelperPresets present) {
+    //==============================================================================================
+    // Public Methods
+    //==============================================================================================
+
+    /**
+     * Static initializer of a new animation
+     * helper view.
+     *
+     * @param view View being operated on.
+     *
+     * @return New instance of the helper.
+     */
+    public static AnimationHelperView from(View view) {
+
+        return new AnimationHelperView(view);
+    }
+
+    /**
+     * Sets an animation preset for this helper.
+     *
+     * @param present Preset enum.
+     *
+     * @return Current class instance.
+     */
+    public AnimationHelperView withPreset(AnimationHelperPresets present) {
+
         mPreset = present;
+
+        return this;
     }
 
     void setCoordinates(int windowWidth, int windowHeight) {

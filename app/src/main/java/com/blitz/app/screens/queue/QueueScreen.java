@@ -42,34 +42,22 @@ public class QueueScreen extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        AnimationHelperView
-            aQueuePromoText = new AnimationHelperView(mQueuePromoText);
-            aQueuePromoText.animationPreset(AnimationHelperPresets.SLIDE_DOWN);
-
-        AnimationHelperView
-            aQueueCallsToAction = new AnimationHelperView(mQueueCallsToAction);
-            aQueueCallsToAction.animationPreset(AnimationHelperPresets.SLIDE_UP);
-
-        AnimationHelperView
-            aQueuePositionInfo = new AnimationHelperView(mQueuePositionInfo);
-            aQueuePositionInfo.animationPreset(AnimationHelperPresets.SLIDE_RIGHT);
-
-        AnimationHelperView
-            aFootballGuy = new AnimationHelperView(mQueueFootballPlayer);
-            aFootballGuy.animationPreset(AnimationHelperPresets.SLIDE_RIGHT);
-
         // Text and call to action.
         animTextCallToActions = new AnimationHelper(this, 25, 5);
-        animTextCallToActions.addHelperView(aQueuePromoText);
-        animTextCallToActions.addHelperView(aQueueCallsToAction);
+        animTextCallToActions.addHelperView(AnimationHelperView.from(mQueuePromoText)
+                .withPreset(AnimationHelperPresets.SLIDE_DOWN));
+        animTextCallToActions.addHelperView(AnimationHelperView.from(mQueueCallsToAction)
+                .withPreset(AnimationHelperPresets.SLIDE_UP));
 
         // Queue container.
         animQueueContainer = new AnimationHelper(this, 25, 10);
-        animQueueContainer.addHelperView(aQueuePositionInfo);
+        animQueueContainer.addHelperView(AnimationHelperView.from(mQueuePositionInfo)
+                .withPreset(AnimationHelperPresets.SLIDE_RIGHT));
 
         // Football guy.
         animFootballPlayer = new AnimationHelper(this, 100, 30);
-        animFootballPlayer.addHelperView(aFootballGuy);
+        animFootballPlayer.addHelperView(AnimationHelperView.from(mQueueFootballPlayer)
+                .withPreset(AnimationHelperPresets.SLIDE_RIGHT));
     }
 
     @Override
