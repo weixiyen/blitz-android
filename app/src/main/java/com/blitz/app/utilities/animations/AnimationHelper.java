@@ -38,6 +38,10 @@ public class AnimationHelper {
     // Are we waiting on initialization.
     private boolean mEnablePendingInitialization;
 
+    // Window dimensions.
+    private int mWindowWidth;
+    private int mWindowHeight;
+
     //==============================================================================================
     // Constructor
     //==============================================================================================
@@ -72,7 +76,7 @@ public class AnimationHelper {
     public AnimationHelper(Activity activity) {
 
         // Default tension and friction.
-        new AnimationHelper(activity, 40, 1);
+        this(activity, 40, 1);
     }
 
     //==============================================================================================
@@ -234,8 +238,9 @@ public class AnimationHelper {
                             enable();
                         }
 
-                        // Try to initialize.
-                        tryInitializeViews(mViews);
+                        // Set window dimensions.
+                        mWindowWidth  = rootView.getWidth();
+                        mWindowHeight = rootView.getHeight();
 
                         // Remove the listener.
                         rootView.getViewTreeObserver().removeOnGlobalLayoutListener(this);
