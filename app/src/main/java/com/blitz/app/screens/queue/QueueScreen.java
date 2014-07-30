@@ -8,9 +8,9 @@ import com.blitz.app.R;
 import com.blitz.app.screens.access_code.AccessCodeScreen;
 import com.blitz.app.screens.sign_in.SignInScreen;
 import com.blitz.app.utilities.android.BaseActivity;
-import com.blitz.app.utilities.animations.AnimationHelper;
-import com.blitz.app.utilities.animations.AnimationHelperPresets;
-import com.blitz.app.utilities.animations.AnimationHelperView;
+import com.blitz.app.utilities.animations.AnimHelper;
+import com.blitz.app.utilities.animations.AnimHelperPresets;
+import com.blitz.app.utilities.animations.AnimHelperView;
 
 import butterknife.InjectView;
 import butterknife.OnClick;
@@ -25,14 +25,14 @@ public class QueueScreen extends BaseActivity {
     //==============================================================================================
 
     @InjectView(R.id.queue_promo_text)      View mQueuePromoText;
-    @InjectView(R.id.queue_calls_to_action) View mQueueCallsToAction;
-    @InjectView(R.id.queue_position_info)   View mQueuePositionInfo;
-    @InjectView(R.id.queue_football_player) View mQueueFootballPlayer;
+    @InjectView(R.id.queue_calls_to_action) View mQueueButtons;
+    @InjectView(R.id.queue_position_info)   View mQueuePosInfo;
+    @InjectView(R.id.queue_football_player) View mQueuePlayer;
 
     // Page animations.
-    private AnimationHelper animTextCallToActions;
-    private AnimationHelper animQueueContainer;
-    private AnimationHelper animFootballPlayer;
+    private AnimHelper animTextCallToActions;
+    private AnimHelper animQueueContainer;
+    private AnimHelper animFootballPlayer;
 
     //==============================================================================================
     // Overwritten Methods
@@ -43,21 +43,17 @@ public class QueueScreen extends BaseActivity {
         super.onCreate(savedInstanceState);
 
         // Text and call to action.
-        animTextCallToActions = new AnimationHelper(this, 25, 5);
-        animTextCallToActions.addHelperView(AnimationHelperView.from(mQueuePromoText)
-                .withPreset(AnimationHelperPresets.SLIDE_DOWN));
-        animTextCallToActions.addHelperView(AnimationHelperView.from(mQueueCallsToAction)
-                .withPreset(AnimationHelperPresets.SLIDE_UP));
+        animTextCallToActions = AnimHelper.from(this, 25, 5)
+                .addHelperView(AnimHelperView.from(mQueuePromoText, AnimHelperPresets.SLIDE_DOWN))
+                .addHelperView(AnimHelperView.from(mQueueButtons, AnimHelperPresets.SLIDE_UP));
 
-        // Queue container.
-        animQueueContainer = new AnimationHelper(this, 25, 10);
-        animQueueContainer.addHelperView(AnimationHelperView.from(mQueuePositionInfo)
-                .withPreset(AnimationHelperPresets.SLIDE_RIGHT));
+        // Queue container text.
+        animQueueContainer = AnimHelper.from(this, 25, 10)
+                .addHelperView(AnimHelperView.from(mQueuePosInfo, AnimHelperPresets.SLIDE_RIGHT));
 
-        // Football guy.
-        animFootballPlayer = new AnimationHelper(this, 100, 30);
-        animFootballPlayer.addHelperView(AnimationHelperView.from(mQueueFootballPlayer)
-                .withPreset(AnimationHelperPresets.SLIDE_RIGHT));
+        // Football player guy.
+        animFootballPlayer = AnimHelper.from(this, 100, 30)
+                .addHelperView(AnimHelperView.from(mQueuePlayer, AnimHelperPresets.SLIDE_RIGHT));
     }
 
     @Override

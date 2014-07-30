@@ -8,7 +8,7 @@ import com.facebook.rebound.SpringUtil;
 /**
  * Created by mrkcsc on 7/30/14.
  */
-public class AnimationHelperView {
+public class AnimHelperView {
 
     private static final int OFF_SCREEN_PADDING = 60;
 
@@ -22,7 +22,7 @@ public class AnimationHelperView {
     private int mTranslationXFrom;
     private int mTranslationXTo;
 
-    private AnimationHelperPresets mPreset;
+    private AnimHelperPresets mPreset;
 
     private Integer mViewWidth;
     private Integer mViewHeight;
@@ -40,7 +40,7 @@ public class AnimationHelperView {
      * Unused private constructor.
      */
     @SuppressWarnings("unused")
-    private AnimationHelperView() {
+    private AnimHelperView() {
 
     }
 
@@ -50,7 +50,7 @@ public class AnimationHelperView {
      *
      * @param view The view to operate on.
      */
-    private AnimationHelperView(View view) {
+    private AnimHelperView(View view) {
         mView = view;
     }
 
@@ -66,10 +66,30 @@ public class AnimationHelperView {
      *
      * @return New instance of the helper.
      */
-    public static AnimationHelperView from(View view) {
+    @SuppressWarnings("unused")
+    public static AnimHelperView from(View view) {
 
-        return new AnimationHelperView(view);
+        return new AnimHelperView(view);
     }
+
+    /**
+     * Static initializer of a new animation
+     * helper view.
+     *
+     * @param view View being operated on.
+     * @param presets Preset enum.
+     *
+     * @return New instance of the helper.
+     */
+    @SuppressWarnings("unused")
+    public static AnimHelperView from(View view, AnimHelperPresets presets) {
+
+        return new AnimHelperView(view).withPreset(presets);
+    }
+
+    //==============================================================================================
+    // Private Methods
+    //==============================================================================================
 
     /**
      * Sets an animation preset for this helper.
@@ -78,7 +98,7 @@ public class AnimationHelperView {
      *
      * @return Current class instance.
      */
-    public AnimationHelperView withPreset(AnimationHelperPresets present) {
+    private AnimHelperView withPreset(AnimHelperPresets present) {
 
         mPreset = present;
 
