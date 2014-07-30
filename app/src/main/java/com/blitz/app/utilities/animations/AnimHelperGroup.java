@@ -6,4 +6,12 @@ package com.blitz.app.utilities.animations;
 public class AnimHelperGroup {
 
     // TODO: Group of animations.
+
+    // from-activity
+
+    // create-helper
+
+    // enable
+
+    // disable
 }
