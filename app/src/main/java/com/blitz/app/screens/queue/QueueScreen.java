@@ -25,9 +25,13 @@ public class QueueScreen extends BaseActivity {
 
     @InjectView(R.id.queue_promo_text)      View mQueuePromoText;
     @InjectView(R.id.queue_calls_to_action) View mQueueCallsToAction;
+    @InjectView(R.id.queue_position_info)   View mQueuePositionInfo;
+    @InjectView(R.id.queue_football_player) View mQueueFootballPlayer;
 
     // Page animations.
-    private AnimationHelper mPageAnimations;
+    private AnimationHelper animTextCallToActions;
+    private AnimationHelper animQueueContainer;
+    private AnimationHelper animFootballPlayer;
 
     //==============================================================================================
     // Overwritten Methods
@@ -40,21 +44,39 @@ public class QueueScreen extends BaseActivity {
         AnimationHelperView
             aQueuePromoText = new AnimationHelperView(mQueuePromoText);
             aQueuePromoText.setTranslationYRange(
-                    AnimationHelperView.TranslationPosition.SCREEN_TOP,
-                    AnimationHelperView.TranslationPosition.CURRENT_POSITION);
+                AnimationHelperView.TranslationPosition.SCREEN_TOP,
+                AnimationHelperView.TranslationPosition.CURRENT_POSITION);
 
         AnimationHelperView
             aQueueCallsToAction = new AnimationHelperView(mQueueCallsToAction);
             aQueueCallsToAction.setTranslationYRange(
-                    AnimationHelperView.TranslationPosition.SCREEN_BOTTOM,
+                AnimationHelperView.TranslationPosition.SCREEN_BOTTOM,
+                AnimationHelperView.TranslationPosition.CURRENT_POSITION);
+
+        AnimationHelperView
+            aQueuePositionInfo = new AnimationHelperView(mQueuePositionInfo);
+            aQueuePositionInfo.setTranslationYRange(
+                AnimationHelperView.TranslationPosition.SCREEN_LEFT,
+                AnimationHelperView.TranslationPosition.CURRENT_POSITION);
+
+        AnimationHelperView
+            aFootballGuy = new AnimationHelperView(mQueueFootballPlayer);
+            aFootballGuy.setTranslationYRange(
+                    AnimationHelperView.TranslationPosition.SCREEN_LEFT,
                     AnimationHelperView.TranslationPosition.CURRENT_POSITION);
 
-        // Initialize helper animations.
-        mPageAnimations = new AnimationHelper(this);
+        // Text and call to action.
+        animTextCallToActions = new AnimationHelper(this, 25, 5);
+        animTextCallToActions.addHelperView(aQueuePromoText);
+        animTextCallToActions.addHelperView(aQueueCallsToAction);
 
-        // Add helper animation views.
-        mPageAnimations.addHelperView(aQueuePromoText);
-        mPageAnimations.addHelperView(aQueueCallsToAction);
+        // Queue container.
+        animQueueContainer = new AnimationHelper(this, 25, 10);
+        animQueueContainer.addHelperView(aQueuePositionInfo);
+
+        // Football guy.
+        animFootballPlayer = new AnimationHelper(this, 100, 30);
+        animFootballPlayer.addHelperView(aFootballGuy);
     }
 
     @Override
@@ -62,7 +84,9 @@ public class QueueScreen extends BaseActivity {
         super.onResume();
 
         // Enable.
-        mPageAnimations.enable();
+        animTextCallToActions.enable();
+        animQueueContainer.enable();
+        animFootballPlayer.enable();
     }
 
     @Override
@@ -70,7 +94,9 @@ public class QueueScreen extends BaseActivity {
         super.onPause();
 
         // Disable.
-        mPageAnimations.disable();
+        animTextCallToActions.disable();
+        animQueueContainer.disable();
+        animFootballPlayer.disable();
     }
 
     //==============================================================================================

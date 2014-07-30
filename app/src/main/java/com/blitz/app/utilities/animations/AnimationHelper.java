@@ -65,20 +65,6 @@ public class AnimationHelper {
         initialize();
     }
 
-    /**
-     * Initialize an animation helper class
-     * with some default values.
-     *
-     * @param activity Target activity. We must wait until
-     *                 the views are rendered before we can
-     *                 initialize them.
-     */
-    public AnimationHelper(Activity activity) {
-
-        // Default tension and friction.
-        this(activity, 40, 1);
-    }
-
     //==============================================================================================
     // Public Methods
     //==============================================================================================
@@ -164,7 +150,7 @@ public class AnimationHelper {
                 // Animate each view on update.
                 for (AnimationHelperView view : mViews) {
 
-                    view.translateY(mSpring);
+                    view.animateWithSpring(mSpring);
                 }
             }
         });

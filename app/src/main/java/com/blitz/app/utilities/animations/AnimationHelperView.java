@@ -2,7 +2,6 @@ package com.blitz.app.utilities.animations;
 
 import android.view.View;
 
-import com.blitz.app.utilities.logging.LogHelper;
 import com.facebook.rebound.Spring;
 import com.facebook.rebound.SpringUtil;
 
@@ -15,14 +14,21 @@ public class AnimationHelperView {
 
     private View mView;
 
+    private boolean mTranslateY;
     private int mTranslationYFrom;
     private int mTranslationYTo;
+
+    private boolean mTranslateX;
+    private int mTranslationXFrom;
+    private int mTranslationXTo;
 
     private TranslationPosition mFrom;
     private TranslationPosition mTo;
 
-    private Integer mHeight;
-    private Integer mTop;
+    private Integer mViewWidth;
+    private Integer mViewHeight;
+    private Integer mViewTop;
+    private Integer mViewLeft;
 
     private int mWindowHeight;
     private int mWindowWidth;
@@ -50,35 +56,27 @@ public class AnimationHelperView {
         mTo   = to;
     }
 
-    void translateY(Spring spring) {
-
-        float yTranslation = (float) SpringUtil.mapValueFromRangeToRange
-                (spring.getCurrentValue(), 0, 1, mTranslationYFrom, mTranslationYTo);
-
-        translateY(yTranslation);
-    }
-
-    void translateY(float yTranslation) {
-        mView.setTranslationY(yTranslation);
-    }
-
     void setCoordinates(int windowWidth, int windowHeight) {
 
         // Set window dimensions.
         mWindowWidth = windowWidth;
         mWindowHeight = windowHeight;
 
-        if (mTop == null) {
+        if (mViewTop == null || mViewLeft == null) {
 
             int[] location = new int[2];
 
             mView.getLocationInWindow(location);
 
-            mTop = location[1];
+            mViewLeft = location[0];
+            mViewTop = location[1];
         }
 
-        if (mHeight == null) {
-            mHeight = mView.getHeight();
+        if (mViewHeight == null || mViewWidth == null) {
+
+            // Set height and width.
+            mViewHeight = mView.getHeight();
+            mViewWidth  = mView.getWidth();
 
             tryInitialize();
         }
@@ -88,24 +86,69 @@ public class AnimationHelperView {
 
         switch (mFrom) {
             case SCREEN_TOP:
-                mTranslationYFrom = -(mTop + mHeight + OFF_SCREEN_PADDING);
+                mTranslationYFrom = -(mViewTop + mViewHeight + OFF_SCREEN_PADDING);
+                mTranslateY = true;
                 break;
             case SCREEN_BOTTOM:
-
-
-                mTranslationYFrom =  mWindowHeight - mTop;
-
-                LogHelper.log("Translating from " + mTranslationYFrom + " " + mWindowHeight + " " + mTop);
+                mTranslationYFrom =  mWindowHeight - mViewTop;
+                mTranslateY = true;
                 break;
+            case SCREEN_LEFT:
+                mTranslationXFrom = -(mViewLeft + mViewWidth + OFF_SCREEN_PADDING);
+                mTranslateX = true;
         }
 
         switch (mTo) {
             case CURRENT_POSITION:
                 mTranslationYTo = 0;
+                mTranslationXTo = 0;
                 break;
         }
 
         // Initialize the value.
-        translateY(mTranslationYFrom);
+        animateWithSpring(null);
+    }
+
+    //==============================================================================================
+    // Protected Methods
+    //==============================================================================================
+
+    /**
+     * Apply animations - either pre-defined
+     * or custom, given an animation spring.
+     *
+     * @param spring Animation spring, initializes if null.
+     */
+    void animateWithSpring(Spring spring) {
+
+        if (mTranslateY) {
+
+            float yTranslation = mTranslationYFrom;
+
+            if (spring != null) {
+
+                // Standard y-translation mapping.
+                yTranslation = (float) SpringUtil.mapValueFromRangeToRange
+                        (spring.getCurrentValue(), 0, 1, mTranslationYFrom, mTranslationYTo);
+            }
+
+            // Apply the translation.
+            mView.setTranslationY(yTranslation);
+        }
+
+        if (mTranslateX) {
+
+            float xTranslation = mTranslationXFrom;
+
+            if (spring != null) {
+
+                // Standard x-translation mapping.
+                xTranslation = (float) SpringUtil.mapValueFromRangeToRange
+                        (spring.getCurrentValue(), 0, 1, mTranslationXFrom, mTranslationXTo);
+            }
+
+            // Apply the translation.
+            mView.setTranslationX(xTranslation);
+        }
     }
 }
