@@ -9,6 +9,7 @@ import com.blitz.app.screens.access_code.AccessCodeScreen;
 import com.blitz.app.screens.sign_in.SignInScreen;
 import com.blitz.app.utilities.android.BaseActivity;
 import com.blitz.app.utilities.animations.AnimationHelper;
+import com.blitz.app.utilities.animations.AnimationHelperPresets;
 import com.blitz.app.utilities.animations.AnimationHelperView;
 
 import butterknife.InjectView;
@@ -43,27 +44,19 @@ public class QueueScreen extends BaseActivity {
 
         AnimationHelperView
             aQueuePromoText = new AnimationHelperView(mQueuePromoText);
-            aQueuePromoText.setTranslationYRange(
-                AnimationHelperView.TranslationPosition.SCREEN_TOP,
-                AnimationHelperView.TranslationPosition.CURRENT_POSITION);
+            aQueuePromoText.animationPreset(AnimationHelperPresets.SLIDE_DOWN);
 
         AnimationHelperView
             aQueueCallsToAction = new AnimationHelperView(mQueueCallsToAction);
-            aQueueCallsToAction.setTranslationYRange(
-                AnimationHelperView.TranslationPosition.SCREEN_BOTTOM,
-                AnimationHelperView.TranslationPosition.CURRENT_POSITION);
+            aQueueCallsToAction.animationPreset(AnimationHelperPresets.SLIDE_UP);
 
         AnimationHelperView
             aQueuePositionInfo = new AnimationHelperView(mQueuePositionInfo);
-            aQueuePositionInfo.setTranslationYRange(
-                AnimationHelperView.TranslationPosition.SCREEN_LEFT,
-                AnimationHelperView.TranslationPosition.CURRENT_POSITION);
+            aQueuePositionInfo.animationPreset(AnimationHelperPresets.SLIDE_RIGHT);
 
         AnimationHelperView
             aFootballGuy = new AnimationHelperView(mQueueFootballPlayer);
-            aFootballGuy.setTranslationYRange(
-                    AnimationHelperView.TranslationPosition.SCREEN_LEFT,
-                    AnimationHelperView.TranslationPosition.CURRENT_POSITION);
+            aFootballGuy.animationPreset(AnimationHelperPresets.SLIDE_RIGHT);
 
         // Text and call to action.
         animTextCallToActions = new AnimationHelper(this, 25, 5);

@@ -22,8 +22,7 @@ public class AnimationHelperView {
     private int mTranslationXFrom;
     private int mTranslationXTo;
 
-    private TranslationPosition mFrom;
-    private TranslationPosition mTo;
+    private AnimationHelperPresets mPreset;
 
     private Integer mViewWidth;
     private Integer mViewHeight;
@@ -32,15 +31,6 @@ public class AnimationHelperView {
 
     private int mWindowHeight;
     private int mWindowWidth;
-
-    public enum TranslationPosition {
-        CURRENT_POSITION,
-
-        SCREEN_TOP,
-        SCREEN_BOTTOM,
-        SCREEN_LEFT,
-        SCREEN_RIGHT
-    }
 
     @SuppressWarnings("unused")
     private AnimationHelperView() {
@@ -51,9 +41,8 @@ public class AnimationHelperView {
         mView = view;
     }
 
-    public void setTranslationYRange(TranslationPosition from, TranslationPosition to) {
-        mFrom = from;
-        mTo   = to;
+    public void animationPreset(AnimationHelperPresets present) {
+        mPreset = present;
     }
 
     void setCoordinates(int windowWidth, int windowHeight) {
@@ -84,25 +73,25 @@ public class AnimationHelperView {
 
     private void tryInitialize() {
 
-        switch (mFrom) {
-            case SCREEN_TOP:
+        switch (mPreset) {
+            case SLIDE_DOWN:
                 mTranslationYFrom = -(mViewTop + mViewHeight + OFF_SCREEN_PADDING);
-                mTranslateY = true;
-                break;
-            case SCREEN_BOTTOM:
-                mTranslationYFrom =  mWindowHeight - mViewTop;
-                mTranslateY = true;
-                break;
-            case SCREEN_LEFT:
-                mTranslationXFrom = -(mViewLeft + mViewWidth + OFF_SCREEN_PADDING);
-                mTranslateX = true;
-        }
-
-        switch (mTo) {
-            case CURRENT_POSITION:
                 mTranslationYTo = 0;
-                mTranslationXTo = 0;
+                mTranslateY = true;
                 break;
+            case SLIDE_UP:
+                mTranslationYFrom =  mWindowHeight - mViewTop;
+                mTranslationYTo = 0;
+                mTranslateY = true;
+                break;
+            case SLIDE_RIGHT:
+                mTranslationXFrom = -(mViewLeft + mViewWidth + OFF_SCREEN_PADDING);
+                mTranslationXTo = 0;
+                mTranslateX = true;
+            case SLIDE_LEFT:
+                mTranslationXFrom = mWindowWidth - mViewLeft;
+                mTranslationXTo = 0;
+                mTranslateX = true;
         }
 
         // Initialize the value.
