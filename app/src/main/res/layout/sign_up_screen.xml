@@ -1,130 +1,141 @@
-<LinearLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     tools:context="${packageName}.${activityClass}"
     tools:ignore="ButtonStyle,HardcodedText">
 
-    <ScrollView
+    <ImageView
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_margin="10dp"
-        android:layout_weight="1"
-        android:background="@color/background_inner">
+        android:layout_height="match_parent"
+        android:contentDescription="@string/empty_string"
+        android:scaleType="centerCrop"
+        android:src="@drawable/asset_bg_standard" />
 
-        <LinearLayout
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:layout_height="0dp"
+            android:layout_margin="10dp"
+            android:layout_weight="1">
 
-            <ImageView
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:contentDescription="@string/empty_string"
-                android:src="@drawable/icon_blitz" />
+                android:orientation="vertical">
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_margin="10dp"
-                android:background="@color/background_primary"/>
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:contentDescription="@string/empty_string"
+                    android:src="@drawable/icon_blitz" />
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="30dp"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                android:fontFamily="@string/app_font_light"
-                android:gravity="center_vertical"
-                android:text="Desired Email"
-                android:textColor="@color/text_color_light"
-                android:textSize="16sp" />
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_margin="10dp"
+                    android:background="@color/background_primary"/>
 
-            <EditText
-                android:id="@+id/sign_up_screen_email"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:layout_gravity="center_horizontal"
-                android:layout_margin="10dp"
-                android:background="@color/button_color_1"
-                android:fontFamily="@string/app_font_regular"
-                android:gravity="center_vertical"
-                android:hint="Desired Email"
-                android:inputType="textNoSuggestions|textVisiblePassword"
-                android:padding="10dp"
-                android:textColor="@color/text_color_light"
-                android:textSize="14sp"
-                tools:ignore="TextFields" />
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:fontFamily="@string/app_font_light"
+                    android:gravity="center_vertical"
+                    android:text="Desired Email"
+                    android:textColor="@color/text_color_light"
+                    android:textSize="16sp" />
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="30dp"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                android:fontFamily="@string/app_font_light"
-                android:gravity="center_vertical"
-                android:text="Desired Username"
-                android:textColor="@color/text_color_light"
-                android:textSize="14sp" />
+                <EditText
+                    android:id="@+id/sign_up_screen_email"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_margin="10dp"
+                    android:background="@color/button_color_1"
+                    android:fontFamily="@string/app_font_regular"
+                    android:gravity="center_vertical"
+                    android:hint="Desired Email"
+                    android:inputType="textNoSuggestions|textVisiblePassword"
+                    android:padding="10dp"
+                    android:textColor="@color/text_color_light"
+                    android:textSize="14sp"
+                    tools:ignore="TextFields" />
 
-            <EditText
-                android:id="@+id/sign_up_screen_username"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:layout_gravity="center_horizontal"
-                android:layout_margin="10dp"
-                android:background="@color/button_color_1"
-                android:fontFamily="@string/app_font_regular"
-                android:gravity="center_vertical"
-                android:hint="Desired Username"
-                android:inputType="textNoSuggestions|textVisiblePassword"
-                android:padding="10dp"
-                android:textColor="@color/text_color_light"
-                android:textSize="14sp" />
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:fontFamily="@string/app_font_light"
+                    android:gravity="center_vertical"
+                    android:text="Desired Username"
+                    android:textColor="@color/text_color_light"
+                    android:textSize="14sp" />
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="30dp"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                android:fontFamily="@string/app_font_light"
-                android:gravity="center_vertical"
-                android:text="Desired Password"
-                android:textColor="@color/text_color_light"
-                android:textSize="16sp" />
+                <EditText
+                    android:id="@+id/sign_up_screen_username"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_margin="10dp"
+                    android:background="@color/button_color_1"
+                    android:fontFamily="@string/app_font_regular"
+                    android:gravity="center_vertical"
+                    android:hint="Desired Username"
+                    android:inputType="textNoSuggestions|textVisiblePassword"
+                    android:padding="10dp"
+                    android:textColor="@color/text_color_light"
+                    android:textSize="14sp" />
 
-            <EditText
-                android:id="@+id/sign_up_screen_password"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:layout_gravity="center_horizontal"
-                android:layout_margin="10dp"
-                android:background="@color/button_color_1"
-                android:fontFamily="@string/app_font_regular"
-                android:gravity="center_vertical"
-                android:hint="Desired Password"
-                android:inputType="textPassword"
-                android:padding="10dp"
-                android:textColor="@color/text_color_light"
-                android:textSize="14sp" />
-        </LinearLayout>
-    </ScrollView>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:fontFamily="@string/app_font_light"
+                    android:gravity="center_vertical"
+                    android:text="Desired Password"
+                    android:textColor="@color/text_color_light"
+                    android:textSize="16sp" />
 
-    <Button
-        android:id="@+id/sign_up_screen_sign_up"
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:layout_marginBottom="10dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:background="@drawable/drawable_button_main"
-        android:contentDescription="@string/empty_string"
-        android:fontFamily="@string/app_font_light"
-        android:text="Sign Up"
-        android:textColor="@color/text_color_light"
-        android:textSize="12sp" />
+                <EditText
+                    android:id="@+id/sign_up_screen_password"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_margin="10dp"
+                    android:background="@color/button_color_1"
+                    android:fontFamily="@string/app_font_regular"
+                    android:gravity="center_vertical"
+                    android:hint="Desired Password"
+                    android:inputType="textPassword"
+                    android:padding="10dp"
+                    android:textColor="@color/text_color_light"
+                    android:textSize="14sp" />
+            </LinearLayout>
+        </ScrollView>
 
-</LinearLayout>
+        <Button
+            android:id="@+id/sign_up_screen_sign_up"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:background="@drawable/drawable_button_main"
+            android:contentDescription="@string/empty_string"
+            android:fontFamily="@string/app_font_light"
+            android:text="Sign Up"
+            android:textColor="@color/text_color_light"
+            android:textSize="12sp" />
+
+    </LinearLayout>
+</RelativeLayout>
