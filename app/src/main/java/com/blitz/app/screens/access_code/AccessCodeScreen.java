@@ -28,9 +28,9 @@ public class AccessCodeScreen extends BaseActivity {
     //==============================================================================================
 
     @InjectView(R.id.access_code_continue_with_code) View mContinue;
-    @InjectView(R.id.access_code_code)           EditText mCode;
-    @InjectView(R.id.access_code_player)             View mPlayer;
-    @InjectView(R.id.access_code_header)             View mHeader;
+    @InjectView(R.id.access_code_code)  EditText mCode;
+    @InjectView(R.id.access_code_player) View mPlayer;
+    @InjectView(R.id.access_code_top_container) View mAccessTopContainer;
 
     private AnimHelper animsFromTop;
     private AnimHelper animsFromRight;
@@ -53,13 +53,10 @@ public class AccessCodeScreen extends BaseActivity {
         // This screen uses a slide animation.
         setCustomTransitions(CustomTransition.T_SLIDE_HORIZONTAL);
 
-        // Text and call to action.
-        animsFromTop = AnimHelper.from(this, 25, 5)
-                .addHelperView(AnimHelperView.from(mHeader, AnimHelperPresets.SLIDE_DOWN))
-                .addHelperView(AnimHelperView.from(mCode, AnimHelperPresets.SLIDE_DOWN))
-                .addHelperView(AnimHelperView.from(mContinue, AnimHelperPresets.SLIDE_UP));
+        animsFromTop = AnimHelper.from(this, 25, 7)
+                .addHelperView(AnimHelperView.from(mContinue, AnimHelperPresets.SLIDE_UP))
+                .addHelperView(AnimHelperView.from(mAccessTopContainer, AnimHelperPresets.SLIDE_DOWN));
 
-        // Queue container text.
         animsFromRight = AnimHelper.from(this, 100, 30)
                 .addHelperView(AnimHelperView.from(mPlayer, AnimHelperPresets.SLIDE_LEFT));
     }
