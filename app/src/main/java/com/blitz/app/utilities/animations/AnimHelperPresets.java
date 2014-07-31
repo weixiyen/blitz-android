@@ -4,7 +4,6 @@ package com.blitz.app.utilities.animations;
 * Created by Miguel on 7/30/2014.
 */
 public enum AnimHelperPresets {
-    CURRENT_POSITION,
 
     // Slide down from outside of the screen
     // into the current position.

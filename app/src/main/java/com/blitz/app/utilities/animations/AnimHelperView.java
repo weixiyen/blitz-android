@@ -148,10 +148,12 @@ public class AnimHelperView {
                 mTranslationXFrom = -(mViewLeft + mViewWidth + OFF_SCREEN_PADDING);
                 mTranslationXTo = 0;
                 mTranslateX = true;
+                break;
             case SLIDE_LEFT:
                 mTranslationXFrom = mWindowWidth - mViewLeft;
                 mTranslationXTo = 0;
                 mTranslateX = true;
+                break;
         }
 
         // Initialize the value.
