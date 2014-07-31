@@ -1,6 +1,7 @@
 package com.blitz.app.screens.sign_in;
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.widget.EditText;
 
 import com.blitz.app.R;
@@ -27,6 +28,18 @@ public class SignInScreen extends BaseActivity {
 
     // Model object.
     private ObjectModelUser mObjectModelUser;
+
+    //==============================================================================================
+    // Overwritten Methods
+    //==============================================================================================
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        // Use a vertical slide animation.
+        setCustomTransitions(CustomTransition.T_SLIDE_VERTICAL);
+    }
 
     //==============================================================================================
     // Click Methods

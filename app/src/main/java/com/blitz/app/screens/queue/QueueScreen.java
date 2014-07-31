@@ -46,7 +46,7 @@ public class QueueScreen extends BaseActivity {
         // Text and call to action.
         mAnimations.createHelper(25, 5)
                 .addHelperView(AnimHelperView.from(mQueuePromoText, AnimHelperPresets.SLIDE_DOWN))
-                .addHelperView(AnimHelperView.from(mQueueButtons, AnimHelperPresets.SLIDE_UP));
+                .addHelperView(AnimHelperView.from(mQueueButtons,   AnimHelperPresets.SLIDE_UP));
 
         // Queue container text.
         mAnimations.createHelper(25, 10)

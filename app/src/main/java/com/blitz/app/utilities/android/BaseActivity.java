@@ -330,12 +330,17 @@ public class BaseActivity extends FragmentActivity implements ViewModel.ViewMode
                                 entering ? R.anim.activity_open_scale      : R.anim.activity_open_translate,
                                 entering ? R.anim.activity_close_translate : R.anim.activity_close_scale);
                         break;
-
                     case T_SLIDE_HORIZONTAL:
 
                         overridePendingTransition(
                                 entering ? R.anim.activity_slide_close_in  : R.anim.activity_slide_open_in,
                                 entering ? R.anim.activity_slide_close_out : R.anim.activity_slide_open_out);
+                        break;
+                    case T_SLIDE_VERTICAL:
+
+                        overridePendingTransition(
+                                entering ? R.anim.activity_slide_up_close_in  : R.anim.activity_slide_up_open_in,
+                                entering ? R.anim.activity_slide_up_close_out : R.anim.activity_slide_up_open_out);
                         break;
                 }
             } else {
@@ -347,12 +352,16 @@ public class BaseActivity extends FragmentActivity implements ViewModel.ViewMode
                                 entering ? R.anim.activity_open_translate : R.anim.activity_open_scale,
                                 entering ? R.anim.activity_close_scale    : R.anim.activity_close_translate);
                         break;
-
                     case T_SLIDE_HORIZONTAL:
 
                         overridePendingTransition(
                                 entering ? R.anim.activity_slide_open_in  : R.anim.activity_slide_close_in,
                                 entering ? R.anim.activity_slide_open_out : R.anim.activity_slide_close_out);
+                        break;
+                    case T_SLIDE_VERTICAL:
+                        overridePendingTransition(
+                                entering ? R.anim.activity_slide_up_open_in  : R.anim.activity_slide_up_close_in,
+                                entering ? R.anim.activity_slide_up_open_out : R.anim.activity_slide_up_close_out);
                         break;
                 }
             }
