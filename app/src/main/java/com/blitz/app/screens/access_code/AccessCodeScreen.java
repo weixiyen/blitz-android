@@ -10,7 +10,7 @@ import com.blitz.app.models.objects.ObjectModelCode;
 import com.blitz.app.models.rest.RestAPIOperation;
 import com.blitz.app.screens.splash.SplashScreen;
 import com.blitz.app.utilities.android.BaseActivity;
-import com.blitz.app.utilities.animations.AnimHelper;
+import com.blitz.app.utilities.animations.AnimHelperGroup;
 import com.blitz.app.utilities.animations.AnimHelperPresets;
 import com.blitz.app.utilities.animations.AnimHelperView;
 import com.blitz.app.utilities.app.AppDataObject;
@@ -28,13 +28,14 @@ public class AccessCodeScreen extends BaseActivity {
     //==============================================================================================
 
     @InjectView(R.id.access_code_continue_with_code) View mContinue;
-    @InjectView(R.id.access_code_code)  EditText mCode;
+    @InjectView(R.id.access_code_code) EditText mCode;
     @InjectView(R.id.access_code_player) View mPlayer;
     @InjectView(R.id.access_code_top_container) View mAccessTopContainer;
 
-    private AnimHelper animsFromTop;
-    private AnimHelper animsFromRight;
+    // Page animations.
+    private AnimHelperGroup mAnimations;
 
+    // View model.
     private ObjectModelCode mObjectModelCode;
 
     //==============================================================================================
@@ -53,11 +54,16 @@ public class AccessCodeScreen extends BaseActivity {
         // This screen uses a slide animation.
         setCustomTransitions(CustomTransition.T_SLIDE_HORIZONTAL);
 
-        animsFromTop = AnimHelper.from(this, 25, 7)
+        // Create animation group.
+        mAnimations = AnimHelperGroup.from(this);
+
+        // Add a helper.
+        mAnimations.createHelper(25, 7)
                 .addHelperView(AnimHelperView.from(mContinue, AnimHelperPresets.SLIDE_UP))
                 .addHelperView(AnimHelperView.from(mAccessTopContainer, AnimHelperPresets.SLIDE_DOWN));
 
-        animsFromRight = AnimHelper.from(this, 100, 30)
+        // Add a helper.
+        mAnimations.createHelper(100, 30)
                 .addHelperView(AnimHelperView.from(mPlayer, AnimHelperPresets.SLIDE_LEFT));
     }
 
@@ -65,18 +71,14 @@ public class AccessCodeScreen extends BaseActivity {
     protected void onResume() {
         super.onResume();
 
-        // Enable.
-        animsFromTop.enable();
-        animsFromRight.enable();
+        mAnimations.enable();
     }
 
     @Override
     protected void onPause() {
         super.onPause();
 
-        // Disable.
-        animsFromTop.disable();
-        animsFromRight.disable();
+        mAnimations.disable();
     }
 
     //==============================================================================================

@@ -8,7 +8,7 @@ import com.blitz.app.R;
 import com.blitz.app.screens.access_code.AccessCodeScreen;
 import com.blitz.app.screens.sign_in.SignInScreen;
 import com.blitz.app.utilities.android.BaseActivity;
-import com.blitz.app.utilities.animations.AnimHelper;
+import com.blitz.app.utilities.animations.AnimHelperGroup;
 import com.blitz.app.utilities.animations.AnimHelperPresets;
 import com.blitz.app.utilities.animations.AnimHelperView;
 
@@ -30,9 +30,7 @@ public class QueueScreen extends BaseActivity {
     @InjectView(R.id.queue_football_player) View mQueuePlayer;
 
     // Page animations.
-    private AnimHelper animTextCallToActions;
-    private AnimHelper animQueueContainer;
-    private AnimHelper animFootballPlayer;
+    private AnimHelperGroup mAnimations;
 
     //==============================================================================================
     // Overwritten Methods
@@ -42,17 +40,20 @@ public class QueueScreen extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        // Create animation group.
+        mAnimations = AnimHelperGroup.from(this);
+
         // Text and call to action.
-        animTextCallToActions = AnimHelper.from(this, 25, 5)
+        mAnimations.createHelper(25, 5)
                 .addHelperView(AnimHelperView.from(mQueuePromoText, AnimHelperPresets.SLIDE_DOWN))
                 .addHelperView(AnimHelperView.from(mQueueButtons, AnimHelperPresets.SLIDE_UP));
 
         // Queue container text.
-        animQueueContainer = AnimHelper.from(this, 25, 10)
+        mAnimations.createHelper(25, 10)
                 .addHelperView(AnimHelperView.from(mQueuePosInfo, AnimHelperPresets.SLIDE_RIGHT));
 
         // Football player guy.
-        animFootballPlayer = AnimHelper.from(this, 100, 30)
+        mAnimations.createHelper(100, 30)
                 .addHelperView(AnimHelperView.from(mQueuePlayer, AnimHelperPresets.SLIDE_RIGHT));
     }
 
@@ -60,20 +61,14 @@ public class QueueScreen extends BaseActivity {
     protected void onResume() {
         super.onResume();
 
-        // Enable.
-        animTextCallToActions.enable();
-        animQueueContainer.enable();
-        animFootballPlayer.enable();
+        mAnimations.enable();
     }
 
     @Override
     protected void onPause() {
         super.onPause();
 
-        // Disable.
-        animTextCallToActions.disable();
-        animQueueContainer.disable();
-        animFootballPlayer.disable();
+        mAnimations.disable();
     }
 
     //==============================================================================================
