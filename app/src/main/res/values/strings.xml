@@ -20,4 +20,5 @@
     <string name="send_reminder">Send me a reminder when Blitz is ready</string>
     <string name="players_behind_you">Players behind you</string>
     <string name="players_in_front">Players in front of you</string>
+    <string name="continue_string">Continue</string>
 </resources>

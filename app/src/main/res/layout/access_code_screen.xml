@@ -17,6 +17,15 @@
         android:src="@drawable/asset_bg_queue"
         app:scaleType="topCrop" />
 
+    <ImageView
+        android:layout_width="150dp"
+        android:layout_height="420dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:contentDescription="@string/empty_string"
+        android:scaleX="-1"
+        android:src="@drawable/asset_bg_queue_player_alt" />
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -71,19 +80,25 @@
 
         </LinearLayout>
 
-        <Button
+        <me.grantland.widget.AutofitTextView
             android:id="@+id/access_code_screen_continue_with_code"
             android:layout_width="match_parent"
             android:layout_height="60dp"
-            android:layout_marginBottom="10dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:background="@drawable/button_main"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="20dp"
+            android:background="@drawable/asset_bg_queue_button"
             android:contentDescription="@string/empty_string"
-            android:fontFamily="@string/app_font_light"
-            android:text="Continue"
+            android:fontFamily="@string/app_font_regular"
+            android:gravity="center"
+            android:paddingBottom="2dp"
+            android:shadowColor="@color/text_color_shadow"
+            android:shadowDx="1"
+            android:shadowDy="1"
+            android:shadowRadius="2"
+            android:singleLine="true"
+            android:text="@string/continue_string"
             android:textColor="@color/text_color_light"
-            android:textSize="12sp" />
+            android:textSize="20sp" />
 
     </LinearLayout>
 </RelativeLayout>

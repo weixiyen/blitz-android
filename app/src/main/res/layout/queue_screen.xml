@@ -180,7 +180,7 @@
                 android:singleLine="true"
                 android:text="@string/have_code"
                 android:textColor="@color/text_color_light"
-                android:textSize="22sp" />
+                android:textSize="20sp" />
 
             <me.grantland.widget.AutofitTextView
                 android:id="@+id/queue_screen_have_account"
