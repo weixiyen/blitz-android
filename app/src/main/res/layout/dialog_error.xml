@@ -42,7 +42,7 @@
                 android:layout_marginBottom="10dp"
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
-                android:background="@drawable/button_main"
+                android:background="@drawable/drawable_button_main"
                 android:contentDescription="@string/empty_string"
                 android:fontFamily="@string/app_font_light"
                 android:text="@string/Ok"

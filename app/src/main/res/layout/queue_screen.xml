@@ -168,7 +168,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
                 android:layout_marginTop="40dp"
-                android:background="@drawable/asset_bg_queue_button"
+                android:background="@drawable/drawable_button_big"
                 android:contentDescription="@string/empty_string"
                 android:fontFamily="@string/app_font_regular"
                 android:gravity="center"

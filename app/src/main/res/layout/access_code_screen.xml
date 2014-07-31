@@ -17,65 +17,55 @@
         android:src="@drawable/asset_bg_queue"
         app:scaleType="topCrop" />
 
-    <ImageView
-        android:layout_width="150dp"
-        android:layout_height="420dp"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
-        android:contentDescription="@string/empty_string"
-        android:scaleX="-1"
-        android:src="@drawable/asset_bg_queue_player_alt" />
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_margin="10dp"
-            android:layout_weight="1"
-            android:orientation="vertical">
-
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:contentDescription="@string/empty_string"
-                android:src="@drawable/icon_blitz" />
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_margin="10dp"
-                android:background="@color/background_primary"/>
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp">
 
             <TextView
                 android:layout_width="match_parent"
-                android:layout_height="30dp"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                android:fontFamily="@string/app_font_light"
-                android:gravity="center_vertical"
-                android:text="Enter Access Code"
+                android:layout_height="wrap_content"
+                android:layout_margin="25dp"
+                android:fontFamily="@string/app_font_bold"
+                android:gravity="center"
+                android:shadowColor="@color/text_color_shadow"
+                android:shadowDx="1"
+                android:shadowDy="1"
+                android:shadowRadius="2"
+                android:text="Passcode"
                 android:textColor="@color/text_color_light"
-                android:textSize="16sp" />
+                android:textSize="20sp" />
+        </RelativeLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:orientation="vertical">
 
             <EditText
                 android:id="@+id/access_code_screen_code"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:layout_gravity="center_horizontal"
-                android:layout_margin="10dp"
-                android:background="@color/button_color_1"
+                android:background="@drawable/drawable_queue_input"
                 android:fontFamily="@string/app_font_regular"
                 android:gravity="center_vertical"
                 android:hint="Enter Access Code"
                 android:inputType="number"
                 android:maxLength="5"
-                android:padding="10dp"
+                android:paddingLeft="70dp"
+                android:shadowColor="@color/text_color_shadow"
+                android:shadowDx="1"
+                android:shadowDy="1"
+                android:shadowRadius="2"
                 android:textColor="@color/text_color_light"
+                android:textColorHint="@color/text_color_light"
                 android:textSize="14sp" />
 
         </LinearLayout>
@@ -84,9 +74,9 @@
             android:id="@+id/access_code_screen_continue_with_code"
             android:layout_width="match_parent"
             android:layout_height="60dp"
-            android:layout_marginTop="20dp"
             android:layout_marginBottom="20dp"
-            android:background="@drawable/asset_bg_queue_button"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/drawable_button_big"
             android:contentDescription="@string/empty_string"
             android:fontFamily="@string/app_font_regular"
             android:gravity="center"
@@ -101,4 +91,13 @@
             android:textSize="20sp" />
 
     </LinearLayout>
+
+    <ImageView
+        android:layout_width="150dp"
+        android:layout_height="420dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:contentDescription="@string/empty_string"
+        android:src="@drawable/asset_bg_queue_player_alt" />
+
 </RelativeLayout>

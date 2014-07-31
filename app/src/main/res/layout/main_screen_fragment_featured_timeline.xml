@@ -31,7 +31,7 @@
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:layout_marginTop="10dp"
-        android:background="@drawable/button_main"
+        android:background="@drawable/drawable_button_main"
         android:contentDescription="@string/empty_string"
         android:fontFamily="@string/app_font_light"
         android:text="Play"
