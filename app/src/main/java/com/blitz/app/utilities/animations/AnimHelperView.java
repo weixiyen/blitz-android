@@ -105,32 +105,6 @@ public class AnimHelperView {
         return this;
     }
 
-    void setCoordinates(int windowWidth, int windowHeight) {
-
-        // Set window dimensions.
-        mWindowWidth = windowWidth;
-        mWindowHeight = windowHeight;
-
-        if (mViewTop == null || mViewLeft == null) {
-
-            int[] location = new int[2];
-
-            mView.getLocationInWindow(location);
-
-            mViewLeft = location[0];
-            mViewTop = location[1];
-        }
-
-        if (mViewHeight == null || mViewWidth == null) {
-
-            // Set height and width.
-            mViewHeight = mView.getHeight();
-            mViewWidth  = mView.getWidth();
-
-            tryInitialize();
-        }
-    }
-
     private void tryInitialize() {
 
         switch (mPreset) {
@@ -163,6 +137,41 @@ public class AnimHelperView {
     //==============================================================================================
     // Protected Methods
     //==============================================================================================
+
+    /**
+     * Setup the various coordinates of the view
+     * associated with this helper.
+     *
+     * @param windowWidth The window width.
+     * @param windowHeight The window height.
+     */
+    void setCoordinates(int windowWidth, int windowHeight) {
+
+        // Set window dimensions.
+        mWindowWidth  = windowWidth;
+        mWindowHeight = windowHeight;
+
+        // If the view top and left is not set.
+        if (mViewTop == null || mViewLeft == null) {
+
+            int[] location = new int[2];
+
+            mView.getLocationInWindow(location);
+
+            mViewLeft = location[0];
+            mViewTop = location[1];
+        }
+
+        // If the view height and width is not set.
+        if (mViewHeight == null || mViewWidth == null) {
+
+            // Set height and width.
+            mViewHeight = mView.getHeight();
+            mViewWidth  = mView.getWidth();
+        }
+
+        tryInitialize();
+    }
 
     /**
      * Apply animations - either pre-defined
