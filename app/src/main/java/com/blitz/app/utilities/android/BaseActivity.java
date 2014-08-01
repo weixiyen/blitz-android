@@ -327,8 +327,8 @@ public class BaseActivity extends FragmentActivity implements ViewModel.ViewMode
                     case T_STANDARD:
 
                         overridePendingTransition(
-                                entering ? R.anim.activity_open_scale      : R.anim.activity_open_translate,
-                                entering ? R.anim.activity_close_translate : R.anim.activity_close_scale);
+                                entering ? R.anim.activity_standard_close_in  : R.anim.activity_standard_open_in,
+                                entering ? R.anim.activity_standard_close_out : R.anim.activity_standard_open_out);
                         break;
                     case T_SLIDE_HORIZONTAL:
 
@@ -349,8 +349,8 @@ public class BaseActivity extends FragmentActivity implements ViewModel.ViewMode
                     case T_STANDARD:
 
                         overridePendingTransition(
-                                entering ? R.anim.activity_open_translate : R.anim.activity_open_scale,
-                                entering ? R.anim.activity_close_scale    : R.anim.activity_close_translate);
+                                entering ? R.anim.activity_standard_open_in  : R.anim.activity_standard_close_in,
+                                entering ? R.anim.activity_standard_open_out : R.anim.activity_standard_close_out);
                         break;
                     case T_SLIDE_HORIZONTAL:
 
