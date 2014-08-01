@@ -1,17 +1,18 @@
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="${packageName}.${activityClass}"
     tools:ignore="ButtonStyle,HardcodedText">
 
-    <ImageView
+    <com.blitz.app.utilities.imageview_plus.ImageViewPlus
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:contentDescription="@string/empty_string"
-        android:scaleType="centerCrop"
-        android:src="@drawable/asset_bg_standard" />
+        android:src="@drawable/asset_bg_standard"
+        app:scaleType="topCrop" />
 
     <LinearLayout
         android:layout_width="match_parent"
