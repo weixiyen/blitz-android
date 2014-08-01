@@ -34,7 +34,7 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"
                     android:contentDescription="@string/empty_string"
-                    android:src="@drawable/icon_blitz" />
+                    android:src="@drawable/asset_bg_logo" />
 
                 <View
                     android:layout_width="match_parent"

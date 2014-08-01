@@ -18,7 +18,7 @@
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
         android:contentDescription="@string/empty_string"
-        android:src="@drawable/icon_blitz" />
+        android:src="@drawable/asset_bg_logo" />
 
     <ProgressBar
         style="?android:attr/progressBarStyleLarge"
