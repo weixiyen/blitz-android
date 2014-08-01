@@ -38,7 +38,8 @@ public class BaseActivity extends FragmentActivity implements ViewModel.ViewMode
     private CustomTransition mCustomTransitions = CustomTransition.T_STANDARD;
 
     // Track if activity history is cleared.
-    private boolean mHistoryCleared = false;
+    private static boolean mHistoryClearedFlag;
+    private static boolean mHistoryCleared;
 
     // View model for each activity.
     private ViewModel mViewModel = null;
@@ -97,7 +98,7 @@ public class BaseActivity extends FragmentActivity implements ViewModel.ViewMode
         } else if (!EnteredBackground.isInBackground()) {
 
             // Run transitions, we are entering.
-            runCustomTransitions(getIntent(), true);
+            runCustomTransitions(true);
         }
 
         // Stop timer to detect entering the background.
@@ -137,8 +138,13 @@ public class BaseActivity extends FragmentActivity implements ViewModel.ViewMode
 
         if (mGoingBack) {
 
-            // Run transitions, we are exiting.
-            runCustomTransitions(null, false);
+            if (mHistoryCleared) {
+                mHistoryCleared = false;
+            } else {
+
+                // Run transitions, we going back.
+                runCustomTransitions(false);
+            }
         }
 
         // Start timer to detect entering the background.
@@ -185,10 +191,18 @@ public class BaseActivity extends FragmentActivity implements ViewModel.ViewMode
     public void startActivity(Intent intent, Bundle options) {
         super.startActivity(intent, options);
 
-        // If history is cleared.
-        if (isHistoryCleared(intent)) {
+        // If clear history flag was set, but we now are
+        // starting a new activity, then we can unset the
+        // flag as a new history stack is being built.
+        if (mHistoryCleared) {
+            mHistoryCleared = false;
+        }
 
-            // Flip the flag.
+        // If however the clear history flag has been set
+        // we do want the history to remain cleared.
+        if (mHistoryClearedFlag) {
+            mHistoryClearedFlag = false;
+
             mHistoryCleared = true;
         }
     }
@@ -199,10 +213,21 @@ public class BaseActivity extends FragmentActivity implements ViewModel.ViewMode
      */
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
+
+        if (mHistoryCleared) {
+
+            // Move this activity to the back of
+            // the history stack which causes the
+            // back button to essentially exit
+            // the app, which is the behavior a
+            // user expects on clear history.
+            moveTaskToBack(true);
+        }
 
         // Now going back.
         mGoingBack = true;
+
+        super.onBackPressed();
     }
 
     //==============================================================================================
@@ -218,12 +243,10 @@ public class BaseActivity extends FragmentActivity implements ViewModel.ViewMode
      */
     public void startActivity(Intent intent, boolean clearHistory) {
 
-        if (clearHistory) {
+        // Set clear history flag.
+        mHistoryClearedFlag = clearHistory;
 
-            // Set flags to clear the history.
-            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        }
-
+        // Call native method.
         super.startActivity(intent);
     }
 
@@ -291,80 +314,33 @@ public class BaseActivity extends FragmentActivity implements ViewModel.ViewMode
     //==============================================================================================
 
     /**
-     * Given an optional intent, find out if the
-     * history has been cleared - either via intent
-     * or the cleared flag.
-     *
-     * @param intent Intent.
-     *
-     * @return True if cleared.
-     */
-    private boolean isHistoryCleared(Intent intent) {
-
-        return intent != null &&
-               intent.getFlags() == (Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK)
-
-                || mHistoryCleared;
-
-    }
-
-    /**
      * Run custom transitions between switching activities.
      *
-     * @param intent Intent - used to check for cleared history.
      * @param entering Is activity entering or existing.
      */
-    private void runCustomTransitions(Intent intent, boolean entering) {
+    private void runCustomTransitions(boolean entering) {
+        if (mCustomTransitions == null) {
+            return;
+        }
 
-        if (mCustomTransitions != null) {
+        switch (mCustomTransitions) {
+            case T_STANDARD:
 
-            if (isHistoryCleared(intent)) {
+                overridePendingTransition(
+                        entering ? R.anim.activity_standard_open_in  : R.anim.activity_standard_close_in,
+                        entering ? R.anim.activity_standard_open_out : R.anim.activity_standard_close_out);
+                break;
+            case T_SLIDE_HORIZONTAL:
 
-                // Unset history flag.
-                mHistoryCleared = false;
-
-                switch (mCustomTransitions) {
-                    case T_STANDARD:
-
-                        overridePendingTransition(
-                                entering ? R.anim.activity_standard_close_in  : R.anim.activity_standard_open_in,
-                                entering ? R.anim.activity_standard_close_out : R.anim.activity_standard_open_out);
-                        break;
-                    case T_SLIDE_HORIZONTAL:
-
-                        overridePendingTransition(
-                                entering ? R.anim.activity_slide_close_in  : R.anim.activity_slide_open_in,
-                                entering ? R.anim.activity_slide_close_out : R.anim.activity_slide_open_out);
-                        break;
-                    case T_SLIDE_VERTICAL:
-
-                        overridePendingTransition(
-                                entering ? R.anim.activity_slide_up_close_in  : R.anim.activity_slide_up_open_in,
-                                entering ? R.anim.activity_slide_up_close_out : R.anim.activity_slide_up_open_out);
-                        break;
-                }
-            } else {
-
-                switch (mCustomTransitions) {
-                    case T_STANDARD:
-
-                        overridePendingTransition(
-                                entering ? R.anim.activity_standard_open_in  : R.anim.activity_standard_close_in,
-                                entering ? R.anim.activity_standard_open_out : R.anim.activity_standard_close_out);
-                        break;
-                    case T_SLIDE_HORIZONTAL:
-
-                        overridePendingTransition(
-                                entering ? R.anim.activity_slide_open_in  : R.anim.activity_slide_close_in,
-                                entering ? R.anim.activity_slide_open_out : R.anim.activity_slide_close_out);
-                        break;
-                    case T_SLIDE_VERTICAL:
-                        overridePendingTransition(
-                                entering ? R.anim.activity_slide_up_open_in  : R.anim.activity_slide_up_close_in,
-                                entering ? R.anim.activity_slide_up_open_out : R.anim.activity_slide_up_close_out);
-                        break;
-                }
-            }
+                overridePendingTransition(
+                        entering ? R.anim.activity_slide_open_in  : R.anim.activity_slide_close_in,
+                        entering ? R.anim.activity_slide_open_out : R.anim.activity_slide_close_out);
+                break;
+            case T_SLIDE_VERTICAL:
+                overridePendingTransition(
+                        entering ? R.anim.activity_slide_up_open_in  : R.anim.activity_slide_up_close_in,
+                        entering ? R.anim.activity_slide_up_open_out : R.anim.activity_slide_up_close_out);
+                break;
         }
     }
 }
