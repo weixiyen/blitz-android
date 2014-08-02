@@ -66,7 +66,7 @@
         <me.grantland.widget.AutofitTextView
             android:layout_width="match_parent"
             android:layout_height="175dp"
-            android:background="@drawable/asset_bg_queue_overlay"
+            android:background="@drawable/asset_queue_overlay"
             android:contentDescription="@string/empty_string"
             android:fontFamily="@string/app_font_light"
             android:gravity="center_vertical|left"
@@ -112,6 +112,6 @@
         android:layout_alignParentRight="true"
         android:layout_marginRight="-1dp"
         android:contentDescription="@string/empty_string"
-        android:src="@drawable/asset_bg_queue_player_alt" />
+        android:src="@drawable/asset_queue_player_alt" />
 
 </RelativeLayout>

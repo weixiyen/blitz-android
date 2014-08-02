@@ -2,8 +2,8 @@
 
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <item android:drawable="@drawable/asset_bg_queue_input_active" android:state_pressed="true"/>
-    <item android:drawable="@drawable/asset_bg_queue_input_active" android:state_focused="true"/>
-    <item android:drawable="@drawable/asset_bg_queue_input" />
+    <item android:drawable="@drawable/asset_queue_input_active" android:state_pressed="true"/>
+    <item android:drawable="@drawable/asset_queue_input_active" android:state_focused="true"/>
+    <item android:drawable="@drawable/asset_queue_input" />
 
 </selector>
