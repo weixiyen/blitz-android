@@ -19,6 +19,11 @@ public class AnimHelperGroup {
     // List of individual helpers.
     private ArrayList<AnimHelper> mAnimHelperGroup;
 
+    // Runs on animations complete.
+    private Runnable mOnCompleteListener;
+
+    private int mAnimCompleteCount;
+
     //==============================================================================================
     // Constructors
     //==============================================================================================
@@ -77,6 +82,25 @@ public class AnimHelperGroup {
         // Add to group.
         mAnimHelperGroup.add(animHelper);
 
+        // Add a completion listener.
+        animHelper.addOnCompleteListener(new Runnable() {
+
+            @Override
+            public void run() {
+
+                // Increment completion count.
+                mAnimCompleteCount++;
+
+                // If all animations are complete.
+                if (mAnimCompleteCount == mAnimHelperGroup.size()) {
+
+                    if (mOnCompleteListener != null) {
+                        mOnCompleteListener.run();
+                    }
+                }
+            }
+        });
+
         return animHelper;
     }
 
@@ -97,10 +121,25 @@ public class AnimHelperGroup {
      */
     public void enable() {
 
+        // Reset the count.
+        mAnimCompleteCount = 0;
+
         // Enable each animation helper.
         for (AnimHelper animHelper : mAnimHelperGroup) {
 
             animHelper.enable();
         }
+    }
+
+    /**
+     * Set a callback that runs when all animation
+     * helpers have run.
+     *
+     * @param onCompleteListener Callback that will run.
+     */
+    @SuppressWarnings("unused")
+    public void setOnCompleteListener(Runnable onCompleteListener) {
+
+        mOnCompleteListener = onCompleteListener;
     }
 }

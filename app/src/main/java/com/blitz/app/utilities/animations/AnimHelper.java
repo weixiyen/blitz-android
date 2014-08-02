@@ -7,9 +7,9 @@ import android.view.ViewTreeObserver;
 import android.widget.FrameLayout;
 
 import com.blitz.app.R;
-import com.facebook.rebound.SimpleSpringListener;
 import com.facebook.rebound.Spring;
 import com.facebook.rebound.SpringConfig;
+import com.facebook.rebound.SpringListener;
 import com.facebook.rebound.SpringSystem;
 
 import java.util.ArrayList;
@@ -41,6 +41,9 @@ public class AnimHelper {
     // Window dimensions.
     private int mWindowWidth;
     private int mWindowHeight;
+
+    // Callback for when complete.
+    private ArrayList<Runnable> mOnCompleteListeners;
 
     //==============================================================================================
     // Constructor
@@ -173,8 +176,13 @@ public class AnimHelper {
         tryInitializeViews(mViews);
 
         // Add a spring listener.
-        mSpring.addListener(new SimpleSpringListener() {
+        mSpring.addListener(new SpringListener() {
 
+            /**
+             * Called when the spring value updates.
+             *
+             * @param spring Spring object.
+             */
             @Override
             public void onSpringUpdate(Spring spring) {
 
@@ -184,8 +192,33 @@ public class AnimHelper {
                     view.animateWithSpring(mSpring);
                 }
             }
+
+            /**
+             * Called when spring is now at rest (1.0 value).
+             *
+             * @param spring Spring object.
+             */
+            @Override
+            public void onSpringAtRest(Spring spring) {
+
+                if (mOnCompleteListeners != null) {
+
+                    // Run any associated callbacks.
+                    for (Runnable runnable : mOnCompleteListeners) {
+
+                        runnable.run();
+                    }
+                }
+            }
+
+            @Override
+            public void onSpringActivate      (Spring spring) { }
+
+            @Override
+            public void onSpringEndStateChange(Spring spring) { }
         });
 
+        // Start spring on delay.
         new Handler().postDelayed(new Runnable() {
 
             @Override
@@ -195,6 +228,21 @@ public class AnimHelper {
                 mSpring.setEndValue(1);
             }
         }, delay);
+    }
+
+    /**
+     * Set a listener that whens when animation is done.
+     *
+     * @param onCompleteListener Callback to run.
+     */
+    @SuppressWarnings("unused")
+    public void addOnCompleteListener(Runnable onCompleteListener) {
+
+        if (mOnCompleteListeners == null) {
+            mOnCompleteListeners = new ArrayList<Runnable>();
+        }
+
+        mOnCompleteListeners.add(onCompleteListener);
     }
 
     //==============================================================================================

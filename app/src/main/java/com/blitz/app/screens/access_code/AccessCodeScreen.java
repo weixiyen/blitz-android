@@ -14,6 +14,7 @@ import com.blitz.app.utilities.animations.AnimHelperGroup;
 import com.blitz.app.utilities.animations.AnimHelperPresets;
 import com.blitz.app.utilities.animations.AnimHelperView;
 import com.blitz.app.utilities.app.AppDataObject;
+import com.blitz.app.utilities.keyboard.KeyboardUtility;
 
 import butterknife.InjectView;
 import butterknife.OnClick;
@@ -68,6 +69,16 @@ public class AccessCodeScreen extends BaseActivity {
         // Add a helper.
         mAnimations.createHelper(100, 30)
                 .addHelperView(AnimHelperView.from(mPlayer, AnimHelperPresets.SLIDE_LEFT));
+
+        // Open the keyboard when done.
+        mAnimations.setOnCompleteListener(new Runnable() {
+
+            @Override
+            public void run() {
+
+                KeyboardUtility.showKeyboard(AccessCodeScreen.this, mCode);
+            }
+        });
     }
 
     @Override
