@@ -26,7 +26,7 @@ public class AppConfig {
     public static final String WEBSOCKET_URL = "wss://snapdraft.us/comet/u/";
 
     // Should we clear app data on launch.
-    public static final boolean CLEAR_APP_DATA_ON_LAUNCH = true;
+    public static final boolean CLEAR_APP_DATA_ON_LAUNCH = false;
 
     // Should we have rest debugging.
     public static final boolean ENABLE_REST_DEBUGGING = false;
@@ -35,5 +35,5 @@ public class AppConfig {
     public static final boolean PORTRAIT_ONLY = true;
 
     // Disable or enable sound for debugging.
-    public static final boolean SOUND_ENABLED = false;
+    public static final boolean SOUND_ENABLED = true;
 }
