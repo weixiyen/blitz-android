@@ -17,77 +17,12 @@
         android:src="@drawable/asset_bg_queue"
         app:scaleType="topCrop" />
 
-    <LinearLayout
-        android:id="@+id/access_code_top_container"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp">
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="25dp"
-                android:fontFamily="@string/app_font_bold"
-                android:gravity="center"
-                android:shadowColor="@color/text_color_shadow"
-                android:shadowDx="1"
-                android:shadowDy="1"
-                android:shadowRadius="2"
-                android:text="Passcode"
-                android:textColor="@color/text_color_light"
-                android:textSize="20sp" />
-        </RelativeLayout>
-
-        <EditText
-            android:id="@+id/access_code_code"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_gravity="center_horizontal"
-            android:background="@drawable/drawable_queue_input"
-            android:fontFamily="@string/app_font_regular"
-            android:gravity="center_vertical"
-            android:hint="Enter Access Code"
-            android:inputType="number"
-            android:maxLength="5"
-            android:paddingLeft="70dp"
-            android:shadowColor="@color/text_color_shadow"
-            android:shadowDx="1"
-            android:shadowDy="1"
-            android:shadowRadius="2"
-            android:textColor="@color/text_color_light"
-            android:textColorHint="@color/text_color_light"
-            android:textSize="14sp" />
-
-        <me.grantland.widget.AutofitTextView
-            android:layout_width="match_parent"
-            android:layout_height="175dp"
-            android:background="@drawable/asset_queue_overlay"
-            android:contentDescription="@string/empty_string"
-            android:fontFamily="@string/app_font_light"
-            android:gravity="center_vertical|left"
-            android:lineSpacingMultiplier="1.1"
-            android:paddingLeft="20dp"
-            android:paddingRight="150dp"
-            android:shadowColor="@color/text_color_shadow"
-            android:shadowDx="1"
-            android:shadowDy="1"
-            android:shadowRadius="2"
-            android:text="If you have an access code, please enter it now to join the future of Fantasy Football!"
-            android:textColor="@color/text_color_light"
-            android:textSize="16sp" />
-
-    </LinearLayout>
-
     <me.grantland.widget.AutofitTextView
         android:id="@+id/access_code_continue_with_code"
-        android:layout_width="match_parent"
+        android:layout_width="320dp"
         android:layout_height="60dp"
         android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
         android:layout_marginBottom="20dp"
         android:layout_marginTop="20dp"
         android:background="@drawable/drawable_button_big"
@@ -113,5 +48,72 @@
         android:layout_marginRight="-1dp"
         android:contentDescription="@string/empty_string"
         android:src="@drawable/asset_queue_player_alt" />
+
+    <LinearLayout
+        android:id="@+id/access_code_top_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
+            android:fontFamily="@string/app_font_bold"
+            android:gravity="center"
+            android:padding="25dp"
+            android:shadowColor="@color/text_color_shadow"
+            android:shadowDx="1"
+            android:shadowDy="1"
+            android:shadowRadius="2"
+            android:text="Passcode"
+            android:textColor="@color/text_color_light"
+            android:textSize="20sp" />
+
+        <EditText
+            android:id="@+id/access_code_code"
+            android:layout_width="320dp"
+            android:layout_height="50dp"
+            android:layout_gravity="center_horizontal"
+            android:background="@drawable/drawable_queue_input"
+            android:fontFamily="@string/app_font_regular"
+            android:gravity="center_vertical"
+            android:hint="Enter Access Code"
+            android:inputType="number"
+            android:maxLength="5"
+            android:paddingLeft="70dp"
+            android:shadowColor="@color/text_color_shadow"
+            android:shadowDx="1"
+            android:shadowDy="1"
+            android:shadowRadius="2"
+            android:textColor="@color/text_color_light"
+            android:textColorHint="@color/text_color_light"
+            android:textSize="14sp" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="175dp"
+            android:layout_gravity="center"
+            android:background="@drawable/asset_queue_overlay">
+
+            <me.grantland.widget.AutofitTextView
+                android:layout_width="320dp"
+                android:layout_height="match_parent"
+                android:layout_centerHorizontal="true"
+                android:contentDescription="@string/empty_string"
+                android:fontFamily="@string/app_font_light"
+                android:gravity="center_vertical|left"
+                android:lineSpacingMultiplier="1.1"
+                android:paddingLeft="20dp"
+                android:paddingRight="75dp"
+                android:shadowColor="@color/text_color_shadow"
+                android:shadowDx="1"
+                android:shadowDy="1"
+                android:shadowRadius="2"
+                android:text="If you have an access code, please enter it now to join the future of Fantasy Football!"
+                android:textColor="@color/text_color_light"
+                android:textSize="16sp" />
+        </RelativeLayout>
+    </LinearLayout>
 
 </RelativeLayout>
