@@ -14,6 +14,7 @@ import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.FrameLayout;
 
+import com.blitz.app.utilities.android.BaseActivity;
 import com.blitz.app.utilities.app.AppDataObject;
 
 import java.util.ArrayList;
@@ -95,7 +96,7 @@ public class KeyboardUtility {
      * @param activity If null, removes tracking.
      */
     @SuppressWarnings("unused, deprecation")
-    static public void setGlobalLayoutListener(final Activity activity) {
+    static public void setGlobalLayoutListener(final BaseActivity activity) {
 
         if (mRootView != null) {
 
@@ -177,7 +178,7 @@ public class KeyboardUtility {
                         mKeyboardHandler.postDelayed(mKeyboardRunnable, 300);
                     }
 
-                    if (mIsFullscreen) {
+                    if (mIsFullscreen && activity.getAdjustResize()) {
 
                         // Update and resize the view if in fullscreen mode.
                         mRootViewLayoutParams.height = mWindowHeight - mCurrentKeyboardHeight;

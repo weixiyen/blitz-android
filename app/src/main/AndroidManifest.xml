@@ -30,25 +30,25 @@
         </activity>
 
         <activity android:name=".screens.queue.QueueScreen"
-            android:windowSoftInputMode="adjustResize|stateHidden" />
+            android:windowSoftInputMode="stateHidden" />
 
         <activity android:name=".screens.splash.SplashScreen"
-            android:windowSoftInputMode="adjustResize|stateHidden" />
+            android:windowSoftInputMode="stateHidden" />
 
         <activity android:name=".screens.access_code.AccessCodeScreen"
-            android:windowSoftInputMode="adjustResize|stateHidden" />
+            android:windowSoftInputMode="stateHidden" />
 
         <activity android:name=".screens.sign_in.SignInScreen"
-            android:windowSoftInputMode="adjustResize|stateHidden" />
+            android:windowSoftInputMode="stateVisible" />
 
         <activity android:name=".screens.sign_up.SignUpScreen"
-            android:windowSoftInputMode="adjustResize|stateHidden" />
+            android:windowSoftInputMode="stateVisible" />
 
         <activity android:name=".screens.main.MainScreen"
-            android:windowSoftInputMode="adjustResize|stateHidden" />
+            android:windowSoftInputMode="stateHidden" />
 
         <activity android:name=".screens.draft_preview.DraftPreviewScreen"
-            android:windowSoftInputMode="adjustResize|stateHidden" />
+            android:windowSoftInputMode="stateHidden" />
 
     </application>
 </manifest>

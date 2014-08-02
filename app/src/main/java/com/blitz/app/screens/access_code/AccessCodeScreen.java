@@ -54,6 +54,9 @@ public class AccessCodeScreen extends BaseActivity {
         // This screen uses a slide animation.
         setCustomTransitions(CustomTransition.T_SLIDE_HORIZONTAL);
 
+        // Adjust and resize.
+        setAdjustResize(true);
+
         // Create animation group.
         mAnimations = AnimHelperGroup.from(this);
 

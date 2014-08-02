@@ -47,6 +47,10 @@ public class BaseActivity extends FragmentActivity implements ViewModel.ViewMode
     // Are we going back an activity.
     private static boolean mGoingBack = false;
 
+    // By default the keyboard should adjust
+    // and resize activity window.
+    private boolean mAdjustResize;
+
     //==============================================================================================
     // Overwritten Methods
     //==============================================================================================
@@ -286,6 +290,28 @@ public class BaseActivity extends FragmentActivity implements ViewModel.ViewMode
     public <T extends ViewModel> T getViewModel(Class<T> type) {
 
         return type.cast(mViewModel);
+    }
+
+    /**
+     * Set if activity should adjust and resize
+     * window when keyboard is open.
+     *
+     * @param adjustResize Should adjust resize.
+     */
+    @SuppressWarnings("unused")
+    public void setAdjustResize(boolean adjustResize) {
+        mAdjustResize = adjustResize;
+    }
+
+    /**
+     * Get if activity should adjust and resize
+     * window when keyboard is opened.
+     *
+     * @return Flag.
+     */
+    @SuppressWarnings("unused")
+    public boolean getAdjustResize() {
+        return mAdjustResize;
     }
 
     //==============================================================================================
