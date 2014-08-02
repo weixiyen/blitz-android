@@ -5,6 +5,7 @@ import android.content.res.AssetFileDescriptor;
 import android.media.MediaPlayer;
 
 import com.blitz.app.utilities.app.AppConfig;
+import com.blitz.app.utilities.logging.LogHelper;
 
 import java.io.IOException;
 
@@ -96,6 +97,8 @@ public class SoundHelper {
 
                 if (!mMusicDisabled && AppConfig.SOUND_ENABLED) {
 
+                    LogHelper.log("Start the player");
+
                     // Start playing music.
                     mediaPlayer.start();
                 }
@@ -111,6 +114,8 @@ public class SoundHelper {
     public void stopMusic() {
         if (!mMusicDisabled) {
 
+            LogHelper.log("Stop the music player.");
+
             // Re-initialize.
             initializePlayer();
         }
@@ -122,7 +127,11 @@ public class SoundHelper {
     @SuppressWarnings("unused")
     public void pauseMusic() {
 
-        if (mMediaPlayer != null && !mMusicDisabled) {
+        // If initialized and not playing or disabled.
+        if (mMediaPlayer != null && mMediaPlayer.isPlaying() && !mMusicDisabled) {
+
+            LogHelper.log("Pause the music player.");
+
             mMediaPlayer.pause();
         }
     }
@@ -133,7 +142,11 @@ public class SoundHelper {
     @SuppressWarnings("unused")
     public void resumeMusic() {
 
-        if (mMediaPlayer != null && !mMusicDisabled) {
+        // If initialized and not playing or disabled.
+        if (mMediaPlayer != null && !mMediaPlayer.isPlaying() && !mMusicDisabled) {
+
+            LogHelper.log("Start the music player.");
+
             mMediaPlayer.start();
         }
     }
