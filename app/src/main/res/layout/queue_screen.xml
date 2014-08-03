@@ -158,9 +158,10 @@
 
         <LinearLayout
             android:id="@+id/queue_calls_to_action"
-            android:layout_width="match_parent"
+            android:layout_width="320dp"
             android:layout_height="wrap_content"
             android:layout_below="@+id/queue_position_info"
+            android:layout_centerHorizontal="true"
             android:orientation="vertical">
 
             <me.grantland.widget.AutofitTextView
