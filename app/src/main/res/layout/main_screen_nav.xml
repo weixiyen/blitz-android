@@ -1,5 +1,3 @@
-<?xml version="1.0" encoding="utf-8"?>
-
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
@@ -11,7 +9,7 @@
     android:background="@color/background_nav"
     android:baselineAligned="false"
     tools:context="${packageName}.${activityClass}"
-    tools:ignore="ButtonStyle,HardcodedText">
+    tools:ignore="ButtonStyle,UnusedAttribute">
 
     <RelativeLayout
         android:layout_width="0dp"
@@ -28,7 +26,7 @@
             android:contentDescription="@string/empty_string"
             android:fontFamily="@string/app_font_regular"
             android:tag="0"
-            android:text="Featured"
+            android:text="@string/featured"
             android:textAllCaps="true"
             android:textColor="@color/text_color_light"
             android:textSize="12sp"/>
@@ -56,7 +54,7 @@
             android:contentDescription="@string/empty_string"
             android:fontFamily="@string/app_font_regular"
             android:tag="1"
-            android:text="Recent"
+            android:text="@string/recent"
             android:textAllCaps="true"
             android:textColor="@color/text_color_light"
             android:textSize="12sp"/>
@@ -85,7 +83,7 @@
             android:contentDescription="@string/empty_string"
             android:fontFamily="@string/app_font_regular"
             android:tag="2"
-            android:text="Settings"
+            android:text="@string/settings"
             android:textAllCaps="true"
             android:textColor="@color/text_color_light"
             android:textSize="12sp"/>

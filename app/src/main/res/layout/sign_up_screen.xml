@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="${packageName}.${activityClass}"
-    tools:ignore="ButtonStyle,HardcodedText">
+    tools:ignore="ButtonStyle,UnusedAttribute,TextFields">
 
     <com.blitz.app.utilities.imageview_plus.ImageViewPlus
         android:layout_width="match_parent"
@@ -31,7 +31,7 @@
             android:shadowDx="1"
             android:shadowDy="1"
             android:shadowRadius="2"
-            android:text="Sign Up"
+            android:text="@string/sign_up"
             android:textColor="@color/text_color_light"
             android:textSize="20sp" />
 
@@ -52,7 +52,7 @@
                 android:background="@android:color/transparent"
                 android:fontFamily="@string/app_font_regular"
                 android:gravity="center_vertical"
-                android:hint="Email"
+                android:hint="@string/email"
                 android:inputType="textNoSuggestions|textVisiblePassword"
                 android:paddingLeft="35dp"
                 android:paddingRight="35dp"
@@ -74,7 +74,7 @@
                 android:background="@android:color/transparent"
                 android:fontFamily="@string/app_font_regular"
                 android:gravity="center_vertical"
-                android:hint="Desired Username"
+                android:hint="@string/desired_username"
                 android:inputType="textPassword"
                 android:paddingLeft="35dp"
                 android:paddingRight="35dp"
@@ -96,7 +96,7 @@
                 android:background="@android:color/transparent"
                 android:fontFamily="@string/app_font_regular"
                 android:gravity="center_vertical"
-                android:hint="Password"
+                android:hint="@string/password"
                 android:inputType="textPassword"
                 android:paddingLeft="35dp"
                 android:paddingRight="35dp"
@@ -115,7 +115,7 @@
             android:layout_height="60dp"
             android:layout_marginTop="10dp"
             android:background="@drawable/drawable_button_big"
-            android:text="Sign Up" />
+            android:text="@string/sign_up" />
 
         <me.grantland.widget.AutofitTextView
             android:id="@+id/queue_screen_have_account"

@@ -7,7 +7,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="${packageName}.${activityClass}"
-    tools:ignore="ButtonStyle,HardcodedText">
+    tools:ignore="ButtonStyle,UnusedAttribute">
 
     <com.blitz.app.utilities.imageview_plus.ImageViewPlus
         android:layout_width="match_parent"
@@ -56,7 +56,7 @@
             android:shadowDx="1"
             android:shadowDy="1"
             android:shadowRadius="2"
-            android:text="Passcode"
+            android:text="@string/access_code"
             android:textColor="@color/text_color_light"
             android:textSize="20sp" />
 
@@ -68,7 +68,7 @@
             android:background="@drawable/drawable_queue_input"
             android:fontFamily="@string/app_font_regular"
             android:gravity="center_vertical"
-            android:hint="Enter Access Code"
+            android:hint="@string/enter_access_code"
             android:inputType="number"
             android:maxLength="5"
             android:paddingLeft="70dp"
@@ -100,10 +100,9 @@
                 android:shadowDx="1"
                 android:shadowDy="1"
                 android:shadowRadius="2"
-                android:text="If you have an access code, please enter it now to join the future of Fantasy Football!"
+                android:text="@string/access_code_copy"
                 android:textColor="@color/text_color_light"
                 android:textSize="16sp" />
         </RelativeLayout>
     </LinearLayout>
-
 </RelativeLayout>

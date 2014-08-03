@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="${packageName}.${activityClass}"
-    tools:ignore="ButtonStyle,HardcodedText">
+    tools:ignore="ButtonStyle,UnusedAttribute">
 
     <com.blitz.app.utilities.imageview_plus.ImageViewPlus
         android:layout_width="match_parent"
@@ -31,7 +31,7 @@
             android:shadowDx="1"
             android:shadowDy="1"
             android:shadowRadius="2"
-            android:text="Sign In"
+            android:text="@string/sign_in"
             android:textColor="@color/text_color_light"
             android:textSize="20sp" />
 
@@ -53,7 +53,7 @@
                 android:background="@android:color/transparent"
                 android:fontFamily="@string/app_font_regular"
                 android:gravity="center_vertical"
-                android:hint="Username or Email"
+                android:hint="@string/username_or_email"
                 android:inputType="textNoSuggestions|textVisiblePassword"
                 android:paddingLeft="35dp"
                 android:paddingRight="35dp"
@@ -76,7 +76,7 @@
                 android:background="@android:color/transparent"
                 android:fontFamily="@string/app_font_regular"
                 android:gravity="center_vertical"
-                android:hint="Password"
+                android:hint="@string/password"
                 android:inputType="textPassword"
                 android:paddingLeft="35dp"
                 android:paddingRight="35dp"
@@ -102,7 +102,7 @@
             android:shadowDx="1"
             android:shadowDy="1"
             android:shadowRadius="2"
-            android:text="Forgot password?"
+            android:text="@string/forgot_password"
             android:textColor="@color/text_color_link"
             android:textSize="14sp" />
 
@@ -112,7 +112,7 @@
             android:layout_width="match_parent"
             android:layout_height="60dp"
             android:background="@drawable/drawable_button_big"
-            android:text="Sign In" />
+            android:text="@string/sign_in" />
 
     </LinearLayout>
 

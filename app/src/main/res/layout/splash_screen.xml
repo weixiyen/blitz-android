@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="${packageName}.${activityClass}"
-    tools:ignore="ButtonStyle,HardcodedText">
+    tools:ignore="ButtonStyle,UnusedAttribute">
 
     <com.blitz.app.utilities.imageview_plus.ImageViewPlus
         android:layout_width="match_parent"
@@ -56,7 +56,7 @@
                 android:layout_marginLeft="5dp"
                 android:layout_marginRight="10dp"
                 android:background="@drawable/drawable_button_half"
-                android:text="Sign Up"/>
+                android:text="@string/sign_up"/>
 
             <Button
                 android:id="@+id/splash_screen_sign_in"
@@ -66,7 +66,7 @@
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="5dp"
                 android:background="@drawable/drawable_button_half"
-                android:text="Sign In" />
+                android:text="@string/sign_in" />
         </LinearLayout>
     </LinearLayout>
 </RelativeLayout>
