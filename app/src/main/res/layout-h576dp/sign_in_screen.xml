@@ -92,6 +92,8 @@
             android:layout_width="match_parent"
             android:layout_height="30dp"
             android:layout_gravity="center"
+            android:layout_marginBottom="20dp"
+            android:layout_marginTop="20dp"
             android:fontFamily="@string/app_font_light"
             android:gravity="center_vertical"
             android:paddingLeft="20dp"
@@ -102,7 +104,7 @@
             android:shadowRadius="2"
             android:text="Forgot password?"
             android:textColor="@color/text_color_link"
-            android:textSize="12sp" />
+            android:textSize="14sp" />
 
         <Button
             android:id="@+id/sign_in_screen_sign_in"
