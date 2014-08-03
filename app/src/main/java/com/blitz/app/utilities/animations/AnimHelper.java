@@ -38,6 +38,7 @@ public class AnimHelper {
 
     // Are we waiting on initialization.
     private boolean mEnablePendingInitialization;
+    private boolean mStartPendingInitialization;
 
     // Window dimensions.
     private int mWindowWidth;
@@ -153,82 +154,106 @@ public class AnimHelper {
      */
     public void enable() {
 
-        if (!mInitialized) {
+        if (mInitialized) {
+
+            // Try to initialize the views and
+            // set their initial positions.
+            tryInitializeViews(mViews);
+
+            // Add a spring listener.
+            mSpring.addListener(new SpringListener() {
+
+                /**
+                 * Called when the spring value updates.
+                 *
+                 * @param spring Spring object.
+                 */
+                @Override
+                public void onSpringUpdate(Spring spring) {
+
+                    // Animate each view on update.
+                    for (AnimHelperView view : mViews) {
+
+                        view.animateWithSpring(mSpring);
+                    }
+                }
+
+                /**
+                 * Called when spring is now at rest (1.0 value).
+                 *
+                 * @param spring Spring object.
+                 */
+                @Override
+                public void onSpringAtRest(Spring spring) {
+
+                    if (mOnCompleteListeners != null) {
+
+                        // Run any associated callbacks.
+                        for (Runnable runnable : mOnCompleteListeners) {
+
+                            runnable.run();
+                        }
+                    }
+                }
+
+                @Override
+                public void onSpringActivate      (Spring spring) { }
+
+                @Override
+                public void onSpringEndStateChange(Spring spring) { }
+            });
+        } else {
 
             // Delay the enable until initialized.
             mEnablePendingInitialization = true;
-
-            return;
         }
+    }
 
-        // Time to transition an activity.
-        int screenTransitionTime = mActivity.getResources()
-                .getInteger(R.integer.config_screen_translation_time);
+    public void start(boolean afterScreenTransition) {
+        if (mInitialized) {
 
-        int delay = 0;
+            // Time to transition an activity.
+            int screenTransitionTime = mActivity.getResources()
+                    .getInteger(R.integer.config_screen_translation_time);
 
-        // At least transition time.
-        if (delay < screenTransitionTime) {
-            delay = screenTransitionTime + 100;
+            int delay = 0;
+
+            // At least transition time.
+            if (delay < screenTransitionTime) {
+                delay = screenTransitionTime + 100;
+            }
+
+            // Action that starts animation.
+            Runnable startAnimation =  new Runnable() {
+
+                @Override
+                public void run() {
+
+                    // Set new end value to start.
+                    mSpring.setEndValue(1);
+                }
+            };
+
+            if (afterScreenTransition) {
+
+                // Start spring on delay.
+                new Handler().postDelayed(startAnimation, delay);
+            } else {
+                startAnimation.run();
+            }
+        } else {
+
+            // Start when initialized.
+            mStartPendingInitialization = true;
         }
+    }
 
-        // Try to initialize the views and
-        // set their initial positions.
-        tryInitializeViews(mViews);
-
-        // Add a spring listener.
-        mSpring.addListener(new SpringListener() {
-
-            /**
-             * Called when the spring value updates.
-             *
-             * @param spring Spring object.
-             */
-            @Override
-            public void onSpringUpdate(Spring spring) {
-
-                // Animate each view on update.
-                for (AnimHelperView view : mViews) {
-
-                    view.animateWithSpring(mSpring);
-                }
-            }
-
-            /**
-             * Called when spring is now at rest (1.0 value).
-             *
-             * @param spring Spring object.
-             */
-            @Override
-            public void onSpringAtRest(Spring spring) {
-
-                if (mOnCompleteListeners != null) {
-
-                    // Run any associated callbacks.
-                    for (Runnable runnable : mOnCompleteListeners) {
-
-                        runnable.run();
-                    }
-                }
-            }
-
-            @Override
-            public void onSpringActivate      (Spring spring) { }
-
-            @Override
-            public void onSpringEndStateChange(Spring spring) { }
-        });
-
-        // Start spring on delay.
-        new Handler().postDelayed(new Runnable() {
-
-            @Override
-            public void run() {
-
-                // Set new end value to start.
-                mSpring.setEndValue(1);
-            }
-        }, delay);
+    /**
+     * By default start animations after
+     * the screen transition.
+     */
+    public void start() {
+        start(true);
     }
 
     /**
@@ -307,6 +332,13 @@ public class AnimHelper {
                             mEnablePendingInitialization = false;
 
                             enable();
+                        }
+
+                        // Start if pending.
+                        if (mStartPendingInitialization) {
+                            mStartPendingInitialization = false;
+
+                            start();
                         }
 
                         if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {

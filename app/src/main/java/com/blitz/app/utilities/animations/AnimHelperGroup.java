@@ -117,17 +117,47 @@ public class AnimHelperGroup {
     }
 
     /**
-     * Enable the animation helper group.
+     * Enable the animation group.
+     *
+     * @param start If specified, also start it.
      */
-    public void enable() {
-
-        // Reset the count.
-        mAnimCompleteCount = 0;
+    public void enable(boolean start) {
 
         // Enable each animation helper.
         for (AnimHelper animHelper : mAnimHelperGroup) {
 
             animHelper.enable();
+
+            if (start) {
+
+                // Reset the count.
+                mAnimCompleteCount = 0;
+
+                // Start after transition.
+                animHelper.start(true);
+            }
+        }
+    }
+
+    /**
+     * By default enable and start.
+     */
+    public void enable() {
+        enable(true);
+    }
+
+    /**
+     * Start the animations.
+     */
+    public void start() {
+
+        // Reset the count.
+        mAnimCompleteCount = 0;
+
+        // Start each animation helper.
+        for (AnimHelper animHelper : mAnimHelperGroup) {
+
+            animHelper.start(false);
         }
     }
 
