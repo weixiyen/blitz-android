@@ -1,6 +1,7 @@
 package com.blitz.app.utilities.animations;
 
 import android.app.Activity;
+import android.os.Build;
 import android.os.Handler;
 import android.view.View;
 import android.view.ViewTreeObserver;
@@ -279,6 +280,7 @@ public class AnimHelper {
      * Initialize animation helper object. Should be
      * called on activity creation.
      */
+    @SuppressWarnings("deprecation")
     private void initialize() {
 
         // Fetch associated root view.
@@ -307,8 +309,11 @@ public class AnimHelper {
                             enable();
                         }
 
-                        // Remove the listener.
-                        rootView.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+                        if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+                            rootView.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+                        } else {
+                            rootView.getViewTreeObserver().removeGlobalOnLayoutListener(this);
+                        }
                     }
                 });
     }
