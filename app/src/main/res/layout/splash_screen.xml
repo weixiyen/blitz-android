@@ -15,8 +15,9 @@
         app:scaleType="topCrop" />
 
     <LinearLayout
-        android:layout_width="match_parent"
+        android:layout_width="320dp"
         android:layout_height="match_parent"
+        android:layout_centerHorizontal="true"
         android:orientation="vertical">
 
         <RelativeLayout
@@ -43,37 +44,42 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="60dp"
-            android:layout_marginBottom="10dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:gravity="center"
+            android:layout_marginBottom="20dp"
             android:orientation="horizontal">
 
             <Button
                 android:id="@+id/splash_screen_sign_up"
-                android:layout_width="0dp"
+                android:layout_width="145dp"
                 android:layout_height="match_parent"
-                android:layout_marginRight="5dp"
-                android:layout_weight=".5"
-                android:background="@drawable/drawable_button_main"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="10dp"
+                android:background="@drawable/drawable_button_half"
                 android:contentDescription="@string/empty_string"
-                android:fontFamily="@string/app_font_light"
+                android:fontFamily="@string/app_font_regular"
+                android:shadowColor="@color/text_color_shadow"
+                android:shadowDx="1"
+                android:shadowDy="1"
+                android:shadowRadius="2"
                 android:text="Sign Up"
                 android:textColor="@color/text_color_light"
-                android:textSize="12sp" />
+                android:textSize="18sp" />
 
             <Button
                 android:id="@+id/splash_screen_sign_in"
-                android:layout_width="0dp"
+                android:layout_width="145dp"
                 android:layout_height="match_parent"
-                android:layout_marginLeft="5dp"
-                android:layout_weight=".5"
-                android:background="@drawable/drawable_button_main"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="5dp"
+                android:background="@drawable/drawable_button_half"
                 android:contentDescription="@string/empty_string"
-                android:fontFamily="@string/app_font_light"
+                android:fontFamily="@string/app_font_regular"
+                android:shadowColor="@color/text_color_shadow"
+                android:shadowDx="1"
+                android:shadowDy="1"
+                android:shadowRadius="2"
                 android:text="Sign In"
                 android:textColor="@color/text_color_light"
-                android:textSize="12sp" />
+                android:textSize="18sp" />
         </LinearLayout>
     </LinearLayout>
 </RelativeLayout>
