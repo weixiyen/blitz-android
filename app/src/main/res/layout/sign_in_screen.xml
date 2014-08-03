@@ -106,24 +106,13 @@
             android:textColor="@color/text_color_link"
             android:textSize="14sp" />
 
-        <me.grantland.widget.AutofitTextView
+        <Button
             android:id="@+id/sign_in_screen_sign_in"
+            style="@style/ButtonStyle"
             android:layout_width="match_parent"
             android:layout_height="60dp"
-            android:layout_gravity="center"
             android:background="@drawable/drawable_button_big"
-            android:contentDescription="@string/empty_string"
-            android:fontFamily="@string/app_font_regular"
-            android:gravity="center"
-            android:paddingBottom="2dp"
-            android:shadowColor="@color/text_color_shadow"
-            android:shadowDx="1"
-            android:shadowDy="1"
-            android:shadowRadius="2"
-            android:singleLine="true"
-            android:text="Sign In"
-            android:textColor="@color/text_color_light"
-            android:textSize="20sp" />
+            android:text="Sign In" />
 
     </LinearLayout>
 

@@ -164,24 +164,14 @@
             android:layout_centerHorizontal="true"
             android:orientation="vertical">
 
-            <me.grantland.widget.AutofitTextView
+            <Button
                 android:id="@+id/queue_screen_have_code"
                 android:layout_width="match_parent"
+                style="@style/ButtonStyle"
                 android:layout_height="60dp"
                 android:layout_marginTop="40dp"
                 android:background="@drawable/drawable_button_big"
-                android:contentDescription="@string/empty_string"
-                android:fontFamily="@string/app_font_regular"
-                android:gravity="center"
-                android:paddingBottom="2dp"
-                android:shadowColor="@color/text_color_shadow"
-                android:shadowDx="1"
-                android:shadowDy="1"
-                android:shadowRadius="2"
-                android:singleLine="true"
-                android:text="@string/have_code"
-                android:textColor="@color/text_color_light"
-                android:textSize="20sp" />
+                android:text="@string/have_code" />
 
             <me.grantland.widget.AutofitTextView
                 android:id="@+id/queue_screen_have_account"
