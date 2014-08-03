@@ -189,11 +189,10 @@ public class BaseActivity extends FragmentActivity implements ViewModel.ViewMode
      * animations in the proper direction.
      *
      * @param intent Parameters.
-     * @param options Options.
      */
     @Override
-    public void startActivity(Intent intent, Bundle options) {
-        super.startActivity(intent, options);
+    public void startActivity(Intent intent) {
+        super.startActivity(intent);
 
         // If clear history flag was set, but we now are
         // starting a new activity, then we can unset the
@@ -251,7 +250,7 @@ public class BaseActivity extends FragmentActivity implements ViewModel.ViewMode
         mHistoryClearedFlag = clearHistory;
 
         // Call native method.
-        super.startActivity(intent);
+        startActivity(intent);
     }
 
     /**
