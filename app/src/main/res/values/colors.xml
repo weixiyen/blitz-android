@@ -1,7 +1,7 @@
 <resources>
     <color name="background_primary">#000d20</color>
     <color name="background_inner">#082951</color>
-    <color name="background_dialog">#BF000000</color>
+    <color name="background_dialog">#E6000000</color>
 
     <color name="background_nav">#123c6f</color>
     <color name="background_nav_active">#4481cb</color>
