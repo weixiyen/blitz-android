@@ -19,7 +19,7 @@
             android:layout_gravity="center"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
-            android:background="@color/background_inner"
+            android:background="@drawable/asset_bg_dialog"
             android:minHeight="200dp"
             android:orientation="vertical">
 
