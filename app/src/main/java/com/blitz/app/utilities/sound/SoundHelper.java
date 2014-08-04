@@ -7,6 +7,7 @@ import android.media.MediaPlayer;
 import com.blitz.app.utilities.app.AppConfig;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 /**
  * Created by mrkcsc on 7/14/14.
@@ -23,8 +24,8 @@ public class SoundHelper {
     // Application level context.
     private Context mContext;
 
-    // Media player.
-    private MediaPlayer mMediaPlayer;
+    // Media players - boolean flag is to track paused state.
+    private ArrayList<MediaPlayerHelper> mMediaPlayers;
 
     // Is music disabled.
     private boolean mMusicDisabled;
@@ -42,8 +43,10 @@ public class SoundHelper {
 
         if (mInstance == null) {
             synchronized (SoundHelper.class) {
+
                 if (mInstance == null) {
                     mInstance = new SoundHelper();
+                    mInstance.mMediaPlayers = new ArrayList<MediaPlayerHelper>();
                 }
             }
         }
@@ -68,27 +71,27 @@ public class SoundHelper {
     @SuppressWarnings("unused")
     public void startMusic(int resourceId) {
 
-        initializePlayer();
+        // Loop single track.
+        startMusic(resourceId, null);
+    }
 
-        try {
-            AssetFileDescriptor assetFileDescriptor = mContext.getResources()
-                    .openRawResourceFd(resourceId);
+    /**
+     * Starts playing associated resource.  The first
+     * resource plays followed by the second on a loop.
+     *
+     * @param resourceId First.
+     * @param resourceIdLoop Second (loop).
+     */
+    public void startMusic(int resourceId, Integer resourceIdLoop) {
 
-            mMediaPlayer.setDataSource(
-                    assetFileDescriptor.getFileDescriptor(),
-                    assetFileDescriptor.getStartOffset(),
-                    assetFileDescriptor.getDeclaredLength());
+        // Initialize all players.
+        initializePlayers();
 
-            assetFileDescriptor.close();
-        }
-        catch (IllegalArgumentException ignored) { }
-        catch (IllegalStateException    ignored) { }
-        catch (IOException              ignored) { }
+        // Create a player for the first resource.
+        MediaPlayer mediaPlayer = createPlayer(resourceId, false);
 
-        mMediaPlayer.setLooping(true);
-        mMediaPlayer.setVolume(100, 100);
-        mMediaPlayer.prepareAsync();
-        mMediaPlayer.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+        // Wait for it to be prepared before playing.
+        mediaPlayer.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
 
             @Override
             @SuppressWarnings({"PointlessBooleanExpression", "ConstantConditions"})
@@ -99,9 +102,24 @@ public class SoundHelper {
                     // Start playing music.
                     mediaPlayer.start();
                 }
-
             }
         });
+
+        if (resourceIdLoop != null) {
+
+            // Create a new looping player from the second track.
+            final MediaPlayer mediaPlayerLoop = createPlayer(resourceIdLoop, true);
+
+            // Play it when the first track finishes.
+            mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+
+                @Override
+                public void onCompletion(MediaPlayer mediaPlayer) {
+
+                    mediaPlayerLoop.start();
+                }
+            });
+        }
     }
 
     /**
@@ -112,7 +130,7 @@ public class SoundHelper {
         if (!mMusicDisabled) {
 
             // Re-initialize.
-            initializePlayer();
+            initializePlayers();
         }
     }
 
@@ -122,9 +140,18 @@ public class SoundHelper {
     @SuppressWarnings("unused")
     public void pauseMusic() {
 
-        // If initialized and not playing or disabled.
-        if (mMediaPlayer != null && mMediaPlayer.isPlaying() && !mMusicDisabled) {
-            mMediaPlayer.pause();
+        // Iterate over each media player.
+        for (MediaPlayerHelper mediaPlayerHelper : mMediaPlayers) {
+
+            MediaPlayer mediaPlayer = mediaPlayerHelper.getMediaPlayer();
+
+            // If initialized and not playing, pause it.
+            if (mediaPlayer != null && mediaPlayer.isPlaying()) {
+                mediaPlayer.pause();
+
+                // Now paused.
+                mediaPlayerHelper.setPaused(true);
+            }
         }
     }
 
@@ -134,9 +161,18 @@ public class SoundHelper {
     @SuppressWarnings("unused")
     public void resumeMusic() {
 
-        // If initialized and not playing or disabled.
-        if (mMediaPlayer != null && !mMediaPlayer.isPlaying() && !mMusicDisabled) {
-            mMediaPlayer.start();
+        // Iterate over each media player.
+        for (MediaPlayerHelper mediaPlayerHelper : mMediaPlayers) {
+
+            MediaPlayer mediaPlayer = mediaPlayerHelper.getMediaPlayer();
+
+            // If initialized and not playing or disabled.
+            if (mediaPlayer != null && mediaPlayerHelper.getPaused() && !mMusicDisabled) {
+                mediaPlayer.start();
+
+                // No longer paused.
+                mediaPlayerHelper.setPaused(false);
+            }
         }
     }
 
@@ -148,12 +184,9 @@ public class SoundHelper {
     @SuppressWarnings("unused")
     public void setMusicDisabled(boolean musicDisabled) {
 
-        // Enable for a moment.
-        if (mMusicDisabled) {
-            mMusicDisabled = false;
-        }
+        mMusicDisabled = musicDisabled;
 
-        if (musicDisabled) {
+        if (mMusicDisabled) {
 
             // Pause if disabled.
             pauseMusic();
@@ -162,8 +195,6 @@ public class SoundHelper {
             // Just resume.
             resumeMusic();
         }
-
-        mMusicDisabled = musicDisabled;
     }
 
     //==============================================================================================
@@ -174,11 +205,103 @@ public class SoundHelper {
      * Initialize the player.  First make sure
      * that it is released.
      */
-    private void initializePlayer() {
-        if (mMediaPlayer != null) {
-            mMediaPlayer.release();
+    private void initializePlayers() {
+        if (mMediaPlayers != null) {
+
+            // Iterate over each media player.
+            for (MediaPlayerHelper mediaPlayerHelper : mMediaPlayers) {
+
+                if (mediaPlayerHelper.getMediaPlayer() != null) {
+                    mediaPlayerHelper.getMediaPlayer().release();
+                }
+            }
+
+            // Remove all media players.
+            mMediaPlayers.clear();
+        }
+    }
+
+    /**
+     * Create and return a new player.
+     *
+     * @return Initialized player.
+     */
+    private MediaPlayer createPlayer(int resourceId, boolean looping) {
+
+        MediaPlayer mediaPlayer = new MediaPlayer();
+
+        // Set the data source.
+        setDataSource(mediaPlayer, resourceId);
+
+        // Normal volume.
+        mediaPlayer.setVolume(100, 100);
+
+        // Prepare it async.
+        mediaPlayer.prepareAsync();
+
+        // Set the looping flag.
+        mediaPlayer.setLooping(looping);
+
+        // Add it to the array.
+        mMediaPlayers.add(new MediaPlayerHelper(mediaPlayer));
+
+        return mediaPlayer;
+    }
+
+    /**
+     * Set the data source for a media player.
+     *
+     * @param mediaPlayer Media player object.
+     * @param resourceId Target resource.
+     */
+    private void setDataSource(MediaPlayer mediaPlayer, int resourceId) {
+
+        try {
+            AssetFileDescriptor assetFileDescriptor = mContext.getResources()
+                    .openRawResourceFd(resourceId);
+
+            mediaPlayer.setDataSource(
+                    assetFileDescriptor.getFileDescriptor(),
+                    assetFileDescriptor.getStartOffset(),
+                    assetFileDescriptor.getDeclaredLength());
+
+            assetFileDescriptor.close();
+        }
+        catch (IllegalArgumentException ignored) { }
+        catch (IllegalStateException    ignored) { }
+        catch (IOException              ignored) { }
+    }
+
+    //==============================================================================================
+    // Inner Class
+    //==============================================================================================
+
+    /**
+     * Wrapper class to keep track
+     * of media players.
+     */
+    private class MediaPlayerHelper {
+
+        // Native android media player.
+        private MediaPlayer mMediaPlayer;
+
+        // Is this player paused.
+        private boolean mPaused;
+
+        public MediaPlayerHelper(MediaPlayer mediaPlayer) {
+            mMediaPlayer = mediaPlayer;
         }
 
-        mMediaPlayer = new MediaPlayer();
+        public MediaPlayer getMediaPlayer() {
+            return mMediaPlayer;
+        }
+
+        public void setPaused(boolean paused) {
+            mPaused = paused;
+        }
+
+        public boolean getPaused() {
+            return mPaused;
+        }
     }
 }
