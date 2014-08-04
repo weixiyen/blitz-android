@@ -5,6 +5,7 @@ import android.animation.AnimatorListenerAdapter;
 import android.app.Activity;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.os.Handler;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
@@ -120,9 +121,10 @@ public class BaseDialog {
      * Show the popup.
      *
      * @param showContent Should also display it's content?
+     * @param delay Time to delay showing.
      */
     @SuppressWarnings("unused")
-    public void show(boolean showContent) {
+    public void show(boolean showContent, int delay) {
 
         // If window exists and not already showing.
         if (mPopupWindow != null && !mPopupWindow.isShowing()) {
@@ -130,17 +132,36 @@ public class BaseDialog {
             // Hide the keyboard.
             KeyboardUtility.hideKeyboard(mActivity);
 
-            // Show at top corner of the window.
-            mPopupWindow.showAtLocation(mActivity.getWindow().getDecorView(),
-                    Gravity.NO_GRAVITY, 0, 0);
-        }
+            // Run on specified delay.
+            new Handler().postDelayed(new Runnable() {
+
+                @Override
+                public void run() {
+
+                    // Show at top corner of the window.
+                    mPopupWindow.showAtLocation(mActivity.getWindow().getDecorView(),
+                            Gravity.NO_GRAVITY, 0, 0);
+
+                    // Show the content.
+                    toggleDialogContent(true);
+                }
+            }, delay);
 
         // If asked to show content and not currently hidden.
-        if (showContent && mDialogContentState == DialogContentState.HIDDEN) {
+        } else if (showContent && mDialogContentState == DialogContentState.HIDDEN) {
 
             // Show the content.
             toggleDialogContent(true);
         }
+    }
+
+    /**
+     * Show the popup.
+     *
+     * @param showContent Should also display it's content?
+     */
+    public void show(boolean showContent) {
+        show(showContent, 0);
     }
 
     /**
