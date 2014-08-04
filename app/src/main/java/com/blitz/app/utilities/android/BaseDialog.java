@@ -124,7 +124,7 @@ public class BaseDialog {
      * @param delay Time to delay showing.
      */
     @SuppressWarnings("unused")
-    public void show(boolean showContent, int delay) {
+    public void show(final boolean showContent, int delay) {
 
         // If window exists and not already showing.
         if (mPopupWindow != null && !mPopupWindow.isShowing()) {
@@ -142,16 +142,15 @@ public class BaseDialog {
                     mPopupWindow.showAtLocation(mActivity.getWindow().getDecorView(),
                             Gravity.NO_GRAVITY, 0, 0);
 
-                    // Show the content.
-                    toggleDialogContent(true);
+                    // Try to show dialog content.
+                    tryShowDialogContent(showContent);
                 }
             }, delay);
 
-        // If asked to show content and not currently hidden.
-        } else if (showContent && mDialogContentState == DialogContentState.HIDDEN) {
+        } else {
 
-            // Show the content.
-            toggleDialogContent(true);
+            // Try to show dialog content.
+            tryShowDialogContent(showContent);
         }
     }
 
@@ -214,6 +213,20 @@ public class BaseDialog {
     //==============================================================================================
     // Private Methods
     //==============================================================================================
+
+    /**
+     * Try to show the dialog content.
+     *
+     * @param showContent Show flag.
+     */
+    private void tryShowDialogContent(boolean showContent) {
+
+        if (showContent && mDialogContentState == DialogContentState.HIDDEN) {
+
+            // Show the content.
+            toggleDialogContent(true);
+        }
+    }
 
     /**
      * Toggle the dialog content view.
