@@ -53,7 +53,7 @@ public class QueueScreen extends BaseActivity {
                 .addHelperView(AnimHelperView.from(mQueuePosInfo, AnimHelperPresets.SLIDE_RIGHT));
 
         // Football player guy.
-        mAnimations.createHelper(100, 30)
+        mAnimations.createHelper(100, 20)
                 .addHelperView(AnimHelperView.from(mQueuePlayer, AnimHelperPresets.SLIDE_RIGHT));
     }
 

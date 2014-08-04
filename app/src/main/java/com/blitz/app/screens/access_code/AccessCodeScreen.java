@@ -67,7 +67,7 @@ public class AccessCodeScreen extends BaseActivity {
                 .addHelperView(AnimHelperView.from(mAccessTopContainer, AnimHelperPresets.SLIDE_DOWN));
 
         // Add a helper.
-        mAnimations.createHelper(100, 30)
+        mAnimations.createHelper(100, 20)
                 .addHelperView(AnimHelperView.from(mPlayer, AnimHelperPresets.SLIDE_LEFT));
 
         // Open the keyboard when done.
