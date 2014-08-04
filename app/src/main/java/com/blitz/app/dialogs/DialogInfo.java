@@ -34,6 +34,10 @@ public class DialogInfo extends BaseDialog {
         mInfoText   .setVisibility(View.GONE);
         mInfoLButton.setVisibility(View.GONE);
         mInfoRButton.setVisibility(View.GONE);
+
+        // Can touch and dismiss.
+        setTouchable(true);
+        setDismissible(true);
     }
 
     //==============================================================================================

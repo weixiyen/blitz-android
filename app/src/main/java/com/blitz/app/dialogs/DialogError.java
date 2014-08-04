@@ -63,13 +63,13 @@ public class DialogError extends BaseDialog {
             AuthHelper.signOut();
 
             // Set a dismiss listener.
-            setOnDismissListener(new OnDismissListener() {
+            setOnDismissListener(new Runnable() {
 
                 @Override
-                public void onDismiss(Activity activity) {
+                public void run() {
 
                     // Bounce user back to the loading screen.
-                    activity.startActivity(new Intent(activity, LoadingScreen.class));
+                    mActivity.startActivity(new Intent(mActivity, LoadingScreen.class));
                 }
             });
         }

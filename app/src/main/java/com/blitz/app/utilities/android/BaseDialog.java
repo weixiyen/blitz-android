@@ -44,7 +44,7 @@ public class BaseDialog {
     private PopupWindow mPopupWindow;
 
     // Parent activity.
-    private Activity mActivity;
+    protected Activity mActivity;
 
     // Hide related variables.
     private boolean mHidePending;
@@ -111,10 +111,22 @@ public class BaseDialog {
      * @param onDismissListener Dismiss listener.
      */
     @SuppressWarnings("unused")
-    public void setOnDismissListener(OnDismissListener onDismissListener) {
+    public void setOnDismissListener(final Runnable onDismissListener) {
 
         // Assign the dismiss listener.
-        mPopupWindow.setOnDismissListener(onDismissListener);
+        mPopupWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
+
+            @Override
+            public void onDismiss() {
+
+                // Reset injections.
+                ButterKnife.reset(this);
+
+                if (onDismissListener != null) {
+                    onDismissListener.run();
+                }
+            }
+        });
     }
 
     /**
@@ -346,25 +358,8 @@ public class BaseDialog {
     }
 
     //==============================================================================================
-    // Interfaces / Inner Classes
+    // Interfaces
     //==============================================================================================
-
-    /**
-     * Custom on dismiss listener.
-     */
-    public abstract class OnDismissListener implements PopupWindow.OnDismissListener {
-
-        @Override
-        public void onDismiss() {
-
-            // Probably not needed, but good practice.
-            ButterKnife.reset(this);
-
-            onDismiss(mActivity);
-        }
-
-        public abstract void onDismiss(Activity activity);
-    }
 
     /**
      * Listener for hide event.  Sometimes we cannot hide
