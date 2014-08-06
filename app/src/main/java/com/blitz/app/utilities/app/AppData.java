@@ -118,6 +118,17 @@ public class AppData {
     }
 
     /**
+     * Fetch app data as an integer.
+     *
+     * @return Primitive integer value, 0 if not found.
+     */
+    @SuppressWarnings("unused")
+    public int getInt() {
+
+        return (Integer)get();
+    }
+
+    /**
      * Set app data object, must be one
      * of the supported primitive types.
      *
