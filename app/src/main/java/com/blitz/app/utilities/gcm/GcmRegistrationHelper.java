@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 
+import com.blitz.app.utilities.app.AppDataObject;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 
@@ -23,6 +24,34 @@ public class GcmRegistrationHelper {
     //==============================================================================================
     // Private Methods
     //==============================================================================================
+
+    /**
+     * Gets the current registration ID for application on GCM service, if there is one.
+     *
+     * If result is empty, the app needs to register.
+     *
+     * @return registration ID, or empty string if there is no existing
+     *         registration ID.
+     */
+    @SuppressWarnings("unused")
+    private static String getRegistrationId(Context context) {
+
+        // Attempt to fetch stored registration id.
+        String registrationId = AppDataObject.gcmRegistrationId.getString();
+
+        // Fetch the stored application version.
+        int registeredVersion = AppDataObject.gcmAppVersion.getInt();
+
+        // Fetch the current application version.
+        int currentVersion = getAppVersion(context);
+
+        if (registrationId == null || registeredVersion != currentVersion) {
+
+            return null;
+        }
+
+        return registrationId;
+    }
 
     /**
      * Check the device to make sure it has the Google Play Services APK. If
