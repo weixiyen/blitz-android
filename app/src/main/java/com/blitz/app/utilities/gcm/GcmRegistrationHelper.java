@@ -4,10 +4,15 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.os.AsyncTask;
 
 import com.blitz.app.utilities.app.AppDataObject;
+import com.blitz.app.utilities.logging.LogHelper;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
+import com.google.android.gms.gcm.GoogleCloudMessaging;
+
+import java.io.IOException;
 
 /**
  * Created by mrkcsc on 8/6/14.
@@ -21,9 +26,101 @@ public class GcmRegistrationHelper {
     // Request tag for asking user to obtain google play services.
     private static final int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;
 
+    // This is the project number obtained from the API Console.
+    private static final String SENDER_ID = "294665201786";
+
+    //==============================================================================================
+    // Public Methods
+    //==============================================================================================
+
+    /**
+     * Attempt to register device for GCM messages. Will
+     * run on background thread if needed.
+     *
+     * @param activity Activity context.
+     *
+     * @return Can fail if this device does not have or
+     *         support google play services.
+     */
+    public static boolean tryRegistration(Activity activity) {
+
+        // Obtain the application context.
+        Context context = activity.getApplicationContext();
+
+        // Check device for Play Services APK.
+        boolean hasPlayServices = checkPlayServices(activity);
+
+        // If check succeeds, proceed with GCM registration.
+        if (hasPlayServices) {
+
+            // If there is no registration id available.
+            if (getRegistrationId(context) == null) {
+
+                // Fetch it in background.
+                registerInBackground(context);
+            }
+        }
+
+        return hasPlayServices;
+    }
+
     //==============================================================================================
     // Private Methods
     //==============================================================================================
+
+    /**
+     * Registers the application with GCM servers asynchronously.
+     *
+     * Stores the registration ID and the app versionCode in the application's
+     * shared preferences.
+     */
+    private static void registerInBackground(final Context context) {
+
+        new AsyncTask<Void, Void, Void>() {
+
+            @Override
+            protected Void doInBackground(Void... params) {
+
+                try {
+
+                    // Fetch instance of google cloud messaging object.
+                    GoogleCloudMessaging gcm = GoogleCloudMessaging.getInstance(context);
+
+                    if (gcm != null) {
+
+                        String registrationId = gcm.register(SENDER_ID);
+
+                        // You should send the registration ID to your server over HTTP, so it
+                        // can use GCM/HTTP or CCS to send messages to your app.
+                        sendRegistrationIdToBackend(registrationId);
+
+                        // Persist the id - no need to register again.
+                        storeRegistrationId(context, registrationId);
+                    }
+
+                } catch (IOException ex) {
+
+                    // If there is an error, don't just keep trying to register.
+                    // Require the user to click a button again, or perform
+                    // exponential back-off.
+                }
+
+                return null;
+            }
+
+        }.execute(null, null, null);
+    }
+
+    /**
+     * Sends the registration ID to your server over HTTP, so it can use GCM/HTTP or CCS to send
+     * messages to your app. Not needed for this demo since the device sends upstream messages
+     * to a server that echoes back the message using the 'from' address in the message.
+     */
+    private static void sendRegistrationIdToBackend(String registrationId) {
+
+        // TODO: Implementation here.
+        LogHelper.log("Registration id: " + registrationId);
+    }
 
     /**
      * Gets the current registration ID for application on GCM service, if there is one.
@@ -69,9 +166,6 @@ public class GcmRegistrationHelper {
             if (GooglePlayServicesUtil.isUserRecoverableError(resultCode)) {
                 GooglePlayServicesUtil.getErrorDialog(resultCode, activity,
                         PLAY_SERVICES_RESOLUTION_REQUEST).show();
-            } else {
-
-                activity.finish();
             }
 
             return false;
@@ -96,5 +190,20 @@ public class GcmRegistrationHelper {
             // Should never happen.
             throw new RuntimeException("Could not get package name: " + e);
         }
+    }
+
+    /**
+     * Stores the registration ID and the app versionCode in the application's
+     * {@code SharedPreferences}.
+     *
+     * @param context application's context.
+     * @param registrationId registration ID
+     */
+    @SuppressWarnings("unused")
+    private static void storeRegistrationId(Context context, String registrationId) {
+
+        // Store registration id, with app version.
+        AppDataObject.gcmRegistrationId.set(registrationId);
+        AppDataObject.gcmAppVersion.set(getAppVersion(context));
     }
 }

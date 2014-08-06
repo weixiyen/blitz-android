@@ -13,6 +13,7 @@ import com.blitz.app.utilities.app.AppConfig;
 import com.blitz.app.utilities.app.AppData;
 import com.blitz.app.utilities.app.AppDataObject;
 import com.blitz.app.utilities.authentication.AuthHelper;
+import com.blitz.app.utilities.gcm.GcmRegistrationHelper;
 import com.blitz.app.utilities.sound.SoundHelper;
 
 /**
@@ -36,6 +37,7 @@ public class LoadingScreen extends BaseActivity {
      *
      * @param savedInstanceState Instance parameters.
      */
+    @SuppressWarnings({"PointlessBooleanExpression", "ConstantConditions"})
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,31 +51,26 @@ public class LoadingScreen extends BaseActivity {
             AppData.clear();
         }
 
-        // If we want to jump to some activity.
-        if (AppConfig.JUMP_TO_ACTIVITY != null) {
+        // Try to register for GCM - used for notifications.
+        boolean gcmRegistrationResult =
+                GcmRegistrationHelper.tryRegistration(this);
 
-            // Do it - this would only really be done for debugging.
-            startActivity(new Intent(this, AppConfig.JUMP_TO_ACTIVITY));
-        } else {
+        // If ignoring registration result, or have registration result.
+        if (AppConfig.IGNORE_GCM_REGISTRATION_RESULT || gcmRegistrationResult) {
 
-            setupLoadingScreenTimeout();
+            // If we want to jump to some activity.
+            if (AppConfig.JUMP_TO_ACTIVITY != null) {
+
+                // Do it - this would only really be done for debugging.
+                startActivity(new Intent(this, AppConfig.JUMP_TO_ACTIVITY));
+            } else {
+
+                setupLoadingScreenTimeout();
+            }
+
+            // Stop all music.
+            SoundHelper.instance().stopMusic();
         }
-
-        // Stop all music.
-        SoundHelper.instance().stopMusic();
-    }
-
-    /**
-     * Once activity finishes, jump into
-     * first activity and play music.
-     */
-    @Override
-    public void finish() {
-        super.finish();
-
-        // Play the lobby music after loading.
-        SoundHelper.instance().startMusic(R.raw.music_lobby_loop0, R.raw.music_lobby_loopn);
-        SoundHelper.instance().setMusicDisabled(AppDataObject.settingsMusicDisabled.getBoolean());
     }
 
     //==============================================================================================
@@ -132,6 +129,10 @@ public class LoadingScreen extends BaseActivity {
                 startActivity(new Intent(LoadingScreen.this, QueueScreen.class));
             }
         }
+
+        // Play the lobby music after loading.
+        SoundHelper.instance().startMusic(R.raw.music_lobby_loop0, R.raw.music_lobby_loopn);
+        SoundHelper.instance().setMusicDisabled(AppDataObject.settingsMusicDisabled.getBoolean());
 
         // close this activity
         finish();
