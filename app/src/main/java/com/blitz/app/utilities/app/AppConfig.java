@@ -36,4 +36,7 @@ public class AppConfig {
 
     // Disable or enable sound for debugging.
     public static final boolean SOUND_ENABLED = false;
+
+    // Should we ignore GCM registration result (can fail w/o play store).
+    public static final boolean IGNORE_GCM_REGISTRATION_RESULT = false;
 }
