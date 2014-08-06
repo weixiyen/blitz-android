@@ -67,10 +67,11 @@
     <orderEntry type="library" exported="" name="Java-WebSocket-7c3b223" level="project" />
     <orderEntry type="library" exported="" name="gson-2.2.4" level="project" />
     <orderEntry type="library" exported="" name="facebook-android-sdk-3.14.1" level="project" />
+    <orderEntry type="library" exported="" name="support-v4-19.1.0" level="project" />
     <orderEntry type="library" exported="" name="okio-1.0.0" level="project" />
     <orderEntry type="library" exported="" name="calligraphy-0.7.2" level="project" />
     <orderEntry type="library" exported="" name="circleimageview-1.1.0" level="project" />
-    <orderEntry type="library" exported="" name="support-v4-13.0.0" level="project" />
+    <orderEntry type="library" exported="" name="play-services-5.0.89" level="project" />
     <orderEntry type="library" exported="" name="retrofit-1.6.1" level="project" />
     <orderEntry type="library" exported="" name="rebound-0.3.3" level="project" />
     <orderEntry type="library" exported="" name="okhttp-2.0.0" level="project" />

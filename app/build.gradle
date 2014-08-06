@@ -56,4 +56,7 @@ dependencies {
 
     // WebSocket library for real-time calls.
     compile files('libs/Java-WebSocket-7c3b223.jar')
+
+    // Used for push notifications.
+    compile "com.google.android.gms:play-services:5.0.+"
 }
