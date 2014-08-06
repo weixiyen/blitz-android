@@ -35,5 +35,5 @@ public class AppConfig {
     public static final boolean PORTRAIT_ONLY = true;
 
     // Disable or enable sound for debugging.
-    public static final boolean SOUND_ENABLED = true;
+    public static final boolean SOUND_ENABLED = false;
 }
