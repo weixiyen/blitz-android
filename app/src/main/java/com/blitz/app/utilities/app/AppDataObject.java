@@ -28,6 +28,10 @@ public class AppDataObject extends AppData {
     public static final AppData settingsMusicDisabled = new AppDataObject(Boolean.class, "SETTINGS_MUSIC");
     public static final AppData settingsSoundDisabled = new AppDataObject(Boolean.class, "SETTINGS_SOUND");
 
+    // GCM related information (specifically, the application version and device registration id).
+    public static final AppData gcmAppVersion     = new AppDataObject(Integer.class, "GCM_APP_VERSION");
+    public static final AppData gcmRegistrationId = new AppDataObject(String.class,  "GCM_REGISTRATION_ID");
+
     //==============================================================================================
     // Constructors
     //==============================================================================================
