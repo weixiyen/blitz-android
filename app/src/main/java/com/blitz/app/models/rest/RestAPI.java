@@ -2,6 +2,7 @@ package com.blitz.app.models.rest;
 
 import com.blitz.app.models.rest_objects.JsonObjectAuth;
 import com.blitz.app.models.rest_objects.JsonObjectCode;
+import com.blitz.app.models.rest_objects.JsonObjectDevice;
 import com.blitz.app.models.rest_objects.JsonObjectDraft;
 import com.blitz.app.models.rest_objects.JsonObjectPreference;
 import com.blitz.app.models.rest_objects.JsonObjectQueue;
@@ -11,6 +12,7 @@ import retrofit.Callback;
 import retrofit.http.Body;
 import retrofit.http.DELETE;
 import retrofit.http.GET;
+import retrofit.http.PATCH;
 import retrofit.http.POST;
 import retrofit.http.PUT;
 import retrofit.http.Path;
@@ -18,6 +20,7 @@ import retrofit.http.Path;
 /**
  * Created by Miguel Gaeta on 6/26/14.
  */
+@SuppressWarnings("UnusedDeclaration")
 public interface RestAPI {
 
     //==============================================================================================
@@ -33,6 +36,15 @@ public interface RestAPI {
     void code(@Body JsonObjectCode.Body body,
 
                Callback<JsonObjectCode> callback);
+
+    @PATCH("/device/{device_id}")
+    void device(@Path("device_id") String deviceId, @Body JsonObjectDevice.Body body, Callback<JsonObjectDevice> callback);
+
+    @POST("/devices")
+    void devices(@Body JsonObjectDevice.Body body, Callback<JsonObjectDevice> callback);
+
+    @GET("/device/{device_id}")
+    void device(@Path("device_id") String deviceId, Callback<JsonObjectDevice> callback);
 
     @POST("/users")
     void users(@Body JsonObjectUsers.Body body,
