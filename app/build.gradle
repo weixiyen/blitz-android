@@ -24,17 +24,17 @@ dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
 
     // Support annotations (mainly unsed for @NonNull).
-    compile 'com.android.support:support-annotations:+'
+    compile 'com.android.support:support-annotations:20.0.0'
 
     // Android XML view injections.
-    compile 'com.jakewharton:butterknife:5.1.+'
+    compile 'com.jakewharton:butterknife:5.1.2'
 
     // Custom HTTP client that is better than the default.
     compile 'com.squareup.okhttp:okhttp-urlconnection:2.0.0'
     compile 'com.squareup.okhttp:okhttp:2.0.0'
 
     // Library for making REST calls.
-    compile 'com.squareup.retrofit:retrofit:1.6.+'
+    compile 'com.squareup.retrofit:retrofit:1.6.1'
 
     // Android facebook SDK.
     compile 'com.facebook:facebook-android-sdk:3.14.1'
@@ -43,13 +43,13 @@ dependencies {
     compile 'com.viewpagerindicator:library:2.4.1@aar'
 
     // Library for custom fonts.
-    compile 'uk.co.chrisjenx:calligraphy:0.7.+'
+    compile 'uk.co.chrisjenx:calligraphy:0.7.2'
 
     // Library for circle image views.
     compile 'de.hdodenhof:circleimageview:1.1.0'
 
     // Library for a text view that fits text.
-    compile 'me.grantland:autofittextview:0.1.+'
+    compile 'me.grantland:autofittextview:0.1.1'
 
     // Library for spring style animations.
     compile 'com.facebook.rebound:rebound:0.3.3'
@@ -58,5 +58,5 @@ dependencies {
     compile files('libs/Java-WebSocket-7c3b223.jar')
 
     // Used for push notifications.
-    compile "com.google.android.gms:play-services:5.0.+"
+    compile "com.google.android.gms:play-services:5.0.89"
 }
