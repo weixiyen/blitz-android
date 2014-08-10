@@ -1,6 +1,10 @@
 package com.blitz.app.utilities.authentication;
 
+import android.content.Intent;
+
 import com.blitz.app.models.objects.ObjectModelDraft;
+import com.blitz.app.screens.splash.SplashScreen;
+import com.blitz.app.utilities.android.BaseActivity;
 import com.blitz.app.utilities.app.AppData;
 import com.blitz.app.utilities.app.AppDataObject;
 
@@ -19,6 +23,22 @@ public class AuthHelper {
     //==============================================================================================
     // Public Methods
     //==============================================================================================
+
+    /**
+     * Grant access to the user.  This is done after
+     * they have entered a valid access code or
+     * reached the front of the queue.
+     *
+     * @param activity Target activity.
+     */
+    public static void grantAccess(BaseActivity activity) {
+
+        // User now has access.
+        AppDataObject.hasAccess.set(true);
+
+        // Transition to splash screen, clear history.
+        activity.startActivity(new Intent(activity, SplashScreen.class), true);
+    }
 
     /**
      * Is user signed in.

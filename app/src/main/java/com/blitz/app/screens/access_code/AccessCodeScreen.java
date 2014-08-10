@@ -1,6 +1,5 @@
 package com.blitz.app.screens.access_code;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
@@ -8,12 +7,11 @@ import android.widget.EditText;
 import com.blitz.app.R;
 import com.blitz.app.models.objects.ObjectModelCode;
 import com.blitz.app.models.rest.RestAPIOperation;
-import com.blitz.app.screens.splash.SplashScreen;
 import com.blitz.app.utilities.android.BaseActivity;
 import com.blitz.app.utilities.animations.AnimHelperGroup;
 import com.blitz.app.utilities.animations.AnimHelperPresets;
 import com.blitz.app.utilities.animations.AnimHelperView;
-import com.blitz.app.utilities.app.AppDataObject;
+import com.blitz.app.utilities.authentication.AuthHelper;
 import com.blitz.app.utilities.keyboard.KeyboardUtility;
 
 import butterknife.InjectView;
@@ -122,11 +120,8 @@ public class AccessCodeScreen extends BaseActivity {
                 // If code is valid.
                 if (mObjectModelCode.isValidCode()) {
 
-                    // User now has access.
-                    AppDataObject.hasAccess.set(true);
-
-                    // Transition to splash screen, clear history.
-                    startActivity(new Intent(AccessCodeScreen.this, SplashScreen.class), true);
+                    // Grant access.
+                    AuthHelper.grantAccess(AccessCodeScreen.this);
                 }
             }
         });
