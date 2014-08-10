@@ -1,5 +1,6 @@
 package com.blitz.app.models.rest;
 
+import com.blitz.app.models.rest_objects.JsonObjectAccessQueue;
 import com.blitz.app.models.rest_objects.JsonObjectAuth;
 import com.blitz.app.models.rest_objects.JsonObjectCode;
 import com.blitz.app.models.rest_objects.JsonObjectDevice;
@@ -26,6 +27,9 @@ public interface RestAPI {
     //==============================================================================================
     // Public REST API Methods
     //==============================================================================================
+
+    @GET("/access_queue/{device_id}")
+    void access_queue(@Path("device_id") String deviceId, Callback<JsonObjectAccessQueue> callback);
 
     @GET("/preferences")
     void preferences(
