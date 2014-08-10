@@ -1,7 +1,5 @@
 package com.blitz.app.utilities.background;
 
-import com.blitz.app.models.rest.RestAPIClient;
-
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -98,7 +96,7 @@ public class EnteredBackground {
     private static EnteredBackground instance() {
 
         if (instance == null) {
-            synchronized (RestAPIClient.class) {
+            synchronized (EnteredBackground.class) {
                 if (instance == null) {
                     instance = new EnteredBackground();
                 }
