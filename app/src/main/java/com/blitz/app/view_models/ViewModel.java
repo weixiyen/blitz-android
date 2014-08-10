@@ -1,4 +1,4 @@
-package com.blitz.app.models.views;
+package com.blitz.app.view_models;
 
 import android.app.Activity;
 import android.os.Bundle;

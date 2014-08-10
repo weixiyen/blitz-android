@@ -9,7 +9,7 @@ import android.view.ViewGroup;
 
 import com.blitz.app.R;
 import com.blitz.app.models.comet.CometAPIManager;
-import com.blitz.app.models.views.ViewModel;
+import com.blitz.app.view_models.ViewModel;
 import com.blitz.app.utilities.reflection.ReflectionHelper;
 import com.blitz.app.utilities.string.StringHelper;
 

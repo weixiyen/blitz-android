@@ -9,7 +9,7 @@ import android.widget.Button;
 import com.blitz.app.R;
 import com.blitz.app.dialogs.DialogInfo;
 import com.blitz.app.dialogs.DialogLoading;
-import com.blitz.app.models.views.ViewModelMain;
+import com.blitz.app.view_models.ViewModelMain;
 import com.blitz.app.screens.draft_preview.DraftPreviewScreen;
 import com.blitz.app.utilities.android.BaseActivity;
 import com.blitz.app.utilities.android.BaseDialog;

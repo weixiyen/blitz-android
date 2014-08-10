@@ -8,7 +8,7 @@ import android.support.v4.app.FragmentActivity;
 
 import com.blitz.app.R;
 import com.blitz.app.models.comet.CometAPIManager;
-import com.blitz.app.models.views.ViewModel;
+import com.blitz.app.view_models.ViewModel;
 import com.blitz.app.utilities.app.AppConfig;
 import com.blitz.app.utilities.background.EnteredBackground;
 import com.blitz.app.utilities.keyboard.KeyboardUtility;

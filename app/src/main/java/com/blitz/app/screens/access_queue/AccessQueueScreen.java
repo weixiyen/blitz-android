@@ -6,7 +6,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.blitz.app.R;
-import com.blitz.app.models.views.ViewModelAccessQueue;
+import com.blitz.app.view_models.ViewModelAccessQueue;
 import com.blitz.app.screens.access_code.AccessCodeScreen;
 import com.blitz.app.screens.sign_in.SignInScreen;
 import com.blitz.app.utilities.android.BaseActivity;
