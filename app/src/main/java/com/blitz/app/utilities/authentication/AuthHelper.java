@@ -2,7 +2,7 @@ package com.blitz.app.utilities.authentication;
 
 import android.content.Intent;
 
-import com.blitz.app.models.objects.ObjectModelDraft;
+import com.blitz.app.object_models.ObjectModelDraft;
 import com.blitz.app.screens.splash.SplashScreen;
 import com.blitz.app.utilities.android.BaseActivity;
 import com.blitz.app.utilities.app.AppData;
