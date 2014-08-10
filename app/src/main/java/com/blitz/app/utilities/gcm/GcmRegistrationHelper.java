@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.os.AsyncTask;
+import android.provider.Settings;
 
 import com.blitz.app.utilities.app.AppDataObject;
 import com.blitz.app.utilities.logging.LogHelper;
@@ -42,6 +43,7 @@ public class GcmRegistrationHelper {
      * @return Can fail if this device does not have or
      *         support google play services.
      */
+    @SuppressWarnings("unused")
     public static boolean tryRegistration(Activity activity) {
 
         // Obtain the application context.
@@ -62,6 +64,37 @@ public class GcmRegistrationHelper {
         }
 
         return hasPlayServices;
+    }
+
+    /**
+     * Attempt to fetch and store a unique device id. First
+     * uses a standard approach to fetch device id.  If
+     * that fails, it will generate a random GUID identifier
+     * for the device.
+     *
+     * @param context Context.
+     *
+     * @return Device id.
+     */
+    @SuppressWarnings("unused")
+    public static String getDeviceId(Context context) {
+
+        // Attempt to fetch cached device id.
+        String deviceId = AppDataObject.gcmDeviceId.getString();
+
+        if (deviceId == null) {
+            deviceId = Settings.Secure.getString
+                    (context.getContentResolver(), Settings.Secure.ANDROID_ID);
+
+            if (deviceId == null) {
+                deviceId = java.util.UUID.randomUUID().toString();
+            }
+
+            // Persist the device id.
+            AppDataObject.gcmDeviceId.set(deviceId);
+        }
+
+        return deviceId;
     }
 
     //==============================================================================================
