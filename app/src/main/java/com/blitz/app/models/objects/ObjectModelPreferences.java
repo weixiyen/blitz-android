@@ -5,8 +5,8 @@ import android.app.Activity;
 import com.blitz.app.models.rest.RestAPICallback;
 import com.blitz.app.models.rest.RestAPIClient;
 import com.blitz.app.models.rest.RestAPIOperation;
-import com.blitz.app.models.rest_objects.JsonObjectPreference;
 import com.blitz.app.utilities.app.AppConfig;
+import com.google.gson.JsonObject;
 
 /**
  * Created by Miguel Gaeta on 6/26/14.
@@ -59,15 +59,15 @@ public class ObjectModelPreferences extends ObjectModel {
             public void success() {
 
                 // Fetch json result.
-                JsonObjectPreference jsonObject = getJsonObject(JsonObjectPreference.class);
+                JsonObject jsonObject = getJsonObject();
 
                 if (AppConfig.IS_PRODUCTION) {
 
                     // Assign from result.
-                    mCurrentYear        = jsonObject.current_year;
-                    mCurrentWeek        = jsonObject.current_week;
-                    mQueueAvailable     = jsonObject.queue_available;
-                    mCurrentActiveQueue = jsonObject.current_active_queue;
+                    mCurrentYear        = jsonObject.get("current_year").getAsInt();
+                    mCurrentWeek        = jsonObject.get("current_week").getAsInt();
+                    mQueueAvailable     = jsonObject.get("queue_available").getAsBoolean();
+                    mCurrentActiveQueue = jsonObject.get("current_active_queue").getAsString();
 
                 } else {
 
@@ -85,7 +85,7 @@ public class ObjectModelPreferences extends ObjectModel {
 
         // Make api call.
         RestAPIClient.getAPI().preferences
-                (new RestAPICallback<JsonObjectPreference>(mRestApiObject, operation));
+                (new RestAPICallback<JsonObject>(mRestApiObject, operation));
     }
 
     //==============================================================================================

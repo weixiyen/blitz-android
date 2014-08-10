@@ -1,6 +1,6 @@
 package com.blitz.app.models.rest;
 
-import com.blitz.app.models.rest_objects.JsonObject;
+import com.google.gson.JsonObject;
 
 import retrofit.Callback;
 import retrofit.RetrofitError;

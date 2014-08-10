@@ -5,7 +5,7 @@ import android.app.Activity;
 import com.blitz.app.models.rest.RestAPICallback;
 import com.blitz.app.models.rest.RestAPIClient;
 import com.blitz.app.models.rest.RestAPIOperation;
-import com.blitz.app.models.rest_objects.JsonObjectCode;
+import com.google.gson.JsonObject;
 
 /**
  * Created by Miguel Gaeta on 6/28/14.
@@ -63,14 +63,13 @@ public class ObjectModelCode extends ObjectModel {
             public void success() {
 
                 // Fetch resulting object.
-                JsonObjectCode jsonObject = getJsonObject(JsonObjectCode.class);
+                JsonObject jsonObject = getJsonObject();
 
-                if (jsonObject                  != null &&
-                    jsonObject.result           != null &&
-                    jsonObject.result.code_type != null) {
+                if (jsonObject != null) {
 
                     // Assign result.
-                    mCodeType = jsonObject.result.code_type;
+                    mCodeType = jsonObject.getAsJsonObject("result")
+                            .get("code_type").getAsString();
                 }
 
                 // Code redeemed.
@@ -79,10 +78,11 @@ public class ObjectModelCode extends ObjectModel {
         };
 
         // Construct POST body.
-        JsonObjectCode.Body body = new JsonObjectCode.Body(mValue);
+        JsonObject body = new JsonObject();
+                   body.addProperty("value", mValue);
 
         // Make rest call for code.
-        RestAPIClient.getAPI().code(body, new RestAPICallback<JsonObjectCode>(mRestApiObject, operation));
+        RestAPIClient.getAPI().code(body, new RestAPICallback<JsonObject>(mRestApiObject, operation));
     }
 
     //==============================================================================================

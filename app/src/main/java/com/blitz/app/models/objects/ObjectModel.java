@@ -1,7 +1,7 @@
 package com.blitz.app.models.objects;
 
 import com.blitz.app.models.rest.RestAPIObject;
-import com.blitz.app.models.rest_objects.JsonObject;
+import com.google.gson.JsonObject;
 
 /**
  * Created by mrkcsc on 7/9/14.
@@ -36,13 +36,10 @@ public class ObjectModel {
     /**
      * Fetch JSON object.
      *
-     * @param type Object type.
-     * @param <T> Type.
-     *
      * @return Json object.
      */
-    protected <T extends JsonObject> T getJsonObject(Class<T> type) {
+    protected JsonObject getJsonObject() {
 
-        return mRestApiObject.getJsonObject(type);
+        return mRestApiObject.getJsonObject();
     }
 }

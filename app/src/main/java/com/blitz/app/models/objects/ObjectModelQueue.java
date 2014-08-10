@@ -5,7 +5,7 @@ import android.app.Activity;
 import com.blitz.app.models.rest.RestAPICallback;
 import com.blitz.app.models.rest.RestAPIClient;
 import com.blitz.app.models.rest.RestAPIOperation;
-import com.blitz.app.models.rest_objects.JsonObjectQueue;
+import com.google.gson.JsonObject;
 
 /**
  * Created by mrkcsc on 7/20/14.
@@ -63,11 +63,12 @@ public class ObjectModelQueue extends ObjectModel {
                 };
 
                 // Construct POST body.
-                JsonObjectQueue.Body body = new JsonObjectQueue.Body(mDraftKey);
+                JsonObject body = new JsonObject();
+                           body.addProperty("draft_key", mDraftKey);
 
                 // Make api call.
                 RestAPIClient.getAPI().queue
-                        (body, new RestAPICallback<JsonObjectQueue>(mRestApiObject, operation));
+                        (body, new RestAPICallback<JsonObject>(mRestApiObject, operation));
             }
         });
     }
@@ -100,7 +101,7 @@ public class ObjectModelQueue extends ObjectModel {
 
         // Make api call.
         RestAPIClient.getAPI().queue
-                (mDraftKey, new RestAPICallback<JsonObjectQueue>(mRestApiObject, operation));
+                (mDraftKey, new RestAPICallback<JsonObject>(mRestApiObject, operation));
     }
 
     /**
@@ -130,10 +131,11 @@ public class ObjectModelQueue extends ObjectModel {
         };
 
         // Construct PUT body.
-        JsonObjectQueue.BodyPUT body = new JsonObjectQueue.BodyPUT(mDraftKey);
+        JsonObject body = new JsonObject();
+                   body.addProperty("draft_key", mDraftKey);
 
         // Make api call.
         RestAPIClient.getAPI().queue
-                (body, new RestAPICallback<JsonObjectQueue>(mRestApiObject, operation));
+                (body, new RestAPICallback<JsonObject>(mRestApiObject, operation));
     }
 }

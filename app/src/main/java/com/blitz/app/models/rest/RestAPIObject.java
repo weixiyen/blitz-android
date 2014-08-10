@@ -1,6 +1,7 @@
 package com.blitz.app.models.rest;
 
-import com.blitz.app.models.rest_objects.JsonObject;
+
+import com.google.gson.JsonObject;
 
 /**
  * Created by Miguel Gaeta on 6/29/14.
@@ -27,8 +28,8 @@ public class RestAPIObject implements RestAPIObjectInterface {
     @Override
     public boolean hasErrors() {
 
-        return mJsonObject != null &&
-               mJsonObject.hasErrors();
+        // Check for presence of errors result.
+        return mJsonObject != null && mJsonObject.has("errors");
     }
 
     /**
@@ -46,15 +47,12 @@ public class RestAPIObject implements RestAPIObjectInterface {
     //==============================================================================================
 
     /**
-     * Get json object, casted to appropriate class.
+     * Fetch json object.
      *
-     * @param type Json class type (up to callee to provide the correct serialized class).
-     * @param <T> Return JsonObject class.
-     *
-     * @return Casted JsonObject.
+     * @return Json object.
      */
-    public <T extends JsonObject>T getJsonObject(Class<T> type) {
+    public JsonObject getJsonObject() {
 
-        return type.cast(mJsonObject);
+        return mJsonObject;
     }
 }

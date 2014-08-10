@@ -5,7 +5,7 @@ import android.app.Activity;
 import com.blitz.app.models.rest.RestAPICallback;
 import com.blitz.app.models.rest.RestAPIClient;
 import com.blitz.app.models.rest.RestAPIOperation;
-import com.blitz.app.models.rest_objects.JsonObjectAccessQueue;
+import com.google.gson.JsonObject;
 
 /**
  * Created by mrkcsc on 8/9/14.
@@ -78,13 +78,13 @@ public class ObjectModelAccessQueue extends ObjectModel {
             public void success() {
 
                 // Fetch resulting object.
-                JsonObjectAccessQueue jsonObject = getJsonObject(JsonObjectAccessQueue.class);
+                JsonObject jsonObject = getJsonObject();
 
                 if (jsonObject != null) {
 
-                    mAccessGranted = jsonObject.access_granted;
-                    mPeopleAhead   = jsonObject.people_ahead;
-                    mPeopleBehind  = jsonObject.people_behind;
+                    mAccessGranted = jsonObject.get("access_granted").getAsBoolean();
+                    mPeopleAhead   = jsonObject.get("people_ahead").getAsInt();
+                    mPeopleBehind  = jsonObject.get("people_behind").getAsInt();
                 }
 
                 // Code redeemed.
@@ -94,6 +94,6 @@ public class ObjectModelAccessQueue extends ObjectModel {
 
         // Make rest call for code.
         RestAPIClient.getAPI().access_queue(mDeviceId,
-                new RestAPICallback<JsonObjectAccessQueue>(mRestApiObject, operation));
+                new RestAPICallback<JsonObject>(mRestApiObject, operation));
     }
 }

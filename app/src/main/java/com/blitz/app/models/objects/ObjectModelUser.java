@@ -6,9 +6,8 @@ import android.widget.EditText;
 import com.blitz.app.models.rest.RestAPICallback;
 import com.blitz.app.models.rest.RestAPIClient;
 import com.blitz.app.models.rest.RestAPIOperation;
-import com.blitz.app.models.rest_objects.JsonObjectAuth;
-import com.blitz.app.models.rest_objects.JsonObjectUsers;
 import com.blitz.app.utilities.authentication.AuthHelper;
+import com.google.gson.JsonObject;
 
 /**
  * Created by mrkcsc on 7/9/14.
@@ -69,23 +68,33 @@ public class ObjectModelUser extends ObjectModel {
             public void success() {
 
                 // Fetch json result.
-                JsonObjectUsers jsonObject = getJsonObject(JsonObjectUsers.class);
+                JsonObject jsonObject = getJsonObject();
 
-                // Sign in the user.
-                AuthHelper.signIn(jsonObject.result.id,
-                                  jsonObject.result.username, mEmail, mPassword);
+                if (jsonObject != null) {
 
-                // Now signed up.
-                callback.onSignUp();
+                    // Fetch user object.
+                    JsonObject result = jsonObject.getAsJsonObject("result");
+
+                    // Sign in the user.
+                    AuthHelper.signIn(
+                            result.get("id").getAsString(),
+                            result.get("username").getAsString(), mEmail, mPassword);
+
+                    // Now signed up.
+                    callback.onSignUp();
+                }
             }
         };
 
         // Construct POST body.
-        JsonObjectUsers.Body body = new JsonObjectUsers.Body(mEmail, mUsername, mPassword);
+        JsonObject body = new JsonObject();
+                   body.addProperty("email", mEmail);
+                   body.addProperty("username", mUsername);
+                   body.addProperty("password", mPassword);
 
         // Make rest call for code.
         RestAPIClient.getAPI().users(body,
-                new RestAPICallback<JsonObjectUsers>(mRestApiObject, operation, true));
+                new RestAPICallback<JsonObject>(mRestApiObject, operation, true));
     }
 
     /**
@@ -103,23 +112,32 @@ public class ObjectModelUser extends ObjectModel {
             public void success() {
 
                 // Fetch json result.
-                JsonObjectAuth jsonObject = getJsonObject(JsonObjectAuth.class);
+                JsonObject jsonObject = getJsonObject();
 
-                // Sign in the user.
-                AuthHelper.signIn(jsonObject.user.id,
-                                  jsonObject.user.username, mEmail, mPassword);
+                if (jsonObject != null) {
 
-                // Now signed in.
-                callback.onSignIn();
+                    // Fetch user object.
+                    JsonObject user = jsonObject.getAsJsonObject("user");
+
+                    // Sign in the user.
+                    AuthHelper.signIn(
+                            user.get("id").getAsString(),
+                            user.get("username").getAsString(), mEmail, mPassword);
+
+                    // Now signed in.
+                    callback.onSignIn();
+                }
             }
         };
 
         // Construct POST body.
-        JsonObjectAuth.Body body = new JsonObjectAuth.Body(mUsername, mPassword);
+        JsonObject body = new JsonObject();
+                   body.addProperty("username", mUsername);
+                   body.addProperty("password", mPassword);
 
         // Make auth rest call.
         RestAPIClient.getAPI().auth(body,
-                new RestAPICallback<JsonObjectAuth>(mRestApiObject, operation, true));
+                new RestAPICallback<JsonObject>(mRestApiObject, operation, true));
     }
 
     //==============================================================================================
