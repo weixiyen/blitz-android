@@ -3,14 +3,17 @@ package com.blitz.app.screens.access_queue;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.TextView;
 
 import com.blitz.app.R;
+import com.blitz.app.models.views.ViewModelAccessQueue;
 import com.blitz.app.screens.access_code.AccessCodeScreen;
 import com.blitz.app.screens.sign_in.SignInScreen;
 import com.blitz.app.utilities.android.BaseActivity;
 import com.blitz.app.utilities.animations.AnimHelperGroup;
 import com.blitz.app.utilities.animations.AnimHelperPresets;
 import com.blitz.app.utilities.animations.AnimHelperView;
+import com.blitz.app.utilities.authentication.AuthHelper;
 
 import butterknife.InjectView;
 import butterknife.OnClick;
@@ -18,7 +21,7 @@ import butterknife.OnClick;
 /**
  * Created by Miguel Gaeta on 6/28/14.
  */
-public class AccessQueueScreen extends BaseActivity {
+public class AccessQueueScreen extends BaseActivity implements ViewModelAccessQueue.ViewModelAccessQueueCallbacks {
 
     //==============================================================================================
     // Member Variables
@@ -28,6 +31,9 @@ public class AccessQueueScreen extends BaseActivity {
     @InjectView(R.id.access_queue_calls_to_action) View mQueueButtons;
     @InjectView(R.id.access_queue_position_info)   View mQueuePosInfo;
     @InjectView(R.id.access_queue_football_player) View mQueuePlayer;
+
+    @InjectView(R.id.access_queue_people_ahead) TextView mQueuePeopleAhead;
+    @InjectView(R.id.access_queue_people_behind) TextView mQueuePeopleBehind;
 
     // Page animations.
     private AnimHelperGroup mAnimations;
@@ -39,6 +45,9 @@ public class AccessQueueScreen extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        // Set the view model.
+        setViewModel(new ViewModelAccessQueue(), savedInstanceState);
 
         // Create animation group.
         mAnimations = AnimHelperGroup.from(this);
@@ -69,6 +78,39 @@ public class AccessQueueScreen extends BaseActivity {
         super.onPause();
 
         mAnimations.disable();
+    }
+
+    //==============================================================================================
+    // View Model Callbacks
+    //==============================================================================================
+
+    /**
+     * Update people in front of you.
+     */
+    @Override
+    public void onPeopleAhead(int peopleAhead) {
+        mQueuePeopleAhead.setText(Integer.toString(peopleAhead));
+    }
+
+    /**
+     * Update people behind you.
+     */
+    @Override
+    public void onPeopleBehind(int peopleBehind) {
+        mQueuePeopleBehind.setText(Integer.toString(peopleBehind));
+    }
+
+    /**
+     * Authorize user when access is
+     * granted.
+     */
+    @Override
+    public void onAccessGranted(boolean accessGranted) {
+
+        if (accessGranted) {
+
+            AuthHelper.grantAccess(this);
+        }
     }
 
     //==============================================================================================
