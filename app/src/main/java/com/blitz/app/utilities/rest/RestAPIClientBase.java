@@ -1,4 +1,4 @@
-package com.blitz.app.models.rest;
+package com.blitz.app.utilities.rest;
 
 import com.blitz.app.utilities.app.AppConfig;
 import com.blitz.app.utilities.ssl.SSLHelper;

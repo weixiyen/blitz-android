@@ -1,4 +1,4 @@
-package com.blitz.app.models.rest;
+package com.blitz.app.utilities.rest;
 
 import android.app.Activity;
 import android.os.Handler;

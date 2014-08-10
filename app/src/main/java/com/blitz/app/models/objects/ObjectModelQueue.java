@@ -2,9 +2,9 @@ package com.blitz.app.models.objects;
 
 import android.app.Activity;
 
-import com.blitz.app.models.rest.RestAPICallback;
-import com.blitz.app.models.rest.RestAPIClient;
-import com.blitz.app.models.rest.RestAPIOperation;
+import com.blitz.app.utilities.rest.RestAPICallback;
+import com.blitz.app.utilities.rest.RestAPIClient;
+import com.blitz.app.utilities.rest.RestAPIOperation;
 import com.google.gson.JsonObject;
 
 /**

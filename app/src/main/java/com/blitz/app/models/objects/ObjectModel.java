@@ -1,6 +1,6 @@
 package com.blitz.app.models.objects;
 
-import com.blitz.app.models.rest.RestAPIObject;
+import com.blitz.app.utilities.rest.RestAPIObject;
 import com.google.gson.JsonObject;
 
 /**

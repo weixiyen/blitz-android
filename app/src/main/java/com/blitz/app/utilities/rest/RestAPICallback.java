@@ -1,4 +1,4 @@
-package com.blitz.app.models.rest;
+package com.blitz.app.utilities.rest;
 
 import com.google.gson.JsonObject;
 
@@ -29,7 +29,7 @@ public class RestAPICallback<T> implements Callback<T> {
     //==============================================================================================
 
     /**
-     * @see com.blitz.app.models.rest.RestAPICallback
+     * @see com.blitz.app.utilities.rest.RestAPICallback
      */
     public RestAPICallback(RestAPIObjectInterface restAPIObjectInterface, RestAPIOperation operation) {
 

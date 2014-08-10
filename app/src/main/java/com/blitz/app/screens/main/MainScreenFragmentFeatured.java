@@ -5,7 +5,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.blitz.app.R;
-import com.blitz.app.models.rest.RestAPIOperation;
+import com.blitz.app.utilities.rest.RestAPIOperation;
 import com.blitz.app.view_models.ViewModelMainFeatured;
 import com.blitz.app.utilities.android.BaseFragment;
 

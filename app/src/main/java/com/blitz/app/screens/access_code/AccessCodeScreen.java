@@ -6,7 +6,7 @@ import android.widget.EditText;
 
 import com.blitz.app.R;
 import com.blitz.app.models.objects.ObjectModelCode;
-import com.blitz.app.models.rest.RestAPIOperation;
+import com.blitz.app.utilities.rest.RestAPIOperation;
 import com.blitz.app.utilities.android.BaseActivity;
 import com.blitz.app.utilities.animations.AnimHelperGroup;
 import com.blitz.app.utilities.animations.AnimHelperPresets;
