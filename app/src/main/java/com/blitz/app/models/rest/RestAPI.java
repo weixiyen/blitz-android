@@ -55,5 +55,5 @@ public interface RestAPI {
     void queue_put(@Body JsonObject body, Callback<JsonObject> callback);
 
     @POST("/users")
-    void users(@Body JsonObject body, Callback<JsonObject> callback);
+    void users_post(@Body JsonObject body, Callback<JsonObject> callback);
 }

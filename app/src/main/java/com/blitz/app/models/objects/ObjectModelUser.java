@@ -93,7 +93,7 @@ public class ObjectModelUser extends ObjectModel {
                    body.addProperty("password", mPassword);
 
         // Make rest call for code.
-        RestAPIClient.getAPI().users(body,
+        RestAPIClient.getAPI().users_post(body,
                 new RestAPICallback<JsonObject>(mRestApiObject, operation, true));
     }
 
