@@ -57,7 +57,7 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".screens.queue.QueueScreen"
+        <activity android:name=".screens.access_queue.AccessQueueScreen"
             android:windowSoftInputMode="stateHidden" />
 
         <activity android:name=".screens.splash.SplashScreen"

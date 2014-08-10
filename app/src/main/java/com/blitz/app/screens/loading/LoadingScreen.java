@@ -5,8 +5,8 @@ import android.os.Bundle;
 import android.os.Handler;
 
 import com.blitz.app.R;
+import com.blitz.app.screens.access_queue.AccessQueueScreen;
 import com.blitz.app.screens.main.MainScreen;
-import com.blitz.app.screens.queue.QueueScreen;
 import com.blitz.app.screens.splash.SplashScreen;
 import com.blitz.app.utilities.android.BaseActivity;
 import com.blitz.app.utilities.app.AppConfig;
@@ -126,7 +126,7 @@ public class LoadingScreen extends BaseActivity {
             } else {
 
                 // User is blocked on Queue screen.
-                startActivity(new Intent(LoadingScreen.this, QueueScreen.class));
+                startActivity(new Intent(LoadingScreen.this, AccessQueueScreen.class));
             }
         }
 

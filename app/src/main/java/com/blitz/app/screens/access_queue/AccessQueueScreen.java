@@ -1,4 +1,4 @@
-package com.blitz.app.screens.queue;
+package com.blitz.app.screens.access_queue;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -18,16 +18,16 @@ import butterknife.OnClick;
 /**
  * Created by Miguel Gaeta on 6/28/14.
  */
-public class QueueScreen extends BaseActivity {
+public class AccessQueueScreen extends BaseActivity {
 
     //==============================================================================================
     // Member Variables
     //==============================================================================================
 
-    @InjectView(R.id.queue_promo_text)      View mQueuePromoText;
-    @InjectView(R.id.queue_calls_to_action) View mQueueButtons;
-    @InjectView(R.id.queue_position_info)   View mQueuePosInfo;
-    @InjectView(R.id.queue_football_player) View mQueuePlayer;
+    @InjectView(R.id.access_queue_promo_text)      View mQueuePromoText;
+    @InjectView(R.id.access_queue_calls_to_action) View mQueueButtons;
+    @InjectView(R.id.access_queue_position_info)   View mQueuePosInfo;
+    @InjectView(R.id.access_queue_football_player) View mQueuePlayer;
 
     // Page animations.
     private AnimHelperGroup mAnimations;
@@ -78,7 +78,7 @@ public class QueueScreen extends BaseActivity {
     /**
      * Transition to access code screen.
      */
-    @OnClick(R.id.queue_screen_have_code) @SuppressWarnings("unused")
+    @OnClick(R.id.access_queue_screen_have_code) @SuppressWarnings("unused")
     public void haveCode() {
 
         // Transition to access code screen.
@@ -88,7 +88,7 @@ public class QueueScreen extends BaseActivity {
     /**
      * Transition to sign in screen.
      */
-    @OnClick(R.id.queue_screen_have_account) @SuppressWarnings("unused")
+    @OnClick(R.id.access_queue_screen_have_account) @SuppressWarnings("unused")
     public void haveAccount() {
 
         // Transition to sign in screen.
