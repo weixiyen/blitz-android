@@ -1,4 +1,4 @@
-package com.blitz.app.models.comet;
+package com.blitz.app.utilities.comet;
 
 import com.google.gson.JsonObject;
 

@@ -1,4 +1,4 @@
-package com.blitz.app.models.comet;
+package com.blitz.app.utilities.comet;
 
 import android.app.Activity;
 import android.util.Pair;
@@ -98,7 +98,7 @@ public class CometAPIChannel {
     }
 
     /**
-     * @see com.blitz.app.models.comet.CometAPIChannel#addCallback(Object, CometAPICallback, String)
+     * @see com.blitz.app.utilities.comet.CometAPIChannel#addCallback(Object, CometAPICallback, String)
      *
      * @param receivingClass Class that is going to be receiving
      *                       this callback. Must be either a fragment

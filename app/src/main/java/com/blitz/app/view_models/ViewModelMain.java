@@ -2,8 +2,8 @@ package com.blitz.app.view_models;
 
 import android.app.Activity;
 
-import com.blitz.app.models.comet.CometAPICallback;
-import com.blitz.app.models.comet.CometAPIManager;
+import com.blitz.app.utilities.comet.CometAPICallback;
+import com.blitz.app.utilities.comet.CometAPIManager;
 import com.blitz.app.models.objects.ObjectModelQueue;
 import com.blitz.app.screens.main.MainScreen;
 import com.blitz.app.utilities.app.AppDataObject;
