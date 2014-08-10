@@ -58,7 +58,7 @@ public class ObjectModelDraft extends ObjectModel {
         };
 
         // Make api call.
-        RestAPIClient.getAPI().draft
+        RestAPIClient.getAPI().draft_get
                 (mDraftId, new RestAPICallback<JsonObject>(mRestApiObject, operation));
     }
 }

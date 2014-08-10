@@ -84,7 +84,7 @@ public class ObjectModelPreferences extends ObjectModel {
         };
 
         // Make api call.
-        RestAPIClient.getAPI().preferences
+        RestAPIClient.getAPI().preferences_get
                 (new RestAPICallback<JsonObject>(mRestApiObject, operation));
     }
 

@@ -22,28 +22,28 @@ public interface RestAPI {
     //==============================================================================================
 
     @GET("/access_queue/{device_id}")
-    void access_queue(@Path("device_id") String deviceId, Callback<JsonObject> callback);
+    void access_queue_get(@Path("device_id") String deviceId, Callback<JsonObject> callback);
 
     @POST("/auth")
-    void auth(@Body JsonObject body, Callback<JsonObject> callback);
+    void auth_post(@Body JsonObject body, Callback<JsonObject> callback);
 
     @GET("/preferences")
-    void preferences(Callback<JsonObject> callback);
+    void preferences_get(Callback<JsonObject> callback);
 
     @POST("/code")
-    void code(@Body JsonObject body, Callback<JsonObject> callback);
+    void code_post(@Body JsonObject body, Callback<JsonObject> callback);
 
     @GET("/device/{device_id}")
-    void device(@Path("device_id") String deviceId, Callback<JsonObject> callback);
+    void device_get(@Path("device_id") String deviceId, Callback<JsonObject> callback);
 
     @PATCH("/device/{device_id}")
-    void device(@Path("device_id") String deviceId, @Body JsonObject body, Callback<JsonObject> callback);
+    void device_patch(@Path("device_id") String deviceId, @Body JsonObject body, Callback<JsonObject> callback);
 
     @POST("/devices")
-    void devices(@Body JsonObject body, Callback<JsonObject> callback);
+    void devices_post(@Body JsonObject body, Callback<JsonObject> callback);
 
     @GET("/draft/{draft_id}")
-    void draft(@Path("draft_id") String draftId, Callback<JsonObject> callback);
+    void draft_get(@Path("draft_id") String draftId, Callback<JsonObject> callback);
 
     @POST("/queue")
     void queue_post(@Body JsonObject body, Callback<JsonObject> callback);

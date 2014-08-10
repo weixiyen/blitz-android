@@ -136,7 +136,7 @@ public class ObjectModelUser extends ObjectModel {
                    body.addProperty("password", mPassword);
 
         // Make auth rest call.
-        RestAPIClient.getAPI().auth(body,
+        RestAPIClient.getAPI().auth_post(body,
                 new RestAPICallback<JsonObject>(mRestApiObject, operation, true));
     }
 
