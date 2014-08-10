@@ -93,7 +93,6 @@ public class ObjectModelAccessQueue extends ObjectModel {
         };
 
         // Make rest call for code.
-        RestAPIClient.getAPI().access_queue_get(mDeviceId,
-                new RestAPICallback<JsonObject>(mRestApiObject, operation));
+        RestAPIClient.getAPI().access_queue_get(mDeviceId, RestAPICallback.create(mRestApiObject, operation));
     }
 }

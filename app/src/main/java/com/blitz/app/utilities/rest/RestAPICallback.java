@@ -29,22 +29,13 @@ public class RestAPICallback<T> implements Callback<T> {
     //==============================================================================================
 
     /**
-     * @see com.blitz.app.utilities.rest.RestAPICallback
-     */
-    public RestAPICallback(RestAPIObjectInterface restAPIObjectInterface, RestAPIOperation operation) {
-
-        // Not authenticated by default.
-        this(restAPIObjectInterface, operation, false);
-    }
-
-    /**
      * Assign our member variables.
      *
      * @param restAPIObjectInterface Interface object.
      * @param operation Operation object.
      * @param isAuthentication Is this an authentication call.
      */
-    public RestAPICallback(RestAPIObjectInterface restAPIObjectInterface, RestAPIOperation operation, boolean isAuthentication) {
+    private RestAPICallback(RestAPIObjectInterface restAPIObjectInterface, RestAPIOperation operation, boolean isAuthentication) {
 
         mRestAPIObjectInterface = restAPIObjectInterface;
         mOperation = operation;
@@ -54,6 +45,33 @@ public class RestAPICallback<T> implements Callback<T> {
 
         // Set authentication flag.
         mIsAuthentication = isAuthentication;
+    }
+
+    /**
+     * Create callback object.
+     *
+     * @param restAPIObjectInterface Interface object.
+     * @param operation Operation object.
+     * @param isAuthentication Is this an authentication call.
+     *
+     * @return New instance.
+     */
+    public static RestAPICallback<JsonObject> create(RestAPIObjectInterface restAPIObjectInterface, RestAPIOperation operation, boolean isAuthentication) {
+
+        return new RestAPICallback<JsonObject>(restAPIObjectInterface, operation, isAuthentication);
+    }
+
+    /**
+     * Create callback object.
+     *
+     * @param restAPIObjectInterface Interface object.
+     * @param operation Operation object.
+     *
+     * @return New instance.
+     */
+    public static RestAPICallback<JsonObject> create(RestAPIObjectInterface restAPIObjectInterface, RestAPIOperation operation) {
+
+        return new RestAPICallback<JsonObject>(restAPIObjectInterface, operation, false);
     }
 
     //==============================================================================================

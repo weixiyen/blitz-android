@@ -68,7 +68,7 @@ public class ObjectModelQueue extends ObjectModel {
 
                 // Make api call.
                 RestAPIClient.getAPI().queue_post
-                        (body, new RestAPICallback<JsonObject>(mRestApiObject, operation));
+                        (body, RestAPICallback.create(mRestApiObject, operation));
             }
         });
     }
@@ -101,7 +101,7 @@ public class ObjectModelQueue extends ObjectModel {
 
         // Make api call.
         RestAPIClient.getAPI().queue_delete
-                (mDraftKey, new RestAPICallback<JsonObject>(mRestApiObject, operation));
+                (mDraftKey, RestAPICallback.create(mRestApiObject, operation));
     }
 
     /**
@@ -136,6 +136,6 @@ public class ObjectModelQueue extends ObjectModel {
 
         // Make api call.
         RestAPIClient.getAPI().queue_put
-                (body, new RestAPICallback<JsonObject>(mRestApiObject, operation));
+                (body, RestAPICallback.create(mRestApiObject, operation));
     }
 }

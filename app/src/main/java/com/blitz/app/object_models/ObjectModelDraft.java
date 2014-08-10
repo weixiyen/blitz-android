@@ -5,7 +5,6 @@ import android.app.Activity;
 import com.blitz.app.utilities.rest.RestAPICallback;
 import com.blitz.app.utilities.rest.RestAPIClient;
 import com.blitz.app.utilities.rest.RestAPIOperation;
-import com.google.gson.JsonObject;
 
 /**
  * Created by mrkcsc on 7/27/14.
@@ -59,6 +58,6 @@ public class ObjectModelDraft extends ObjectModel {
 
         // Make api call.
         RestAPIClient.getAPI().draft_get
-                (mDraftId, new RestAPICallback<JsonObject>(mRestApiObject, operation));
+                (mDraftId, RestAPICallback.create(mRestApiObject, operation));
     }
 }

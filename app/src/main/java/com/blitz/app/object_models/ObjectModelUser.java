@@ -94,7 +94,7 @@ public class ObjectModelUser extends ObjectModel {
 
         // Make rest call for code.
         RestAPIClient.getAPI().users_post(body,
-                new RestAPICallback<JsonObject>(mRestApiObject, operation, true));
+                RestAPICallback.create(mRestApiObject, operation, true));
     }
 
     /**
@@ -137,7 +137,7 @@ public class ObjectModelUser extends ObjectModel {
 
         // Make auth rest call.
         RestAPIClient.getAPI().auth_post(body,
-                new RestAPICallback<JsonObject>(mRestApiObject, operation, true));
+                RestAPICallback.create(mRestApiObject, operation, true));
     }
 
     //==============================================================================================

@@ -82,7 +82,7 @@ public class ObjectModelCode extends ObjectModel {
                    body.addProperty("value", mValue);
 
         // Make rest call for code.
-        RestAPIClient.getAPI().code_post(body, new RestAPICallback<JsonObject>(mRestApiObject, operation));
+        RestAPIClient.getAPI().code_post(body, RestAPICallback.create(mRestApiObject, operation));
     }
 
     //==============================================================================================
