@@ -24,8 +24,14 @@ public interface RestAPI {
     @GET("/access_queue/{device_id}")
     void access_queue_get(@Path("device_id") String deviceId, Callback<JsonObject> callback);
 
+    @GET("/achievements")
+    void achievements_get(Callback<JsonObject> callback);
+
     @POST("/auth")
     void auth_post(@Body JsonObject body, Callback<JsonObject> callback);
+
+    @DELETE("/auth")
+    void auth_delete(@Body JsonObject body, Callback<JsonObject> callback);
 
     @GET("/preferences")
     void preferences_get(Callback<JsonObject> callback);
