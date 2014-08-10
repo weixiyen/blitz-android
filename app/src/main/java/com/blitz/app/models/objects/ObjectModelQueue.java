@@ -67,7 +67,7 @@ public class ObjectModelQueue extends ObjectModel {
                            body.addProperty("draft_key", mDraftKey);
 
                 // Make api call.
-                RestAPIClient.getAPI().queue
+                RestAPIClient.getAPI().queue_post
                         (body, new RestAPICallback<JsonObject>(mRestApiObject, operation));
             }
         });
@@ -100,7 +100,7 @@ public class ObjectModelQueue extends ObjectModel {
         };
 
         // Make api call.
-        RestAPIClient.getAPI().queue
+        RestAPIClient.getAPI().queue_delete
                 (mDraftKey, new RestAPICallback<JsonObject>(mRestApiObject, operation));
     }
 
@@ -135,7 +135,7 @@ public class ObjectModelQueue extends ObjectModel {
                    body.addProperty("draft_key", mDraftKey);
 
         // Make api call.
-        RestAPIClient.getAPI().queue
+        RestAPIClient.getAPI().queue_put
                 (body, new RestAPICallback<JsonObject>(mRestApiObject, operation));
     }
 }

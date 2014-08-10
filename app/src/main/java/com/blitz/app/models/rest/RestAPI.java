@@ -46,10 +46,10 @@ public interface RestAPI {
     void draft(@Path("draft_id") String draftId, Callback<JsonObject> callback);
 
     @POST("/queue")
-    void queue(@Body JsonObject body, Callback<JsonObject> callback);
+    void queue_post(@Body JsonObject body, Callback<JsonObject> callback);
 
     @DELETE("/queue/{draft_key}")
-    void queue(@Path("draft_key") String draftKey, Callback<JsonObject> callback);
+    void queue_delete(@Path("draft_key") String draftKey, Callback<JsonObject> callback);
 
     @PUT("/queue")
     void queue_put(@Body JsonObject body, Callback<JsonObject> callback);
