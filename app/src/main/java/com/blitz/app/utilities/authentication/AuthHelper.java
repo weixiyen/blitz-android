@@ -25,6 +25,17 @@ public class AuthHelper {
     //==============================================================================================
 
     /**
+     * Is this device registered with
+     * the servers.
+     *
+     * @return Is the device registered.
+     */
+    public static boolean isDeviceRegistered() {
+
+        return AppDataObject.gcmRegistrationPersisted.getBoolean();
+    }
+
+    /**
      * Grant access to the user.  This is done after
      * they have entered a valid access code or
      * reached the front of the queue.
@@ -46,6 +57,7 @@ public class AuthHelper {
      * @return Yes/No.
      */
     public static boolean isSignedIn() {
+
         return AppDataObject.userId.getString() != null;
     }
 
@@ -55,6 +67,7 @@ public class AuthHelper {
      * @return Yes/No.
      */
     public static boolean isPassedQueue() {
+
         return AppDataObject.hasAccess.getBoolean();
     }
 
