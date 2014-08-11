@@ -13,7 +13,7 @@ import com.google.gson.JsonObject;
 public class ObjectModelAccessQueue extends ObjectModel {
 
     //==============================================================================================
-    // Public Methods
+    // Member Variables
     //==============================================================================================
 
     private String mDeviceId;
