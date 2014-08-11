@@ -8,6 +8,7 @@
     <string name="desired_username">Desired Username</string>
     <string name="enter_access_code">Enter Access Code</string>
     <string name="email">Email</string>
+    <string name="error">Error</string>
     <string name="featured">Featured</string>
     <string name="forgot_password">Forgot password?</string>
     <string name="have_code">I have an Access Code</string>
