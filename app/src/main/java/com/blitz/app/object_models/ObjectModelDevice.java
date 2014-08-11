@@ -111,26 +111,32 @@ public class ObjectModelDevice extends ObjectModel {
             }
         };
 
-        // Create post body.
-        JsonObject body = new JsonObject();
+        // Create object holding values to replace.
+        JsonObject replace = new JsonObject();
 
         if (mPushNotificationsEnabled != null) {
 
             // Update push notifications if needed.
-            body.addProperty("push_notification_enabled", mPushNotificationsEnabled);
+            replace.addProperty("push_notification_enabled", mPushNotificationsEnabled);
         }
 
         if (mPushNotificationToken != null) {
 
             // Update token if needed.
-            body.addProperty("push_notification_token", mPushNotificationToken);
+            replace.addProperty("push_notification_token", mPushNotificationToken);
         }
 
         if (mUserId != null) {
 
             // Update user id if needed.
-            body.addProperty("user_id", mUserId);
+            replace.addProperty("user_id", mUserId);
         }
+
+        // Create body.
+        JsonObject body = new JsonObject();
+
+        // Add replace object.
+        body.add("replace", replace);
 
         // Make rest call for code.
         RestAPIClient.getAPI().device_patch(mId, body,
