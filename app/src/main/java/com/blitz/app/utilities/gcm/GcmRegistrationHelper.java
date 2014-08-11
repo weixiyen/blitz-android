@@ -7,8 +7,9 @@ import android.content.pm.PackageManager;
 import android.os.AsyncTask;
 import android.provider.Settings;
 
+import com.blitz.app.object_models.ObjectModelDevice;
 import com.blitz.app.utilities.app.AppDataObject;
-import com.blitz.app.utilities.logging.LogHelper;
+import com.blitz.app.utilities.authentication.AuthHelper;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.gcm.GoogleCloudMessaging;
@@ -60,6 +61,11 @@ public class GcmRegistrationHelper {
 
                 // Fetch it in background.
                 registerInBackground(context);
+
+            } else if (!AuthHelper.isDeviceRegistered()) {
+
+                // Try to persist if not persisted.
+                sendRegistrationIdToBackend(context, getRegistrationId(context));
             }
         }
 
@@ -125,7 +131,7 @@ public class GcmRegistrationHelper {
 
                         // You should send the registration ID to your server over HTTP, so it
                         // can use GCM/HTTP or CCS to send messages to your app.
-                        sendRegistrationIdToBackend(registrationId);
+                        sendRegistrationIdToBackend(context, registrationId);
 
                         // Persist the id - no need to register again.
                         storeRegistrationId(context, registrationId);
@@ -149,10 +155,31 @@ public class GcmRegistrationHelper {
      * messages to your app. Not needed for this demo since the device sends upstream messages
      * to a server that echoes back the message using the 'from' address in the message.
      */
-    private static void sendRegistrationIdToBackend(String registrationId) {
+    private static void sendRegistrationIdToBackend(Context context, final String registrationId) {
 
-        // TODO: Implementation here.
-        LogHelper.log("Registration id: " + registrationId);
+        final ObjectModelDevice objectModelDevice = new ObjectModelDevice();
+
+        // Create a new device id registration.
+        objectModelDevice.setDeviceId(getDeviceId(context));
+        objectModelDevice.create(null, new Runnable() {
+
+            @Override
+            public void run() {
+
+                // Set push notification information and update.
+                objectModelDevice.setPushNotificationToken(registrationId);
+                objectModelDevice.setPushNotificationsEnabled(true);
+                objectModelDevice.update(null, new Runnable() {
+
+                    @Override
+                    public void run() {
+
+                        // Device registration persisted.
+                        AppDataObject.gcmRegistrationPersisted.set(true);
+                    }
+                });
+            }
+        });
     }
 
     /**

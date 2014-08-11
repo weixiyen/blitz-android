@@ -2,33 +2,58 @@ package com.blitz.app.object_models;
 
 import android.app.Activity;
 
+import com.blitz.app.utilities.rest.RestAPICallback;
+import com.blitz.app.utilities.rest.RestAPIClient;
+import com.blitz.app.utilities.rest.RestAPIOperation;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+
 /**
  * Created by mrkcsc on 8/10/14.
  */
 public class ObjectModelDevice extends ObjectModel {
 
-    public enum DeviceType {
-        IOS,
-        ANDROID
-    }
+    //==============================================================================================
+    // Member Variables
+    //==============================================================================================
+
+    private String mId;
 
     private String mDeviceId;
-    private DeviceType mDeviceType;
     private String mUserId;
-    private Boolean mPushNotificationsEnabled;
-    private String mPushNotificationToken;
+
+    private Boolean mPushNotificationsEnabled = null;
+    private String mPushNotificationToken = null;
+
+    //==============================================================================================
+    // Public Methods
+    //==============================================================================================
 
     /**
      * Get specified device given a device id.  The model
      * will be populated based on the result.
      *
-     * @param deviceId Specified device id.
      * @param activity Activity for dialogs.
      * @param callback Completion callback.
      */
-    public void get(String deviceId, Activity activity, final Runnable callback) {
+    public void get(Activity activity, final Runnable callback) {
 
-        throw new UnsupportedOperationException();
+        RestAPIOperation operation = new RestAPIOperation(activity) {
+
+            @Override
+            public void success() {
+
+                // Populate model.
+                populateModel();
+
+                // Device model created.
+                callback.run();
+            }
+        };
+
+        // Make rest call for code.
+        RestAPIClient.getAPI().device_get(mDeviceId,
+                RestAPICallback.create(mRestApiObject, operation));
     }
 
     /**
@@ -36,13 +61,34 @@ public class ObjectModelDevice extends ObjectModel {
      * a device id.  The model will be populated
      * based on the result.
      *
-     * @param deviceId Specified device id.
      * @param activity Activity for dialogs.
      * @param callback Completion callback.
      */
-    public void create(String deviceId, Activity activity, final Runnable callback) {
+    public void create(Activity activity, final Runnable callback) {
 
-        throw new UnsupportedOperationException();
+        RestAPIOperation operation = new RestAPIOperation(activity) {
+
+            @Override
+            public void success() {
+
+                // Populate model.
+                populateModel();
+
+                // Device model created.
+                callback.run();
+            }
+        };
+
+        // Create post body.
+        JsonObject body = new JsonObject();
+
+        body.addProperty("device_id", mDeviceId);
+        body.addProperty("device_type", "ANDROID");
+        body.addProperty("push_notification_enabled", false);
+
+        // Make rest call for code.
+        RestAPIClient.getAPI().devices_post(body,
+                RestAPICallback.create(mRestApiObject, operation));
     }
 
     /**
@@ -55,7 +101,51 @@ public class ObjectModelDevice extends ObjectModel {
      */
     public void update(Activity activity, final Runnable callback) {
 
-        throw new UnsupportedOperationException();
+        RestAPIOperation operation = new RestAPIOperation(activity) {
+
+            @Override
+            public void success() {
+
+                // Device model updated.
+                callback.run();
+            }
+        };
+
+        // Create post body.
+        JsonObject body = new JsonObject();
+
+        if (mPushNotificationsEnabled != null) {
+
+            // Update push notifications if needed.
+            body.addProperty("push_notification_enabled", mPushNotificationsEnabled);
+        }
+
+        if (mPushNotificationToken != null) {
+
+            // Update token if needed.
+            body.addProperty("push_notification_token", mPushNotificationToken);
+        }
+
+        if (mUserId != null) {
+
+            // Update user id if needed.
+            body.addProperty("user_id", mUserId);
+        }
+
+        // Make rest call for code.
+        RestAPIClient.getAPI().device_patch(mId, body,
+                RestAPICallback.create(mRestApiObject, operation));
+    }
+
+    /**
+     * Set the push notification token. In android
+     * this is referred to as the registration id.
+     *
+     * @param pushNotificationToken Token.
+     */
+    @SuppressWarnings("unused")
+    public void setPushNotificationToken(String pushNotificationToken) {
+        mPushNotificationToken = pushNotificationToken;
     }
 
     /**
@@ -66,5 +156,64 @@ public class ObjectModelDevice extends ObjectModel {
     @SuppressWarnings("unused")
     public void setPushNotificationsEnabled(boolean pushNotificationsEnabled) {
         mPushNotificationsEnabled = pushNotificationsEnabled;
+    }
+
+    /**
+     * Set the device id, this is needed for any
+     * of the REST calls.
+     *
+     * @param deviceId Target device id.
+     */
+    @SuppressWarnings("unused")
+    public void setDeviceId(String deviceId) {
+        mDeviceId = deviceId;
+    }
+
+    /**
+     * Set the user id.
+     *
+     * @param userId User id.
+     */
+    @SuppressWarnings("unused")
+    public void setUserId(String userId) {
+        mUserId = userId;
+    }
+
+    //==============================================================================================
+    // Private Methods
+    //==============================================================================================
+
+    /**
+     * Populate the model.  Should be called with
+     * a json result object that is populated
+     * with device model results.
+     */
+    private void populateModel() {
+
+        JsonObject jsonObject = getJsonObject().getAsJsonObject("result");
+        JsonElement element;
+
+        // Fetch id and device id.
+        mId = jsonObject.get("id").getAsString();
+        mDeviceId = jsonObject.get("device_id").getAsString();
+
+        // Fetch push notification info.
+        mPushNotificationsEnabled = jsonObject.get("push_notification_enabled").getAsBoolean();
+
+        element = jsonObject.get("push_notification_token");
+
+        if (!element.isJsonNull()) {
+
+            // Fetch notification token.
+            mPushNotificationToken = element.getAsString();
+        }
+
+        element = jsonObject.get("user_id");
+
+        if (!element.isJsonNull()) {
+
+            // Fetch user id.
+            mUserId = element.getAsString();
+        }
     }
 }
