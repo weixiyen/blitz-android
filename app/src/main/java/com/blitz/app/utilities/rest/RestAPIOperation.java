@@ -152,6 +152,13 @@ public abstract class RestAPIOperation {
      */
     private void setOperationThrottle() {
 
+        // If this operation does not have an activity (and thus no
+        // dialog support) there is no need to throttle it.
+        if (mActivity == null) {
+
+            return;
+        }
+
         // Enable the throttle.
         mOperationThrottle = true;
 
