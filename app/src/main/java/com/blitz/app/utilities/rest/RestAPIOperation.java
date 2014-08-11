@@ -62,7 +62,9 @@ public abstract class RestAPIOperation {
         setOperationThrottle();
 
         // Show loading dialog.
-        getDialogLoading().delayedShow();
+        if (getDialogLoading() != null) {
+            getDialogLoading().delayedShow();
+        }
     }
 
     /**
@@ -87,8 +89,8 @@ public abstract class RestAPIOperation {
      */
     public void finish(final boolean success, final Integer httpStatusCode) {
 
-        // Hide loading dialog.
-        getDialogLoading().hide(new DialogLoading.HideListener() {
+        // Trigger operation callbacks after hide.
+        DialogLoading.HideListener hideListener = new DialogLoading.HideListener() {
 
             @Override
             public void didHide() {
@@ -100,7 +102,15 @@ public abstract class RestAPIOperation {
                             httpStatusCode == 401);
                 }
             }
-        });
+        };
+
+        // Hide only if dialog present.
+        if (getDialogLoading() != null) {
+            getDialogLoading().hide(hideListener);
+        } else {
+
+            hideListener.didHide();
+        }
     }
 
     //==============================================================================================
@@ -121,7 +131,9 @@ public abstract class RestAPIOperation {
     public void failure(boolean logout) {
 
         // Show the error dialog.
-        getDialogError().show(true, logout);
+        if (getDialogError() != null) {
+            getDialogError().show(true, logout);
+        }
     }
 
     public static boolean shouldThrottle() {
@@ -173,7 +185,7 @@ public abstract class RestAPIOperation {
      * @return Error dialog.
      */
     private DialogError getDialogError() {
-        if (mDialogError == null) {
+        if (mDialogError == null && mActivity != null) {
             mDialogError = new DialogError(mActivity);
         }
 
@@ -186,7 +198,7 @@ public abstract class RestAPIOperation {
      * @return Loading dialog.
      */
     private DialogLoading getDialogLoading() {
-        if (mDialogLoading == null) {
+        if (mDialogLoading == null && mActivity != null) {
             mDialogLoading = new DialogLoading(mActivity);
         }
 
