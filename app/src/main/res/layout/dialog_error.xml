@@ -13,52 +13,61 @@
         android:background="@color/background_dialog"
         tools:ignore="UselessParent">
 
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="320dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:background="@drawable/asset_bg_dialog"
-            android:minHeight="200dp"
-            android:orientation="vertical">
+            android:background="@drawable/asset_bg_dialog">
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="66dp"
-                android:fontFamily="@string/app_font_bold"
-                android:gravity="center"
-                android:shadowColor="@color/text_color_shadow"
-                android:shadowDx="1"
-                android:shadowDy="1"
-                android:shadowRadius="2"
-                android:text="@string/error"
-                android:textColor="@color/text_color_light"
-                android:textSize="20sp"/>
-
-            <TextView
-                android:id="@+id/dialog_error_message"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_margin="10dp"
-                android:layout_weight="1"
-                android:fontFamily="@string/app_font_light"
-                android:gravity="center"
-                android:text="@string/error_generic"
-                android:textColor="@color/text_color_light"
-                android:textSize="14sp" />
-
-            <Button
-                android:id="@+id/dialog_error_ok"
-                android:layout_width="match_parent"
-                android:layout_height="60dp"
-                android:layout_marginBottom="10dp"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                android:background="@drawable/drawable_button_main"
+            <ImageView
+                android:layout_width="320dp"
+                android:layout_height="300dp"
                 android:contentDescription="@string/empty_string"
-                android:fontFamily="@string/app_font_light"
-                android:text="@string/ok"
-                android:textColor="@color/text_color_light"
-                android:textSize="12sp" />
-        </LinearLayout>
+                android:src="@drawable/asset_bg_dialog_glow" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:minHeight="300dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="66dp"
+                    android:fontFamily="@string/app_font_bold"
+                    android:gravity="center"
+                    android:shadowColor="@color/text_color_shadow"
+                    android:shadowDx="1"
+                    android:shadowDy="1"
+                    android:shadowRadius="2"
+                    android:text="@string/error"
+                    android:textColor="@color/text_color_light"
+                    android:textSize="20sp"/>
+
+                <TextView
+                    android:id="@+id/dialog_error_message"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_margin="10dp"
+                    android:padding="20dp"
+                    android:layout_weight="1"
+                    android:fontFamily="@string/app_font_light"
+                    android:gravity="center"
+                    android:text="@string/error_generic"
+                    android:textColor="@color/text_color_light"
+                    android:textSize="14sp" />
+
+                <Button
+                    android:id="@+id/dialog_error_ok"
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:background="@drawable/drawable_button_dialog"
+                    android:contentDescription="@string/empty_string"
+                    android:fontFamily="@string/app_font_light"
+                    android:text="@string/ok"
+                    android:textColor="@color/text_color_light"
+                    android:textSize="12sp" />
+            </LinearLayout>
+        </RelativeLayout>
     </FrameLayout>
 </FrameLayout>
