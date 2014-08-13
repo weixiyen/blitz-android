@@ -34,6 +34,10 @@
         android:hardwareAccelerated="true"
         android:theme="@style/AppTheme">
 
+        <!-- Environment (affects AppConfig values) -->
+        <meta-data android:name="com.blitz.app.config.environment"
+            android:resource="@string/environment_production"/>
+
         <!-- Required for applications which use Google Play Services. -->
         <meta-data
             android:name="com.google.android.gms.version"

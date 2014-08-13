@@ -64,7 +64,7 @@ public class BaseActivity extends FragmentActivity implements ViewModel.ViewMode
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        if (AppConfig.PORTRAIT_ONLY) {
+        if (!AppConfig.isLandscapeEnabled()) {
 
             // Portrait mode only.
             setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);

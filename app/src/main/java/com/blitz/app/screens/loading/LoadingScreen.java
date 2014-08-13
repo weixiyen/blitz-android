@@ -37,7 +37,6 @@ public class LoadingScreen extends BaseActivity {
      *
      * @param savedInstanceState Instance parameters.
      */
-    @SuppressWarnings({"PointlessBooleanExpression", "ConstantConditions"})
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,7 +45,7 @@ public class LoadingScreen extends BaseActivity {
         setCustomTransitions(null);
 
         // Clear app data if configured.
-        if (AppConfig.CLEAR_APP_DATA_ON_LAUNCH) {
+        if (AppConfig.isAppDataClearedOnLaunch()) {
 
             AppData.clear();
         }
@@ -56,20 +55,13 @@ public class LoadingScreen extends BaseActivity {
                 GcmRegistrationHelper.tryRegistration(this);
 
         // If ignoring registration result, or have registration result.
-        if (AppConfig.IGNORE_GCM_REGISTRATION_RESULT || gcmRegistrationResult) {
-
-            // If we want to jump to some activity.
-            if (AppConfig.JUMP_TO_ACTIVITY != null) {
-
-                // Do it - this would only really be done for debugging.
-                startActivity(new Intent(this, AppConfig.JUMP_TO_ACTIVITY));
-            } else {
-
-                setupLoadingScreenTimeout();
-            }
+        if (AppConfig.isGcmRegistrationIgnored() || gcmRegistrationResult) {
 
             // Stop all music.
             SoundHelper.instance().stopMusic();
+
+            // Proceed after short delay.
+            setupLoadingScreenTimeout();
         }
     }
 
@@ -104,10 +96,10 @@ public class LoadingScreen extends BaseActivity {
     private void jumpToFirstActivity() {
 
         // If we want to jump to some activity.
-        if (AppConfig.JUMP_TO_ACTIVITY != null) {
+        if (AppConfig.getJumpToActivity() != null) {
 
             // Do it - this would only really be done for debugging.
-            startActivity(new Intent(LoadingScreen.this, AppConfig.JUMP_TO_ACTIVITY));
+            startActivity(new Intent(LoadingScreen.this, AppConfig.getJumpToActivity()));
         } else {
 
             if (AuthHelper.isPassedQueue()) {

@@ -61,7 +61,7 @@ public class ObjectModelPreferences extends ObjectModel {
                 // Fetch json result.
                 JsonObject jsonObject = getJsonObject();
 
-                if (AppConfig.IS_PRODUCTION) {
+                if (AppConfig.isProduction()) {
 
                     // Assign from result.
                     mCurrentYear        = jsonObject.get("current_year").getAsInt();

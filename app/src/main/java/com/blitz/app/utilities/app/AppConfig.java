@@ -1,42 +1,159 @@
 package com.blitz.app.utilities.app;
 
+import android.content.Context;
+import android.content.pm.ApplicationInfo;
+import android.content.pm.PackageManager;
+import android.os.Bundle;
+
+import com.blitz.app.R;
+
 /**
  * Intended to setup configuration constants for the App.
- * Currently hard coded but eventually will pull
- * constants down from server.
  *
  * Created by Miguel Gaeta on 6/1/14.
  */
 @SuppressWarnings("unused")
 public class AppConfig {
 
+    //==============================================================================================
+    // Member Variables
+    //==============================================================================================
+
+    // Base url, set on initialization.
+    private static String mBaseURL;
+
     // Production flag.
-    public static final boolean IS_PRODUCTION = false;
+    private static Boolean mIsProduction;
 
-    // Should we authenticate with Facebook.
-    public static final boolean AUTH_WITH_FACEBOOK = false;
+    //==============================================================================================
+    // Configuration Methods (Modify with care)
+    //==============================================================================================
 
-    // Should we jump to an arbitrary activity on start.
-    public static final Class JUMP_TO_ACTIVITY = null;
+    /**
+     * Should we jump to an arbitrary activity on start.
+     */
+    public static Class getJumpToActivity() {
 
-    // Endpoint URL for RESTful API.
-    public static final String API_URL = "https://snapdraft.us/api";
+        return null;
+    }
 
-    // Endpoint URL for Comet Server.
-    public static final String WEBSOCKET_URL = "wss://snapdraft.us/comet/u/";
+    /**
+     * Should we clear app data on launch.
+     */
+    public static boolean isAppDataClearedOnLaunch() {
 
-    // Should we clear app data on launch.
-    public static final boolean CLEAR_APP_DATA_ON_LAUNCH = true;
+        return false;
+    }
 
-    // Should we have rest debugging.
-    public static final boolean ENABLE_REST_DEBUGGING = false;
+    /**
+     * Should we have rest debugging.
+     */
+    public static boolean isRestDebuggingEnabled() {
 
-    // Allow landscape for debugging purposes.
-    public static final boolean PORTRAIT_ONLY = true;
+        return false;
+    }
 
-    // Disable or enable sound for debugging.
-    public static final boolean SOUND_ENABLED = false;
+    /**
+     * Disable or enable sound for debugging.
+     */
+    public static boolean isSoundDisabled() {
 
-    // Should we ignore GCM registration result (can fail w/o play store).
-    public static final boolean IGNORE_GCM_REGISTRATION_RESULT = false;
+        return false;
+    }
+
+    /**
+     * Allow landscape for debugging purposes.
+     */
+    public static boolean isLandscapeEnabled() {
+
+        return false;
+    }
+
+    /**
+     * Should we ignore GCM registration result (can fail w/o play store).
+     */
+    public static boolean isGcmRegistrationIgnored() {
+
+        return false;
+    }
+
+    //==============================================================================================
+    // Public Methods
+    //==============================================================================================
+
+    /**
+     * Get production flag, this value is read
+     * directly from the manifest.  Do not
+     * modify this function directly.
+     */
+    public static boolean isProduction() {
+
+        // Production flag.
+        return mIsProduction;
+    }
+
+    /**
+     * Endpoint URL for RESTful API. Do not modify unless
+     * API version is changed.
+     */
+    public static String getApiUrl() {
+
+        // Base with rest API.
+        return mBaseURL + "api";
+    }
+
+    /**
+     * Endpoint URL for Comet Server. Do not modify unless
+     * API version is changed.
+     */
+    public static String getWebsocketUrl() {
+
+        // Base with comet API.
+        return mBaseURL + "comet/u";
+    }
+
+    /**
+     * Initialize the application config.  Most of its internal
+     * configuration is based on the environment string
+     * which we read from the manifest.
+     *
+     * Carefully change configuration values from within this
+     * file.  The only recommended changes would be QA related.
+     *
+     * @param context Application context.
+     */
+    public static void init(Context context) {
+
+        try {
+
+            // Fetch application into object.
+            ApplicationInfo applicationInfo = context.getPackageManager()
+                    .getApplicationInfo(context.getPackageName(), PackageManager.GET_META_DATA);
+
+            // Obtain the metadata bundle.
+            Bundle bundle = applicationInfo.metaData;
+
+            switch (bundle.getInt("com.blitz.app.config.environment")) {
+
+                case R.string.environment_production:
+                case R.string.environment_staging:
+
+                    mBaseURL = "https://blitz.zone/";
+                    mIsProduction = true;
+
+                    break;
+
+                case R.string.environment_qa:
+
+                    mBaseURL = "https://snapdraft.us/";
+                    mIsProduction = false;
+
+                    break;
+            }
+        } catch (Exception e) {
+
+            // Cannot proceed without configuration set.
+            throw new RuntimeException("Unable to ready configuration values.");
+        }
+    }
 }

@@ -18,7 +18,7 @@ import retrofit.client.OkClient;
 public class RestAPIClientBase {
 
     // Endpoint URL for the REST API.
-    private static final String API_URL = AppConfig.API_URL;
+    private static final String API_URL = AppConfig.getApiUrl();
 
     // Adapter for REST client.
     private RestAdapter mRestAdapter;
@@ -59,7 +59,7 @@ public class RestAPIClientBase {
                 .setEndpoint(API_URL);
 
         // If rest debugging turned on.
-        if (AppConfig.ENABLE_REST_DEBUGGING) {
+        if (AppConfig.isRestDebuggingEnabled()) {
 
             // Add logging if enabled.
             builder.setLogLevel(RestAdapter.LogLevel.FULL)

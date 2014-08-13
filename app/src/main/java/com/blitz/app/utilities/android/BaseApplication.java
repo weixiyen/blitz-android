@@ -3,6 +3,7 @@ package com.blitz.app.utilities.android;
 import android.app.Application;
 
 import com.blitz.app.R;
+import com.blitz.app.utilities.app.AppConfig;
 import com.blitz.app.utilities.app.AppData;
 import com.blitz.app.utilities.background.EnteredBackground;
 import com.blitz.app.utilities.background.EnteredBackgroundInterface;
@@ -29,6 +30,9 @@ public class BaseApplication extends Application implements EnteredBackgroundInt
 
         // Initialize app-data.
         AppData.init(this);
+
+        // Initialize configuration.
+        AppConfig.init(this);
 
         // Initialize the keyboard utility.
         KeyboardUtility.init(this);

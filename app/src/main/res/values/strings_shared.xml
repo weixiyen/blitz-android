@@ -16,4 +16,8 @@
 
     <string name="error_generic">Oops! Something went wrong!</string>
     <string name="error_unauthorized">Oops! Something went wrong!\n\nPlease try logging in again.</string>
+
+    <string name="environment_production">Production</string>
+    <string name="environment_qa">QA</string>
+    <string name="environment_staging">Staging</string>
 </resources>

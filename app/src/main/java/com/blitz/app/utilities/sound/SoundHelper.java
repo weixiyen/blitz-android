@@ -94,10 +94,9 @@ public class SoundHelper {
         mediaPlayer.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
 
             @Override
-            @SuppressWarnings({"PointlessBooleanExpression", "ConstantConditions"})
             public void onPrepared(MediaPlayer mediaPlayer) {
 
-                if (!mMusicDisabled && AppConfig.SOUND_ENABLED) {
+                if (!mMusicDisabled && !AppConfig.isSoundDisabled()) {
 
                     // Start playing music.
                     mediaPlayer.start();
