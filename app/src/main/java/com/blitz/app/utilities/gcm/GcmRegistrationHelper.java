@@ -8,6 +8,7 @@ import android.os.AsyncTask;
 import android.provider.Settings;
 
 import com.blitz.app.object_models.ObjectModelDevice;
+import com.blitz.app.utilities.app.AppConfig;
 import com.blitz.app.utilities.app.AppDataObject;
 import com.blitz.app.utilities.authentication.AuthHelper;
 import com.google.android.gms.common.ConnectionResult;
@@ -223,7 +224,8 @@ public class GcmRegistrationHelper {
 
         if (resultCode != ConnectionResult.SUCCESS) {
 
-            if (GooglePlayServicesUtil.isUserRecoverableError(resultCode)) {
+            // If can show recovery dialog and not ignoring result.
+            if (GooglePlayServicesUtil.isUserRecoverableError(resultCode) && !AppConfig.isGcmRegistrationIgnored()) {
                 GooglePlayServicesUtil.getErrorDialog(resultCode, activity,
                         PLAY_SERVICES_RESOLUTION_REQUEST).show();
             }
