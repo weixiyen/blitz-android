@@ -1,6 +1,7 @@
 <resources>
     <string name="access_code">Access Code</string>
     <string name="access_code_copy">If you have an access code, please enter it now to join the future of Fantasy Football!</string>
+    <string name="account">Account</string>
     <string name="already_have_account">Already have an account? Login</string>
     <string name="bet_money_copy">Bet $5 to win up to $25,000</string>
     <string name="cancel">Cancel</string>
@@ -11,6 +12,7 @@
     <string name="error">Error</string>
     <string name="featured">Featured</string>
     <string name="forgot_password">Forgot password?</string>
+    <string name="game_log">Game Log</string>
     <string name="have_code">I have an Access Code</string>
     <string name="information">Information</string>
     <string name="join">Join!</string>

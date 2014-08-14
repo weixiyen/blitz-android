@@ -14,7 +14,11 @@ import com.blitz.app.utilities.android.BaseDialog;
 import com.blitz.app.utilities.viewpager.ViewPagerZoomOutTransformer;
 import com.blitz.app.view_models.ViewModelMain;
 
+import java.util.List;
+
+import butterknife.ButterKnife;
 import butterknife.InjectView;
+import butterknife.InjectViews;
 import butterknife.OnClick;
 
 /**
@@ -30,9 +34,10 @@ public class MainScreen extends BaseActivity implements ViewModelMain.ViewModelM
     @InjectView(R.id.main_screen_pager) ViewPager mPager;
 
     // Navigation bar tabs.
-    @InjectView(R.id.main_screen_nav_featured_active) View mNavFeaturedActive;
-    @InjectView(R.id.main_screen_nav_recent_active)   View mNavRecentActive;
-    @InjectView(R.id.main_screen_nav_settings_active) View mNavSettingsActive;
+    @InjectViews({
+            R.id.main_nav_play_active,
+            R.id.main_nav_recent_active,
+            R.id.main_nav_settings_active}) List<View> mNavActiveButtons;
 
     // Info/loading dialog.
     private DialogInfo mDialogInfo;
@@ -103,21 +108,8 @@ public class MainScreen extends BaseActivity implements ViewModelMain.ViewModelM
             @Override
             public void onPageSelected(int i) {
 
-                deselectNav();
-
-                switch (i) {
-                    case 0:
-                        mNavFeaturedActive.setVisibility(View.VISIBLE);
-                        break;
-
-                    case 1:
-                        mNavRecentActive  .setVisibility(View.VISIBLE);
-                        break;
-
-                    case 2:
-                        mNavSettingsActive.setVisibility(View.VISIBLE);
-                        break;
-                }
+                // Enable nav item.
+                selectNavItemWithTag(i);
             }
         });
     }
@@ -125,11 +117,20 @@ public class MainScreen extends BaseActivity implements ViewModelMain.ViewModelM
     /**
      * Deselect all navigation bar items.
      */
-    private void deselectNav() {
+    private void selectNavItemWithTag(int tag) {
 
-        mNavFeaturedActive.setVisibility(View.GONE);
-        mNavRecentActive  .setVisibility(View.GONE);
-        mNavSettingsActive.setVisibility(View.GONE);
+        // Hide all nav button glows first.
+        ButterKnife.apply(mNavActiveButtons, new ButterKnife.Action<View>() {
+
+            @Override
+            public void apply(View view, int index) {
+
+                view.setVisibility(View.GONE);
+            }
+        });
+
+        // Set active nav button.
+        mNavActiveButtons.get(tag).setVisibility(View.VISIBLE);
     }
 
     //==============================================================================================
@@ -250,30 +251,19 @@ public class MainScreen extends BaseActivity implements ViewModelMain.ViewModelM
      *
      * @param button Button clicked.
      */
-    @OnClick({R.id.main_screen_nav_featured,
-              R.id.main_screen_nav_recent,
-              R.id.main_screen_nav_settings})
+    @OnClick({R.id.main_nav_button_play,
+              R.id.main_nav_button_recent,
+              R.id.main_nav_button_settings})
     @SuppressWarnings("unused")
     public void navClicked(View button) {
 
-        deselectNav();
+        // Fetch tag associated with the item clicked.
+        int tag = Integer.parseInt((String) button.getTag());
 
-        switch (button.getId()) {
-
-            case R.id.main_screen_nav_featured:
-                mNavFeaturedActive.setVisibility(View.VISIBLE);
-                break;
-
-            case R.id.main_screen_nav_recent:
-                mNavRecentActive  .setVisibility(View.VISIBLE);
-                break;
-
-            case R.id.main_screen_nav_settings:
-                mNavSettingsActive.setVisibility(View.VISIBLE);
-                break;
-        }
+        // Enable nav item.
+        selectNavItemWithTag(tag);
 
         // Sync with view pager when selected.
-        mPager.setCurrentItem(Integer.parseInt((String) button.getTag()), false);
+        mPager.setCurrentItem(tag);
     }
 }
