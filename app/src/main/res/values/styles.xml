@@ -1,4 +1,6 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools"
+
+    tools:ignore="NewApi">
 
     <!-- Base application theme. -->
     <style name="AppTheme" parent="@android:style/Theme.Holo.NoActionBar.Fullscreen">
@@ -21,6 +23,19 @@
 
     <!-- Standard button style. -->
     <style name="ButtonStyle" parent="@android:style/Widget.Button">
+        <item name="android:textColor">@color/text_color_light</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:fontFamily">@string/app_font_regular</item>
+        <item name="android:shadowColor">@color/text_color_shadow</item>
+        <item name="android:shadowDx">1</item>
+        <item name="android:shadowDy">1</item>
+        <item name="android:shadowRadius">2</item>
+        <item name="android:contentDescription">@string/empty_string</item>
+        <item name="android:singleLine">true</item>
+    </style>
+
+    <!-- Standard text view style. -->
+    <style name="TextViewStyle" parent="@android:style/Widget.TextView">
         <item name="android:textColor">@color/text_color_light</item>
         <item name="android:textSize">18sp</item>
         <item name="android:fontFamily">@string/app_font_regular</item>
