@@ -6,16 +6,11 @@
     tools:context="${packageName}.${activityClass}"
     tools:ignore="ButtonStyle,UnusedAttribute">
 
-    <include layout="@layout/main_screen_nav"/>
-
     <android.support.v4.view.ViewPager
         android:id="@+id/main_screen_pager"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="70dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:layout_marginBottom="10dp"
-        android:background="@color/background_inner"/>
+        android:layout_height="match_parent"/>
+
+    <include layout="@layout/main_screen_nav"/>
 
 </RelativeLayout>
