@@ -15,48 +15,353 @@
         android:src="@drawable/asset_bg_main_dark"
         app:scaleType="topCrop" />
 
-    <LinearLayout
+    <TextView
+        style="@style/TextViewStyle"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginBottom="10dp"
+        android:layout_marginTop="50dp"
+        android:fontFamily="@string/app_font_bold"
+        android:gravity="center|bottom"
+        android:text="@string/my_account"
+        android:textAllCaps="true"
+        android:textColor="@color/text_color_link"
+        android:textSize="18sp" />
+
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="50dp"
-        android:gravity="bottom"
-        android:orientation="vertical">
+        android:layout_marginTop="100dp">
 
-        <Switch
-            android:id="@+id/main_screen_fragment_settings_toggle_sound"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:layout_gravity="center_horizontal"
-            android:layout_margin="10dp"
-            android:background="@color/button_color_1"
-            android:padding="10dp"
-            android:text="@string/play_sound"
-            android:textColor="@color/text_color_light"
-            android:textSize="12sp"/>
+            android:layout_height="wrap_content"
+            android:gravity="bottom"
+            android:orientation="vertical">
 
-        <Switch
-            android:id="@+id/main_screen_fragment_settings_toggle_music"
-            android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginBottom="10dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:background="@color/button_color_1"
-            android:padding="10dp"
-            android:text="@string/play_music"
-            android:textColor="@color/text_color_light"
-            android:textSize="12sp"/>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:gravity="center">
 
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:layout_margin="10dp"
-            android:background="@drawable/drawable_button_main"
-            android:contentDescription="@string/empty_string"
-            android:fontFamily="@string/app_font_light"
-            android:text="@string/reset"
-            android:textColor="@color/text_color_light"
-            android:textSize="12sp" />
-    </LinearLayout>
+                <ImageView
+                    android:layout_width="140dp"
+                    android:layout_height="140dp"
+                    android:contentDescription="@string/empty_string"
+                    android:src="@drawable/asset_bg_helmet_sample" />
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/background_inner_divider"/>
+
+            <Switch
+                android:id="@+id/main_screen_fragment_settings_toggle_sound"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_gravity="center_horizontal"
+                android:background="@color/background_inner"
+                android:fontFamily="@string/app_font_helvetica_condensed_bold"
+                android:paddingLeft="25dp"
+                android:paddingRight="25dp"
+                android:text="@string/push_notifications"
+                android:textColor="@color/text_color_light"
+                android:textSize="16sp"/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/background_inner_divider"/>
+
+            <Switch
+                android:id="@+id/main_screen_fragment_settings_toggle_music"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_gravity="center_horizontal"
+                android:background="@color/background_inner"
+                android:fontFamily="@string/app_font_helvetica_condensed_bold"
+                android:paddingLeft="25dp"
+                android:paddingRight="25dp"
+                android:text="@string/music_and_sounds"
+                android:textColor="@color/text_color_light"
+                android:textSize="16sp"/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/background_inner_divider"/>
+
+            <LinearLayout
+                style="@style/ButtonStyle"
+                android:layout_width="match_parent"
+                android:layout_height="85dp"
+                android:background="@color/background_inner"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:paddingLeft="25dp"
+                android:paddingRight="25dp">
+
+                <TextView
+                    style="@style/TextViewStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="20dp"
+                    android:layout_gravity="center_horizontal"
+                    android:background="@android:color/transparent"
+                    android:fontFamily="@string/app_font_helvetica_condensed_bold"
+                    android:gravity="center"
+                    android:text="@string/unlock_more_helmets"
+                    android:textAllCaps="true"
+                    android:textColor="@color/text_color_dark_alt"
+                    android:textSize="16sp"/>
+
+                <TextView
+                    style="@style/TextViewStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp"
+                    android:layout_gravity="center_horizontal"
+                    android:background="@android:color/transparent"
+                    android:fontFamily="@string/app_font_helvetica_condensed_bold"
+                    android:gravity="center"
+                    android:text="@string/invite_a_friend"
+                    android:textColor="@color/text_color_link"
+                    android:textSize="18sp"/>
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/background_inner_divider"/>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:background="@color/background_inner">
+
+                <LinearLayout
+                    android:layout_width="200dp"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:paddingLeft="25dp"
+                    android:paddingRight="25dp">
+
+                    <Button
+                        style="@style/ButtonStyle"
+                        android:layout_width="match_parent"
+                        android:layout_height="20dp"
+                        android:layout_gravity="center_horizontal"
+                        android:background="@android:color/transparent"
+                        android:fontFamily="@string/app_font_helvetica_condensed_bold"
+                        android:gravity="center|left"
+                        android:text="@string/blitz_access_code"
+                        android:textAllCaps="true"
+                        android:textColor="@color/text_color_dark_alt"
+                        android:textSize="12sp"/>
+
+                    <Button
+                        style="@style/ButtonStyle"
+                        android:layout_width="match_parent"
+                        android:layout_height="25dp"
+                        android:layout_gravity="center_horizontal"
+                        android:background="@android:color/transparent"
+                        android:fontFamily="@string/app_font_helvetica_condensed_bold"
+                        android:gravity="center|left"
+                        android:text="pHSag92G"
+                        android:textSize="16sp"/>
+                </LinearLayout>
+
+                <Button
+                    style="@style/ButtonStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentRight="true"
+                    android:layout_gravity="center_horizontal"
+                    android:background="@android:color/transparent"
+                    android:fontFamily="@string/app_font_helvetica_condensed_bold"
+                    android:gravity="center|left"
+                    android:paddingLeft="25dp"
+                    android:paddingRight="25dp"
+                    android:text="@string/send"
+                    android:textColor="@color/text_color_link"
+                    android:textSize="20sp"/>
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/background_inner_divider"/>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:background="@color/background_inner">
+
+                <LinearLayout
+                    android:layout_width="200dp"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:paddingLeft="25dp"
+                    android:paddingRight="25dp">
+
+                    <Button
+                        style="@style/ButtonStyle"
+                        android:layout_width="match_parent"
+                        android:layout_height="20dp"
+                        android:layout_gravity="center_horizontal"
+                        android:background="@android:color/transparent"
+                        android:fontFamily="@string/app_font_helvetica_condensed_bold"
+                        android:gravity="center|left"
+                        android:text="@string/blitz_access_code"
+                        android:textAllCaps="true"
+                        android:textColor="@color/text_color_dark_alt"
+                        android:textSize="12sp"/>
+
+                    <Button
+                        style="@style/ButtonStyle"
+                        android:layout_width="match_parent"
+                        android:layout_height="25dp"
+                        android:layout_gravity="center_horizontal"
+                        android:background="@android:color/transparent"
+                        android:fontFamily="@string/app_font_helvetica_condensed_bold"
+                        android:gravity="center|left"
+                        android:text="pHSag92G"
+                        android:textSize="16sp"/>
+                </LinearLayout>
+
+                <Button
+                    style="@style/ButtonStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentRight="true"
+                    android:layout_gravity="center_horizontal"
+                    android:background="@android:color/transparent"
+                    android:fontFamily="@string/app_font_helvetica_condensed_bold"
+                    android:gravity="center|left"
+                    android:paddingLeft="25dp"
+                    android:paddingRight="25dp"
+                    android:text="@string/send"
+                    android:textColor="@color/text_color_link"
+                    android:textSize="20sp"/>
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/background_inner_divider"/>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:background="@color/background_inner">
+
+                <LinearLayout
+                    android:layout_width="200dp"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:paddingLeft="25dp"
+                    android:paddingRight="25dp">
+
+                    <Button
+                        style="@style/ButtonStyle"
+                        android:layout_width="match_parent"
+                        android:layout_height="20dp"
+                        android:layout_gravity="center_horizontal"
+                        android:background="@android:color/transparent"
+                        android:fontFamily="@string/app_font_helvetica_condensed_bold"
+                        android:gravity="center|left"
+                        android:text="@string/blitz_access_code"
+                        android:textAllCaps="true"
+                        android:textColor="@color/text_color_dark_alt"
+                        android:textSize="12sp"/>
+
+                    <Button
+                        style="@style/ButtonStyle"
+                        android:layout_width="match_parent"
+                        android:layout_height="25dp"
+                        android:layout_gravity="center_horizontal"
+                        android:background="@android:color/transparent"
+                        android:fontFamily="@string/app_font_helvetica_condensed_bold"
+                        android:gravity="center|left"
+                        android:text="pHSag92G"
+                        android:textSize="16sp"/>
+                </LinearLayout>
+
+                <Button
+                    style="@style/ButtonStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentRight="true"
+                    android:layout_gravity="center_horizontal"
+                    android:background="@android:color/transparent"
+                    android:fontFamily="@string/app_font_helvetica_condensed_bold"
+                    android:gravity="center|left"
+                    android:paddingLeft="25dp"
+                    android:paddingRight="25dp"
+                    android:text="@string/send"
+                    android:textColor="@color/text_color_link"
+                    android:textSize="20sp"/>
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/background_inner_divider"/>
+
+            <Button
+                style="@style/ButtonStyle"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_gravity="center_horizontal"
+                android:background="@color/background_inner"
+                android:fontFamily="@string/app_font_helvetica_condensed_bold"
+                android:gravity="center|left"
+                android:paddingLeft="25dp"
+                android:paddingRight="25dp"
+                android:text="@string/terms_of_use"
+                android:textSize="16sp"/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/background_inner_divider"/>
+
+            <Button
+                style="@style/ButtonStyle"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_gravity="center_horizontal"
+                android:background="@color/background_inner"
+                android:fontFamily="@string/app_font_helvetica_condensed_bold"
+                android:gravity="center|left"
+                android:paddingLeft="25dp"
+                android:paddingRight="25dp"
+                android:text="@string/privacy_policy"
+                android:textSize="16sp"/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/background_inner_divider"/>
+
+            <Button
+                style="@style/ButtonStyle"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:background="@color/background_inner"
+                android:fontFamily="@string/app_font_helvetica_condensed_bold"
+                android:gravity="center|left"
+                android:paddingLeft="25dp"
+                android:paddingRight="25dp"
+                android:text="@string/reset"
+                android:textSize="16sp"/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/background_inner_divider"/>
+        </LinearLayout>
+    </ScrollView>
 </RelativeLayout>
