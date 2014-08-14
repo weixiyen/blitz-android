@@ -3,47 +3,78 @@ package com.blitz.app.utilities.viewpager;
 import android.support.v4.view.ViewPager;
 import android.view.View;
 
+import com.blitz.app.R;
+
 /**
  * Created by Miguel Gaeta on 6/1/14.
  */
 @SuppressWarnings("unused")
 public class ViewPagerZoomOutTransformer implements ViewPager.PageTransformer {
 
-    private static final float MIN_SCALE = 0.85f;
-    private static final float MIN_ALPHA = 0.5f;
+    private static final float MIN_SCALE = 0.95f;
+    private static final float MIN_ALPHA = 0.15f;
 
     public void transformPage(View view, float position) {
-        int pageWidth = view.getWidth();
-        int pageHeight = view.getHeight();
 
-        if (position < -1) { // [-Infinity,-1)
-            // This page is way off-screen to the left.
-            view.setAlpha(0);
+        // Check to see if this is the play screen.
+        View playScreen = view.findViewById(R.id.main_featured);
 
-        } else if (position <= 1) { // [-1,1]
+        if (playScreen != null) {
+
+            // Only fade this screen.
+            adjustAlpha(view, position);
+        }
+
+        // All pages scale.
+        adjustScale(view, position);
+    }
+
+    public void adjustScale(View view, float position) {
+
+        if (position >= -1 && position <= 1) {
+
+            int pageWidth = view.getWidth();
+            int pageHeight = view.getHeight();
+
             // Modify the default slide transition to shrink the page as well
             float scaleFactor = Math.max(MIN_SCALE, 1 - Math.abs(position));
-            float vertMargin = pageHeight * (1 - scaleFactor) / 2;
-            float horzMargin = pageWidth * (1 - scaleFactor) / 2;
+
+            float   verticalMargin = pageHeight * (1 - scaleFactor) / 2;
+            float horizontalMargin = pageWidth  * (1 - scaleFactor) / 2;
+
             if (position < 0) {
-                view.setTranslationX(horzMargin - vertMargin / 2);
+                view.setTranslationX( horizontalMargin - verticalMargin / 2);
             } else {
-                view.setTranslationX(-horzMargin + vertMargin / 2);
+                view.setTranslationX(-horizontalMargin + verticalMargin / 2);
             }
 
             // Scale the page down (between MIN_SCALE and 1)
             view.setScaleX(scaleFactor);
             view.setScaleY(scaleFactor);
+        }
+    }
+
+    public void adjustAlpha(View view, float position) {
+
+        if (position < -1) {
+
+            // This page is way off-screen to the left.
+            view.setAlpha(0);
+
+        } else if (position <= 1) {
+
+            // Modify the default slide transition to shrink the page as well
+            float scaleFactor = Math.max(MIN_SCALE, 1 - Math.abs(position));
 
             // Fade the page relative to its size.
             view.setAlpha(MIN_ALPHA +
                     (scaleFactor - MIN_SCALE) /
-                            (1 - MIN_SCALE) * (1 - MIN_ALPHA));
+                              (1 - MIN_SCALE) * (1 - MIN_ALPHA));
 
-        } else { // (1,+Infinity]
+        } else {
+
             // This page is way off-screen to the right.
             view.setAlpha(0);
         }
     }
-
 }
