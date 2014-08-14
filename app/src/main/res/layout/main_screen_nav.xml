@@ -3,96 +3,102 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="50dp"
-    android:layout_marginLeft="10dp"
-    android:layout_marginRight="10dp"
-    android:layout_marginTop="10dp"
-    android:background="@color/background_nav"
     android:baselineAligned="false"
     tools:context="${packageName}.${activityClass}"
     tools:ignore="ButtonStyle,UnusedAttribute">
 
     <RelativeLayout
+        android:id="@+id/main_screen_nav_featured"
         android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:layout_margin="5dp"
         android:layout_weight="1"
         android:orientation="vertical">
 
-        <Button
-            android:id="@+id/main_screen_nav_featured"
-            android:layout_width="match_parent"
+        <TextView
+            android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:background="@drawable/drawable_button_main"
-            android:contentDescription="@string/empty_string"
-            android:fontFamily="@string/app_font_regular"
-            android:tag="0"
-            android:text="@string/featured"
+            android:fontFamily="@string/app_font_bold"
+            android:gravity="center"
             android:textAllCaps="true"
+            android:layout_centerHorizontal="true"
+            android:text="@string/featured"
             android:textColor="@color/text_color_light"
-            android:textSize="12sp"/>
+            android:textSize="12sp"
+            android:drawableLeft="@drawable/asset_tab_icon_play"
+            android:drawableStart="@drawable/asset_tab_icon_play"
+            style="@style/TextViewStyle"/>
 
         <View
             android:id="@+id/main_screen_nav_featured_active"
             android:layout_width="match_parent"
             android:layout_height="3dp"
-            android:layout_alignParentBottom="true"
+            android:layout_alignParentTop="true"
             android:background="@color/background_nav_active" />
+
+        <ImageView
+            android:visibility="gone"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:contentDescription="@string/empty_string"
+            android:src="@drawable/asset_tab_icon_play" />
     </RelativeLayout>
 
     <RelativeLayout
+        android:id="@+id/main_screen_nav_recent"
         android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:layout_margin="5dp"
         android:layout_weight="1"
         android:orientation="vertical">
 
-        <Button
-            android:id="@+id/main_screen_nav_recent"
-            android:layout_width="match_parent"
+        <TextView
+            android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:background="@drawable/drawable_button_main"
-            android:contentDescription="@string/empty_string"
-            android:fontFamily="@string/app_font_regular"
-            android:tag="1"
-            android:text="@string/recent"
+            android:fontFamily="@string/app_font_bold"
+            android:gravity="center"
             android:textAllCaps="true"
+            android:layout_centerHorizontal="true"
+            android:text="@string/recent"
             android:textColor="@color/text_color_light"
-            android:textSize="12sp"/>
+            android:textSize="12sp"
+            android:drawableLeft="@drawable/asset_tab_icon_logs"
+            android:drawableStart="@drawable/asset_tab_icon_logs"
+            style="@style/TextViewStyle"/>
 
         <View
             android:id="@+id/main_screen_nav_recent_active"
             android:layout_width="match_parent"
             android:layout_height="3dp"
-            android:layout_alignParentBottom="true"
+            android:layout_alignParentTop="true"
             android:background="@color/background_nav_active"
             android:visibility="invisible" />
     </RelativeLayout>
 
     <RelativeLayout
+        android:id="@+id/main_screen_nav_settings"
         android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:layout_margin="5dp"
         android:layout_weight="1"
         android:orientation="vertical">
 
-        <Button
-            android:id="@+id/main_screen_nav_settings"
-            android:layout_width="match_parent"
+        <TextView
+            android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:background="@drawable/drawable_button_main"
-            android:contentDescription="@string/empty_string"
-            android:fontFamily="@string/app_font_regular"
-            android:tag="2"
-            android:text="@string/settings"
+            android:fontFamily="@string/app_font_bold"
+            android:gravity="center"
             android:textAllCaps="true"
+            android:layout_centerHorizontal="true"
+            android:text="@string/settings"
             android:textColor="@color/text_color_light"
-            android:textSize="12sp"/>
+            android:textSize="12sp"
+            android:drawableLeft="@drawable/asset_tab_icon_profile"
+            android:drawableStart="@drawable/asset_tab_icon_profile"
+            style="@style/TextViewStyle"/>
 
         <View
             android:id="@+id/main_screen_nav_settings_active"
             android:layout_width="match_parent"
             android:layout_height="3dp"
-            android:layout_alignParentBottom="true"
+            android:layout_alignParentTop="true"
             android:background="@color/background_nav_active"
             android:visibility="invisible" />
     </RelativeLayout>

@@ -4,16 +4,15 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.view.View;
-import android.widget.Button;
 
 import com.blitz.app.R;
 import com.blitz.app.dialogs.DialogInfo;
 import com.blitz.app.dialogs.DialogLoading;
-import com.blitz.app.view_models.ViewModelMain;
 import com.blitz.app.screens.draft_preview.DraftPreviewScreen;
 import com.blitz.app.utilities.android.BaseActivity;
 import com.blitz.app.utilities.android.BaseDialog;
-import com.blitz.app.utilities.viewpager.ViewPagerDepthTransformer;
+import com.blitz.app.utilities.viewpager.ViewPagerZoomOutTransformer;
+import com.blitz.app.view_models.ViewModelMain;
 
 import butterknife.InjectView;
 import butterknife.OnClick;
@@ -92,7 +91,7 @@ public class MainScreen extends BaseActivity implements ViewModelMain.ViewModelM
         mPager.setAdapter(adapter);
 
         // Add a custom page transition effect.
-        mPager.setPageTransformer(true, new ViewPagerDepthTransformer());
+        mPager.setPageTransformer(true, new ViewPagerZoomOutTransformer());
 
         mPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
@@ -255,7 +254,7 @@ public class MainScreen extends BaseActivity implements ViewModelMain.ViewModelM
               R.id.main_screen_nav_recent,
               R.id.main_screen_nav_settings})
     @SuppressWarnings("unused")
-    public void navClicked(Button button) {
+    public void navClicked(View button) {
 
         deselectNav();
 
@@ -275,6 +274,6 @@ public class MainScreen extends BaseActivity implements ViewModelMain.ViewModelM
         }
 
         // Sync with view pager when selected.
-        mPager.setCurrentItem(Integer.parseInt((String) button.getTag()));
+        mPager.setCurrentItem(Integer.parseInt((String) button.getTag()), false);
     }
 }
