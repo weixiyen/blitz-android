@@ -10,6 +10,9 @@
 
         <!-- View pager indicator style. -->
         <item name="vpiCirclePageIndicatorStyle">@style/TabStyle</item>
+
+        <!-- Disable overscroll effects -->
+        <item name="android:overScrollMode">never</item>
     </style>
 
     <!-- View pager indicator style. -->
