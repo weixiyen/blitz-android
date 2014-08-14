@@ -1,47 +1,61 @@
-<LinearLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/background_inner"
-    android:orientation="vertical"
     tools:context="${packageName}.${activityClass}"
     tools:ignore="ButtonStyle,UnusedAttribute">
 
-    <Switch
-        android:id="@+id/main_screen_fragment_settings_toggle_sound"
+    <com.blitz.app.utilities.imageview_plus.ImageViewPlus
         android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:layout_gravity="center_horizontal"
-        android:layout_margin="10dp"
-        android:background="@color/button_color_1"
-        android:padding="10dp"
-        android:text="@string/play_sound"
-        android:textColor="@color/text_color_light"
-        android:textSize="12sp"/>
-
-    <Switch
-        android:id="@+id/main_screen_fragment_settings_toggle_music"
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:layout_marginBottom="10dp"
-        android:background="@color/button_color_1"
-        android:padding="10dp"
-        android:text="@string/play_music"
-        android:textColor="@color/text_color_light"
-        android:textSize="12sp"/>
-
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:layout_margin="10dp"
-        android:background="@drawable/drawable_button_main"
+        android:layout_height="match_parent"
         android:contentDescription="@string/empty_string"
-        android:fontFamily="@string/app_font_light"
-        android:text="@string/reset"
-        android:textColor="@color/text_color_light"
-        android:textSize="12sp" />
-</LinearLayout>
+        android:src="@drawable/asset_bg_main_dark"
+        app:scaleType="topCrop" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="50dp"
+        android:gravity="bottom"
+        android:orientation="vertical">
+
+        <Switch
+            android:id="@+id/main_screen_fragment_settings_toggle_sound"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_margin="10dp"
+            android:background="@color/button_color_1"
+            android:padding="10dp"
+            android:text="@string/play_sound"
+            android:textColor="@color/text_color_light"
+            android:textSize="12sp"/>
+
+        <Switch
+            android:id="@+id/main_screen_fragment_settings_toggle_music"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:background="@color/button_color_1"
+            android:padding="10dp"
+            android:text="@string/play_music"
+            android:textColor="@color/text_color_light"
+            android:textSize="12sp"/>
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_margin="10dp"
+            android:background="@drawable/drawable_button_main"
+            android:contentDescription="@string/empty_string"
+            android:fontFamily="@string/app_font_light"
+            android:text="@string/reset"
+            android:textColor="@color/text_color_light"
+            android:textSize="12sp" />
+    </LinearLayout>
+</RelativeLayout>
