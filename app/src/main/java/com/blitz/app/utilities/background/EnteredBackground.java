@@ -112,10 +112,14 @@ public class EnteredBackground {
     private void clearTimer() {
         if (mActivityTransitionTimerTask != null) {
             mActivityTransitionTimerTask.cancel();
+
+            mActivityTransitionTimerTask = null;
         }
 
         if (mActivityTransitionTimer != null) {
             mActivityTransitionTimer.cancel();
+
+            mActivityTransitionTimer = null;
         }
     }
 }
