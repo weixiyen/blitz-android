@@ -77,6 +77,22 @@ public class AppConfig {
         return false;
     }
 
+    /**
+     * Fetch URL for the terms of use.
+     */
+    public static String getTermsOfUseUrl() {
+
+        return "https://blitz.zone/terms";
+    }
+
+    /**
+     * Fetch URL for the privacy policy.
+     */
+    public static String getPrivacyPolicyUrl() {
+
+        return "https://blitz.zone/privacy";
+    }
+
     //==============================================================================================
     // Public Methods
     //==============================================================================================
