@@ -1,10 +1,13 @@
 package com.blitz.app.screens.main;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Switch;
 
 import com.blitz.app.R;
+import com.blitz.app.screens.web.WebScreen;
 import com.blitz.app.utilities.android.BaseFragment;
+import com.blitz.app.utilities.app.AppConfig;
 import com.blitz.app.utilities.app.AppDataObject;
 import com.blitz.app.utilities.sound.SoundHelper;
 
@@ -56,5 +59,35 @@ public class MainScreenFragmentSettings extends BaseFragment {
 
         // Set the disabled state of the music player.
         SoundHelper.instance().setMusicDisabled(AppDataObject.settingsMusicDisabled.getBoolean());
+    }
+
+    /**
+     * Show terms of use.
+     */
+    @OnClick(R.id.main_settings_terms_of_use) @SuppressWarnings("unused")
+    public void termsOfUseClicked() {
+
+        Intent intent = new Intent(this.getActivity(), WebScreen.class);
+
+        // Pass parameters to the web screen.
+        intent.putExtra(WebScreen.PARAM_URL, AppConfig.getTermsOfUseUrl());
+        intent.putExtra(WebScreen.PARAM_TITLE, "Terms Of Use");
+
+        startActivity(intent);
+    }
+
+    /**
+     * Show privacy policy.
+     */
+    @OnClick(R.id.main_settings_privacy_policy) @SuppressWarnings("unused")
+    public void privacyPolicyClicked() {
+
+        Intent i = new Intent(this.getActivity(), WebScreen.class);
+
+        // Pass parameters to the web screen.
+        i.putExtra(WebScreen.PARAM_URL, AppConfig.getPrivacyPolicyUrl());
+        i.putExtra(WebScreen.PARAM_TITLE, "Privacy Policy");
+
+        startActivity(i);
     }
 }

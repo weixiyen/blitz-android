@@ -325,6 +325,7 @@
                 android:background="@color/background_inner_divider"/>
 
             <Button
+                android:id="@+id/main_settings_terms_of_use"
                 style="@style/ButtonStyle"
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
@@ -343,6 +344,7 @@
                 android:background="@color/background_inner_divider"/>
 
             <Button
+                android:id="@+id/main_settings_privacy_policy"
                 style="@style/ButtonStyle"
                 android:layout_width="match_parent"
                 android:layout_height="60dp"

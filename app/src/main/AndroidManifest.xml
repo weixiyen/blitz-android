@@ -36,7 +36,7 @@
 
         <!-- Environment (affects AppConfig values) -->
         <meta-data android:name="com.blitz.app.config.environment"
-            android:resource="@string/environment_production"/>
+            android:resource="@string/environment_qa"/>
 
         <!-- Required for applications which use Google Play Services. -->
         <meta-data
@@ -80,6 +80,9 @@
             android:windowSoftInputMode="stateHidden" />
 
         <activity android:name=".screens.draft_preview.DraftPreviewScreen"
+            android:windowSoftInputMode="stateHidden" />
+
+        <activity android:name=".screens.web.WebScreen"
             android:windowSoftInputMode="stateHidden" />
 
         <!--
