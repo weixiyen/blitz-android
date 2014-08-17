@@ -1,0 +1,17 @@
+<com.blitz.app.utilities.carousel.MyLinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/root"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/holo_red_dark"
+    android:gravity="center"
+    android:orientation="vertical">
+
+    <ImageView
+        android:id="@+id/content"
+        android:layout_width="140dp"
+        android:layout_height="140dp"
+        android:contentDescription="@string/empty_string"
+        android:src="@drawable/asset_bg_helmet_sample" />
+
+</com.blitz.app.utilities.carousel.MyLinearLayout>

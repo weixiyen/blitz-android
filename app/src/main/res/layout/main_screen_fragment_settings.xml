@@ -45,20 +45,13 @@
             android:gravity="bottom"
             android:orientation="vertical">
 
-            <RelativeLayout
+            <android.support.v4.view.ViewPager
+                android:id="@+id/main_settings_carousel"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="250dp"
                 android:background="@color/background_inner_dark"
-                android:gravity="center">
-
-                <ImageView
-                    android:layout_width="140dp"
-                    android:layout_height="140dp"
-                    android:layout_marginTop="50dp"
-                    android:layout_marginBottom="50dp"
-                    android:contentDescription="@string/empty_string"
-                    android:src="@drawable/asset_bg_helmet_sample" />
-            </RelativeLayout>
+                android:gravity="center"
+                android:overScrollMode="never" />
 
             <View
                 android:layout_width="match_parent"

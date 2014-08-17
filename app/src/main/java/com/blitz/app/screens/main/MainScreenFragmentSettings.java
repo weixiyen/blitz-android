@@ -2,6 +2,7 @@ package com.blitz.app.screens.main;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.widget.Switch;
 
@@ -12,6 +13,8 @@ import com.blitz.app.utilities.android.BaseFragment;
 import com.blitz.app.utilities.app.AppConfig;
 import com.blitz.app.utilities.app.AppDataObject;
 import com.blitz.app.utilities.authentication.AuthHelper;
+import com.blitz.app.utilities.carousel.MyPagerAdapter;
+import com.blitz.app.utilities.reflection.ReflectionHelper;
 import com.blitz.app.utilities.sound.SoundHelper;
 
 import butterknife.InjectView;
@@ -32,6 +35,19 @@ public class MainScreenFragmentSettings extends BaseFragment {
     // Reset button (only display for QA).
     @InjectView(R.id.main_settings_reset) View mSettingsReset;
 
+    public @InjectView(R.id.main_settings_carousel) ViewPager pager;
+
+    public MyPagerAdapter adapter;
+
+    public final static int PAGES = 5;
+    // You can choose a bigger number for LOOPS, but you know, nobody will fling
+// more than 1000 times just in order to test your "infinite" ViewPager :D
+    public final static int LOOPS = 1000;
+    public final static int FIRST_PAGE = PAGES * LOOPS / 2;
+    public final static float BIG_SCALE = 1.0f;
+    public final static float SMALL_SCALE = 0.5f;
+    public final static float DIFF_SCALE = BIG_SCALE - SMALL_SCALE;
+
     //==============================================================================================
     // Overwritten Methods
     //==============================================================================================
@@ -44,6 +60,28 @@ public class MainScreenFragmentSettings extends BaseFragment {
     @Override
     protected void onCreateView(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+
+        adapter = new MyPagerAdapter(this, getActivity().getSupportFragmentManager());
+
+        pager.setAdapter(adapter);
+        pager.setOnPageChangeListener(adapter);
+// Set current item to the middle page so we can fling to both
+// directions left and right
+        pager.setCurrentItem(FIRST_PAGE);
+// Necessary or the pager will only have one extra page to show
+// make this at least however many pages you can see
+        pager.setOffscreenPageLimit(3);
+// Set margin for pages as a negative number, so a part of next and
+// previous pages will be showed
+
+
+        int pixelPadding = ReflectionHelper.densityPixelsToPixels(getActivity(), 90);
+        int pagePadding = ReflectionHelper.densityPixelsToPixels(getActivity(), 10);
+
+        pager.setPadding(pixelPadding, 0, pixelPadding, 0);
+        pager.setClipToPadding(false);
+        pager.setPageMargin(pagePadding);
 
         // Initialize switch states.
         mSettingsToggleMusic.setChecked(!AppDataObject.settingsMusicDisabled.getBoolean());
