@@ -17,4 +17,45 @@
         android:src="@drawable/asset_bg_main_dark"
         app:scaleType="topCrop" />
 
+    <TextView
+        android:id="@+id/web_header"
+        style="@style/TextViewStyle"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="#40000000"
+        android:fontFamily="@string/app_font_helvetica_condensed_bold"
+        android:gravity="center"
+        android:text="@string/my_account"
+        android:textColor="@color/text_color_link"
+        android:textSize="18sp" />
+
+    <View
+        android:id="@+id/web_header_border_0"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_alignBottom="@+id/web_header"
+        android:background="#222222"/>
+
+    <View
+        android:id="@+id/web_header_border_1"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_above="@+id/web_header_border_0"
+        android:background="#111111"/>
+
+    <WebView
+        android:id="@+id/web_view_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="50dp"
+        android:background="@color/background_inner"/>
+
+    <ProgressBar
+        android:id="@+id/web_view_loading"
+        style="?android:attr/progressBarStyleLarge"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:layout_marginBottom="10dp"/>
 </RelativeLayout>
