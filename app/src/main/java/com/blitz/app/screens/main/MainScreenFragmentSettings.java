@@ -14,6 +14,7 @@ import com.blitz.app.utilities.app.AppConfig;
 import com.blitz.app.utilities.app.AppDataObject;
 import com.blitz.app.utilities.authentication.AuthHelper;
 import com.blitz.app.utilities.carousel.MyPagerAdapter;
+import com.blitz.app.utilities.logging.LogHelper;
 import com.blitz.app.utilities.reflection.ReflectionHelper;
 import com.blitz.app.utilities.sound.SoundHelper;
 
@@ -45,7 +46,7 @@ public class MainScreenFragmentSettings extends BaseFragment {
     public final static int LOOPS = 1000;
     public final static int FIRST_PAGE = PAGES * LOOPS / 2;
     public final static float BIG_SCALE = 1.0f;
-    public final static float SMALL_SCALE = 0.5f;
+    public final static float SMALL_SCALE = 0.7f;
     public final static float DIFF_SCALE = BIG_SCALE - SMALL_SCALE;
 
     //==============================================================================================
@@ -75,13 +76,14 @@ public class MainScreenFragmentSettings extends BaseFragment {
 // Set margin for pages as a negative number, so a part of next and
 // previous pages will be showed
 
+        LogHelper.log("New created");
 
         int pixelPadding = ReflectionHelper.densityPixelsToPixels(getActivity(), 90);
         int pagePadding = ReflectionHelper.densityPixelsToPixels(getActivity(), 10);
 
         pager.setPadding(pixelPadding, 0, pixelPadding, 0);
         pager.setClipToPadding(false);
-        pager.setPageMargin(pagePadding);
+        pager.setPageMargin(0);
 
         // Initialize switch states.
         mSettingsToggleMusic.setChecked(!AppDataObject.settingsMusicDisabled.getBoolean());

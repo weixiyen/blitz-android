@@ -45,13 +45,23 @@
             android:gravity="bottom"
             android:orientation="vertical">
 
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="20dp"
+                android:background="@color/background_inner_dark"/>
+
             <android.support.v4.view.ViewPager
                 android:id="@+id/main_settings_carousel"
                 android:layout_width="match_parent"
-                android:layout_height="250dp"
+                android:layout_height="140dp"
                 android:background="@color/background_inner_dark"
                 android:gravity="center"
                 android:overScrollMode="never" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:background="@color/background_inner_dark"/>
 
             <View
                 android:layout_width="match_parent"
@@ -135,7 +145,7 @@
                 style="@style/ButtonStyle"
                 android:layout_width="match_parent"
                 android:layout_height="85dp"
-                android:background="@color/background_inner_dark"
+                android:background="@color/background_inner"
                 android:gravity="center"
                 android:orientation="vertical"
                 android:paddingLeft="25dp"
