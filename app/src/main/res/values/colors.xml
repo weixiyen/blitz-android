@@ -1,6 +1,7 @@
 <resources>
     <color name="background_primary">#000d20</color>
-    <color name="background_inner">#BF222222</color>
+    <color name="background_inner">#BF333333</color>
+    <color name="background_inner_dark">#BF222222</color>
     <color name="background_inner_divider">#111111</color>
     <color name="background_inner_divider_light">#333333</color>
     <color name="background_dialog">#BF000000</color>
@@ -14,7 +15,7 @@
 
     <color name="text_color_light">#ffffff</color>
     <color name="text_color_dark">#000000</color>
-    <color name="text_color_dark_alt">#dedede</color>
+    <color name="text_color_dark_alt">#bbbbbb</color>
     <color name="text_color_link">#00f6ff</color>
     <color name="text_color_shadow">#BF000000</color>
     <color name="text_color_shadow_light">#40ffffff</color>
