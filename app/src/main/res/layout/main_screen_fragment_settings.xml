@@ -20,10 +20,10 @@
         style="@style/TextViewStyle"
         android:layout_width="match_parent"
         android:layout_height="110dp"
+        android:background="#40000000"
         android:fontFamily="@string/app_font_helvetica_condensed_bold"
         android:gravity="center"
         android:paddingTop="50dp"
-        android:background="#40000000"
         android:text="@string/my_account"
         android:textColor="@color/text_color_link"
         android:textSize="18sp" />
@@ -32,15 +32,15 @@
         android:id="@+id/main_settings_header_border_0"
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:background="#222222"
-        android:layout_alignBottom="@+id/main_settings_header"/>
+        android:layout_alignBottom="@+id/main_settings_header"
+        android:background="#222222"/>
 
     <View
         android:id="@+id/main_settings_header_border_1"
         android:layout_width="match_parent"
-        android:background="#111111"
         android:layout_height="1dp"
-        android:layout_above="@+id/main_settings_header_border_0"/>
+        android:layout_above="@+id/main_settings_header_border_0"
+        android:background="#111111"/>
 
     <ScrollView
         android:layout_width="match_parent"
@@ -55,12 +55,15 @@
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="200dp"
+                android:layout_height="wrap_content"
+                android:background="@color/background_inner"
                 android:gravity="center">
 
                 <ImageView
                     android:layout_width="140dp"
                     android:layout_height="140dp"
+                    android:layout_marginTop="50dp"
+                    android:layout_marginBottom="50dp"
                     android:contentDescription="@string/empty_string"
                     android:src="@drawable/asset_bg_helmet_sample" />
             </RelativeLayout>
