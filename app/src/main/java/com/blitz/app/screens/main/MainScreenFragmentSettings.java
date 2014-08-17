@@ -2,13 +2,16 @@ package com.blitz.app.screens.main;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Switch;
 
 import com.blitz.app.R;
+import com.blitz.app.screens.loading.LoadingScreen;
 import com.blitz.app.screens.web.WebScreen;
 import com.blitz.app.utilities.android.BaseFragment;
 import com.blitz.app.utilities.app.AppConfig;
 import com.blitz.app.utilities.app.AppDataObject;
+import com.blitz.app.utilities.authentication.AuthHelper;
 import com.blitz.app.utilities.sound.SoundHelper;
 
 import butterknife.InjectView;
@@ -26,6 +29,9 @@ public class MainScreenFragmentSettings extends BaseFragment {
     @InjectView(R.id.main_screen_fragment_settings_toggle_music) Switch mSettingsToggleMusic;
     @InjectView(R.id.main_screen_fragment_settings_toggle_sound) Switch mSettingsToggleSound;
 
+    // Reset button (only display for QA).
+    @InjectView(R.id.main_settings_reset) View mSettingsReset;
+
     //==============================================================================================
     // Overwritten Methods
     //==============================================================================================
@@ -42,6 +48,12 @@ public class MainScreenFragmentSettings extends BaseFragment {
         // Initialize switch states.
         mSettingsToggleMusic.setChecked(!AppDataObject.settingsMusicDisabled.getBoolean());
         mSettingsToggleSound.setChecked(!AppDataObject.settingsSoundDisabled.getBoolean());
+
+        if (!AppConfig.isProduction()) {
+
+            // Hide if not on production.
+            mSettingsReset.setVisibility(View.GONE);
+        }
     }
 
     //==============================================================================================
@@ -89,5 +101,18 @@ public class MainScreenFragmentSettings extends BaseFragment {
         i.putExtra(WebScreen.PARAM_TITLE, "Privacy Policy");
 
         startActivity(i);
+    }
+
+    /**
+     * Sign user out when reset clicked.
+     */
+    @OnClick(R.id.main_settings_reset) @SuppressWarnings("unused")
+    public void resetClicked() {
+
+        // Sign out user.
+        AuthHelper.signOut();
+
+        // Bounce user back to the loading screen.
+        startActivity(new Intent(this.getActivity(), LoadingScreen.class));
     }
 }
