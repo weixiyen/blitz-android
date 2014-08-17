@@ -34,7 +34,7 @@
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:layout_alignBottom="@+id/main_recent_header"
-        android:background="#222222"/>
+        android:background="@color/background_inner_divider_light"/>
 
     <LinearLayout
         android:id="@+id/main_recent_scrubber"
@@ -50,5 +50,5 @@
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:layout_alignTop="@+id/main_recent_scrubber"
-        android:background="#222222"/>
+        android:background="@color/background_inner_divider_light"/>
 </RelativeLayout>

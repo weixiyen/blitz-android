@@ -29,18 +29,10 @@
         android:textSize="18sp" />
 
     <View
-        android:id="@+id/main_settings_header_border_0"
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:layout_alignBottom="@+id/main_settings_header"
-        android:background="#222222"/>
-
-    <View
-        android:id="@+id/main_settings_header_border_1"
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_above="@+id/main_settings_header_border_0"
-        android:background="#111111"/>
+        android:background="@color/background_inner_divider_light"/>
 
     <ScrollView
         android:layout_width="match_parent"

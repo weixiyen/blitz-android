@@ -1,5 +1,3 @@
-<?xml version="1.0" encoding="utf-8"?>
-
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -30,18 +28,10 @@
         android:textSize="18sp" />
 
     <View
-        android:id="@+id/web_header_border_0"
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:layout_alignBottom="@+id/web_header"
-        android:background="#222222"/>
-
-    <View
-        android:id="@+id/web_header_border_1"
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_above="@+id/web_header_border_0"
-        android:background="#111111"/>
+        android:background="@color/background_inner_divider_light"/>
 
     <WebView
         android:id="@+id/web_view_container"
