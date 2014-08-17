@@ -50,7 +50,7 @@ public class MainScreenFragmentRecent extends BaseFragment {
                     .inflate(R.layout.main_screen_fragment_recent_week, mScrubber, true);
 
             // Set the current week value.
-            ((TextView)mScrubber.getChildAt(i)).setText(Integer.toString(i + 1));
+            ((TextView)mScrubber.getChildAt(i)).setText(String.format("%02d", i + 1));
         }
     }
 }

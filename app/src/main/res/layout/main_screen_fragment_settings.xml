@@ -142,7 +142,7 @@
                 style="@style/ButtonStyle"
                 android:layout_width="match_parent"
                 android:layout_height="85dp"
-                android:background="@color/background_inner"
+                android:background="@color/background_inner_dark"
                 android:gravity="center"
                 android:orientation="vertical"
                 android:paddingLeft="25dp"

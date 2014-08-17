@@ -3,7 +3,7 @@
 <merge
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:android="http://schemas.android.com/apk/res/android"
-    tools:ignore="UnusedAttribute">
+    tools:ignore="UnusedAttribute,SmallSp">
 
     <TextView
         style="@style/TextViewStyle"
@@ -14,6 +14,6 @@
         android:fontFamily="@string/app_font_helvetica_condensed_bold"
         android:gravity="center"
         android:text="@string/number_small"
-        android:textColor="@color/text_color_light"
-        android:textSize="12sp" />
+        android:textColor="@color/text_color_dark_alt"
+        android:textSize="11sp" />
 </merge>
