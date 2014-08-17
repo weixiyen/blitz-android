@@ -63,7 +63,9 @@ public class MainScreenFragmentSettings extends BaseFragment {
         super.onCreate(savedInstanceState);
 
 
-        adapter = new MyPagerAdapter(this, getActivity().getSupportFragmentManager());
+
+
+        adapter = new MyPagerAdapter(this, getChildFragmentManager());
 
         pager.setAdapter(adapter);
         pager.setOnPageChangeListener(adapter);
