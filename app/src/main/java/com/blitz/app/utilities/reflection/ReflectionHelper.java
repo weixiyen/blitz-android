@@ -1,5 +1,9 @@
 package com.blitz.app.utilities.reflection;
 
+import android.content.Context;
+import android.content.res.Resources;
+import android.util.TypedValue;
+
 import com.blitz.app.utilities.string.StringHelper;
 
 import java.lang.reflect.Field;
@@ -46,5 +50,23 @@ public class ReflectionHelper {
 
         // Call function using converted variable class.
         return getResourceId(underscoredClassName, resourceClass);
+    }
+
+    /**
+     * Convert DP to pixels.
+     *
+     * @param context Context object.
+     * @param densityPixels Target DP.
+     *
+     * @return Converted pixel value.
+     */
+    public static int densityPixelsToPixels(Context context, int densityPixels) {
+
+        // Grab the resources object.
+        Resources resources = context.getResources();
+
+        // Return pixel value.
+        return Math.round(TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,
+                densityPixels, resources.getDisplayMetrics()));
     }
 }
