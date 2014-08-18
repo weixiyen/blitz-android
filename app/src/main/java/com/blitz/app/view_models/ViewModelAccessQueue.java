@@ -43,10 +43,13 @@ public class ViewModelAccessQueue extends ViewModel {
                 ViewModelAccessQueueCallbacks callbacks =
                         getCallbacks(ViewModelAccessQueueCallbacks.class);
 
-                // Run callbacks.
-                callbacks.onAccessGranted(mModelAccessQueue.getAccessGranted());
-                callbacks.onPeopleAhead  (mModelAccessQueue.getPeopleAhead());
-                callbacks.onPeopleBehind (mModelAccessQueue.getPeopleBehind());
+                if (callbacks != null) {
+
+                    // Run callbacks.
+                    callbacks.onAccessGranted(mModelAccessQueue.getAccessGranted());
+                    callbacks.onPeopleAhead  (mModelAccessQueue.getPeopleAhead());
+                    callbacks.onPeopleBehind (mModelAccessQueue.getPeopleBehind());
+                }
             }
         });
     }
