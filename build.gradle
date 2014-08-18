@@ -18,12 +18,6 @@ allprojects {
             url "http://dl.bintray.com/populov/maven"
         }
 
-        // Temporary custom repo for facebook
-        // android SDK: http://bit.ly/1twxstU
-        maven {
-            url 'http://repo.shamanland.com'
-        }
-
         mavenCentral()
     }
 }

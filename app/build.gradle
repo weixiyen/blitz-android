@@ -36,9 +36,6 @@ dependencies {
     // Library for making REST calls.
     compile 'com.squareup.retrofit:retrofit:1.6.1'
 
-    // Android facebook SDK.
-    compile 'com.facebook:facebook-android-sdk:3.14.1'
-
     // Library for dots under view pager.
     compile 'com.viewpagerindicator:library:2.4.1@aar'
 
