@@ -9,6 +9,7 @@ import android.os.Handler;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.PopupWindow;
 
 import com.blitz.app.R;
@@ -150,12 +151,16 @@ public class BaseDialog {
                 @Override
                 public void run() {
 
-                    // Show at top corner of the window.
-                    mPopupWindow.showAtLocation(mActivity.getWindow().getDecorView(),
-                            Gravity.NO_GRAVITY, 0, 0);
+                    try {
 
-                    // Try to show dialog content.
-                    tryShowDialogContent(showContent);
+                        // Show at top corner of the window.
+                        mPopupWindow.showAtLocation(mActivity.getWindow().getDecorView(),
+                                Gravity.NO_GRAVITY, 0, 0);
+
+                        // Try to show dialog content.
+                        tryShowDialogContent(showContent);
+
+                    } catch (WindowManager.BadTokenException ignored) { }
                 }
             }, delay);
 
@@ -195,8 +200,14 @@ public class BaseDialog {
                 // No longer pending.
                 mHidePending = false;
 
-                // Hide immediately.
-                mPopupWindow.dismiss();
+                try {
+
+                    // Hide immediately.
+                    if (mPopupWindow.isShowing()) {
+                        mPopupWindow.dismiss();
+                    }
+
+                } catch (IllegalArgumentException ignored) { }
 
                 // Execute callback.
                 if (mHideListener != null) {
