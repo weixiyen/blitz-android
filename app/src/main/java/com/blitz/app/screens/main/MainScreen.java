@@ -65,7 +65,7 @@ public class MainScreen extends BaseActivity implements ViewModelMain.ViewModelM
 
     /**
      * Bounce user back to first page
-     * "featured" before backing out.
+     * "play" before backing out.
      */
     @Override
     public void onBackPressed() {

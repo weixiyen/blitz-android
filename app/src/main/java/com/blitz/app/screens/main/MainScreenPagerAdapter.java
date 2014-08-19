@@ -14,7 +14,7 @@ public class MainScreenPagerAdapter extends FragmentStatePagerAdapter {
     //==============================================================================================
 
     // Title of each page.
-    private static final String[] PAGE_TITLES = new String[] { "Featured", "Recent", "Settings" };
+    private static final String[] PAGE_TITLES = new String[] { "Play", "Recent", "Settings" };
 
     //==============================================================================================
     // Constructor
@@ -32,7 +32,7 @@ public class MainScreenPagerAdapter extends FragmentStatePagerAdapter {
     public Fragment getItem(int position) {
         switch (position) {
             case 0:
-                return new MainScreenFragmentFeatured();
+                return new MainScreenFragmentPlay();
             case 1:
                 return new MainScreenFragmentRecent();
             case 2:

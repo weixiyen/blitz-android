@@ -6,7 +6,7 @@ import android.widget.TextView;
 
 import com.blitz.app.R;
 import com.blitz.app.utilities.rest.RestAPIOperation;
-import com.blitz.app.view_models.ViewModelMainFeatured;
+import com.blitz.app.view_models.ViewModelMainPlay;
 import com.blitz.app.utilities.android.BaseFragment;
 
 import butterknife.InjectView;
@@ -15,18 +15,18 @@ import butterknife.OnClick;
 /**
  * Created by mrkcsc on 7/14/14.
  */
-public class MainScreenFragmentFeatured extends BaseFragment {
+public class MainScreenFragmentPlay extends BaseFragment {
 
     //==============================================================================================
     // Member Variables
     //==============================================================================================
 
     // Container views.
-    @InjectView(R.id.main_featured_timeline_container) View mTimelineContainer;
-    @InjectView(R.id.main_featured_queued_container) View mQueuedContainer;
+    @InjectView(R.id.main_play_timeline_container) View mTimelineContainer;
+    @InjectView(R.id.main_play_queued_container) View mQueuedContainer;
 
     // Queue timer.
-    @InjectView(R.id.main_featured_queued_timer) TextView mQueuedTimerTextView;
+    @InjectView(R.id.main_play_queued_timer) TextView mQueuedTimerTextView;
 
     //==============================================================================================
     // Overwritten Methods
@@ -42,10 +42,10 @@ public class MainScreenFragmentFeatured extends BaseFragment {
         super.onCreateView(savedInstanceState);
 
         // Initialize view model.
-        setViewModel(new ViewModelMainFeatured(), savedInstanceState);
+        setViewModel(new ViewModelMainPlay(), savedInstanceState);
 
         // Set the views.
-        getViewModel(ViewModelMainFeatured.class)
+        getViewModel(ViewModelMainPlay.class)
                 .setViews(mTimelineContainer, mQueuedContainer, mQueuedTimerTextView);
     }
 
@@ -56,28 +56,28 @@ public class MainScreenFragmentFeatured extends BaseFragment {
     /**
      * Join the draft queue!
      */
-    @OnClick(R.id.main_featured_play) @SuppressWarnings("unused")
-    public void main_featured_play() {
+    @OnClick(R.id.main_play_button) @SuppressWarnings("unused")
+    public void main_play() {
 
         if (RestAPIOperation.shouldThrottle()) {
             return;
         }
 
         // Enter the queue.
-        getViewModel(ViewModelMainFeatured.class).queueUp();
+        getViewModel(ViewModelMainPlay.class).queueUp();
     }
 
     /**
      * Leave the draft queue.
      */
-    @OnClick(R.id.main_featured_cancel) @SuppressWarnings("unused")
-    public void main_featured_cancel() {
+    @OnClick(R.id.main_play_cancel) @SuppressWarnings("unused")
+    public void main_cancel() {
 
         if (RestAPIOperation.shouldThrottle()) {
             return;
         }
 
         // Leave the queue.
-        getViewModel(ViewModelMainFeatured.class).leaveQueue();
+        getViewModel(ViewModelMainPlay.class).leaveQueue();
     }
 }

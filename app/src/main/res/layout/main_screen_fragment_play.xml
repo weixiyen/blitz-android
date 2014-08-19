@@ -2,7 +2,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/main_featured"
+    android:id="@+id/main_play"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="${packageName}.${activityClass}"
@@ -34,16 +34,16 @@
         android:src="@drawable/asset_bg_helmet_sample" />
 
     <include
-        android:id="@+id/main_featured_timeline_container"
-        layout="@layout/main_screen_fragment_featured_timeline"
+        android:id="@+id/main_play_timeline_container"
+        layout="@layout/main_screen_fragment_play_timeline"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_margin="10dp"/>
 
     <include
-        android:id="@+id/main_featured_queued_container"
-        layout="@layout/main_screen_fragment_featured_queued"
+        android:id="@+id/main_play_queued_container"
+        layout="@layout/main_screen_fragment_play_queued"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"

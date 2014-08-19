@@ -17,7 +17,7 @@ public class ViewPagerZoomOutTransformer implements ViewPager.PageTransformer {
     public void transformPage(View view, float position) {
 
         // Check to see if this is the play screen.
-        View playScreen = view.findViewById(R.id.main_featured);
+        View playScreen = view.findViewById(R.id.main_play);
 
         if (playScreen != null) {
 

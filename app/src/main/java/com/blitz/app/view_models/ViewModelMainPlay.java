@@ -6,17 +6,17 @@ import android.os.Handler;
 import android.view.View;
 import android.widget.TextView;
 
+import com.blitz.app.screens.main.MainScreenFragmentPlay;
 import com.blitz.app.utilities.comet.CometAPICallback;
 import com.blitz.app.utilities.comet.CometAPIManager;
 import com.blitz.app.object_models.ObjectModelQueue;
-import com.blitz.app.screens.main.MainScreenFragmentFeatured;
 import com.blitz.app.utilities.app.AppDataObject;
 import com.google.gson.JsonObject;
 
 /**
  * Created by Miguel on 7/26/2014.
  */
-public class ViewModelMainFeatured extends ViewModel {
+public class ViewModelMainPlay extends ViewModel {
 
     //==============================================================================================
     // Member Variables
@@ -204,13 +204,13 @@ public class ViewModelMainFeatured extends ViewModel {
                 .subscribeToChannel(userCometChannel)
 
                         // Set callback action.
-                .addCallback(MainScreenFragmentFeatured.class, new CometAPICallback<MainScreenFragmentFeatured>() {
+                .addCallback(MainScreenFragmentPlay.class, new CometAPICallback<MainScreenFragmentPlay>() {
 
                     @Override
-                    public void messageReceived(MainScreenFragmentFeatured receivingClass, JsonObject message) {
+                    public void messageReceived(MainScreenFragmentPlay receivingClass, JsonObject message) {
 
                         // Handle the action.
-                        receivingClass.getViewModel(ViewModelMainFeatured.class)
+                        receivingClass.getViewModel(ViewModelMainPlay.class)
                                 .handleDraftAction(receivingClass, message);
                     }
                 }, "draftUserCallback");
@@ -222,7 +222,7 @@ public class ViewModelMainFeatured extends ViewModel {
      * @param receivingClass Instance of this activity.
      * @param message Json message sent.
      */
-    private void handleDraftAction(MainScreenFragmentFeatured receivingClass, JsonObject message) {
+    private void handleDraftAction(MainScreenFragmentPlay receivingClass, JsonObject message) {
 
         // Fetch sent action.
         String action = message.get("action").getAsString();
@@ -230,7 +230,7 @@ public class ViewModelMainFeatured extends ViewModel {
         // If left the queue or entered the draft.
         if (action.equals("left_queue") || action.equals("enter_draft")) {
 
-            receivingClass.getViewModel(ViewModelMainFeatured.class)
+            receivingClass.getViewModel(ViewModelMainPlay.class)
                     .showQueueContainer(false, true);
         }
     }

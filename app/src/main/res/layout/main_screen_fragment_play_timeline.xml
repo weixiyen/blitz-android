@@ -15,30 +15,26 @@
         android:background="@color/button_color_1"
         android:gravity="center"
         android:padding="10dp"
-        android:text="@string/waiting_for_opponent"
+        android:text="@string/bet_money_copy"
         android:textColor="@color/text_color_light"
         android:textSize="16sp"/>
 
-    <TextView
-        android:id="@+id/main_featured_queued_timer"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="100dp"
-        android:background="@color/button_color_1"
-        android:fontFamily="@string/app_font_medium"
-        android:gravity="center"
-        android:text="@string/time"
-        android:textColor="@color/text_color_light"
-        android:textSize="36sp"/>
+        android:background="@color/button_color_1">
+
+    </LinearLayout>
 
     <Button
-        android:id="@+id/main_featured_cancel"
+        android:id="@+id/main_play_button"
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:layout_marginTop="10dp"
         android:background="@drawable/drawable_button_main"
         android:contentDescription="@string/empty_string"
         android:fontFamily="@string/app_font_light"
-        android:text="@string/cancel"
+        android:text="@string/play"
         android:textColor="@color/text_color_light"
         android:textSize="12sp" />
 </LinearLayout>
