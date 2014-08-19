@@ -15,13 +15,13 @@
         tools:ignore="UselessParent">
 
         <RelativeLayout
-            android:layout_width="320dp"
+            android:layout_width="@dimen/screen_width"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:background="@drawable/asset_bg_dialog">
 
             <ImageView
-                android:layout_width="320dp"
+                android:layout_width="@dimen/screen_width"
                 android:layout_height="300dp"
                 android:contentDescription="@string/empty_string"
                 android:src="@drawable/asset_bg_dialog_glow" />

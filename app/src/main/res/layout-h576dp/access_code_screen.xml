@@ -20,7 +20,7 @@
     <Button
         android:id="@+id/access_code_continue_with_code"
         style="@style/ButtonStyle"
-        android:layout_width="320dp"
+        android:layout_width="@dimen/screen_width"
         android:layout_height="60dp"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
@@ -62,7 +62,7 @@
 
         <EditText
             android:id="@+id/access_code_code"
-            android:layout_width="320dp"
+            android:layout_width="@dimen/screen_width"
             android:layout_height="50dp"
             android:layout_gravity="center_horizontal"
             android:background="@drawable/drawable_queue_input"
@@ -87,7 +87,7 @@
             android:background="@drawable/asset_queue_overlay">
 
             <me.grantland.widget.AutofitTextView
-                android:layout_width="320dp"
+                android:layout_width="@dimen/screen_width"
                 android:layout_height="match_parent"
                 android:layout_centerHorizontal="true"
                 android:contentDescription="@string/empty_string"

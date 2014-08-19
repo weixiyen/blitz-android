@@ -156,7 +156,7 @@
 
     <LinearLayout
         android:id="@+id/access_queue_calls_to_action"
-        android:layout_width="320dp"
+        android:layout_width="@dimen/screen_width"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"

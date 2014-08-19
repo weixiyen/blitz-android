@@ -15,131 +15,23 @@
         android:src="@drawable/asset_bg_main"
         app:scaleType="topCrop" />
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="50dp"
+    <RelativeLayout
+        android:layout_width="@dimen/screen_width"
+        android:layout_height="127dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="100dp"
+        android:background="@drawable/asset_bg_profile_play"
         android:orientation="vertical">
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:layout_marginTop="10dp"
-            android:background="@color/button_color_1"
-            android:fontFamily="@string/app_font_regular"
-            android:gravity="center"
-            android:padding="10dp"
-            android:text="@string/lorum_ipsum_tiny"
-            android:textColor="@color/text_color_light"
-            android:textSize="24sp"/>
+    </RelativeLayout>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:background="@color/button_color_1"
-            android:orientation="horizontal"
-            android:padding="10dp">
-
-            <RelativeLayout
-                android:layout_width="60dp"
-                android:layout_height="match_parent"
-                android:background="@color/button_color_1"
-                android:padding="3dp">
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentTop="true"
-                    android:fontFamily="@string/app_font_medium"
-                    android:gravity="center"
-                    android:text="@string/number_small"
-                    android:textColor="@color/text_color_light"
-                    android:textSize="12sp"/>
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentBottom="true"
-                    android:fontFamily="@string/app_font_light"
-                    android:gravity="center"
-                    android:text="@string/wins"
-                    android:textAllCaps="true"
-                    android:textColor="@color/text_color_light"
-                    android:textSize="13sp"/>
-            </RelativeLayout>
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                android:layout_weight="1"
-                android:background="@color/button_color_1"
-                android:gravity="center"
-                android:text="@string/number_small"
-                android:textSize="28sp"/>
-
-            <RelativeLayout
-                android:layout_width="60dp"
-                android:layout_height="match_parent"
-                android:background="@color/button_color_1"
-                android:padding="3dp">
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentTop="true"
-                    android:fontFamily="@string/app_font_medium"
-                    android:gravity="center"
-                    android:text="@string/number_small"
-                    android:textColor="@color/text_color_light"
-                    android:textSize="12sp"/>
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentBottom="true"
-                    android:fontFamily="@string/app_font_light"
-                    android:gravity="center"
-                    android:text="@string/losses"
-                    android:textAllCaps="true"
-                    android:textColor="@color/text_color_light"
-                    android:textSize="13sp"/>
-            </RelativeLayout>
-
-        </LinearLayout>
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_margin="10dp"
-            android:background="@color/button_color_1"
-            android:paddingLeft="10dp"
-            android:paddingRight="10dp">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_alignParentLeft="true"
-                android:gravity="center"
-                android:text="@string/lorum_ipsum_tiny"
-                android:textColor="@color/text_color_light"
-                android:textSize="12sp"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_alignParentRight="true"
-                android:gravity="center"
-                android:text="@string/lorum_ipsum_tiny"
-                android:textColor="@color/text_color_light"
-                android:textSize="12sp"/>
-        </RelativeLayout>
-    </LinearLayout>
+    <ImageView
+        android:layout_width="140dp"
+        android:layout_height="140dp"
+        android:layout_marginLeft="40dp"
+        android:layout_marginTop="100dp"
+        android:contentDescription="@string/empty_string"
+        android:src="@drawable/asset_bg_helmet_sample" />
 
     <include
         android:id="@+id/main_featured_timeline_container"
