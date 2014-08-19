@@ -21,6 +21,7 @@ public class AppConfig {
 
     // Base url, set on initialization.
     private static String mBaseURL;
+    private static String mBaseURLComet;
 
     // Production flag.
     private static Boolean mIsProduction;
@@ -125,7 +126,7 @@ public class AppConfig {
     public static String getWebsocketUrl() {
 
         // Base with comet API.
-        return mBaseURL + "comet/u";
+        return mBaseURLComet + "comet/u/";
     }
 
     /**
@@ -155,6 +156,8 @@ public class AppConfig {
                 case R.string.environment_staging:
 
                     mBaseURL = "https://blitz.zone/";
+                    mBaseURLComet = "wss://blitz.zone/";
+
                     mIsProduction = true;
 
                     break;
@@ -162,6 +165,8 @@ public class AppConfig {
                 case R.string.environment_qa:
 
                     mBaseURL = "https://snapdraft.us/";
+                    mBaseURLComet = "wss://snapdraft.us/";
+
                     mIsProduction = false;
 
                     break;
