@@ -1,0 +1,24 @@
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="320dp"
+    android:layout_height="wrap_content"
+    tools:context="${packageName}.${activityClass}"
+    tools:ignore="ButtonStyle,UnusedAttribute">
+
+    <ImageView
+        android:layout_width="@dimen/screen_width"
+        android:layout_height="127dp"
+        android:layout_centerHorizontal="true"
+        android:contentDescription="@string/empty_string"
+        android:orientation="vertical"
+        android:src="@drawable/asset_bg_profile_play" />
+
+    <ImageView
+        android:layout_width="140dp"
+        android:layout_height="140dp"
+        android:layout_marginLeft="5dp"
+        android:contentDescription="@string/empty_string"
+        android:src="@drawable/asset_bg_helmet_sample" />
+
+</RelativeLayout>
