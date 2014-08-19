@@ -1,17 +1,16 @@
-<LinearLayout
+<FrameLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:gravity="center"
-    android:orientation="vertical"
     tools:context="${packageName}.${activityClass}"
-    tools:ignore="ButtonStyle,UnusedAttribute">
+    tools:ignore="ButtonStyle,UnusedAttribute,UselessParent">
 
     <RelativeLayout
         android:id="@+id/main_play_button"
         android:layout_width="150dp"
         android:layout_height="150dp"
+        android:layout_gravity="center"
         android:background="@drawable/asset_play_button_play_up">
 
         <ImageView
@@ -25,5 +24,16 @@
             android:layout_height="match_parent"
             android:contentDescription="@string/empty_string"
             android:src="@drawable/asset_play_button_play_outline" />
+
+        <TextView
+            style="@style/TextViewStyle"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:fontFamily="@string/app_font_sports"
+            android:gravity="center"
+            android:text="@string/play"
+            android:textColor="@color/text_color_light"
+            android:textSize="28sp"/>
     </RelativeLayout>
-</LinearLayout>
+</FrameLayout> 
