@@ -5,9 +5,10 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.blitz.app.R;
+import com.blitz.app.utilities.android.BaseFragment;
+import com.blitz.app.utilities.logging.LogHelper;
 import com.blitz.app.utilities.rest.RestAPIOperation;
 import com.blitz.app.view_models.ViewModelMainPlay;
-import com.blitz.app.utilities.android.BaseFragment;
 
 import butterknife.InjectView;
 import butterknife.OnClick;
@@ -15,7 +16,7 @@ import butterknife.OnClick;
 /**
  * Created by mrkcsc on 7/14/14.
  */
-public class MainScreenFragmentPlay extends BaseFragment {
+public class MainScreenFragmentPlay extends BaseFragment implements ViewModelMainPlay.ViewModelMainPlayCallbacks {
 
     //==============================================================================================
     // Member Variables
@@ -43,10 +44,25 @@ public class MainScreenFragmentPlay extends BaseFragment {
 
         // Initialize view model.
         setViewModel(new ViewModelMainPlay(), savedInstanceState);
+    }
 
-        // Set the views.
-        getViewModel(ViewModelMainPlay.class)
-                .setViews(mTimelineContainer, mQueuedContainer, mQueuedTimerTextView);
+    //==============================================================================================
+    // View Model Callbacks
+    //==============================================================================================
+
+    @Override
+    public void onQueueUp(boolean animate) {
+        LogHelper.log("Joined the queue. " + animate);
+    }
+
+    @Override
+    public void onQueueCancel(boolean animate) {
+        LogHelper.log("Left the queue. " + animate);
+    }
+
+    @Override
+    public void onQueueTick(String secondsInQueue) {
+        LogHelper.log("Timer ticked: " + secondsInQueue + ".");
     }
 
     //==============================================================================================

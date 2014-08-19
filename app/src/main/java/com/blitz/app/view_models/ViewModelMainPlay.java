@@ -3,14 +3,12 @@ package com.blitz.app.view_models;
 import android.app.Activity;
 import android.os.Bundle;
 import android.os.Handler;
-import android.view.View;
-import android.widget.TextView;
 
+import com.blitz.app.object_models.ObjectModelQueue;
 import com.blitz.app.screens.main.MainScreenFragmentPlay;
+import com.blitz.app.utilities.app.AppDataObject;
 import com.blitz.app.utilities.comet.CometAPICallback;
 import com.blitz.app.utilities.comet.CometAPIManager;
-import com.blitz.app.object_models.ObjectModelQueue;
-import com.blitz.app.utilities.app.AppDataObject;
 import com.google.gson.JsonObject;
 
 /**
@@ -21,11 +19,6 @@ public class ViewModelMainPlay extends ViewModel {
     //==============================================================================================
     // Member Variables
     //==============================================================================================
-
-    // View containers.
-    private View mTimelineContainer;
-    private View mQueuedContainer;
-    private TextView mTimerTextView;
 
     // Queue timer variables.
     private int      mSecondsAtSuspension;
@@ -113,21 +106,6 @@ public class ViewModelMainPlay extends ViewModel {
     //==============================================================================================
 
     /**
-     * Setter for various views in the UI that
-     * we will be operating on.
-     *
-     * @param timelineContainer Timeline container, shows betting schedule.
-     * @param queuedContainer Queue container, shows the queue timer.
-     * @param timerTextView Time text view.
-     */
-    public void setViews(View timelineContainer, View queuedContainer, TextView timerTextView) {
-
-        mTimelineContainer = timelineContainer;
-        mQueuedContainer   = queuedContainer;
-        mTimerTextView     = timerTextView;
-    }
-
-    /**
      * Join the draft queue.
      */
     public void queueUp() {
@@ -171,19 +149,18 @@ public class ViewModelMainPlay extends ViewModel {
 
         if (showQueueContainer) {
 
-            if (mQueuedContainer.getVisibility() != View.VISIBLE) {
+            // Now in the queue.
+            getCallbacks(ViewModelMainPlayCallbacks.class).onQueueUp(animate);
 
-                showContainer(mTimelineContainer, mQueuedContainer, animate);
-            }
-            startQueueTimer(mTimerTextView);
+            // Start timer.
+            startQueueTimer();
 
-        } else  {
+        } else {
 
-            if (mTimelineContainer.getVisibility() != View.VISIBLE) {
+            // Now left the queue.
+            getCallbacks(ViewModelMainPlayCallbacks.class).onQueueCancel(animate);
 
-                showContainer(mQueuedContainer, mTimelineContainer, animate);
-            }
-
+            // Stop timer.
             stopQueueTimer(true);
         }
     }
@@ -239,7 +216,7 @@ public class ViewModelMainPlay extends ViewModel {
      * Start the queue timer and increment
      * it every second.
      */
-    private void startQueueTimer(final TextView timerTextView) {
+    private void startQueueTimer() {
 
         if (mSecondsInQueueHandler ==  null) {
             mSecondsInQueueHandler = new Handler();
@@ -254,9 +231,9 @@ public class ViewModelMainPlay extends ViewModel {
                     mSecondsInQueue++;
                     mSecondsInQueueHandler.postDelayed(mSecondsInQueueRunnable, 1000);
 
-                    // Update the timer text view.
-                    timerTextView.setText(String.format("%02d:%02d",
-                            mSecondsInQueue / 100, mSecondsInQueue % 100));
+                    // Queue timer has ticked.
+                    getCallbacks(ViewModelMainPlayCallbacks.class).onQueueTick(
+                            String.format("%02d:%02d", mSecondsInQueue / 100, mSecondsInQueue % 100));
                 }
             };
         }
@@ -286,34 +263,6 @@ public class ViewModelMainPlay extends ViewModel {
     }
 
     /**
-     * Show a container with animation.
-     *
-     * @param containerFrom Animating from.
-     * @param containerTo Animating to.
-     */
-    private void showContainer(final View containerFrom, final View containerTo, boolean animate) {
-
-        // Duration based on animate flag.
-        final int duration = animate ? 250 : 0;
-
-        // First fade out the from container.
-        containerFrom.animate().alpha(0.0f).setDuration(duration).withEndAction(new Runnable() {
-
-            @Override
-            public void run() {
-
-                // Then remove it from the layout.
-                containerFrom.setVisibility(View.GONE);
-
-                // Then fade in the to container.
-                containerTo.setVisibility(View.VISIBLE);
-                containerTo.setAlpha(0.0f);
-                containerTo.animate().alpha(1.0f).setDuration(duration);
-            }
-        });
-    }
-
-    /**
      * Fetch queue model instance.
      *
      * @return Queue model instance.
@@ -326,5 +275,16 @@ public class ViewModelMainPlay extends ViewModel {
         }
 
         return mModelQueue;
+    }
+
+    //==============================================================================================
+    // Callbacks Interface
+    //==============================================================================================
+
+    public interface ViewModelMainPlayCallbacks extends ViewModelCallbacks {
+
+        public void onQueueUp(boolean animate);
+        public void onQueueCancel(boolean animate);
+        public void onQueueTick(String secondsInQueue);
     }
 }
