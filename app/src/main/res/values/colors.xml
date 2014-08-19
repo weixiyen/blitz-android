@@ -1,5 +1,4 @@
 <resources>
-    <color name="background_primary">#000d20</color>
     <color name="background_inner">#BF333333</color>
     <color name="background_inner_dark">#BF222222</color>
     <color name="background_inner_divider">#111111</color>

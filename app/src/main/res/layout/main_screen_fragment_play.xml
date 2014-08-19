@@ -19,17 +19,56 @@
         android:layout_width="@dimen/screen_width"
         android:layout_height="127dp"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="100dp"
+        android:layout_marginTop="80dp"
         android:background="@drawable/asset_bg_profile_play"
         android:orientation="vertical">
 
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="320dp"
+        android:layout_height="99dp"
+        android:layout_marginTop="225dp"
+        android:background="@drawable/asset_timeline_bg"
+        android:visibility="gone">
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="132dp"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="200dp"
+        android:gravity="center_horizontal">
+
+        <ImageView
+            android:layout_width="320dp"
+            android:layout_height="99dp"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="33dp"
+            android:contentDescription="@string/empty_string"
+            android:src="@drawable/asset_timeline_bg_pattern" />
+
+        <ImageView
+            android:layout_width="320dp"
+            android:layout_height="99dp"
+            android:layout_alignParentTop="true"
+            android:contentDescription="@string/empty_string"
+            android:src="@drawable/asset_timeline_bg" />
+
+        <ImageView
+            android:layout_width="300dp"
+            android:layout_height="70dp"
+            android:layout_marginTop="27dp"
+            android:contentDescription="@string/empty_string"
+            android:src="@drawable/asset_timeline_bg_highlight" />
     </RelativeLayout>
 
     <ImageView
         android:layout_width="140dp"
         android:layout_height="140dp"
         android:layout_marginLeft="40dp"
-        android:layout_marginTop="100dp"
+        android:layout_marginTop="80dp"
         android:contentDescription="@string/empty_string"
         android:src="@drawable/asset_bg_helmet_sample" />
 
@@ -38,8 +77,7 @@
         layout="@layout/main_screen_fragment_play_timeline"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_margin="10dp"/>
+        android:layout_alignParentBottom="true"/>
 
     <include
         android:id="@+id/main_play_queued_container"
@@ -47,6 +85,5 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_margin="10dp"
         android:visibility="gone"/>
 </RelativeLayout>
