@@ -3,27 +3,19 @@ package com.blitz.app.utilities.viewpager;
 import android.support.v4.view.ViewPager;
 import android.view.View;
 
-import com.blitz.app.R;
-
 /**
  * Created by Miguel Gaeta on 6/1/14.
  */
 @SuppressWarnings("unused")
 public class ViewPagerZoomOutTransformer implements ViewPager.PageTransformer {
 
-    private static final float MIN_SCALE = 0.95f;
-    private static final float MIN_ALPHA = 0.15f;
+    private static final float MIN_SCALE = 0.85f;
+    private static final float MIN_ALPHA = 0.50f;
 
     public void transformPage(View view, float position) {
 
-        // Check to see if this is the play screen.
-        View playScreen = view.findViewById(R.id.main_play);
-
-        if (playScreen != null) {
-
-            // Only fade this screen.
-            adjustAlpha(view, position);
-        }
+        // Only fade this screen.
+        adjustAlpha(view, position);
 
         // All pages scale.
         adjustScale(view, position);
