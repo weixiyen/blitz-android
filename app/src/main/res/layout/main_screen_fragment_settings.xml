@@ -398,6 +398,25 @@
                 android:background="@color/background_inner_divider"/>
 
             <Button
+                android:id="@+id/main_settings_logout"
+                style="@style/ButtonStyle"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:background="@color/background_inner"
+                android:fontFamily="@string/app_font_helvetica_condensed_bold"
+                android:gravity="center|left"
+                android:paddingLeft="25dp"
+                android:paddingRight="25dp"
+                android:text="@string/logout"
+                android:textSize="16sp"/>
+
+            <View
+                android:id="@+id/main_settings_reset_border"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/background_inner_divider"/>
+
+            <Button
                 android:id="@+id/main_settings_reset"
                 style="@style/ButtonStyle"
                 android:layout_width="match_parent"

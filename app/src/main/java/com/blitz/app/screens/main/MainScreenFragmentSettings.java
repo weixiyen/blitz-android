@@ -11,10 +11,10 @@ import com.blitz.app.screens.loading.LoadingScreen;
 import com.blitz.app.screens.web.WebScreen;
 import com.blitz.app.utilities.android.BaseFragment;
 import com.blitz.app.utilities.app.AppConfig;
+import com.blitz.app.utilities.app.AppData;
 import com.blitz.app.utilities.app.AppDataObject;
 import com.blitz.app.utilities.authentication.AuthHelper;
 import com.blitz.app.utilities.carousel.MyPagerAdapter;
-import com.blitz.app.utilities.logging.LogHelper;
 import com.blitz.app.utilities.reflection.ReflectionHelper;
 import com.blitz.app.utilities.sound.SoundHelper;
 
@@ -34,7 +34,8 @@ public class MainScreenFragmentSettings extends BaseFragment {
     @InjectView(R.id.main_screen_fragment_settings_toggle_sound) Switch mSettingsToggleSound;
 
     // Reset button (only display for QA).
-    @InjectView(R.id.main_settings_reset) View mSettingsReset;
+    @InjectView(R.id.main_settings_reset)        View mSettingsReset;
+    @InjectView(R.id.main_settings_reset_border) View mSettingsResetBorder;
 
     public @InjectView(R.id.main_settings_carousel) ViewPager pager;
 
@@ -64,21 +65,18 @@ public class MainScreenFragmentSettings extends BaseFragment {
 
 
 
-
         adapter = new MyPagerAdapter(this, getChildFragmentManager());
 
         pager.setAdapter(adapter);
         pager.setOnPageChangeListener(adapter);
-// Set current item to the middle page so we can fling to both
-// directions left and right
+        // Set current item to the middle page so we can fling to both
+        // directions left and right
         pager.setCurrentItem(FIRST_PAGE);
-// Necessary or the pager will only have one extra page to show
-// make this at least however many pages you can see
+        // Necessary or the pager will only have one extra page to show
+        // make this at least however many pages you can see
         pager.setOffscreenPageLimit(3);
-// Set margin for pages as a negative number, so a part of next and
-// previous pages will be showed
-
-        LogHelper.log("New created");
+        // Set margin for pages as a negative number, so a part of next and
+        // previous pages will be showed
 
         int pixelPadding = ReflectionHelper.densityPixelsToPixels(getActivity(), 90);
         int pagePadding = ReflectionHelper.densityPixelsToPixels(getActivity(), 10);
@@ -87,14 +85,17 @@ public class MainScreenFragmentSettings extends BaseFragment {
         pager.setClipToPadding(false);
         pager.setPageMargin(0);
 
+
+
         // Initialize switch states.
         mSettingsToggleMusic.setChecked(!AppDataObject.settingsMusicDisabled.getBoolean());
         mSettingsToggleSound.setChecked(!AppDataObject.settingsSoundDisabled.getBoolean());
 
-        if (!AppConfig.isProduction()) {
+        if (AppConfig.isProduction()) {
 
             // Hide if not on production.
-            mSettingsReset.setVisibility(View.GONE);
+            mSettingsReset      .setVisibility(View.GONE);
+            mSettingsResetBorder.setVisibility(View.GONE);
         }
     }
 
@@ -146,13 +147,26 @@ public class MainScreenFragmentSettings extends BaseFragment {
     }
 
     /**
-     * Sign user out when reset clicked.
+     * Log out user when clicked.
+     */
+    @OnClick(R.id.main_settings_logout) @SuppressWarnings("unused")
+    public void logoutClicked() {
+
+        // Sign out user.
+        AuthHelper.signOut();
+
+        // Bounce user back to the loading screen.
+        startActivity(new Intent(this.getActivity(), LoadingScreen.class));
+    }
+
+    /**
+     * Reset all app data when clicked.
      */
     @OnClick(R.id.main_settings_reset) @SuppressWarnings("unused")
     public void resetClicked() {
 
-        // Sign out user.
-        AuthHelper.signOut();
+        // Clear app data.
+        AppData.clear();
 
         // Bounce user back to the loading screen.
         startActivity(new Intent(this.getActivity(), LoadingScreen.class));
