@@ -59,7 +59,7 @@ public class AppConfig {
      */
     public static boolean isSoundDisabled() {
 
-        return true;
+        return false;
     }
 
     /**
@@ -83,7 +83,7 @@ public class AppConfig {
      */
     public static String getTermsOfUseUrl() {
 
-        return "https://blitz.zone/terms";
+        return "https://blitz.zone/terms?android=true";
     }
 
     /**
@@ -91,7 +91,7 @@ public class AppConfig {
      */
     public static String getPrivacyPolicyUrl() {
 
-        return "https://blitz.zone/privacy";
+        return "https://blitz.zone/privacy?android=true";
     }
 
     //==============================================================================================
