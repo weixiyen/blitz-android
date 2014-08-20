@@ -55,8 +55,8 @@
     </RelativeLayout>
 
     <include
-        android:id="@+id/main_play_timeline_container"
-        layout="@layout/main_screen_fragment_play_timeline"
+        android:id="@+id/main_play_action"
+        layout="@layout/main_screen_fragment_play_action"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"

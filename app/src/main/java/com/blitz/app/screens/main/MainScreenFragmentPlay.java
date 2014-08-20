@@ -23,7 +23,7 @@ public class MainScreenFragmentPlay extends BaseFragment implements ViewModelMai
     //==============================================================================================
 
     // Container views.
-    @InjectView(R.id.main_play_timeline_container) View mTimelineContainer;
+    @InjectView(R.id.main_play_action) View mTimelineContainer;
     @InjectView(R.id.main_play_queued_container) View mQueuedContainer;
 
     // Queue timer.
