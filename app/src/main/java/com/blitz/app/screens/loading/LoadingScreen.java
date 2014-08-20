@@ -5,8 +5,6 @@ import android.os.Bundle;
 import android.os.Handler;
 
 import com.blitz.app.R;
-import com.blitz.app.screens.access_queue.AccessQueueScreen;
-import com.blitz.app.screens.splash.SplashScreen;
 import com.blitz.app.utilities.android.BaseActivity;
 import com.blitz.app.utilities.app.AppConfig;
 import com.blitz.app.utilities.app.AppData;
@@ -101,24 +99,8 @@ public class LoadingScreen extends BaseActivity {
             startActivity(new Intent(LoadingScreen.this, AppConfig.getJumpToActivity()));
         } else {
 
-            if (AuthHelper.isPassedQueue()) {
-
-                if (AuthHelper.isSignedIn()) {
-
-                    // User is already logged in, go to main app.
-                    AuthHelper.enterMainApp(LoadingScreen.this);
-
-                } else {
-
-                    // User must go to splash screen and sign-in/register.
-                    startActivity(new Intent(LoadingScreen.this, SplashScreen.class));
-                }
-
-            } else {
-
-                // User is blocked on Queue screen.
-                startActivity(new Intent(LoadingScreen.this, AccessQueueScreen.class));
-            }
+            // Try to enter the application.
+            AuthHelper.tryEnterMainApp(LoadingScreen.this);
         }
 
         // Play the lobby music after loading.
