@@ -1,0 +1,33 @@
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="132dp"
+    android:gravity="center_horizontal"
+    tools:context="${packageName}.${activityClass}"
+    tools:ignore="ButtonStyle,UnusedAttribute,UselessParent">
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="99dp"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="33dp"
+        android:contentDescription="@string/empty_string"
+        android:scaleType="center"
+        android:src="@drawable/asset_timeline_bg_pattern"/>
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="99dp"
+        android:layout_alignParentTop="true"
+        android:contentDescription="@string/empty_string"
+        android:scaleType="center"
+        android:src="@drawable/asset_timeline_bg" />
+
+    <ImageView
+        android:layout_width="300dp"
+        android:layout_height="70dp"
+        android:layout_marginTop="27dp"
+        android:contentDescription="@string/empty_string"
+        android:src="@drawable/asset_timeline_bg_highlight"/>
+</RelativeLayout>
