@@ -108,13 +108,13 @@ public class BaseActivity extends FragmentActivity implements ViewModel.ViewMode
         // Stop timer to detect entering the background.
         EnteredBackground.stopActivityTransitionTimer();
 
-        // Add current activity.
-        CometAPIManager.configAddActivity(this);
-
         // Initialize the view model.
         if (mViewModel != null) {
             mViewModel.initialize(this, this);
         }
+
+        // Add current activity.
+        CometAPIManager.configAddActivity(this);
     }
 
     /**

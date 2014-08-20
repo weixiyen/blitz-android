@@ -101,13 +101,13 @@ public class BaseFragment extends Fragment implements ViewModel.ViewModelCallbac
     public void onResume () {
         super.onResume();
 
-        // Add a new fragment.
-        CometAPIManager.configAddFragment(this);
-
         // Initialize the view model.
         if (mViewModel != null) {
             mViewModel.initialize(getActivity(), this);
         }
+
+        // Add a new fragment.
+        CometAPIManager.configAddFragment(this);
     }
 
     /**
