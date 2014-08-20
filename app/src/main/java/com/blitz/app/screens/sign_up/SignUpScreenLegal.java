@@ -39,7 +39,7 @@ public class SignUpScreenLegal extends BaseActivity {
         mWebView.setLoadingView(mProgressBar);
 
         // Set terms of use url.
-        mWebView.loadUrl(AppConfig.getTermsOfUseUrl());
+        mWebView.loadUrl(AppConfig.getLegalUrl());
     }
 
     //==============================================================================================
