@@ -94,6 +94,14 @@ public class AppConfig {
         return mBaseURL + "privacy?android=true";
     }
 
+    /**
+     * Fetch URL for legal terms.
+     */
+    public static String getLegalUrl() {
+
+        return mBaseURL + "legal?android=true";
+    }
+
     //==============================================================================================
     // Public Methods
     //==============================================================================================
