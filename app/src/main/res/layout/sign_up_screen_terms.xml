@@ -1,0 +1,59 @@
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="${packageName}.${activityClass}"
+    tools:ignore="ButtonStyle,UnusedAttribute,TextFields">
+
+    <com.blitz.app.utilities.imageview_plus.ImageViewPlus
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:contentDescription="@string/empty_string"
+        android:src="@drawable/asset_bg_standard"
+        app:scaleType="topCrop" />
+
+    <me.grantland.widget.AutofitTextView
+        android:layout_width="match_parent"
+        android:layout_height="75dp"
+        android:layout_marginBottom="10dp"
+        android:fontFamily="@string/app_font_bold"
+        android:gravity="center"
+        android:padding="25dp"
+        android:shadowColor="@color/text_color_shadow"
+        android:shadowDx="1"
+        android:shadowDy="1"
+        android:shadowRadius="2"
+        android:singleLine="true"
+        android:text="@string/terms_of_use_combined"
+        android:textColor="@color/text_color_light"
+        android:textSize="20sp" />
+
+    <com.blitz.app.utilities.android.BaseWebView
+        android:id="@+id/sign_up_terms_web"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="90dp"
+        android:layout_marginTop="75dp"/>
+
+    <ProgressBar
+        android:id="@+id/sign_up_terms_progress"
+        style="?android:attr/progressBarStyleLarge"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:layout_marginBottom="10dp"/>
+
+    <Button
+        android:id="@+id/sign_up_terms_accept"
+        style="@style/ButtonStyle"
+        android:layout_width="@dimen/screen_width"
+        android:layout_height="60dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="10dp"
+        android:background="@drawable/drawable_button_big"
+        android:text="@string/accept" />
+</RelativeLayout>

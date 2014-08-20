@@ -43,16 +43,6 @@
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
 
-        <!-- Facebook SDK appId used for authentication. -->
-        <meta-data
-            android:name="com.facebook.sdk.ApplicationId"
-            android:value="@string/app_id" />
-
-        <!-- Facebook Login activity -->
-        <activity
-            android:name="com.facebook.LoginActivity"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
-
         <!-- Main loading screen -->
         <activity android:name=".screens.loading.LoadingScreen">
             <intent-filter>
@@ -75,6 +65,9 @@
 
         <activity android:name=".screens.sign_up.SignUpScreen"
             android:windowSoftInputMode="stateVisible" />
+
+        <activity android:name=".screens.sign_up.SignUpScreenTerms"
+            android:windowSoftInputMode="stateHidden" />
 
         <activity android:name=".screens.main.MainScreen"
             android:windowSoftInputMode="stateHidden" />

@@ -1,4 +1,5 @@
 <resources>
+    <string name="accept">Accept</string>
     <string name="access_code">Access Code</string>
     <string name="access_code_copy">If you have an access code, please enter it now to join the future of Fantasy Football!</string>
     <string name="account">Account</string>
@@ -43,6 +44,7 @@
     <string name="sign_in">Sign In</string>
     <string name="sign_up">Sign Up</string>
     <string name="terms_of_use">Terms of Use</string>
+    <string name="terms_of_use_combined">Terms of Use / Privacy Policy</string>
     <string name="unlock_more_helmets">Unlock More Helmets</string>
     <string name="username_or_email">Username or Email</string>
     <string name="waiting_for_opponent">Waiting for opponent…</string>
