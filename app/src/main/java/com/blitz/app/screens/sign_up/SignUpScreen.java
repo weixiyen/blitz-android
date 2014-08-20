@@ -1,14 +1,13 @@
 package com.blitz.app.screens.sign_up;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.widget.EditText;
 
 import com.blitz.app.R;
 import com.blitz.app.object_models.ObjectModelUser;
-import com.blitz.app.utilities.rest.RestAPIOperation;
-import com.blitz.app.screens.main.MainScreen;
 import com.blitz.app.utilities.android.BaseActivity;
+import com.blitz.app.utilities.authentication.AuthHelper;
+import com.blitz.app.utilities.rest.RestAPIOperation;
 
 import butterknife.InjectView;
 import butterknife.OnClick;
@@ -69,8 +68,8 @@ public class SignUpScreen extends BaseActivity {
             @Override
             public void onSignUp() {
 
-                // Enter main screen.
-                startActivity(new Intent(SignUpScreen.this, MainScreen.class), true);
+                // Enter main app.
+                AuthHelper.enterMainApp(SignUpScreen.this);
             }
         });
     }

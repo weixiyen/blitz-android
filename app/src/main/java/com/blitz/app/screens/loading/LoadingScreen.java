@@ -6,7 +6,6 @@ import android.os.Handler;
 
 import com.blitz.app.R;
 import com.blitz.app.screens.access_queue.AccessQueueScreen;
-import com.blitz.app.screens.main.MainScreen;
 import com.blitz.app.screens.splash.SplashScreen;
 import com.blitz.app.utilities.android.BaseActivity;
 import com.blitz.app.utilities.app.AppConfig;
@@ -107,7 +106,7 @@ public class LoadingScreen extends BaseActivity {
                 if (AuthHelper.isSignedIn()) {
 
                     // User is already logged in, go to main app.
-                    startActivity(new Intent(LoadingScreen.this, MainScreen.class));
+                    AuthHelper.enterMainApp(LoadingScreen.this);
 
                 } else {
 

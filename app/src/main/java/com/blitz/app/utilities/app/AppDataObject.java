@@ -14,6 +14,9 @@ public class AppDataObject extends AppData {
     // Does the user have access to the main app (passed queue wall).
     public static final AppData hasAccess = new AppData(Boolean.class, "HAS_ACCESS");
 
+    // Has the user agreed to the legal terms of this app.
+    public static final AppData hasAgreedLegal = new AppData(Boolean.class, "HAS_AGREED_LEGAL");
+
     // Set of various keyboard heights.
     public static final AppData keyboardHeights = new AppData(HashMap.class, "KEYBOARD_HEIGHTS");
 

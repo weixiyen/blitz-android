@@ -3,6 +3,8 @@ package com.blitz.app.utilities.authentication;
 import android.content.Intent;
 
 import com.blitz.app.object_models.ObjectModelDraft;
+import com.blitz.app.screens.main.MainScreen;
+import com.blitz.app.screens.sign_up.SignUpScreenTerms;
 import com.blitz.app.screens.splash.SplashScreen;
 import com.blitz.app.utilities.android.BaseActivity;
 import com.blitz.app.utilities.app.AppData;
@@ -69,6 +71,26 @@ public class AuthHelper {
     public static boolean isPassedQueue() {
 
         return AppDataObject.hasAccess.getBoolean();
+    }
+
+    /**
+     * Tries to enter the main application.  This may fail
+     * if the user has not yet agreed to legal policy.
+     *
+     * @param activity Target activity.
+     */
+    public static void enterMainApp(BaseActivity activity) {
+
+        if (AppDataObject.hasAgreedLegal.getBoolean()) {
+
+            // Enter main screen of the app.
+            activity.startActivity(new Intent(activity, MainScreen.class), true);
+
+        } else {
+
+            // Enter the sign up terms screen.
+            activity.startActivity(new Intent(activity, SignUpScreenTerms.class), true);
+        }
     }
 
     /**
