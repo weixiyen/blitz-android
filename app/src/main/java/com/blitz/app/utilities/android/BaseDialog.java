@@ -208,6 +208,7 @@ public class BaseDialog {
                     }
 
                 } catch (IllegalArgumentException ignored) { }
+                  catch (IllegalStateException    ignored) { }
 
                 // Execute callback.
                 if (mHideListener != null) {
