@@ -38,7 +38,7 @@
         android:layout_marginTop="75dp"/>
 
     <ProgressBar
-        android:id="@+id/sign_up_terms_progress"
+        android:id="@+id/sign_up_legal_progress"
         style="?android:attr/progressBarStyleLarge"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -47,7 +47,7 @@
         android:layout_marginBottom="10dp"/>
 
     <Button
-        android:id="@+id/sign_up_terms_accept"
+        android:id="@+id/sign_up_legal_accept"
         style="@style/ButtonStyle"
         android:layout_width="@dimen/screen_width"
         android:layout_height="60dp"

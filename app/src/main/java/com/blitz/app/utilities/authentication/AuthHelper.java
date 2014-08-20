@@ -5,7 +5,7 @@ import android.content.Intent;
 import com.blitz.app.object_models.ObjectModelDraft;
 import com.blitz.app.screens.access_queue.AccessQueueScreen;
 import com.blitz.app.screens.main.MainScreen;
-import com.blitz.app.screens.sign_up.SignUpScreenTerms;
+import com.blitz.app.screens.sign_up.SignUpScreenLegal;
 import com.blitz.app.screens.splash.SplashScreen;
 import com.blitz.app.utilities.android.BaseActivity;
 import com.blitz.app.utilities.app.AppData;
@@ -55,6 +55,15 @@ public class AuthHelper {
     }
 
     /**
+     * User accepted legal agreements.
+     */
+    public static void setLegalAccepted() {
+
+        // User has accepted legal terms.
+        AppDataObject.hasAgreedLegal.set(true);
+    }
+
+    /**
      * Tries to enter the main application.  This may fail
      * if the user has not yet agreed to legal policy, is
      * not signed in, or has not passed access queue.
@@ -78,7 +87,7 @@ public class AuthHelper {
                 } else {
 
                     // User is blocked on legal screen.
-                    activity.startActivity(new Intent(activity, SignUpScreenTerms.class), true);
+                    activity.startActivity(new Intent(activity, SignUpScreenLegal.class), true);
                 }
 
             } else {
