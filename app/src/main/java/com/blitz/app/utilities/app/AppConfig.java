@@ -83,7 +83,7 @@ public class AppConfig {
      */
     public static String getTermsOfUseUrl() {
 
-        return "https://blitz.zone/terms?android=true";
+        return mBaseURL + "terms?android=true";
     }
 
     /**
@@ -91,7 +91,7 @@ public class AppConfig {
      */
     public static String getPrivacyPolicyUrl() {
 
-        return "https://blitz.zone/privacy?android=true";
+        return mBaseURL + "privacy?android=true";
     }
 
     //==============================================================================================
