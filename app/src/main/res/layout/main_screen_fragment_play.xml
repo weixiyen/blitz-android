@@ -15,41 +15,39 @@
         android:src="@drawable/asset_bg_main"
         app:scaleType="topCrop" />
 
-    <include
-        layout="@layout/main_screen_fragment_play_stats"
-        android:layout_width="@dimen/screen_width"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="80dp"/>
-
-    <include
-        layout="@layout/main_screen_fragment_play_timeline"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="132dp"
-        android:layout_alignParentBottom="true"
-        android:layout_marginBottom="180dp"/>
+        android:layout_height="match_parent"
+        android:layout_marginBottom="40dp"
+        android:layout_marginTop="60dp"
+        android:gravity="center"
+        android:orientation="vertical">
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="TEST TEST"/>
+        <include
+            layout="@layout/main_screen_fragment_play_stats"
+            android:layout_width="@dimen/screen_width"
+            android:layout_height="0dp"
+            android:layout_weight="1"/>
 
-    <include
-        android:id="@+id/main_play_action"
-        layout="@layout/main_screen_fragment_play_action"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_marginBottom="30dp"/>
+        <include
+            layout="@layout/main_screen_fragment_play_timeline"
+            android:layout_width="match_parent"
+            android:layout_height="132dp"/>
 
-    <include
-        android:id="@+id/main_play_queued_container"
-        layout="@layout/main_screen_fragment_play_queued"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_marginBottom="50dp"
-        android:visibility="gone"/>
+        <include
+            android:id="@+id/main_play_action"
+            layout="@layout/main_screen_fragment_play_action"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"/>
+
+        <include
+            android:id="@+id/main_play_queued_container"
+            layout="@layout/main_screen_fragment_play_queued"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone"/>
+    </LinearLayout>
 
     <include
         layout="@layout/main_screen_fragment_play_footer"
