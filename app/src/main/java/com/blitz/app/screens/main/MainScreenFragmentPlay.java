@@ -8,6 +8,7 @@ import android.widget.TextView;
 import com.blitz.app.R;
 import com.blitz.app.utilities.android.BaseFragment;
 import com.blitz.app.utilities.animations.AnimHelperCrossFade;
+import com.blitz.app.utilities.animations.AnimHelperFade;
 import com.blitz.app.utilities.rest.RestAPIOperation;
 import com.blitz.app.view_models.ViewModelMainPlay;
 
@@ -61,14 +62,11 @@ public class MainScreenFragmentPlay extends BaseFragment implements ViewModelMai
         AnimHelperCrossFade.setBackgroundResource(mPlayButton, R.drawable.drawable_button_play_cancel);
 
         AnimHelperCrossFade.setImageResource(mPlayButtonHighlight, R.drawable.asset_play_button_cancel_highlight);
-        AnimHelperCrossFade.setImageResource(mPlayButtonOutline, R.drawable.asset_play_button_cancel_outline);
+        AnimHelperCrossFade.setImageResource(mPlayButtonOutline,   R.drawable.asset_play_button_cancel_outline);
 
-        // Hide play button text.
-        mPlayButtonText.setVisibility(View.GONE);
-
-        // Show time and waiting label.
-        mPlayButtonTime.setVisibility(View.VISIBLE);
-        mPlayButtonWaiting.setVisibility(View.VISIBLE);
+        AnimHelperFade.setVisibility(mPlayButtonText,    View.GONE);
+        AnimHelperFade.setVisibility(mPlayButtonTime,    View.VISIBLE);
+        AnimHelperFade.setVisibility(mPlayButtonWaiting, View.VISIBLE);
     }
 
     /**
@@ -82,12 +80,9 @@ public class MainScreenFragmentPlay extends BaseFragment implements ViewModelMai
         AnimHelperCrossFade.setImageResource(mPlayButtonHighlight, R.drawable.asset_play_button_play_highlight);
         AnimHelperCrossFade.setImageResource(mPlayButtonOutline, R.drawable.asset_play_button_play_outline);
 
-        // Hide time and waiting label.
-        mPlayButtonTime.setVisibility(View.GONE);
-        mPlayButtonWaiting.setVisibility(View.GONE);
-
-        // Show play button test.
-        mPlayButtonText.setVisibility(View.VISIBLE);
+        AnimHelperFade.setVisibility(mPlayButtonText,    View.VISIBLE);
+        AnimHelperFade.setVisibility(mPlayButtonTime,    View.GONE);
+        AnimHelperFade.setVisibility(mPlayButtonWaiting, View.GONE);
     }
 
     /**
