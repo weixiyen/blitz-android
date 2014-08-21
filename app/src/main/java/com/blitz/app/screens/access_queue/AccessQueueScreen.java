@@ -6,13 +6,13 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.blitz.app.R;
+import com.blitz.app.utilities.animations.AnimHelperSpringsGroup;
+import com.blitz.app.utilities.animations.AnimHelperSpringsPresets;
+import com.blitz.app.utilities.animations.AnimHelperSpringsView;
 import com.blitz.app.view_models.ViewModelAccessQueue;
 import com.blitz.app.screens.access_code.AccessCodeScreen;
 import com.blitz.app.screens.sign_in.SignInScreen;
 import com.blitz.app.utilities.android.BaseActivity;
-import com.blitz.app.utilities.animations.AnimHelperGroup;
-import com.blitz.app.utilities.animations.AnimHelperPresets;
-import com.blitz.app.utilities.animations.AnimHelperView;
 import com.blitz.app.utilities.authentication.AuthHelper;
 
 import butterknife.InjectView;
@@ -36,7 +36,7 @@ public class AccessQueueScreen extends BaseActivity implements ViewModelAccessQu
     @InjectView(R.id.access_queue_people_behind) TextView mQueuePeopleBehind;
 
     // Page animations.
-    private AnimHelperGroup mAnimations;
+    private AnimHelperSpringsGroup mAnimations;
 
     //==============================================================================================
     // Overwritten Methods
@@ -50,20 +50,20 @@ public class AccessQueueScreen extends BaseActivity implements ViewModelAccessQu
         setViewModel(new ViewModelAccessQueue(), savedInstanceState);
 
         // Create animation group.
-        mAnimations = AnimHelperGroup.from(this);
+        mAnimations = AnimHelperSpringsGroup.from(this);
 
         // Text and call to action.
         mAnimations.createHelper(25, 5)
-                .addHelperView(AnimHelperView.from(mQueuePromoText, AnimHelperPresets.SLIDE_DOWN))
-                .addHelperView(AnimHelperView.from(mQueueButtons,   AnimHelperPresets.SLIDE_UP));
+                .addHelperView(AnimHelperSpringsView.from(mQueuePromoText, AnimHelperSpringsPresets.SLIDE_DOWN))
+                .addHelperView(AnimHelperSpringsView.from(mQueueButtons, AnimHelperSpringsPresets.SLIDE_UP));
 
         // Queue container text.
         mAnimations.createHelper(25, 10)
-                .addHelperView(AnimHelperView.from(mQueuePosInfo, AnimHelperPresets.SLIDE_RIGHT));
+                .addHelperView(AnimHelperSpringsView.from(mQueuePosInfo, AnimHelperSpringsPresets.SLIDE_RIGHT));
 
         // Football player guy.
         mAnimations.createHelper(100, 20)
-                .addHelperView(AnimHelperView.from(mQueuePlayer, AnimHelperPresets.SLIDE_RIGHT));
+                .addHelperView(AnimHelperSpringsView.from(mQueuePlayer, AnimHelperSpringsPresets.SLIDE_RIGHT));
     }
 
     @Override

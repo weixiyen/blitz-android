@@ -18,7 +18,7 @@ import java.util.ArrayList;
 /**
  * Created by mrkcsc on 7/29/14.
  */
-public class AnimHelper {
+public class AnimHelperSprings {
 
     //==============================================================================================
     // Member Variables
@@ -31,7 +31,7 @@ public class AnimHelper {
     private Spring mSpring;
 
     // Views this helper controls.
-    private ArrayList<AnimHelperView> mViews;
+    private ArrayList<AnimHelperSpringsView> mViews;
 
     // Are we initialized.
     private boolean mInitialized;
@@ -55,7 +55,7 @@ public class AnimHelper {
      * Unused private constructor.
      */
     @SuppressWarnings("unused")
-    private AnimHelper() {
+    private AnimHelperSprings() {
 
     }
 
@@ -69,7 +69,7 @@ public class AnimHelper {
      *                 the views are rendered before we can
      *                 initialize them.
      */
-    private AnimHelper(Activity activity, int tension, int friction) {
+    private AnimHelperSprings(Activity activity, int tension, int friction) {
 
         // First configure.
         configure(activity, tension, friction);
@@ -92,9 +92,9 @@ public class AnimHelper {
      *
      * @return New instance.
      */
-    public static AnimHelper from(Activity activity, int tension, int friction) {
+    public static AnimHelperSprings from(Activity activity, int tension, int friction) {
 
-        return new AnimHelper(activity, tension, friction);
+        return new AnimHelperSprings(activity, tension, friction);
     }
 
     /**
@@ -105,7 +105,7 @@ public class AnimHelper {
      * @return Current instance.
      */
     @SuppressWarnings("unused")
-    public AnimHelper addHelperView(AnimHelperView helperView) {
+    public AnimHelperSprings addHelperView(AnimHelperSpringsView helperView) {
 
         // Try initialize.
         tryInitializeView(helperView);
@@ -124,7 +124,7 @@ public class AnimHelper {
      * @return Current instance.
      */
     @SuppressWarnings("unused")
-    public AnimHelper addHelperViews(ArrayList<AnimHelperView> helperViews) {
+    public AnimHelperSprings addHelperViews(ArrayList<AnimHelperSpringsView> helperViews) {
 
         // Try initialize.
         tryInitializeViews(helperViews);
@@ -172,7 +172,7 @@ public class AnimHelper {
                 public void onSpringUpdate(Spring spring) {
 
                     // Animate each view on update.
-                    for (AnimHelperView view : mViews) {
+                    for (AnimHelperSpringsView view : mViews) {
 
                         view.animateWithSpring(mSpring);
                     }
@@ -298,7 +298,7 @@ public class AnimHelper {
                 .setAtRest();
 
         // Initialize list of animation views.
-        mViews = new ArrayList<AnimHelperView>();
+        mViews = new ArrayList<AnimHelperSpringsView>();
     }
 
     /**
@@ -357,11 +357,11 @@ public class AnimHelper {
      *
      * @param helperViews Helper views list.
      */
-    private void tryInitializeViews(ArrayList<AnimHelperView> helperViews) {
+    private void tryInitializeViews(ArrayList<AnimHelperSpringsView> helperViews) {
 
         if (helperViews != null && mInitialized) {
 
-            for (AnimHelperView view : helperViews) {
+            for (AnimHelperSpringsView view : helperViews) {
 
                 // Try initialize each view.
                 tryInitializeView(view);
@@ -376,7 +376,7 @@ public class AnimHelper {
      *
      * @param helperView Helper view.
      */
-    private void tryInitializeView(AnimHelperView helperView) {
+    private void tryInitializeView(AnimHelperSpringsView helperView) {
 
         if (helperView != null && mInitialized) {
             helperView.setCoordinates(mWindowWidth, mWindowHeight);

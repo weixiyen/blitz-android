@@ -6,11 +6,11 @@ import android.widget.EditText;
 
 import com.blitz.app.R;
 import com.blitz.app.object_models.ObjectModelCode;
+import com.blitz.app.utilities.animations.AnimHelperSpringsGroup;
+import com.blitz.app.utilities.animations.AnimHelperSpringsPresets;
+import com.blitz.app.utilities.animations.AnimHelperSpringsView;
 import com.blitz.app.utilities.rest.RestAPIOperation;
 import com.blitz.app.utilities.android.BaseActivity;
-import com.blitz.app.utilities.animations.AnimHelperGroup;
-import com.blitz.app.utilities.animations.AnimHelperPresets;
-import com.blitz.app.utilities.animations.AnimHelperView;
 import com.blitz.app.utilities.authentication.AuthHelper;
 import com.blitz.app.utilities.keyboard.KeyboardUtility;
 
@@ -32,7 +32,7 @@ public class AccessCodeScreen extends BaseActivity {
     @InjectView(R.id.access_code_top_container) View mAccessTopContainer;
 
     // Page animations.
-    private AnimHelperGroup mAnimations;
+    private AnimHelperSpringsGroup mAnimations;
 
     // View model.
     private ObjectModelCode mObjectModelCode;
@@ -57,16 +57,16 @@ public class AccessCodeScreen extends BaseActivity {
         setAdjustResize(true);
 
         // Create animation group.
-        mAnimations = AnimHelperGroup.from(this);
+        mAnimations = AnimHelperSpringsGroup.from(this);
 
         // Add a helper.
         mAnimations.createHelper(25, 7)
-                .addHelperView(AnimHelperView.from(mContinue, AnimHelperPresets.SLIDE_UP))
-                .addHelperView(AnimHelperView.from(mAccessTopContainer, AnimHelperPresets.SLIDE_DOWN));
+                .addHelperView(AnimHelperSpringsView.from(mContinue, AnimHelperSpringsPresets.SLIDE_UP))
+                .addHelperView(AnimHelperSpringsView.from(mAccessTopContainer, AnimHelperSpringsPresets.SLIDE_DOWN));
 
         // Add a helper.
         mAnimations.createHelper(100, 20)
-                .addHelperView(AnimHelperView.from(mPlayer, AnimHelperPresets.SLIDE_LEFT));
+                .addHelperView(AnimHelperSpringsView.from(mPlayer, AnimHelperSpringsPresets.SLIDE_LEFT));
 
         // Open the keyboard when done.
         mAnimations.setOnCompleteListener(new Runnable() {

@@ -7,7 +7,7 @@ import java.util.ArrayList;
 /**
  * Created by Miguel on 7/30/2014.
  */
-public class AnimHelperGroup {
+public class AnimHelperSpringsGroup {
 
     //==============================================================================================
     // Constructors
@@ -17,7 +17,7 @@ public class AnimHelperGroup {
     private Activity mActivity;
 
     // List of individual helpers.
-    private ArrayList<AnimHelper> mAnimHelperGroup;
+    private ArrayList<AnimHelperSprings> mAnimHelperSpringsGroup;
 
     // Runs on animations complete.
     private Runnable mOnCompleteListener;
@@ -32,7 +32,7 @@ public class AnimHelperGroup {
      * Private constructor.
      */
     @SuppressWarnings("unused")
-    private AnimHelperGroup() {
+    private AnimHelperSpringsGroup() {
 
     }
 
@@ -41,13 +41,13 @@ public class AnimHelperGroup {
      *
      * @param activity Target activity.
      */
-    private AnimHelperGroup(Activity activity) {
+    private AnimHelperSpringsGroup(Activity activity) {
 
         // Set activity.
         mActivity = activity;
 
         // Initialize helper group.
-        mAnimHelperGroup = new ArrayList<AnimHelper>();
+        mAnimHelperSpringsGroup = new ArrayList<AnimHelperSprings>();
     }
 
     //==============================================================================================
@@ -61,9 +61,9 @@ public class AnimHelperGroup {
      *
      * @return Instance of a helper group.
      */
-    public static AnimHelperGroup from(Activity activity) {
+    public static AnimHelperSpringsGroup from(Activity activity) {
 
-        return new AnimHelperGroup(activity);
+        return new AnimHelperSpringsGroup(activity);
     }
 
     /**
@@ -74,16 +74,16 @@ public class AnimHelperGroup {
      *
      * @return The instantiated helper.
      */
-    public AnimHelper createHelper(int tension, int friction) {
+    public AnimHelperSprings createHelper(int tension, int friction) {
 
         // Create a new animation helper.
-        AnimHelper animHelper = AnimHelper.from(mActivity, tension, friction);
+        AnimHelperSprings animHelperSprings = AnimHelperSprings.from(mActivity, tension, friction);
 
         // Add to group.
-        mAnimHelperGroup.add(animHelper);
+        mAnimHelperSpringsGroup.add(animHelperSprings);
 
         // Add a completion listener.
-        animHelper.addOnCompleteListener(new Runnable() {
+        animHelperSprings.addOnCompleteListener(new Runnable() {
 
             @Override
             public void run() {
@@ -92,7 +92,7 @@ public class AnimHelperGroup {
                 mAnimCompleteCount++;
 
                 // If all animations are complete.
-                if (mAnimCompleteCount == mAnimHelperGroup.size()) {
+                if (mAnimCompleteCount == mAnimHelperSpringsGroup.size()) {
 
                     if (mOnCompleteListener != null) {
                         mOnCompleteListener.run();
@@ -101,7 +101,7 @@ public class AnimHelperGroup {
             }
         });
 
-        return animHelper;
+        return animHelperSprings;
     }
 
     /**
@@ -110,9 +110,9 @@ public class AnimHelperGroup {
     public void disable() {
 
         // Disable each animation helper.
-        for (AnimHelper animHelper : mAnimHelperGroup) {
+        for (AnimHelperSprings animHelperSprings : mAnimHelperSpringsGroup) {
 
-            animHelper.disable();
+            animHelperSprings.disable();
         }
     }
 
@@ -124,9 +124,9 @@ public class AnimHelperGroup {
     public void enable(boolean start) {
 
         // Enable each animation helper.
-        for (AnimHelper animHelper : mAnimHelperGroup) {
+        for (AnimHelperSprings animHelperSprings : mAnimHelperSpringsGroup) {
 
-            animHelper.enable();
+            animHelperSprings.enable();
 
             if (start) {
 
@@ -134,7 +134,7 @@ public class AnimHelperGroup {
                 mAnimCompleteCount = 0;
 
                 // Start after transition.
-                animHelper.start(true);
+                animHelperSprings.start(true);
             }
         }
     }
@@ -155,9 +155,9 @@ public class AnimHelperGroup {
         mAnimCompleteCount = 0;
 
         // Start each animation helper.
-        for (AnimHelper animHelper : mAnimHelperGroup) {
+        for (AnimHelperSprings animHelperSprings : mAnimHelperSpringsGroup) {
 
-            animHelper.start(false);
+            animHelperSprings.start(false);
         }
     }
 

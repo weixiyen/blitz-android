@@ -8,7 +8,7 @@ import com.facebook.rebound.SpringUtil;
 /**
  * Created by mrkcsc on 7/30/14.
  */
-public class AnimHelperView {
+public class AnimHelperSpringsView {
 
     private static final int OFF_SCREEN_PADDING = 60;
 
@@ -22,7 +22,7 @@ public class AnimHelperView {
     private int mTranslationXFrom;
     private int mTranslationXTo;
 
-    private AnimHelperPresets mPreset;
+    private AnimHelperSpringsPresets mPreset;
 
     private Integer mViewWidth;
     private Integer mViewHeight;
@@ -40,7 +40,7 @@ public class AnimHelperView {
      * Unused private constructor.
      */
     @SuppressWarnings("unused")
-    private AnimHelperView() {
+    private AnimHelperSpringsView() {
 
     }
 
@@ -50,7 +50,7 @@ public class AnimHelperView {
      *
      * @param view The view to operate on.
      */
-    private AnimHelperView(View view) {
+    private AnimHelperSpringsView(View view) {
         mView = view;
     }
 
@@ -67,9 +67,9 @@ public class AnimHelperView {
      * @return New instance of the helper.
      */
     @SuppressWarnings("unused")
-    public static AnimHelperView from(View view) {
+    public static AnimHelperSpringsView from(View view) {
 
-        return new AnimHelperView(view);
+        return new AnimHelperSpringsView(view);
     }
 
     /**
@@ -82,9 +82,9 @@ public class AnimHelperView {
      * @return New instance of the helper.
      */
     @SuppressWarnings("unused")
-    public static AnimHelperView from(View view, AnimHelperPresets presets) {
+    public static AnimHelperSpringsView from(View view, AnimHelperSpringsPresets presets) {
 
-        return new AnimHelperView(view).withPreset(presets);
+        return new AnimHelperSpringsView(view).withPreset(presets);
     }
 
     //==============================================================================================
@@ -98,7 +98,7 @@ public class AnimHelperView {
      *
      * @return Current class instance.
      */
-    private AnimHelperView withPreset(AnimHelperPresets present) {
+    private AnimHelperSpringsView withPreset(AnimHelperSpringsPresets present) {
 
         mPreset = present;
 
