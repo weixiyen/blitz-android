@@ -24,6 +24,12 @@ public class AnimHelperFade extends AnimHelper {
      */
     public static void setVisibility(final View view, final int visibility) {
 
+        // Don't animate if already set.
+        if (view.getVisibility() == visibility) {
+
+            return;
+        }
+
         // Fetch initial alpha state.
         final float initialAlpha = view.getAlpha();
 

@@ -1,7 +1,10 @@
 package com.blitz.app.screens.main;
 
+import android.animation.ObjectAnimator;
+import android.animation.ValueAnimator;
 import android.os.Bundle;
 import android.view.View;
+import android.view.animation.LinearInterpolator;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -9,6 +12,7 @@ import com.blitz.app.R;
 import com.blitz.app.utilities.android.BaseFragment;
 import com.blitz.app.utilities.animations.AnimHelperCrossFade;
 import com.blitz.app.utilities.animations.AnimHelperFade;
+import com.blitz.app.utilities.logging.LogHelper;
 import com.blitz.app.utilities.rest.RestAPIOperation;
 import com.blitz.app.view_models.ViewModelMainPlay;
 
@@ -47,6 +51,13 @@ public class MainScreenFragmentPlay extends BaseFragment implements ViewModelMai
 
         // Initialize view model.
         setViewModel(new ViewModelMainPlay(), savedInstanceState);
+
+        ObjectAnimator oa = ObjectAnimator.ofFloat(mPlayButtonHighlight, "rotation", 0, 360);
+
+        oa.setDuration(1750);
+        oa.setRepeatCount(ValueAnimator.INFINITE);
+        oa.setInterpolator(new LinearInterpolator());
+        oa.start();
     }
 
     //==============================================================================================
@@ -59,7 +70,9 @@ public class MainScreenFragmentPlay extends BaseFragment implements ViewModelMai
     @Override
     public void onQueueUp(boolean animate) {
 
-        AnimHelperCrossFade.setBackgroundResource(mPlayButton, R.drawable.drawable_button_play_cancel);
+        LogHelper.log("Queue");
+
+        mPlayButton.setBackgroundResource(R.drawable.drawable_button_play_cancel);
 
         AnimHelperCrossFade.setImageResource(mPlayButtonHighlight, R.drawable.asset_play_button_cancel_highlight);
         AnimHelperCrossFade.setImageResource(mPlayButtonOutline,   R.drawable.asset_play_button_cancel_outline);
@@ -75,7 +88,9 @@ public class MainScreenFragmentPlay extends BaseFragment implements ViewModelMai
     @Override
     public void onQueueCancel(boolean animate) {
 
-        AnimHelperCrossFade.setBackgroundResource(mPlayButton, R.drawable.drawable_button_play);
+        LogHelper.log("Cancel");
+
+        mPlayButton.setBackgroundResource(R.drawable.drawable_button_play);
 
         AnimHelperCrossFade.setImageResource(mPlayButtonHighlight, R.drawable.asset_play_button_play_highlight);
         AnimHelperCrossFade.setImageResource(mPlayButtonOutline, R.drawable.asset_play_button_play_outline);
