@@ -2,11 +2,11 @@ package com.blitz.app.screens.main;
 
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.blitz.app.R;
 import com.blitz.app.utilities.android.BaseFragment;
-import com.blitz.app.utilities.logging.LogHelper;
 import com.blitz.app.utilities.rest.RestAPIOperation;
 import com.blitz.app.view_models.ViewModelMainPlay;
 
@@ -22,12 +22,13 @@ public class MainScreenFragmentPlay extends BaseFragment implements ViewModelMai
     // Member Variables
     //==============================================================================================
 
-    // Container views.
-    @InjectView(R.id.main_play_action) View mTimelineContainer;
-    @InjectView(R.id.main_play_queued_container) View mQueuedContainer;
-
-    // Queue timer.
-    @InjectView(R.id.main_play_queued_timer) TextView mQueuedTimerTextView;
+    // Play button related views.
+    @InjectView(R.id.main_play_button)                View mPlayButton;
+    @InjectView(R.id.main_play_button_highlight) ImageView mPlayButtonHighlight;
+    @InjectView(R.id.main_play_button_outline)   ImageView mPlayButtonOutline;
+    @InjectView(R.id.main_play_button_text)       TextView mPlayButtonText;
+    @InjectView(R.id.main_play_button_time)       TextView mPlayButtonTime;
+    @InjectView(R.id.main_play_button_waiting)        View mPlayButtonWaiting;
 
     //==============================================================================================
     // Overwritten Methods
@@ -50,19 +51,52 @@ public class MainScreenFragmentPlay extends BaseFragment implements ViewModelMai
     // View Model Callbacks
     //==============================================================================================
 
+    /**
+     * Setup cool button state.
+     */
     @Override
     public void onQueueUp(boolean animate) {
-        LogHelper.log("Joined the queue. " + animate);
+
+        // Update images.
+        mPlayButton.setBackgroundResource(R.drawable.drawable_button_play_cancel);
+        mPlayButtonHighlight.setImageResource(R.drawable.asset_play_button_cancel_highlight);
+        mPlayButtonOutline.setImageResource(R.drawable.asset_play_button_cancel_outline);
+
+        // Hide play button text.
+        mPlayButtonText.setVisibility(View.GONE);
+
+        // Show time and waiting label.
+        mPlayButtonTime.setVisibility(View.VISIBLE);
+        mPlayButtonWaiting.setVisibility(View.VISIBLE);
     }
 
+    /**
+     * Restore normal button state.
+     */
     @Override
     public void onQueueCancel(boolean animate) {
-        LogHelper.log("Left the queue. " + animate);
+
+        // Update images.
+        mPlayButton.setBackgroundResource(R.drawable.drawable_button_play);
+        mPlayButtonHighlight.setImageResource(R.drawable.asset_play_button_play_highlight);
+        mPlayButtonOutline.setImageResource(R.drawable.asset_play_button_play_outline);
+
+        // Hide time and waiting label.
+        mPlayButtonTime.setVisibility(View.GONE);
+        mPlayButtonWaiting.setVisibility(View.GONE);
+
+        // Show play button test.
+        mPlayButtonText.setVisibility(View.VISIBLE);
     }
 
+    /**
+     * Update time display on tick.
+     */
     @Override
     public void onQueueTick(String secondsInQueue) {
-        LogHelper.log("Timer ticked: " + secondsInQueue + ".");
+
+        // Set to current second count.
+        mPlayButtonTime.setText(secondsInQueue);
     }
 
     //==============================================================================================
@@ -70,7 +104,7 @@ public class MainScreenFragmentPlay extends BaseFragment implements ViewModelMai
     //==============================================================================================
 
     /**
-     * Join the draft queue!
+     * Join (or leave) the draft queue!
      */
     @OnClick(R.id.main_play_button) @SuppressWarnings("unused")
     public void main_play() {
@@ -79,21 +113,7 @@ public class MainScreenFragmentPlay extends BaseFragment implements ViewModelMai
             return;
         }
 
-        // Enter the queue.
-        getViewModel(ViewModelMainPlay.class).queueUp();
-    }
-
-    /**
-     * Leave the draft queue.
-     */
-    @OnClick(R.id.main_play_cancel) @SuppressWarnings("unused")
-    public void main_cancel() {
-
-        if (RestAPIOperation.shouldThrottle()) {
-            return;
-        }
-
-        // Leave the queue.
-        getViewModel(ViewModelMainPlay.class).leaveQueue();
+        // Toggle the queue.
+        getViewModel(ViewModelMainPlay.class).toggleQueue();
     }
 }

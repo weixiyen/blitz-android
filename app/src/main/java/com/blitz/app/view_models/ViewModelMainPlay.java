@@ -29,8 +29,12 @@ public class ViewModelMainPlay extends ViewModel {
     // Object model.
     private ObjectModelQueue mModelQueue;
 
-    static final String STATE_SECONDS = "stateSeconds";
-    static final String STATE_TIME_SUSPENDED = "timeSuspected";
+    // Are we in queue.
+    private boolean mInQueue;
+
+    private static final String STATE_SECONDS = "stateSeconds";
+    private static final String STATE_TIME_SUSPENDED = "timeSuspected";
+    private static final String STATE_IN_QUEUE = "stateInQueue";
 
     //==============================================================================================
     // Overwritten Methods
@@ -51,6 +55,7 @@ public class ViewModelMainPlay extends ViewModel {
             // Restore state primitives.
             mSecondsInQueue = savedInstanceState.getInt(STATE_SECONDS);
             mSecondsAtSuspension = savedInstanceState.getInt(STATE_TIME_SUSPENDED);
+            mInQueue = savedInstanceState.getBoolean(STATE_IN_QUEUE);
         }
     }
 
@@ -71,6 +76,7 @@ public class ViewModelMainPlay extends ViewModel {
         // Save info needed to restore state.
         savedInstanceState.putInt(STATE_TIME_SUSPENDED, mSecondsAtSuspension);
         savedInstanceState.putInt(STATE_SECONDS, mSecondsInQueue);
+        savedInstanceState.putBoolean(STATE_IN_QUEUE, mInQueue);
 
         // Stop timer.
         stopQueueTimer(false);
@@ -106,28 +112,28 @@ public class ViewModelMainPlay extends ViewModel {
     //==============================================================================================
 
     /**
-     * Join the draft queue.
+     * Toggle the draft queue state (either join
+     * or leave it).
      */
-    public void queueUp() {
+    public void toggleQueue() {
 
-        // Enter the queue.
-        getModelQueue().queueUp(mActivity, new Runnable() {
+        if (mInQueue) {
 
-            @Override
-            public void run() {
+            // Leave the queue.
+            getModelQueue().leaveQueue(mActivity, null);
 
-                showQueueContainer(true, true);
-            }
-        });
-    }
+        } else {
 
-    /**
-     * Leave the draft queue.
-     */
-    public void leaveQueue() {
+            // Enter the queue.
+            getModelQueue().queueUp(mActivity, new Runnable() {
 
-        // Leave the queue.
-        getModelQueue().leaveQueue(mActivity, null);
+                @Override
+                public void run() {
+
+                    showQueueContainer(true, true);
+                }
+            });
+        }
     }
 
     //==============================================================================================
@@ -149,6 +155,8 @@ public class ViewModelMainPlay extends ViewModel {
 
         if (showQueueContainer) {
 
+            mInQueue = true;
+
             // Now in the queue.
             getCallbacks(ViewModelMainPlayCallbacks.class).onQueueUp(animate);
 
@@ -156,6 +164,8 @@ public class ViewModelMainPlay extends ViewModel {
             startQueueTimer();
 
         } else {
+
+            mInQueue = false;
 
             // Now left the queue.
             getCallbacks(ViewModelMainPlayCallbacks.class).onQueueCancel(animate);
@@ -217,6 +227,9 @@ public class ViewModelMainPlay extends ViewModel {
      * it every second.
      */
     private void startQueueTimer() {
+
+        // Stop and reset.
+        stopQueueTimer(true);
 
         if (mSecondsInQueueHandler ==  null) {
             mSecondsInQueueHandler = new Handler();
