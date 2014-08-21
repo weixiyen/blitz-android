@@ -7,7 +7,6 @@ import android.view.View;
 import android.view.ViewTreeObserver;
 import android.widget.FrameLayout;
 
-import com.blitz.app.R;
 import com.facebook.rebound.Spring;
 import com.facebook.rebound.SpringConfig;
 import com.facebook.rebound.SpringListener;
@@ -18,7 +17,7 @@ import java.util.ArrayList;
 /**
  * Created by mrkcsc on 7/29/14.
  */
-public class AnimHelperSprings {
+public class AnimHelperSprings extends AnimHelper {
 
     //==============================================================================================
     // Member Variables
@@ -209,18 +208,17 @@ public class AnimHelperSprings {
         }
     }
 
+    /**
+     * Start spring animation.
+     */
     public void start(boolean afterScreenTransition) {
         if (mInitialized) {
-
-            // Time to transition an activity.
-            int screenTransitionTime = mActivity.getResources()
-                    .getInteger(R.integer.config_screen_translation_time);
 
             int delay = 0;
 
             // At least transition time.
-            if (delay < screenTransitionTime) {
-                delay = screenTransitionTime + 100;
+            if (delay < getConfigAnimTimeStandard(mActivity)) {
+                delay = getConfigAnimTimeStandard(mActivity) + 100;
             }
 
             // Action that starts animation.
