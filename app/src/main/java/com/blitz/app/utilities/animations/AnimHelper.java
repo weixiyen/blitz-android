@@ -21,7 +21,7 @@ public class AnimHelper {
      *
      * @return Standard animation time.
      */
-    protected int getConfigAnimTimeStandard(Context context) {
+    protected static int getConfigAnimTimeStandard(Context context) {
 
         // Time to transition an activity.
         return context.getResources().getInteger(R.integer.config_screen_translation_time);

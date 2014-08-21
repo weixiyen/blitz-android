@@ -7,6 +7,7 @@ import android.widget.TextView;
 
 import com.blitz.app.R;
 import com.blitz.app.utilities.android.BaseFragment;
+import com.blitz.app.utilities.animations.AnimHelperCrossFade;
 import com.blitz.app.utilities.rest.RestAPIOperation;
 import com.blitz.app.view_models.ViewModelMainPlay;
 
@@ -57,10 +58,10 @@ public class MainScreenFragmentPlay extends BaseFragment implements ViewModelMai
     @Override
     public void onQueueUp(boolean animate) {
 
-        // Update images.
-        mPlayButton.setBackgroundResource(R.drawable.drawable_button_play_cancel);
-        mPlayButtonHighlight.setImageResource(R.drawable.asset_play_button_cancel_highlight);
-        mPlayButtonOutline.setImageResource(R.drawable.asset_play_button_cancel_outline);
+        AnimHelperCrossFade.setBackgroundResource(mPlayButton, R.drawable.drawable_button_play_cancel);
+
+        AnimHelperCrossFade.setImageResource(mPlayButtonHighlight, R.drawable.asset_play_button_cancel_highlight);
+        AnimHelperCrossFade.setImageResource(mPlayButtonOutline, R.drawable.asset_play_button_cancel_outline);
 
         // Hide play button text.
         mPlayButtonText.setVisibility(View.GONE);
@@ -76,10 +77,10 @@ public class MainScreenFragmentPlay extends BaseFragment implements ViewModelMai
     @Override
     public void onQueueCancel(boolean animate) {
 
-        // Update images.
-        mPlayButton.setBackgroundResource(R.drawable.drawable_button_play);
-        mPlayButtonHighlight.setImageResource(R.drawable.asset_play_button_play_highlight);
-        mPlayButtonOutline.setImageResource(R.drawable.asset_play_button_play_outline);
+        AnimHelperCrossFade.setBackgroundResource(mPlayButton, R.drawable.drawable_button_play);
+
+        AnimHelperCrossFade.setImageResource(mPlayButtonHighlight, R.drawable.asset_play_button_play_highlight);
+        AnimHelperCrossFade.setImageResource(mPlayButtonOutline, R.drawable.asset_play_button_play_outline);
 
         // Hide time and waiting label.
         mPlayButtonTime.setVisibility(View.GONE);
