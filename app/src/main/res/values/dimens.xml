@@ -1,5 +1,6 @@
 <resources>
     <integer name="config_screen_translation_time">350</integer>
+    <integer name="config_animation_time_standard">350</integer>
 
     <dimen name="screen_width">320dp</dimen>
 </resources>
