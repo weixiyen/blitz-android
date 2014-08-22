@@ -88,12 +88,12 @@ public class MainScreenFragmentPlay extends BaseFragment implements ViewModelMai
     @Override
     public void onQueueCancel(boolean animate) {
 
-        LogHelper.log("Cancel");
-
         mPlayButton.setBackgroundResource(R.drawable.drawable_button_play);
 
-        AnimHelperCrossFade.setImageResource(mPlayButtonHighlight, R.drawable.asset_play_button_play_highlight);
-        AnimHelperCrossFade.setImageResource(mPlayButtonOutline, R.drawable.asset_play_button_play_outline);
+        AnimHelperCrossFade.setImageResource(mPlayButtonHighlight,
+                R.drawable.asset_play_button_play_highlight);
+        AnimHelperCrossFade.setImageResource(mPlayButtonOutline,
+                R.drawable.asset_play_button_play_outline);
 
         AnimHelperFade.setVisibility(mPlayButtonText,    View.VISIBLE);
         AnimHelperFade.setVisibility(mPlayButtonTime,    View.GONE);
