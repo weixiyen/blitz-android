@@ -30,6 +30,8 @@ public abstract class AppData<T> {
     final String mKey;
     // TODO: cache the value locally as private T mVal ?
 
+    private final Class mClass;
+
     //==============================================================================================
     // Constructors
     //==============================================================================================
@@ -37,9 +39,10 @@ public abstract class AppData<T> {
     /**
      * Cannot be instantiated. Use factory methods instead.
      */
-    private AppData(String key) {
-        // Set key.
+    private AppData(String key, Class classObject) {
+
         mKey = key;
+        mClass = classObject;
     }
 
     //==============================================================================================
@@ -69,7 +72,8 @@ public abstract class AppData<T> {
      * Factory method to return a string data object
      */
     public static AppData<String> string(String key) {
-        return new AppData<String>(key) {
+
+        return new AppData<String>(key, String.class) {
 
             @Override
             public String get() {
@@ -84,7 +88,7 @@ public abstract class AppData<T> {
      */
     public static AppData<Boolean> bool(String key) {
 
-        return new AppData<Boolean>(key) {
+        return new AppData<Boolean>(key, Boolean.class) {
 
             @Override
             public Boolean get() {
@@ -99,7 +103,7 @@ public abstract class AppData<T> {
      */
     public static AppData<Integer> integer(String key) {
 
-        return new AppData<Integer>(key) {
+        return new AppData<Integer>(key, Integer.class) {
 
             @Override
             public Integer get() {
@@ -114,7 +118,7 @@ public abstract class AppData<T> {
      */
     public static AppData<HashMap<String, String>> dictionary(String key) {
 
-        return new AppData<HashMap<String, String>>(key) {
+        return new AppData<HashMap<String, String>>(key, HashMap.class) {
 
             @Override
             public HashMap<String, String> get() {
@@ -181,22 +185,16 @@ public abstract class AppData<T> {
         // Get editor.
         SharedPreferences.Editor editor = getEditor();
 
-        if (value instanceof String) {
+        if (mClass == String.class) {
 
             editor.putString(mKey, (String)value);
-        } else if (value instanceof Boolean) {
+        } else if (mClass == Boolean.class) {
 
             editor.putBoolean(mKey, (Boolean)value);
-        } else if (value instanceof Integer) {
+        } else if (mClass == Integer.class) {
 
             editor.putInt(mKey, (Integer)value);
-        } else if (value instanceof Float) {
-
-            editor.putFloat(mKey, (Float)value);
-        } else if (value instanceof Long) {
-
-            editor.putLong(mKey, (Long)value);
-        } else if (value instanceof HashMap) {
+        } else if (mClass == HashMap.class) {
 
             // Convert dictionary into JSON string.
             String newValue = new Gson().toJsonTree(value).toString();
