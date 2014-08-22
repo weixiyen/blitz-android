@@ -154,7 +154,7 @@ class CometAPIWebsocket {
 
         // Fetch URI from provided URL.
         URI webSocketURI = createWebSocketURI(AppConfig.getWebsocketUrl()
-                + AppDataObject.userId.getString());
+                + AppDataObject.userId.get());
 
         // Initialize the client.
         mWebSocketClient = new WebSocketClient(webSocketURI) {

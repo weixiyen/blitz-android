@@ -82,7 +82,7 @@ public class ViewModelMain extends ViewModel {
     private void setupCometCallbacks() {
 
         // Fetch comet channel for this user.
-        String userCometChannel = "user:" + AppDataObject.userId.getString();
+        String userCometChannel = "user:" + AppDataObject.userId.get();
 
         // Subscribe to channel, set callback.
         CometAPIManager
@@ -140,7 +140,7 @@ public class ViewModelMain extends ViewModel {
                     public void run() {
 
                         // Fetch comet channel for this user.
-                        String userCometChannel = "user:" + AppDataObject.userId.getString();
+                        String userCometChannel = "user:" + AppDataObject.userId.get();
 
                         // Unsubscribe them from it.
                         CometAPIManager.unsubscribeFromChannel(userCometChannel);

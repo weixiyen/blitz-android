@@ -371,7 +371,7 @@ public class KeyboardUtility {
 
         // Fetch cached keyboard heights.
         HashMap<String, String> keyboardHeights =
-                AppDataObject.keyboardHeights.getDictionary();
+                AppDataObject.keyboardHeights.get();
 
         // If cached height exists, return it.
         if (keyboardHeights.get(softKeyboardIdentifier) != null) {
@@ -396,7 +396,7 @@ public class KeyboardUtility {
 
         // Fetch cached keyboard heights.
         HashMap<String, String> keyboardHeights =
-                AppDataObject.keyboardHeights.getDictionary();
+                AppDataObject.keyboardHeights.get();
 
         // Place new height it into dictionary.
         keyboardHeights.put(softKeyboardIdentifier, Integer.toString(mKeyboardHeight));

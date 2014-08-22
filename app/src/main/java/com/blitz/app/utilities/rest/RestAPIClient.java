@@ -38,7 +38,7 @@ public class RestAPIClient extends RestAPIClientBase {
             public void intercept(RequestFacade request) {
 
                 // Attempt to fetch the app data cookie.
-                String cookie = AppDataObject.userCookie.getString();
+                String cookie = AppDataObject.userCookie.get();
 
                 if (cookie != null) {
 

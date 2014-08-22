@@ -87,7 +87,7 @@ public class GcmRegistrationHelper {
     public static String getDeviceId(Context context) {
 
         // Attempt to fetch cached device id.
-        String deviceId = AppDataObject.gcmDeviceId.getString();
+        String deviceId = AppDataObject.gcmDeviceId.get();
 
         if (deviceId == null) {
             deviceId = Settings.Secure.getString
@@ -195,10 +195,10 @@ public class GcmRegistrationHelper {
     private static String getRegistrationId(Context context) {
 
         // Attempt to fetch stored registration id.
-        String registrationId = AppDataObject.gcmRegistrationId.getString();
+        String registrationId = AppDataObject.gcmRegistrationId.get();
 
         // Fetch the stored application version.
-        int registeredVersion = AppDataObject.gcmAppVersion.getInt();
+        int registeredVersion = AppDataObject.gcmAppVersion.get();
 
         // Fetch the current application version.
         int currentVersion = getAppVersion(context);
