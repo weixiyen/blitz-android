@@ -35,7 +35,7 @@ public class AuthHelper {
      */
     public static boolean isDeviceRegistered() {
 
-        return AppDataObject.gcmRegistrationPersisted.getBoolean();
+        return AppDataObject.gcmRegistrationPersisted.get();
     }
 
     /**
@@ -73,13 +73,13 @@ public class AuthHelper {
     public static void tryEnterMainApp(BaseActivity activity) {
 
         // If user has passed the access queue.
-        if (AppDataObject.hasAccess.getBoolean()) {
+        if (AppDataObject.hasAccess.get()) {
 
             // If user is signed into the app.
-            if (AppDataObject.userId.getString() != null) {
+            if (AppDataObject.userId.get() != null) {
 
                 // If user has agreed to legal road block.
-                if (AppDataObject.hasAgreedLegal.getBoolean()) {
+                if (AppDataObject.hasAgreedLegal.get()) {
 
                     // Enter main screen of the app.
                     activity.startActivity(new Intent(activity, MainScreen.class), true);

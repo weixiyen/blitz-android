@@ -13,9 +13,11 @@ import java.util.HashMap;
 /**
  * Created by mrkcsc on 7/7/14.
  *
+ * TODO: Not thread safe. Either use ThreadLocal or synchronized, or something more clever.
+ *
  * TODO: Improve security: https://github.com/sveinungkb/encrypted-userprefs
  */
-public class AppData {
+public abstract class AppData<T> {
 
     //==============================================================================================
     // Constructors
@@ -24,25 +26,18 @@ public class AppData {
     // Application context.
     private static Context mContext;
 
-    // Data type and key.
-    private Class mType;
-    private String mKey;
+    // Data key.
+    final String mKey;
+    // TODO: cache the value locally as private T mVal ?
 
     //==============================================================================================
     // Constructors
     //==============================================================================================
 
-    @SuppressWarnings("unused")
-    protected AppData() {
-
-    }
-
-    @SuppressWarnings("unused")
-    protected AppData(Class type, String key) {
-
-        // Set type.
-        mType = type;
-
+    /**
+     * Cannot be instantiated. Use factory methods instead.
+     */
+    private AppData(String key) {
         // Set key.
         mKey = key;
     }
@@ -60,6 +55,68 @@ public class AppData {
     public static void init(Context context) {
 
         mContext = context;
+    }
+
+    final SharedPreferences getSharedPreferences() {
+        return PreferenceManager.getDefaultSharedPreferences(mContext);
+    }
+
+    /**
+     * Factory method to return a string data object
+     */
+    public static AppData<String> string(String key) {
+        return new AppData<String>(key) {
+            @Override
+            public String get() {
+                return getSharedPreferences().getString(this.mKey, null);
+            }
+        };
+    }
+
+    /**
+     * Factory method to return a boolean data object
+     */
+    public static AppData<Boolean> bool(String key) {
+        return new AppData<Boolean>(key) {
+            @Override
+            public Boolean get() {
+                return getSharedPreferences().getBoolean(this.mKey, false);
+            }
+        };
+    }
+
+    /**
+     * Factory method to return an integer data object
+     */
+    public static AppData<Integer> integer(String key) {
+        return new AppData<Integer>(key) {
+            @Override
+            public Integer get() {
+                return getSharedPreferences().getInt(this.mKey, 0);
+            }
+        };
+    }
+
+    /**
+     * Factory method to return a "dictionary" data object
+     */
+    public static AppData<HashMap<String, String>> dictionary(String key) {
+        return new AppData<HashMap<String, String>>(key) {
+            @Override
+            public HashMap<String, String> get() {
+                // Fetch raw JSON string.
+                String jsonDictionary = getSharedPreferences().getString(this.mKey, null);
+
+                // Convert to dictionary.
+                HashMap<String, String> dictionary =
+                        new Gson().fromJson(jsonDictionary,
+                                new TypeToken<HashMap<String, String>>() {
+                                }.getType());
+
+                // Convert to dictionary and return.
+                return (dictionary != null ? dictionary : new HashMap<String, String>());
+            }
+        };
     }
 
     /**
@@ -91,42 +148,11 @@ public class AppData {
     }
 
     /**
-     * Fetch dictionary app data.
-     */
-    @SuppressWarnings("unchecked")
-    public HashMap<String, String> getDictionary() {
-
-        return (HashMap<String, String>)get();
-    }
-
-    /**
-     * Fetch boolean app data.
-     */
-    @SuppressWarnings("unused")
-    public boolean getBoolean() {
-
-        return (Boolean)get();
-    }
-
-    /**
-     * Fetch string app data.
-     */
-    @SuppressWarnings("unused")
-    public String getString() {
-
-        return (String)get();
-    }
-
-    /**
-     * Fetch app data as an integer.
+     *  Get app data value.
      *
-     * @return Primitive integer value, 0 if not found.
+     * @return Supported value.
      */
-    @SuppressWarnings("unused")
-    public int getInt() {
-
-        return (Integer)get();
-    }
+    public abstract T get();
 
     /**
      * Set app data object, must be one
@@ -135,37 +161,37 @@ public class AppData {
      * @param value New value.
      */
     @SuppressLint("CommitPrefEdits")
-    public void set(Object value) {
+    public void set(T value) {
 
         // Get editor.
         SharedPreferences.Editor editor = getEditor();
 
-        if (mType == String.class) {
+        if (value instanceof String) {
 
             editor.putString(mKey, (String)value);
         } else
 
-        if (mType == Boolean.class) {
+        if (value instanceof Boolean) {
 
             editor.putBoolean(mKey, (Boolean)value);
         } else
 
-        if (mType == Integer.class) {
+        if (value instanceof Integer) {
 
             editor.putInt(mKey, (Integer)value);
         } else
 
-        if (mType == Float.class) {
+        if (value instanceof Float) {
 
             editor.putFloat(mKey, (Float)value);
         } else
 
-        if (mType == Long.class) {
+        if (value instanceof Long) {
 
             editor.putLong(mKey, (Long)value);
         } else
 
-        if (mType == HashMap.class) {
+        if (value instanceof HashMap) {
 
             // Convert dictionary into JSON string.
             String newValue = new Gson().toJsonTree(value).toString();
@@ -200,57 +226,4 @@ public class AppData {
         return sharedPreferences.edit();
     }
 
-    /**
-     *  Get app data value.
-     *
-     * @return Supported value.
-     */
-    private Object get() {
-
-        // Fetch shared preferences.
-        SharedPreferences sharedPreferences = PreferenceManager
-                .getDefaultSharedPreferences(mContext);
-
-        if (mType == String.class) {
-
-            return sharedPreferences.getString(mKey, null);
-        } else
-
-        if (mType == Boolean.class) {
-
-            return sharedPreferences.getBoolean(mKey, false);
-        } else
-
-        if (mType == Integer.class) {
-
-            return sharedPreferences.getInt(mKey, 0);
-        } else
-
-        if (mType == Float.class) {
-
-            return sharedPreferences.getFloat(mKey, 0f);
-        } else
-
-        if (mType == Long.class) {
-
-            return sharedPreferences.getLong(mKey, 0);
-        } else
-
-        if (mType == HashMap.class) {
-
-            // Fetch raw JSON string.
-            String jsonDictionary = sharedPreferences.getString(mKey, null);
-
-            // Convert to dictionary.
-            HashMap<String, String> dictionary =
-                    new Gson().fromJson(jsonDictionary,
-                    new TypeToken<HashMap<String, String>>() {}.getType());
-
-            // Convert to dictionary and return.
-            return dictionary != null ? dictionary : new HashMap<String, String>();
-        } else {
-
-            throw new ClassCastException("AppDataObject is not of supported type.");
-        }
-    }
 }

@@ -88,8 +88,8 @@ public class MainScreenFragmentSettings extends BaseFragment {
 
 
         // Initialize switch states.
-        mSettingsToggleMusic.setChecked(!AppDataObject.settingsMusicDisabled.getBoolean());
-        mSettingsToggleSound.setChecked(!AppDataObject.settingsSoundDisabled.getBoolean());
+        mSettingsToggleMusic.setChecked(!AppDataObject.settingsMusicDisabled.get());
+        mSettingsToggleSound.setChecked(!AppDataObject.settingsSoundDisabled.get());
 
         if (AppConfig.isProduction()) {
 
@@ -113,7 +113,7 @@ public class MainScreenFragmentSettings extends BaseFragment {
         AppDataObject.settingsMusicDisabled.set(!mSettingsToggleMusic.isChecked());
 
         // Set the disabled state of the music player.
-        SoundHelper.instance().setMusicDisabled(AppDataObject.settingsMusicDisabled.getBoolean());
+        SoundHelper.instance().setMusicDisabled(AppDataObject.settingsMusicDisabled.get());
     }
 
     /**

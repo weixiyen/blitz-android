@@ -182,7 +182,7 @@ public class ViewModelMainPlay extends ViewModel {
     private void setupCometCallbacks() {
 
         // Fetch comet channel for this user.
-        String userCometChannel = "user:" + AppDataObject.userId.getString();
+        String userCometChannel = "user:" + AppDataObject.userId.get();
 
         // Subscribe to channel, set callback.
         CometAPIManager

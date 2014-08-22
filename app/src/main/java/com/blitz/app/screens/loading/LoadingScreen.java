@@ -105,7 +105,7 @@ public class LoadingScreen extends BaseActivity {
 
         // Play the lobby music after loading.
         SoundHelper.instance().startMusic(R.raw.music_lobby_loop0, R.raw.music_lobby_loopn);
-        SoundHelper.instance().setMusicDisabled(AppDataObject.settingsMusicDisabled.getBoolean());
+        SoundHelper.instance().setMusicDisabled(AppDataObject.settingsMusicDisabled.get());
 
         // close this activity
         finish();
