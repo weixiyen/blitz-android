@@ -117,8 +117,11 @@ public class AuthHelper {
         AppDataObject.userId.set(userId);
         AppDataObject.userName.set(userName);
 
-        // Rest is user provided.
-        AppDataObject.userEmail.set(email);
+        if (email != null) {
+
+            AppDataObject.userEmail.set(email);
+        }
+
         AppDataObject.userPassword.set(password);
 
         // Make sure user passed the queue.
