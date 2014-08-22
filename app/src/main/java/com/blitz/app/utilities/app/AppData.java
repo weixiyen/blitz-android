@@ -57,7 +57,11 @@ public abstract class AppData<T> {
         mContext = context;
     }
 
+    /**
+     * Convenience method to get shared preferences
+     */
     final SharedPreferences getSharedPreferences() {
+
         return PreferenceManager.getDefaultSharedPreferences(mContext);
     }
 
@@ -66,8 +70,10 @@ public abstract class AppData<T> {
      */
     public static AppData<String> string(String key) {
         return new AppData<String>(key) {
+
             @Override
             public String get() {
+
                 return getSharedPreferences().getString(this.mKey, null);
             }
         };
@@ -77,9 +83,12 @@ public abstract class AppData<T> {
      * Factory method to return a boolean data object
      */
     public static AppData<Boolean> bool(String key) {
+
         return new AppData<Boolean>(key) {
+
             @Override
             public Boolean get() {
+
                 return getSharedPreferences().getBoolean(this.mKey, false);
             }
         };
@@ -89,9 +98,12 @@ public abstract class AppData<T> {
      * Factory method to return an integer data object
      */
     public static AppData<Integer> integer(String key) {
+
         return new AppData<Integer>(key) {
+
             @Override
             public Integer get() {
+
                 return getSharedPreferences().getInt(this.mKey, 0);
             }
         };
@@ -101,9 +113,12 @@ public abstract class AppData<T> {
      * Factory method to return a "dictionary" data object
      */
     public static AppData<HashMap<String, String>> dictionary(String key) {
+
         return new AppData<HashMap<String, String>>(key) {
+
             @Override
             public HashMap<String, String> get() {
+
                 // Fetch raw JSON string.
                 String jsonDictionary = getSharedPreferences().getString(this.mKey, null);
 
@@ -169,36 +184,25 @@ public abstract class AppData<T> {
         if (value instanceof String) {
 
             editor.putString(mKey, (String)value);
-        } else
-
-        if (value instanceof Boolean) {
+        } else if (value instanceof Boolean) {
 
             editor.putBoolean(mKey, (Boolean)value);
-        } else
-
-        if (value instanceof Integer) {
+        } else if (value instanceof Integer) {
 
             editor.putInt(mKey, (Integer)value);
-        } else
-
-        if (value instanceof Float) {
+        } else if (value instanceof Float) {
 
             editor.putFloat(mKey, (Float)value);
-        } else
-
-        if (value instanceof Long) {
+        } else if (value instanceof Long) {
 
             editor.putLong(mKey, (Long)value);
-        } else
-
-        if (value instanceof HashMap) {
+        } else if (value instanceof HashMap) {
 
             // Convert dictionary into JSON string.
             String newValue = new Gson().toJsonTree(value).toString();
 
             // Persist into editor.
             editor.putString(mKey, newValue);
-
         } else {
 
             throw new ClassCastException("AppDataObject is not of supported type.");
