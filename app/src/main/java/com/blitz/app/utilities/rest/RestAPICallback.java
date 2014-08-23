@@ -16,7 +16,7 @@ public class RestAPICallback<T> implements Callback<T> {
     //==============================================================================================
 
     // The interface needed for callback operations on the API.
-    private RestAPIObject mRestAPIObjectInterface;
+    private RestAPIObject mRestAPIObject;
 
     // The model operation object.
     private RestAPIOperation mOperation;
@@ -37,7 +37,7 @@ public class RestAPICallback<T> implements Callback<T> {
      */
     private RestAPICallback(RestAPIObject restAPIObjectInterface, RestAPIOperation operation, boolean isAuthentication) {
 
-        mRestAPIObjectInterface = restAPIObjectInterface;
+        mRestAPIObject = restAPIObjectInterface;
         mOperation = operation;
 
         // Start operation as soon as initialized.
@@ -94,10 +94,10 @@ public class RestAPICallback<T> implements Callback<T> {
         }
 
         // Set the api object which we receive on success.
-        mRestAPIObjectInterface.setJsonObject((JsonObject) jsonObject);
+        mRestAPIObject.setJsonObject((JsonObject) jsonObject);
 
         // Operation is finished, pass in success/fail boolean.
-        mOperation.finish(!mRestAPIObjectInterface.hasErrors());
+        mOperation.finish(!mRestAPIObject.hasErrors());
     }
 
     /**
