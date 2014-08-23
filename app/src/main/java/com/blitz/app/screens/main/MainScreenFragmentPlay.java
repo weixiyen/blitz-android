@@ -33,6 +33,13 @@ public class MainScreenFragmentPlay extends BaseFragment implements ViewModelMai
     @InjectView(R.id.main_play_button_time)       TextView mPlayButtonTime;
     @InjectView(R.id.main_play_button_waiting)        View mPlayButtonWaiting;
 
+    @InjectView(R.id.main_play_cash_available) TextView mCashAvailable;
+
+    @InjectView(R.id.main_play_stats_username) TextView mStatsUserName;
+    @InjectView(R.id.main_play_stats_rating)   TextView mStatsRating;
+    @InjectView(R.id.main_play_stats_wins)     TextView mStatsWins;
+    @InjectView(R.id.main_play_stats_losses)   TextView mStatsLosses;
+
     //==============================================================================================
     // Overwritten Methods
     //==============================================================================================
@@ -131,8 +138,53 @@ public class MainScreenFragmentPlay extends BaseFragment implements ViewModelMai
     @Override
     public void onQueueTick(String secondsInQueue) {
 
-        // Set to current second count.
         mPlayButtonTime.setText(secondsInQueue);
+    }
+
+    /**
+     * When username changes.
+     */
+    @Override
+    public void onUsername(String username) {
+
+        mStatsUserName.setText(username);
+    }
+
+    /**
+     * When rating changes.
+     */
+    @Override
+    public void onRating(int rating) {
+
+        mStatsRating.setText(Integer.toString(rating));
+    }
+
+    /**
+     * When wins change.
+     */
+    @Override
+    public void onWins(int wins) {
+
+        mStatsWins.setText(Integer.toString(wins));
+    }
+
+    /**
+     * When losses change.
+     */
+    @Override
+    public void onLosses(int losses) {
+
+        mStatsLosses.setText(Integer.toString(losses));
+    }
+
+    /**
+     * When cash changes.
+     */
+    @Override
+    public void onCash(int cash) {
+
+        // Set available cash, formatted.
+        mCashAvailable.setText("You have $" + String.format("%.2f", cash / 100.0f));
     }
 
     //==============================================================================================

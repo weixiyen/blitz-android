@@ -27,12 +27,51 @@ public class ObjectModelUser {
     private int mRating;
     private int mWins;
     private int mLosses;
-    private int mTies;
     private int mCash;
 
     //==============================================================================================
     // Public Methods
     //==============================================================================================
+
+    /**
+     * Fetch username.
+     */
+    public String getUsername() {
+
+        return mUsername;
+    }
+
+    /**
+     * Fetch rating.
+     */
+    public int getRating() {
+
+        return mRating;
+    }
+
+    /**
+     * Fetch wins.
+     */
+    public int getWins() {
+
+        return mWins;
+    }
+
+    /**
+     * Fetch losses.
+     */
+    public int getLosses() {
+
+        return mLosses;
+    }
+
+    /**
+     * Fetch cash.
+     */
+    public int getCash() {
+
+        return mCash;
+    }
 
     /**
      * Set email.
@@ -88,7 +127,6 @@ public class ObjectModelUser {
                     mCash     = result.get("cash").getAsInt();
                     mLosses   = result.get("losses").getAsInt();
                     mRating   = result.get("rating").getAsInt();
-                    mTies     = result.get("ties").getAsInt();
                     mUsername = result.get("username").getAsString();
                     mWins     = result.get("wins").getAsInt();
 

@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.os.Handler;
 
 import com.blitz.app.object_models.ObjectModelQueue;
+import com.blitz.app.object_models.ObjectModelUser;
 import com.blitz.app.screens.main.MainScreenFragmentPlay;
 import com.blitz.app.utilities.app.AppDataObject;
 import com.blitz.app.utilities.comet.CometAPICallback;
@@ -27,7 +28,8 @@ public class ViewModelMainPlay extends ViewModel {
     private Runnable mSecondsInQueueRunnable;
 
     // Object model.
-    private ObjectModelQueue mModelQueue;
+    private ObjectModelQueue mModelQueue = new ObjectModelQueue();
+    private ObjectModelUser mModelUser = new ObjectModelUser();
 
     // Are we in queue.
     private boolean mInQueue;
@@ -103,6 +105,9 @@ public class ViewModelMainPlay extends ViewModel {
         // Initialize container state.
         showQueueContainer(null, false);
 
+        // Fetch user info.
+        fetchUserInfo();
+
         // Setup comet.
         setupCometCallbacks();
     }
@@ -120,12 +125,12 @@ public class ViewModelMainPlay extends ViewModel {
         if (mInQueue) {
 
             // Leave the queue.
-            getModelQueue().leaveQueue(mActivity, null);
+            mModelQueue.leaveQueue(mActivity, null);
 
         } else {
 
             // Enter the queue.
-            getModelQueue().queueUp(mActivity, new Runnable() {
+            mModelQueue.queueUp(mActivity, new Runnable() {
 
                 @Override
                 public void run() {
@@ -139,6 +144,32 @@ public class ViewModelMainPlay extends ViewModel {
     //==============================================================================================
     // Private Methods
     //==============================================================================================
+
+    /**
+     * Fetch and broadcast user information relevant
+     * to the play view model.
+     */
+    private void fetchUserInfo() {
+
+        // Fetch user object.
+        mModelUser.getUser(mActivity, new Runnable() {
+
+            @Override
+            public void run() {
+
+                // Fetch callbacks.
+                ViewModelMainPlayCallbacks callbacks = getCallbacks(ViewModelMainPlayCallbacks.class);
+
+                if (callbacks != null) {
+                    callbacks.onUsername(mModelUser.getUsername());
+                    callbacks.onRating(mModelUser.getRating());
+                    callbacks.onWins(mModelUser.getWins());
+                    callbacks.onLosses(mModelUser.getLosses());
+                    callbacks.onCash(mModelUser.getCash());
+                }
+            }
+        });
+    }
 
     /**
      * Show the queue container to either hidden or
@@ -275,21 +306,6 @@ public class ViewModelMainPlay extends ViewModel {
         }
     }
 
-    /**
-     * Fetch queue model instance.
-     *
-     * @return Queue model instance.
-     */
-    private ObjectModelQueue getModelQueue() {
-
-        // Lazy load the model.
-        if (mModelQueue == null) {
-            mModelQueue = new ObjectModelQueue();
-        }
-
-        return mModelQueue;
-    }
-
     //==============================================================================================
     // Callbacks Interface
     //==============================================================================================
@@ -299,5 +315,10 @@ public class ViewModelMainPlay extends ViewModel {
         public void onQueueUp(boolean animate);
         public void onQueueCancel(boolean animate);
         public void onQueueTick(String secondsInQueue);
+        public void onUsername(String username);
+        public void onRating(int rating);
+        public void onWins(int wins);
+        public void onLosses(int losses);
+        public void onCash(int cash);
     }
 }
