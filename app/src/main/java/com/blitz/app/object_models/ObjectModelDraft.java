@@ -10,7 +10,7 @@ import com.blitz.app.utilities.rest.RestAPIOperation;
 /**
  * Created by mrkcsc on 7/27/14.
  */
-public class ObjectModelDraft extends ObjectModel {
+public class ObjectModelDraft {
 
     //==============================================================================================
     // Member Variables

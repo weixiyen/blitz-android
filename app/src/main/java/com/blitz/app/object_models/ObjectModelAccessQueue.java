@@ -11,7 +11,7 @@ import com.google.gson.JsonObject;
 /**
  * Created by mrkcsc on 8/9/14.
  */
-public class ObjectModelAccessQueue extends ObjectModel {
+public class ObjectModelAccessQueue {
 
     //==============================================================================================
     // Member Variables

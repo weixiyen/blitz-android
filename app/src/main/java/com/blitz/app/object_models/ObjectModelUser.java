@@ -13,7 +13,7 @@ import com.google.gson.JsonObject;
 /**
  * Created by mrkcsc on 7/9/14.
  */
-public class ObjectModelUser extends ObjectModel {
+public class ObjectModelUser {
 
     //==============================================================================================
     // Member Variables

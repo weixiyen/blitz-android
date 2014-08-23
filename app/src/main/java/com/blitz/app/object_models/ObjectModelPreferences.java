@@ -13,7 +13,7 @@ import com.google.gson.JsonObject;
  * Created by Miguel Gaeta on 6/26/14.
  */
 @SuppressWarnings("unused")
-public class ObjectModelPreferences extends ObjectModel {
+public class ObjectModelPreferences {
 
     //==============================================================================================
     // Member Variables

@@ -11,7 +11,7 @@ import com.google.gson.JsonObject;
 /**
  * Created by Miguel Gaeta on 6/28/14.
  */
-public class ObjectModelCode extends ObjectModel {
+public class ObjectModelCode {
 
     //==============================================================================================
     // Member Variables
