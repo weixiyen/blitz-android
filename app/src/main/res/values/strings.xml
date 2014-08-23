@@ -49,4 +49,5 @@
     <string name="username_or_email">Username or Email</string>
     <string name="waiting_for_opponent">Waiting for\nopponent</string>
     <string name="win">win</string>
+    <string name="you_have_cash">You have $0.00</string>
 </resources>
