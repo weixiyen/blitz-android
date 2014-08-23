@@ -13,15 +13,26 @@ import android.view.WindowManager;
 import com.blitz.app.R;
 import com.blitz.app.utilities.reflection.ReflectionHelper;
 
-import java.util.List;
+import butterknife.ButterKnife;
 
 /**
  * Created by mrkcsc on 8/17/14.
  */
 public abstract class BaseDialogFragment extends DialogFragment {
 
-    protected abstract void onViewCreated(View view);
+    //==============================================================================================
+    // Overwritten Methods
+    //==============================================================================================
 
+    /**
+     * When view is created inflate layout and setup the window.
+     *
+     * @param inflater Inflater object.
+     * @param container Parent container.
+     * @param savedInstanceState Saved state.
+     *
+     * @return Instantiated view.
+     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
@@ -40,12 +51,34 @@ public abstract class BaseDialogFragment extends DialogFragment {
                 WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
+
+        // Initialize butter-knife.
+        ButterKnife.inject(this, view);
+
         // Call on view created.
         onViewCreated(view);
 
         return view;
     }
 
+    /**
+     * Destroy butter-knife injections.
+     */
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+
+        // Reset butter-knife.
+        ButterKnife.reset(this);
+    }
+
+    /**
+     * When activity is created, make this dialog
+     * transparent as possible and full screen.
+     *
+     * @param savedInstanceState Saved state.
+     */
+    @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
@@ -61,11 +94,9 @@ public abstract class BaseDialogFragment extends DialogFragment {
                 WindowManager.LayoutParams.MATCH_PARENT);
     }
 
-    private List getFragments(){
-        //List fList = new ArrayList();
-        //fList.add(FragmentAcoesMusculares.newInstance("Fragment 1",1));
-        //fList.add(FragmentAcoesMusculares.newInstance("Fragment 2",2));
-        //fList.add(FragmentAcoesMusculares.newInstance("Fragment 3",3));
-        return null;
-    }
+    //==============================================================================================
+    // Abstract Methods
+    //==============================================================================================
+
+    protected abstract void onViewCreated(View view);
 }
