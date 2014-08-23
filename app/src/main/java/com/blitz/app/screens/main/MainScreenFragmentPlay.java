@@ -1,18 +1,12 @@
 package com.blitz.app.screens.main;
 
-import android.animation.ObjectAnimator;
-import android.animation.ValueAnimator;
 import android.os.Bundle;
 import android.view.View;
-import android.view.animation.LinearInterpolator;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.blitz.app.R;
 import com.blitz.app.utilities.android.BaseFragment;
-import com.blitz.app.utilities.animations.AnimHelperCrossFade;
-import com.blitz.app.utilities.animations.AnimHelperFade;
-import com.blitz.app.utilities.logging.LogHelper;
 import com.blitz.app.utilities.rest.RestAPIOperation;
 import com.blitz.app.view_models.ViewModelMainPlay;
 
@@ -51,13 +45,6 @@ public class MainScreenFragmentPlay extends BaseFragment implements ViewModelMai
 
         // Initialize view model.
         setViewModel(new ViewModelMainPlay(), savedInstanceState);
-
-        ObjectAnimator oa = ObjectAnimator.ofFloat(mPlayButtonHighlight, "rotation", 0, 360);
-
-        oa.setDuration(1750);
-        oa.setRepeatCount(ValueAnimator.INFINITE);
-        oa.setInterpolator(new LinearInterpolator());
-        oa.start();
     }
 
     //==============================================================================================
@@ -70,16 +57,19 @@ public class MainScreenFragmentPlay extends BaseFragment implements ViewModelMai
     @Override
     public void onQueueUp(boolean animate) {
 
-        LogHelper.log("Queue");
+        mPlayButton
+                .setBackgroundResource(R.drawable.drawable_button_play_cancel);
+        mPlayButtonHighlight
+                .setImageResource(R.drawable.asset_play_button_cancel_highlight);
+        mPlayButtonOutline
+                .setImageResource(R.drawable.asset_play_button_cancel_outline);
 
-        mPlayButton.setBackgroundResource(R.drawable.drawable_button_play_cancel);
-
-        AnimHelperCrossFade.setImageResource(mPlayButtonHighlight, R.drawable.asset_play_button_cancel_highlight);
-        AnimHelperCrossFade.setImageResource(mPlayButtonOutline,   R.drawable.asset_play_button_cancel_outline);
-
-        AnimHelperFade.setVisibility(mPlayButtonText,    View.GONE);
-        AnimHelperFade.setVisibility(mPlayButtonTime,    View.VISIBLE);
-        AnimHelperFade.setVisibility(mPlayButtonWaiting, View.VISIBLE);
+        mPlayButtonText
+                .setVisibility(View.GONE);
+        mPlayButtonTime
+                .setVisibility(View.VISIBLE);
+        mPlayButtonWaiting
+                .setVisibility(View.VISIBLE);
     }
 
     /**
@@ -88,16 +78,19 @@ public class MainScreenFragmentPlay extends BaseFragment implements ViewModelMai
     @Override
     public void onQueueCancel(boolean animate) {
 
-        mPlayButton.setBackgroundResource(R.drawable.drawable_button_play);
+        mPlayButton
+                .setBackgroundResource(R.drawable.drawable_button_play);
+        mPlayButtonHighlight
+                .setImageResource(R.drawable.asset_play_button_play_highlight);
+        mPlayButtonOutline
+                .setImageResource(R.drawable.asset_play_button_play_outline);
 
-        AnimHelperCrossFade.setImageResource(mPlayButtonHighlight,
-                R.drawable.asset_play_button_play_highlight);
-        AnimHelperCrossFade.setImageResource(mPlayButtonOutline,
-                R.drawable.asset_play_button_play_outline);
-
-        AnimHelperFade.setVisibility(mPlayButtonText,    View.VISIBLE);
-        AnimHelperFade.setVisibility(mPlayButtonTime,    View.GONE);
-        AnimHelperFade.setVisibility(mPlayButtonWaiting, View.GONE);
+        mPlayButtonText
+                .setVisibility(View.VISIBLE);
+        mPlayButtonTime
+                .setVisibility(View.GONE);
+        mPlayButtonWaiting
+                .setVisibility(View.GONE);
     }
 
     /**
