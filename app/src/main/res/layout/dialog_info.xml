@@ -61,17 +61,14 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="10dp"
-                    android:layout_marginRight="10dp"
                     android:orientation="horizontal">
 
                     <Button
                         android:id="@+id/dialog_info_left_button"
                         android:layout_width="0dp"
                         android:layout_height="60dp"
-                        android:layout_marginLeft="10dp"
                         android:layout_weight="1"
-                        android:background="@drawable/drawable_button_main"
+                        android:background="@drawable/drawable_button_dialog"
                         android:contentDescription="@string/empty_string"
                         android:fontFamily="@string/app_font_light"
                         android:text="@string/lorum_ipsum_tiny"
@@ -84,7 +81,7 @@
                         android:layout_height="60dp"
                         android:layout_marginLeft="10dp"
                         android:layout_weight="1"
-                        android:background="@drawable/drawable_button_main"
+                        android:background="@drawable/drawable_button_dialog"
                         android:contentDescription="@string/empty_string"
                         android:fontFamily="@string/app_font_light"
                         android:text="@string/lorum_ipsum_tiny"
