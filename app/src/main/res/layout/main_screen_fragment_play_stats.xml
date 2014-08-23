@@ -1,22 +1,141 @@
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="320dp"
+    android:layout_width="@dimen/screen_width"
     android:layout_height="match_parent"
     android:layout_gravity="center"
     android:gravity="center"
     tools:context="${packageName}.${activityClass}"
     tools:ignore="ButtonStyle,UnusedAttribute">
 
-    <ImageView
-        android:layout_width="@dimen/screen_width"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="127dp"
-        android:layout_centerHorizontal="true"
-        android:contentDescription="@string/empty_string"
+        android:background="@drawable/asset_bg_profile_play"
+        android:gravity="center_horizontal"
         android:orientation="vertical"
-        android:src="@drawable/asset_bg_profile_play" />
+        android:paddingLeft="100dp"
+        android:paddingRight="10dp"
+        android:paddingTop="5dp">
+
+        <me.grantland.widget.AutofitTextView
+            android:id="@+id/main_play_stats_username"
+            style="@style/TextViewStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@string/app_font_sports"
+            android:gravity="center"
+            android:paddingBottom="5dp"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"
+            android:paddingTop="10dp"
+            android:singleLine="true"
+            android:text="@string/lorum_ipsum_tiny"
+            android:textColor="@color/text_color_light"
+            android:textSize="20sp"/>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="-6dp"
+                android:src="@drawable/asset_play_icon_elo"/>
+
+            <TextView
+                android:id="@+id/main_play_stats_rating"
+                style="@style/TextViewStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@string/app_font_sports"
+                android:gravity="center"
+                android:paddingLeft="5dp"
+                android:paddingRight="5dp"
+                android:singleLine="true"
+                android:text="@string/number_large"
+                android:textColor="@color/text_color_link"
+                android:textSize="20sp"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <TextView
+                style="@style/TextViewStyle"
+                android:layout_width="70dp"
+                android:layout_height="wrap_content"
+                android:fontFamily="@string/app_font_sports"
+                android:gravity="center"
+                android:paddingLeft="5dp"
+                android:paddingRight="5dp"
+                android:singleLine="true"
+                android:text="@string/win"
+                android:textAllCaps="true"
+                android:textColor="@color/text_color_light"
+                android:textSize="16sp"/>
+
+            <TextView
+                style="@style/TextViewStyle"
+                android:layout_width="70dp"
+                android:layout_height="wrap_content"
+                android:fontFamily="@string/app_font_sports"
+                android:gravity="center"
+                android:paddingLeft="5dp"
+                android:paddingRight="5dp"
+                android:singleLine="true"
+                android:text="@string/loss"
+                android:textAllCaps="true"
+                android:textColor="@color/text_color_grey"
+                android:textSize="16sp"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/main_play_stats_wins"
+                style="@style/TextViewStyle"
+                android:layout_width="70dp"
+                android:layout_height="wrap_content"
+                android:fontFamily="@string/app_font_sports"
+                android:gravity="center"
+                android:paddingLeft="5dp"
+                android:paddingRight="5dp"
+                android:singleLine="true"
+                android:text="@string/number_small"
+                android:textAllCaps="true"
+                android:textColor="@color/text_color_light"
+                android:textSize="28sp"/>
+
+            <TextView
+                android:id="@+id/main_play_stats_losses"
+                style="@style/TextViewStyle"
+                android:layout_width="70dp"
+                android:layout_height="wrap_content"
+                android:fontFamily="@string/app_font_sports"
+                android:gravity="center"
+                android:paddingLeft="5dp"
+                android:paddingRight="5dp"
+                android:singleLine="true"
+                android:text="@string/number_small"
+                android:textAllCaps="true"
+                android:textColor="@color/text_color_grey"
+                android:textSize="28sp"/>
+        </LinearLayout>
+    </LinearLayout>
 
     <ImageView
+        android:id="@+id/main_play_stats_avatar"
         android:layout_width="140dp"
         android:layout_height="140dp"
         android:layout_marginLeft="5dp"

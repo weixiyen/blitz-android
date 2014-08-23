@@ -1,7 +1,10 @@
 package com.blitz.app.screens.main;
 
+import android.animation.ObjectAnimator;
+import android.animation.ValueAnimator;
 import android.os.Bundle;
 import android.view.View;
+import android.view.animation.LinearInterpolator;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -45,6 +48,35 @@ public class MainScreenFragmentPlay extends BaseFragment implements ViewModelMai
 
         // Initialize view model.
         setViewModel(new ViewModelMainPlay(), savedInstanceState);
+
+        // Spin baby.
+        setupSpinningPlayButton();
+    }
+
+    //==============================================================================================
+    // Private Methods
+    //==============================================================================================
+
+    /**
+     * Animate play button.
+     */
+    private void setupSpinningPlayButton() {
+
+        // Create an animator for rotation.
+        ObjectAnimator objectAnimator = ObjectAnimator
+                .ofFloat(mPlayButtonHighlight, "rotation", 0, 360);
+
+        // Time to spin.
+        objectAnimator.setDuration(1750);
+
+        // Repeat forever.
+        objectAnimator.setRepeatCount(ValueAnimator.INFINITE);
+
+        // Spin linearly.
+        objectAnimator.setInterpolator(new LinearInterpolator());
+
+        // Start animating.
+        objectAnimator.start();
     }
 
     //==============================================================================================
