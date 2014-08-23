@@ -60,6 +60,9 @@ public interface RestAPI {
     @PUT("/queue")
     void queue_put(@Body JsonObject body, Callback<JsonObject> callback);
 
+    @GET("/user/{user_id}")
+    void user_get(@Path("user_id") String userId, Callback<JsonObject> callback);
+
     @POST("/users")
     void users_post(@Body JsonObject body, Callback<JsonObject> callback);
 }
