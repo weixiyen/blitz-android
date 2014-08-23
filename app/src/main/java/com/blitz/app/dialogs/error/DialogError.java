@@ -1,4 +1,4 @@
-package com.blitz.app.dialogs;
+package com.blitz.app.dialogs.error;
 
 import android.app.Activity;
 import android.content.Intent;

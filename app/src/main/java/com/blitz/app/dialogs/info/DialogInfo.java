@@ -1,4 +1,4 @@
-package com.blitz.app.dialogs;
+package com.blitz.app.dialogs.info;
 
 import android.app.Activity;
 import android.view.View;

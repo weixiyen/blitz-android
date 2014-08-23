@@ -9,8 +9,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.blitz.app.R;
-import com.blitz.app.dialogs.DialogInfo;
-import com.blitz.app.dialogs.DialogRules;
+import com.blitz.app.dialogs.info.DialogInfo;
+import com.blitz.app.dialogs.rules.DialogRules;
 import com.blitz.app.utilities.android.BaseFragment;
 import com.blitz.app.utilities.rest.RestAPIOperation;
 import com.blitz.app.view_models.ViewModelMainPlay;

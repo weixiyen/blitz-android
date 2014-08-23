@@ -1,4 +1,4 @@
-package com.blitz.app.dialogs;
+package com.blitz.app.dialogs.loading;
 
 import android.app.Activity;
 import android.os.Handler;

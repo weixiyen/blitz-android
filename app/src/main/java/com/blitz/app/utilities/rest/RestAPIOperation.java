@@ -3,8 +3,8 @@ package com.blitz.app.utilities.rest;
 import android.app.Activity;
 import android.os.Handler;
 
-import com.blitz.app.dialogs.DialogError;
-import com.blitz.app.dialogs.DialogLoading;
+import com.blitz.app.dialogs.error.DialogError;
+import com.blitz.app.dialogs.loading.DialogLoading;
 
 
 /**

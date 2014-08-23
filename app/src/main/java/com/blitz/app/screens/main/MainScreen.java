@@ -6,8 +6,8 @@ import android.support.v4.view.ViewPager;
 import android.view.View;
 
 import com.blitz.app.R;
-import com.blitz.app.dialogs.DialogInfo;
-import com.blitz.app.dialogs.DialogLoading;
+import com.blitz.app.dialogs.info.DialogInfo;
+import com.blitz.app.dialogs.loading.DialogLoading;
 import com.blitz.app.screens.draft_preview.DraftPreviewScreen;
 import com.blitz.app.utilities.android.BaseActivity;
 import com.blitz.app.utilities.android.BaseDialog;
