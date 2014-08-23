@@ -2,6 +2,7 @@ package com.blitz.app.utilities.android;
 
 import android.content.Context;
 import android.net.http.SslError;
+import android.os.Build;
 import android.support.annotation.NonNull;
 import android.util.AttributeSet;
 import android.view.View;
@@ -81,6 +82,12 @@ public class BaseWebView extends WebView {
 
         // Set web-view as transparent.
         setBackgroundColor(0x00000000);
+
+        // Disable hardware acceleration on older SDKs.
+        if (android.os.Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN) {
+
+            setLayerType(View.LAYER_TYPE_SOFTWARE, null);
+        }
 
         // Add a custom web-view client.
         setWebViewClient(new WebViewClient() {
