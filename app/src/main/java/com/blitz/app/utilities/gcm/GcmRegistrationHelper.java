@@ -11,6 +11,7 @@ import com.blitz.app.object_models.ObjectModelDevice;
 import com.blitz.app.utilities.app.AppConfig;
 import com.blitz.app.utilities.app.AppDataObject;
 import com.blitz.app.utilities.authentication.AuthHelper;
+import com.blitz.app.utilities.logging.LogHelper;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.gcm.GoogleCloudMessaging;
@@ -207,6 +208,8 @@ public class GcmRegistrationHelper {
 
             return null;
         }
+
+        LogHelper.log("GCM registration id: " + registrationId);
 
         return registrationId;
     }
