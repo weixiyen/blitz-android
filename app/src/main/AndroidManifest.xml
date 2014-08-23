@@ -94,7 +94,7 @@
                 <action
                     android:name="com.google.android.c2dm.intent.RECEIVE" />
                 <category
-                    android:name="com.google.android.gcm.demo.app" />
+                    android:name="com.blitz.app" />
             </intent-filter>
         </receiver>
 
