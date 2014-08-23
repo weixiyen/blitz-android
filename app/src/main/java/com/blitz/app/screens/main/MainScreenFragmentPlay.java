@@ -10,8 +10,8 @@ import android.widget.TextView;
 
 import com.blitz.app.R;
 import com.blitz.app.dialogs.DialogInfo;
+import com.blitz.app.dialogs.DialogRules;
 import com.blitz.app.utilities.android.BaseFragment;
-import com.blitz.app.utilities.logging.LogHelper;
 import com.blitz.app.utilities.rest.RestAPIOperation;
 import com.blitz.app.view_models.ViewModelMainPlay;
 
@@ -42,8 +42,6 @@ public class MainScreenFragmentPlay extends BaseFragment implements ViewModelMai
     @InjectView(R.id.main_play_stats_wins)     TextView mStatsWins;
     @InjectView(R.id.main_play_stats_losses)   TextView mStatsLosses;
 
-    private DialogInfo mInfoDialog;
-
     //==============================================================================================
     // Overwritten Methods
     //==============================================================================================
@@ -62,8 +60,6 @@ public class MainScreenFragmentPlay extends BaseFragment implements ViewModelMai
 
         // Spin baby.
         setupSpinningPlayButton();
-
-        mInfoDialog = new DialogInfo(getActivity());
     }
 
     //==============================================================================================
@@ -217,18 +213,21 @@ public class MainScreenFragmentPlay extends BaseFragment implements ViewModelMai
     @OnClick(R.id.main_play_add_money) @SuppressWarnings("unused")
     public void addMoneyClicked() {
 
+        // Create a new info dialog instance.
+        final DialogInfo dialogInfo = new DialogInfo(getActivity());
+
         // Set coming soon text with standard OK button.
-        mInfoDialog.setInfoText(R.string.add_money_coming_soon);
-        mInfoDialog.setInfoLeftButton(R.string.ok, new Runnable() {
+        dialogInfo.setInfoText(R.string.add_money_coming_soon);
+        dialogInfo.setInfoLeftButton(R.string.ok, new Runnable() {
 
             @Override
             public void run() {
-                mInfoDialog.hide(null);
+                dialogInfo.hide(null);
             }
         });
 
         // Show the dialog.
-        mInfoDialog.show(true);
+        dialogInfo.show(true);
     }
 
     /**
@@ -237,6 +236,7 @@ public class MainScreenFragmentPlay extends BaseFragment implements ViewModelMai
     @OnClick(R.id.main_play_rules) @SuppressWarnings("unused")
     public void rulesClicked() {
 
-        LogHelper.log("Rules.");
+        // TODO: Revise this.
+        new DialogRules().show(getChildFragmentManager(), "asdsdasdasddas");
     }
 }
