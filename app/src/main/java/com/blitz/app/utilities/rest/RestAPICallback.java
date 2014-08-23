@@ -16,7 +16,7 @@ public class RestAPICallback<T> implements Callback<T> {
     //==============================================================================================
 
     // The interface needed for callback operations on the API.
-    private RestAPIObjectInterface mRestAPIObjectInterface;
+    private RestAPIObject mRestAPIObjectInterface;
 
     // The model operation object.
     private RestAPIOperation mOperation;
@@ -35,7 +35,7 @@ public class RestAPICallback<T> implements Callback<T> {
      * @param operation Operation object.
      * @param isAuthentication Is this an authentication call.
      */
-    private RestAPICallback(RestAPIObjectInterface restAPIObjectInterface, RestAPIOperation operation, boolean isAuthentication) {
+    private RestAPICallback(RestAPIObject restAPIObjectInterface, RestAPIOperation operation, boolean isAuthentication) {
 
         mRestAPIObjectInterface = restAPIObjectInterface;
         mOperation = operation;
@@ -56,7 +56,7 @@ public class RestAPICallback<T> implements Callback<T> {
      *
      * @return New instance.
      */
-    public static RestAPICallback<JsonObject> create(RestAPIObjectInterface restAPIObjectInterface, RestAPIOperation operation, boolean isAuthentication) {
+    public static RestAPICallback<JsonObject> create(RestAPIObject restAPIObjectInterface, RestAPIOperation operation, boolean isAuthentication) {
 
         return new RestAPICallback<JsonObject>(restAPIObjectInterface, operation, isAuthentication);
     }
@@ -69,7 +69,7 @@ public class RestAPICallback<T> implements Callback<T> {
      *
      * @return New instance.
      */
-    public static RestAPICallback<JsonObject> create(RestAPIObjectInterface restAPIObjectInterface, RestAPIOperation operation) {
+    public static RestAPICallback<JsonObject> create(RestAPIObject restAPIObjectInterface, RestAPIOperation operation) {
 
         return new RestAPICallback<JsonObject>(restAPIObjectInterface, operation, false);
     }

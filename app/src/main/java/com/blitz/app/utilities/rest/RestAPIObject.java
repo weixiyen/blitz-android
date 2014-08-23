@@ -6,7 +6,7 @@ import com.google.gson.JsonObject;
 /**
  * Created by Miguel Gaeta on 6/29/14.
  */
-public class RestAPIObject implements RestAPIObjectInterface {
+public class RestAPIObject {
 
     //==============================================================================================
     // Member Variables
@@ -25,7 +25,6 @@ public class RestAPIObject implements RestAPIObjectInterface {
      *
      * @return True/false.
      */
-    @Override
     public boolean hasErrors() {
 
         // Check for presence of errors result.
@@ -37,7 +36,6 @@ public class RestAPIObject implements RestAPIObjectInterface {
      *
      * @param jsonObject Provided object.
      */
-    @Override
     public void setJsonObject(JsonObject jsonObject) {
         mJsonObject = jsonObject;
     }
