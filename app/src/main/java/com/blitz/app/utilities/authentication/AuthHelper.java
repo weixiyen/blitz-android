@@ -28,6 +28,15 @@ public class AuthHelper {
     //==============================================================================================
 
     /**
+     * Fetch associated user id.
+     */
+    @SuppressWarnings("unused")
+    public static String getUserId() {
+
+        return AppDataObject.userId.get();
+    }
+
+    /**
      * Is this device registered with
      * the servers.
      *
