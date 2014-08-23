@@ -16,7 +16,10 @@
     <color name="text_color_dark">#000000</color>
     <color name="text_color_grey">#84909b</color>
     <color name="text_color_dark_alt">#bbbbbb</color>
+
     <color name="text_color_link">#00f6ff</color>
+    <color name="text_color_link_pressed">#d0fdff</color>
+
     <color name="text_color_shadow">#BF000000</color>
     <color name="text_color_shadow_light">#40ffffff</color>
 </resources>

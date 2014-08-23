@@ -16,9 +16,9 @@
         android:id="@+id/main_play_cash_available"
         style="@style/TextViewStyle"
         android:layout_width="0dp"
-        android:layout_weight="1"
         android:layout_height="match_parent"
         android:layout_gravity="center"
+        android:layout_weight="1"
         android:fontFamily="@string/app_font_helvetica_condensed_bold"
         android:gravity="left|center_vertical"
         android:text="@string/you_have_cash"
@@ -26,6 +26,7 @@
         android:textSize="14sp"/>
 
     <TextView
+        android:id="@+id/main_play_add_money"
         style="@style/TextViewStyle"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
@@ -33,7 +34,7 @@
         android:fontFamily="@string/app_font_helvetica_condensed_bold"
         android:gravity="center"
         android:text="@string/add_money"
-        android:textColor="@color/text_color_link"
+        android:textColor="@color/selector_text_link"
         android:textSize="14sp"/>
 
     <TextView
@@ -50,12 +51,13 @@
         android:textSize="14sp"/>
 
     <TextView
+        android:id="@+id/main_play_rules"
         style="@style/TextViewStyle"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:fontFamily="@string/app_font_helvetica_condensed_bold"
         android:gravity="center"
         android:text="@string/rules"
-        android:textColor="@color/text_color_link"
+        android:textColor="@color/selector_text_link"
         android:textSize="14sp"/>
 </LinearLayout>

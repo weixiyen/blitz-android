@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.blitz.app.R;
 import com.blitz.app.utilities.android.BaseFragment;
+import com.blitz.app.utilities.logging.LogHelper;
 import com.blitz.app.utilities.rest.RestAPIOperation;
 import com.blitz.app.view_models.ViewModelMainPlay;
 
@@ -195,7 +196,7 @@ public class MainScreenFragmentPlay extends BaseFragment implements ViewModelMai
      * Join (or leave) the draft queue!
      */
     @OnClick(R.id.main_play_button) @SuppressWarnings("unused")
-    public void main_play() {
+    public void playButtonClicked() {
 
         if (RestAPIOperation.shouldThrottle()) {
             return;
@@ -203,5 +204,23 @@ public class MainScreenFragmentPlay extends BaseFragment implements ViewModelMai
 
         // Toggle the queue.
         getViewModel(ViewModelMainPlay.class).toggleQueue();
+    }
+
+    /**
+     * Add money clicked.
+     */
+    @OnClick(R.id.main_play_add_money) @SuppressWarnings("unused")
+    public void addMoneyClicked() {
+
+        LogHelper.log("Add money.");
+    }
+
+    /**
+     * Rules clicked.
+     */
+    @OnClick(R.id.main_play_rules) @SuppressWarnings("unused")
+    public void rulesClicked() {
+
+        LogHelper.log("Rules.");
     }
 }
