@@ -50,13 +50,13 @@ public abstract class RestAPIOperation {
     }
 
     //==============================================================================================
-    // Overwritten Methods
+    // Package Methods
     //==============================================================================================
 
     /**
      * Triggered when a model operation begins.
      */
-    public void start() {
+    void start() {
 
         // Setup operation throttling.
         setOperationThrottle();
@@ -72,11 +72,12 @@ public abstract class RestAPIOperation {
      * finishing the operation in sync with
      * any dialogs/running UI events, etc.
      *
-     * @param success Operation status.
+     * @param restAPIObject Resulting rest object.
      */
-    public void finish(final boolean success) {
+    void finish(RestAPIObject restAPIObject) {
 
-        finish(success, null);
+        // Operation is finished, pass in success/fail boolean.
+        finish(restAPIObject, !restAPIObject.hasErrors(), null);
     }
 
     /**
@@ -84,10 +85,11 @@ public abstract class RestAPIOperation {
      * finishing the operation in sync with
      * any dialogs/running UI events, etc.
      *
-     * @param success Operation status.
      * @param httpStatusCode HTTP status code.
+     * @param success Operation success.
+     * @param restAPIObject Resulting rest object.
      */
-    public void finish(final boolean success, final Integer httpStatusCode) {
+    void finish(final RestAPIObject restAPIObject, final boolean success, final Integer httpStatusCode) {
 
         // Trigger operation callbacks after hide.
         DialogLoading.HideListener hideListener = new DialogLoading.HideListener() {
@@ -96,7 +98,7 @@ public abstract class RestAPIOperation {
             public void didHide() {
 
                 if (success) {
-                    success();
+                    success(restAPIObject);
                 } else {
                     failure(httpStatusCode != null &&
                             httpStatusCode == 401);
@@ -119,9 +121,10 @@ public abstract class RestAPIOperation {
 
     /**
      * Triggered when a model operation is successful.
+     *
+     * @param restAPIObject Populated rest api.
      */
-    public abstract void success();
-
+    public abstract void success(RestAPIObject restAPIObject);
 
     /**
      * Triggered when a model operation fails.

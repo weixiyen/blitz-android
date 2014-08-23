@@ -4,6 +4,7 @@ import android.app.Activity;
 
 import com.blitz.app.utilities.rest.RestAPICallback;
 import com.blitz.app.utilities.rest.RestAPIClient;
+import com.blitz.app.utilities.rest.RestAPIObject;
 import com.blitz.app.utilities.rest.RestAPIOperation;
 import com.google.gson.JsonObject;
 
@@ -60,10 +61,10 @@ public class ObjectModelCode extends ObjectModel {
         RestAPIOperation operation = new RestAPIOperation(activity) {
 
             @Override
-            public void success() {
+            public void success(RestAPIObject restAPIObject) {
 
                 // Fetch resulting object.
-                JsonObject jsonObject = getJsonObject();
+                JsonObject jsonObject = restAPIObject.getJsonObject();
 
                 if (jsonObject != null) {
 
@@ -82,7 +83,7 @@ public class ObjectModelCode extends ObjectModel {
                    body.addProperty("value", mValue);
 
         // Make rest call for code.
-        RestAPIClient.getAPI().code_post(body, RestAPICallback.create(mRestApiObject, operation));
+        RestAPIClient.getAPI().code_post(body, RestAPICallback.create(operation));
     }
 
     //==============================================================================================

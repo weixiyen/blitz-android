@@ -4,6 +4,7 @@ import android.app.Activity;
 
 import com.blitz.app.utilities.rest.RestAPICallback;
 import com.blitz.app.utilities.rest.RestAPIClient;
+import com.blitz.app.utilities.rest.RestAPIObject;
 import com.blitz.app.utilities.rest.RestAPIOperation;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -41,10 +42,10 @@ public class ObjectModelDevice extends ObjectModel {
         RestAPIOperation operation = new RestAPIOperation(activity) {
 
             @Override
-            public void success() {
+            public void success(RestAPIObject restAPIObject) {
 
                 // Populate model.
-                populateModel();
+                populateModel(restAPIObject);
 
                 // Device model created.
                 callback.run();
@@ -52,8 +53,7 @@ public class ObjectModelDevice extends ObjectModel {
         };
 
         // Make rest call for code.
-        RestAPIClient.getAPI().device_get(mDeviceId,
-                RestAPICallback.create(mRestApiObject, operation));
+        RestAPIClient.getAPI().device_get(mDeviceId, RestAPICallback.create(operation));
     }
 
     /**
@@ -69,10 +69,10 @@ public class ObjectModelDevice extends ObjectModel {
         RestAPIOperation operation = new RestAPIOperation(activity) {
 
             @Override
-            public void success() {
+            public void success(RestAPIObject restAPIObject) {
 
                 // Populate model.
-                populateModel();
+                populateModel(restAPIObject);
 
                 // Device model created.
                 callback.run();
@@ -87,8 +87,7 @@ public class ObjectModelDevice extends ObjectModel {
         body.addProperty("push_notification_enabled", false);
 
         // Make rest call for code.
-        RestAPIClient.getAPI().devices_post(body,
-                RestAPICallback.create(mRestApiObject, operation));
+        RestAPIClient.getAPI().devices_post(body, RestAPICallback.create(operation));
     }
 
     /**
@@ -104,7 +103,7 @@ public class ObjectModelDevice extends ObjectModel {
         RestAPIOperation operation = new RestAPIOperation(activity) {
 
             @Override
-            public void success() {
+            public void success(RestAPIObject restAPIObject) {
 
                 // Device model updated.
                 callback.run();
@@ -139,8 +138,7 @@ public class ObjectModelDevice extends ObjectModel {
         body.add("replace", replace);
 
         // Make rest call for code.
-        RestAPIClient.getAPI().device_patch(mId, body,
-                RestAPICallback.create(mRestApiObject, operation));
+        RestAPIClient.getAPI().device_patch(mId, body, RestAPICallback.create(operation));
     }
 
     /**
@@ -194,9 +192,9 @@ public class ObjectModelDevice extends ObjectModel {
      * a json result object that is populated
      * with device model results.
      */
-    private void populateModel() {
+    private void populateModel(RestAPIObject restAPIObject) {
 
-        JsonObject jsonObject = getJsonObject().getAsJsonObject("result");
+        JsonObject jsonObject = restAPIObject.getJsonObject().getAsJsonObject("result");
         JsonElement element;
 
         // Fetch id and device id.

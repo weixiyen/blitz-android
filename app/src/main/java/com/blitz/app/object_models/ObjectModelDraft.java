@@ -4,6 +4,7 @@ import android.app.Activity;
 
 import com.blitz.app.utilities.rest.RestAPICallback;
 import com.blitz.app.utilities.rest.RestAPIClient;
+import com.blitz.app.utilities.rest.RestAPIObject;
 import com.blitz.app.utilities.rest.RestAPIOperation;
 
 /**
@@ -47,7 +48,7 @@ public class ObjectModelDraft extends ObjectModel {
         RestAPIOperation operation = new RestAPIOperation(activity) {
 
             @Override
-            public void success() {
+            public void success(RestAPIObject restAPIObject) {
 
                 // Now left queue.
                 if (callback != null) {
@@ -58,6 +59,6 @@ public class ObjectModelDraft extends ObjectModel {
 
         // Make api call.
         RestAPIClient.getAPI().draft_get
-                (mDraftId, RestAPICallback.create(mRestApiObject, operation));
+                (mDraftId, RestAPICallback.create(operation));
     }
 }

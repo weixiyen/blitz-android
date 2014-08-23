@@ -4,6 +4,7 @@ import android.app.Activity;
 
 import com.blitz.app.utilities.rest.RestAPICallback;
 import com.blitz.app.utilities.rest.RestAPIClient;
+import com.blitz.app.utilities.rest.RestAPIObject;
 import com.blitz.app.utilities.rest.RestAPIOperation;
 import com.google.gson.JsonObject;
 
@@ -53,7 +54,7 @@ public class ObjectModelQueue extends ObjectModel {
                 RestAPIOperation operation = new RestAPIOperation(activity) {
 
                     @Override
-                    public void success() {
+                    public void success(RestAPIObject restAPIObject) {
 
                         // Now in queue.
                         if (callback != null) {
@@ -67,8 +68,7 @@ public class ObjectModelQueue extends ObjectModel {
                            body.addProperty("draft_key", mDraftKey);
 
                 // Make api call.
-                RestAPIClient.getAPI().queue_post
-                        (body, RestAPICallback.create(mRestApiObject, operation));
+                RestAPIClient.getAPI().queue_post(body, RestAPICallback.create(operation));
             }
         });
     }
@@ -90,7 +90,7 @@ public class ObjectModelQueue extends ObjectModel {
         RestAPIOperation operation = new RestAPIOperation(activity) {
 
             @Override
-            public void success() {
+            public void success(RestAPIObject restAPIObject) {
 
                 // Now left queue.
                 if (callback != null) {
@@ -101,7 +101,7 @@ public class ObjectModelQueue extends ObjectModel {
 
         // Make api call.
         RestAPIClient.getAPI().queue_delete
-                (mDraftKey, RestAPICallback.create(mRestApiObject, operation));
+                (mDraftKey, RestAPICallback.create(operation));
     }
 
     /**
@@ -121,7 +121,7 @@ public class ObjectModelQueue extends ObjectModel {
         RestAPIOperation operation = new RestAPIOperation(activity) {
 
             @Override
-            public void success() {
+            public void success(RestAPIObject restAPIObject) {
 
                 // Now confirmed queue.
                 if (callback != null) {
@@ -136,6 +136,6 @@ public class ObjectModelQueue extends ObjectModel {
 
         // Make api call.
         RestAPIClient.getAPI().queue_put
-                (body, RestAPICallback.create(mRestApiObject, operation));
+                (body, RestAPICallback.create(operation));
     }
 }

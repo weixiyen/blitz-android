@@ -15,9 +15,6 @@ public class RestAPICallback<T> implements Callback<T> {
     // Overwritten Methods
     //==============================================================================================
 
-    // The interface needed for callback operations on the API.
-    private RestAPIObject mRestAPIObject;
-
     // The model operation object.
     private RestAPIOperation mOperation;
 
@@ -31,13 +28,11 @@ public class RestAPICallback<T> implements Callback<T> {
     /**
      * Assign our member variables.
      *
-     * @param restAPIObjectInterface Interface object.
      * @param operation Operation object.
      * @param isAuthentication Is this an authentication call.
      */
-    private RestAPICallback(RestAPIObject restAPIObjectInterface, RestAPIOperation operation, boolean isAuthentication) {
+    private RestAPICallback(RestAPIOperation operation, boolean isAuthentication) {
 
-        mRestAPIObject = restAPIObjectInterface;
         mOperation = operation;
 
         // Start operation as soon as initialized.
@@ -50,28 +45,26 @@ public class RestAPICallback<T> implements Callback<T> {
     /**
      * Create callback object.
      *
-     * @param restAPIObjectInterface Interface object.
      * @param operation Operation object.
      * @param isAuthentication Is this an authentication call.
      *
      * @return New instance.
      */
-    public static RestAPICallback<JsonObject> create(RestAPIObject restAPIObjectInterface, RestAPIOperation operation, boolean isAuthentication) {
+    public static RestAPICallback<JsonObject> create(RestAPIOperation operation, boolean isAuthentication) {
 
-        return new RestAPICallback<JsonObject>(restAPIObjectInterface, operation, isAuthentication);
+        return new RestAPICallback<JsonObject>(operation, isAuthentication);
     }
 
     /**
      * Create callback object.
      *
-     * @param restAPIObjectInterface Interface object.
      * @param operation Operation object.
      *
      * @return New instance.
      */
-    public static RestAPICallback<JsonObject> create(RestAPIObject restAPIObjectInterface, RestAPIOperation operation) {
+    public static RestAPICallback<JsonObject> create(RestAPIOperation operation) {
 
-        return new RestAPICallback<JsonObject>(restAPIObjectInterface, operation, false);
+        return new RestAPICallback<JsonObject>(operation, false);
     }
 
     //==============================================================================================
@@ -93,11 +86,11 @@ public class RestAPICallback<T> implements Callback<T> {
             RestAPIClient.trySetUserCookies(response);
         }
 
-        // Set the api object which we receive on success.
-        mRestAPIObject.setJsonObject((JsonObject) jsonObject);
+        // Create a new rest API object from the result.
+        RestAPIObject restAPIObject = new RestAPIObject((JsonObject) jsonObject);
 
-        // Operation is finished, pass in success/fail boolean.
-        mOperation.finish(!mRestAPIObject.hasErrors());
+        // Finish the operation.
+        mOperation.finish(restAPIObject);
     }
 
     /**
@@ -112,9 +105,9 @@ public class RestAPICallback<T> implements Callback<T> {
         Response response = retrofitError.getResponse();
 
         if (response == null) {
-            mOperation.finish(false);
+            mOperation.finish(null, false, null);
         } else {
-            mOperation.finish(false, response.getStatus());
+            mOperation.finish(null, false, response.getStatus());
         }
     }
 }

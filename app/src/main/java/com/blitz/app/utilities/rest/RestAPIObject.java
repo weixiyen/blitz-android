@@ -16,6 +16,30 @@ public class RestAPIObject {
     private JsonObject mJsonObject;
 
     //==============================================================================================
+    // Constructors
+    //==============================================================================================
+
+    /**
+     * Private empty constructor.
+     */
+    @SuppressWarnings("unused")
+    private RestAPIObject() {
+
+    }
+
+    /**
+     * Create a rest API object with a
+     * json object payload.
+     *
+     * @param jsonObject Json object.
+     */
+    @SuppressWarnings("unused")
+    public RestAPIObject(JsonObject jsonObject) {
+
+        mJsonObject = jsonObject;
+    }
+
+    //==============================================================================================
     // Overwritten Methods
     //==============================================================================================
 
@@ -31,15 +55,6 @@ public class RestAPIObject {
         return mJsonObject != null && mJsonObject.has("errors");
     }
 
-    /**
-     * Set the json object.
-     *
-     * @param jsonObject Provided object.
-     */
-    public void setJsonObject(JsonObject jsonObject) {
-        mJsonObject = jsonObject;
-    }
-
     //==============================================================================================
     // Public Methods
     //==============================================================================================
@@ -49,6 +64,7 @@ public class RestAPIObject {
      *
      * @return Json object.
      */
+    @SuppressWarnings("unused")
     public JsonObject getJsonObject() {
 
         return mJsonObject;

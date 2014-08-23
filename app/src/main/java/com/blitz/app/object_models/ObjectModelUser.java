@@ -6,6 +6,7 @@ import android.widget.EditText;
 import com.blitz.app.utilities.authentication.AuthHelper;
 import com.blitz.app.utilities.rest.RestAPICallback;
 import com.blitz.app.utilities.rest.RestAPIClient;
+import com.blitz.app.utilities.rest.RestAPIObject;
 import com.blitz.app.utilities.rest.RestAPIOperation;
 import com.google.gson.JsonObject;
 
@@ -73,9 +74,9 @@ public class ObjectModelUser extends ObjectModel {
         RestAPIOperation operation = new RestAPIOperation(activity) {
 
             @Override
-            public void success() {
+            public void success(RestAPIObject restAPIObject) {
 
-                JsonObject jsonObject = getJsonObject();
+                JsonObject jsonObject = restAPIObject.getJsonObject();
 
                 if (jsonObject != null) {
 
@@ -101,7 +102,7 @@ public class ObjectModelUser extends ObjectModel {
 
         // Make api call to fetch user data.
         RestAPIClient.getAPI().user_get(userId,
-                RestAPICallback.create(mRestApiObject, operation));
+                RestAPICallback.create(operation));
     }
 
     /**
@@ -116,10 +117,10 @@ public class ObjectModelUser extends ObjectModel {
         RestAPIOperation operation = new RestAPIOperation(activity) {
 
             @Override
-            public void success() {
+            public void success(RestAPIObject restAPIObject) {
 
                 // Fetch json result.
-                JsonObject jsonObject = getJsonObject();
+                JsonObject jsonObject = restAPIObject.getJsonObject();
 
                 if (jsonObject != null) {
 
@@ -145,7 +146,7 @@ public class ObjectModelUser extends ObjectModel {
 
         // Make rest call for code.
         RestAPIClient.getAPI().users_post(body,
-                RestAPICallback.create(mRestApiObject, operation, true));
+                RestAPICallback.create(operation, true));
     }
 
     /**
@@ -160,10 +161,10 @@ public class ObjectModelUser extends ObjectModel {
         RestAPIOperation operation = new RestAPIOperation(activity) {
 
             @Override
-            public void success() {
+            public void success(RestAPIObject restAPIObject) {
 
                 // Fetch json result.
-                JsonObject jsonObject = getJsonObject();
+                JsonObject jsonObject = restAPIObject.getJsonObject();
 
                 if (jsonObject != null) {
 
@@ -188,7 +189,7 @@ public class ObjectModelUser extends ObjectModel {
 
         // Make auth rest call.
         RestAPIClient.getAPI().auth_post(body,
-                RestAPICallback.create(mRestApiObject, operation, true));
+                RestAPICallback.create(operation, true));
     }
 
     //==============================================================================================

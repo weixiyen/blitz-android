@@ -4,6 +4,7 @@ import android.app.Activity;
 
 import com.blitz.app.utilities.rest.RestAPICallback;
 import com.blitz.app.utilities.rest.RestAPIClient;
+import com.blitz.app.utilities.rest.RestAPIObject;
 import com.blitz.app.utilities.rest.RestAPIOperation;
 import com.blitz.app.utilities.app.AppConfig;
 import com.google.gson.JsonObject;
@@ -56,10 +57,10 @@ public class ObjectModelPreferences extends ObjectModel {
         RestAPIOperation operation = new RestAPIOperation(mActivity) {
 
             @Override
-            public void success() {
+            public void success(RestAPIObject restAPIObject) {
 
                 // Fetch json result.
-                JsonObject jsonObject = getJsonObject();
+                JsonObject jsonObject = restAPIObject.getJsonObject();
 
                 if (AppConfig.isProduction()) {
 
@@ -84,8 +85,7 @@ public class ObjectModelPreferences extends ObjectModel {
         };
 
         // Make api call.
-        RestAPIClient.getAPI().preferences_get
-                (RestAPICallback.create(mRestApiObject, operation));
+        RestAPIClient.getAPI().preferences_get(RestAPICallback.create(operation));
     }
 
     //==============================================================================================
