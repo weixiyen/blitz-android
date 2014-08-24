@@ -13,13 +13,14 @@ import com.blitz.app.view_models.ViewModelDraft;
 import butterknife.InjectView;
 
 /**
- * Created by mrkcsc on 7/27/14.
+ * Created by mrkcsc on 7/27/14. Copyright 2014 Blitz Studios
  */
 public class DraftScreen extends BaseActivity implements ViewModelDraft.ViewModelDraftCallbacks {
 
-    @InjectView(R.id.draft_intro) ViewGroup mDraftIntroContainer;
-    @InjectView(R.id.draft_loading) ProgressBar mDraftLoadingSpinner;
+    @InjectView(R.id.draft_players) ViewGroup mDraftContainerPlayers;
+    @InjectView(R.id.draft_intro) ViewGroup mDraftContainerIntro;
 
+    @InjectView(R.id.draft_loading) ProgressBar mDraftLoadingSpinner;
     @InjectView(R.id.draft_header) TextView mDraftHeader;
 
     /**
@@ -61,7 +62,9 @@ public class DraftScreen extends BaseActivity implements ViewModelDraft.ViewMode
     public void onDraftingStarted() {
 
         // TODO: Cool animations.
-        mDraftIntroContainer.setVisibility(View.GONE);
+        mDraftContainerIntro.setVisibility(View.GONE);
         mDraftLoadingSpinner.setVisibility(View.GONE);
+
+        mDraftContainerPlayers.setVisibility(View.VISIBLE);
     }
 }

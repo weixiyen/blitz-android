@@ -1,0 +1,66 @@
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_play"
+    android:layout_width="@dimen/screen_width"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    android:orientation="horizontal"
+    android:visibility="gone"
+    tools:context="${packageName}.${activityClass}"
+    tools:ignore="ButtonStyle,UnusedAttribute">
+
+    <LinearLayout
+        android:id="@+id/draft_player_tl"
+        android:layout_width="145dp"
+        android:layout_height="155dp"
+        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/asset_draft_bg_player_normal"
+        android:orientation="vertical">
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/draft_player_tr"
+        android:layout_width="145dp"
+        android:layout_height="155dp"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/asset_draft_bg_player_normal"
+        android:gravity="right"
+        android:orientation="vertical">
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/draft_player_bl"
+        android:layout_width="145dp"
+        android:layout_height="155dp"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/draft_player_tl"
+        android:layout_marginBottom="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/asset_draft_bg_player_normal"
+        android:orientation="vertical">
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/draft_player_br"
+        android:layout_width="145dp"
+        android:layout_height="155dp"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/draft_player_tl"
+        android:layout_marginBottom="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/asset_draft_bg_player_normal"
+        android:gravity="right"
+        android:orientation="vertical">
+
+    </LinearLayout>
+</RelativeLayout>
