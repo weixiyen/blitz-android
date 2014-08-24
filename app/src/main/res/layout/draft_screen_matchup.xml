@@ -1,0 +1,57 @@
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="@dimen/screen_width"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    tools:context="${packageName}.${activityClass}"
+    tools:ignore="ButtonStyle,UnusedAttribute">
+
+    <me.grantland.widget.AutofitTextView
+        style="@style/TextViewStyle"
+        fontPath="@string/app_font_sports"
+        android:layout_width="140dp"
+        android:layout_height="38dp"
+        android:layout_alignParentLeft="true"
+        android:layout_marginTop="110dp"
+        android:background="@drawable/asset_draft_container_namecard"
+        android:gravity="center"
+        android:singleLine="true"
+        android:text="@string/lorum_ipsum_tiny"
+        android:textAllCaps="true"
+        android:textColor="@color/text_color_green"
+        android:textSize="16sp"/>
+
+    <ImageView
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="10dp"
+        android:contentDescription="@string/empty_string"
+        android:src="@drawable/asset_bg_helmet_sample" />
+
+    <me.grantland.widget.AutofitTextView
+        style="@style/TextViewStyle"
+        fontPath="@string/app_font_sports"
+        android:layout_width="140dp"
+        android:layout_height="38dp"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="110dp"
+        android:background="@drawable/asset_draft_container_namecard"
+        android:gravity="center"
+        android:singleLine="true"
+        android:text="@string/lorum_ipsum_tiny"
+        android:textAllCaps="true"
+        android:textColor="@color/text_color_red"
+        android:textSize="16sp"/>
+
+    <ImageView
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="10dp"
+        android:contentDescription="@string/empty_string"
+        android:scaleX="-1"
+        android:src="@drawable/asset_bg_helmet_sample" />
+
+</RelativeLayout>
