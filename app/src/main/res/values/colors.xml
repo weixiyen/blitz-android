@@ -18,5 +18,4 @@
     <color name="text_color_link_pressed">#d0fdff</color>
 
     <color name="text_color_shadow">#BF000000</color>
-    <color name="text_color_shadow_light">#40ffffff</color>
 </resources>

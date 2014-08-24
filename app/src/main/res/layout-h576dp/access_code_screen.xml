@@ -46,36 +46,31 @@
         android:orientation="vertical">
 
         <TextView
+            style="@style/TextViewStyle"
+            fontPath="@string/app_font_bold"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="20dp"
-            fontPath="@string/app_font_bold"
             android:gravity="center"
             android:padding="25dp"
-            android:shadowColor="@color/text_color_shadow"
-            android:shadowDx="1"
-            android:shadowDy="1"
-            android:shadowRadius="2"
             android:text="@string/access_code"
             android:textColor="@color/text_color_light"
             android:textSize="20sp" />
 
         <EditText
             android:id="@+id/access_code_code"
+            style="@style/TextViewStyle"
+            fontPath="@string/app_font_regular"
             android:layout_width="@dimen/screen_width"
             android:layout_height="50dp"
             android:layout_gravity="center_horizontal"
             android:background="@drawable/drawable_queue_input"
-            fontPath="@string/app_font_regular"
             android:gravity="center_vertical"
             android:hint="@string/enter_access_code"
             android:inputType="number"
             android:maxLength="5"
             android:paddingLeft="70dp"
-            android:shadowColor="@color/text_color_shadow"
-            android:shadowDx="1"
-            android:shadowDy="1"
-            android:shadowRadius="2"
+            android:paddingRight="70dp"
             android:textColor="@color/text_color_light"
             android:textColorHint="@color/text_color_light"
             android:textSize="14sp" />
@@ -87,19 +82,16 @@
             android:background="@drawable/asset_queue_overlay">
 
             <me.grantland.widget.AutofitTextView
+                style="@style/TextViewStyle"
+                fontPath="@string/app_font_light"
                 android:layout_width="@dimen/screen_width"
                 android:layout_height="match_parent"
                 android:layout_centerHorizontal="true"
                 android:contentDescription="@string/empty_string"
-                fontPath="@string/app_font_light"
                 android:gravity="center_vertical|left"
                 android:lineSpacingMultiplier="1.1"
                 android:paddingLeft="20dp"
                 android:paddingRight="75dp"
-                android:shadowColor="@color/text_color_shadow"
-                android:shadowDx="1"
-                android:shadowDy="1"
-                android:shadowRadius="2"
                 android:text="@string/access_code_copy"
                 android:textColor="@color/text_color_light"
                 android:textSize="16sp" />

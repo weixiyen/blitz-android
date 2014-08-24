@@ -21,16 +21,13 @@
         android:orientation="vertical">
 
         <TextView
+            style="@style/TextViewStyle"
+            fontPath="@string/app_font_bold"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="20dp"
-            fontPath="@string/app_font_bold"
             android:gravity="center"
             android:padding="25dp"
-            android:shadowColor="@color/text_color_shadow"
-            android:shadowDx="1"
-            android:shadowDy="1"
-            android:shadowRadius="2"
             android:text="@string/sign_in"
             android:textColor="@color/text_color_light"
             android:textSize="20sp" />
@@ -44,6 +41,8 @@
 
             <EditText
                 android:id="@+id/sign_in_screen_username_or_email"
+                style="@style/TextViewStyle"
+                fontPath="@string/app_font_regular"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
                 android:layout_gravity="center_horizontal"
@@ -51,22 +50,19 @@
                 android:layout_marginRight="25dp"
                 android:layout_marginTop="10dp"
                 android:background="@android:color/transparent"
-                fontPath="@string/app_font_regular"
                 android:gravity="center_vertical"
                 android:hint="@string/username_or_email"
                 android:inputType="textNoSuggestions|textVisiblePassword"
                 android:paddingLeft="35dp"
                 android:paddingRight="35dp"
-                android:shadowColor="@color/text_color_shadow"
-                android:shadowDx="1"
-                android:shadowDy="1"
-                android:shadowRadius="2"
                 android:textColor="@color/text_color_light"
                 android:textSize="14sp"
                 tools:ignore="TextFields" />
 
             <EditText
                 android:id="@+id/sign_in_screen_password"
+                style="@style/TextViewStyle"
+                fontPath="@string/app_font_regular"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
                 android:layout_gravity="center_horizontal"
@@ -74,34 +70,26 @@
                 android:layout_marginRight="25dp"
                 android:layout_marginTop="7dp"
                 android:background="@android:color/transparent"
-                fontPath="@string/app_font_regular"
                 android:gravity="center_vertical"
                 android:hint="@string/password"
                 android:inputType="textPassword"
                 android:paddingLeft="35dp"
                 android:paddingRight="35dp"
-                android:shadowColor="@color/text_color_shadow"
-                android:shadowDx="1"
-                android:shadowDy="1"
-                android:shadowRadius="2"
                 android:textColor="@color/text_color_light"
                 android:textSize="14sp" />
         </LinearLayout>
 
         <TextView
+            style="@style/TextViewStyle"
+            fontPath="@string/app_font_light"
             android:layout_width="match_parent"
             android:layout_height="30dp"
             android:layout_gravity="center"
             android:layout_marginBottom="20dp"
             android:layout_marginTop="20dp"
-            fontPath="@string/app_font_light"
             android:gravity="center_vertical"
             android:paddingLeft="20dp"
             android:paddingRight="20dp"
-            android:shadowColor="@color/text_color_shadow"
-            android:shadowDx="1"
-            android:shadowDy="1"
-            android:shadowRadius="2"
             android:text="@string/forgot_password"
             android:textColor="@color/text_color_link"
             android:textSize="14sp" />
