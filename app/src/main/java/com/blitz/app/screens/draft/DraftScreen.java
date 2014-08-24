@@ -5,13 +5,14 @@ import android.widget.TextView;
 
 import com.blitz.app.R;
 import com.blitz.app.utilities.android.BaseActivity;
+import com.blitz.app.view_models.ViewModelDraft;
 
 import butterknife.InjectView;
 
 /**
  * Created by mrkcsc on 7/27/14.
  */
-public class DraftScreen extends BaseActivity {
+public class DraftScreen extends BaseActivity implements ViewModelDraft.ViewModelDraftCallbacks {
 
     @InjectView(R.id.draft_header) TextView mDraftHeader;
 
@@ -41,6 +42,15 @@ public class DraftScreen extends BaseActivity {
     @Override
     protected void onPause() {
         super.onPause();
+
+    }
+
+    //==============================================================================================
+    // View Model Callbacks
+    //==============================================================================================
+
+    @Override
+    public void onDraftingStarted() {
 
     }
 }
