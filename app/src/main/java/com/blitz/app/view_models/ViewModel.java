@@ -4,7 +4,7 @@ import android.app.Activity;
 import android.os.Bundle;
 
 /**
- * Created by Miguel on 7/26/2014.
+ * Created by Miguel on 7/26/2014. Copyright 2014 Blitz Studios
  */
 public abstract class ViewModel {
 
@@ -48,8 +48,7 @@ public abstract class ViewModel {
     }
 
     /**
-     * Initialize the view model.  Setup all UI
-     * here (non expensive calls please).
+     * Initialize the view model.
      */
     @SuppressWarnings("unused")
     public void initialize(Activity activity, ViewModelCallbacks callbacks) {
