@@ -43,7 +43,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="-6dp"
-                android:src="@drawable/asset_play_icon_elo"/>
+                android:src="@drawable/asset_play_icon_elo"
+                android:contentDescription="@string/empty_string" />
 
             <TextView
                 android:id="@+id/main_play_stats_rating"
