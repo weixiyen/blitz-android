@@ -1,6 +1,9 @@
 package com.blitz.app.screens.draft;
 
 import android.os.Bundle;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.blitz.app.R;
@@ -14,6 +17,9 @@ import butterknife.InjectView;
  */
 public class DraftScreen extends BaseActivity implements ViewModelDraft.ViewModelDraftCallbacks {
 
+    @InjectView(R.id.draft_intro) ViewGroup mDraftIntroContainer;
+    @InjectView(R.id.draft_loading) ProgressBar mDraftLoadingSpinner;
+
     @InjectView(R.id.draft_header) TextView mDraftHeader;
 
     /**
@@ -23,6 +29,8 @@ public class DraftScreen extends BaseActivity implements ViewModelDraft.ViewMode
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        // Initialize the view model.
+        setViewModel(new ViewModelDraft(), savedInstanceState);
     }
 
     /**
@@ -52,5 +60,8 @@ public class DraftScreen extends BaseActivity implements ViewModelDraft.ViewMode
     @Override
     public void onDraftingStarted() {
 
+        // TODO: Cool animations.
+        mDraftIntroContainer.setVisibility(View.GONE);
+        mDraftLoadingSpinner.setVisibility(View.GONE);
     }
 }
