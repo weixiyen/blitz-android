@@ -8,7 +8,7 @@ import android.view.View;
 import com.blitz.app.R;
 import com.blitz.app.dialogs.info.DialogInfo;
 import com.blitz.app.dialogs.loading.DialogLoading;
-import com.blitz.app.screens.draft_preview.DraftPreviewScreen;
+import com.blitz.app.screens.draft.DraftScreen;
 import com.blitz.app.utilities.android.BaseActivity;
 import com.blitz.app.utilities.android.BaseDialog;
 import com.blitz.app.utilities.viewpager.ViewPagerZoomOutTransformer;
@@ -235,7 +235,7 @@ public class MainScreen extends BaseActivity implements ViewModelMain.ViewModelM
                 public void didHide() {
 
                     // Enter draft preview and clear history.
-                    startActivity(new Intent(MainScreen.this, DraftPreviewScreen.class), true);
+                    startActivity(new Intent(MainScreen.this, DraftScreen.class), true);
                 }
             });
         }

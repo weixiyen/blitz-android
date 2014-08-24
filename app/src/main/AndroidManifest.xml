@@ -72,7 +72,7 @@
         <activity android:name=".screens.main.MainScreen"
             android:windowSoftInputMode="stateHidden" />
 
-        <activity android:name=".screens.draft_preview.DraftPreviewScreen"
+        <activity android:name=".screens.draft.DraftScreen"
             android:windowSoftInputMode="stateHidden" />
 
         <activity android:name=".screens.web.WebScreen"

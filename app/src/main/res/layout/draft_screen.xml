@@ -1,11 +1,19 @@
-<LinearLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_play"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     tools:context="${packageName}.${activityClass}"
     tools:ignore="ButtonStyle,UnusedAttribute">
+
+    <com.blitz.app.utilities.imageview_plus.ImageViewPlus
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:contentDescription="@string/empty_string"
+        android:src="@drawable/asset_bg_main"
+        app:scaleType="topCrop" />
 
     <TextView
         android:layout_width="match_parent"
@@ -17,4 +25,5 @@
         android:textColor="@color/text_color_light"
         android:lineSpacingMultiplier="1.5"
         android:textSize="14sp" />
-</LinearLayout>
+
+</RelativeLayout>
