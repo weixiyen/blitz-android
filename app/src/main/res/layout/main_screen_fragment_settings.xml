@@ -18,10 +18,10 @@
     <TextView
         android:id="@+id/main_settings_header"
         style="@style/TextViewStyle"
+        fontPath="@string/app_font_helvetica_condensed_bold"
         android:layout_width="match_parent"
         android:layout_height="110dp"
         android:background="#40000000"
-        android:fontFamily="@string/app_font_helvetica_condensed_bold"
         android:gravity="center"
         android:paddingTop="50dp"
         android:text="@string/my_account"
@@ -70,11 +70,11 @@
 
             <Button
                 style="@style/ButtonStyle"
+                fontPath="@string/app_font_helvetica_condensed_bold"
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
                 android:layout_gravity="center_horizontal"
                 android:background="@color/background_inner_dark"
-                android:fontFamily="@string/app_font_helvetica_condensed_bold"
                 android:gravity="center|left"
                 android:paddingLeft="25dp"
                 android:paddingRight="25dp"
@@ -88,11 +88,11 @@
 
             <Button
                 style="@style/ButtonStyle"
+                fontPath="@string/app_font_helvetica_condensed_bold"
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
                 android:layout_gravity="center_horizontal"
                 android:background="@color/background_inner_dark"
-                android:fontFamily="@string/app_font_helvetica_condensed_bold"
                 android:gravity="center|left"
                 android:paddingLeft="25dp"
                 android:paddingRight="25dp"
@@ -107,11 +107,11 @@
 
             <Switch
                 android:id="@+id/main_screen_fragment_settings_toggle_sound"
+                fontPath="@string/app_font_helvetica_condensed_bold"
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
                 android:layout_gravity="center_horizontal"
                 android:background="@color/background_inner"
-                android:fontFamily="@string/app_font_helvetica_condensed_bold"
                 android:paddingLeft="25dp"
                 android:paddingRight="25dp"
                 android:text="@string/push_notifications"
@@ -125,11 +125,11 @@
 
             <Switch
                 android:id="@+id/main_screen_fragment_settings_toggle_music"
+                fontPath="@string/app_font_helvetica_condensed_bold"
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
                 android:layout_gravity="center_horizontal"
                 android:background="@color/background_inner"
-                android:fontFamily="@string/app_font_helvetica_condensed_bold"
                 android:paddingLeft="25dp"
                 android:paddingRight="25dp"
                 android:text="@string/music_and_sounds"
@@ -153,11 +153,11 @@
 
                 <TextView
                     style="@style/TextViewStyle"
+                    fontPath="@string/app_font_helvetica_condensed_bold"
                     android:layout_width="match_parent"
                     android:layout_height="30dp"
                     android:layout_gravity="center_horizontal"
                     android:background="@android:color/transparent"
-                    android:fontFamily="@string/app_font_helvetica_condensed_bold"
                     android:gravity="center"
                     android:text="@string/unlock_more_helmets"
                     android:textAllCaps="true"
@@ -166,11 +166,11 @@
 
                 <TextView
                     style="@style/TextViewStyle"
+                    fontPath="@string/app_font_helvetica_condensed_bold"
                     android:layout_width="match_parent"
                     android:layout_height="30dp"
                     android:layout_gravity="center_horizontal"
                     android:background="@android:color/transparent"
-                    android:fontFamily="@string/app_font_helvetica_condensed_bold"
                     android:gravity="center"
                     android:text="@string/invite_a_friend"
                     android:textColor="@color/text_color_link"
@@ -197,11 +197,11 @@
 
                     <Button
                         style="@style/ButtonStyle"
+                        fontPath="@string/app_font_helvetica_condensed_bold"
                         android:layout_width="match_parent"
                         android:layout_height="20dp"
                         android:layout_gravity="center_horizontal"
                         android:background="@android:color/transparent"
-                        android:fontFamily="@string/app_font_helvetica_condensed_bold"
                         android:gravity="center|left"
                         android:text="@string/blitz_access_code"
                         android:textAllCaps="true"
@@ -210,11 +210,11 @@
 
                     <Button
                         style="@style/ButtonStyle"
+                        fontPath="@string/app_font_helvetica_condensed_bold"
                         android:layout_width="match_parent"
                         android:layout_height="25dp"
                         android:layout_gravity="center_horizontal"
                         android:background="@android:color/transparent"
-                        android:fontFamily="@string/app_font_helvetica_condensed_bold"
                         android:gravity="center|left"
                         android:text="pHSag92G"
                         android:textSize="16sp"/>
@@ -222,12 +222,12 @@
 
                 <Button
                     style="@style/ButtonStyle"
+                    fontPath="@string/app_font_helvetica_condensed_bold"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_alignParentRight="true"
                     android:layout_gravity="center_horizontal"
                     android:background="@android:color/transparent"
-                    android:fontFamily="@string/app_font_helvetica_condensed_bold"
                     android:gravity="center|left"
                     android:paddingLeft="25dp"
                     android:paddingRight="25dp"
@@ -256,11 +256,11 @@
 
                     <Button
                         style="@style/ButtonStyle"
+                        fontPath="@string/app_font_helvetica_condensed_bold"
                         android:layout_width="match_parent"
                         android:layout_height="20dp"
                         android:layout_gravity="center_horizontal"
                         android:background="@android:color/transparent"
-                        android:fontFamily="@string/app_font_helvetica_condensed_bold"
                         android:gravity="center|left"
                         android:text="@string/blitz_access_code"
                         android:textAllCaps="true"
@@ -269,11 +269,11 @@
 
                     <Button
                         style="@style/ButtonStyle"
+                        fontPath="@string/app_font_helvetica_condensed_bold"
                         android:layout_width="match_parent"
                         android:layout_height="25dp"
                         android:layout_gravity="center_horizontal"
                         android:background="@android:color/transparent"
-                        android:fontFamily="@string/app_font_helvetica_condensed_bold"
                         android:gravity="center|left"
                         android:text="pHSag92G"
                         android:textSize="16sp"/>
@@ -281,12 +281,12 @@
 
                 <Button
                     style="@style/ButtonStyle"
+                    fontPath="@string/app_font_helvetica_condensed_bold"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_alignParentRight="true"
                     android:layout_gravity="center_horizontal"
                     android:background="@android:color/transparent"
-                    android:fontFamily="@string/app_font_helvetica_condensed_bold"
                     android:gravity="center|left"
                     android:paddingLeft="25dp"
                     android:paddingRight="25dp"
@@ -315,11 +315,11 @@
 
                     <Button
                         style="@style/ButtonStyle"
+                        fontPath="@string/app_font_helvetica_condensed_bold"
                         android:layout_width="match_parent"
                         android:layout_height="20dp"
                         android:layout_gravity="center_horizontal"
                         android:background="@android:color/transparent"
-                        android:fontFamily="@string/app_font_helvetica_condensed_bold"
                         android:gravity="center|left"
                         android:text="@string/blitz_access_code"
                         android:textAllCaps="true"
@@ -328,11 +328,11 @@
 
                     <Button
                         style="@style/ButtonStyle"
+                        fontPath="@string/app_font_helvetica_condensed_bold"
                         android:layout_width="match_parent"
                         android:layout_height="25dp"
                         android:layout_gravity="center_horizontal"
                         android:background="@android:color/transparent"
-                        android:fontFamily="@string/app_font_helvetica_condensed_bold"
                         android:gravity="center|left"
                         android:text="pHSag92G"
                         android:textSize="16sp"/>
@@ -340,12 +340,12 @@
 
                 <Button
                     style="@style/ButtonStyle"
+                    fontPath="@string/app_font_helvetica_condensed_bold"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_alignParentRight="true"
                     android:layout_gravity="center_horizontal"
                     android:background="@android:color/transparent"
-                    android:fontFamily="@string/app_font_helvetica_condensed_bold"
                     android:gravity="center|left"
                     android:paddingLeft="25dp"
                     android:paddingRight="25dp"
@@ -362,11 +362,11 @@
             <Button
                 android:id="@+id/main_settings_terms_of_use"
                 style="@style/ButtonStyle"
+                fontPath="@string/app_font_helvetica_condensed_bold"
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
                 android:layout_gravity="center_horizontal"
                 android:background="@color/background_inner"
-                android:fontFamily="@string/app_font_helvetica_condensed_bold"
                 android:gravity="center|left"
                 android:paddingLeft="25dp"
                 android:paddingRight="25dp"
@@ -381,11 +381,11 @@
             <Button
                 android:id="@+id/main_settings_privacy_policy"
                 style="@style/ButtonStyle"
+                fontPath="@string/app_font_helvetica_condensed_bold"
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
                 android:layout_gravity="center_horizontal"
                 android:background="@color/background_inner"
-                android:fontFamily="@string/app_font_helvetica_condensed_bold"
                 android:gravity="center|left"
                 android:paddingLeft="25dp"
                 android:paddingRight="25dp"
@@ -400,10 +400,10 @@
             <Button
                 android:id="@+id/main_settings_logout"
                 style="@style/ButtonStyle"
+                fontPath="@string/app_font_helvetica_condensed_bold"
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
                 android:background="@color/background_inner"
-                android:fontFamily="@string/app_font_helvetica_condensed_bold"
                 android:gravity="center|left"
                 android:paddingLeft="25dp"
                 android:paddingRight="25dp"
@@ -419,10 +419,10 @@
             <Button
                 android:id="@+id/main_settings_reset"
                 style="@style/ButtonStyle"
+                fontPath="@string/app_font_helvetica_condensed_bold"
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
                 android:background="@color/background_inner"
-                android:fontFamily="@string/app_font_helvetica_condensed_bold"
                 android:gravity="center|left"
                 android:paddingLeft="25dp"
                 android:paddingRight="25dp"

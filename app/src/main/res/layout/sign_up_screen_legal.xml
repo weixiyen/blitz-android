@@ -15,10 +15,10 @@
         app:scaleType="topCrop" />
 
     <me.grantland.widget.AutofitTextView
+        fontPath="@string/app_font_bold"
         android:layout_width="match_parent"
         android:layout_height="75dp"
         android:layout_marginBottom="10dp"
-        android:fontFamily="@string/app_font_bold"
         android:gravity="center"
         android:padding="25dp"
         android:shadowColor="@color/text_color_shadow"

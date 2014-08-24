@@ -21,10 +21,10 @@
         android:orientation="vertical">
 
         <TextView
+            fontPath="@string/app_font_bold"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="20dp"
-            android:fontFamily="@string/app_font_bold"
             android:gravity="center"
             android:padding="25dp"
             android:shadowColor="@color/text_color_shadow"
@@ -43,6 +43,7 @@
 
             <EditText
                 android:id="@+id/sign_in_screen_username_or_email"
+                fontPath="@string/app_font_regular"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
                 android:layout_gravity="center_horizontal"
@@ -50,7 +51,6 @@
                 android:layout_marginRight="25dp"
                 android:layout_marginTop="10dp"
                 android:background="@android:color/transparent"
-                android:fontFamily="@string/app_font_regular"
                 android:gravity="center_vertical"
                 android:hint="@string/username_or_email"
                 android:inputType="textNoSuggestions|textVisiblePassword"
@@ -66,6 +66,7 @@
 
             <EditText
                 android:id="@+id/sign_in_screen_password"
+                fontPath="@string/app_font_regular"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
                 android:layout_gravity="center_horizontal"
@@ -73,7 +74,6 @@
                 android:layout_marginRight="25dp"
                 android:layout_marginTop="7dp"
                 android:background="@android:color/transparent"
-                android:fontFamily="@string/app_font_regular"
                 android:gravity="center_vertical"
                 android:hint="@string/password"
                 android:inputType="textPassword"
@@ -88,10 +88,10 @@
         </LinearLayout>
 
         <TextView
+            fontPath="@string/app_font_light"
             android:layout_width="match_parent"
             android:layout_height="30dp"
             android:layout_gravity="center"
-            android:fontFamily="@string/app_font_light"
             android:gravity="center_vertical"
             android:paddingLeft="20dp"
             android:paddingRight="20dp"

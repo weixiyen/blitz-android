@@ -21,9 +21,9 @@
         <me.grantland.widget.AutofitTextView
             android:id="@+id/main_play_stats_username"
             style="@style/TextViewStyle"
+            fontPath="@string/app_font_sports"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:fontFamily="@string/app_font_sports"
             android:gravity="center"
             android:paddingBottom="5dp"
             android:paddingLeft="5dp"
@@ -43,15 +43,15 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="-6dp"
-                android:src="@drawable/asset_play_icon_elo"
-                android:contentDescription="@string/empty_string" />
+                android:contentDescription="@string/empty_string"
+                android:src="@drawable/asset_play_icon_elo" />
 
             <TextView
                 android:id="@+id/main_play_stats_rating"
                 style="@style/TextViewStyle"
+                fontPath="@string/app_font_sports"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:fontFamily="@string/app_font_sports"
                 android:gravity="center"
                 android:paddingLeft="5dp"
                 android:paddingRight="5dp"
@@ -70,9 +70,9 @@
 
             <TextView
                 style="@style/TextViewStyle"
+                fontPath="@string/app_font_sports"
                 android:layout_width="70dp"
                 android:layout_height="wrap_content"
-                android:fontFamily="@string/app_font_sports"
                 android:gravity="center"
                 android:paddingLeft="5dp"
                 android:paddingRight="5dp"
@@ -84,9 +84,9 @@
 
             <TextView
                 style="@style/TextViewStyle"
+                fontPath="@string/app_font_sports"
                 android:layout_width="70dp"
                 android:layout_height="wrap_content"
-                android:fontFamily="@string/app_font_sports"
                 android:gravity="center"
                 android:paddingLeft="5dp"
                 android:paddingRight="5dp"
@@ -106,9 +106,9 @@
             <TextView
                 android:id="@+id/main_play_stats_wins"
                 style="@style/TextViewStyle"
+                fontPath="@string/app_font_sports"
                 android:layout_width="70dp"
                 android:layout_height="wrap_content"
-                android:fontFamily="@string/app_font_sports"
                 android:gravity="center"
                 android:paddingLeft="5dp"
                 android:paddingRight="5dp"
@@ -121,9 +121,9 @@
             <TextView
                 android:id="@+id/main_play_stats_losses"
                 style="@style/TextViewStyle"
+                fontPath="@string/app_font_sports"
                 android:layout_width="70dp"
                 android:layout_height="wrap_content"
-                android:fontFamily="@string/app_font_sports"
                 android:gravity="center"
                 android:paddingLeft="5dp"
                 android:paddingRight="5dp"

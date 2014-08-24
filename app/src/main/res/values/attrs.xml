@@ -27,4 +27,8 @@
             <enum name="topCrop" value="8" />
         </attr>
     </declare-styleable>
+
+    <!-- Custom attribute for Calligraphy -->
+    <attr name="fontPath" format="string"/>
+
 </resources>

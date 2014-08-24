@@ -40,7 +40,7 @@ dependencies {
     compile 'com.viewpagerindicator:library:2.4.1@aar'
 
     // Library for custom fonts.
-    compile 'uk.co.chrisjenx:calligraphy:0.7.2'
+    compile 'uk.co.chrisjenx:calligraphy:1.1.0'
 
     // Library for circle image views.
     compile 'de.hdodenhof:circleimageview:1.1.0'

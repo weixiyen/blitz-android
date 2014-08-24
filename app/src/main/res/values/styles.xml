@@ -11,7 +11,7 @@
         <!-- View pager indicator style. -->
         <item name="vpiCirclePageIndicatorStyle">@style/TabStyle</item>
 
-        <!-- Disable overscroll effects -->
+        <!-- Disable over-scroll effects -->
         <item name="android:overScrollMode">never</item>
     </style>
 
@@ -28,7 +28,7 @@
     <style name="ButtonStyle" parent="@android:style/Widget.Button">
         <item name="android:textColor">@color/text_color_light</item>
         <item name="android:textSize">18sp</item>
-        <item name="android:fontFamily">@string/app_font_regular</item>
+        <item name="fontPath">@string/app_font_regular</item>
         <item name="android:shadowColor">@color/text_color_shadow</item>
         <item name="android:shadowDx">1</item>
         <item name="android:shadowDy">1</item>
@@ -41,7 +41,7 @@
     <style name="TextViewStyle" parent="@android:style/Widget.TextView">
         <item name="android:textColor">@color/text_color_light</item>
         <item name="android:textSize">18sp</item>
-        <item name="android:fontFamily">@string/app_font_regular</item>
+        <item name="fontPath">@string/app_font_regular</item>
         <item name="android:shadowColor">@color/text_color_shadow</item>
         <item name="android:shadowDx">1</item>
         <item name="android:shadowDy">1</item>

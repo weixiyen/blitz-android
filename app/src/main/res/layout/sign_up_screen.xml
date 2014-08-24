@@ -16,15 +16,15 @@
 
     <LinearLayout
         android:layout_width="@dimen/screen_width"
-        android:layout_centerHorizontal="true"
         android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
         android:orientation="vertical">
 
         <TextView
+            fontPath="@string/app_font_bold"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
-            android:fontFamily="@string/app_font_bold"
             android:gravity="center"
             android:padding="25dp"
             android:shadowColor="@color/text_color_shadow"
@@ -43,6 +43,7 @@
 
             <EditText
                 android:id="@+id/sign_up_screen_email"
+                fontPath="@string/app_font_regular"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
                 android:layout_gravity="center_horizontal"
@@ -50,7 +51,6 @@
                 android:layout_marginRight="25dp"
                 android:layout_marginTop="10dp"
                 android:background="@android:color/transparent"
-                android:fontFamily="@string/app_font_regular"
                 android:gravity="center_vertical"
                 android:hint="@string/email"
                 android:inputType="textNoSuggestions|textVisiblePassword"
@@ -65,6 +65,7 @@
 
             <EditText
                 android:id="@+id/sign_up_screen_username"
+                fontPath="@string/app_font_regular"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
                 android:layout_gravity="center_horizontal"
@@ -72,7 +73,6 @@
                 android:layout_marginRight="25dp"
                 android:layout_marginTop="6dp"
                 android:background="@android:color/transparent"
-                android:fontFamily="@string/app_font_regular"
                 android:gravity="center_vertical"
                 android:hint="@string/desired_username"
                 android:inputType="textPassword"
@@ -87,6 +87,7 @@
 
             <EditText
                 android:id="@+id/sign_up_screen_password"
+                fontPath="@string/app_font_regular"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
                 android:layout_gravity="center_horizontal"
@@ -94,7 +95,6 @@
                 android:layout_marginRight="25dp"
                 android:layout_marginTop="6dp"
                 android:background="@android:color/transparent"
-                android:fontFamily="@string/app_font_regular"
                 android:gravity="center_vertical"
                 android:hint="@string/password"
                 android:inputType="textPassword"
@@ -118,13 +118,13 @@
             android:text="@string/sign_up" />
 
         <me.grantland.widget.AutofitTextView
+            fontPath="@string/app_font_light"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="30dp"
             android:layout_marginTop="10dp"
             android:background="@android:color/transparent"
             android:contentDescription="@string/empty_string"
-            android:fontFamily="@string/app_font_light"
             android:gravity="center"
             android:padding="10dp"
             android:shadowColor="@color/text_color_shadow"

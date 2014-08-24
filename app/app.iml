@@ -85,7 +85,7 @@
     <orderEntry type="library" exported="" name="gson-2.2.4" level="project" />
     <orderEntry type="library" exported="" name="support-v4-19.1.0" level="project" />
     <orderEntry type="library" exported="" name="okio-1.0.0" level="project" />
-    <orderEntry type="library" exported="" name="calligraphy-0.7.2" level="project" />
+    <orderEntry type="library" exported="" name="calligraphy-1.1.0" level="project" />
     <orderEntry type="library" exported="" name="circleimageview-1.1.0" level="project" />
     <orderEntry type="library" exported="" name="play-services-5.0.89" level="project" />
     <orderEntry type="library" exported="" name="retrofit-1.6.1" level="project" />

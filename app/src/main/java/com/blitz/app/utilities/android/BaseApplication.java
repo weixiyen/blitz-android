@@ -13,7 +13,7 @@ import com.blitz.app.utilities.sound.SoundHelper;
 import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
 
 /**
- * Created by Miguel Gaeta on 6/1/14.
+ * Created by Miguel Gaeta on 6/1/14. Copyright 2014 Blitz Studios
  */
 public class BaseApplication extends Application implements EnteredBackgroundInterface {
 
@@ -44,7 +44,8 @@ public class BaseApplication extends Application implements EnteredBackgroundInt
         EnteredBackground.init(this);
 
         // Set the regular font weight to be the default.
-        CalligraphyConfig.initDefault(getResources().getString(R.string.app_font_light));
+        CalligraphyConfig.initDefault(getResources().getString(R.string.app_font_light),
+                R.attr.fontPath);
     }
 
     @Override
