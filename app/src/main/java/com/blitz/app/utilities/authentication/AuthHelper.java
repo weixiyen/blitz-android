@@ -8,6 +8,7 @@ import com.blitz.app.screens.main.MainScreen;
 import com.blitz.app.screens.sign_up.SignUpScreenLegal;
 import com.blitz.app.screens.splash.SplashScreen;
 import com.blitz.app.utilities.android.BaseActivity;
+import com.blitz.app.utilities.app.AppConfig;
 import com.blitz.app.utilities.app.AppData;
 import com.blitz.app.utilities.app.AppDataObject;
 
@@ -81,35 +82,44 @@ public class AuthHelper {
      */
     public static void tryEnterMainApp(BaseActivity activity) {
 
-        // If user has passed the access queue.
-        if (AppDataObject.hasAccess.get()) {
+        // First check to see if there is a activity we want
+        // to automatically jump to for debugging purposes.
+        Class targetActivity = AppConfig.getJumpToActivity();
 
-            // If user is signed into the app.
-            if (AppDataObject.userId.get() != null) {
+        if (targetActivity == null) {
 
-                // If user has agreed to legal road block.
-                if (AppDataObject.hasAgreedLegal.get()) {
+            // If user has passed the access queue.
+            if (AppDataObject.hasAccess.get()) {
 
-                    // Enter main screen of the app.
-                    activity.startActivity(new Intent(activity, MainScreen.class), true);
+                // If user is signed into the app.
+                if (AppDataObject.userId.get() != null) {
+
+                    // If user has agreed to legal road block.
+                    if (AppDataObject.hasAgreedLegal.get()) {
+
+                        // Enter main screen of the app.
+                        targetActivity = MainScreen.class;
+
+                    } else {
+
+                        // User is blocked on legal screen.
+                        targetActivity = SignUpScreenLegal.class;
+                    }
 
                 } else {
 
-                    // User is blocked on legal screen.
-                    activity.startActivity(new Intent(activity, SignUpScreenLegal.class), true);
+                    // User must go to splash screen and sign-in/register.
+                    targetActivity = SplashScreen.class;
                 }
 
             } else {
 
-                // User must go to splash screen and sign-in/register.
-                activity.startActivity(new Intent(activity, SplashScreen.class));
+                // User is blocked on Queue screen.
+                targetActivity = AccessQueueScreen.class;
             }
-
-        } else {
-
-            // User is blocked on Queue screen.
-            activity.startActivity(new Intent(activity, AccessQueueScreen.class));
         }
+
+        activity.startActivity(new Intent(activity, targetActivity), true);
     }
 
     /**

@@ -1,6 +1,5 @@
 package com.blitz.app.screens.loading;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 
@@ -92,22 +91,11 @@ public class LoadingScreen extends BaseActivity {
      */
     private void jumpToFirstActivity() {
 
-        // If we want to jump to some activity.
-        if (AppConfig.getJumpToActivity() != null) {
-
-            // Do it - this would only really be done for debugging.
-            startActivity(new Intent(LoadingScreen.this, AppConfig.getJumpToActivity()));
-        } else {
-
-            // Try to enter the application.
-            AuthHelper.tryEnterMainApp(LoadingScreen.this);
-        }
+        // Try to enter the application.
+        AuthHelper.tryEnterMainApp(LoadingScreen.this);
 
         // Play the lobby music after loading.
         SoundHelper.instance().startMusic(R.raw.music_lobby_loop0, R.raw.music_lobby_loopn);
         SoundHelper.instance().setMusicDisabled(AppDataObject.settingsMusicDisabled.get());
-
-        // close this activity
-        finish();
     }
 }
