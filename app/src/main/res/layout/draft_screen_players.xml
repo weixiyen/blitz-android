@@ -6,7 +6,6 @@
     android:layout_height="wrap_content"
     android:layout_gravity="center"
     android:orientation="horizontal"
-    android:visibility="gone"
     tools:context="${packageName}.${activityClass}"
     tools:ignore="ButtonStyle,UnusedAttribute">
 
@@ -16,7 +15,7 @@
         android:layout_height="155dp"
         android:layout_alignParentLeft="true"
         android:layout_marginLeft="10dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="15dp"
         android:background="@drawable/asset_draft_bg_player_normal"
         android:orientation="vertical">
 
@@ -28,7 +27,7 @@
         android:layout_height="155dp"
         android:layout_alignParentRight="true"
         android:layout_marginRight="10dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="15dp"
         android:background="@drawable/asset_draft_bg_player_normal"
         android:gravity="right"
         android:orientation="vertical">
@@ -41,9 +40,7 @@
         android:layout_height="155dp"
         android:layout_alignParentLeft="true"
         android:layout_below="@+id/draft_player_tl"
-        android:layout_marginBottom="10dp"
         android:layout_marginLeft="10dp"
-        android:layout_marginTop="10dp"
         android:background="@drawable/asset_draft_bg_player_normal"
         android:orientation="vertical">
 
@@ -55,9 +52,7 @@
         android:layout_height="155dp"
         android:layout_alignParentRight="true"
         android:layout_below="@+id/draft_player_tl"
-        android:layout_marginBottom="10dp"
         android:layout_marginRight="10dp"
-        android:layout_marginTop="10dp"
         android:background="@drawable/asset_draft_bg_player_normal"
         android:gravity="right"
         android:orientation="vertical">
