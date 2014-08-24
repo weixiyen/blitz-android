@@ -17,8 +17,9 @@ import butterknife.InjectView;
  */
 public class DraftScreen extends BaseActivity implements ViewModelDraft.ViewModelDraftCallbacks {
 
-    @InjectView(R.id.draft_players) ViewGroup mDraftContainerPlayers;
-    @InjectView(R.id.draft_intro) ViewGroup mDraftContainerIntro;
+    @InjectView(R.id.draft_intro)   ViewGroup mDraftContainerIntro;
+
+    @InjectView(R.id.draft_container_drafting) ViewGroup mDraftContainerDrafting;
 
     @InjectView(R.id.draft_loading) ProgressBar mDraftLoadingSpinner;
     @InjectView(R.id.draft_header) TextView mDraftHeader;
@@ -61,10 +62,11 @@ public class DraftScreen extends BaseActivity implements ViewModelDraft.ViewMode
     @Override
     public void onDraftingStarted() {
 
-        // TODO: Cool animations.
+        // Hide the intro UI.
         mDraftContainerIntro.setVisibility(View.GONE);
         mDraftLoadingSpinner.setVisibility(View.GONE);
 
-        mDraftContainerPlayers.setVisibility(View.VISIBLE);
+        // Bring back the drafting container.
+        mDraftContainerDrafting.setVisibility(View.VISIBLE);
     }
 }
