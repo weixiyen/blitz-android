@@ -19,6 +19,8 @@ package com.blitz.app.utilities.gcm;
 import android.app.IntentService;
 import android.app.Notification;
 import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.app.TaskStackBuilder;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -26,6 +28,7 @@ import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
 import com.blitz.app.R;
+import com.blitz.app.screens.main.MainScreen;
 import com.google.android.gms.gcm.GoogleCloudMessaging;
 
 /**
@@ -39,13 +42,11 @@ import com.google.android.gms.gcm.GoogleCloudMessaging;
 public class GcmIntentService extends IntentService {
     
     public static final int NOTIFICATION_ID = 1;
-    private NotificationManager mNotificationManager;
-    NotificationCompat.Builder builder;
 
     public GcmIntentService() {
         super("GcmIntentService");
     }
-    public static final String TAG = "GCM Demo";
+    public static final String TAG = "GCM GcmIntentService"; // Tag used to identify log lines
 
     @Override
     protected void onHandleIntent(Intent intent) {
@@ -82,9 +83,6 @@ public class GcmIntentService extends IntentService {
     // a GCM message.
     private void sendNotification(String msg) {
 
-        mNotificationManager = (NotificationManager)
-                this.getSystemService(Context.NOTIFICATION_SERVICE);
-
         int icon = R.drawable.icon_blitz;
         long when = System.currentTimeMillis();
         String title = "Blitz";
@@ -96,6 +94,28 @@ public class GcmIntentService extends IntentService {
                 .setDefaults(Notification.DEFAULT_ALL)
                 .setContentText(msg);
 
-        mNotificationManager.notify(NOTIFICATION_ID, builder.build());
+        /*
+        // back navigation stuff (doesn't seem to work with old android api versions)
+        TaskStackBuilder stackBuilder = TaskStackBuilder.create(this);
+        stackBuilder.addParentStack(MainScreen.class);
+        stackBuilder.addNextIntent(resultIntent);
+
+        PendingIntent resultPendingIntent = stackBuilder.getPendingIntent(0,
+                PendingIntent.FLAG_UPDATE_CURRENT);
+
+
+        builder.setContentIntent(resultPendingIntent);
+        */
+
+        // TODO, supply the intent as a parameter (make this part of a reusable library)
+        builder.setContentIntent( // supply an intent to send when the notification is clicked
+                PendingIntent.getActivity( // retrieve an intent that will start a new activity
+                        this.getApplicationContext(), 0,
+                        new Intent(this, MainScreen.class), // intent that starts the main screen
+                        PendingIntent.FLAG_UPDATE_CURRENT));
+
+        NotificationManager notificationManager = (NotificationManager)
+                this.getSystemService(Context.NOTIFICATION_SERVICE);
+        notificationManager.notify(NOTIFICATION_ID, builder.build());
     }
 }
