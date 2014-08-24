@@ -16,14 +16,26 @@
         app:scaleType="topCrop" />
 
     <TextView
+        android:id="@+id/draft_header"
+        style="@style/TextViewStyle"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-        android:fontFamily="@string/app_font_light"
+        android:layout_height="75dp"
+        android:layout_marginTop="25dp"
+        android:alpha=".75"
+        android:fontFamily="@string/app_font_helvetica_condensed_bold"
         android:gravity="center"
-        android:text="@string/lorum_ipsum_long"
+        android:singleLine="true"
+        android:text="@string/get_ready"
+        android:textAllCaps="true"
         android:textColor="@color/text_color_light"
-        android:lineSpacingMultiplier="1.5"
-        android:textSize="14sp" />
+        android:textSize="36sp"/>
+
+    <ProgressBar
+        style="?android:attr/progressBarStyleLarge"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="25dp"/>
 
 </RelativeLayout>
