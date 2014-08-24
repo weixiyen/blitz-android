@@ -9,8 +9,8 @@
 
     <ImageView
         android:id="@+id/content"
-        android:layout_width="140dp"
-        android:layout_height="140dp"
+        android:layout_width="@dimen/helmet_size"
+        android:layout_height="@dimen/helmet_size"
         android:contentDescription="@string/empty_string"
         android:src="@drawable/asset_bg_helmet_sample" />
 

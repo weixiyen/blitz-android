@@ -137,8 +137,8 @@
 
     <ImageView
         android:id="@+id/main_play_stats_avatar"
-        android:layout_width="140dp"
-        android:layout_height="140dp"
+        android:layout_width="@dimen/helmet_size"
+        android:layout_height="@dimen/helmet_size"
         android:layout_marginLeft="5dp"
         android:contentDescription="@string/empty_string"
         android:src="@drawable/asset_bg_helmet_sample" />

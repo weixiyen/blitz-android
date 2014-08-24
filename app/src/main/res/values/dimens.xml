@@ -2,4 +2,5 @@
     <integer name="config_screen_translation_time">350</integer>
 
     <dimen name="screen_width">320dp</dimen>
+    <dimen name="helmet_size">140dp</dimen>
 </resources>
