@@ -19,6 +19,12 @@
         android:background="@drawable/asset_draft_bg_player_normal"
         android:orientation="vertical">
 
+        <ImageView
+            android:layout_width="161dp"
+            android:layout_height="106dp"
+            android:layout_marginLeft="-8dp"
+            android:contentDescription="@string/empty_string"
+            android:src="@drawable/asset_draft_placeholder_player" />
     </LinearLayout>
 
     <LinearLayout
@@ -32,6 +38,12 @@
         android:gravity="right"
         android:orientation="vertical">
 
+        <ImageView
+            android:layout_width="161dp"
+            android:layout_height="106dp"
+            android:layout_marginLeft="-8dp"
+            android:contentDescription="@string/empty_string"
+            android:src="@drawable/asset_draft_placeholder_player" />
     </LinearLayout>
 
     <LinearLayout
@@ -44,6 +56,12 @@
         android:background="@drawable/asset_draft_bg_player_normal"
         android:orientation="vertical">
 
+        <ImageView
+            android:layout_width="161dp"
+            android:layout_height="106dp"
+            android:layout_marginLeft="-8dp"
+            android:contentDescription="@string/empty_string"
+            android:src="@drawable/asset_draft_placeholder_player" />
     </LinearLayout>
 
     <LinearLayout
@@ -57,5 +75,11 @@
         android:gravity="right"
         android:orientation="vertical">
 
+        <ImageView
+            android:layout_width="161dp"
+            android:layout_height="106dp"
+            android:layout_marginLeft="-8dp"
+            android:contentDescription="@string/empty_string"
+            android:src="@drawable/asset_draft_placeholder_player" />
     </LinearLayout>
 </RelativeLayout>
