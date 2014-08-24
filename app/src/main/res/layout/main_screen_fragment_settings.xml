@@ -97,7 +97,7 @@
                 android:paddingLeft="25dp"
                 android:paddingRight="25dp"
                 android:text="Change Password"
-                android:textColor="@color/text_color_dark_alt"
+                android:textColor="@color/text_color_dark"
                 android:textSize="16sp"/>
 
             <View
@@ -161,7 +161,7 @@
                     android:gravity="center"
                     android:text="@string/unlock_more_helmets"
                     android:textAllCaps="true"
-                    android:textColor="@color/text_color_dark_alt"
+                    android:textColor="@color/text_color_dark"
                     android:textSize="16sp"/>
 
                 <TextView
@@ -205,7 +205,7 @@
                         android:gravity="center|left"
                         android:text="@string/blitz_access_code"
                         android:textAllCaps="true"
-                        android:textColor="@color/text_color_dark_alt"
+                        android:textColor="@color/text_color_dark"
                         android:textSize="12sp"/>
 
                     <Button
@@ -264,7 +264,7 @@
                         android:gravity="center|left"
                         android:text="@string/blitz_access_code"
                         android:textAllCaps="true"
-                        android:textColor="@color/text_color_dark_alt"
+                        android:textColor="@color/text_color_dark"
                         android:textSize="12sp"/>
 
                     <Button
@@ -323,7 +323,7 @@
                         android:gravity="center|left"
                         android:text="@string/blitz_access_code"
                         android:textAllCaps="true"
-                        android:textColor="@color/text_color_dark_alt"
+                        android:textColor="@color/text_color_dark"
                         android:textSize="12sp"/>
 
                     <Button

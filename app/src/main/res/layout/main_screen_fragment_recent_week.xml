@@ -14,6 +14,6 @@
         fontPath="@string/app_font_helvetica_condensed_bold"
         android:gravity="center"
         android:text="@string/number_small"
-        android:textColor="@color/text_color_dark_alt"
+        android:textColor="@color/text_color_dark"
         android:textSize="11sp" />
 </merge>

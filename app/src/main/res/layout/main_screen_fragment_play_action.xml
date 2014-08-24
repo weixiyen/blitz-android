@@ -67,7 +67,7 @@
             android:paddingTop="45dp"
             android:text="@string/waiting_for_opponent"
             android:textAllCaps="true"
-            android:textColor="@color/text_color_dark_alt"
+            android:textColor="@color/text_color_dark"
             android:textSize="10sp"
             android:visibility="gone"/>
     </RelativeLayout>
