@@ -76,26 +76,18 @@ public class LoadingScreen extends BaseActivity {
             @Override
             public void run() {
 
-                // After delay, jump into
-                // the first activity.
-                jumpToFirstActivity();
+                // Try to enter the application.
+                AuthHelper.tryEnterMainApp(LoadingScreen.this);
+
+                // Play the lobby music after loading.
+                SoundHelper.instance().startMusic(R.raw.music_lobby_loop0, R.raw.music_lobby_loopn);
+                SoundHelper.instance().setMusicDisabled(AppDataObject.settingsMusicDisabled.get());
+
+                // Always destroy the loading
+                // activity as we leave.
+                finish();
 
             }
         }, SPLASH_TIME_OUT);
-    }
-
-    /**
-     * Based on various AppData and AppConfig
-     * preferences, figure out which activity
-     * to take the user to.
-     */
-    private void jumpToFirstActivity() {
-
-        // Try to enter the application.
-        AuthHelper.tryEnterMainApp(LoadingScreen.this);
-
-        // Play the lobby music after loading.
-        SoundHelper.instance().startMusic(R.raw.music_lobby_loop0, R.raw.music_lobby_loopn);
-        SoundHelper.instance().setMusicDisabled(AppDataObject.settingsMusicDisabled.get());
     }
 }

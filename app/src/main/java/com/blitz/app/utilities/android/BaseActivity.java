@@ -3,17 +3,18 @@ package com.blitz.app.utilities.android;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 
 import com.blitz.app.R;
-import com.blitz.app.utilities.comet.CometAPIManager;
-import com.blitz.app.view_models.ViewModel;
 import com.blitz.app.utilities.app.AppConfig;
 import com.blitz.app.utilities.background.EnteredBackground;
+import com.blitz.app.utilities.comet.CometAPIManager;
 import com.blitz.app.utilities.keyboard.KeyboardUtility;
 import com.blitz.app.utilities.reflection.ReflectionHelper;
 import com.blitz.app.utilities.string.StringHelper;
+import com.blitz.app.view_models.ViewModel;
 
 import butterknife.ButterKnife;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
@@ -36,10 +37,6 @@ public class BaseActivity extends FragmentActivity implements ViewModel.ViewMode
 
     // Custom transitions flag.
     private CustomTransition mCustomTransitions = CustomTransition.T_STANDARD;
-
-    // Track if activity history is cleared.
-    private static boolean mHistoryClearedFlag;
-    private static boolean mHistoryCleared;
 
     // View model for each activity.
     private ViewModel mViewModel = null;
@@ -142,13 +139,8 @@ public class BaseActivity extends FragmentActivity implements ViewModel.ViewMode
 
         if (mGoingBack) {
 
-            if (mHistoryCleared) {
-                mHistoryCleared = false;
-            } else {
-
-                // Run transitions, we going back.
-                runCustomTransitions(false);
-            }
+            // Run transitions, we going back.
+            runCustomTransitions(false);
         }
 
         // Start timer to detect entering the background.
@@ -184,53 +176,15 @@ public class BaseActivity extends FragmentActivity implements ViewModel.ViewMode
     }
 
     /**
-     * Intercept start activity in order to make sure that
-     * if the history stack is cleared, we still run
-     * animations in the proper direction.
-     *
-     * @param intent Parameters.
-     */
-    @Override
-    public void startActivity(Intent intent) {
-        super.startActivity(intent);
-
-        // If clear history flag was set, but we now are
-        // starting a new activity, then we can unset the
-        // flag as a new history stack is being built.
-        if (mHistoryCleared) {
-            mHistoryCleared = false;
-        }
-
-        // If however the clear history flag has been set
-        // we do want the history to remain cleared.
-        if (mHistoryClearedFlag) {
-            mHistoryClearedFlag = false;
-
-            mHistoryCleared = true;
-        }
-    }
-
-    /**
      * Track if we are going back
      * with a static flag.
      */
     @Override
     public void onBackPressed() {
-
-        if (mHistoryCleared) {
-
-            // Move this activity to the back of
-            // the history stack which causes the
-            // back button to essentially exit
-            // the app, which is the behavior a
-            // user expects on clear history.
-            moveTaskToBack(true);
-        }
+        super.onBackPressed();
 
         // Now going back.
         mGoingBack = true;
-
-        super.onBackPressed();
     }
 
     //==============================================================================================
@@ -246,11 +200,19 @@ public class BaseActivity extends FragmentActivity implements ViewModel.ViewMode
      */
     public void startActivity(Intent intent, boolean clearHistory) {
 
-        // Set clear history flag.
-        mHistoryClearedFlag = clearHistory;
-
         // Call native method.
         startActivity(intent);
+
+        if (clearHistory) {
+
+            // If jelly bean or above.
+            if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+
+                // Finish all activities on
+                // the current stack.
+                finishAffinity();
+            }
+        }
     }
 
     /**
