@@ -21,4 +21,7 @@
     <string name="environment_production">Production</string>
     <string name="environment_qa">QA</string>
     <string name="environment_staging">Staging</string>
+
+    <!-- Used by the animation helper library. -->
+    <string name="anim_original_view_layout">ANIM_ORIGINAL_VIEW_LAYOUT</string>
 </resources>

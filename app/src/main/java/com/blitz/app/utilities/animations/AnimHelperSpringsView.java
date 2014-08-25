@@ -2,6 +2,7 @@ package com.blitz.app.utilities.animations;
 
 import android.view.View;
 
+import com.blitz.app.R;
 import com.facebook.rebound.Spring;
 import com.facebook.rebound.SpringUtil;
 
@@ -10,27 +11,45 @@ import com.facebook.rebound.SpringUtil;
  */
 public class AnimHelperSpringsView {
 
+    //==============================================================================================
+    // Member Variables
+    //==============================================================================================
+
     private static final int OFF_SCREEN_PADDING = 60;
 
+    // Target view.
     private View mView;
 
+    // Translate Y information.
     private boolean mTranslateY;
-    private int mTranslationYFrom;
-    private int mTranslationYTo;
+    private int     mTranslationYFrom;
+    private int     mTranslationYTo;
 
+    // Translate X information.
     private boolean mTranslateX;
-    private int mTranslationXFrom;
-    private int mTranslationXTo;
+    private int     mTranslationXFrom;
+    private int     mTranslationXTo;
 
-    private AnimHelperSpringsPresets mPreset;
-
-    private Integer mViewWidth;
-    private Integer mViewHeight;
-    private Integer mViewTop;
-    private Integer mViewLeft;
-
+    // Window dimensions.
     private int mWindowHeight;
     private int mWindowWidth;
+
+    // Animation path preset.
+    private AnimHelperSpringsPresets mPreset;
+
+    // View layout information.
+    private ViewLayout mViewLayout;
+
+    /**
+     * Metadata about the view layout.
+     */
+    private class ViewLayout {
+
+        public Integer mViewWidth;
+        public Integer mViewHeight;
+        public Integer mViewTop;
+        public Integer mViewLeft;
+    }
 
     //==============================================================================================
     // Constructors
@@ -109,43 +128,43 @@ public class AnimHelperSpringsView {
 
         switch (mPreset) {
             case SLIDE_DOWN:
-                mTranslationYFrom = -(mViewTop + mViewHeight + OFF_SCREEN_PADDING);
+                mTranslationYFrom = -(mViewLayout.mViewTop + mViewLayout.mViewHeight + OFF_SCREEN_PADDING);
                 mTranslationYTo   = 0;
                 mTranslateY = true;
                 break;
             case SLIDE_DOWN_REVERSED:
                 mTranslationYFrom = 0;
-                mTranslationYTo   = -(mViewTop + mViewHeight + OFF_SCREEN_PADDING);
+                mTranslationYTo   = -(mViewLayout.mViewTop + mViewLayout.mViewHeight + OFF_SCREEN_PADDING);
                 mTranslateY = true;
                 break;
             case SLIDE_UP:
-                mTranslationYFrom = mWindowHeight - mViewTop;
+                mTranslationYFrom = mWindowHeight - mViewLayout.mViewTop;
                 mTranslationYTo   = 0;
                 mTranslateY = true;
                 break;
             case SLIDE_UP_REVERSED:
                 mTranslationYFrom = 0;
-                mTranslationYTo   = mWindowHeight - mViewTop;
+                mTranslationYTo   = mWindowHeight - mViewLayout.mViewTop;
                 mTranslateY = true;
                 break;
             case SLIDE_RIGHT:
-                mTranslationXFrom = -(mViewLeft + mViewWidth + OFF_SCREEN_PADDING);
+                mTranslationXFrom = -(mViewLayout.mViewLeft + mViewLayout.mViewWidth + OFF_SCREEN_PADDING);
                 mTranslationXTo   = 0;
                 mTranslateX = true;
                 break;
             case SLIDE_RIGHT_REVERSED:
                 mTranslationXFrom = 0;
-                mTranslationXTo   = -(mViewLeft + mViewWidth + OFF_SCREEN_PADDING);
+                mTranslationXTo   = -(mViewLayout.mViewLeft + mViewLayout.mViewWidth + OFF_SCREEN_PADDING);
                 mTranslateX = true;
                 break;
             case SLIDE_LEFT:
-                mTranslationXFrom = mWindowWidth - mViewLeft;
+                mTranslationXFrom = mWindowWidth - mViewLayout.mViewLeft;
                 mTranslationXTo   = 0;
                 mTranslateX = true;
                 break;
             case SLIDE_LEFT_REVERSED:
                 mTranslationXFrom = 0;
-                mTranslationXTo   = mWindowWidth - mViewLeft;
+                mTranslationXTo   = mWindowWidth - mViewLayout.mViewLeft;
                 mTranslateX = true;
                 break;
         }
@@ -171,23 +190,34 @@ public class AnimHelperSpringsView {
         mWindowWidth  = windowWidth;
         mWindowHeight = windowHeight;
 
-        // If the view top and left is not set.
-        if (mViewTop == null || mViewLeft == null) {
-
-            int[] location = new int[2];
-
-            mView.getLocationInWindow(location);
-
-            mViewLeft = location[0];
-            mViewTop = location[1];
+        if (mViewLayout == null) {
+            mViewLayout = (ViewLayout)mView.getTag(R.string.anim_original_view_layout);
         }
 
-        // If the view height and width is not set.
-        if (mViewHeight == null || mViewWidth == null) {
+        if (mViewLayout == null) {
+            mViewLayout = new ViewLayout();
 
-            // Set height and width.
-            mViewHeight = mView.getHeight();
-            mViewWidth  = mView.getWidth();
+            // If the view top and left is not set.
+            if (mViewLayout.mViewTop == null || mViewLayout.mViewLeft == null) {
+
+                int[] location = new int[2];
+
+                mView.getLocationInWindow(location);
+
+                mViewLayout.mViewLeft = location[0];
+                mViewLayout.mViewTop = location[1];
+            }
+
+            // If the view height and width is not set.
+            if (mViewLayout.mViewHeight == null || mViewLayout.mViewWidth == null) {
+
+                // Set height and width.
+                mViewLayout.mViewHeight = mView.getHeight();
+                mViewLayout.mViewWidth  = mView.getWidth();
+            }
+
+            // Save the layout information.
+            mView.setTag(R.string.anim_original_view_layout, mViewLayout);
         }
 
         tryInitialize();
