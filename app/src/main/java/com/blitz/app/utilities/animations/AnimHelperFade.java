@@ -6,13 +6,12 @@ import android.animation.ObjectAnimator;
 import android.view.View;
 
 /**
- * Created by mrkcsc on 8/21/14.
+ * Created by mrkcsc on 8/21/14. Copyright 2014 Blitz Studios
  */
 public class AnimHelperFade extends AnimHelper {
 
-    //==============================================================================================
-    // View Model Callbacks
-    //==============================================================================================
+    // region Public Methods
+    // =============================================================================================
 
     /**
      * Sets the visibility of a view but layers a
@@ -21,11 +20,13 @@ public class AnimHelperFade extends AnimHelper {
      *
      * @param view Target view.
      * @param visibility Target visibility.
+     * @param forceTransition If set it will force the animation
+     *                        even if going from same visibility state.
      */
-    public static void setVisibility(final View view, final int visibility) {
+    public static void setVisibility(final View view, final int visibility, boolean forceTransition) {
 
         // Don't animate if already set.
-        if (view.getVisibility() == visibility) {
+        if (view.getVisibility() == visibility && !forceTransition) {
 
             return;
         }
@@ -86,4 +87,14 @@ public class AnimHelperFade extends AnimHelper {
 
         alphaAnimator.start();
     }
+
+    /**
+     * By default do not force transition.
+     */
+    public static void setVisibility(final View view, final int visibility) {
+
+        setVisibility(view, visibility, false);
+    }
+
+    // endregion
 }
