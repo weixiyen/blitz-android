@@ -15,16 +15,73 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="25dp">
 
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="130dp"
             android:layout_height="105dp"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="105dp"
             android:background="@drawable/asset_draft_container_matchup">
 
-        </LinearLayout>
+            <me.grantland.widget.AutofitTextView
+                android:id="@+id/draft_intro_user"
+                style="@style/TextViewStyle"
+                fontPath="@string/app_font_sports"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="20dp"
+                android:gravity="center"
+                android:singleLine="true"
+                android:text="@string/lorum_ipsum_tiny"
+                android:textColor="@color/text_color_green"
+                android:textSize="20sp"/>
+
+            <TextView
+                style="@style/TextViewStyle"
+                fontPath="@string/app_font_sports"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:gravity="center"
+                android:singleLine="true"
+                android:text="0-0-0"
+                android:textColor="@color/text_color_light"
+                android:textSize="16sp"/>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:layout_margin="5dp"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="-4dp"
+                    android:contentDescription="@string/empty_string"
+                    android:src="@drawable/asset_play_icon_elo" />
+
+                <TextView
+                    android:id="@+id/draft_intro_user_elo"
+                    style="@style/TextViewStyle"
+                    fontPath="@string/app_font_sports"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:paddingLeft="5dp"
+                    android:paddingRight="5dp"
+                    android:singleLine="true"
+                    android:text="@string/number_large"
+                    android:textColor="@color/text_color_link"
+                    android:textSize="22sp"/>
+            </LinearLayout>
+        </RelativeLayout>
 
         <ImageView
+            android:id="@+id/draft_intro_helmet_left"
             android:layout_width="120dp"
             android:layout_height="120dp"
             android:layout_centerHorizontal="true"
@@ -52,16 +109,73 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="25dp">
 
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="130dp"
             android:layout_height="105dp"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="105dp"
             android:background="@drawable/asset_draft_container_matchup">
 
-        </LinearLayout>
+            <me.grantland.widget.AutofitTextView
+                android:id="@+id/draft_intro_opponent"
+                style="@style/TextViewStyle"
+                fontPath="@string/app_font_sports"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="20dp"
+                android:gravity="center"
+                android:singleLine="true"
+                android:text="@string/lorum_ipsum_tiny"
+                android:textColor="@color/text_color_red"
+                android:textSize="20sp"/>
+
+            <TextView
+                style="@style/TextViewStyle"
+                fontPath="@string/app_font_sports"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:gravity="center"
+                android:singleLine="true"
+                android:text="0-0-0"
+                android:textColor="@color/text_color_light"
+                android:textSize="16sp"/>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:layout_margin="5dp"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="-4dp"
+                    android:contentDescription="@string/empty_string"
+                    android:src="@drawable/asset_play_icon_elo" />
+
+                <TextView
+                    android:id="@+id/draft_intro_opponent_elo"
+                    style="@style/TextViewStyle"
+                    fontPath="@string/app_font_sports"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:paddingLeft="5dp"
+                    android:paddingRight="5dp"
+                    android:singleLine="true"
+                    android:text="@string/number_large"
+                    android:textColor="@color/text_color_link"
+                    android:textSize="22sp"/>
+            </LinearLayout>
+        </RelativeLayout>
 
         <ImageView
+            android:id="@+id/draft_intro_helmet_right"
             android:layout_width="120dp"
             android:layout_height="120dp"
             android:layout_centerHorizontal="true"
