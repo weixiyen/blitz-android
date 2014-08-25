@@ -13,6 +13,7 @@
     <color name="text_color_dark">#bbbbbb</color>
     <color name="text_color_red">#FF4200</color>
     <color name="text_color_green">#00FF96</color>
+    <color name="text_color_black">#37373C</color>
 
     <color name="text_color_link">#00FDFB</color>
     <color name="text_color_link_pressed">#d0fdff</color>

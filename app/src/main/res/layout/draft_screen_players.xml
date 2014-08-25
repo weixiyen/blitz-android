@@ -25,6 +25,49 @@
             android:layout_marginLeft="-8dp"
             android:contentDescription="@string/empty_string"
             android:src="@drawable/asset_draft_placeholder_player" />
+
+        <me.grantland.widget.AutofitTextView
+            fontPath="@string/app_font_helvetica_condensed_bold"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="2dp"
+            android:gravity="center"
+            android:singleLine="true"
+            android:text="@string/lorum_ipsum_tiny"
+            android:textColor="@color/text_color_black"
+            android:textSize="14sp"/>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:orientation="horizontal">
+
+            <TextView
+                fontPath="@string/app_font_helvetica_condensed_bold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:gravity="center"
+                android:singleLine="true"
+                android:text="@string/lorum_ipsum_word"
+                android:textColor="@color/text_color_grey"
+                android:textSize="12sp"/>
+
+            <TextView
+                fontPath="@string/app_font_helvetica_condensed_bold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:gravity="center"
+                android:singleLine="true"
+                android:text="@string/lorum_ipsum_word"
+                android:textColor="@color/text_color_grey"
+                android:textSize="12sp"/>
+        </RelativeLayout>
     </LinearLayout>
 
     <LinearLayout
@@ -44,6 +87,49 @@
             android:layout_marginLeft="-8dp"
             android:contentDescription="@string/empty_string"
             android:src="@drawable/asset_draft_placeholder_player" />
+
+        <me.grantland.widget.AutofitTextView
+            fontPath="@string/app_font_helvetica_condensed_bold"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="2dp"
+            android:gravity="center"
+            android:singleLine="true"
+            android:text="@string/lorum_ipsum_tiny"
+            android:textColor="@color/text_color_black"
+            android:textSize="14sp"/>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:orientation="horizontal">
+
+            <TextView
+                fontPath="@string/app_font_helvetica_condensed_bold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:gravity="center"
+                android:singleLine="true"
+                android:text="@string/lorum_ipsum_word"
+                android:textColor="@color/text_color_grey"
+                android:textSize="12sp"/>
+
+            <TextView
+                fontPath="@string/app_font_helvetica_condensed_bold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:gravity="center"
+                android:singleLine="true"
+                android:text="@string/lorum_ipsum_word"
+                android:textColor="@color/text_color_grey"
+                android:textSize="12sp"/>
+        </RelativeLayout>
     </LinearLayout>
 
     <LinearLayout
@@ -62,6 +148,49 @@
             android:layout_marginLeft="-8dp"
             android:contentDescription="@string/empty_string"
             android:src="@drawable/asset_draft_placeholder_player" />
+
+        <me.grantland.widget.AutofitTextView
+            fontPath="@string/app_font_helvetica_condensed_bold"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="2dp"
+            android:gravity="center"
+            android:singleLine="true"
+            android:text="@string/lorum_ipsum_tiny"
+            android:textColor="@color/text_color_black"
+            android:textSize="14sp"/>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:orientation="horizontal">
+
+            <TextView
+                fontPath="@string/app_font_helvetica_condensed_bold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:gravity="center"
+                android:singleLine="true"
+                android:text="@string/lorum_ipsum_word"
+                android:textColor="@color/text_color_grey"
+                android:textSize="12sp"/>
+
+            <TextView
+                fontPath="@string/app_font_helvetica_condensed_bold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:gravity="center"
+                android:singleLine="true"
+                android:text="@string/lorum_ipsum_word"
+                android:textColor="@color/text_color_grey"
+                android:textSize="12sp"/>
+        </RelativeLayout>
     </LinearLayout>
 
     <LinearLayout
@@ -81,5 +210,48 @@
             android:layout_marginLeft="-8dp"
             android:contentDescription="@string/empty_string"
             android:src="@drawable/asset_draft_placeholder_player" />
+
+        <me.grantland.widget.AutofitTextView
+            fontPath="@string/app_font_helvetica_condensed_bold"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="2dp"
+            android:gravity="center"
+            android:singleLine="true"
+            android:text="@string/lorum_ipsum_tiny"
+            android:textColor="@color/text_color_black"
+            android:textSize="14sp"/>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:orientation="horizontal">
+
+            <TextView
+                fontPath="@string/app_font_helvetica_condensed_bold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:gravity="center"
+                android:singleLine="true"
+                android:text="@string/lorum_ipsum_word"
+                android:textColor="@color/text_color_grey"
+                android:textSize="12sp"/>
+
+            <TextView
+                fontPath="@string/app_font_helvetica_condensed_bold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:gravity="center"
+                android:singleLine="true"
+                android:text="@string/lorum_ipsum_word"
+                android:textColor="@color/text_color_grey"
+                android:textSize="12sp"/>
+        </RelativeLayout>
     </LinearLayout>
 </RelativeLayout>

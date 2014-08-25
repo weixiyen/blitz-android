@@ -13,6 +13,7 @@
     <string name="lorum_ipsum_medium">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</string>
     <string name="lorum_ipsum_short">Lorem Ipsum is simply dummy text of the printing and typesetting industry.</string>
     <string name="lorum_ipsum_tiny">Lorem Ipsum</string>
+    <string name="lorum_ipsum_word">Lorem</string>
 
     <string name="error_generic">Oops! Something went wrong!</string>
     <string name="error_unauthorized">Oops! Something went wrong!\n\nPlease try logging in again.</string>
