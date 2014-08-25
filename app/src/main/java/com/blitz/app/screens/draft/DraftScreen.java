@@ -57,29 +57,7 @@ public class DraftScreen extends BaseActivity implements ViewModelDraft.ViewMode
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        // Create animation group.
-        mAnimations = AnimHelperSpringsGroup.from(this);
-
-        // Containers smash.
-        mAnimations.createHelper(20, 4)
-                .addHelperView(AnimHelperSpringsView.from(mDraftIntroContainerLeft, AnimHelperSpringsPresets.SLIDE_RIGHT))
-                .addHelperView(AnimHelperSpringsView.from(mDraftIntroContainerRight, AnimHelperSpringsPresets.SLIDE_LEFT));
-
-        // Rest flies down.
-        mAnimations.createHelper(5, 5)
-                .addHelperView(AnimHelperSpringsView.from(mDraftHeader, AnimHelperSpringsPresets.SLIDE_DOWN));
-
-        // Set a springs completion listener.
-        mAnimations.setOnCompleteListener(new Runnable() {
-
-            @Override
-            public void run() {
-
-                // Fade in the vs text and the spinner.
-                AnimHelperFade.setVisibility(mDraftIntroContainerVs, View.VISIBLE);
-                AnimHelperFade.setVisibility(mDraftLoadingSpinner, View.VISIBLE);
-            }
-        });
+        playAnimationsIntro();
     }
 
     /**
@@ -92,7 +70,6 @@ public class DraftScreen extends BaseActivity implements ViewModelDraft.ViewMode
 
         // Enable animations.
         mAnimations.enable();
-
     }
 
     /**
@@ -125,13 +102,82 @@ public class DraftScreen extends BaseActivity implements ViewModelDraft.ViewMode
 
     // endregion
 
-    // region View Model Callbacks
+    // region Private Methods
     // =============================================================================================
 
-    @Override
-    public void onDraftingStarted() {
+    /**
+     * Show the intro UI.
+     */
+    private void playAnimationsIntro() {
 
+        // Create animation group.
+        mAnimations = AnimHelperSpringsGroup.from(this);
 
+        // Containers smash.
+        mAnimations.createHelper(20, 4)
+                .addHelperView(AnimHelperSpringsView.from(mDraftIntroContainerLeft, AnimHelperSpringsPresets.SLIDE_RIGHT))
+                .addHelperView(AnimHelperSpringsView.from(mDraftIntroContainerRight, AnimHelperSpringsPresets.SLIDE_LEFT));
+
+        // Header flies down.
+        mAnimations.createHelper(5, 5)
+                .addHelperView(AnimHelperSpringsView.from(mDraftHeader, AnimHelperSpringsPresets.SLIDE_DOWN));
+
+        // Set a springs completion listener.
+        mAnimations.setOnCompleteListener(new Runnable() {
+
+            @Override
+            public void run() {
+
+                // Fade in the vs text and the spinner.
+                AnimHelperFade.setVisibility(mDraftIntroContainerVs, View.VISIBLE);
+                AnimHelperFade.setVisibility(mDraftLoadingSpinner, View.VISIBLE);
+
+                // Start the draft.
+                mViewModelDraft.startDrafting();
+            }
+        });
+    }
+
+    /**
+     * Reverse the intro UI.
+     */
+    private void playAnimationsIntroReversed() {
+
+        // Remove current helpers.
+        mAnimations.removeHelpers();
+
+        // Containers smash.
+        mAnimations.createHelper(20, 4)
+                .addHelperView(AnimHelperSpringsView.from(mDraftIntroContainerLeft, AnimHelperSpringsPresets.SLIDE_RIGHT_REVERSED))
+                .addHelperView(AnimHelperSpringsView.from(mDraftIntroContainerRight, AnimHelperSpringsPresets.SLIDE_LEFT_REVERSED));
+
+        // Header flies up.
+        mAnimations.createHelper(5, 5)
+                .addHelperView(AnimHelperSpringsView.from(mDraftHeader, AnimHelperSpringsPresets.SLIDE_DOWN_REVERSED));
+
+        // Fade out vs and spinner.
+        AnimHelperFade.setVisibility(mDraftIntroContainerVs, View.INVISIBLE);
+        AnimHelperFade.setVisibility(mDraftLoadingSpinner, View.INVISIBLE);
+
+        // Set a springs completion listener.
+        mAnimations.setOnCompleteListener(new Runnable() {
+
+            @Override
+            public void run() {
+
+                // Show drafting UI.
+                playAnimationsDrafting();
+            }
+        });
+
+        // Start it up.
+        mAnimations.enable();
+    }
+
+    /**
+     * Show the drafting UI.
+     */
+    private void playAnimationsDrafting() {
 
         // Hide the intro UI.
         mDraftIntroContainer.setVisibility(View.GONE);
@@ -139,6 +185,27 @@ public class DraftScreen extends BaseActivity implements ViewModelDraft.ViewMode
 
         // Bring back the drafting container.
         mDraftContainerDrafting.setVisibility(View.VISIBLE);
+
+        // Remove current helpers.
+        mAnimations.removeHelpers();
+
+        // Header flies down.
+        mAnimations.createHelper(5, 5)
+                .addHelperView(AnimHelperSpringsView.from(mDraftHeader, AnimHelperSpringsPresets.SLIDE_DOWN));
+
+        // Start it up.
+        mAnimations.enable();
+    }
+
+    // endregion
+
+    // region View Model Callbacks
+    // =============================================================================================
+
+    @Override
+    public void onDraftingStarted() {
+
+        playAnimationsIntroReversed();
     }
 
     // endregion

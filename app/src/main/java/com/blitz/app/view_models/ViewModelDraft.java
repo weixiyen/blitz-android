@@ -1,6 +1,7 @@
 package com.blitz.app.view_models;
 
 import android.app.Activity;
+import android.os.Handler;
 
 /**
  * Created by mrkcsc on 8/24/14. Copyright 2014 Blitz Studios
@@ -25,8 +26,14 @@ public class ViewModelDraft extends ViewModel {
 
     public void startDrafting() {
 
-        // Dummy call to drafting started.
-        getCallbacks(ViewModelDraftCallbacks.class).onDraftingStarted();
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+
+                // Dummy call to drafting started.
+                getCallbacks(ViewModelDraftCallbacks.class).onDraftingStarted();
+            }
+        }, 2000);
     }
 
     // endregion
