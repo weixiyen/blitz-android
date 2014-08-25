@@ -27,9 +27,8 @@ import butterknife.OnClick;
  */
 public class MainScreen extends BaseActivity implements ViewModelMain.ViewModelMainCallbacks {
 
-    //==============================================================================================
-    // Member Variables
-    //==============================================================================================
+    // region Member Variables
+    // =============================================================================================
 
     // Fragment view pager.
     @InjectView(R.id.main_screen_pager) ViewPager mPager;
@@ -47,9 +46,10 @@ public class MainScreen extends BaseActivity implements ViewModelMain.ViewModelM
     // View model object.
     private ViewModelMain mViewModelMain;
 
-    //==============================================================================================
-    // Overwritten Methods
-    //==============================================================================================
+    // endregion
+
+    // region Overwritten Methods
+    // =============================================================================================
 
     /**
      * Setup main navigational interface.
@@ -95,9 +95,10 @@ public class MainScreen extends BaseActivity implements ViewModelMain.ViewModelM
         return mViewModelMain;
     }
 
-    //==============================================================================================
-    // Private Methods
-    //==============================================================================================
+    // endregion
+
+    // region Private Methods
+    // =============================================================================================
 
     /**
      * Create and setup the viewpager and associated
@@ -150,9 +151,10 @@ public class MainScreen extends BaseActivity implements ViewModelMain.ViewModelM
         mNavActiveButtons.get(tag).setVisibility(View.VISIBLE);
     }
 
-    //==============================================================================================
-    // View Model Callbacks
-    //==============================================================================================
+    // endregion
+
+    // region View Model Callbacks
+    // =============================================================================================
 
     /**
      * Show a confirmation dialog for the draft.
@@ -258,9 +260,10 @@ public class MainScreen extends BaseActivity implements ViewModelMain.ViewModelM
         }
     }
 
-    //==============================================================================================
-    // Click Methods
-    //==============================================================================================
+    // endregion
+
+    // region Click Methods
+    // =============================================================================================
 
     /**
      * Change active nav item, and
@@ -283,4 +286,6 @@ public class MainScreen extends BaseActivity implements ViewModelMain.ViewModelM
         // Sync with view pager when selected.
         mPager.setCurrentItem(tag);
     }
+
+    // endregion
 }

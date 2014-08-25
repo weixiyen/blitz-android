@@ -17,16 +17,16 @@ import butterknife.OnClick;
  */
 public class SignUpScreenLegal extends BaseActivity {
 
-    //==============================================================================================
-    // Member Variables
-    //==============================================================================================
+    // region Member Variables
+    // =============================================================================================
 
     @InjectView(R.id.sign_up_terms_web) BaseWebView mWebView;
     @InjectView(R.id.sign_up_legal_progress) ProgressBar mProgressBar;
 
-    //==============================================================================================
-    // Overwritten Methods
-    //==============================================================================================
+    // endregion
+
+    // region Overwritten Methods
+    // =============================================================================================
 
     /**
      * Setup the web view.
@@ -42,9 +42,10 @@ public class SignUpScreenLegal extends BaseActivity {
         mWebView.loadUrl(AppConfig.getLegalUrl());
     }
 
-    //==============================================================================================
-    // Click Methods
-    //==============================================================================================
+    // endregion
+
+    // region Click Methods
+    // =============================================================================================
 
     /**
      * User accepts legal agreement.
@@ -58,4 +59,6 @@ public class SignUpScreenLegal extends BaseActivity {
         // Now try to enter the app.
         AuthHelper.tryEnterMainApp(this);
     }
+
+    // endregion
 }

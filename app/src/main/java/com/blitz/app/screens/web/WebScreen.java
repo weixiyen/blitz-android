@@ -16,9 +16,8 @@ import butterknife.InjectView;
  */
 public class WebScreen extends BaseActivity {
 
-    //==============================================================================================
-    // Member Variables
-    //==============================================================================================
+    // region Member Variables
+    // =============================================================================================
 
     // Url for this view set based on this.
     public static final String PARAM_URL = "PARAM_URL";
@@ -30,9 +29,10 @@ public class WebScreen extends BaseActivity {
     @InjectView(R.id.web_view_loading) ProgressBar mProgressBar;
     @InjectView(R.id.web_header) TextView mHeader;
 
-    //==============================================================================================
-    // Overwritten Methods
-    //==============================================================================================
+    // endregion
+
+    // region Overwritten Methods
+    // =============================================================================================
 
     /**
      * Run custom transitions if needed.
@@ -58,4 +58,6 @@ public class WebScreen extends BaseActivity {
             mHeader.setText(intent.getStringExtra(PARAM_TITLE));
         }
     }
+
+    // endregion
 }

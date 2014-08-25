@@ -11,22 +11,22 @@ import com.blitz.app.utilities.android.BaseFragment;
 import butterknife.InjectView;
 
 /**
- * Created by mrkcsc on 7/14/14.
+ * Created by mrkcsc on 7/14/14. Copyright 2014 Blitz Studios
  */
 public class MainScreenFragmentRecent extends BaseFragment {
 
-    //==============================================================================================
-    // Member Variables
-    //==============================================================================================
+    // region Member Variables
+    // =============================================================================================
 
     // Total weeks in an NFL season.
     private static final int WEEKS_IN_SEASON = 17;
 
     @InjectView(R.id.main_recent_scrubber) ViewGroup mScrubber;
 
-    //==============================================================================================
-    // Overwritten Methods
-    //==============================================================================================
+    // endregion
+
+    // region Overwritten Methods
+    // =============================================================================================
 
     /**
      * Setup the recent matches UI.
@@ -53,4 +53,6 @@ public class MainScreenFragmentRecent extends BaseFragment {
             ((TextView)mScrubber.getChildAt(i)).setText(String.format("%02d", i + 1));
         }
     }
+
+    // endregion
 }

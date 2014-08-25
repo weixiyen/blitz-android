@@ -22,9 +22,8 @@ import butterknife.OnClick;
  */
 public class AccessCodeScreen extends BaseActivity {
 
-    //==============================================================================================
-    // Member Variables
-    //==============================================================================================
+    // region Member Variables
+    // =============================================================================================
 
     @InjectView(R.id.access_code_continue_with_code) View mContinue;
     @InjectView(R.id.access_code_code) EditText mCode;
@@ -37,9 +36,10 @@ public class AccessCodeScreen extends BaseActivity {
     // Model.
     private ObjectModelCode mObjectModelCode;
 
-    //==============================================================================================
-    // Overwritten Methods
-    //==============================================================================================
+    // endregion
+
+    // region Overwritten Methods
+    // =============================================================================================
 
     /**
      * Setup the screen.
@@ -93,9 +93,10 @@ public class AccessCodeScreen extends BaseActivity {
         mAnimations.disable();
     }
 
-    //==============================================================================================
-    // Click Methods
-    //==============================================================================================
+    // endregion
+
+    // region Click Methods
+    // =============================================================================================
 
     @OnClick(R.id.access_code_continue_with_code) @SuppressWarnings("unused")
     public void continueWithCode() {
@@ -126,4 +127,6 @@ public class AccessCodeScreen extends BaseActivity {
             }
         });
     }
+
+    // endregion
 }

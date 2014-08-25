@@ -22,13 +22,12 @@ import butterknife.InjectView;
 import butterknife.OnClick;
 
 /**
- * Created by mrkcsc on 7/14/14.
+ * Created by mrkcsc on 7/14/14. Copyright 2014 Blitz Studios
  */
 public class MainScreenFragmentSettings extends BaseFragment {
 
-    //==============================================================================================
-    // Member Variables
-    //==============================================================================================
+    // region Member Variables
+    // =============================================================================================
 
     @InjectView(R.id.main_screen_fragment_settings_toggle_music) Switch mSettingsToggleMusic;
     @InjectView(R.id.main_screen_fragment_settings_toggle_sound) Switch mSettingsToggleSound;
@@ -50,9 +49,10 @@ public class MainScreenFragmentSettings extends BaseFragment {
     public final static float SMALL_SCALE = 0.7f;
     public final static float DIFF_SCALE = BIG_SCALE - SMALL_SCALE;
 
-    //==============================================================================================
-    // Overwritten Methods
-    //==============================================================================================
+    // endregion
+
+    // region Overwritten Methods
+    // =============================================================================================
 
     /**
      * Setup main navigational interface.
@@ -99,9 +99,10 @@ public class MainScreenFragmentSettings extends BaseFragment {
         }
     }
 
-    //==============================================================================================
-    // Click Methods
-    //==============================================================================================
+    // endregion
+
+    // region Click Methods
+    // =============================================================================================
 
     /**
      * Toggle music setting.
@@ -171,4 +172,6 @@ public class MainScreenFragmentSettings extends BaseFragment {
         // Bounce user back to the loading screen.
         startActivity(new Intent(this.getActivity(), LoadingScreen.class));
     }
+
+    // endregion
 }

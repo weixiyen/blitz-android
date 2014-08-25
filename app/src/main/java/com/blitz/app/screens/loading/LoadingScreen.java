@@ -17,16 +17,16 @@ import com.blitz.app.utilities.sound.SoundHelper;
  */
 public class LoadingScreen extends BaseActivity {
 
-    //==============================================================================================
-    // Member Variables
-    //==============================================================================================
+    // region Member Variables
+    // =============================================================================================
 
     // Splash screen timer
     private static final int SPLASH_TIME_OUT = 1500;
 
-    //==============================================================================================
-    // Overwritten Methods
-    //==============================================================================================
+    // endregion
+
+    // region Overwritten Methods
+    // =============================================================================================
 
     /**
      * Setup and jump to associated activity.
@@ -61,9 +61,10 @@ public class LoadingScreen extends BaseActivity {
         }
     }
 
-    //==============================================================================================
-    // Private Methods
-    //==============================================================================================
+    // endregion
+
+    // region Private Methods
+    // =============================================================================================
 
     /**
      * Artificial loading screen delay.
@@ -90,4 +91,6 @@ public class LoadingScreen extends BaseActivity {
             }
         }, SPLASH_TIME_OUT);
     }
+
+    // endregion
 }

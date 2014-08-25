@@ -13,13 +13,12 @@ import butterknife.InjectView;
 import butterknife.OnClick;
 
 /**
- * Created by Miguel Gaeta on 6/1/14.
+ * Created by Miguel Gaeta on 6/1/14. Copyright 2014 Blitz Studios
  */
 public class SignInScreen extends BaseActivity {
 
-    //==============================================================================================
-    // Member Variables
-    //==============================================================================================
+    // region Member Variables
+    // =============================================================================================
 
     // Mapped views.
     @InjectView(R.id.sign_in_screen_username_or_email) EditText mUsername;
@@ -28,9 +27,10 @@ public class SignInScreen extends BaseActivity {
     // Model object.
     private ObjectModelUser mObjectModelUser;
 
-    //==============================================================================================
-    // Overwritten Methods
-    //==============================================================================================
+    // endregion
+
+    // region Overwritten Methods
+    // =============================================================================================
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,9 +40,10 @@ public class SignInScreen extends BaseActivity {
         setCustomTransitions(CustomTransition.T_SLIDE_VERTICAL);
     }
 
-    //==============================================================================================
-    // Click Methods
-    //==============================================================================================
+    // endregion
+
+    // region Click Methods
+    // =============================================================================================
 
     @OnClick(R.id.sign_in_screen_sign_in) @SuppressWarnings("unused")
     public void sign_in() {
@@ -68,4 +69,6 @@ public class SignInScreen extends BaseActivity {
             }
         });
     }
+
+    // endregion
 }

@@ -24,9 +24,8 @@ import butterknife.OnClick;
  */
 public class MainScreenFragmentPlay extends BaseFragment implements ViewModelMainPlay.ViewModelMainPlayCallbacks {
 
-    //==============================================================================================
-    // Member Variables
-    //==============================================================================================
+    // region Member Variables
+    // =============================================================================================
 
     // Play button related views.
     @InjectView(R.id.main_play_button)                View mPlayButton;
@@ -46,9 +45,10 @@ public class MainScreenFragmentPlay extends BaseFragment implements ViewModelMai
     // View model object.
     private ViewModelMainPlay mViewModelMainPlay;
 
-    //==============================================================================================
-    // Overwritten Methods
-    //==============================================================================================
+    // endregion
+
+    // region Overwritten Methods
+    // =============================================================================================
 
     /**
      * Initialize the fragment.
@@ -79,9 +79,10 @@ public class MainScreenFragmentPlay extends BaseFragment implements ViewModelMai
         return mViewModelMainPlay;
     }
 
-    //==============================================================================================
-    // Private Methods
-    //==============================================================================================
+    // endregion
+
+    // region Private Methods
+    // =============================================================================================
 
     /**
      * Animate play button.
@@ -105,9 +106,10 @@ public class MainScreenFragmentPlay extends BaseFragment implements ViewModelMai
         objectAnimator.start();
     }
 
-    //==============================================================================================
-    // View Model Callbacks
-    //==============================================================================================
+    // endregion
+
+    // region View Model Callbacks
+    // =============================================================================================
 
     /**
      * Setup cool button state.
@@ -206,9 +208,10 @@ public class MainScreenFragmentPlay extends BaseFragment implements ViewModelMai
         mCashAvailable.setText("You have $" + String.format("%.2f", cash / 100.0f));
     }
 
-    //==============================================================================================
-    // Click Methods
-    //==============================================================================================
+    // endregion
+
+    // region Click Methods
+    // =============================================================================================
 
     /**
      * Join (or leave) the draft queue!
@@ -256,4 +259,6 @@ public class MainScreenFragmentPlay extends BaseFragment implements ViewModelMai
         // TODO: Revise this.
         new DialogRules().show(getChildFragmentManager(), "asdsdasdasddas");
     }
+
+    // endregion
 }

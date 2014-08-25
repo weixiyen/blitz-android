@@ -24,9 +24,8 @@ import butterknife.OnClick;
  */
 public class AccessQueueScreen extends BaseActivity implements ViewModelAccessQueue.ViewModelAccessQueueCallbacks {
 
-    //==============================================================================================
-    // Member Variables
-    //==============================================================================================
+    // region Member Variables
+    // =============================================================================================
 
     @InjectView(R.id.access_queue_promo_text)      View mQueuePromoText;
     @InjectView(R.id.access_queue_calls_to_action) View mQueueButtons;
@@ -42,9 +41,10 @@ public class AccessQueueScreen extends BaseActivity implements ViewModelAccessQu
     // View model object.
     private ViewModelAccessQueue mViewModelAccessQueue;
 
-    //==============================================================================================
-    // Overwritten Methods
-    //==============================================================================================
+    // endregion
+
+    // region Overwritten Methods
+    // =============================================================================================
 
     /**
      * Setup spring animations.
@@ -106,9 +106,10 @@ public class AccessQueueScreen extends BaseActivity implements ViewModelAccessQu
         return mViewModelAccessQueue;
     }
 
-    //==============================================================================================
-    // View Model Callbacks
-    //==============================================================================================
+    // endregion
+
+    // region View Model Callbacks
+    // =============================================================================================
 
     /**
      * Update people in front of you.
@@ -139,9 +140,10 @@ public class AccessQueueScreen extends BaseActivity implements ViewModelAccessQu
         }
     }
 
-    //==============================================================================================
-    // Click Methods
-    //==============================================================================================
+    // endregion
+
+    // region Click Methods
+    // =============================================================================================
 
     /**
      * Transition to access code screen.
@@ -162,4 +164,6 @@ public class AccessQueueScreen extends BaseActivity implements ViewModelAccessQu
         // Transition to sign in screen.
         startActivity(new Intent(this, SignInScreen.class));
     }
+
+    // endregion
 }

@@ -13,13 +13,12 @@ import butterknife.InjectView;
 import butterknife.OnClick;
 
 /**
- * Created by Miguel Gaeta on 6/1/14.
+ * Created by Miguel Gaeta on 6/1/14. Copyright 2014 Blitz Studios
  */
 public class SignUpScreen extends BaseActivity {
 
-    //==============================================================================================
-    // Member Variables
-    //==============================================================================================
+    // region Member Variables
+    // =============================================================================================
 
     // Mapped views.
     @InjectView(R.id.sign_up_screen_email)    EditText mEmail;
@@ -29,10 +28,16 @@ public class SignUpScreen extends BaseActivity {
     // Model object.
     private ObjectModelUser mObjectModelUser;
 
-    //==============================================================================================
-    // Overwritten Methods
-    //==============================================================================================
+    // endregion
 
+    // region Overwritten Methods
+    // =============================================================================================
+
+    /**
+     * Setup view on creation.
+     *
+     * @param savedInstanceState Instance parameters.
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,9 +46,10 @@ public class SignUpScreen extends BaseActivity {
         setCustomTransitions(CustomTransition.T_SLIDE_VERTICAL);
     }
 
-    //==============================================================================================
-    // Click Methods
-    //==============================================================================================
+    // endregion
+
+    // region Click Methods
+    // =============================================================================================
 
     /**
      * Register the user.
@@ -73,4 +79,6 @@ public class SignUpScreen extends BaseActivity {
             }
         });
     }
+
+    // endregion
 }

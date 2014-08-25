@@ -18,6 +18,9 @@ import butterknife.InjectView;
  */
 public class DraftScreen extends BaseActivity implements ViewModelDraft.ViewModelDraftCallbacks {
 
+    // region Member Variables
+    // =============================================================================================
+
     @InjectView(R.id.draft_intro)   ViewGroup mDraftContainerIntro;
 
     @InjectView(R.id.draft_container_drafting) ViewGroup mDraftContainerDrafting;
@@ -27,6 +30,11 @@ public class DraftScreen extends BaseActivity implements ViewModelDraft.ViewMode
 
     // View model object.
     private ViewModelDraft mViewModelDraft;
+
+    // endregion
+
+    // region Overwritten Methods
+    // =============================================================================================
 
     /**
      * When screen is created.
@@ -72,9 +80,10 @@ public class DraftScreen extends BaseActivity implements ViewModelDraft.ViewMode
         return mViewModelDraft;
     }
 
-    //==============================================================================================
-    // View Model Callbacks
-    //==============================================================================================
+    // endregion
+
+    // region View Model Callbacks
+    // =============================================================================================
 
     @Override
     public void onDraftingStarted() {
@@ -86,4 +95,6 @@ public class DraftScreen extends BaseActivity implements ViewModelDraft.ViewMode
         // Bring back the drafting container.
         mDraftContainerDrafting.setVisibility(View.VISIBLE);
     }
+
+    // endregion
 }

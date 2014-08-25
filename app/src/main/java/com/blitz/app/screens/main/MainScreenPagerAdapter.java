@@ -5,28 +5,29 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 
 /**
- * Created by mrkcsc on 7/14/14.
+ * Created by mrkcsc on 7/14/14. Copyright 2014 Blitz Studios
  */
 public class MainScreenPagerAdapter extends FragmentStatePagerAdapter {
 
-    //==============================================================================================
-    // Member Variables
-    //==============================================================================================
+    // region Member Variables
+    // =============================================================================================
 
     // Title of each page.
     private static final String[] PAGE_TITLES = new String[] { "Play", "Recent", "Settings" };
 
-    //==============================================================================================
-    // Constructor
-    //==============================================================================================
+    // endregion
+
+    // region Constructor
+    // =============================================================================================
 
     public MainScreenPagerAdapter(FragmentManager fm) {
         super(fm);
     }
 
-    //==============================================================================================
-    // Overwritten Methods
-    //==============================================================================================
+    // endregion
+
+    // region Overwritten Methods
+    // =============================================================================================
 
     @Override
     public Fragment getItem(int position) {
@@ -51,4 +52,6 @@ public class MainScreenPagerAdapter extends FragmentStatePagerAdapter {
     public int getCount() {
         return PAGE_TITLES.length;
     }
+
+    // endregion
 }
