@@ -15,7 +15,7 @@ import com.facebook.rebound.SpringSystem;
 import java.util.ArrayList;
 
 /**
- * Created by mrkcsc on 7/29/14.
+ * Created by mrkcsc on 7/29/14. Copyright 2014 Blitz Studios
  */
 public class AnimHelperSprings extends AnimHelper {
 
@@ -346,6 +346,9 @@ public class AnimHelperSprings extends AnimHelper {
                         }
                     }
                 });
+
+        // Request a layout.
+        rootView.requestLayout();
     }
 
     /**
