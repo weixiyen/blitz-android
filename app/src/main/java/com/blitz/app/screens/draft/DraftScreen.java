@@ -8,6 +8,10 @@ import android.widget.TextView;
 
 import com.blitz.app.R;
 import com.blitz.app.utilities.android.BaseActivity;
+import com.blitz.app.utilities.animations.AnimHelperFade;
+import com.blitz.app.utilities.animations.AnimHelperSpringsGroup;
+import com.blitz.app.utilities.animations.AnimHelperSpringsPresets;
+import com.blitz.app.utilities.animations.AnimHelperSpringsView;
 import com.blitz.app.view_models.ViewModel;
 import com.blitz.app.view_models.ViewModelDraft;
 
@@ -21,15 +25,25 @@ public class DraftScreen extends BaseActivity implements ViewModelDraft.ViewMode
     // region Member Variables
     // =============================================================================================
 
-    @InjectView(R.id.draft_intro)   ViewGroup mDraftContainerIntro;
+    // Draft intro containers.
+    @InjectView(R.id.draft_intro)                 View mDraftIntroContainer;
+    @InjectView(R.id.draft_intro_container_left)  View mDraftIntroContainerLeft;
+    @InjectView(R.id.draft_intro_container_right) View mDraftIntroContainerRight;
+    @InjectView(R.id.draft_intro_container_vs)    View mDraftIntroContainerVs;
+
+    // Loading spinner for the draft.
+    @InjectView(R.id.draft_loading) ProgressBar mDraftLoadingSpinner;
+
+    // Header view for the draft.
+    @InjectView(R.id.draft_header) TextView mDraftHeader;
 
     @InjectView(R.id.draft_container_drafting) ViewGroup mDraftContainerDrafting;
 
-    @InjectView(R.id.draft_loading) ProgressBar mDraftLoadingSpinner;
-    @InjectView(R.id.draft_header) TextView mDraftHeader;
-
     // View model object.
     private ViewModelDraft mViewModelDraft;
+
+    // Page animations.
+    private AnimHelperSpringsGroup mAnimations;
 
     // endregion
 
@@ -42,6 +56,30 @@ public class DraftScreen extends BaseActivity implements ViewModelDraft.ViewMode
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        // Create animation group.
+        mAnimations = AnimHelperSpringsGroup.from(this);
+
+        // Containers smash.
+        mAnimations.createHelper(20, 5)
+                .addHelperView(AnimHelperSpringsView.from(mDraftIntroContainerLeft, AnimHelperSpringsPresets.SLIDE_RIGHT))
+                .addHelperView(AnimHelperSpringsView.from(mDraftIntroContainerRight, AnimHelperSpringsPresets.SLIDE_LEFT));
+
+        // Rest flies down.
+        mAnimations.createHelper(5, 5)
+                .addHelperView(AnimHelperSpringsView.from(mDraftHeader, AnimHelperSpringsPresets.SLIDE_DOWN));
+
+        // Set a springs completion listener.
+        mAnimations.setOnCompleteListener(new Runnable() {
+
+            @Override
+            public void run() {
+
+                // Fade in the vs text and the spinner.
+                AnimHelperFade.setVisibility(mDraftIntroContainerVs, View.VISIBLE);
+                AnimHelperFade.setVisibility(mDraftLoadingSpinner, View.VISIBLE);
+            }
+        });
     }
 
     /**
@@ -51,6 +89,9 @@ public class DraftScreen extends BaseActivity implements ViewModelDraft.ViewMode
     @Override
     protected void onResume() {
         super.onResume();
+
+        // Enable animations.
+        mAnimations.enable();
 
     }
 
@@ -62,6 +103,8 @@ public class DraftScreen extends BaseActivity implements ViewModelDraft.ViewMode
     protected void onPause() {
         super.onPause();
 
+        // Disable animations.
+        mAnimations.disable();
     }
 
     /**
@@ -89,7 +132,7 @@ public class DraftScreen extends BaseActivity implements ViewModelDraft.ViewMode
     public void onDraftingStarted() {
 
         // Hide the intro UI.
-        mDraftContainerIntro.setVisibility(View.GONE);
+        mDraftIntroContainer.setVisibility(View.GONE);
         mDraftLoadingSpinner.setVisibility(View.GONE);
 
         // Bring back the drafting container.

@@ -16,6 +16,14 @@ public class ViewModelDraft extends ViewModel {
     @Override
     public void initialize(Activity activity, ViewModelCallbacks callbacks) {
         super.initialize(activity, callbacks);
+    }
+
+    // endregion
+
+    // region Public Methods
+    // =============================================================================================
+
+    public void startDrafting() {
 
         // Dummy call to drafting started.
         getCallbacks(ViewModelDraftCallbacks.class).onDraftingStarted();
