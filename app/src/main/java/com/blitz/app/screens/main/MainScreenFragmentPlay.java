@@ -221,7 +221,7 @@ public class MainScreenFragmentPlay extends BaseFragment implements ViewModelMai
         }
 
         // Toggle the queue.
-        ((ViewModelMainPlay)onFetchViewModel()).toggleQueue();
+        mViewModelMainPlay.toggleQueue();
     }
 
     /**
