@@ -1,34 +1,17 @@
-/*
- * Copyright (C) 2013 The Android Open Source Project
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package com.blitz.app.utilities.gcm;
 
 import android.app.IntentService;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
-import android.app.TaskStackBuilder;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.NotificationCompat;
-import android.util.Log;
 
 import com.blitz.app.R;
-import com.blitz.app.screens.main.MainScreen;
+import com.blitz.app.screens.loading.LoadingScreen;
+import com.blitz.app.utilities.logging.LogHelper;
 import com.google.android.gms.gcm.GoogleCloudMessaging;
 
 /**
@@ -38,84 +21,108 @@ import com.google.android.gms.gcm.GoogleCloudMessaging;
  * service is finished, it calls {@code completeWakefulIntent()} to release the
  * wake lock.
  */
-@SuppressWarnings("ALL")
 public class GcmIntentService extends IntentService {
-    
+
+    // region Member Variables
+    //==============================================================================================
+
     public static final int NOTIFICATION_ID = 1;
 
-    public GcmIntentService() {
-        super("GcmIntentService");
-    }
-    public static final String TAG = "GCM GcmIntentService"; // Tag used to identify log lines
+    // endregion
 
+    // region Constructors
+    //==============================================================================================
+
+    /**
+     * Default constructor,  The string passed to the
+     * super method is used for debugging purposes only.
+     */
+    public GcmIntentService() {
+
+        super(GcmIntentService.class.toString());
+    }
+
+    // endregion
+
+    // region Overwritten Methods
+    //==============================================================================================
+
+    /**
+     * Todo: Revise and make this method more robust.
+     */
     @Override
     protected void onHandleIntent(Intent intent) {
 
-        Bundle extras = intent.getExtras();
+        // Fetch instance of GCM services.
         GoogleCloudMessaging gcm = GoogleCloudMessaging.getInstance(this);
-        // The getMessageType() intent parameter must be the intent you received
-        // in your BroadcastReceiver.
+
+        // Fetch GCM message type parameter.
         String messageType = gcm.getMessageType(intent);
 
-        if (!extras.isEmpty()) {  // has effect of unparcelling Bundle
+        // Fetch extras.
+        Bundle extras = intent.getExtras();
+
+        if (!extras.isEmpty()) {
+
             /*
              * Filter messages based on message type. Since it is likely that GCM will be
              * extended in the future with new message types, just ignore any message types you're
              * not interested in, or that you don't recognize.
              */
             if (GoogleCloudMessaging.MESSAGE_TYPE_SEND_ERROR.equals(messageType)) {
-                sendNotification("Send error: " + extras.toString());
-            } else if (GoogleCloudMessaging.MESSAGE_TYPE_DELETED.equals(messageType)) {
-                sendNotification("Deleted messages on server: " + extras.toString());
-            // If it's a regular GCM message, do some work.
+
+                LogHelper.log("GCM error, please revise.");
+
             } else if (GoogleCloudMessaging.MESSAGE_TYPE_MESSAGE.equals(messageType)) {
+
+
                 // Post notification of received message.
-                sendNotification(extras.getString("message", "New content"));
-                Log.i(TAG, "Received: " + extras.toString());
+                sendNotification(extras.getString("message", null));
             }
         }
-        // Release the wake lock provided by the WakefulBroadcastReceiver.
+
+        // Release wake lock provided by WakefulBroadcastReceiver.
         GcmBroadcastReceiver.completeWakefulIntent(intent);
     }
 
-    // Put the message into a notification and post it.
-    // This is just one simple example of what you might choose to do with
-    // a GCM message.
+    // endregion
+
+    // region Private Methods
+    //==============================================================================================
+
+    /**
+     * TODO: Supply the intent as a parameter (make this part of a reusable library).
+     *
+     * @param msg Target message from server.
+     */
     private void sendNotification(String msg) {
 
-        int icon = R.drawable.icon_blitz;
-        long when = System.currentTimeMillis();
-        String title = "Blitz";
+        if (msg == null) {
+            return;
+        }
+
+        String title = getResources().getString(R.string.app_name);
 
         NotificationCompat.Builder builder = new NotificationCompat.Builder(this)
-                .setSmallIcon(icon)
+                .setSmallIcon(R.drawable.icon_blitz)
                 .setContentTitle(title)
                 .setStyle(new NotificationCompat.BigTextStyle().bigText(msg))
                 .setDefaults(Notification.DEFAULT_ALL)
                 .setContentText(msg);
 
-        /*
-        // back navigation stuff (doesn't seem to work with old android api versions)
-        TaskStackBuilder stackBuilder = TaskStackBuilder.create(this);
-        stackBuilder.addParentStack(MainScreen.class);
-        stackBuilder.addNextIntent(resultIntent);
-
-        PendingIntent resultPendingIntent = stackBuilder.getPendingIntent(0,
-                PendingIntent.FLAG_UPDATE_CURRENT);
-
-
-        builder.setContentIntent(resultPendingIntent);
-        */
-
-        // TODO, supply the intent as a parameter (make this part of a reusable library)
         builder.setContentIntent( // supply an intent to send when the notification is clicked
                 PendingIntent.getActivity( // retrieve an intent that will start a new activity
-                        this.getApplicationContext(), 0,
-                        new Intent(this, MainScreen.class), // intent that starts the main screen
+                        getApplicationContext(), 0,
+                        new Intent(this, LoadingScreen.class),
                         PendingIntent.FLAG_UPDATE_CURRENT));
 
+        // Fetch instance of the notification manager.
         NotificationManager notificationManager = (NotificationManager)
-                this.getSystemService(Context.NOTIFICATION_SERVICE);
+                getSystemService(Context.NOTIFICATION_SERVICE);
+
+        // Push out our notification.
         notificationManager.notify(NOTIFICATION_ID, builder.build());
     }
+
+    // endregion
 }
