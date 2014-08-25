@@ -9,13 +9,12 @@ import com.blitz.app.utilities.rest.RestAPIOperation;
 import com.google.gson.JsonObject;
 
 /**
- * Created by Miguel Gaeta on 6/28/14.
+ * Created by Miguel Gaeta on 6/28/14. Copyright 2014 Blitz Studios
  */
 public class ObjectModelCode {
 
-    //==============================================================================================
-    // Member Variables
-    //==============================================================================================
+    // region Member Variables
+    // =============================================================================================
 
     // User provided code.
     private String mValue;
@@ -23,9 +22,10 @@ public class ObjectModelCode {
     // Type of code provided.
     private String mCodeType;
 
-    //==============================================================================================
-    // Public Methods
-    //==============================================================================================
+    // endregion
+
+    // region Public Methods
+    // =============================================================================================
 
     /**
      * Set code value.
@@ -86,12 +86,15 @@ public class ObjectModelCode {
         RestAPIClient.getAPI().code_post(body, RestAPICallback.create(operation));
     }
 
-    //==============================================================================================
-    // Callbacks
-    //==============================================================================================
+    // endregion
+
+    // region Callbacks
+    // =============================================================================================
 
     public interface RedeemCodeCallback {
 
         public void onRedeemCode();
     }
+
+    // endregion
 }

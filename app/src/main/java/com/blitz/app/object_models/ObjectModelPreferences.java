@@ -10,14 +10,13 @@ import com.blitz.app.utilities.app.AppConfig;
 import com.google.gson.JsonObject;
 
 /**
- * Created by Miguel Gaeta on 6/26/14.
+ * Created by Miguel Gaeta on 6/26/14. Copyright 2014 Blitz Studios
  */
 @SuppressWarnings("unused")
 public class ObjectModelPreferences {
 
-    //==============================================================================================
-    // Member Variables
-    //==============================================================================================
+    // region Member Variables
+    // =============================================================================================
 
     // Current year.
     private int mCurrentYear;
@@ -31,9 +30,10 @@ public class ObjectModelPreferences {
     // What queue are we in.
     private String mCurrentActiveQueue;
 
-    //==============================================================================================
-    // Public Methods
-    //==============================================================================================
+    // endregion
+
+    // region Public Methods
+    // =============================================================================================
 
     /**
      * Fetch active queue (time based).
@@ -88,12 +88,15 @@ public class ObjectModelPreferences {
         RestAPIClient.getAPI().preferences_get(RestAPICallback.create(operation));
     }
 
-    //==============================================================================================
-    // Callbacks
-    //==============================================================================================
+    // endregion
+
+    // region Callbacks
+    // =============================================================================================
 
     public interface SyncCallback {
 
         public void onSync();
     }
+
+    // endregion
 }

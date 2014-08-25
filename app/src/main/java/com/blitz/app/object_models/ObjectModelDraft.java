@@ -8,21 +8,21 @@ import com.blitz.app.utilities.rest.RestAPIObject;
 import com.blitz.app.utilities.rest.RestAPIOperation;
 
 /**
- * Created by mrkcsc on 7/27/14.
+ * Created by mrkcsc on 7/27/14. Copyright 2014 Blitz Studios
  */
 public class ObjectModelDraft {
 
-    //==============================================================================================
-    // Member Variables
-    //==============================================================================================
+    // region Member Variables
+    // =============================================================================================
 
     // The id of the draft, must be
     // provided to sync a draft.
     private String mDraftId;
 
-    //==============================================================================================
-    // Public Methods
-    //==============================================================================================
+    // endregion
+
+    // region Public Methods
+    // =============================================================================================
 
     /**
      * Set the draft id.
@@ -61,4 +61,6 @@ public class ObjectModelDraft {
         RestAPIClient.getAPI().draft_get
                 (mDraftId, RestAPICallback.create(operation));
     }
+
+    // endregion
 }

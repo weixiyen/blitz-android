@@ -11,13 +11,12 @@ import com.blitz.app.utilities.rest.RestAPIOperation;
 import com.google.gson.JsonObject;
 
 /**
- * Created by mrkcsc on 7/9/14.
+ * Created by mrkcsc on 7/9/14. Copyright 2014 Blitz Studios
  */
 public class ObjectModelUser {
 
-    //==============================================================================================
-    // Member Variables
-    //==============================================================================================
+    // region Member Variables
+    // =============================================================================================
 
     private String mUsername;
     private String mPassword;
@@ -29,9 +28,10 @@ public class ObjectModelUser {
     private int mLosses;
     private int mCash;
 
-    //==============================================================================================
-    // Public Methods
-    //==============================================================================================
+    // endregion
+
+    // region Public Methods
+    // =============================================================================================
 
     /**
      * Fetch username.
@@ -230,10 +230,13 @@ public class ObjectModelUser {
                 RestAPICallback.create(operation, true));
     }
 
-    //==============================================================================================
-    // Callbacks
-    //==============================================================================================
+    // endregion
+
+    // region Callbacks
+    // =============================================================================================
 
     public interface CallbackSignUp { public void onSignUp(); }
     public interface CallbackSignIn { public void onSignIn(); }
+
+    // endregion
 }

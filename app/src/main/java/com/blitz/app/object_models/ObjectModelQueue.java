@@ -9,13 +9,12 @@ import com.blitz.app.utilities.rest.RestAPIOperation;
 import com.google.gson.JsonObject;
 
 /**
- * Created by mrkcsc on 7/20/14.
+ * Created by mrkcsc on 7/20/14. Copyright 2014 Blitz Studios
  */
 public class ObjectModelQueue {
 
-    //==============================================================================================
-    // Member Variables
-    //==============================================================================================
+    // region Member Variables
+    // =============================================================================================
 
     // Current active draft key,
     // static to preserve state.
@@ -24,9 +23,10 @@ public class ObjectModelQueue {
     // Preferences model used to sync.
     private ObjectModelPreferences mModelPreferences;
 
-    //==============================================================================================
-    // Public Methods
-    //==============================================================================================
+    // endregion
+
+    // region Public Methods
+    // =============================================================================================
 
     /**
      * Add user to draft queue.  Requires a draft
@@ -138,4 +138,6 @@ public class ObjectModelQueue {
         RestAPIClient.getAPI().queue_put
                 (body, RestAPICallback.create(operation));
     }
+
+    // endregion
 }

@@ -9,13 +9,12 @@ import com.blitz.app.utilities.rest.RestAPIOperation;
 import com.google.gson.JsonObject;
 
 /**
- * Created by mrkcsc on 8/9/14.
+ * Created by mrkcsc on 8/9/14. Copyright 2014 Blitz Studios
  */
 public class ObjectModelAccessQueue {
 
-    //==============================================================================================
-    // Member Variables
-    //==============================================================================================
+    // region Member Variables
+    // =============================================================================================
 
     private String mDeviceId;
 
@@ -24,9 +23,10 @@ public class ObjectModelAccessQueue {
 
     private boolean mAccessGranted;
 
-    //==============================================================================================
-    // Public Methods
-    //==============================================================================================
+    // endregion
+
+    // region Public Methods
+    // =============================================================================================
 
     /**
      * Set the device id.
@@ -96,4 +96,6 @@ public class ObjectModelAccessQueue {
         // Make rest call for code.
         RestAPIClient.getAPI().access_queue_get(mDeviceId, RestAPICallback.create(operation));
     }
+
+    // endregion
 }

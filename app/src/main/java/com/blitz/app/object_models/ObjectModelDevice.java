@@ -10,13 +10,12 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
 /**
- * Created by mrkcsc on 8/10/14.
+ * Created by mrkcsc on 8/10/14. Copyright 2014 Blitz Studios
  */
 public class ObjectModelDevice {
 
-    //==============================================================================================
-    // Member Variables
-    //==============================================================================================
+    // region Member Variables
+    // =============================================================================================
 
     private String mId;
 
@@ -26,9 +25,10 @@ public class ObjectModelDevice {
     private Boolean mPushNotificationsEnabled = null;
     private String mPushNotificationToken = null;
 
-    //==============================================================================================
-    // Public Methods
-    //==============================================================================================
+    // endregion
+
+    // region Public Methods
+    // =============================================================================================
 
     /**
      * Get specified device given a device id.  The model
@@ -183,9 +183,10 @@ public class ObjectModelDevice {
         mUserId = userId;
     }
 
-    //==============================================================================================
-    // Private Methods
-    //==============================================================================================
+    // endregion
+
+    // region Private Methods
+    // =============================================================================================
 
     /**
      * Populate the model.  Should be called with
@@ -220,4 +221,6 @@ public class ObjectModelDevice {
             mUserId = element.getAsString();
         }
     }
+
+    // endregion
 }
