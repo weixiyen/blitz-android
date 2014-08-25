@@ -11,7 +11,7 @@ import com.blitz.app.utilities.authentication.AuthHelper;
 import com.google.gson.JsonObject;
 
 /**
- * Created by mrkcsc on 7/27/14.
+ * Created by mrkcsc on 7/27/14. Copyright 2014 Blitz Studios
  */
 public class ViewModelMain extends ViewModel {
 
@@ -96,8 +96,9 @@ public class ViewModelMain extends ViewModel {
                     @Override
                     public void messageReceived(MainScreen receivingClass, JsonObject message) {
 
-                        receivingClass.getViewModel(ViewModelMain.class)
+                        ((ViewModelMain)receivingClass.onFetchViewModel())
                                 .handleDraftAction(message);
+
                     }
                 }, "draftUserCallbackMainScreen");
     }

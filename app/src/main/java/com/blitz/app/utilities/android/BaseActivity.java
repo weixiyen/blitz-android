@@ -38,9 +38,6 @@ public class BaseActivity extends FragmentActivity implements ViewModel.ViewMode
     // Custom transitions flag.
     private CustomTransition mCustomTransitions = CustomTransition.T_STANDARD;
 
-    // View model for each activity.
-    private ViewModel mViewModel = null;
-
     // Are we going back an activity.
     private static boolean mGoingBack = false;
 
@@ -105,28 +102,8 @@ public class BaseActivity extends FragmentActivity implements ViewModel.ViewMode
         // Stop timer to detect entering the background.
         EnteredBackground.stopActivityTransitionTimer();
 
-        // Initialize the view model.
-        if (mViewModel != null) {
-            mViewModel.initialize(this, this);
-        }
-
         // Add current activity.
         CometAPIManager.configAddActivity(this);
-    }
-
-    /**
-     * Save this screens state.
-     *
-     * @param outState State values.
-     */
-    @Override
-    public void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-
-        // Save state.
-        if (mViewModel != null) {
-            mViewModel.saveInstanceState(outState);
-        }
     }
 
     /**
@@ -238,21 +215,6 @@ public class BaseActivity extends FragmentActivity implements ViewModel.ViewMode
         mCustomTransitions = customTransition;
     }
 
-
-    /**
-     * Fetch the view model, assumes user
-     * knows the type.
-     *
-     * @param type View model type.
-     * @param <T> Type.
-     *
-     * @return Casted view model.
-     */
-    public <T extends ViewModel> T getViewModel(Class<T> type) {
-
-        return type.cast(mViewModel);
-    }
-
     /**
      * Set if activity should adjust and resize
      * window when keyboard is open.
@@ -273,27 +235,6 @@ public class BaseActivity extends FragmentActivity implements ViewModel.ViewMode
     @SuppressWarnings("unused")
     public boolean getAdjustResize() {
         return mAdjustResize;
-    }
-
-    //==============================================================================================
-    // Protected Methods
-    //==============================================================================================
-
-    /**
-     * Set the view model (initializes it).
-     *
-     * @param viewModel View model instance.
-     * @param savedInstanceState Saved state.
-     */
-    protected void setViewModel(ViewModel viewModel, Bundle savedInstanceState) {
-
-        // Set the model.
-        mViewModel = viewModel;
-
-        // Restore state.
-        if (mViewModel != null) {
-            mViewModel.restoreInstanceState(savedInstanceState);
-        }
     }
 
     //==============================================================================================

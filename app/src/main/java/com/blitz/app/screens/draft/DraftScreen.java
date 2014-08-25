@@ -7,7 +7,8 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.blitz.app.R;
-import com.blitz.app.utilities.android.BaseActivity;
+import com.blitz.app.utilities.android.BaseActivityViewModel;
+import com.blitz.app.view_models.ViewModel;
 import com.blitz.app.view_models.ViewModelDraft;
 
 import butterknife.InjectView;
@@ -15,7 +16,7 @@ import butterknife.InjectView;
 /**
  * Created by mrkcsc on 7/27/14. Copyright 2014 Blitz Studios
  */
-public class DraftScreen extends BaseActivity implements ViewModelDraft.ViewModelDraftCallbacks {
+public class DraftScreen extends BaseActivityViewModel implements ViewModelDraft.ViewModelDraftCallbacks {
 
     @InjectView(R.id.draft_intro)   ViewGroup mDraftContainerIntro;
 
@@ -24,15 +25,15 @@ public class DraftScreen extends BaseActivity implements ViewModelDraft.ViewMode
     @InjectView(R.id.draft_loading) ProgressBar mDraftLoadingSpinner;
     @InjectView(R.id.draft_header) TextView mDraftHeader;
 
+    // View model object.
+    private ViewModelDraft mViewModelDraft;
+
     /**
      * When screen is created.
      */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        // Initialize the view model.
-        setViewModel(new ViewModelDraft(), savedInstanceState);
     }
 
     /**
@@ -53,6 +54,22 @@ public class DraftScreen extends BaseActivity implements ViewModelDraft.ViewMode
     protected void onPause() {
         super.onPause();
 
+    }
+
+    /**
+     * This method requests an instance of the view
+     * model to operate on for lifecycle callbacks.
+     *
+     * @return Instantiated instance of the view model
+     */
+    @Override
+    public ViewModel onFetchViewModel() {
+
+        if (mViewModelDraft == null) {
+            mViewModelDraft = new ViewModelDraft();
+        }
+
+        return mViewModelDraft;
     }
 
     //==============================================================================================

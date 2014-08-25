@@ -9,9 +9,10 @@ import com.blitz.app.R;
 import com.blitz.app.dialogs.info.DialogInfo;
 import com.blitz.app.dialogs.loading.DialogLoading;
 import com.blitz.app.screens.draft.DraftScreen;
-import com.blitz.app.utilities.android.BaseActivity;
+import com.blitz.app.utilities.android.BaseActivityViewModel;
 import com.blitz.app.utilities.android.BaseDialog;
 import com.blitz.app.utilities.viewpager.ViewPagerZoomOutTransformer;
+import com.blitz.app.view_models.ViewModel;
 import com.blitz.app.view_models.ViewModelMain;
 
 import java.util.List;
@@ -22,9 +23,9 @@ import butterknife.InjectViews;
 import butterknife.OnClick;
 
 /**
- * Created by mrkcsc on 7/14/14.
+ * Created by mrkcsc on 7/14/14. Copyright 2014 Blitz Studios
  */
-public class MainScreen extends BaseActivity implements ViewModelMain.ViewModelMainCallbacks {
+public class MainScreen extends BaseActivityViewModel implements ViewModelMain.ViewModelMainCallbacks {
 
     //==============================================================================================
     // Member Variables
@@ -43,6 +44,9 @@ public class MainScreen extends BaseActivity implements ViewModelMain.ViewModelM
     private DialogInfo mDialogInfo;
     private DialogLoading mDialogLoading;
 
+    // View model object.
+    private ViewModelMain mViewModelMain;
+
     //==============================================================================================
     // Overwritten Methods
     //==============================================================================================
@@ -55,9 +59,6 @@ public class MainScreen extends BaseActivity implements ViewModelMain.ViewModelM
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        // Initialize view model.
-        setViewModel(new ViewModelMain(), savedInstanceState);
 
         // Setup view pager.
         setViewPager();
@@ -76,6 +77,22 @@ public class MainScreen extends BaseActivity implements ViewModelMain.ViewModelM
 
             super.onBackPressed();
         }
+    }
+
+    /**
+     * This method requests an instance of the view
+     * model to operate on for lifecycle callbacks.
+     *
+     * @return Instantiated instance of the view model
+     */
+    @Override
+    public ViewModel onFetchViewModel() {
+
+        if (mViewModelMain == null) {
+            mViewModelMain = new ViewModelMain();
+        }
+
+        return mViewModelMain;
     }
 
     //==============================================================================================

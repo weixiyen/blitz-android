@@ -13,7 +13,7 @@ import butterknife.InjectView;
 import butterknife.OnClick;
 
 /**
- * Created by mrkcsc on 8/19/14.
+ * Created by mrkcsc on 8/19/14. Copyright 2014 Blitz Studios
  */
 public class SignUpScreenLegal extends BaseActivity {
 

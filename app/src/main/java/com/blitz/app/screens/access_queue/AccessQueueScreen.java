@@ -6,22 +6,23 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.blitz.app.R;
+import com.blitz.app.screens.access_code.AccessCodeScreen;
+import com.blitz.app.screens.sign_in.SignInScreen;
+import com.blitz.app.utilities.android.BaseActivityViewModel;
 import com.blitz.app.utilities.animations.AnimHelperSpringsGroup;
 import com.blitz.app.utilities.animations.AnimHelperSpringsPresets;
 import com.blitz.app.utilities.animations.AnimHelperSpringsView;
-import com.blitz.app.view_models.ViewModelAccessQueue;
-import com.blitz.app.screens.access_code.AccessCodeScreen;
-import com.blitz.app.screens.sign_in.SignInScreen;
-import com.blitz.app.utilities.android.BaseActivity;
 import com.blitz.app.utilities.authentication.AuthHelper;
+import com.blitz.app.view_models.ViewModel;
+import com.blitz.app.view_models.ViewModelAccessQueue;
 
 import butterknife.InjectView;
 import butterknife.OnClick;
 
 /**
- * Created by Miguel Gaeta on 6/28/14.
+ * Created by Miguel Gaeta on 6/28/14. Copyright 2014 Blitz Studios
  */
-public class AccessQueueScreen extends BaseActivity implements ViewModelAccessQueue.ViewModelAccessQueueCallbacks {
+public class AccessQueueScreen extends BaseActivityViewModel implements ViewModelAccessQueue.ViewModelAccessQueueCallbacks {
 
     //==============================================================================================
     // Member Variables
@@ -38,16 +39,19 @@ public class AccessQueueScreen extends BaseActivity implements ViewModelAccessQu
     // Page animations.
     private AnimHelperSpringsGroup mAnimations;
 
+    // View model object.
+    private ViewModelAccessQueue mViewModelAccessQueue;
+
     //==============================================================================================
     // Overwritten Methods
     //==============================================================================================
 
+    /**
+     * Setup spring animations.
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        // Set the view model.
-        setViewModel(new ViewModelAccessQueue(), savedInstanceState);
 
         // Create animation group.
         mAnimations = AnimHelperSpringsGroup.from(this);
@@ -66,6 +70,9 @@ public class AccessQueueScreen extends BaseActivity implements ViewModelAccessQu
                 .addHelperView(AnimHelperSpringsView.from(mQueuePlayer, AnimHelperSpringsPresets.SLIDE_RIGHT));
     }
 
+    /**
+     * Enable animations when resumed.
+     */
     @Override
     protected void onResume() {
         super.onResume();
@@ -73,11 +80,30 @@ public class AccessQueueScreen extends BaseActivity implements ViewModelAccessQu
         mAnimations.enable();
     }
 
+    /**
+     * Disable animations when paused.
+     */
     @Override
     protected void onPause() {
         super.onPause();
 
         mAnimations.disable();
+    }
+
+    /**
+     * This method requests an instance of the view
+     * model to operate on for lifecycle callbacks.
+     *
+     * @return Instantiated instance of the view model
+     */
+    @Override
+    public ViewModel onFetchViewModel() {
+
+        if (mViewModelAccessQueue == null) {
+            mViewModelAccessQueue = new ViewModelAccessQueue();
+        }
+
+        return mViewModelAccessQueue;
     }
 
     //==============================================================================================
