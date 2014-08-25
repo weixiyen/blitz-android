@@ -61,7 +61,7 @@ public class DraftScreen extends BaseActivity implements ViewModelDraft.ViewMode
         mAnimations = AnimHelperSpringsGroup.from(this);
 
         // Containers smash.
-        mAnimations.createHelper(20, 5)
+        mAnimations.createHelper(20, 4)
                 .addHelperView(AnimHelperSpringsView.from(mDraftIntroContainerLeft, AnimHelperSpringsPresets.SLIDE_RIGHT))
                 .addHelperView(AnimHelperSpringsView.from(mDraftIntroContainerRight, AnimHelperSpringsPresets.SLIDE_LEFT));
 
@@ -130,6 +130,8 @@ public class DraftScreen extends BaseActivity implements ViewModelDraft.ViewMode
 
     @Override
     public void onDraftingStarted() {
+
+
 
         // Hide the intro UI.
         mDraftIntroContainer.setVisibility(View.GONE);
