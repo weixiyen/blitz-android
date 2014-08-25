@@ -12,7 +12,7 @@ import com.blitz.app.utilities.android.BaseWebView;
 import butterknife.InjectView;
 
 /**
- * Created by mrkcsc on 8/14/14.
+ * Created by mrkcsc on 8/14/14. Copyright 2014 Blitz Studios
  */
 public class WebScreen extends BaseActivity {
 

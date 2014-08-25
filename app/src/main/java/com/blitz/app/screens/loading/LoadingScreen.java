@@ -13,7 +13,7 @@ import com.blitz.app.utilities.gcm.GcmRegistrationHelper;
 import com.blitz.app.utilities.sound.SoundHelper;
 
 /**
- * Created by Miguel Gaeta on 6/28/14.
+ * Created by Miguel Gaeta on 6/28/14. Copyright 2014 Blitz Studios
  */
 public class LoadingScreen extends BaseActivity {
 
