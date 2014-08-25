@@ -15,16 +15,16 @@ import com.google.gson.JsonObject;
  */
 public class ViewModelMain extends ViewModel {
 
-    //==============================================================================================
-    // Member Variables
-    //==============================================================================================
+    // region Member Variables
+    // =============================================================================================
 
     // Queue model.
     private ObjectModelQueue mModelQueue;
 
-    //==============================================================================================
-    // Overwritten Methods
-    //==============================================================================================
+    // endregion
+
+    // region Overwritten Methods
+    // =============================================================================================
 
     /**
      * Setup comet.
@@ -40,9 +40,10 @@ public class ViewModelMain extends ViewModel {
         setupCometCallbacks();
     }
 
-    //==============================================================================================
-    // Public Methods
-    //==============================================================================================
+    // endregion
+
+    // region Public Methods
+    // =============================================================================================
 
     /**
      * Leave the draft queue.
@@ -71,9 +72,10 @@ public class ViewModelMain extends ViewModel {
         });
     }
 
-    //==============================================================================================
-    // Private Methods
-    //==============================================================================================
+    // endregion
+
+    // region Private Methods
+    // =============================================================================================
 
     /**
      * Setup callbacks for the draft
@@ -169,9 +171,10 @@ public class ViewModelMain extends ViewModel {
         return mModelQueue;
     }
 
-    //==============================================================================================
-    // Callbacks Interface
-    //==============================================================================================
+    // endregion
+
+    // region Callbacks Interface
+    // =============================================================================================
 
     public interface ViewModelMainCallbacks extends ViewModelCallbacks {
 
@@ -180,4 +183,6 @@ public class ViewModelMain extends ViewModel {
         public void    onLeftQueue(ViewModelMain viewModel);
         public void   onEnterDraft(ViewModelMain viewModel);
     }
+
+    // endregion
 }

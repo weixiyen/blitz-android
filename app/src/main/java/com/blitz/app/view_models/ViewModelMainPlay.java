@@ -17,9 +17,8 @@ import com.google.gson.JsonObject;
  */
 public class ViewModelMainPlay extends ViewModel {
 
-    //==============================================================================================
-    // Member Variables
-    //==============================================================================================
+    // region Member Variables
+    // =============================================================================================
 
     // Queue timer variables.
     private int      mSecondsAtSuspension;
@@ -38,9 +37,10 @@ public class ViewModelMainPlay extends ViewModel {
     private static final String STATE_TIME_SUSPENDED = "timeSuspected";
     private static final String STATE_IN_QUEUE = "stateInQueue";
 
-    //==============================================================================================
-    // Overwritten Methods
-    //==============================================================================================
+    // endregion
+
+    // region Overwritten Methods
+    // =============================================================================================
 
     /**
      * Restore model variables and re-initialize
@@ -112,9 +112,10 @@ public class ViewModelMainPlay extends ViewModel {
         setupCometCallbacks();
     }
 
-    //==============================================================================================
-    // Public Methods
-    //==============================================================================================
+    // endregion
+
+    // region Public Methods
+    // =============================================================================================
 
     /**
      * Toggle the draft queue state (either join
@@ -141,9 +142,10 @@ public class ViewModelMainPlay extends ViewModel {
         }
     }
 
-    //==============================================================================================
-    // Private Methods
-    //==============================================================================================
+    // endregion
+
+    // region Private Methods
+    // =============================================================================================
 
     /**
      * Fetch and broadcast user information relevant
@@ -306,9 +308,10 @@ public class ViewModelMainPlay extends ViewModel {
         }
     }
 
-    //==============================================================================================
-    // Callbacks Interface
-    //==============================================================================================
+    // endregion
+
+    // region Callbacks Interface
+    // =============================================================================================
 
     public interface ViewModelMainPlayCallbacks extends ViewModelCallbacks {
 
@@ -321,4 +324,6 @@ public class ViewModelMainPlay extends ViewModel {
         public void onLosses(int losses);
         public void onCash(int cash);
     }
+
+    // endregion
 }

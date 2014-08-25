@@ -7,6 +7,9 @@ import android.app.Activity;
  */
 public class ViewModelDraft extends ViewModel {
 
+    // region Overwritten Methods
+    // =============================================================================================
+
     /**
      * Initialize the view model.
      */
@@ -18,9 +21,10 @@ public class ViewModelDraft extends ViewModel {
         getCallbacks(ViewModelDraftCallbacks.class).onDraftingStarted();
     }
 
-    //==============================================================================================
-    // Callbacks Interface
-    //==============================================================================================
+    // endregion
+
+    // region Callbacks Interface
+    // =============================================================================================
 
     /**
      * Drafting related callbacks.
@@ -29,4 +33,6 @@ public class ViewModelDraft extends ViewModel {
 
         public void onDraftingStarted();
     }
+
+    // endregion
 }

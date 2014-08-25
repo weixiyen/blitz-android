@@ -6,19 +6,19 @@ import com.blitz.app.object_models.ObjectModelAccessQueue;
 import com.blitz.app.utilities.gcm.GcmRegistrationHelper;
 
 /**
- * Created by mrkcsc on 8/9/14.
+ * Created by mrkcsc on 8/9/14. Copyright 2014 Blitz Studios
  */
 public class ViewModelAccessQueue extends ViewModel {
 
-    //==============================================================================================
-    // Member Variables
-    //==============================================================================================
+    // region Member Variables
+    // =============================================================================================
 
     private ObjectModelAccessQueue mModelAccessQueue;
 
-    //==============================================================================================
-    // Overwritten Methods
-    //==============================================================================================
+    // endregion
+
+    // region Overwritten Methods
+    // =============================================================================================
 
     /**
      * Initialize and sync the access queue numbers.
@@ -54,9 +54,10 @@ public class ViewModelAccessQueue extends ViewModel {
         });
     }
 
-    //==============================================================================================
-    // Callbacks Interface
-    //==============================================================================================
+    // endregion
+
+    // region Callbacks Interface
+    // =============================================================================================
 
     public interface ViewModelAccessQueueCallbacks extends ViewModelCallbacks {
 
@@ -64,4 +65,6 @@ public class ViewModelAccessQueue extends ViewModel {
         public void onPeopleBehind(int peopleBehind);
         public void onAccessGranted(boolean accessGranted);
     }
+
+    // endregion
 }
