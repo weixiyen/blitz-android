@@ -6,13 +6,12 @@ import android.os.Handler;
 import com.blitz.app.utilities.android.BaseDialog;
 
 /**
- * Created by Miguel Gaeta on 6/29/14.
+ * Created by Miguel Gaeta on 6/29/14. Copyright 2014 Blitz Studios
  */
 public class DialogLoading extends BaseDialog {
 
-    //==============================================================================================
-    // Member Variables
-    //==============================================================================================
+    // region Member Variables
+    // =============================================================================================
 
     // Constants.
     private static final long MINIMUM_LOADING_TIME = 1000;
@@ -21,9 +20,10 @@ public class DialogLoading extends BaseDialog {
     private Runnable mRunnable;
     private Handler mHandler;
 
-    //==============================================================================================
-    // Constructor
-    //==============================================================================================
+    // endregion
+
+    // region Constructor
+    // =============================================================================================
 
     /**
      * Setup state when constructed.
@@ -36,9 +36,10 @@ public class DialogLoading extends BaseDialog {
         setTouchable(true);
     }
 
-    //==============================================================================================
-    // Overwritten Methods
-    //==============================================================================================
+    // endregion
+
+    // region Overwritten Methods
+    // =============================================================================================
 
     /**
      * Perform some additional hide
@@ -54,9 +55,10 @@ public class DialogLoading extends BaseDialog {
         }
     }
 
-    //==============================================================================================
-    // Public Methods
-    //==============================================================================================
+    // endregion
+
+    // region Public Methods
+    // =============================================================================================
 
     /**
      * When this dialog is shown, at first it just blocks
@@ -79,4 +81,6 @@ public class DialogLoading extends BaseDialog {
         // Toggle loading view if displayed for long enough.
         mHandler.postDelayed(mRunnable, MINIMUM_LOADING_TIME);
     }
+
+    // endregion
 }

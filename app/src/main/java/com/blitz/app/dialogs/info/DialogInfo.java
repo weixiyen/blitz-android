@@ -17,9 +17,8 @@ import butterknife.InjectView;
  */
 public class DialogInfo extends BaseDialog {
 
-    //==============================================================================================
-    // Member Variables
-    //==============================================================================================
+    // region Member Variables
+    // =============================================================================================
 
     @InjectView(R.id.dialog_info_text)       TextView mInfoText;
     @InjectView(R.id.dialog_info_left_button)  Button mInfoLButton;
@@ -28,9 +27,10 @@ public class DialogInfo extends BaseDialog {
     private LinearLayout.LayoutParams mButtonLp;
     private LinearLayout.LayoutParams mButtonLpSmall;
 
-    //==============================================================================================
-    // Constructor
-    //==============================================================================================
+    // endregion
+
+    // region Constructor
+    // =============================================================================================
 
     public DialogInfo(Activity activity) {
         super(activity);
@@ -54,9 +54,10 @@ public class DialogInfo extends BaseDialog {
         setDismissible(true);
     }
 
-    //==============================================================================================
-    // Public Methods
-    //==============================================================================================
+    // endregion
+
+    // region Public Methods
+    // =============================================================================================
 
     /**
      * Set info text of dialog.
@@ -120,9 +121,10 @@ public class DialogInfo extends BaseDialog {
         setButtonDimensions();
     }
 
-    //==============================================================================================
-    // Private Methods
-    //==============================================================================================
+    // endregion
+
+    // region Private Methods
+    // =============================================================================================
 
     /**
      * Based on current visibility status, set buttons to either
@@ -150,4 +152,6 @@ public class DialogInfo extends BaseDialog {
             mInfoRButton.setLayoutParams(mButtonLp);
         }
     }
+
+    // endregion
 }

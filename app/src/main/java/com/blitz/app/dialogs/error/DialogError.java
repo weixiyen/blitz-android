@@ -13,19 +13,19 @@ import butterknife.InjectView;
 import butterknife.OnClick;
 
 /**
- * Created by mrkcsc on 7/6/14.
+ * Created by mrkcsc on 7/6/14. Copyright 2014 Blitz Studios
  */
 public class DialogError extends BaseDialog {
 
-    //==============================================================================================
-    // Member Variables
-    //==============================================================================================
+    // region Member Variables
+    // =============================================================================================
 
     @InjectView(R.id.dialog_error_message) TextView mDialogErrorMessage;
 
-    //==============================================================================================
-    // Constructors
-    //==============================================================================================
+    // endregion
+
+    // region Constructors
+    // =============================================================================================
 
     /**
      * Default constructor.  Sets up a dialog
@@ -40,9 +40,10 @@ public class DialogError extends BaseDialog {
         setDismissible(true);
     }
 
-    //==============================================================================================
-    // Public Methods
-    //==============================================================================================
+    // endregion
+
+    // region Public Methods
+    // =============================================================================================
 
     /**
      * Add to default dialog show and also provide
@@ -75,9 +76,10 @@ public class DialogError extends BaseDialog {
         }
     }
 
-    //==============================================================================================
-    // Click Methods
-    //==============================================================================================
+    // endregion
+
+    // region Click Methods
+    // =============================================================================================
 
     /**
      * Dismiss error dialog on user press.
@@ -87,4 +89,6 @@ public class DialogError extends BaseDialog {
 
         hide(null);
     }
+
+    // endregion
 }

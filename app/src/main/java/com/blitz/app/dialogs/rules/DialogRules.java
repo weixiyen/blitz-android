@@ -12,7 +12,7 @@ import java.util.List;
 import butterknife.InjectView;
 
 /**
- * Created by mrkcsc on 8/17/14.
+ * Created by mrkcsc on 8/17/14. Copyright 2014 Blitz Studios
  */
 public class DialogRules extends BaseDialogFragment {
 
