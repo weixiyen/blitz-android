@@ -11,6 +11,7 @@
     tools:ignore="ButtonStyle,UnusedAttribute">
 
     <RelativeLayout
+        android:id="@+id/draft_intro_container_left"
         android:layout_width="@dimen/helmet_size"
         android:layout_height="wrap_content"
         android:layout_marginBottom="25dp">
@@ -90,21 +91,22 @@
     </RelativeLayout>
 
     <me.grantland.widget.AutofitTextView
-        android:id="@+id/draft_header"
+        android:id="@+id/draft_intro_container_vs"
         style="@style/TextViewStyle"
         fontPath="@string/app_font_sports"
         android:layout_width="40dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="15dp"
-        android:alpha=".75"
         android:gravity="center"
         android:singleLine="true"
         android:text="@string/vs"
         android:textAllCaps="true"
-        android:textColor="@color/text_color_light"
-        android:textSize="28sp"/>
+        android:textColor="#c1c5cb"
+        android:textSize="28sp"
+        android:visibility="invisible"/>
 
     <RelativeLayout
+        android:id="@+id/draft_intro_container_right"
         android:layout_width="@dimen/helmet_size"
         android:layout_height="wrap_content"
         android:layout_marginBottom="25dp">
