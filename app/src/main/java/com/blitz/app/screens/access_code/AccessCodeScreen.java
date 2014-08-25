@@ -6,19 +6,19 @@ import android.widget.EditText;
 
 import com.blitz.app.R;
 import com.blitz.app.object_models.ObjectModelCode;
+import com.blitz.app.utilities.android.BaseActivity;
 import com.blitz.app.utilities.animations.AnimHelperSpringsGroup;
 import com.blitz.app.utilities.animations.AnimHelperSpringsPresets;
 import com.blitz.app.utilities.animations.AnimHelperSpringsView;
-import com.blitz.app.utilities.rest.RestAPIOperation;
-import com.blitz.app.utilities.android.BaseActivity;
 import com.blitz.app.utilities.authentication.AuthHelper;
 import com.blitz.app.utilities.keyboard.KeyboardUtility;
+import com.blitz.app.utilities.rest.RestAPIOperation;
 
 import butterknife.InjectView;
 import butterknife.OnClick;
 
 /**
- * Created by Miguel Gaeta on 6/28/14.
+ * Created by Miguel Gaeta on 6/28/14. Copyright 2014 Blitz Studios
  */
 public class AccessCodeScreen extends BaseActivity {
 
@@ -34,7 +34,7 @@ public class AccessCodeScreen extends BaseActivity {
     // Page animations.
     private AnimHelperSpringsGroup mAnimations;
 
-    // View model.
+    // Model.
     private ObjectModelCode mObjectModelCode;
 
     //==============================================================================================
