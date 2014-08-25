@@ -7,7 +7,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.blitz.app.R;
-import com.blitz.app.utilities.android.BaseActivityViewModel;
+import com.blitz.app.utilities.android.BaseActivity;
 import com.blitz.app.view_models.ViewModel;
 import com.blitz.app.view_models.ViewModelDraft;
 
@@ -16,7 +16,7 @@ import butterknife.InjectView;
 /**
  * Created by mrkcsc on 7/27/14. Copyright 2014 Blitz Studios
  */
-public class DraftScreen extends BaseActivityViewModel implements ViewModelDraft.ViewModelDraftCallbacks {
+public class DraftScreen extends BaseActivity implements ViewModelDraft.ViewModelDraftCallbacks {
 
     @InjectView(R.id.draft_intro)   ViewGroup mDraftContainerIntro;
 

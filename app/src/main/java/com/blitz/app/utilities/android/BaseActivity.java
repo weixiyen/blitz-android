@@ -22,7 +22,7 @@ import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 /**
  * Shared base functionality across all activities.
  */
-public class BaseActivity extends FragmentActivity implements ViewModel.ViewModelCallbacks {
+public class BaseActivity extends FragmentActivity {
 
     //==============================================================================================
     // Member Variables
@@ -69,6 +69,11 @@ public class BaseActivity extends FragmentActivity implements ViewModel.ViewMode
 
         // Use reflection to fetch the associated view resource id and set content view.
         setContentView(ReflectionHelper.getResourceId(underscoredClassName, R.layout.class));
+
+        // Restore view model state.
+        if (getViewModel() != null) {
+            getViewModel().restoreInstanceState(savedInstanceState);
+        }
     }
 
     /**
@@ -89,6 +94,11 @@ public class BaseActivity extends FragmentActivity implements ViewModel.ViewMode
     @Override
     protected void onResume() {
         super.onResume();
+
+        // Initialize view model.
+        if (getViewModel() != null) {
+            getViewModel().initialize(this, (ViewModel.ViewModelCallbacks)this);
+        }
 
         if (mGoingBack) {
             mGoingBack = false;
@@ -162,6 +172,21 @@ public class BaseActivity extends FragmentActivity implements ViewModel.ViewMode
 
         // Now going back.
         mGoingBack = true;
+    }
+
+    /**
+     * Save the instance state of the model.
+     *
+     * @param outState State values.
+     */
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+
+        // Save view model state.
+        if (getViewModel() != null) {
+            getViewModel().saveInstanceState(outState);
+        }
     }
 
     //==============================================================================================
@@ -270,5 +295,23 @@ public class BaseActivity extends FragmentActivity implements ViewModel.ViewMode
                         entering ? R.anim.activity_slide_up_open_out : R.anim.activity_slide_up_close_out);
                 break;
         }
+    }
+
+    /**
+     * Attempts to fetch the associated instance
+     * of the view model for lifecycle callbacks.
+     *
+     * @return View model or null if not found.
+     */
+    private ViewModel getViewModel() {
+
+        // If we implement view model callbacks.
+        if (this instanceof ViewModel.ViewModelCallbacks) {
+
+            // That means we can fetch the view model.
+            return ((ViewModel.ViewModelCallbacks)this).onFetchViewModel();
+        }
+
+        return null;
     }
 }

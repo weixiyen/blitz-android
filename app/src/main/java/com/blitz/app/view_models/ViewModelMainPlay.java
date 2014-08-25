@@ -13,7 +13,7 @@ import com.blitz.app.utilities.comet.CometAPIManager;
 import com.google.gson.JsonObject;
 
 /**
- * Created by Miguel on 7/26/2014.
+ * Created by Miguel on 7/26/2014. Copyright 2014 Blitz Studios
  */
 public class ViewModelMainPlay extends ViewModel {
 
@@ -228,7 +228,7 @@ public class ViewModelMainPlay extends ViewModel {
                     public void messageReceived(MainScreenFragmentPlay receivingClass, JsonObject message) {
 
                         // Handle the action.
-                        receivingClass.getViewModel(ViewModelMainPlay.class)
+                        ((ViewModelMainPlay)receivingClass.onFetchViewModel())
                                 .handleDraftAction(receivingClass, message);
                     }
                 }, "draftUserCallback");
@@ -248,7 +248,7 @@ public class ViewModelMainPlay extends ViewModel {
         // If left the queue or entered the draft.
         if (action.equals("left_queue") || action.equals("enter_draft")) {
 
-            receivingClass.getViewModel(ViewModelMainPlay.class)
+            ((ViewModelMainPlay)receivingClass.onFetchViewModel())
                     .showQueueContainer(false, true);
         }
     }

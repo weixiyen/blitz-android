@@ -83,5 +83,12 @@ public abstract class ViewModel {
      */
     public interface ViewModelCallbacks {
 
+        /**
+         * This method requests an instance of the view
+         * model to operate on for lifecycle callbacks.
+         *
+         * @return Instantiated instance of the view model
+         */
+        public abstract ViewModel onFetchViewModel();
     }
 }

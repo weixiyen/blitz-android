@@ -9,7 +9,7 @@ import com.blitz.app.R;
 import com.blitz.app.dialogs.info.DialogInfo;
 import com.blitz.app.dialogs.loading.DialogLoading;
 import com.blitz.app.screens.draft.DraftScreen;
-import com.blitz.app.utilities.android.BaseActivityViewModel;
+import com.blitz.app.utilities.android.BaseActivity;
 import com.blitz.app.utilities.android.BaseDialog;
 import com.blitz.app.utilities.viewpager.ViewPagerZoomOutTransformer;
 import com.blitz.app.view_models.ViewModel;
@@ -25,7 +25,7 @@ import butterknife.OnClick;
 /**
  * Created by mrkcsc on 7/14/14. Copyright 2014 Blitz Studios
  */
-public class MainScreen extends BaseActivityViewModel implements ViewModelMain.ViewModelMainCallbacks {
+public class MainScreen extends BaseActivity implements ViewModelMain.ViewModelMainCallbacks {
 
     //==============================================================================================
     // Member Variables

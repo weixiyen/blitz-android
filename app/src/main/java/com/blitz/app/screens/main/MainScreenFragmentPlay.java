@@ -13,13 +13,14 @@ import com.blitz.app.dialogs.info.DialogInfo;
 import com.blitz.app.dialogs.rules.DialogRules;
 import com.blitz.app.utilities.android.BaseFragment;
 import com.blitz.app.utilities.rest.RestAPIOperation;
+import com.blitz.app.view_models.ViewModel;
 import com.blitz.app.view_models.ViewModelMainPlay;
 
 import butterknife.InjectView;
 import butterknife.OnClick;
 
 /**
- * Created by mrkcsc on 7/14/14.
+ * Created by mrkcsc on 7/14/14. Copyright 2014 Blitz Studios
  */
 public class MainScreenFragmentPlay extends BaseFragment implements ViewModelMainPlay.ViewModelMainPlayCallbacks {
 
@@ -42,6 +43,9 @@ public class MainScreenFragmentPlay extends BaseFragment implements ViewModelMai
     @InjectView(R.id.main_play_stats_wins)     TextView mStatsWins;
     @InjectView(R.id.main_play_stats_losses)   TextView mStatsLosses;
 
+    // View model object.
+    private ViewModelMainPlay mViewModelMainPlay;
+
     //==============================================================================================
     // Overwritten Methods
     //==============================================================================================
@@ -55,11 +59,24 @@ public class MainScreenFragmentPlay extends BaseFragment implements ViewModelMai
     protected void onCreateView(Bundle savedInstanceState) {
         super.onCreateView(savedInstanceState);
 
-        // Initialize view model.
-        setViewModel(new ViewModelMainPlay(), savedInstanceState);
-
         // Spin baby.
         setupSpinningPlayButton();
+    }
+
+    /**
+     * This method requests an instance of the view
+     * model to operate on for lifecycle callbacks.
+     *
+     * @return Instantiated instance of the view model
+     */
+    @Override
+    public ViewModel onFetchViewModel() {
+
+        if (mViewModelMainPlay == null) {
+            mViewModelMainPlay = new ViewModelMainPlay();
+        }
+
+        return mViewModelMainPlay;
     }
 
     //==============================================================================================
@@ -204,7 +221,7 @@ public class MainScreenFragmentPlay extends BaseFragment implements ViewModelMai
         }
 
         // Toggle the queue.
-        getViewModel(ViewModelMainPlay.class).toggleQueue();
+        ((ViewModelMainPlay)onFetchViewModel()).toggleQueue();
     }
 
     /**

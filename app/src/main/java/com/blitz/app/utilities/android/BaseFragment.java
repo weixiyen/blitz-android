@@ -18,18 +18,20 @@ import butterknife.ButterKnife;
 /**
  * Shared base functionality across all fragments.
  */
-public class BaseFragment extends Fragment implements ViewModel.ViewModelCallbacks {
+public class BaseFragment extends Fragment {
 
     //==============================================================================================
     // Member Variables
     //==============================================================================================
 
+    // Content view of the fragment.
     private View mContentView;
-    private ViewGroup mContainer;
-    private LayoutInflater mInflater;
 
-    // View model for each fragment.
-    private ViewModel mViewModel = null;
+    // Parent container.
+    private ViewGroup mContainer;
+
+    // Layout inflater.
+    private LayoutInflater mInflater;
 
     //==============================================================================================
     // Overwritten Methods
@@ -62,6 +64,11 @@ public class BaseFragment extends Fragment implements ViewModel.ViewModelCallbac
 
         // Call simpler version of create view.
         onCreateView(savedInstanceState);
+
+        // Restore view model state.
+        if (getViewModel() != null) {
+            getViewModel().restoreInstanceState(savedInstanceState);
+        }
 
         return mContentView;
     }
@@ -101,9 +108,9 @@ public class BaseFragment extends Fragment implements ViewModel.ViewModelCallbac
     public void onResume () {
         super.onResume();
 
-        // Initialize the view model.
-        if (mViewModel != null) {
-            mViewModel.initialize(getActivity(), this);
+        // Initialize view model.
+        if (getViewModel() != null) {
+            getViewModel().initialize(getActivity(), (ViewModel.ViewModelCallbacks)this);
         }
 
         // Add a new fragment.
@@ -130,28 +137,46 @@ public class BaseFragment extends Fragment implements ViewModel.ViewModelCallbac
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
 
-        // Save state.
-        if (mViewModel != null) {
-            mViewModel.saveInstanceState(outState);
+        // Save view model state.
+        if (getViewModel() != null) {
+            getViewModel().saveInstanceState(outState);
         }
     }
 
     //==============================================================================================
-    // Public Methods
+    // Private Methods
     //==============================================================================================
 
     /**
-     * Fetch the view model, assumes user
-     * knows the type.
+     * Attempts to fetch the associated instance
+     * of the view model for lifecycle callbacks.
      *
-     * @param type View model type.
-     * @param <T> Type.
-     *
-     * @return Casted view model.
+     * @return View model or null if not found.
      */
-    public <T extends ViewModel> T getViewModel(Class<T> type) {
+    private ViewModel getViewModel() {
 
-        return type.cast(mViewModel);
+        // If we implement view model callbacks.
+        if (this instanceof ViewModel.ViewModelCallbacks) {
+
+            // That means we can fetch the view model.
+            return ((ViewModel.ViewModelCallbacks)this).onFetchViewModel();
+        }
+
+        return null;
+    }
+
+    /**
+     * Exposes activity set content view syntax into fragments.
+     *
+     * @param layoutResId Layout resource.
+     */
+    private void setContentView(int layoutResId) {
+
+        // Inflate and store the content view.
+        mContentView = mInflater.inflate(layoutResId, mContainer, false);
+
+        // Inject butter-knife views.
+        ButterKnife.inject(this, mContentView);
     }
 
     //==============================================================================================
@@ -159,29 +184,13 @@ public class BaseFragment extends Fragment implements ViewModel.ViewModelCallbac
     //==============================================================================================
 
     /**
-     * Set the view model (initializes it).
-     *
-     * @param viewModel View model instance.
-     * @param savedInstanceState Saved state.
-     */
-    protected void setViewModel(ViewModel viewModel, Bundle savedInstanceState) {
-
-        // Set the model.
-        mViewModel = viewModel;
-
-        // Restore state.
-        if (mViewModel != null) {
-            mViewModel.restoreInstanceState(savedInstanceState);
-        }
-    }
-
-    /**
      * @see android.app.Fragment#startActivity(android.content.Intent)
      *
      * Call the activities version of this method.  This is done to
      * ensure that the proper custom transitions get applied.
      */
-    public void startActivity (Intent intent) {
+    @SuppressWarnings("unused")
+    public void startActivity(Intent intent) {
         getActivity().startActivity(intent);
     }
 
@@ -196,19 +205,5 @@ public class BaseFragment extends Fragment implements ViewModel.ViewModelCallbac
     @SuppressWarnings("unused")
     protected void onCreateView(Bundle savedInstanceState) {
 
-    }
-
-    /**
-     * Exposes activity set content view syntax into fragments.
-     *
-     * @param layoutResID Layout resource.
-     */
-    protected void setContentView (int layoutResID) {
-
-        // Inflate and store the content view.
-        mContentView = mInflater.inflate(layoutResID, mContainer, false);
-
-        // Inject butter-knife views.
-        ButterKnife.inject(this, mContentView);
     }
 }

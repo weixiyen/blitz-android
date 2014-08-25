@@ -8,7 +8,7 @@ import android.widget.TextView;
 import com.blitz.app.R;
 import com.blitz.app.screens.access_code.AccessCodeScreen;
 import com.blitz.app.screens.sign_in.SignInScreen;
-import com.blitz.app.utilities.android.BaseActivityViewModel;
+import com.blitz.app.utilities.android.BaseActivity;
 import com.blitz.app.utilities.animations.AnimHelperSpringsGroup;
 import com.blitz.app.utilities.animations.AnimHelperSpringsPresets;
 import com.blitz.app.utilities.animations.AnimHelperSpringsView;
@@ -22,7 +22,7 @@ import butterknife.OnClick;
 /**
  * Created by Miguel Gaeta on 6/28/14. Copyright 2014 Blitz Studios
  */
-public class AccessQueueScreen extends BaseActivityViewModel implements ViewModelAccessQueue.ViewModelAccessQueueCallbacks {
+public class AccessQueueScreen extends BaseActivity implements ViewModelAccessQueue.ViewModelAccessQueueCallbacks {
 
     //==============================================================================================
     // Member Variables
