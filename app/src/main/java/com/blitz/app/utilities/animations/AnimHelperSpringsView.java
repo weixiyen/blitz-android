@@ -6,7 +6,7 @@ import com.facebook.rebound.Spring;
 import com.facebook.rebound.SpringUtil;
 
 /**
- * Created by mrkcsc on 7/30/14.
+ * Created by mrkcsc on 7/30/14. Copyright 2014 Blitz Studios
  */
 public class AnimHelperSpringsView {
 
@@ -110,22 +110,42 @@ public class AnimHelperSpringsView {
         switch (mPreset) {
             case SLIDE_DOWN:
                 mTranslationYFrom = -(mViewTop + mViewHeight + OFF_SCREEN_PADDING);
-                mTranslationYTo = 0;
+                mTranslationYTo   = 0;
+                mTranslateY = true;
+                break;
+            case SLIDE_DOWN_REVERSED:
+                mTranslationYFrom = 0;
+                mTranslationYTo   = -(mViewTop + mViewHeight + OFF_SCREEN_PADDING);
                 mTranslateY = true;
                 break;
             case SLIDE_UP:
-                mTranslationYFrom =  mWindowHeight - mViewTop;
-                mTranslationYTo = 0;
+                mTranslationYFrom = mWindowHeight - mViewTop;
+                mTranslationYTo   = 0;
+                mTranslateY = true;
+                break;
+            case SLIDE_UP_REVERSED:
+                mTranslationYFrom = 0;
+                mTranslationYTo   = mWindowHeight - mViewTop;
                 mTranslateY = true;
                 break;
             case SLIDE_RIGHT:
                 mTranslationXFrom = -(mViewLeft + mViewWidth + OFF_SCREEN_PADDING);
-                mTranslationXTo = 0;
+                mTranslationXTo   = 0;
+                mTranslateX = true;
+                break;
+            case SLIDE_RIGHT_REVERSED:
+                mTranslationXFrom = 0;
+                mTranslationXTo   = -(mViewLeft + mViewWidth + OFF_SCREEN_PADDING);
                 mTranslateX = true;
                 break;
             case SLIDE_LEFT:
                 mTranslationXFrom = mWindowWidth - mViewLeft;
-                mTranslationXTo = 0;
+                mTranslationXTo   = 0;
+                mTranslateX = true;
+                break;
+            case SLIDE_LEFT_REVERSED:
+                mTranslationXFrom = 0;
+                mTranslationXTo   = mWindowWidth - mViewLeft;
                 mTranslateX = true;
                 break;
         }
