@@ -5,7 +5,7 @@ import android.app.Activity;
 import java.util.ArrayList;
 
 /**
- * Created by Miguel on 7/30/2014.
+ * Created by Miguel on 7/30/2014. Copyright 2014 Blitz Studios
  */
 public class AnimHelperSpringsGroup {
 
@@ -114,6 +114,22 @@ public class AnimHelperSpringsGroup {
 
             animHelperSprings.disable();
         }
+    }
+
+    /**
+     * Disables and removes all helpers, as
+     * well as any associated callbacks.
+     */
+    public void removeHelpers() {
+
+        // Disable existing helpers.
+        disable();
+
+        // Remove completion listener.
+        mOnCompleteListener = null;
+
+        // Remove spring helpers.
+        mAnimHelperSpringsGroup.clear();
     }
 
     /**
