@@ -35,11 +35,13 @@
     <string name="players_behind_you">Players behind you</string>
     <string name="players_in_front">Players in front of you</string>
     <string name="play">Play</string>
+    <string name="play_coming_soon">Drafting is currently disabled on Android (early access program in place) - when drafting has been approved, you will receive a notification.  Thank you for downloading Blitz and stay tuned!</string>
     <string name="privacy_policy">Privacy Policy</string>
     <string name="push_notifications">Push Notifications</string>
     <string name="recent">Recent</string>
     <string name="reset">Reset</string>
     <string name="rules">Rules</string>
+    <string name="rules_coming_soon">Drafting rules coming soon, a notification will be sent when android drafting support is enabled.</string>
     <string name="send">Send</string>
     <string name="send_reminder">Send me a reminder when Blitz is ready</string>
     <string name="settings">Settings</string>

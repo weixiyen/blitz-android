@@ -10,8 +10,8 @@ import android.widget.TextView;
 
 import com.blitz.app.R;
 import com.blitz.app.dialogs.info.DialogInfo;
-import com.blitz.app.dialogs.rules.DialogRules;
 import com.blitz.app.utilities.android.BaseFragment;
+import com.blitz.app.utilities.app.AppConfig;
 import com.blitz.app.utilities.rest.RestAPIOperation;
 import com.blitz.app.view_models.ViewModel;
 import com.blitz.app.view_models.ViewModelMainPlay;
@@ -104,6 +104,29 @@ public class MainScreenFragmentPlay extends BaseFragment implements ViewModelMai
 
         // Start animating.
         objectAnimator.start();
+    }
+
+    /**
+     * Create a normal info dialog, one button, with
+     * the specified text.
+     */
+    private void createBasicInfoDialog(int dialogTextResourceId) {
+
+        // Create a new info dialog instance.
+        final DialogInfo dialogInfo = new DialogInfo(getActivity());
+
+        // Set coming soon text with standard OK button.
+        dialogInfo.setInfoText(dialogTextResourceId);
+        dialogInfo.setInfoLeftButton(R.string.ok, new Runnable() {
+
+            @Override
+            public void run() {
+                dialogInfo.hide(null);
+            }
+        });
+
+        // Show the dialog.
+        dialogInfo.show(true);
     }
 
     // endregion
@@ -223,8 +246,16 @@ public class MainScreenFragmentPlay extends BaseFragment implements ViewModelMai
             return;
         }
 
-        // Toggle the queue.
-        mViewModelMainPlay.toggleQueue();
+        if (AppConfig.isProduction()) {
+
+            // Drafting is coming soon.
+            createBasicInfoDialog(R.string.play_coming_soon);
+
+        } else {
+
+            // Toggle the queue.
+            mViewModelMainPlay.toggleQueue();
+        }
     }
 
     /**
@@ -233,21 +264,8 @@ public class MainScreenFragmentPlay extends BaseFragment implements ViewModelMai
     @OnClick(R.id.main_play_add_money) @SuppressWarnings("unused")
     public void addMoneyClicked() {
 
-        // Create a new info dialog instance.
-        final DialogInfo dialogInfo = new DialogInfo(getActivity());
-
-        // Set coming soon text with standard OK button.
-        dialogInfo.setInfoText(R.string.add_money_coming_soon);
-        dialogInfo.setInfoLeftButton(R.string.ok, new Runnable() {
-
-            @Override
-            public void run() {
-                dialogInfo.hide(null);
-            }
-        });
-
-        // Show the dialog.
-        dialogInfo.show(true);
+        // Add money coming soon.
+        createBasicInfoDialog(R.string.add_money_coming_soon);
     }
 
     /**
@@ -256,8 +274,8 @@ public class MainScreenFragmentPlay extends BaseFragment implements ViewModelMai
     @OnClick(R.id.main_play_rules) @SuppressWarnings("unused")
     public void rulesClicked() {
 
-        // TODO: Revise this.
-        new DialogRules().show(getChildFragmentManager(), "asdsdasdasddas");
+        // Rules coming soon.
+        createBasicInfoDialog(R.string.rules_coming_soon);
     }
 
     // endregion
