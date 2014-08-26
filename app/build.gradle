@@ -33,8 +33,11 @@ dependencies {
     compile 'com.squareup.okhttp:okhttp-urlconnection:2.0.0'
     compile 'com.squareup.okhttp:okhttp:2.0.0'
 
+    // Google json parsing library.
+    compile 'com.google.code.gson:gson:2.3'
+
     // Library for making REST calls.
-    compile 'com.squareup.retrofit:retrofit:1.6.1'
+    //compile 'com.squareup.retrofit:retrofit:1.6.1'
 
     // Library for dots under view pager.
     compile 'com.viewpagerindicator:library:2.4.1@aar'
@@ -50,9 +53,6 @@ dependencies {
 
     // Library for spring style animations.
     compile 'com.facebook.rebound:rebound:0.3.3'
-
-    // WebSocket library for real-time calls.
-    compile files('libs/Java-WebSocket-7c3b223.jar')
 
     // Used for push notifications.
     compile "com.google.android.gms:play-services:5.0.89"
