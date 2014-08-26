@@ -107,7 +107,8 @@ public class ObjectModelUser {
      * Get and populate the user model - requires a user
      * id which means the user must be logged in.
      */
-    public void getUser(Activity activity, final Runnable callback) {
+    @SuppressWarnings("unused")
+    public void getUser(Activity activity, final Runnable success, final Runnable failure) {
 
         // Rest operation.
         RestAPIOperation operation = new RestAPIOperation(activity) {
@@ -130,7 +131,25 @@ public class ObjectModelUser {
                     mUsername = result.get("username").getAsString();
                     mWins     = result.get("wins").getAsInt();
 
-                    callback.run();
+                    if (success != null) {
+                        success.run();
+                    }
+                }
+            }
+
+            /**
+             * Triggered when a model operation fails.
+             *
+             * @param logout Should also log out the user.
+             */
+            @Override
+            public void failure(boolean logout) {
+
+                if (failure != null) {
+                    failure.run();
+                } else {
+
+                    super.failure(logout);
                 }
             }
         };
@@ -141,6 +160,15 @@ public class ObjectModelUser {
         // Make api call to fetch user data.
         RestAPIClient.getAPI().user_get(userId,
                 RestAPICallback.create(operation));
+    }
+
+    /**
+     * Get and populate the user model - requires a user
+     * id which means the user must be logged in.
+     */
+    @SuppressWarnings("unused")
+    public void getUser(Activity activity, final Runnable success) {
+        getUser(activity, success, null);
     }
 
     /**
