@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.os.Handler;
 
+import com.blitz.app.dialogs.error.DialogError;
 import com.blitz.app.object_models.ObjectModelQueue;
 import com.blitz.app.object_models.ObjectModelUser;
 import com.blitz.app.screens.main.MainScreenFragmentPlay;
@@ -169,6 +170,15 @@ public class ViewModelMainPlay extends ViewModel {
                     callbacks.onLosses(mModelUser.getLosses());
                     callbacks.onCash(mModelUser.getCash());
                 }
+            }
+        }, new Runnable() {
+
+            @Override
+            public void run() {
+
+                // Show error dialog configured to
+                // log out user after user action.
+                new DialogError(mActivity).show(true, true);
             }
         });
     }
