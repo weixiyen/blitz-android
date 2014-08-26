@@ -11,6 +11,7 @@ import com.blitz.app.dialogs.loading.DialogLoading;
 import com.blitz.app.screens.draft.DraftScreen;
 import com.blitz.app.utilities.android.BaseActivity;
 import com.blitz.app.utilities.android.BaseDialog;
+import com.blitz.app.utilities.app.AppConfig;
 import com.blitz.app.utilities.viewpager.ViewPagerZoomOutTransformer;
 import com.blitz.app.view_models.ViewModel;
 import com.blitz.app.view_models.ViewModelMain;
@@ -37,7 +38,13 @@ public class MainScreen extends BaseActivity implements ViewModelMain.ViewModelM
     @InjectViews({
             R.id.main_nav_play_active,
             R.id.main_nav_recent_active,
-            R.id.main_nav_settings_active}) List<View> mNavActiveButtons;
+            R.id.main_nav_settings_active }) List<View> mNavActiveButtons;
+
+    // Navigation bar buttons.
+    @InjectViews({
+            R.id.main_nav_button_play,
+            R.id.main_nav_button_recent,
+            R.id.main_nav_button_settings }) List<View> mNavButtons;
 
     // Info/loading dialog.
     private DialogInfo mDialogInfo;
@@ -116,7 +123,9 @@ public class MainScreen extends BaseActivity implements ViewModelMain.ViewModelM
         // Add a custom page transition effect.
         mPager.setPageTransformer(true, new ViewPagerZoomOutTransformer());
 
+        // Setup the page change listener.
         mPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+
             @Override
             public void onPageScrolled(int i, float v, int i2) { }
 
@@ -130,6 +139,13 @@ public class MainScreen extends BaseActivity implements ViewModelMain.ViewModelM
                 selectNavItemWithTag(i);
             }
         });
+
+        if (AppConfig.isProduction()) {
+
+            // Hide everything but the play nav item.
+            mNavButtons.get(1).setVisibility(View.GONE);
+            mNavButtons.get(2).setVisibility(View.GONE);
+        }
     }
 
     /**

@@ -4,6 +4,8 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 
+import com.blitz.app.utilities.app.AppConfig;
+
 /**
  * Created by mrkcsc on 7/14/14. Copyright 2014 Blitz Studios
  */
@@ -13,15 +15,24 @@ public class MainScreenPagerAdapter extends FragmentStatePagerAdapter {
     // =============================================================================================
 
     // Title of each page.
-    private static final String[] PAGE_TITLES = new String[] { "Play", "Recent", "Settings" };
+    private static String[] PAGE_TITLES = new String[] { "Play", "Recent", "Settings" };
 
     // endregion
 
     // region Constructor
     // =============================================================================================
 
+    /**
+     * Initialize the adapter.
+     */
     public MainScreenPagerAdapter(FragmentManager fm) {
         super(fm);
+
+        // Only show play screen for now.
+        if (AppConfig.isProduction()) {
+
+            PAGE_TITLES = new String[] { "Play" };
+        }
     }
 
     // endregion
