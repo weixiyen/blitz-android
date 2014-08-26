@@ -7,7 +7,7 @@ import retrofit.RetrofitError;
 import retrofit.client.Response;
 
 /**
- * Created by Miguel Gaeta on 6/29/14.
+ * Created by Miguel Gaeta on 6/29/14. Copyright 2014 Blitz Studios
  */
 public class RestAPICallback<T> implements Callback<T> {
 
@@ -33,6 +33,7 @@ public class RestAPICallback<T> implements Callback<T> {
      */
     private RestAPICallback(RestAPIOperation operation, boolean isAuthentication) {
 
+        // Set the operation.
         mOperation = operation;
 
         // Start operation as soon as initialized.

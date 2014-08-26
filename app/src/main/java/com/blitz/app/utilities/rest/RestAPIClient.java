@@ -2,9 +2,10 @@ package com.blitz.app.utilities.rest;
 
 import com.blitz.app.utilities.app.AppDataObject;
 
-import retrofit.RequestInterceptor;
+import retrofit.RequestReader;
 import retrofit.RestAdapter;
 import retrofit.client.Header;
+import retrofit.client.Request;
 import retrofit.client.Response;
 
 public class RestAPIClient extends RestAPIClientBase {
@@ -13,8 +14,12 @@ public class RestAPIClient extends RestAPIClientBase {
     // Member Variables
     //==============================================================================================
 
-    // Singleton instance.
-    private static RestAPI api = null;
+    // Singleton instance for API and client.
+    private static RestAPI       mInstanceApi = null;
+    private static RestAPIClient mInstance;
+
+    // Intercept and read request URLs.
+    private RequestURLReader mRequestURLReader;
 
     //==============================================================================================
     // Protected Methods
@@ -32,7 +37,7 @@ public class RestAPIClient extends RestAPIClientBase {
         RestAdapter.Builder builder = super.getRestBuilder();
 
         // Intercept requests and add user cookie if available.
-        RequestInterceptor requestInterceptor = new RequestInterceptor() {
+        builder.setRequestInterceptor(new retrofit.RequestInterceptor() {
 
             @Override
             public void intercept(RequestFacade request) {
@@ -46,10 +51,23 @@ public class RestAPIClient extends RestAPIClientBase {
                     request.addHeader("Cookie", cookie);
                 }
             }
-        };
+        });
 
-        // Set interceptor.
-        builder.setRequestInterceptor(requestInterceptor);
+        // Emit request URL to readers.
+        builder.setRequestReader(new RequestReader() {
+
+            @Override
+            public void readRequest(Request request) {
+
+                if (request.getMethod().equals("GET")) {
+
+                    // Read url if reader exists.
+                    if (instance().getRequestReader() != null) {
+                        instance().getRequestReader().read(request.getUrl());
+                    }
+                }
+            }
+        });
 
         // Return builder.
         return builder;
@@ -58,6 +76,29 @@ public class RestAPIClient extends RestAPIClientBase {
     //==============================================================================================
     // Public Methods
     //==============================================================================================
+
+    /**
+     * Set a request reader for the client (there can
+     * only be one at a time) - for now.
+     *
+     * @param requestReader Reads the request.
+     */
+    @SuppressWarnings("unused")
+    public void setRequestReader(RequestURLReader requestReader) {
+
+        mRequestURLReader = requestReader;
+    }
+
+    /**
+     * Get the request reader via
+     * singleton instance.
+     *
+     * @return Request url reader.
+     */
+    public RequestURLReader getRequestReader() {
+
+        return mRequestURLReader;
+    }
 
     /**
      * Given a response, try to find and
@@ -96,20 +137,43 @@ public class RestAPIClient extends RestAPIClientBase {
     }
 
     /**
-     * Fetch singleton client.
-     *
-     * @return Singleton object.
+     * Fetch class singleton instance.
      */
-    public static RestAPI getAPI() {
+    public static RestAPIClient instance() {
 
-        if (api == null) {
+        if (mInstance == null) {
             synchronized (RestAPIClient.class) {
-                if (api == null) {
-                    api = new RestAPIClient().getRestAdapter().create(RestAPI.class);
+                if (mInstance == null) {
+                    mInstance = new RestAPIClient();
                 }
             }
         }
 
-        return api;
+        return mInstance;
+    }
+
+    /**
+     * Fetch singleton instance for api client.
+     */
+    public static RestAPI getAPI() {
+
+        if (mInstanceApi == null) {
+            synchronized (RestAPI.class) {
+                if (mInstanceApi == null) {
+                    mInstanceApi = new RestAPIClient().getRestAdapter().create(RestAPI.class);
+                }
+            }
+        }
+
+        return mInstanceApi;
+    }
+
+    //==============================================================================================
+    // Interfaces
+    //==============================================================================================
+
+    public interface RequestURLReader {
+
+        public void read(final String requestUrl);
     }
 }
