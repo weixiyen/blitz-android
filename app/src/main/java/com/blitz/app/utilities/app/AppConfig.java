@@ -43,7 +43,7 @@ public class AppConfig {
      */
     public static boolean isAppDataClearedOnLaunch() {
 
-        return false;
+        return true;
     }
 
     /**
