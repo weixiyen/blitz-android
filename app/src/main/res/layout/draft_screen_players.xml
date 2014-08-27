@@ -24,7 +24,7 @@
             android:layout_height="106dp"
             android:layout_marginLeft="-8dp"
             android:contentDescription="@string/empty_string"
-            android:src="@drawable/asset_draft_placeholder_player" />
+            android:src="@drawable/asset_draft_placeholder_player_0" />
 
         <me.grantland.widget.AutofitTextView
             fontPath="@string/app_font_helvetica_condensed_bold"
@@ -86,7 +86,7 @@
             android:layout_height="106dp"
             android:layout_marginRight="-8dp"
             android:contentDescription="@string/empty_string"
-            android:src="@drawable/asset_draft_placeholder_player" />
+            android:src="@drawable/asset_draft_placeholder_player_1" />
 
         <me.grantland.widget.AutofitTextView
             fontPath="@string/app_font_helvetica_condensed_bold"
@@ -147,7 +147,7 @@
             android:layout_height="106dp"
             android:layout_marginLeft="-8dp"
             android:contentDescription="@string/empty_string"
-            android:src="@drawable/asset_draft_placeholder_player" />
+            android:src="@drawable/asset_draft_placeholder_player_2" />
 
         <me.grantland.widget.AutofitTextView
             fontPath="@string/app_font_helvetica_condensed_bold"
@@ -209,7 +209,7 @@
             android:layout_height="106dp"
             android:layout_marginRight="-8dp"
             android:contentDescription="@string/empty_string"
-            android:src="@drawable/asset_draft_placeholder_player" />
+            android:src="@drawable/asset_draft_placeholder_player_3" />
 
         <me.grantland.widget.AutofitTextView
             fontPath="@string/app_font_helvetica_condensed_bold"

@@ -31,6 +31,9 @@ public class DraftScreen extends BaseActivity implements ViewModelDraft.ViewMode
     @InjectView(R.id.draft_intro_container_right) View mDraftIntroContainerRight;
     @InjectView(R.id.draft_intro_container_vs)    View mDraftIntroContainerVs;
 
+    @InjectView(R.id.draft_matchup_player_left)  View mDraftMatchupPlayerLeft;
+    @InjectView(R.id.draft_matchup_player_right) View mDraftMatchupPlayerRight;
+
     // Loading spinner for the draft.
     @InjectView(R.id.draft_loading) ProgressBar mDraftLoadingSpinner;
 
@@ -192,6 +195,11 @@ public class DraftScreen extends BaseActivity implements ViewModelDraft.ViewMode
         // Header flies down.
         mAnimations.createHelper(5, 5)
                 .addHelperView(AnimHelperSpringsView.from(mDraftHeader, AnimHelperSpringsPresets.SLIDE_DOWN));
+
+        // Containers smash.
+        mAnimations.createHelper(20, 5)
+                .addHelperView(AnimHelperSpringsView.from(mDraftMatchupPlayerLeft,  AnimHelperSpringsPresets.SLIDE_RIGHT))
+                .addHelperView(AnimHelperSpringsView.from(mDraftMatchupPlayerRight, AnimHelperSpringsPresets.SLIDE_LEFT));
 
         // Start it up.
         mAnimations.enable();
