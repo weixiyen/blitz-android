@@ -23,5 +23,8 @@ public enum AnimHelperSpringsPresets {
     // Slide from the right of screen
     // into the current position.
     SLIDE_LEFT,
-    SLIDE_LEFT_REVERSED
+    SLIDE_LEFT_REVERSED,
+
+    // Scale up from nothing.
+    SCALE_UP
 }

@@ -31,8 +31,15 @@ public class DraftScreen extends BaseActivity implements ViewModelDraft.ViewMode
     @InjectView(R.id.draft_intro_container_right) View mDraftIntroContainerRight;
     @InjectView(R.id.draft_intro_container_vs)    View mDraftIntroContainerVs;
 
+    // Matching containers.
     @InjectView(R.id.draft_matchup_player_left)  View mDraftMatchupPlayerLeft;
     @InjectView(R.id.draft_matchup_player_right) View mDraftMatchupPlayerRight;
+
+    // Player containers.
+    @InjectView(R.id.draft_player_tl) View mDraftPlayerTl;
+    @InjectView(R.id.draft_player_tr) View mDraftPlayerTr;
+    @InjectView(R.id.draft_player_bl) View mDraftPlayerBl;
+    @InjectView(R.id.draft_player_br) View mDraftPlayerBr;
 
     // Loading spinner for the draft.
     @InjectView(R.id.draft_loading) ProgressBar mDraftLoadingSpinner;
@@ -200,6 +207,13 @@ public class DraftScreen extends BaseActivity implements ViewModelDraft.ViewMode
         mAnimations.createHelper(20, 5)
                 .addHelperView(AnimHelperSpringsView.from(mDraftMatchupPlayerLeft,  AnimHelperSpringsPresets.SLIDE_RIGHT))
                 .addHelperView(AnimHelperSpringsView.from(mDraftMatchupPlayerRight, AnimHelperSpringsPresets.SLIDE_LEFT));
+
+        // Players pop in.
+        mAnimations.createHelper(20, 10)
+                .addHelperView(AnimHelperSpringsView.from(mDraftPlayerTl, AnimHelperSpringsPresets.SCALE_UP))
+                .addHelperView(AnimHelperSpringsView.from(mDraftPlayerTr, AnimHelperSpringsPresets.SCALE_UP))
+                .addHelperView(AnimHelperSpringsView.from(mDraftPlayerBl, AnimHelperSpringsPresets.SCALE_UP))
+                .addHelperView(AnimHelperSpringsView.from(mDraftPlayerBr, AnimHelperSpringsPresets.SCALE_UP));
 
         // Start it up.
         mAnimations.enable();

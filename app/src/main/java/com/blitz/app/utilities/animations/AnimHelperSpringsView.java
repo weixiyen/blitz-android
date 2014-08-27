@@ -30,6 +30,11 @@ public class AnimHelperSpringsView {
     private int     mTranslationXFrom;
     private int     mTranslationXTo;
 
+    // Zoom information.
+    private boolean mScale;
+    private float   mScaleFrom;
+    private float   mScaleTo;
+
     // Window dimensions.
     private int mWindowHeight;
     private int mWindowWidth;
@@ -167,6 +172,11 @@ public class AnimHelperSpringsView {
                 mTranslationXTo   = mWindowWidth - mViewLayout.mViewLeft;
                 mTranslateX = true;
                 break;
+            case SCALE_UP:
+                mScaleFrom = 0;
+                mScaleTo   = 1;
+                mScale = true;
+                break;
         }
 
         // Initialize the value.
@@ -259,6 +269,21 @@ public class AnimHelperSpringsView {
 
             // Apply the translation.
             mView.setTranslationX(xTranslation);
+        }
+
+        if (mScale) {
+
+            float scale = mScaleFrom;
+
+            if (spring != null) {
+
+                // Standard scale mapping.
+                scale = (float )SpringUtil.mapValueFromRangeToRange
+                        (spring.getCurrentValue(), 0, 1, mScaleFrom, mScaleTo);
+            }
+
+            mView.setScaleX(scale);
+            mView.setScaleY(scale);
         }
     }
 }
