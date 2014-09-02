@@ -65,7 +65,7 @@
             android:background="@drawable/drawable_queue_input"
             android:gravity="center_vertical"
             android:hint="@string/enter_access_code"
-            android:inputType="number"
+            android:inputType="textNoSuggestions|textVisiblePassword"
             android:maxLength="5"
             android:paddingLeft="70dp"
             android:paddingRight="70dp"
