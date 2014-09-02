@@ -70,7 +70,7 @@
                 android:background="@android:color/transparent"
                 android:gravity="center_vertical"
                 android:hint="@string/desired_username"
-                android:inputType="textPassword"
+                android:inputType="textNoSuggestions|textVisiblePassword"
                 android:paddingLeft="35dp"
                 android:paddingRight="35dp"
                 android:textColor="@color/text_color_light"
