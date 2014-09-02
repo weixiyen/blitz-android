@@ -84,8 +84,14 @@ public class ObjectModelAccessQueue {
                 if (jsonObject != null) {
 
                     mAccessGranted = jsonObject.get("access_granted").getAsBoolean();
-                    mPeopleAhead   = jsonObject.get("people_ahead").getAsInt();
-                    mPeopleBehind  = jsonObject.get("people_behind").getAsInt();
+
+                    if (jsonObject.get("people_ahead") != null) {
+                        mPeopleAhead = jsonObject.get("people_ahead").getAsInt();
+                    }
+
+                    if (jsonObject.get("people_behind") != null) {
+                        mPeopleBehind = jsonObject.get("people_behind").getAsInt();
+                    }
                 }
 
                 // Code redeemed.
