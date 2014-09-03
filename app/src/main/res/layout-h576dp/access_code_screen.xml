@@ -68,7 +68,7 @@
             android:gravity="center_vertical"
             android:hint="@string/enter_access_code"
             android:inputType="textNoSuggestions|textVisiblePassword"
-            android:maxLength="5"
+            android:maxLength="@integer/access_code_length"
             android:paddingLeft="70dp"
             android:paddingRight="70dp"
             android:textColor="@color/text_color_light"
