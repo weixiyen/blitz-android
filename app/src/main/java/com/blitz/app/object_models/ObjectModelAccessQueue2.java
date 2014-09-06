@@ -62,16 +62,19 @@ public class ObjectModelAccessQueue2 {
         return mAccessGranted;
     }
 
-    public static Observable<ObjectModelAccessQueue2> getObservable(String deviceId) {
+    // ReplaySubject with size=1 is similar to RACObservable. The current value will be
+    // reflected in all current and future subscribers.
+    private static final Subject<ObjectModelAccessQueue2, ObjectModelAccessQueue2> subject =
+            ReplaySubject.createWithSize(1);
 
-        // ReplaySubject with size=1 is similar to RACObservable. The current value will be
-        // reflected in all current and future subscribers.
-        final Subject<ObjectModelAccessQueue2, ObjectModelAccessQueue2> subject =
-                ReplaySubject.createWithSize(1);
+    public static final Observable<ObjectModelAccessQueue2> getObservable() {
+        return subject.asObservable();
+    }
 
-        // Make rest call for code.
+    public static Observable<ObjectModelAccessQueue2> sync(String deviceId) {
+
+        // Make rest call and forward result into subject
         RestAPIClient.getAPI().access_queue_get(deviceId, new Callback<JsonObject>() {
-
 
             @Override
             public void success(JsonObject jsonObject, Response response) {
@@ -87,10 +90,8 @@ public class ObjectModelAccessQueue2 {
             }
         });
 
-        return subject;
+        return subject.asObservable();
     }
-
-
 
     // endregion
 }
