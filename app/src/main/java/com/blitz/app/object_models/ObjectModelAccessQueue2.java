@@ -72,14 +72,15 @@ public class ObjectModelAccessQueue2 {
         return subject.asObservable();
     }
 
-    public static void sync(String deviceId, final Observer<Integer> playersBefore) {
+    public static void sync(String deviceId, final Observer<Integer> playersAhead, final Observer<Integer> playersBehind, final Observer<Boolean> accessGranted) {
         // Make rest call and forward result into subject
         RestAPIClient.getAPI().access_queue_get(deviceId, new Callback<JsonObject>() {
 
             @Override
             public void success(JsonObject jsonObject, Response response) {
-                playersBefore.onNext(
-                        jsonObject.get("people_ahead").getAsInt());
+                playersAhead.onNext(jsonObject.get("people_ahead").getAsInt());
+                playersBehind.onNext(jsonObject.get("people_behind").getAsInt());
+                accessGranted.onNext((jsonObject.get("access_granted").getAsBoolean()));
             }
 
             @Override

@@ -35,4 +35,16 @@ public class UIObserver {
         };
 
     }
+
+    public static abstract class DefaultObserver<T> implements Observer<T> {
+        @Override
+        public void onCompleted() {
+            throw new IllegalStateException("UI observers should never hit an end of stream");
+        }
+
+        @Override
+        public void onError(Throwable e) {
+            throw new RuntimeException(e);
+        }
+    }
 }

@@ -13,11 +13,13 @@ import com.blitz.app.utilities.animations.AnimHelperSpringsGroup;
 import com.blitz.app.utilities.animations.AnimHelperSpringsPresets;
 import com.blitz.app.utilities.animations.AnimHelperSpringsView;
 import com.blitz.app.utilities.authentication.AuthHelper;
+import com.blitz.app.utilities.ui.UIObserver;
 import com.blitz.app.view_models.ViewModel;
 import com.blitz.app.view_models.ViewModelAccessQueue;
 
 import butterknife.InjectView;
 import butterknife.OnClick;
+import rx.Observer;
 
 /**
  * Created by Miguel Gaeta on 6/28/14. Copyright 2014 Blitz Studios
@@ -34,6 +36,15 @@ public class AccessQueueScreen extends BaseActivity implements ViewModelAccessQu
 
     @InjectView(R.id.access_queue_people_ahead) TextView mQueuePeopleAhead;
     @InjectView(R.id.access_queue_people_behind) TextView mQueuePeopleBehind;
+
+    private Observer<Integer> peopleAheadObserver = UIObserver.textField(mQueuePeopleAhead);
+    private Observer<Integer> peopleBehindObserver = UIObserver.textField(mQueuePeopleBehind);
+    private Observer<Boolean> accessGrantedObserver = new UIObserver.DefaultObserver<Boolean>() {
+        @Override
+        public void onNext(Boolean aBoolean) {
+            AuthHelper.grantAccess(AccessQueueScreen.this);
+        }
+    };
 
     // Page animations.
     private AnimHelperSpringsGroup mAnimations;
@@ -52,6 +63,9 @@ public class AccessQueueScreen extends BaseActivity implements ViewModelAccessQu
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        mViewModelAccessQueue = new ViewModelAccessQueue();
+        mViewModelAccessQueue.subscribe(peopleAheadObserver, peopleBehindObserver, accessGrantedObserver);
 
         // Create animation group.
         mAnimations = AnimHelperSpringsGroup.from(this);
@@ -91,10 +105,7 @@ public class AccessQueueScreen extends BaseActivity implements ViewModelAccessQu
     }
 
     /**
-     * This method requests an instance of the view
-     * model to operate on for lifecycle callbacks.
-     *
-     * @return Instantiated instance of the view model
+     * (Obsolete) This method will be unnecessary because we will use Observable
      */
     @Override
     public ViewModel onFetchViewModel() {
