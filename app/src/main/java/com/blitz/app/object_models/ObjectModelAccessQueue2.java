@@ -12,7 +12,7 @@ import rx.subjects.ReplaySubject;
 import rx.subjects.Subject;
 
 /**
- * Created by mrkcsc on 8/9/14. Copyright 2014 Blitz Studios
+ * Created by Nate on 9/5/14. Copyright 2014 Blitz Studios
  */
 public class ObjectModelAccessQueue2 {
 
@@ -64,7 +64,10 @@ public class ObjectModelAccessQueue2 {
 
     public static Observable<ObjectModelAccessQueue2> getObservable(String deviceId) {
 
-        final Subject<ObjectModelAccessQueue2, ObjectModelAccessQueue2> subject = ReplaySubject.createWithSize(1);
+        // ReplaySubject with size=1 is similar to RACObservable. The current value will be
+        // reflected in all current and future subscribers.
+        final Subject<ObjectModelAccessQueue2, ObjectModelAccessQueue2> subject =
+                ReplaySubject.createWithSize(1);
 
         // Make rest call for code.
         RestAPIClient.getAPI().access_queue_get(deviceId, new Callback<JsonObject>() {
