@@ -8,6 +8,7 @@ import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
 import rx.Observable;
+import rx.Observer;
 import rx.subjects.ReplaySubject;
 import rx.subjects.Subject;
 
@@ -69,6 +70,23 @@ public class ObjectModelAccessQueue2 {
 
     public static final Observable<ObjectModelAccessQueue2> getObservable() {
         return subject.asObservable();
+    }
+
+    public static void sync(String deviceId, final Observer<Integer> playersBefore) {
+        // Make rest call and forward result into subject
+        RestAPIClient.getAPI().access_queue_get(deviceId, new Callback<JsonObject>() {
+
+            @Override
+            public void success(JsonObject jsonObject, Response response) {
+                playersBefore.onNext(
+                        jsonObject.get("people_ahead").getAsInt());
+            }
+
+            @Override
+            public void failure(RetrofitError retrofitError) {
+                LogHelper.log(retrofitError.toString());
+            }
+        });
     }
 
     public static Observable<ObjectModelAccessQueue2> sync(String deviceId) {
