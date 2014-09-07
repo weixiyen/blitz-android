@@ -3,15 +3,20 @@ package com.blitz.app.view_models;
 import android.app.Activity;
 import android.os.Bundle;
 import android.os.Handler;
+import android.widget.TextView;
 
-import com.blitz.app.dialogs.error.DialogError;
 import com.blitz.app.object_models.ObjectModelQueue;
-import com.blitz.app.object_models.ObjectModelUser;
+import com.blitz.app.object_models.ObjectModelUser2;
 import com.blitz.app.screens.main.MainScreenFragmentPlay;
 import com.blitz.app.utilities.app.AppDataObject;
 import com.blitz.app.utilities.comet.CometAPICallback;
 import com.blitz.app.utilities.comet.CometAPIManager;
 import com.google.gson.JsonObject;
+
+import rx.Observable;
+import rx.Observer;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 
 /**
  * Created by Miguel on 7/26/2014. Copyright 2014 Blitz Studios
@@ -29,7 +34,7 @@ public class ViewModelMainPlay extends ViewModel {
 
     // Object model.
     private ObjectModelQueue mModelQueue = new ObjectModelQueue();
-    private ObjectModelUser mModelUser = new ObjectModelUser();
+
 
     // Are we in queue.
     private boolean mInQueue;
@@ -87,6 +92,36 @@ public class ViewModelMainPlay extends ViewModel {
         return savedInstanceState;
     }
 
+    public void subscribe(final TextView userName, final TextView wins, final TextView losses,
+                          final TextView rating, final TextView cash) {
+
+        Observable<ObjectModelUser2> user = ObjectModelUser2.sync();
+
+        user.subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<ObjectModelUser2>() {
+                    @Override
+                    public void onCompleted() {
+                        // do nothing
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        e.printStackTrace();
+                    }
+
+                    @Override
+                    public void onNext(ObjectModelUser2 user) {
+                        userName.setText(user.getUsername());
+                        wins.setText(Integer.toString(user.getWins()));
+                        losses.setText(Integer.toString(user.getLosses()));
+                        rating.setText(Integer.toString(user.getRating()));
+                        cash.setText("You have $" + String.format("%.2f", user.getCash() / 100.0f));
+                    }
+                });
+
+    }
+
     /**
      * Initialize the view model.
      */
@@ -105,9 +140,6 @@ public class ViewModelMainPlay extends ViewModel {
 
         // Initialize container state.
         showQueueContainer(null, false);
-
-        // Fetch user info.
-        fetchUserInfo();
 
         // Setup comet.
         setupCometCallbacks();
@@ -147,41 +179,6 @@ public class ViewModelMainPlay extends ViewModel {
 
     // region Private Methods
     // =============================================================================================
-
-    /**
-     * Fetch and broadcast user information relevant
-     * to the play view model.
-     */
-    private void fetchUserInfo() {
-
-        // Fetch user object.
-        mModelUser.getUser(mActivity, new Runnable() {
-
-            @Override
-            public void run() {
-
-                // Fetch callbacks.
-                ViewModelMainPlayCallbacks callbacks = getCallbacks(ViewModelMainPlayCallbacks.class);
-
-                if (callbacks != null) {
-                    callbacks.onUsername(mModelUser.getUsername());
-                    callbacks.onRating(mModelUser.getRating());
-                    callbacks.onWins(mModelUser.getWins());
-                    callbacks.onLosses(mModelUser.getLosses());
-                    callbacks.onCash(mModelUser.getCash());
-                }
-            }
-        }, new Runnable() {
-
-            @Override
-            public void run() {
-
-                // Show error dialog configured to
-                // log out user after user action.
-                new DialogError(mActivity).show(true, true);
-            }
-        });
-    }
 
     /**
      * Show the queue container to either hidden or
@@ -253,6 +250,8 @@ public class ViewModelMainPlay extends ViewModel {
      * @param message Json message sent.
      */
     private void handleDraftAction(MainScreenFragmentPlay receivingClass, JsonObject message) {
+
+        if(message == null || message.get("action") == null) return;
 
         // Fetch sent action.
         String action = message.get("action").getAsString();
@@ -328,11 +327,6 @@ public class ViewModelMainPlay extends ViewModel {
         public void onQueueUp(boolean animate);
         public void onQueueCancel(boolean animate);
         public void onQueueTick(String secondsInQueue);
-        public void onUsername(String username);
-        public void onRating(int rating);
-        public void onWins(int wins);
-        public void onLosses(int losses);
-        public void onCash(int cash);
     }
 
     // endregion
