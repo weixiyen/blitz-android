@@ -1,14 +1,7 @@
 package com.blitz.app.object_models;
 
-import android.app.Activity;
-import android.widget.EditText;
-
 import com.blitz.app.utilities.authentication.AuthHelper;
-import com.blitz.app.utilities.rest.RestAPI;
-import com.blitz.app.utilities.rest.RestAPICallback;
 import com.blitz.app.utilities.rest.RestAPIClient;
-import com.blitz.app.utilities.rest.RestAPIObject;
-import com.blitz.app.utilities.rest.RestAPIOperation;
 import com.google.gson.JsonObject;
 
 import retrofit.Callback;
@@ -29,6 +22,7 @@ public class ObjectModelUser2 {
     // =============================================================================================
 
     private final String mUsername;
+    private String mAvatarId;
     private final int mRating;
     private final int mWins;
     private final int mLosses;
@@ -36,8 +30,9 @@ public class ObjectModelUser2 {
 
     // endregion
 
-    public ObjectModelUser2(String userName, int rating, int wins, int losses, int cash) {
+    public ObjectModelUser2(String userName, String avatarId, int rating, int wins, int losses, int cash) {
         mUsername = userName;
+        mAvatarId = avatarId;
         mRating = rating;
         mWins = wins;
         mLosses = losses;
@@ -46,6 +41,10 @@ public class ObjectModelUser2 {
 
     public String getUsername() {
         return mUsername;
+    }
+
+    public String getAvatarId() {
+        return mAvatarId;
     }
 
     public int getRating() {
@@ -84,6 +83,7 @@ public class ObjectModelUser2 {
 
                         subject.onNext(new ObjectModelUser2(
                                 result.get("username").getAsString(),
+                                result.get("avatar_id").getAsString(),
                                 result.get("rating").getAsInt(),
                                 result.get("wins").getAsInt(),
                                 result.get("losses").getAsInt(),
