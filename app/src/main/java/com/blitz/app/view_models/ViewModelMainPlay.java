@@ -3,6 +3,7 @@ package com.blitz.app.view_models;
 import android.app.Activity;
 import android.os.Bundle;
 import android.os.Handler;
+import android.widget.TextView;
 
 import com.blitz.app.object_models.ObjectModelQueue;
 import com.blitz.app.object_models.ObjectModelUser2;
@@ -91,8 +92,8 @@ public class ViewModelMainPlay extends ViewModel {
         return savedInstanceState;
     }
 
-    public void subscribe(final Observer<String> userName, final Observer<Integer> wins, final Observer<Integer> losses,
-                          final Observer<Integer> rating, final Observer<Integer> cash) {
+    public void subscribe(final TextView userName, final TextView wins, final TextView losses,
+                          final TextView rating, final TextView cash) {
 
         Observable<ObjectModelUser2> user = ObjectModelUser2.sync();
 
@@ -111,11 +112,11 @@ public class ViewModelMainPlay extends ViewModel {
 
                     @Override
                     public void onNext(ObjectModelUser2 user) {
-                        userName.onNext(user.getUsername());
-                        wins.onNext(user.getWins());
-                        losses.onNext(user.getLosses());
-                        rating.onNext(user.getRating());
-                        cash.onNext(user.getCash());
+                        userName.setText(user.getUsername());
+                        wins.setText(Integer.toString(user.getWins()));
+                        losses.setText(Integer.toString(user.getLosses()));
+                        rating.setText(Integer.toString(user.getRating()));
+                        cash.setText("You have $" + String.format("%.2f", user.getCash() / 100.0f));
                     }
                 });
 

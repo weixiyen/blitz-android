@@ -47,14 +47,6 @@ public class MainScreenFragmentPlay extends BaseFragment implements ViewModelMai
     // View model object.
     private ViewModelMainPlay mViewModelMainPlay;
 
-    // Observers for text views. Will be wired later when the view is created in onCreate(0
-    private Observer<String> mUserNameObserver;
-    private Observer<Integer> mWinsObserver;
-    private Observer<Integer> mLossesObserver;
-    private Observer<Integer> mRatingObserver;
-    private Observer<Integer> mCashObserver;
-
-
     // endregion
 
     // region Overwritten Methods
@@ -69,18 +61,11 @@ public class MainScreenFragmentPlay extends BaseFragment implements ViewModelMai
     protected void onCreateView(Bundle savedInstanceState) {
         super.onCreateView(savedInstanceState);
 
-        mUserNameObserver = UIObserver.textField(mStatsUserName);
-        mWinsObserver = UIObserver.textField(mStatsWins);
-        mLossesObserver = UIObserver.textField(mStatsLosses);
-        mRatingObserver = UIObserver.textField(mStatsRating);
-        mCashObserver = new UIObserver.DefaultObserver<Integer>() {
+        if (mViewModelMainPlay == null) {
+            mViewModelMainPlay = new ViewModelMainPlay();
+        }
 
-            @Override
-            public void onNext(Integer cash) {
-                // Set available cash, formatted.
-                mCashAvailable.setText("You have $" + String.format("%.2f", cash / 100.0f));
-            }
-        };
+        mViewModelMainPlay.subscribe(mStatsUserName, mStatsWins, mStatsLosses, mStatsRating, mCashAvailable);
 
         // Spin baby.
         setupSpinningPlayButton();
@@ -98,8 +83,6 @@ public class MainScreenFragmentPlay extends BaseFragment implements ViewModelMai
         if (mViewModelMainPlay == null) {
             mViewModelMainPlay = new ViewModelMainPlay();
         }
-
-        mViewModelMainPlay.subscribe(mUserNameObserver, mWinsObserver, mLossesObserver, mRatingObserver, mCashObserver);
 
         return mViewModelMainPlay;
     }
