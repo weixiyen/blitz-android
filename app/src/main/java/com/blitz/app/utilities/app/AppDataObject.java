@@ -3,7 +3,7 @@ package com.blitz.app.utilities.app;
 import java.util.HashMap;
 
 /**
- * Created by mrkcsc on 7/7/14.
+ * Created by mrkcsc on 7/7/14. Copyright 2014 Blitz Studios
  */
 public class AppDataObject {
 
@@ -32,9 +32,9 @@ public class AppDataObject {
     public static final AppData<Boolean> settingsSoundDisabled = AppData.bool("SETTINGS_SOUND");
 
     // GCM related information (specifically, the application version and device registration id).
-    public static final AppData<Integer> gcmAppVersion          = AppData.integer("GCM_APP_VERSION");
-    public static final AppData<String> gcmRegistrationId        = AppData.string("GCM_REGISTRATION_ID");
+    public static final AppData<Integer> gcmAppVersion            = AppData.integer("GCM_APP_VERSION");
+    public static final AppData<String> gcmRegistrationId         = AppData.string("GCM_REGISTRATION_ID");
     public static final AppData<Boolean> gcmRegistrationPersisted = AppData.bool("GCM_REGISTRATION_PERSISTED");
-    public static final AppData<String> gcmDeviceId              = AppData.string("GCM_DEVICE_ID");
+    public static final AppData<String> gcmDeviceId               = AppData.string("GCM_DEVICE_ID");
 
 }
