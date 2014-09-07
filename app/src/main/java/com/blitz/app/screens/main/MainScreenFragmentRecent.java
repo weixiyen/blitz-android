@@ -1,19 +1,32 @@
 package com.blitz.app.screens.main;
 
+import android.app.Activity;
+import android.content.Context;
+import android.content.res.ColorStateList;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.blitz.app.R;
 import com.blitz.app.utilities.android.BaseFragment;
+import com.blitz.app.view_models.MatchInfo;
+import com.blitz.app.view_models.ViewModel;
+import com.blitz.app.view_models.ViewModelMatches;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.InjectView;
 
 /**
  * Created by mrkcsc on 7/14/14. Copyright 2014 Blitz Studios
  */
-public class MainScreenFragmentRecent extends BaseFragment {
+public class MainScreenFragmentRecent extends BaseFragment implements ViewModelMatches.ViewModelMatchesCallbacks {
 
     // region Member Variables
     // =============================================================================================
@@ -22,11 +35,15 @@ public class MainScreenFragmentRecent extends BaseFragment {
     private static final int WEEKS_IN_SEASON = 17;
 
     @InjectView(R.id.main_recent_scrubber) ViewGroup mScrubber;
+    @InjectView(R.id.main_recent_list)     ListView mRecentMatches;
+
+    private ViewModelMatches mViewModel; // lazy loaded
 
     // endregion
 
     // region Overwritten Methods
     // =============================================================================================
+
 
     /**
      * Setup the recent matches UI.
@@ -36,6 +53,23 @@ public class MainScreenFragmentRecent extends BaseFragment {
         super.onCreateView(savedInstanceState);
 
         setupScrubber();
+    }
+
+    public void onMatches(List<MatchInfo> matches) {
+        final MatchInfoAdapter adapter = new MatchInfoAdapter(getActivity().getApplicationContext(),
+                matches, getActivity());
+
+        if(mRecentMatches != null) {
+            mRecentMatches.setAdapter(adapter);
+        }
+    }
+
+    // poor man's closure
+    private static abstract class WeekSettingListener implements View.OnClickListener {
+        final int mWeek;
+        WeekSettingListener(int week) {
+            mWeek = week;
+        }
     }
 
     /**
@@ -48,10 +82,32 @@ public class MainScreenFragmentRecent extends BaseFragment {
             // Inflate the week view.
             LayoutInflater.from(getActivity())
                     .inflate(R.layout.main_screen_fragment_recent_week, mScrubber, true);
-
-            // Set the current week value.
-            ((TextView)mScrubber.getChildAt(i)).setText(String.format("%02d", i + 1));
         }
+
+        for (int i = 0; i < WEEKS_IN_SEASON; i++) {
+            TextView weekPicker = (TextView) mScrubber.getChildAt(i);
+
+            weekPicker.setOnClickListener(new WeekSettingListener(i + 1) {
+                @Override
+                public void onClick(View view) {
+                    for(int j=0; j < WEEKS_IN_SEASON; j++) {
+                        ((TextView) mScrubber.getChildAt(j)).setTextColor(Color.rgb(251, 251, 251));
+                    }
+                    ((TextView) view).setTextColor(getResources().getColor(R.color.text_color_link));
+                    ((TextView)getActivity().findViewById(R.id.main_recent_header)).setText("Week " + mWeek);
+                    mViewModel.updateWeek(mWeek);
+                }
+            });
+        }
+    }
+
+
+    @Override
+    public ViewModel onFetchViewModel() {
+        if(mViewModel == null) {
+            mViewModel = new ViewModelMatches(getActivity(), this);
+        }
+        return mViewModel;
     }
 
     // endregion

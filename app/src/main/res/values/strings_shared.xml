@@ -2,6 +2,7 @@
     <string name="app_name">Blitz</string>
     <string name="app_id">249246648608400</string>
 
+    <string name="bullet">&#8226;</string>
     <string name="number_small">9</string>
     <string name="number_large">999</string>
 
