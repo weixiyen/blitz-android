@@ -13,11 +13,13 @@ import com.blitz.app.dialogs.info.DialogInfo;
 import com.blitz.app.utilities.android.BaseFragment;
 import com.blitz.app.utilities.app.AppConfig;
 import com.blitz.app.utilities.rest.RestAPIOperation;
+import com.blitz.app.utilities.ui.UIObserver;
 import com.blitz.app.view_models.ViewModel;
 import com.blitz.app.view_models.ViewModelMainPlay;
 
 import butterknife.InjectView;
 import butterknife.OnClick;
+import rx.Observer;
 
 /**
  * Created by mrkcsc on 7/14/14. Copyright 2014 Blitz Studios
@@ -58,6 +60,12 @@ public class MainScreenFragmentPlay extends BaseFragment implements ViewModelMai
     @Override
     protected void onCreateView(Bundle savedInstanceState) {
         super.onCreateView(savedInstanceState);
+
+        if (mViewModelMainPlay == null) {
+            mViewModelMainPlay = new ViewModelMainPlay();
+        }
+
+        mViewModelMainPlay.subscribe(mStatsUserName, mStatsWins, mStatsLosses, mStatsRating, mCashAvailable);
 
         // Spin baby.
         setupSpinningPlayButton();
@@ -183,52 +191,6 @@ public class MainScreenFragmentPlay extends BaseFragment implements ViewModelMai
     public void onQueueTick(String secondsInQueue) {
 
         mPlayButtonTime.setText(secondsInQueue);
-    }
-
-    /**
-     * When username changes.
-     */
-    @Override
-    public void onUsername(String username) {
-
-        mStatsUserName.setText(username);
-    }
-
-    /**
-     * When rating changes.
-     */
-    @Override
-    public void onRating(int rating) {
-
-        mStatsRating.setText(Integer.toString(rating));
-    }
-
-    /**
-     * When wins change.
-     */
-    @Override
-    public void onWins(int wins) {
-
-        mStatsWins.setText(Integer.toString(wins));
-    }
-
-    /**
-     * When losses change.
-     */
-    @Override
-    public void onLosses(int losses) {
-
-        mStatsLosses.setText(Integer.toString(losses));
-    }
-
-    /**
-     * When cash changes.
-     */
-    @Override
-    public void onCash(int cash) {
-
-        // Set available cash, formatted.
-        mCashAvailable.setText("You have $" + String.format("%.2f", cash / 100.0f));
     }
 
     // endregion

@@ -8,6 +8,7 @@ import com.blitz.app.object_models.ObjectModelQueue;
 import com.blitz.app.screens.main.MainScreen;
 import com.blitz.app.utilities.app.AppDataObject;
 import com.blitz.app.utilities.authentication.AuthHelper;
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
 /**
@@ -113,6 +114,8 @@ public class ViewModelMain extends ViewModel {
      * @param message Json message sent.
      */
     private void handleDraftAction(JsonObject message) {
+
+        if(message == null || message.get("action") == null) return;
 
         // Fetch sent action.
         String action = message.get("action").getAsString();
