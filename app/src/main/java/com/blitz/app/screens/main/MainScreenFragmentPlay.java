@@ -47,8 +47,13 @@ public class MainScreenFragmentPlay extends BaseFragment implements ViewModelMai
     // View model object.
     private ViewModelMainPlay mViewModelMainPlay;
 
-    // Observer for text view. Will be wired later when the view is created in onCreate(0
+    // Observers for text views. Will be wired later when the view is created in onCreate(0
     private Observer<String> mUserNameObserver;
+    private Observer<Integer> mWinsObserver;
+    private Observer<Integer> mLossesObserver;
+    private Observer<Integer> mRatingObserver;
+    private Observer<Integer> mCashObserver;
+
 
     // endregion
 
@@ -65,7 +70,18 @@ public class MainScreenFragmentPlay extends BaseFragment implements ViewModelMai
         super.onCreateView(savedInstanceState);
 
         mUserNameObserver = UIObserver.textField(mStatsUserName);
-        
+        mWinsObserver = UIObserver.textField(mStatsWins);
+        mLossesObserver = UIObserver.textField(mStatsLosses);
+        mRatingObserver = UIObserver.textField(mStatsRating);
+        mCashObserver = new UIObserver.DefaultObserver<Integer>() {
+
+            @Override
+            public void onNext(Integer cash) {
+                // Set available cash, formatted.
+                mCashAvailable.setText("You have $" + String.format("%.2f", cash / 100.0f));
+            }
+        };
+
         // Spin baby.
         setupSpinningPlayButton();
     }
@@ -83,7 +99,7 @@ public class MainScreenFragmentPlay extends BaseFragment implements ViewModelMai
             mViewModelMainPlay = new ViewModelMainPlay();
         }
 
-        mViewModelMainPlay.subscribe(mUserNameObserver);
+        mViewModelMainPlay.subscribe(mUserNameObserver, mWinsObserver, mLossesObserver, mRatingObserver, mCashObserver);
 
         return mViewModelMainPlay;
     }
@@ -192,52 +208,6 @@ public class MainScreenFragmentPlay extends BaseFragment implements ViewModelMai
     public void onQueueTick(String secondsInQueue) {
 
         mPlayButtonTime.setText(secondsInQueue);
-    }
-
-    /**
-     * When username changes.
-     */
-    @Override
-    public void onUsername(String username) {
-
-        //mStatsUserName.setText(username);
-    }
-
-    /**
-     * When rating changes.
-     */
-    @Override
-    public void onRating(int rating) {
-
-        mStatsRating.setText(Integer.toString(rating));
-    }
-
-    /**
-     * When wins change.
-     */
-    @Override
-    public void onWins(int wins) {
-
-        mStatsWins.setText(Integer.toString(wins));
-    }
-
-    /**
-     * When losses change.
-     */
-    @Override
-    public void onLosses(int losses) {
-
-        mStatsLosses.setText(Integer.toString(losses));
-    }
-
-    /**
-     * When cash changes.
-     */
-    @Override
-    public void onCash(int cash) {
-
-        // Set available cash, formatted.
-        mCashAvailable.setText("You have $" + String.format("%.2f", cash / 100.0f));
     }
 
     // endregion

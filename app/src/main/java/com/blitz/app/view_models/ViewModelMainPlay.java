@@ -39,6 +39,10 @@ public class ViewModelMainPlay extends ViewModel {
     private ObjectModelUser mModelUser = new ObjectModelUser();
 
     private Subject<String, String> mUserName = ReplaySubject.createWithSize(1);
+    private Subject<Integer, Integer> mWins = ReplaySubject.createWithSize(1);
+    private Subject<Integer, Integer> mLosses = ReplaySubject.createWithSize(1);
+    private Subject<Integer, Integer> mRating = ReplaySubject.createWithSize(1);
+    private Subject<Integer, Integer> mCash = ReplaySubject.createWithSize(1);
 
     // Are we in queue.
     private boolean mInQueue;
@@ -96,11 +100,20 @@ public class ViewModelMainPlay extends ViewModel {
         return savedInstanceState;
     }
 
-    public void subscribe(Observer<String> userName) {
-        mUserName.asObservable()
-                 .subscribeOn(Schedulers.newThread())
-                 .observeOn(AndroidSchedulers.mainThread())
-                 .subscribe(userName);
+    private void bindSubjectToUiObserver(Subject subject, Observer uiObserver) {
+        subject.asObservable()
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(uiObserver);
+    }
+
+    public void subscribe(Observer<String> userName, Observer<Integer> wins, Observer<Integer> losses,
+                          Observer<Integer> rating, Observer<Integer> cash) {
+        bindSubjectToUiObserver(mUserName, userName);
+        bindSubjectToUiObserver(mWins, wins);
+        bindSubjectToUiObserver(mLosses, losses);
+        bindSubjectToUiObserver(mRating, rating);
+        bindSubjectToUiObserver(mCash, cash);
     }
 
     /**
@@ -125,10 +138,17 @@ public class ViewModelMainPlay extends ViewModel {
         // Fetch user info.
         fetchUserInfo();
 
+        // TODO: this is a hack for testing that the Observable stuff is working correctly
+        // Should instead just come from the database sync operation.
         AsyncTask<Void, Integer, Integer> asyncTask = new AsyncTask<Void, Integer, Integer>() {
             @Override
             protected Integer doInBackground(Void... voids) {
                 mUserName.onNext("Subject");
+                mWins.onNext(69);
+                mLosses.onNext(68);
+                mCash.onNext(12345);
+                mRating.onNext(-4321);
+
                 return 0;
             }
         };
@@ -189,11 +209,7 @@ public class ViewModelMainPlay extends ViewModel {
                 ViewModelMainPlayCallbacks callbacks = getCallbacks(ViewModelMainPlayCallbacks.class);
 
                 if (callbacks != null) {
-                    callbacks.onUsername("Callback");
-                    callbacks.onRating(mModelUser.getRating());
-                    callbacks.onWins(mModelUser.getWins());
-                    callbacks.onLosses(mModelUser.getLosses());
-                    callbacks.onCash(mModelUser.getCash());
+
                 }
             }
         }, new Runnable() {
@@ -355,11 +371,6 @@ public class ViewModelMainPlay extends ViewModel {
         public void onQueueUp(boolean animate);
         public void onQueueCancel(boolean animate);
         public void onQueueTick(String secondsInQueue);
-        public void onUsername(String username);
-        public void onRating(int rating);
-        public void onWins(int wins);
-        public void onLosses(int losses);
-        public void onCash(int cash);
     }
 
     // endregion
