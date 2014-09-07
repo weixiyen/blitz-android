@@ -14,6 +14,9 @@ import rx.subjects.ReplaySubject;
 import rx.subjects.Subject;
 
 /**
+ *
+ * Immutable version of ObjectModelAccessQueue that can be synced as an Observable
+ *
  * Created by Nate on 9/5/14. Copyright 2014 Blitz Studios
  */
 public class ObjectModelAccessQueue2 {
@@ -23,7 +26,6 @@ public class ObjectModelAccessQueue2 {
 
     private final int mPeopleAhead;
     private final int mPeopleBehind;
-
     private final boolean mAccessGranted;
 
     public ObjectModelAccessQueue2(int peopleAhead, int peopleBehind, boolean accessGranted) {

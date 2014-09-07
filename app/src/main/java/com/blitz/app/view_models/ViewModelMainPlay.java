@@ -1,24 +1,21 @@
 package com.blitz.app.view_models;
 
 import android.app.Activity;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 
-import com.blitz.app.dialogs.error.DialogError;
 import com.blitz.app.object_models.ObjectModelQueue;
-import com.blitz.app.object_models.ObjectModelUser;
+import com.blitz.app.object_models.ObjectModelUser2;
 import com.blitz.app.screens.main.MainScreenFragmentPlay;
 import com.blitz.app.utilities.app.AppDataObject;
 import com.blitz.app.utilities.comet.CometAPICallback;
 import com.blitz.app.utilities.comet.CometAPIManager;
 import com.google.gson.JsonObject;
 
+import rx.Observable;
 import rx.Observer;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
-import rx.subjects.ReplaySubject;
-import rx.subjects.Subject;
 
 /**
  * Created by Miguel on 7/26/2014. Copyright 2014 Blitz Studios
@@ -36,13 +33,7 @@ public class ViewModelMainPlay extends ViewModel {
 
     // Object model.
     private ObjectModelQueue mModelQueue = new ObjectModelQueue();
-    private ObjectModelUser mModelUser = new ObjectModelUser();
 
-    private Subject<String, String> mUserName = ReplaySubject.createWithSize(1);
-    private Subject<Integer, Integer> mWins = ReplaySubject.createWithSize(1);
-    private Subject<Integer, Integer> mLosses = ReplaySubject.createWithSize(1);
-    private Subject<Integer, Integer> mRating = ReplaySubject.createWithSize(1);
-    private Subject<Integer, Integer> mCash = ReplaySubject.createWithSize(1);
 
     // Are we in queue.
     private boolean mInQueue;
@@ -100,13 +91,34 @@ public class ViewModelMainPlay extends ViewModel {
         return savedInstanceState;
     }
 
-    public void subscribe(Observer<String> userName, Observer<Integer> wins, Observer<Integer> losses,
-                          Observer<Integer> rating, Observer<Integer> cash) {
-        bindSubjectToUiObserver(mUserName, userName);
-        bindSubjectToUiObserver(mWins, wins);
-        bindSubjectToUiObserver(mLosses, losses);
-        bindSubjectToUiObserver(mRating, rating);
-        bindSubjectToUiObserver(mCash, cash);
+    public void subscribe(final Observer<String> userName, final Observer<Integer> wins, final Observer<Integer> losses,
+                          final Observer<Integer> rating, final Observer<Integer> cash) {
+
+        Observable<ObjectModelUser2> user = ObjectModelUser2.sync();
+
+        user.subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<ObjectModelUser2>() {
+                    @Override
+                    public void onCompleted() {
+                        // do nothing
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        e.printStackTrace();
+                    }
+
+                    @Override
+                    public void onNext(ObjectModelUser2 user) {
+                        userName.onNext(user.getUsername());
+                        wins.onNext(user.getWins());
+                        losses.onNext(user.getLosses());
+                        rating.onNext(user.getRating());
+                        cash.onNext(user.getCash());
+                    }
+                });
+
     }
 
     /**
@@ -127,22 +139,6 @@ public class ViewModelMainPlay extends ViewModel {
 
         // Initialize container state.
         showQueueContainer(null, false);
-
-        // TODO: this is a hack for testing that the Observable stuff is working correctly
-        // Should instead just come from the database sync operation.
-        AsyncTask<Void, Integer, Integer> asyncTask = new AsyncTask<Void, Integer, Integer>() {
-            @Override
-            protected Integer doInBackground(Void... voids) {
-                mUserName.onNext("Subject");
-                mWins.onNext(69);
-                mLosses.onNext(68);
-                mCash.onNext(12345);
-                mRating.onNext(-4321);
-
-                return 0;
-            }
-        };
-        asyncTask.execute();
 
         // Setup comet.
         setupCometCallbacks();
@@ -182,16 +178,6 @@ public class ViewModelMainPlay extends ViewModel {
 
     // region Private Methods
     // =============================================================================================
-
-    /**
-     * Convenience method to subscribe the UI observer to an observable view of the subject
-     */
-    private void bindSubjectToUiObserver(Subject subject, Observer uiObserver) {
-        subject.asObservable()
-                .subscribeOn(Schedulers.newThread())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(uiObserver);
-    }
 
     /**
      * Show the queue container to either hidden or
