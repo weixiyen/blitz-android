@@ -58,6 +58,6 @@ dependencies {
     compile "com.google.android.gms:play-services:5.0.89"
 
     // RxJava
-    compile 'com.netflix.rxjava:rxjava-core:0.20.0'
-    compile 'com.netflix.rxjava:rxjava-android:0.16.1'
+    compile 'com.netflix.rxjava:rxjava-core:0.+'
+    compile 'com.netflix.rxjava:rxjava-android:0.+'
 }
