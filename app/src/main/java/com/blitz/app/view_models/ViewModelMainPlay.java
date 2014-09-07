@@ -100,13 +100,6 @@ public class ViewModelMainPlay extends ViewModel {
         return savedInstanceState;
     }
 
-    private void bindSubjectToUiObserver(Subject subject, Observer uiObserver) {
-        subject.asObservable()
-                .subscribeOn(Schedulers.newThread())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(uiObserver);
-    }
-
     public void subscribe(Observer<String> userName, Observer<Integer> wins, Observer<Integer> losses,
                           Observer<Integer> rating, Observer<Integer> cash) {
         bindSubjectToUiObserver(mUserName, userName);
@@ -134,9 +127,6 @@ public class ViewModelMainPlay extends ViewModel {
 
         // Initialize container state.
         showQueueContainer(null, false);
-
-        // Fetch user info.
-        fetchUserInfo();
 
         // TODO: this is a hack for testing that the Observable stuff is working correctly
         // Should instead just come from the database sync operation.
@@ -194,34 +184,13 @@ public class ViewModelMainPlay extends ViewModel {
     // =============================================================================================
 
     /**
-     * Fetch and broadcast user information relevant
-     * to the play view model.
+     * Convenience method to subscribe the UI observer to an observable view of the subject
      */
-    private void fetchUserInfo() {
-
-        // Fetch user object.
-        mModelUser.getUser(mActivity, new Runnable() {
-
-            @Override
-            public void run() {
-
-                // Fetch callbacks.
-                ViewModelMainPlayCallbacks callbacks = getCallbacks(ViewModelMainPlayCallbacks.class);
-
-                if (callbacks != null) {
-
-                }
-            }
-        }, new Runnable() {
-
-            @Override
-            public void run() {
-
-                // Show error dialog configured to
-                // log out user after user action.
-                new DialogError(mActivity).show(true, true);
-            }
-        });
+    private void bindSubjectToUiObserver(Subject subject, Observer uiObserver) {
+        subject.asObservable()
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(uiObserver);
     }
 
     /**
