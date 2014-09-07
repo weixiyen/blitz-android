@@ -279,6 +279,8 @@ public class ViewModelMainPlay extends ViewModel {
      */
     private void handleDraftAction(MainScreenFragmentPlay receivingClass, JsonObject message) {
 
+        if(message == null || message.get("action") == null) return;
+
         // Fetch sent action.
         String action = message.get("action").getAsString();
 
