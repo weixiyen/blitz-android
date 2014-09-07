@@ -97,7 +97,7 @@ public class BaseActivity extends FragmentActivity {
 
         // Initialize view model.
         if (getViewModel() != null) {
-            getViewModel().initialize(this, (ViewModel.ViewModelCallbacks)this);
+            getViewModel().initialize();
         }
 
         if (mGoingBack) {

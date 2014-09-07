@@ -109,7 +109,7 @@ public class DraftScreen extends BaseActivity implements ViewModelDraft.ViewMode
     public ViewModel onFetchViewModel() {
 
         if (mViewModelDraft == null) {
-            mViewModelDraft = new ViewModelDraft();
+            mViewModelDraft = new ViewModelDraft(this, this);
         }
 
         return mViewModelDraft;

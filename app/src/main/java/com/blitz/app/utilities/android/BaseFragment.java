@@ -110,7 +110,7 @@ public class BaseFragment extends Fragment {
 
         // Initialize view model.
         if (getViewModel() != null) {
-            getViewModel().initialize(getActivity(), (ViewModel.ViewModelCallbacks)this);
+            getViewModel().initialize();
         }
 
         // Add a new fragment.

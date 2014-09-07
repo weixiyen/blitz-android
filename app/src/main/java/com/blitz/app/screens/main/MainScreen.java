@@ -96,7 +96,7 @@ public class MainScreen extends BaseActivity implements ViewModelMain.ViewModelM
     public ViewModel onFetchViewModel() {
 
         if (mViewModelMain == null) {
-            mViewModelMain = new ViewModelMain();
+            mViewModelMain = new ViewModelMain(this, this);
         }
 
         return mViewModelMain;

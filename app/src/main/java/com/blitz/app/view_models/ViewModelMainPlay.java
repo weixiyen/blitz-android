@@ -40,6 +40,21 @@ public class ViewModelMainPlay extends ViewModel {
 
     // endregion
 
+    // region Constructor
+    // =============================================================================================
+
+    /**
+     * Creating a new view model requires an activity and a callback.
+     *
+     * @param activity  Activity is used for any android context actions.
+     * @param callbacks Callbacks so that the view model can communicate changes.
+     */
+    public ViewModelMainPlay(Activity activity, ViewModelCallbacks callbacks) {
+        super(activity, callbacks);
+    }
+
+    // endregion
+
     // region Overwritten Methods
     // =============================================================================================
 
@@ -91,8 +106,7 @@ public class ViewModelMainPlay extends ViewModel {
      * Initialize the view model.
      */
     @Override
-    public void initialize(Activity activity, ViewModelCallbacks callbacks) {
-        super.initialize(activity, callbacks);
+    public void initialize() {
 
         if (mSecondsInQueue != -1) {
 

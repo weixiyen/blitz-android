@@ -100,7 +100,7 @@ public class AccessQueueScreen extends BaseActivity implements ViewModelAccessQu
     public ViewModel onFetchViewModel() {
 
         if (mViewModelAccessQueue == null) {
-            mViewModelAccessQueue = new ViewModelAccessQueue();
+            mViewModelAccessQueue = new ViewModelAccessQueue(this, this);
         }
 
         return mViewModelAccessQueue;

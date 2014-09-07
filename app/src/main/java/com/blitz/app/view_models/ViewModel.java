@@ -14,7 +14,33 @@ public abstract class ViewModel {
     // Activity instance.
     protected Activity mActivity;
 
+    // Callbacks object.
     private ViewModelCallbacks mCallbacks;
+
+    // endregion
+
+    // region Constructors
+    // =============================================================================================
+
+    /**
+     * Empty constructor is not allowed.
+     */
+    @SuppressWarnings("unused")
+    private ViewModel() {
+
+    }
+
+    /**
+     * Creating a new view model requires an activity and a callback.
+     *
+     * @param activity Activity is used for any android context actions.
+     * @param callbacks Callbacks so that the view model can communicate changes.
+     */
+    public ViewModel(Activity activity, ViewModelCallbacks callbacks) {
+
+        mActivity  = activity;
+        mCallbacks = callbacks;
+    }
 
     // endregion
 
@@ -51,11 +77,7 @@ public abstract class ViewModel {
      * Initialize the view model.
      */
     @SuppressWarnings("unused")
-    public void initialize(Activity activity, ViewModelCallbacks callbacks) {
-
-        mActivity  = activity;
-        mCallbacks = callbacks;
-    }
+    public abstract void initialize();
 
     // endregion
 

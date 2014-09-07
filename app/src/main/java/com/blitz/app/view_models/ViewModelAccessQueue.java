@@ -17,18 +17,29 @@ public class ViewModelAccessQueue extends ViewModel {
 
     // endregion
 
+    // region Constructor
+    // =============================================================================================
+
+    /**
+     * Creating a new view model requires an activity and a callback.
+     *
+     * @param activity  Activity is used for any android context actions.
+     * @param callbacks Callbacks so that the view model can communicate changes.
+     */
+    public ViewModelAccessQueue(Activity activity, ViewModelCallbacks callbacks) {
+        super(activity, callbacks);
+    }
+
+    // endregion
+
     // region Overwritten Methods
     // =============================================================================================
 
     /**
      * Initialize and sync the access queue numbers.
-     *
-     * @param activity Target activity.
-     * @param callbacks Callbacks.
      */
     @Override
-    public void initialize(Activity activity, ViewModelCallbacks callbacks) {
-        super.initialize(activity, callbacks);
+    public void initialize() {
 
         // Initialize access queue model.
         mModelAccessQueue = new ObjectModelAccessQueue();

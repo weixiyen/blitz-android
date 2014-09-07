@@ -23,18 +23,29 @@ public class ViewModelMain extends ViewModel {
 
     // endregion
 
+    // region Constructor
+    // =============================================================================================
+
+    /**
+     * Creating a new view model requires an activity and a callback.
+     *
+     * @param activity  Activity is used for any android context actions.
+     * @param callbacks Callbacks so that the view model can communicate changes.
+     */
+    public ViewModelMain(Activity activity, ViewModelCallbacks callbacks) {
+        super(activity, callbacks);
+    }
+
+    // endregion
+
     // region Overwritten Methods
     // =============================================================================================
 
     /**
      * Setup comet.
-     *
-     * @param activity Target activity.
-     * @param callbacks Target callbacks.
      */
     @Override
-    public void initialize(Activity activity, ViewModelCallbacks callbacks) {
-        super.initialize(activity, callbacks);
+    public void initialize() {
 
         // Setup callbacks.
         setupCometCallbacks();

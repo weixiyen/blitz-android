@@ -8,6 +8,21 @@ import android.os.Handler;
  */
 public class ViewModelDraft extends ViewModel {
 
+    // region Constructor
+    // =============================================================================================
+
+    /**
+     * Creating a new view model requires an activity and a callback.
+     *
+     * @param activity  Activity is used for any android context actions.
+     * @param callbacks Callbacks so that the view model can communicate changes.
+     */
+    public ViewModelDraft(Activity activity, ViewModelCallbacks callbacks) {
+        super(activity, callbacks);
+    }
+
+    // endregion
+
     // region Overwritten Methods
     // =============================================================================================
 
@@ -15,8 +30,8 @@ public class ViewModelDraft extends ViewModel {
      * Initialize the view model.
      */
     @Override
-    public void initialize(Activity activity, ViewModelCallbacks callbacks) {
-        super.initialize(activity, callbacks);
+    public void initialize() {
+
     }
 
     // endregion
