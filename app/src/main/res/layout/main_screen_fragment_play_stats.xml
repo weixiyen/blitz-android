@@ -103,7 +103,7 @@
             android:gravity="center"
             android:orientation="horizontal">
 
-            <TextView
+            <me.grantland.widget.AutofitTextView
                 android:id="@+id/main_play_stats_wins"
                 style="@style/TextViewStyle"
                 fontPath="@string/app_font_sports"
@@ -118,7 +118,7 @@
                 android:textColor="@color/text_color_light"
                 android:textSize="28sp"/>
 
-            <TextView
+            <me.grantland.widget.AutofitTextView
                 android:id="@+id/main_play_stats_losses"
                 style="@style/TextViewStyle"
                 fontPath="@string/app_font_sports"
