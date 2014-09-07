@@ -2,6 +2,7 @@ package com.blitz.app.object_models;
 
 import com.blitz.app.utilities.logging.LogHelper;
 import com.blitz.app.utilities.rest.RestAPIClient;
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
 import retrofit.Callback;
@@ -78,9 +79,19 @@ public class ObjectModelAccessQueue2 {
 
             @Override
             public void success(JsonObject jsonObject, Response response) {
-                playersAhead.onNext(jsonObject.get("people_ahead").getAsInt());
-                playersBehind.onNext(jsonObject.get("people_behind").getAsInt());
-                accessGranted.onNext((jsonObject.get("access_granted").getAsBoolean()));
+                JsonElement peopleAheadEl = jsonObject.get("people_ahead");
+                JsonElement peopleBehindEl = jsonObject.get("people_behind");
+                JsonElement accessGrantedEl = jsonObject.get("access_granted");
+
+                if(peopleAheadEl != null) {
+                    playersAhead.onNext(peopleAheadEl.getAsInt());
+                }
+                if(peopleBehindEl != null) {
+                    playersBehind.onNext(peopleBehindEl.getAsInt());
+                }
+                if(accessGrantedEl != null) {
+                    accessGranted.onNext(accessGrantedEl.getAsBoolean());
+                }
             }
 
             @Override

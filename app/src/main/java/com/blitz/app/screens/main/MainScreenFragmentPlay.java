@@ -13,11 +13,13 @@ import com.blitz.app.dialogs.info.DialogInfo;
 import com.blitz.app.utilities.android.BaseFragment;
 import com.blitz.app.utilities.app.AppConfig;
 import com.blitz.app.utilities.rest.RestAPIOperation;
+import com.blitz.app.utilities.ui.UIObserver;
 import com.blitz.app.view_models.ViewModel;
 import com.blitz.app.view_models.ViewModelMainPlay;
 
 import butterknife.InjectView;
 import butterknife.OnClick;
+import rx.Observer;
 
 /**
  * Created by mrkcsc on 7/14/14. Copyright 2014 Blitz Studios
@@ -45,6 +47,9 @@ public class MainScreenFragmentPlay extends BaseFragment implements ViewModelMai
     // View model object.
     private ViewModelMainPlay mViewModelMainPlay;
 
+    // Observer for text view. Will be wired later when the view is created in onCreate(0
+    private Observer<String> mUserNameObserver;
+
     // endregion
 
     // region Overwritten Methods
@@ -59,6 +64,8 @@ public class MainScreenFragmentPlay extends BaseFragment implements ViewModelMai
     protected void onCreateView(Bundle savedInstanceState) {
         super.onCreateView(savedInstanceState);
 
+        mUserNameObserver = UIObserver.textField(mStatsUserName);
+        
         // Spin baby.
         setupSpinningPlayButton();
     }
@@ -75,6 +82,8 @@ public class MainScreenFragmentPlay extends BaseFragment implements ViewModelMai
         if (mViewModelMainPlay == null) {
             mViewModelMainPlay = new ViewModelMainPlay();
         }
+
+        mViewModelMainPlay.subscribe(mUserNameObserver);
 
         return mViewModelMainPlay;
     }
@@ -191,7 +200,7 @@ public class MainScreenFragmentPlay extends BaseFragment implements ViewModelMai
     @Override
     public void onUsername(String username) {
 
-        mStatsUserName.setText(username);
+        //mStatsUserName.setText(username);
     }
 
     /**

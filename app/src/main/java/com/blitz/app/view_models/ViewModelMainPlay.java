@@ -1,6 +1,7 @@
 package com.blitz.app.view_models;
 
 import android.app.Activity;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 
@@ -12,6 +13,12 @@ import com.blitz.app.utilities.app.AppDataObject;
 import com.blitz.app.utilities.comet.CometAPICallback;
 import com.blitz.app.utilities.comet.CometAPIManager;
 import com.google.gson.JsonObject;
+
+import rx.Observer;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
+import rx.subjects.ReplaySubject;
+import rx.subjects.Subject;
 
 /**
  * Created by Miguel on 7/26/2014. Copyright 2014 Blitz Studios
@@ -30,6 +37,8 @@ public class ViewModelMainPlay extends ViewModel {
     // Object model.
     private ObjectModelQueue mModelQueue = new ObjectModelQueue();
     private ObjectModelUser mModelUser = new ObjectModelUser();
+
+    private Subject<String, String> mUserName = ReplaySubject.createWithSize(1);
 
     // Are we in queue.
     private boolean mInQueue;
@@ -87,6 +96,13 @@ public class ViewModelMainPlay extends ViewModel {
         return savedInstanceState;
     }
 
+    public void subscribe(Observer<String> userName) {
+        mUserName.asObservable()
+                 .subscribeOn(Schedulers.newThread())
+                 .observeOn(AndroidSchedulers.mainThread())
+                 .subscribe(userName);
+    }
+
     /**
      * Initialize the view model.
      */
@@ -108,6 +124,15 @@ public class ViewModelMainPlay extends ViewModel {
 
         // Fetch user info.
         fetchUserInfo();
+
+        AsyncTask<Void, Integer, Integer> asyncTask = new AsyncTask<Void, Integer, Integer>() {
+            @Override
+            protected Integer doInBackground(Void... voids) {
+                mUserName.onNext("Subject");
+                return 0;
+            }
+        };
+        asyncTask.execute();
 
         // Setup comet.
         setupCometCallbacks();
@@ -164,7 +189,7 @@ public class ViewModelMainPlay extends ViewModel {
                 ViewModelMainPlayCallbacks callbacks = getCallbacks(ViewModelMainPlayCallbacks.class);
 
                 if (callbacks != null) {
-                    callbacks.onUsername(mModelUser.getUsername());
+                    callbacks.onUsername("Callback");
                     callbacks.onRating(mModelUser.getRating());
                     callbacks.onWins(mModelUser.getWins());
                     callbacks.onLosses(mModelUser.getLosses());

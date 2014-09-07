@@ -24,7 +24,7 @@ public class UIObserver {
             @Override
             public void onError(Throwable e) {
 
-                throw new RuntimeException("Unexpected error");
+                e.printStackTrace();
             }
 
             @Override
