@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
- * Created by Miguel on 7/21/2014.
+ * Created by Miguel on 7/21/2014. Copyright 2014 Blitz Studios
  */
 public class CometAPIManager implements CometAPIWebsocket.OnMessageCallback {
 

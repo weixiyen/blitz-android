@@ -13,7 +13,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Created by Miguel on 7/21/2014.
+ * Created by Miguel on 7/21/2014. Copyright 2014 Blitz Studios
  */
 public class CometAPIChannel {
 
@@ -206,8 +206,14 @@ public class CometAPIChannel {
             @Override
             public void run() {
 
-                // Send the callbackEntry with current activity/fragment as the receiving class.
-                callback.messageReceived(activityOrFragment, jsonObject.getAsJsonObject("data"));
+                // Fetch associated data payload.
+                JsonObject data = jsonObject.getAsJsonObject("data");
+
+                if (data != null) {
+
+                    // Send the callbackEntry with current activity/fragment as the receiving class.
+                    callback.messageReceived(activityOrFragment, jsonObject.getAsJsonObject("data"));
+                }
             }
         });
     }

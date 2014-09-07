@@ -4,6 +4,7 @@ import android.os.Handler;
 
 import com.blitz.app.utilities.app.AppConfig;
 import com.blitz.app.utilities.app.AppDataObject;
+import com.blitz.app.utilities.logging.LogHelper;
 import com.blitz.app.utilities.ssl.SSLHelper;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
@@ -19,7 +20,7 @@ import java.util.ArrayList;
 import javax.net.ssl.SSLSocketFactory;
 
 /**
- * Created by Miguel on 7/17/2014.
+ * Created by Miguel on 7/17/2014. Copyright 2014 Blitz Studios
  */
 class CometAPIWebsocket {
 
