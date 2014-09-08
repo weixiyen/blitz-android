@@ -2,8 +2,10 @@ package com.blitz.app.utilities.authentication;
 
 import android.content.Intent;
 
+import com.blitz.app.R;
 import com.blitz.app.object_models.ObjectModelDraft;
 import com.blitz.app.screens.access_queue.AccessQueueScreen;
+import com.blitz.app.screens.draft.DraftScreen;
 import com.blitz.app.screens.main.MainScreen;
 import com.blitz.app.screens.sign_up.SignUpScreenLegal;
 import com.blitz.app.screens.splash.SplashScreen;
@@ -11,9 +13,12 @@ import com.blitz.app.utilities.android.BaseActivity;
 import com.blitz.app.utilities.app.AppConfig;
 import com.blitz.app.utilities.app.AppData;
 import com.blitz.app.utilities.app.AppDataObject;
+import com.blitz.app.utilities.sound.SoundHelper;
+
+import java.util.List;
 
 /**
- * Created by mrkcsc on 7/20/14.
+ * Created by mrkcsc on 7/20/14. Copyright 2014 Blitz Studios
  */
 public class AuthHelper {
 
@@ -97,8 +102,9 @@ public class AuthHelper {
                     // If user has agreed to legal road block.
                     if (AppDataObject.hasAgreedLegal.get()) {
 
-                        // Enter main screen of the app.
-                        targetActivity = MainScreen.class;
+                        // Sync state and enter
+                        // appropriate screen.
+                        syncAppState(activity);
 
                     } else {
 
@@ -119,7 +125,7 @@ public class AuthHelper {
             }
         }
 
-        activity.startActivity(new Intent(activity, targetActivity), true);
+        startActivity(activity, targetActivity);
     }
 
     /**
@@ -170,5 +176,70 @@ public class AuthHelper {
         }
 
         return mCurrentDraft;
+    }
+
+    //==============================================================================================
+    // Private Methods
+    //==============================================================================================
+
+    /**
+     * Before we can enter the main app, we must synchronize the
+     * application state to find out if we are currently
+     * in any active drafts.
+     *
+     * @param activity Activity context.
+     */
+    private static void syncAppState(final BaseActivity activity) {
+
+        // Attempt to fetch active drafts for the user.
+        ObjectModelDraft.fetchActiveDraftsForUser(activity, AppDataObject.userId.get(),
+                new ObjectModelDraft.DraftsCallback() {
+
+            @Override
+            public void onSuccess(List<ObjectModelDraft> drafts) {
+
+                // Stop all music.
+                SoundHelper.instance().stopMusic();
+
+                if (drafts == null) {
+
+                    // Play the lobby music after loading.
+                    SoundHelper.instance().startMusic(R.raw.music_lobby_loop0, R.raw.music_lobby_loopn);
+
+                    // Main screen.
+                    startActivity(activity, MainScreen.class);
+
+                } else {
+
+                    // Start the fast music.
+                    SoundHelper.instance().startMusic(R.raw.music_fast_loop_0, R.raw.music_fast_loop_n);
+
+                    // Drafting screen.
+                    startActivity(activity, DraftScreen.class);
+                }
+
+                // Disable music if needed.
+                SoundHelper.instance().setMusicDisabled(AppDataObject.settingsMusicDisabled.get());
+            }
+        });
+    }
+
+    /**
+     * Start an activity, clear history.
+     *
+     * @param activity Activity from.
+     * @param targetActivity Activity to.
+     */
+    private static void startActivity(BaseActivity activity, Class targetActivity) {
+
+        if (targetActivity != null) {
+
+            // Start target activity, clear the history.
+            activity.startActivity(new Intent(activity, targetActivity), true);
+
+            // Always destroy the loading
+            // activity as we leave.
+            activity.finish();
+        }
     }
 }

@@ -3,11 +3,9 @@ package com.blitz.app.screens.loading;
 import android.os.Bundle;
 import android.os.Handler;
 
-import com.blitz.app.R;
 import com.blitz.app.utilities.android.BaseActivity;
 import com.blitz.app.utilities.app.AppConfig;
 import com.blitz.app.utilities.app.AppData;
-import com.blitz.app.utilities.app.AppDataObject;
 import com.blitz.app.utilities.authentication.AuthHelper;
 import com.blitz.app.utilities.gcm.GcmRegistrationHelper;
 import com.blitz.app.utilities.sound.SoundHelper;
@@ -79,15 +77,6 @@ public class LoadingScreen extends BaseActivity {
 
                 // Try to enter the application.
                 AuthHelper.tryEnterMainApp(LoadingScreen.this);
-
-                // Play the lobby music after loading.
-                SoundHelper.instance().startMusic(R.raw.music_lobby_loop0, R.raw.music_lobby_loopn);
-                SoundHelper.instance().setMusicDisabled(AppDataObject.settingsMusicDisabled.get());
-
-                // Always destroy the loading
-                // activity as we leave.
-                finish();
-
             }
         }, SPLASH_TIME_OUT);
     }

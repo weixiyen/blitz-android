@@ -12,7 +12,6 @@ import com.blitz.app.utilities.animations.AnimHelperFade;
 import com.blitz.app.utilities.animations.AnimHelperSpringsGroup;
 import com.blitz.app.utilities.animations.AnimHelperSpringsPresets;
 import com.blitz.app.utilities.animations.AnimHelperSpringsView;
-import com.blitz.app.utilities.sound.SoundHelper;
 import com.blitz.app.view_models.ViewModel;
 import com.blitz.app.view_models.ViewModelDraft;
 
@@ -67,10 +66,6 @@ public class DraftScreen extends BaseActivity implements ViewModelDraft.ViewMode
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        // Start the fast music (TODO: Move into auth).
-        SoundHelper.instance().stopMusic();
-        SoundHelper.instance().startMusic(R.raw.music_fast_loop_0, R.raw.music_fast_loop_n);
 
         playAnimationsIntro();
     }

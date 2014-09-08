@@ -1,6 +1,5 @@
 package com.blitz.app.screens.main;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.view.View;
@@ -8,10 +7,10 @@ import android.view.View;
 import com.blitz.app.R;
 import com.blitz.app.dialogs.info.DialogInfo;
 import com.blitz.app.dialogs.loading.DialogLoading;
-import com.blitz.app.screens.draft.DraftScreen;
 import com.blitz.app.utilities.android.BaseActivity;
 import com.blitz.app.utilities.android.BaseDialog;
 import com.blitz.app.utilities.app.AppConfig;
+import com.blitz.app.utilities.authentication.AuthHelper;
 import com.blitz.app.utilities.viewpager.ViewPagerZoomOutTransformer;
 import com.blitz.app.view_models.ViewModel;
 import com.blitz.app.view_models.ViewModelMain;
@@ -269,8 +268,8 @@ public class MainScreen extends BaseActivity implements ViewModelMain.ViewModelM
                 @Override
                 public void didHide() {
 
-                    // Enter draft preview and clear history.
-                    startActivity(new Intent(MainScreen.this, DraftScreen.class), true);
+                    // Time to enter the draft!
+                    AuthHelper.tryEnterMainApp(MainScreen.this);
                 }
             });
         }
