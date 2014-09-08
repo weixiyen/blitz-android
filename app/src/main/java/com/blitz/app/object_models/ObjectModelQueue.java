@@ -3,7 +3,6 @@ package com.blitz.app.object_models;
 import android.app.Activity;
 
 import com.blitz.app.utilities.rest.RestAPICallback;
-import com.blitz.app.utilities.rest.RestAPIClient;
 import com.blitz.app.utilities.rest.RestAPIObject;
 import com.blitz.app.utilities.rest.RestAPIOperation;
 import com.google.gson.JsonObject;
@@ -11,7 +10,7 @@ import com.google.gson.JsonObject;
 /**
  * Created by mrkcsc on 7/20/14. Copyright 2014 Blitz Studios
  */
-public class ObjectModelQueue {
+public class ObjectModelQueue extends ObjectModel {
 
     // region Member Variables
     // =============================================================================================
@@ -68,7 +67,7 @@ public class ObjectModelQueue {
                            body.addProperty("draft_key", mDraftKey);
 
                 // Make api call.
-                RestAPIClient.getAPI().queue_post(body, RestAPICallback.create(operation));
+                mRestAPI.queue_post(body, RestAPICallback.create(operation));
             }
         });
     }
@@ -100,8 +99,7 @@ public class ObjectModelQueue {
         };
 
         // Make api call.
-        RestAPIClient.getAPI().queue_delete
-                (mDraftKey, RestAPICallback.create(operation));
+        mRestAPI.queue_delete(mDraftKey, RestAPICallback.create(operation));
     }
 
     /**
@@ -135,8 +133,7 @@ public class ObjectModelQueue {
                    body.addProperty("draft_key", mDraftKey);
 
         // Make api call.
-        RestAPIClient.getAPI().queue_put
-                (body, RestAPICallback.create(operation));
+        mRestAPI.queue_put(body, RestAPICallback.create(operation));
     }
 
     // endregion

@@ -3,7 +3,6 @@ package com.blitz.app.object_models;
 import android.app.Activity;
 
 import com.blitz.app.utilities.rest.RestAPICallback;
-import com.blitz.app.utilities.rest.RestAPIClient;
 import com.blitz.app.utilities.rest.RestAPIObject;
 import com.blitz.app.utilities.rest.RestAPIOperation;
 import com.google.gson.JsonObject;
@@ -11,7 +10,7 @@ import com.google.gson.JsonObject;
 /**
  * Created by mrkcsc on 8/9/14. Copyright 2014 Blitz Studios
  */
-public class ObjectModelAccessQueue {
+public class ObjectModelAccessQueue extends ObjectModel {
 
     // region Member Variables
     // =============================================================================================
@@ -100,7 +99,7 @@ public class ObjectModelAccessQueue {
         };
 
         // Make rest call for code.
-        RestAPIClient.getAPI().access_queue_get(mDeviceId, RestAPICallback.create(operation));
+        mRestAPI.access_queue_get(mDeviceId, RestAPICallback.create(operation));
     }
 
     // endregion

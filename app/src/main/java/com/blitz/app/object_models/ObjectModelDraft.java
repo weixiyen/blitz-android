@@ -3,7 +3,6 @@ package com.blitz.app.object_models;
 import android.app.Activity;
 
 import com.blitz.app.utilities.rest.RestAPICallback;
-import com.blitz.app.utilities.rest.RestAPIClient;
 import com.blitz.app.utilities.rest.RestAPIObject;
 import com.blitz.app.utilities.rest.RestAPIOperation;
 
@@ -13,7 +12,7 @@ import java.util.List;
 /**
  * Created by mrkcsc on 7/27/14. Copyright 2014 Blitz Studios
  */
-public class ObjectModelDraft {
+public class ObjectModelDraft extends ObjectModel {
 
     // region Member Variables
     // =============================================================================================
@@ -61,7 +60,7 @@ public class ObjectModelDraft {
         };
 
         // Make api call.
-        RestAPIClient.getAPI().draft_get
+        mRestAPI.draft_get
                 (mDraftId, RestAPICallback.create(operation));
     }
 
@@ -104,7 +103,7 @@ public class ObjectModelDraft {
         // Sort by most recent.
         String orderBy = "{\"created\": \"ASC\"}";
 
-        RestAPIClient.getAPI().drafts_get(getKeys(userId), null, "users",
+        mRestAPI.drafts_get(getKeys(userId), null, "users",
                 filter, orderBy, null, RestAPICallback.create(operation));
     }
 
@@ -135,7 +134,7 @@ public class ObjectModelDraft {
         // Order by completed and created descending.
         String orderBy = "{\"completed\": \"DESC\", \"created\": \"DESC\"}";
 
-        RestAPIClient.getAPI().drafts_get(getKeys(userId), null, "users",
+        mRestAPI.drafts_get(getKeys(userId), null, "users",
                 filter, orderBy, limit, RestAPICallback.create(operation));
     }
 

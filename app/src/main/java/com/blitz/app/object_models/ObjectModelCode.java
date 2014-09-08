@@ -3,7 +3,6 @@ package com.blitz.app.object_models;
 import android.app.Activity;
 
 import com.blitz.app.utilities.rest.RestAPICallback;
-import com.blitz.app.utilities.rest.RestAPIClient;
 import com.blitz.app.utilities.rest.RestAPIObject;
 import com.blitz.app.utilities.rest.RestAPIOperation;
 import com.google.gson.JsonObject;
@@ -11,7 +10,7 @@ import com.google.gson.JsonObject;
 /**
  * Created by Miguel Gaeta on 6/28/14. Copyright 2014 Blitz Studios
  */
-public class ObjectModelCode {
+public class ObjectModelCode extends ObjectModel {
 
     // region Member Variables
     // =============================================================================================
@@ -83,7 +82,7 @@ public class ObjectModelCode {
                    body.addProperty("value", mValue);
 
         // Make rest call for code.
-        RestAPIClient.getAPI().code_post(body, RestAPICallback.create(operation));
+        mRestAPI.code_post(body, RestAPICallback.create(operation));
     }
 
     // endregion

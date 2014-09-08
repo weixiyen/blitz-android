@@ -2,18 +2,17 @@ package com.blitz.app.object_models;
 
 import android.app.Activity;
 
+import com.blitz.app.utilities.app.AppConfig;
 import com.blitz.app.utilities.rest.RestAPICallback;
-import com.blitz.app.utilities.rest.RestAPIClient;
 import com.blitz.app.utilities.rest.RestAPIObject;
 import com.blitz.app.utilities.rest.RestAPIOperation;
-import com.blitz.app.utilities.app.AppConfig;
 import com.google.gson.JsonObject;
 
 /**
  * Created by Miguel Gaeta on 6/26/14. Copyright 2014 Blitz Studios
  */
 @SuppressWarnings("unused")
-public class ObjectModelPreferences {
+public class ObjectModelPreferences extends ObjectModel {
 
     // region Member Variables
     // =============================================================================================
@@ -85,7 +84,7 @@ public class ObjectModelPreferences {
         };
 
         // Make api call.
-        RestAPIClient.getAPI().preferences_get(RestAPICallback.create(operation));
+        mRestAPI.preferences_get(RestAPICallback.create(operation));
     }
 
     // endregion

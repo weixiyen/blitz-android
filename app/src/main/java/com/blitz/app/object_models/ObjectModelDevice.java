@@ -3,7 +3,6 @@ package com.blitz.app.object_models;
 import android.app.Activity;
 
 import com.blitz.app.utilities.rest.RestAPICallback;
-import com.blitz.app.utilities.rest.RestAPIClient;
 import com.blitz.app.utilities.rest.RestAPIObject;
 import com.blitz.app.utilities.rest.RestAPIOperation;
 import com.google.gson.JsonElement;
@@ -12,7 +11,7 @@ import com.google.gson.JsonObject;
 /**
  * Created by mrkcsc on 8/10/14. Copyright 2014 Blitz Studios
  */
-public class ObjectModelDevice {
+public class ObjectModelDevice extends ObjectModel{
 
     // region Member Variables
     // =============================================================================================
@@ -53,7 +52,7 @@ public class ObjectModelDevice {
         };
 
         // Make rest call for code.
-        RestAPIClient.getAPI().device_get(mDeviceId, RestAPICallback.create(operation));
+        mRestAPI.device_get(mDeviceId, RestAPICallback.create(operation));
     }
 
     /**
@@ -87,7 +86,7 @@ public class ObjectModelDevice {
         body.addProperty("push_notification_enabled", false);
 
         // Make rest call for code.
-        RestAPIClient.getAPI().devices_post(body, RestAPICallback.create(operation));
+        mRestAPI.devices_post(body, RestAPICallback.create(operation));
     }
 
     /**
@@ -138,7 +137,7 @@ public class ObjectModelDevice {
         body.add("replace", replace);
 
         // Make rest call for code.
-        RestAPIClient.getAPI().device_patch(mId, body, RestAPICallback.create(operation));
+        mRestAPI.device_patch(mId, body, RestAPICallback.create(operation));
     }
 
     /**

@@ -5,7 +5,6 @@ import android.widget.EditText;
 
 import com.blitz.app.utilities.authentication.AuthHelper;
 import com.blitz.app.utilities.rest.RestAPICallback;
-import com.blitz.app.utilities.rest.RestAPIClient;
 import com.blitz.app.utilities.rest.RestAPIObject;
 import com.blitz.app.utilities.rest.RestAPIOperation;
 import com.google.gson.JsonObject;
@@ -13,7 +12,7 @@ import com.google.gson.JsonObject;
 /**
  * Created by mrkcsc on 7/9/14. Copyright 2014 Blitz Studios
  */
-public class ObjectModelUser {
+public class ObjectModelUser extends ObjectModel {
 
     // region Member Variables
     // =============================================================================================
@@ -158,8 +157,7 @@ public class ObjectModelUser {
         String userId = AuthHelper.getUserId();
 
         // Make api call to fetch user data.
-        RestAPIClient.getAPI().user_get(userId,
-                RestAPICallback.create(operation));
+        mRestAPI.user_get(userId, RestAPICallback.create(operation));
     }
 
     /**
@@ -211,8 +209,7 @@ public class ObjectModelUser {
                    body.addProperty("password", mPassword);
 
         // Make rest call for code.
-        RestAPIClient.getAPI().users_post(body,
-                RestAPICallback.create(operation, true));
+        mRestAPI.users_post(body, RestAPICallback.create(operation, true));
     }
 
     /**
@@ -254,8 +251,7 @@ public class ObjectModelUser {
                    body.addProperty("password", mPassword);
 
         // Make auth rest call.
-        RestAPIClient.getAPI().auth_post(body,
-                RestAPICallback.create(operation, true));
+        mRestAPI.auth_post(body, RestAPICallback.create(operation, true));
     }
 
     // endregion
