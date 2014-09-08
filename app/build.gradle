@@ -37,7 +37,7 @@ dependencies {
     compile 'com.google.code.gson:gson:2.3'
 
     // Library for making REST calls.
-    //compile 'com.squareup.retrofit:retrofit:1.6.1'
+    compile 'com.squareup.retrofit:retrofit:1.6.1'
 
     // Library for dots under view pager.
     compile 'com.viewpagerindicator:library:2.4.1@aar'

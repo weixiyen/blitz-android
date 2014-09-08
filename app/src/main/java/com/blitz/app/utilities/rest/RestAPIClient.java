@@ -2,28 +2,26 @@ package com.blitz.app.utilities.rest;
 
 import com.blitz.app.utilities.app.AppDataObject;
 
-import retrofit.RequestReader;
 import retrofit.RestAdapter;
 import retrofit.client.Header;
-import retrofit.client.Request;
 import retrofit.client.Response;
 
+/**
+ * Created by Miguel Gaeta on 6/26/14. Copyright 2014 Blitz Studios
+ */
 public class RestAPIClient extends RestAPIClientBase {
 
-    //==============================================================================================
-    // Member Variables
-    //==============================================================================================
+    // region Member Variables
+    // =============================================================================================
 
     // Singleton instance for API and client.
     private static RestAPI       mInstanceApi = null;
     private static RestAPIClient mInstance;
 
-    // Intercept and read request URLs.
-    private RequestURLReader mRequestURLReader;
+    // endregion
 
-    //==============================================================================================
-    // Protected Methods
-    //==============================================================================================
+    // region Protected Methods
+    // =============================================================================================
 
     /**
      * Add cookies to the request.
@@ -53,52 +51,14 @@ public class RestAPIClient extends RestAPIClientBase {
             }
         });
 
-        // Emit request URL to readers.
-        builder.setRequestReader(new RequestReader() {
-
-            @Override
-            public void readRequest(Request request) {
-
-                if (request.getMethod().equals("GET")) {
-
-                    // Read url if reader exists.
-                    if (instance().getRequestReader() != null) {
-                        instance().getRequestReader().read(request.getUrl());
-                    }
-                }
-            }
-        });
-
         // Return builder.
         return builder;
     }
 
-    //==============================================================================================
-    // Public Methods
-    //==============================================================================================
+    // endregion
 
-    /**
-     * Set a request reader for the client (there can
-     * only be one at a time) - for now.
-     *
-     * @param requestReader Reads the request.
-     */
-    @SuppressWarnings("unused")
-    public void setRequestReader(RequestURLReader requestReader) {
-
-        mRequestURLReader = requestReader;
-    }
-
-    /**
-     * Get the request reader via
-     * singleton instance.
-     *
-     * @return Request url reader.
-     */
-    public RequestURLReader getRequestReader() {
-
-        return mRequestURLReader;
-    }
+    // region Public Methods
+    // =============================================================================================
 
     /**
      * Given a response, try to find and
@@ -168,12 +128,5 @@ public class RestAPIClient extends RestAPIClientBase {
         return mInstanceApi;
     }
 
-    //==============================================================================================
-    // Interfaces
-    //==============================================================================================
-
-    public interface RequestURLReader {
-
-        public void read(final String requestUrl);
-    }
+    // endregion
 }
