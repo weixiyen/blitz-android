@@ -2,6 +2,8 @@ package com.blitz.app.utilities.rest;
 
 import com.google.gson.JsonObject;
 
+import java.util.ArrayList;
+
 import retrofit.Callback;
 import retrofit.http.Body;
 import retrofit.http.DELETE;
@@ -10,9 +12,10 @@ import retrofit.http.PATCH;
 import retrofit.http.POST;
 import retrofit.http.PUT;
 import retrofit.http.Path;
+import retrofit.http.Query;
 
 /**
- * Created by Miguel Gaeta on 6/26/14.
+ * Created by Miguel Gaeta on 6/26/14. Copyright 2014 Blitz Studios
  */
 @SuppressWarnings("UnusedDeclaration")
 public interface RestAPI {
@@ -50,6 +53,14 @@ public interface RestAPI {
 
     @GET("/draft/{draft_id}")
     void draft_get(@Path("draft_id") String draftId, Callback<JsonObject> callback);
+
+    @GET("/drafts")
+    void drafts_get(@Query("keys[]")  ArrayList<String> keys,  // Required
+                    @Query("pluck[]") ArrayList<String> pluck, // Optional
+                    @Query("index")    String index,           // Required
+                    @Query("filter")   String filter,          // Optional
+                    @Query("order_by") String orderBy,         // Optional
+                    @Query("limit")   Integer limit, Callback<JsonObject> callback);
 
     @POST("/queue")
     void queue_post(@Body JsonObject body, Callback<JsonObject> callback);
