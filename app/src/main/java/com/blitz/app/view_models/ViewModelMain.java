@@ -147,8 +147,8 @@ public class ViewModelMain extends ViewModel {
                 final String draftId = message.get("draft_id").getAsString();
 
                 // Setup and sync the current draft.
-                AuthHelper.getCurrentDraft().setDraftId(draftId);
-                AuthHelper.getCurrentDraft().sync(mActivity, new Runnable() {
+                AuthHelper.instance().getCurrentDraft().setDraftId(draftId);
+                AuthHelper.instance().getCurrentDraft().sync(mActivity, new Runnable() {
 
                     @Override
                     public void run() {

@@ -269,7 +269,7 @@ public class MainScreen extends BaseActivity implements ViewModelMain.ViewModelM
                 public void didHide() {
 
                     // Time to enter the draft!
-                    AuthHelper.tryEnterMainApp(MainScreen.this);
+                    AuthHelper.instance().tryEnterMainApp(MainScreen.this);
                 }
             });
         }

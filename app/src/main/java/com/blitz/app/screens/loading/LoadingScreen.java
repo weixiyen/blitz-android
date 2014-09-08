@@ -76,7 +76,7 @@ public class LoadingScreen extends BaseActivity {
             public void run() {
 
                 // Try to enter the application.
-                AuthHelper.tryEnterMainApp(LoadingScreen.this);
+                AuthHelper.instance().tryEnterMainApp(LoadingScreen.this);
             }
         }, SPLASH_TIME_OUT);
     }

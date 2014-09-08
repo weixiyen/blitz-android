@@ -54,10 +54,10 @@ public class SignUpScreenLegal extends BaseActivity {
     public void onLegalAcceptClick() {
 
         // User has accepted legal terms.
-        AuthHelper.setLegalAccepted();
+        AuthHelper.instance().setLegalAccepted();
 
         // Now try to enter the app.
-        AuthHelper.tryEnterMainApp(this);
+        AuthHelper.instance().tryEnterMainApp(this);
     }
 
     // endregion

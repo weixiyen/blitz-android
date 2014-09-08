@@ -154,7 +154,7 @@ public class ObjectModelUser extends ObjectModel {
         };
 
         // Fetch user id.
-        String userId = AuthHelper.getUserId();
+        String userId = AuthHelper.instance().getUserId();
 
         // Make api call to fetch user data.
         mRestAPI.user_get(userId, RestAPICallback.create(operation));
@@ -192,7 +192,7 @@ public class ObjectModelUser extends ObjectModel {
                     JsonObject result = jsonObject.getAsJsonObject("result");
 
                     // Sign in the user.
-                    AuthHelper.signIn(
+                    AuthHelper.instance().signIn(
                             result.get("id").getAsString(),
                             result.get("username").getAsString(), mEmail, mPassword);
 
@@ -235,7 +235,7 @@ public class ObjectModelUser extends ObjectModel {
                     JsonObject user = jsonObject.getAsJsonObject("user");
 
                     // Sign in the user.
-                    AuthHelper.signIn(
+                    AuthHelper.instance().signIn(
                             user.get("id").getAsString(),
                             user.get("username").getAsString(), mEmail, mPassword);
 

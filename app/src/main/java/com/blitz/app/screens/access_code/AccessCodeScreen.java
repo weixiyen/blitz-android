@@ -122,7 +122,7 @@ public class AccessCodeScreen extends BaseActivity {
                 if (mObjectModelCode.isValidCode()) {
 
                     // Grant access.
-                    AuthHelper.grantAccess(AccessCodeScreen.this);
+                    AuthHelper.instance().grantAccess(AccessCodeScreen.this);
                 }
             }
         });

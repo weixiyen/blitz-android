@@ -75,7 +75,7 @@ public class SignUpScreen extends BaseActivity {
             public void onSignUp() {
 
                 // Enter main app.
-                AuthHelper.tryEnterMainApp(SignUpScreen.this);
+                AuthHelper.instance().tryEnterMainApp(SignUpScreen.this);
             }
         });
     }

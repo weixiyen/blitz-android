@@ -18,7 +18,7 @@ import com.google.android.gms.gcm.GoogleCloudMessaging;
 import java.io.IOException;
 
 /**
- * Created by mrkcsc on 8/6/14.
+ * Created by mrkcsc on 8/6/14. Copyright 2014 Blitz Studios
  */
 public class GcmRegistrationHelper {
 
@@ -63,7 +63,7 @@ public class GcmRegistrationHelper {
                 // Fetch it in background.
                 registerInBackground(context);
 
-            } else if (!AuthHelper.isDeviceRegistered()) {
+            } else if (!AuthHelper.instance().isDeviceRegistered()) {
 
                 // Try to persist if not persisted.
                 sendRegistrationIdToBackend(context, getRegistrationId(context));

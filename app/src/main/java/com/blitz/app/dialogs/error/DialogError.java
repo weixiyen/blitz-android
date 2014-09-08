@@ -61,7 +61,7 @@ public class DialogError extends BaseDialog {
             mDialogErrorMessage.setText(R.string.error_unauthorized);
 
             // Sign out user.
-            AuthHelper.signOut();
+            AuthHelper.instance().signOut();
 
             // Set a dismiss listener.
             setOnDismissListener(new Runnable() {

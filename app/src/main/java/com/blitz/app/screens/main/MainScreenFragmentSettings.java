@@ -154,7 +154,7 @@ public class MainScreenFragmentSettings extends BaseFragment {
     public void logoutClicked() {
 
         // Sign out user.
-        AuthHelper.signOut();
+        AuthHelper.instance().signOut();
 
         // Bounce user back to the loading screen.
         startActivity(new Intent(this.getActivity(), LoadingScreen.class));

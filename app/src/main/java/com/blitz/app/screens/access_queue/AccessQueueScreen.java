@@ -136,7 +136,7 @@ public class AccessQueueScreen extends BaseActivity implements ViewModelAccessQu
 
         if (accessGranted) {
 
-            AuthHelper.grantAccess(this);
+            AuthHelper.instance().grantAccess(this);
         }
     }
 

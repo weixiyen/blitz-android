@@ -26,18 +26,40 @@ public class AuthHelper {
     // Member Variables
     //==============================================================================================
 
+    // Instance object.
+    private static AuthHelper mInstance;
+
     // There can be only one current draft.
-    private static ObjectModelDraft mCurrentDraft;
+    private ObjectModelDraft mCurrentDraft;
 
     //==============================================================================================
     // Public Methods
     //==============================================================================================
 
     /**
+     * Fetch singleton.
+     *
+     * @return Singleton object.
+     */
+    public static AuthHelper instance() {
+
+        if (mInstance == null) {
+            synchronized (SoundHelper.class) {
+
+                if (mInstance == null) {
+                    mInstance = new AuthHelper();
+                }
+            }
+        }
+
+        return mInstance;
+    }
+
+    /**
      * Fetch associated user id.
      */
     @SuppressWarnings("unused")
-    public static String getUserId() {
+    public String getUserId() {
 
         return AppDataObject.userId.get();
     }
@@ -48,7 +70,8 @@ public class AuthHelper {
      *
      * @return Is the device registered.
      */
-    public static boolean isDeviceRegistered() {
+    @SuppressWarnings("unused")
+    public boolean isDeviceRegistered() {
 
         return AppDataObject.gcmRegistrationPersisted.get();
     }
@@ -60,7 +83,8 @@ public class AuthHelper {
      *
      * @param activity Target activity.
      */
-    public static void grantAccess(BaseActivity activity) {
+    @SuppressWarnings("unused")
+    public void grantAccess(BaseActivity activity) {
 
         // User now has access.
         AppDataObject.hasAccess.set(true);
@@ -72,7 +96,8 @@ public class AuthHelper {
     /**
      * User accepted legal agreements.
      */
-    public static void setLegalAccepted() {
+    @SuppressWarnings("unused")
+    public void setLegalAccepted() {
 
         // User has accepted legal terms.
         AppDataObject.hasAgreedLegal.set(true);
@@ -85,7 +110,8 @@ public class AuthHelper {
      *
      * @param activity Target activity.
      */
-    public static void tryEnterMainApp(BaseActivity activity) {
+    @SuppressWarnings("unused")
+    public void tryEnterMainApp(BaseActivity activity) {
 
         // First check to see if there is a activity we want
         // to automatically jump to for debugging purposes.
@@ -136,7 +162,8 @@ public class AuthHelper {
      * @param email Email.
      * @param password Password.
      */
-    public static void signIn(String userId, String userName, String email, String password) {
+    @SuppressWarnings("unused")
+    public void signIn(String userId, String userName, String email, String password) {
 
         // Set id, and username from result.
         AppDataObject.userId.set(userId);
@@ -156,7 +183,8 @@ public class AuthHelper {
     /**
      * Sign out the user.
      */
-    public static void signOut() {
+    @SuppressWarnings("unused")
+    public void signOut() {
 
         AppData.clear(AppDataObject.userId);
         AppData.clear(AppDataObject.userName);
@@ -170,7 +198,8 @@ public class AuthHelper {
      *
      * @return Current draft object.
      */
-    public static ObjectModelDraft getCurrentDraft() {
+    @SuppressWarnings("unused")
+    public ObjectModelDraft getCurrentDraft() {
         if (mCurrentDraft == null) {
             mCurrentDraft = new ObjectModelDraft();
         }
@@ -189,7 +218,7 @@ public class AuthHelper {
      *
      * @param activity Activity context.
      */
-    private static void syncAppState(final BaseActivity activity) {
+    private void syncAppState(final BaseActivity activity) {
 
         // Attempt to fetch active drafts for the user.
         ObjectModelDraft.fetchActiveDraftsForUser(activity, AppDataObject.userId.get(),
@@ -230,7 +259,7 @@ public class AuthHelper {
      * @param activity Activity from.
      * @param targetActivity Activity to.
      */
-    private static void startActivity(BaseActivity activity, Class targetActivity) {
+    private void startActivity(BaseActivity activity, Class targetActivity) {
 
         if (targetActivity != null) {
 
