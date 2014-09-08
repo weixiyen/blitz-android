@@ -2,17 +2,23 @@ package com.blitz.app.object_models;
 
 import android.app.Activity;
 
+import com.blitz.app.utilities.json.JsonHelper;
+import com.blitz.app.utilities.logging.LogHelper;
 import com.blitz.app.utilities.rest.RestAPICallback;
 import com.blitz.app.utilities.rest.RestAPIObject;
 import com.blitz.app.utilities.rest.RestAPIOperation;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
 
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 
 /**
  * Created by mrkcsc on 7/27/14. Copyright 2014 Blitz Studios
  */
-public class ObjectModelDraft extends ObjectModel {
+public final class ObjectModelDraft extends ObjectModel {
 
     // region Member Variables
     // =============================================================================================
@@ -20,6 +26,36 @@ public class ObjectModelDraft extends ObjectModel {
     // The id of the draft, must be
     // provided to sync a draft.
     private String mDraftId;
+
+    @SuppressWarnings("unused") private int mDraftStartBuffer;
+    @SuppressWarnings("unused") private int mTimePerPick;
+    @SuppressWarnings("unused") private int mRounds;
+    @SuppressWarnings("unused") private int mUsersNeeded;
+    @SuppressWarnings("unused") private int mWeek;
+    @SuppressWarnings("unused") private int mYear;
+
+    @SuppressWarnings("unused") private String mId;
+    @SuppressWarnings("unused") private String mChatId;
+    @SuppressWarnings("unused") private String mModel;
+    @SuppressWarnings("unused") private String mOwner;
+    @SuppressWarnings("unused") private String mGameStatus;
+    @SuppressWarnings("unused") private String mType;
+
+    @SuppressWarnings("unused") private boolean mUserConfirmed;
+
+    @SuppressWarnings("unused") private Date mCompleted;
+    @SuppressWarnings("unused") private Date mCreated;
+    @SuppressWarnings("unused") private Date mLastServerTime;
+    @SuppressWarnings("unused") private Date mLastUpdated;
+    @SuppressWarnings("unused") private Date mStarted;
+
+    @SuppressWarnings("unused") private HashMap<String, Float>             mPoints;
+    @SuppressWarnings("unused") private HashMap<String, Integer>           mRatingChange;
+    @SuppressWarnings("unused") private HashMap<String, ArrayList<String>> mRosters;
+    @SuppressWarnings("unused") private HashMap<String, ObjectModelUser>   mUserInfo;
+
+    @SuppressWarnings("unused") private ArrayList<String> mPositionsRequired;
+    @SuppressWarnings("unused") private ArrayList<String> mUsers;
 
     // endregion
 
@@ -32,6 +68,7 @@ public class ObjectModelDraft extends ObjectModel {
      * @param draftId Draft id.
      */
     public void setDraftId(String draftId) {
+
         mDraftId = draftId;
     }
 
@@ -42,6 +79,7 @@ public class ObjectModelDraft extends ObjectModel {
      * @param callback Callback on completion.
      */
     public void sync(final Activity activity, final Runnable callback) {
+
         if (mDraftId == null) {
             return;
         }
@@ -60,8 +98,7 @@ public class ObjectModelDraft extends ObjectModel {
         };
 
         // Make api call.
-        mRestAPI.draft_get
-                (mDraftId, RestAPICallback.create(operation));
+        mRestAPI.draft_get(mDraftId, RestAPICallback.create(operation));
     }
 
     /**
@@ -81,10 +118,11 @@ public class ObjectModelDraft extends ObjectModel {
             @Override
             public void success(RestAPIObject restAPIObject) {
 
-                // TODO: Parse and create drafts.
+                // Fetch array of results.
+                JsonArray jsonArray = restAPIObject.getJsonObject().getAsJsonArray("results");
 
                 if (callback != null) {
-                    callback.onSuccess(null);
+                    callback.onSuccess(parseDrafts(jsonArray));
                 }
             }
 
@@ -107,6 +145,17 @@ public class ObjectModelDraft extends ObjectModel {
                 filter, orderBy, null, RestAPICallback.create(operation));
     }
 
+    /**
+     * Fetch list of the users drafts filtered by
+     * various elements for use in the game log.
+     *
+     * @param activity Activity fo loading/error dialogs.
+     * @param userId User id.
+     * @param week Target week.
+     * @param year Target year.
+     * @param limit Total results.
+     * @param callback Success callback, provides the list of drafts.
+     */
     @SuppressWarnings("unused")
     public static void fetchDraftsForUser(Activity activity, String userId,
                                           Integer week,
@@ -119,10 +168,11 @@ public class ObjectModelDraft extends ObjectModel {
             @Override
             public void success(RestAPIObject restAPIObject) {
 
-                // TODO: Parse and create drafts.
+                // Fetch array of results.
+                JsonArray jsonArray = restAPIObject.getJsonObject().getAsJsonArray("results");
 
                 if (callback != null) {
-                    callback.onSuccess(null);
+                    callback.onSuccess(parseDrafts(jsonArray));
                 }
             }
         };
@@ -134,7 +184,7 @@ public class ObjectModelDraft extends ObjectModel {
         // Order by completed and created descending.
         String orderBy = "{\"completed\": \"DESC\", \"created\": \"DESC\"}";
 
-        mRestAPI.drafts_get(getKeys(userId), null, "users",
+        mRestAPI.drafts_get(getKeys(userId), getPluck(), "users",
                 filter, orderBy, limit, RestAPICallback.create(operation));
     }
 
@@ -142,6 +192,85 @@ public class ObjectModelDraft extends ObjectModel {
 
     // region Private Methods
     // =============================================================================================
+
+    /**
+     * Parse raw json result array into a list
+     * of draft object models.
+     *
+     * @param jsonArray Json object array.
+     *
+     * @return List of draft models.
+     */
+    private static ArrayList<ObjectModelDraft> parseDrafts(JsonArray jsonArray) {
+
+        // Create a new list of drafts.
+        ArrayList<ObjectModelDraft> drafts = new ArrayList<ObjectModelDraft>();
+
+        if (jsonArray != null) {
+
+            // Iterate over each draft json.
+            for (int i = 0; i < jsonArray.size(); i++) {
+
+                drafts.add(parseDraft(jsonArray.get(i).getAsJsonObject()));
+            }
+        }
+
+        return drafts;
+    }
+
+    /**
+     * Parse a json object into a populated
+     * draft object model.
+     *
+     * @param jsonObject Json object.
+     *
+     * @return Draft model.
+     */
+    private static ObjectModelDraft parseDraft(JsonObject jsonObject) {
+
+        LogHelper.log("T: " + jsonObject);
+
+        // Create a new draft.
+        ObjectModelDraft draft = new ObjectModelDraft();
+
+        // Parse the integers.
+        draft.mDraftStartBuffer = JsonHelper.parseInt(jsonObject.get("draft_start_buffer"));
+        draft.mTimePerPick      = JsonHelper.parseInt(jsonObject.get("time_per_pick"));
+        draft.mRounds           = JsonHelper.parseInt(jsonObject.get("rounds"));
+        draft.mUsersNeeded      = JsonHelper.parseInt(jsonObject.get("users_needed"));
+        draft.mWeek             = JsonHelper.parseInt(jsonObject.get("week"));
+        draft.mYear             = JsonHelper.parseInt(jsonObject.get("year"));
+
+        // Parse the strings.
+        draft.mId         = JsonHelper.parseString(jsonObject.get("id"));
+        draft.mChatId     = JsonHelper.parseString(jsonObject.get("chat_id"));
+        draft.mType       = JsonHelper.parseString(jsonObject.get("model"));
+        draft.mOwner      = JsonHelper.parseString(jsonObject.get("owner"));
+        draft.mGameStatus = JsonHelper.parseString(jsonObject.get("game_status"));
+        draft.mType       = JsonHelper.parseString(jsonObject.get("type"));
+
+        // Parse the booleans.
+        draft.mUserConfirmed = JsonHelper.parseBool(jsonObject.get("user_confirmed"));
+
+        // Parse the dates.
+        draft.mCompleted      = JsonHelper.parseDate(jsonObject.get("completed"));
+        draft.mCreated        = JsonHelper.parseDate(jsonObject.get("created"));
+        draft.mLastServerTime = JsonHelper.parseDate(jsonObject.get("last_server_time"));
+        draft.mLastUpdated    = JsonHelper.parseDate(jsonObject.get("last_updated"));
+        draft.mStarted        = JsonHelper.parseDate(jsonObject.get("started"));
+
+        // Parse the hash maps.
+        draft.mPoints       = JsonHelper.parseHashMap(jsonObject.getAsJsonObject("points"));
+        draft.mRatingChange = JsonHelper.parseHashMap(jsonObject.getAsJsonObject("rating_change"));
+        draft.mRosters      = JsonHelper.parseHashMap(jsonObject.getAsJsonObject("rosters"));
+        draft.mUserInfo     = JsonHelper.parseHashMap(jsonObject.getAsJsonObject("user_info"));
+
+        // Parse the array lists.
+        draft.mPositionsRequired = JsonHelper.parseArrayList(jsonObject.getAsJsonArray("positions_required"));
+        draft.mUsers             = JsonHelper.parseArrayList(jsonObject.getAsJsonArray("users"));
+
+        return draft;
+    }
 
     /**
      * Fetch keys for draft.
@@ -157,6 +286,30 @@ public class ObjectModelDraft extends ObjectModel {
         keys.add(userId);
 
         return keys;
+    }
+
+    /**
+     * Get pluck values used to fetch
+     * larger draft lists.
+     *
+     * @return List of pluck elements.
+     */
+    private static ArrayList<String> getPluck() {
+
+        ArrayList<String> pluck = new ArrayList<String>();
+
+        pluck.add("id");
+        pluck.add("type");
+        pluck.add("users");
+        pluck.add("rosters");
+        pluck.add("points");
+        pluck.add("created");
+        pluck.add("completed");
+        pluck.add("game_status");
+        pluck.add("user_info");
+        pluck.add("rating_change");
+
+        return pluck;
     }
 
     // endregion
