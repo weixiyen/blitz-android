@@ -67,9 +67,6 @@ public abstract class ViewModel {
     @SuppressWarnings("unused")
     public Bundle saveInstanceState(Bundle savedInstanceState) {
 
-        mActivity  = null;
-        mCallbacks = null;
-
         return savedInstanceState;
     }
 
