@@ -51,7 +51,7 @@ public class AppConfig {
      */
     public static boolean isRestDebuggingEnabled() {
 
-        return false;
+        return true;
     }
 
     /**
@@ -75,7 +75,30 @@ public class AppConfig {
      */
     public static boolean isGcmRegistrationIgnored() {
 
-        return false;
+        return true;
+    }
+
+    //==============================================================================================
+    // Public Methods
+    //==============================================================================================
+
+    /**
+     * Get production flag, this value is read
+     * directly from the manifest.  Do not
+     * modify this function directly.
+     */
+    public static boolean isProduction() {
+
+        // Production flag.
+        return mIsProduction;
+    }
+
+    /**
+     * Fetch the URL for the CDN.
+     */
+    public static String getCDNUrl() {
+
+        return "http://blitzcdn.com/static/content/";
     }
 
     /**
@@ -100,21 +123,6 @@ public class AppConfig {
     public static String getLegalUrl() {
 
         return mBaseURL + "legal?android=true";
-    }
-
-    //==============================================================================================
-    // Public Methods
-    //==============================================================================================
-
-    /**
-     * Get production flag, this value is read
-     * directly from the manifest.  Do not
-     * modify this function directly.
-     */
-    public static boolean isProduction() {
-
-        // Production flag.
-        return mIsProduction;
     }
 
     /**
