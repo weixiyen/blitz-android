@@ -31,7 +31,7 @@ public class JsonHelper {
 
         ArrayList<T> arrayList = new ArrayList<T>();
 
-        if (!jsonElement.isJsonNull()) {
+        if (jsonElement != null && !jsonElement.isJsonNull()) {
 
             // Serialize appropriate array list.
             arrayList = new Gson().fromJson(jsonElement,
