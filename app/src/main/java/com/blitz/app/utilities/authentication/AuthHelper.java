@@ -200,9 +200,6 @@ public class AuthHelper {
      */
     @SuppressWarnings("unused")
     public ObjectModelDraft getCurrentDraft() {
-        if (mCurrentDraft == null) {
-            mCurrentDraft = new ObjectModelDraft();
-        }
 
         return mCurrentDraft;
     }
@@ -220,37 +217,57 @@ public class AuthHelper {
      */
     private void syncAppState(final BaseActivity activity) {
 
-        // Attempt to fetch active drafts for the user.
-        ObjectModelDraft.fetchActiveDraftsForUser(activity, AppDataObject.userId.get(),
-                new ObjectModelDraft.DraftsCallback() {
+        if (mCurrentDraft != null) {
 
-            @Override
-            public void onSuccess(List<ObjectModelDraft> drafts) {
+            // Drafting screen.
+            startActivity(activity, DraftScreen.class);
 
-                // Stop all music.
-                SoundHelper.instance().stopMusic();
+        } else {
 
-                if (drafts == null) {
+            // Attempt to fetch active drafts for the user.
+            ObjectModelDraft.fetchActiveDraftsForUser(activity, AppDataObject.userId.get(),
+                    new ObjectModelDraft.DraftsCallback() {
 
-                    // Play the lobby music after loading.
-                    SoundHelper.instance().startMusic(R.raw.music_lobby_loop0, R.raw.music_lobby_loopn);
+                        @Override
+                        public void onSuccess(List<ObjectModelDraft> drafts) {
 
-                    // Main screen.
-                    startActivity(activity, MainScreen.class);
+                            // Stop all music.
+                            SoundHelper.instance().stopMusic();
 
-                } else {
+                            if (drafts.isEmpty()) {
 
-                    // Start the fast music.
-                    SoundHelper.instance().startMusic(R.raw.music_fast_loop_0, R.raw.music_fast_loop_n);
+                                // Play the lobby music after loading.
+                                SoundHelper.instance().startMusic(R.raw.music_lobby_loop0,
+                                        R.raw.music_lobby_loopn);
 
-                    // Drafting screen.
-                    startActivity(activity, DraftScreen.class);
-                }
+                                // Main screen.
+                                startActivity(activity, MainScreen.class);
 
-                // Disable music if needed.
-                SoundHelper.instance().setMusicDisabled(AppDataObject.settingsMusicDisabled.get());
-            }
-        });
+                            } else {
+
+                                // Start the fast music.
+                                SoundHelper.instance().startMusic(R.raw.music_fast_loop_0,
+                                        R.raw.music_fast_loop_n);
+
+                                // Set the current draft and sync it.
+                                mCurrentDraft = drafts.get(drafts.size() - 1);
+                                mCurrentDraft.sync(activity, new Runnable() {
+
+                                    @Override
+                                    public void run() {
+
+                                        // Drafting screen.
+                                        startActivity(activity, DraftScreen.class);
+                                    }
+                                });
+                            }
+
+                            // Disable music if needed.
+                            SoundHelper.instance().setMusicDisabled
+                                    (AppDataObject.settingsMusicDisabled.get());
+                        }
+                    });
+        }
     }
 
     /**
