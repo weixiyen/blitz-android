@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.os.Handler;
 
 import com.blitz.app.dialogs.error.DialogError;
+import com.blitz.app.object_models.ObjectModelItem;
 import com.blitz.app.object_models.ObjectModelQueue;
 import com.blitz.app.object_models.ObjectModelUser;
 import com.blitz.app.screens.main.MainScreenFragmentPlay;
@@ -175,15 +176,28 @@ public class ViewModelMainPlay extends ViewModel {
             public void run() {
 
                 // Fetch callbacks.
-                ViewModelMainPlayCallbacks callbacks = getCallbacks(ViewModelMainPlayCallbacks.class);
+                final ViewModelMainPlayCallbacks callbacks = getCallbacks(ViewModelMainPlayCallbacks.class);
 
                 if (callbacks != null) {
                     callbacks.onUsername(mModelUser.getUsername());
-                    callbacks.onRating(mModelUser.getRating());
-                    callbacks.onWins(mModelUser.getWins());
-                    callbacks.onLosses(mModelUser.getLosses());
-                    callbacks.onCash(mModelUser.getCash());
+                    callbacks.onRating  (mModelUser.getRating());
+                    callbacks.onWins    (mModelUser.getWins());
+                    callbacks.onLosses  (mModelUser.getLosses());
+                    callbacks.onCash    (mModelUser.getCash());
                 }
+
+                // Fetch associated item model.
+                ObjectModelItem.get(mActivity, mModelUser.getAvatarId(),
+                        new ObjectModelItem.ItemCallback() {
+
+                    @Override
+                    public void onSuccess(ObjectModelItem item) {
+
+                        if (callbacks != null) {
+                            callbacks.onImgPath(item.getDefaultImgPath());
+                        }
+                    }
+                });
             }
         }, new Runnable() {
 
@@ -347,6 +361,7 @@ public class ViewModelMainPlay extends ViewModel {
         public void onWins(int wins);
         public void onLosses(int losses);
         public void onCash(int cash);
+        public void onImgPath(String imgPath);
     }
 
     // endregion
