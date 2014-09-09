@@ -56,7 +56,7 @@ public class JsonHelper {
 
         HashMap<F, S> hashMap = new HashMap<F, S>();
 
-        if (!jsonElement.isJsonNull()) {
+        if (jsonElement != null && !jsonElement.isJsonNull()) {
 
             // Serialize appropriate hash map.
             hashMap = new Gson().fromJson(jsonElement,
