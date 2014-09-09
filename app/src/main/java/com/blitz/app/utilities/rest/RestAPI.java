@@ -55,12 +55,22 @@ public interface RestAPI {
     void draft_get(@Path("draft_id") String draftId, Callback<JsonObject> callback);
 
     @GET("/drafts")
-    void drafts_get(@Query("keys[]")  ArrayList<String> keys,  // Required
+    void drafts_get(@Query("keys[]") ArrayList<String> keys,   // Required
                     @Query("pluck[]") ArrayList<String> pluck, // Optional
-                    @Query("index")    String index,           // Required
-                    @Query("filter")   String filter,          // Optional
+                    @Query("index") String index,              // Required
+                    @Query("filter") String filter,            // Optional
                     @Query("order_by") String orderBy,         // Optional
-                    @Query("limit")   Integer limit, Callback<JsonObject> callback);
+                    @Query("limit") Integer limit, Callback<JsonObject> callback);
+
+    @GET("/item/{item_id}")
+    void item_get(@Path("item_id") String itemId, Callback<JsonObject> callback);
+
+    @GET("/items")
+    void items_get(@Query("keys[]") ArrayList<String> keys, // Required
+                   @Query("index") String index,            // Required
+                   @Query("filter") String filter,          // Optional
+                   @Query("limit") Integer limit,           // Optional
+                   Callback<JsonObject> callback);
 
     @POST("/queue")
     void queue_post(@Body JsonObject body, Callback<JsonObject> callback);
