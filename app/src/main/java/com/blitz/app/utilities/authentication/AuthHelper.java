@@ -204,6 +204,17 @@ public class AuthHelper {
         return mCurrentDraft;
     }
 
+    /**
+     * Sets the current draft model object.
+     *
+     * @param objectModelDraft Draft model object.
+     */
+    @SuppressWarnings("unused")
+    public void setCurrentDraft(ObjectModelDraft objectModelDraft) {
+
+        mCurrentDraft = objectModelDraft;
+    }
+
     //==============================================================================================
     // Private Methods
     //==============================================================================================

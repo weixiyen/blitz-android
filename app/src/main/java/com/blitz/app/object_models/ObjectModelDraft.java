@@ -93,6 +93,9 @@ public final class ObjectModelDraft extends ObjectModel {
                 // Set the offset.
                 setServerTimeOffset(clientTimeBeforeRequest);
 
+                // Parse result into this draft.
+                parseDraft(ObjectModelDraft.this, restAPIObject.getJsonObject());
+
                 // Now left queue.
                 if (callback != null) {
                     callback.run();
@@ -214,7 +217,13 @@ public final class ObjectModelDraft extends ObjectModel {
             // Iterate over each draft json.
             for (int i = 0; i < jsonArray.size(); i++) {
 
-                drafts.add(parseDraft(jsonArray.get(i).getAsJsonObject()));
+                // Create a new draft.
+                ObjectModelDraft draft = new ObjectModelDraft();
+
+                // Populate it with json results.
+                parseDraft(draft, jsonArray.get(i).getAsJsonObject());
+
+                drafts.add(draft);
             }
         }
 
@@ -225,53 +234,50 @@ public final class ObjectModelDraft extends ObjectModel {
      * Parse a json object into a populated
      * draft object model.
      *
+     * @param draft Draft object.
      * @param jsonObject Json object.
-     *
-     * @return Draft model.
      */
-    private static ObjectModelDraft parseDraft(JsonObject jsonObject) {
+    private static void parseDraft(ObjectModelDraft draft, JsonObject jsonObject) {
 
-        // Create a new draft.
-        ObjectModelDraft draft = new ObjectModelDraft();
+        if (draft != null) {
 
-        // Parse the integers.
-        draft.mDraftStartBuffer = JsonHelper.parseInt(jsonObject.get("draft_start_buffer"));
-        draft.mTimePerPick      = JsonHelper.parseInt(jsonObject.get("time_per_pick"));
-        draft.mRounds           = JsonHelper.parseInt(jsonObject.get("rounds"));
-        draft.mUsersNeeded      = JsonHelper.parseInt(jsonObject.get("users_needed"));
-        draft.mWeek             = JsonHelper.parseInt(jsonObject.get("week"));
-        draft.mYear             = JsonHelper.parseInt(jsonObject.get("year"));
+            // Parse the integers.
+            draft.mDraftStartBuffer = JsonHelper.parseInt(jsonObject.get("draft_start_buffer"));
+            draft.mTimePerPick      = JsonHelper.parseInt(jsonObject.get("time_per_pick"));
+            draft.mRounds           = JsonHelper.parseInt(jsonObject.get("rounds"));
+            draft.mUsersNeeded      = JsonHelper.parseInt(jsonObject.get("users_needed"));
+            draft.mWeek             = JsonHelper.parseInt(jsonObject.get("week"));
+            draft.mYear             = JsonHelper.parseInt(jsonObject.get("year"));
 
-        // Parse the strings.
-        draft.mId         = JsonHelper.parseString(jsonObject.get("id"));
-        draft.mChatId     = JsonHelper.parseString(jsonObject.get("chat_id"));
-        draft.mType       = JsonHelper.parseString(jsonObject.get("model"));
-        draft.mOwner      = JsonHelper.parseString(jsonObject.get("owner"));
-        draft.mGameStatus = JsonHelper.parseString(jsonObject.get("game_status"));
-        draft.mType       = JsonHelper.parseString(jsonObject.get("type"));
-        draft.mStatus     = JsonHelper.parseString(jsonObject.get("status"));
+            // Parse the strings.
+            draft.mId         = JsonHelper.parseString(jsonObject.get("id"));
+            draft.mChatId     = JsonHelper.parseString(jsonObject.get("chat_id"));
+            draft.mType       = JsonHelper.parseString(jsonObject.get("model"));
+            draft.mOwner      = JsonHelper.parseString(jsonObject.get("owner"));
+            draft.mGameStatus = JsonHelper.parseString(jsonObject.get("game_status"));
+            draft.mType       = JsonHelper.parseString(jsonObject.get("type"));
+            draft.mStatus     = JsonHelper.parseString(jsonObject.get("status"));
 
-        // Parse the booleans.
-        draft.mUserConfirmed = JsonHelper.parseBool(jsonObject.get("user_confirmed"));
+            // Parse the booleans.
+            draft.mUserConfirmed = JsonHelper.parseBool(jsonObject.get("user_confirmed"));
 
-        // Parse the dates.
-        draft.mCompleted      = JsonHelper.parseDate(jsonObject.get("completed"));
-        draft.mCreated        = JsonHelper.parseDate(jsonObject.get("created"));
-        draft.mLastServerTime = JsonHelper.parseDate(jsonObject.get("last_server_time"));
-        draft.mLastUpdated    = JsonHelper.parseDate(jsonObject.get("last_updated"));
-        draft.mStarted        = JsonHelper.parseDate(jsonObject.get("started"));
+            // Parse the dates.
+            draft.mCompleted      = JsonHelper.parseDate(jsonObject.get("completed"));
+            draft.mCreated        = JsonHelper.parseDate(jsonObject.get("created"));
+            draft.mLastServerTime = JsonHelper.parseDate(jsonObject.get("last_server_time"));
+            draft.mLastUpdated    = JsonHelper.parseDate(jsonObject.get("last_updated"));
+            draft.mStarted        = JsonHelper.parseDate(jsonObject.get("started"));
 
-        // Parse the hash maps.
-        draft.mPoints       = JsonHelper.parseHashMap(jsonObject.getAsJsonObject("points"));
-        draft.mRatingChange = JsonHelper.parseHashMap(jsonObject.getAsJsonObject("rating_change"));
-        draft.mRosters      = JsonHelper.parseHashMap(jsonObject.getAsJsonObject("rosters"));
-        draft.mUserInfo     = JsonHelper.parseHashMap(jsonObject.getAsJsonObject("user_info"));
+            // Parse the hash maps.
+            draft.mPoints       = JsonHelper.parseHashMap(jsonObject.getAsJsonObject("points"));
+            draft.mRatingChange = JsonHelper.parseHashMap(jsonObject.getAsJsonObject("rating_change"));
+            draft.mRosters      = JsonHelper.parseHashMap(jsonObject.getAsJsonObject("rosters"));
+            draft.mUserInfo     = JsonHelper.parseHashMap(jsonObject.getAsJsonObject("user_info"));
 
-        // Parse the array lists.
-        draft.mPositionsRequired = JsonHelper.parseArrayList(jsonObject.getAsJsonArray("positions_required"));
-        draft.mUsers             = JsonHelper.parseArrayList(jsonObject.getAsJsonArray("users"));
-
-        return draft;
+            // Parse the array lists.
+            draft.mPositionsRequired = JsonHelper.parseArrayList(jsonObject.getAsJsonArray("positions_required"));
+            draft.mUsers             = JsonHelper.parseArrayList(jsonObject.getAsJsonArray("users"));
+        }
     }
 
     /**

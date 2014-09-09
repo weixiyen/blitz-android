@@ -2,6 +2,7 @@ package com.blitz.app.view_models;
 
 import android.app.Activity;
 
+import com.blitz.app.object_models.ObjectModelDraft;
 import com.blitz.app.utilities.comet.CometAPICallback;
 import com.blitz.app.utilities.comet.CometAPIManager;
 import com.blitz.app.object_models.ObjectModelQueue;
@@ -146,9 +147,11 @@ public class ViewModelMain extends ViewModel {
                 // Fetch the draft id.
                 final String draftId = message.get("draft_id").getAsString();
 
-                // Setup and sync the current draft.
-                AuthHelper.instance().getCurrentDraft().setDraftId(draftId);
-                AuthHelper.instance().getCurrentDraft().sync(mActivity, new Runnable() {
+                ObjectModelDraft objectModelDraft = new ObjectModelDraft();
+
+                // Set and sync the draft.
+                objectModelDraft.setDraftId(draftId);
+                objectModelDraft.sync(mActivity, new Runnable() {
 
                     @Override
                     public void run() {
@@ -163,6 +166,9 @@ public class ViewModelMain extends ViewModel {
                         callbacks.onEnterDraft(ViewModelMain.this);
                     }
                 });
+
+                // Set it as the current draft.
+                AuthHelper.instance().setCurrentDraft(objectModelDraft);
             }
         }
     }
