@@ -6,9 +6,10 @@ import android.os.Handler;
 import com.blitz.app.dialogs.error.DialogError;
 import com.blitz.app.dialogs.loading.DialogLoading;
 
+import java.util.Date;
 
 /**
- * Created by Miguel Gaeta on 6/29/14.
+ * Created by Miguel Gaeta on 6/29/14. Copyright 2014 Blitz Studios
  */
 public abstract class RestAPIOperation {
 
@@ -26,6 +27,11 @@ public abstract class RestAPIOperation {
     private static boolean mOperationThrottle;
     private static Handler mOperationThrottleHandler;
     private static Runnable mOperationThrottleRunnable;
+
+    // Operation time.
+    private long mOperationTimeMilliseconds;
+    private Date mOperationTimeStart;
+    private Date mOperationTimeEnd;
 
     //==============================================================================================
     // Overwritten Methods
@@ -57,6 +63,9 @@ public abstract class RestAPIOperation {
      * Triggered when a model operation begins.
      */
     void start() {
+
+        // Set the start time.
+        mOperationTimeStart = new Date();
 
         // Setup operation throttling.
         setOperationThrottle();
@@ -90,6 +99,14 @@ public abstract class RestAPIOperation {
      * @param restAPIObject Resulting rest object.
      */
     void finish(final RestAPIObject restAPIObject, final boolean success, final Integer httpStatusCode) {
+
+        // Set the end time.
+        mOperationTimeEnd = new Date();
+
+        // Calculate operation time.
+        mOperationTimeMilliseconds =
+                mOperationTimeEnd.getTime() -
+                        mOperationTimeStart.getTime();
 
         // Trigger operation callbacks after hide.
         DialogLoading.HideListener hideListener = new DialogLoading.HideListener() {
@@ -143,6 +160,31 @@ public abstract class RestAPIOperation {
 
         // In progress if loading or error dialog is on screen.
         return mOperationThrottle;
+    }
+
+    //==============================================================================================
+    // Protected Methods
+    //==============================================================================================
+
+    /**
+     * Fetch how long it took to
+     * run this operation.
+     *
+     * @return Time in milliseconds.
+     */
+    @SuppressWarnings("unused")
+    protected Long getOperationTime() {
+        return mOperationTimeMilliseconds;
+    }
+
+    @SuppressWarnings("unused")
+    protected Date getOperationTimeStart() {
+        return mOperationTimeStart;
+    }
+
+    @SuppressWarnings("unused")
+    protected Date getmOperationTimeEnd() {
+        return mOperationTimeEnd;
     }
 
     //==============================================================================================
