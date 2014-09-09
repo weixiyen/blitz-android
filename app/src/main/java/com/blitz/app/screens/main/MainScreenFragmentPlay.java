@@ -182,7 +182,9 @@ public class MainScreenFragmentPlay extends BaseFragment implements ViewModelMai
     @Override
     public void onQueueTick(String secondsInQueue) {
 
-        mPlayButtonTime.setText(secondsInQueue);
+        if (mPlayButtonTime != null) {
+            mPlayButtonTime.setText(secondsInQueue);
+        }
     }
 
     /**
@@ -191,7 +193,9 @@ public class MainScreenFragmentPlay extends BaseFragment implements ViewModelMai
     @Override
     public void onUsername(String username) {
 
-        mStatsUserName.setText(username);
+        if (mStatsUserName != null) {
+            mStatsUserName.setText(username);
+        }
     }
 
     /**
@@ -200,7 +204,9 @@ public class MainScreenFragmentPlay extends BaseFragment implements ViewModelMai
     @Override
     public void onRating(int rating) {
 
-        mStatsRating.setText(Integer.toString(rating));
+        if (mStatsRating != null) {
+            mStatsRating.setText(Integer.toString(rating));
+        }
     }
 
     /**
@@ -209,7 +215,9 @@ public class MainScreenFragmentPlay extends BaseFragment implements ViewModelMai
     @Override
     public void onWins(int wins) {
 
-        mStatsWins.setText(Integer.toString(wins));
+        if (mStatsWins != null) {
+            mStatsWins.setText(Integer.toString(wins));
+        }
     }
 
     /**
@@ -218,7 +226,9 @@ public class MainScreenFragmentPlay extends BaseFragment implements ViewModelMai
     @Override
     public void onLosses(int losses) {
 
-        mStatsLosses.setText(Integer.toString(losses));
+        if (mStatsLosses != null) {
+            mStatsLosses.setText(Integer.toString(losses));
+        }
     }
 
     /**
@@ -227,8 +237,9 @@ public class MainScreenFragmentPlay extends BaseFragment implements ViewModelMai
     @Override
     public void onCash(int cash) {
 
-        // Set available cash, formatted.
-        mCashAvailable.setText("You have $" + String.format("%.2f", cash / 100.0f));
+        if (mCashAvailable != null) {
+            mCashAvailable.setText("You have $" + String.format("%.2f", cash / 100.0f));
+        }
     }
 
     // endregion
