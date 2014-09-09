@@ -82,8 +82,6 @@ public final class ObjectModelDraft extends ObjectModel {
             return;
         }
 
-        final long clientTimeBeforeRequest = new Date().getTime();
-
         // Operation callbacks.
         RestAPIOperation operation = new RestAPIOperation(activity) {
 
@@ -91,7 +89,7 @@ public final class ObjectModelDraft extends ObjectModel {
             public void success(RestAPIObject restAPIObject) {
 
                 // Set the offset.
-                setServerTimeOffset(clientTimeBeforeRequest);
+                setServerTimeOffset(getOperationTimeStart(), getmOperationTimeEnd());
 
                 // Parse result into this draft.
                 parseDraft(ObjectModelDraft.this, restAPIObject.getJsonObject());
@@ -337,23 +335,18 @@ public final class ObjectModelDraft extends ObjectModel {
     /**
      * Some sort of magic that makes for a better
      * real time experience in terms of latency.
-     *
-     * See Weixi for details.
-     *
-     * @param clientTimeBeforeRequest Client time before the request.
      */
-    private void setServerTimeOffset(long clientTimeBeforeRequest) {
+    private void setServerTimeOffset(Date clientTimeBeforeRequest, Date clientTimeAfterRequest) {
 
         if (isDrafting() && mLastServerTime != null) {
 
-            // Fetch current time on the client.
-            long clientTimeAfterRequest = new Date().getTime();
-
             // Half half of the request time in milliseconds.
-            long halfOfRequestTime = (clientTimeAfterRequest - clientTimeBeforeRequest) / 2;
+            long halfOfRequestTime = (clientTimeAfterRequest.getTime() -
+                    clientTimeBeforeRequest.getTime()) / 2;
 
             // Now get the exact time at midpoint of request.
-            long timeAtMidpointOfRequest = clientTimeBeforeRequest + halfOfRequestTime;
+            long timeAtMidpointOfRequest = clientTimeBeforeRequest.getTime() +
+                    halfOfRequestTime;
 
             mServerTimeOffset = Math.abs(mLastServerTime.getTime() - timeAtMidpointOfRequest);
 
