@@ -3,7 +3,6 @@ package com.blitz.app.object_models;
 import android.app.Activity;
 
 import com.blitz.app.utilities.json.JsonHelper;
-import com.blitz.app.utilities.logging.LogHelper;
 import com.blitz.app.utilities.rest.RestAPICallback;
 import com.blitz.app.utilities.rest.RestAPIObject;
 import com.blitz.app.utilities.rest.RestAPIOperation;
@@ -23,9 +22,7 @@ public final class ObjectModelDraft extends ObjectModel {
     // region Member Variables
     // =============================================================================================
 
-    // The id of the draft, must be
-    // provided to sync a draft.
-    private String mDraftId;
+    private long mServerTimeOffset;
 
     @SuppressWarnings("unused") private int mDraftStartBuffer;
     @SuppressWarnings("unused") private int mTimePerPick;
@@ -40,6 +37,7 @@ public final class ObjectModelDraft extends ObjectModel {
     @SuppressWarnings("unused") private String mOwner;
     @SuppressWarnings("unused") private String mGameStatus;
     @SuppressWarnings("unused") private String mType;
+    @SuppressWarnings("unused") private String mStatus;
 
     @SuppressWarnings("unused") private boolean mUserConfirmed;
 
@@ -69,7 +67,7 @@ public final class ObjectModelDraft extends ObjectModel {
      */
     public void setDraftId(String draftId) {
 
-        mDraftId = draftId;
+        mId = draftId;
     }
 
     /**
@@ -80,15 +78,20 @@ public final class ObjectModelDraft extends ObjectModel {
      */
     public void sync(final Activity activity, final Runnable callback) {
 
-        if (mDraftId == null) {
+        if (mId == null) {
             return;
         }
+
+        final long clientTimeBeforeRequest = new Date().getTime();
 
         // Operation callbacks.
         RestAPIOperation operation = new RestAPIOperation(activity) {
 
             @Override
             public void success(RestAPIObject restAPIObject) {
+
+                // Set the offset.
+                setServerTimeOffset(clientTimeBeforeRequest);
 
                 // Now left queue.
                 if (callback != null) {
@@ -98,7 +101,7 @@ public final class ObjectModelDraft extends ObjectModel {
         };
 
         // Make api call.
-        mRestAPI.draft_get(mDraftId, RestAPICallback.create(operation));
+        mRestAPI.draft_get(mId, RestAPICallback.create(operation));
     }
 
     /**
@@ -228,8 +231,6 @@ public final class ObjectModelDraft extends ObjectModel {
      */
     private static ObjectModelDraft parseDraft(JsonObject jsonObject) {
 
-        LogHelper.log("T: " + jsonObject);
-
         // Create a new draft.
         ObjectModelDraft draft = new ObjectModelDraft();
 
@@ -248,6 +249,7 @@ public final class ObjectModelDraft extends ObjectModel {
         draft.mOwner      = JsonHelper.parseString(jsonObject.get("owner"));
         draft.mGameStatus = JsonHelper.parseString(jsonObject.get("game_status"));
         draft.mType       = JsonHelper.parseString(jsonObject.get("type"));
+        draft.mStatus     = JsonHelper.parseString(jsonObject.get("status"));
 
         // Parse the booleans.
         draft.mUserConfirmed = JsonHelper.parseBool(jsonObject.get("user_confirmed"));
@@ -310,6 +312,49 @@ public final class ObjectModelDraft extends ObjectModel {
         pluck.add("rating_change");
 
         return pluck;
+    }
+
+    /**
+     * Are we drafting.
+     */
+    private boolean isDrafting() {
+        return mStatus != null && mStatus.equals("drafting");
+    }
+
+    /**
+     * Is the draft complete.
+     */
+    private boolean isDraftComplete() {
+        return mStatus != null && mStatus.equals("completed");
+    }
+
+    /**
+     * Some sort of magic that makes for a better
+     * real time experience in terms of latency.
+     *
+     * See Weixi for details.
+     *
+     * @param clientTimeBeforeRequest Client time before the request.
+     */
+    private void setServerTimeOffset(long clientTimeBeforeRequest) {
+
+        if (isDrafting() && mLastServerTime != null) {
+
+            // Fetch current time on the client.
+            long clientTimeAfterRequest = new Date().getTime();
+
+            // Half half of the request time in milliseconds.
+            long halfOfRequestTime = (clientTimeAfterRequest - clientTimeBeforeRequest) / 2;
+
+            // Now get the exact time at midpoint of request.
+            long timeAtMidpointOfRequest = clientTimeBeforeRequest + halfOfRequestTime;
+
+            mServerTimeOffset = Math.abs(mLastServerTime.getTime() - timeAtMidpointOfRequest);
+
+        } else {
+
+            mServerTimeOffset = 0;
+        }
     }
 
     // endregion
