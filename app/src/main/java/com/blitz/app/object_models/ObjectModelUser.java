@@ -73,6 +73,14 @@ public class ObjectModelUser extends ObjectModel {
     }
 
     /**
+     * Fetch avatar id.
+     */
+    public String getAvatarId() {
+
+        return mAvatarId;
+    }
+
+    /**
      * Set email.
      *
      * @param email Email.
