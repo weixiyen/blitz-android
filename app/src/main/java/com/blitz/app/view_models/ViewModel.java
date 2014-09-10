@@ -25,10 +25,6 @@ public abstract class ViewModel {
     /**
      * Empty constructor is not allowed.
      */
-    @SuppressWarnings("unused")
-    private ViewModel() {
-
-    }
 
     /**
      * Creating a new view model requires an activity and a callback.
