@@ -1,24 +1,19 @@
 package com.blitz.app.screens.main;
 
-import android.app.Activity;
-import android.content.Context;
-import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import com.blitz.app.R;
 import com.blitz.app.utilities.android.BaseFragment;
-import com.blitz.app.view_models.MatchInfo;
+import com.blitz.app.view_models.HeadToHeadDraft;
 import com.blitz.app.view_models.ViewModel;
 import com.blitz.app.view_models.ViewModelMatches;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.InjectView;
@@ -55,7 +50,7 @@ public class MainScreenFragmentRecent extends BaseFragment implements ViewModelM
         setupScrubber();
     }
 
-    public void onMatches(List<MatchInfo> matches) {
+    public void onMatches(List<HeadToHeadDraft> matches) {
         final MatchInfoAdapter adapter = new MatchInfoAdapter(getActivity().getApplicationContext(),
                 matches, getActivity());
 

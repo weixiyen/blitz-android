@@ -28,9 +28,9 @@ public class ViewModelMatches extends ViewModel {
             new ObjectModelDraft.DraftsCallback() {
                 @Override
                 public void onSuccess(List<ObjectModelDraft> drafts) {
-                    List<MatchInfo> matches = new ArrayList<MatchInfo>(drafts.size());
+                    List<HeadToHeadDraft> matches = new ArrayList<HeadToHeadDraft>(drafts.size());
                     for(ObjectModelDraft draft: drafts) {
-                        matches.add(new MatchInfo(
+                        matches.add(new HeadToHeadDraft(
                                 draft.getTeamName(0),
                                 draft.getTeamPoints(0),
                                 draft.getTeamName(1),
@@ -50,7 +50,7 @@ public class ViewModelMatches extends ViewModel {
     }
 
     public interface ViewModelMatchesCallbacks extends ViewModel.ViewModelCallbacks {
-        public void onMatches(List<MatchInfo> matches);
+        public void onMatches(List<HeadToHeadDraft> matches);
     }
 }
 

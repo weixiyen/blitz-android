@@ -1,11 +1,11 @@
 package com.blitz.app.view_models;
 
 /**
- * An immutable object model for two-player head to head drafts.
+ * An immutable model for two-player head to head drafts.
  *
  * Created by Nate on 9/7/14.
  */
-public class MatchInfo {
+public class HeadToHeadDraft {
 
     private final String mPlayer1Name;
     private final float mPlayer1Score;
@@ -13,9 +13,9 @@ public class MatchInfo {
     private final float mPlayer2Score;
     private final String mStatus;
 
-    public MatchInfo(String player1Name, float player1Score,
-                     String player2Name, float player2Score,
-                     String status) {
+    public HeadToHeadDraft(String player1Name, float player1Score,
+                           String player2Name, float player2Score,
+                           String status) {
         mPlayer1Name  = player1Name;
         mPlayer1Score = player1Score;
         mPlayer2Name  = player2Name;

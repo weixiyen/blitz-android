@@ -10,7 +10,7 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import com.blitz.app.R;
-import com.blitz.app.view_models.MatchInfo;
+import com.blitz.app.view_models.HeadToHeadDraft;
 
 import java.util.List;
 
@@ -21,10 +21,10 @@ import java.util.List;
  */
 class MatchInfoAdapter extends ArrayAdapter {
 
-    private List<MatchInfo> mItems;
+    private List<HeadToHeadDraft> mItems;
     private final Activity mActivity;
 
-    public MatchInfoAdapter(Context context, List<MatchInfo> items, Activity activity) {
+    public MatchInfoAdapter(Context context, List<HeadToHeadDraft> items, Activity activity) {
         super(context, R.layout.main_screen_fragment_recent_list_item, items);
         mItems = items;
         mActivity = activity;
@@ -40,7 +40,7 @@ class MatchInfoAdapter extends ArrayAdapter {
                     .inflate(R.layout.main_screen_fragment_recent_list_item, null);
         }
 
-        final MatchInfo match = mItems.get(position);
+        final HeadToHeadDraft match = mItems.get(position);
 
         if(match != null) {
 
