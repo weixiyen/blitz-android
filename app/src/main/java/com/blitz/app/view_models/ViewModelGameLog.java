@@ -9,15 +9,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * A view model for draft logs.
+ * A view model for game logs.
  *
  * Created by Nate on 9/7/14.
  */
-public class ViewModelMatches extends ViewModel {
+public class ViewModelGameLog extends ViewModel {
 
-    private final ViewModelMatchesCallbacks mCallbacks;
+    private final ViewModelGameLogCallbacks mCallbacks;
 
-    public ViewModelMatches(Activity activity, ViewModelMatchesCallbacks callbacks) {
+    public ViewModelGameLog(Activity activity, ViewModelGameLogCallbacks callbacks) {
         super(activity, callbacks);
         mCallbacks = callbacks;
     }
@@ -38,7 +38,7 @@ public class ViewModelMatches extends ViewModel {
                                 "IN PROGRESS" // TODO: derive the status from the data.
                         ));
                     }
-                    mCallbacks.onMatches(matches);
+                    mCallbacks.onDrafts(matches);
                 }
          });
     }
@@ -49,8 +49,8 @@ public class ViewModelMatches extends ViewModel {
         updateWeek(1);
     }
 
-    public interface ViewModelMatchesCallbacks extends ViewModel.ViewModelCallbacks {
-        public void onMatches(List<HeadToHeadDraft> matches);
+    public interface ViewModelGameLogCallbacks extends ViewModel.ViewModelCallbacks {
+        public void onDrafts(List<HeadToHeadDraft> drafts);
     }
 }
 

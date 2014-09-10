@@ -12,7 +12,7 @@ import com.blitz.app.R;
 import com.blitz.app.utilities.android.BaseFragment;
 import com.blitz.app.view_models.HeadToHeadDraft;
 import com.blitz.app.view_models.ViewModel;
-import com.blitz.app.view_models.ViewModelMatches;
+import com.blitz.app.view_models.ViewModelGameLog;
 
 import java.util.List;
 
@@ -21,7 +21,7 @@ import butterknife.InjectView;
 /**
  * Created by mrkcsc on 7/14/14. Copyright 2014 Blitz Studios
  */
-public class MainScreenFragmentRecent extends BaseFragment implements ViewModelMatches.ViewModelMatchesCallbacks {
+public class MainScreenFragmentRecent extends BaseFragment implements ViewModelGameLog.ViewModelGameLogCallbacks {
 
     // region Member Variables
     // =============================================================================================
@@ -32,7 +32,7 @@ public class MainScreenFragmentRecent extends BaseFragment implements ViewModelM
     @InjectView(R.id.main_recent_scrubber) ViewGroup mScrubber;
     @InjectView(R.id.main_recent_list)     ListView mRecentMatches;
 
-    private ViewModelMatches mViewModel; // lazy loaded
+    private ViewModelGameLog mViewModel; // lazy loaded
 
     // endregion
 
@@ -50,7 +50,7 @@ public class MainScreenFragmentRecent extends BaseFragment implements ViewModelM
         setupScrubber();
     }
 
-    public void onMatches(List<HeadToHeadDraft> matches) {
+    public void onDrafts(List<HeadToHeadDraft> matches) {
         final MatchInfoAdapter adapter = new MatchInfoAdapter(getActivity().getApplicationContext(),
                 matches, getActivity());
 
@@ -100,7 +100,7 @@ public class MainScreenFragmentRecent extends BaseFragment implements ViewModelM
     @Override
     public ViewModel onFetchViewModel() {
         if(mViewModel == null) {
-            mViewModel = new ViewModelMatches(getActivity(), this);
+            mViewModel = new ViewModelGameLog(getActivity(), this);
         }
         return mViewModel;
     }
