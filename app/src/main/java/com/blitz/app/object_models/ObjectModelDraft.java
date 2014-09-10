@@ -57,6 +57,19 @@ public final class ObjectModelDraft extends ObjectModel {
 
     // endregion
 
+    // region Getters
+    // =============================================================================================
+
+    public String getTeamName(int team) {
+        return mUserInfo.get(mUsers.get(team)).getUsername();
+    }
+
+    public float getTeamPoints(int team) {
+        return mPoints.get(mUsers.get(team));
+    }
+
+    // endregion
+
     // region Public Methods
     // =============================================================================================
 

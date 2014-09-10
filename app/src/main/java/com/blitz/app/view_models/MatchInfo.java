@@ -1,9 +1,12 @@
 package com.blitz.app.view_models;
 
 /**
+ * An immutable object model for two-player head to head drafts.
+ *
  * Created by Nate on 9/7/14.
  */
 public class MatchInfo {
+
     private final String mPlayer1Name;
     private final float mPlayer1Score;
     private final String mPlayer2Name;
