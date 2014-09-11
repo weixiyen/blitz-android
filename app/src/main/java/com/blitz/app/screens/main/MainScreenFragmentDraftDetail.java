@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.blitz.app.R;
 import com.blitz.app.simple_models.Player;
+import com.blitz.app.utilities.android.BaseActivity;
 import com.blitz.app.utilities.android.BaseFragment;
 import com.blitz.app.view_models.HeadToHeadDraft;
 import com.blitz.app.view_models.ViewModel;
@@ -24,7 +25,7 @@ import butterknife.InjectView;
 /**
  * Created by mrkcsc on 7/14/14. Copyright 2014 Blitz Studios
  */
-public class MainScreenFragmentDraftDetail extends BaseFragment implements ViewModelDraftDetail.ViewModelDraftDetailCallbacks {
+public class MainScreenFragmentDraftDetail extends BaseActivity implements ViewModelDraftDetail.ViewModelDraftDetailCallbacks {
 
     // region Member Variables
     // =============================================================================================
@@ -40,8 +41,8 @@ public class MainScreenFragmentDraftDetail extends BaseFragment implements ViewM
      * Setup the recent matches UI.
      */
     @Override
-    protected void onCreateView(Bundle savedInstanceState) {
-        super.onCreateView(savedInstanceState);
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
 
     }
 
@@ -51,8 +52,8 @@ public class MainScreenFragmentDraftDetail extends BaseFragment implements ViewM
     // =============================================================================================
 
     public void onPlayers(List<Pair<Player, Player>> players) {
-        final PlayerListAdapter adapter = new PlayerListAdapter(getActivity().getApplicationContext(),
-                players, getActivity());
+        final PlayerListAdapter adapter = new PlayerListAdapter(getApplicationContext(),
+                players, this);
 
         if(mPlayerList != null) {
             mPlayerList.setAdapter(adapter);
