@@ -7,7 +7,6 @@ import com.google.gson.reflect.TypeToken;
 
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
 
 /**
  * Created by mrkcsc on 9/8/14. Copyright 2014 Blitz Studios
@@ -39,31 +38,6 @@ public class JsonHelper {
         }
 
         return arrayList;
-    }
-
-    /***
-     * Parse a hash map json element.
-     *
-     * @param jsonElement Target json element.
-     *
-     * @param <F> First element type.
-     * @param <S> Second element type.
-     *
-     * @return Hash map object.
-     */
-    @SuppressWarnings("unused")
-    public static <F, S> HashMap<F, S> parseHashMap(JsonElement jsonElement) {
-
-        HashMap<F, S> hashMap = new HashMap<F, S>();
-
-        if (jsonElement != null && !jsonElement.isJsonNull()) {
-
-            // Serialize appropriate hash map.
-            hashMap = new Gson().fromJson(jsonElement,
-                    new TypeToken<HashMap<F, S>>() { }.getType());
-        }
-
-        return hashMap;
     }
 
     /**
