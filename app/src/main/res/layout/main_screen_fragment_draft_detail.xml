@@ -2,7 +2,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/main_recent"
+    android:id="@+id/main_draft_detail"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="${packageName}.${activityClass}"
@@ -37,7 +37,6 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:layout_alignBottom="@+id/main_recent_header"
             android:background="@color/background_inner_divider_light"/>
 
 
@@ -96,7 +95,7 @@
             android:background="@color/background_inner_divider"/>
 
         <ListView
-            android:id="@+id/main_recent_list"
+            android:id="@+id/main_draft_detail_player_list"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center"

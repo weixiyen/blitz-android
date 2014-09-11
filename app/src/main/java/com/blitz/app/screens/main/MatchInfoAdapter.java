@@ -2,6 +2,7 @@ package com.blitz.app.screens.main;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,6 +12,7 @@ import android.widget.TextView;
 
 import com.blitz.app.R;
 import com.blitz.app.view_models.HeadToHeadDraft;
+import com.blitz.app.view_models.ViewModelDraftDetail;
 
 import java.util.List;
 
@@ -66,6 +68,13 @@ class MatchInfoAdapter extends ArrayAdapter {
             status.setText(match.getStatus() + "\n" +
                     match.getPlayer1Name() + " vs " + match.getPlayer2Name());
         }
+
+        v.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mActivity.startActivity(new Intent(mActivity, ViewModelDraftDetail.class));
+            }
+        });
 
         return v;
     }
