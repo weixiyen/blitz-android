@@ -23,7 +23,6 @@ public class ViewModelGameLog extends ViewModel {
     }
 
     public void updateWeek(int week) {
-        /*
 
         ObjectModelDraft.fetchDraftsForUser(mActivity, AuthHelper.instance().getUserId(), 1, 2014, null,
             new ObjectModelDraft.DraftsCallback() {
@@ -42,24 +41,6 @@ public class ViewModelGameLog extends ViewModel {
                     mCallbacks.onDrafts(matches);
                 }
          });
-         */
-
-        // TODO: test test test
-        final List<HeadToHeadDraft> list = new ArrayList<HeadToHeadDraft>();
-        list.add(new HeadToHeadDraft("galfgarion", 9000.1f, "mericsson", 9000.2f, "IN PROGRESS"));
-        list.add(new HeadToHeadDraft("galfgarion", 9000.3f, "mgaeta", 90.2f, "IN PROGRESS"));
-        list.add(new HeadToHeadDraft("galfgarion", 900.1f, "supercalifragilisticexpialidocious", 9000.4f, "IN PROGRESS"));
-
-        final List<HeadToHeadDraft> list2 = new ArrayList<HeadToHeadDraft>();
-        list2.add(new HeadToHeadDraft("galfgarion", 90.1f, "jsekiguchi", 342.2f, "IN PROGRESS"));
-        list2.add(new HeadToHeadDraft("galfgarion", 9000.3f, "crajan", 90.2f, "IN PROGRESS"));
-        list2.add(new HeadToHeadDraft("galfgarion", 900.1f, "bsundaravaradan", 900.4f, "IN PROGRESS"));
-
-        if(week % 2 == 0) {
-            mCallbacks.onDrafts(list);
-        } else {
-            mCallbacks.onDrafts(list2);
-        }
     }
 
     @Override
