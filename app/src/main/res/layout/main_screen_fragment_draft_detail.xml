@@ -1,0 +1,114 @@
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_recent"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="${packageName}.${activityClass}"
+    tools:ignore="ButtonStyle,UnusedAttribute,HardcodedText">
+
+    <com.blitz.app.utilities.imageview_plus.ImageViewPlus
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:contentDescription="@string/empty_string"
+        android:scaleX="-1"
+        android:src="@drawable/asset_bg_main_dark"
+        app:scaleType="topCrop" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/main_recent_header"
+            style="@style/TextViewStyle"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:background="#40000000"
+            fontPath="@string/app_font_helvetica_condensed_bold"
+            android:gravity="center"
+            android:paddingTop="0dp"
+            android:text="Week 1"
+            android:textColor="@color/text_color_link"
+            android:textSize="18sp" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_alignBottom="@+id/main_recent_header"
+            android:background="@color/background_inner_divider_light"/>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            android:layout_marginTop="0dp"
+            android:background="@color/background_inner_dark"
+            android:gravity="center_vertical|center"
+            android:orientation="horizontal">
+
+            <TextView
+                style="@style/TextViewStyle"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_gravity="top"
+                android:layout_weight="1"
+                fontPath="@string/app_font_helvetica_condensed_bold"
+                android:gravity="center"
+                android:text="Player 1\n0.00"
+                android:textAllCaps="true"
+                android:textColor="@color/text_color_light"
+                android:textSize="20sp"/>
+
+            <TextView
+                style="@style/TextViewStyle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="top"
+                android:layout_weight="1"
+                fontPath="@string/app_font_helvetica_condensed_bold"
+                android:gravity="center"
+                android:text="vs"
+                android:textAllCaps="true"
+                android:textColor="@color/text_color_light"
+                android:textSize="20sp"/>
+
+            <TextView
+                style="@style/TextViewStyle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="top"
+                android:layout_weight="1"
+                fontPath="@string/app_font_helvetica_condensed_bold"
+                android:gravity="center"
+                android:text="Player 2\n0.00"
+                android:textAllCaps="true"
+                android:textColor="@color/text_color_light"
+                android:textSize="20sp"/>
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="0dp"
+            android:background="@color/background_inner_divider"/>
+
+        <ListView
+            android:id="@+id/main_recent_list"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:layout_marginTop="0dp"
+            android:background="@color/background_inner"/>
+
+        <View
+            android:id="@+id/main_recent_footer_border_0"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/background_inner_divider_light"/>
+
+    </LinearLayout>
+
+</RelativeLayout>
