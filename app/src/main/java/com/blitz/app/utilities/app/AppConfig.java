@@ -51,7 +51,7 @@ public class AppConfig {
      */
     public static boolean isRestDebuggingEnabled() {
 
-        return true;
+        return false;
     }
 
     /**
@@ -75,7 +75,7 @@ public class AppConfig {
      */
     public static boolean isGcmRegistrationIgnored() {
 
-        return true;
+        return false;
     }
 
     //==============================================================================================
