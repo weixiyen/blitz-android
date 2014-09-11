@@ -8,6 +8,7 @@ import com.blitz.app.utilities.rest.RestAPICallback;
 import com.blitz.app.utilities.rest.RestAPIObject;
 import com.blitz.app.utilities.rest.RestAPIOperation;
 import com.google.gson.JsonObject;
+import com.google.gson.annotations.SerializedName;
 
 /**
  * Created by mrkcsc on 7/9/14. Copyright 2014 Blitz Studios
@@ -17,15 +18,22 @@ public class ObjectModelUser extends ObjectModel {
     // region Member Variables
     // =============================================================================================
 
-    private String mUsername;
-    private String mPassword;
-    private String mEmail;
-    private String mAvatarId;
+    @SuppressWarnings("unused") @SerializedName("banned") private Boolean mBanned;
 
-    private int mRating;
-    private int mWins;
-    private int mLosses;
-    private int mCash;
+    @SuppressWarnings("unused") @SerializedName("losses")         private int mLosses;
+    @SuppressWarnings("unused") @SerializedName("wins")           private int mWins;
+    @SuppressWarnings("unused") @SerializedName("matches_played") private int mMatchesPlayed;
+    @SuppressWarnings("unused") @SerializedName("rating")         private int mRating;
+    @SuppressWarnings("unused") @SerializedName("ties")           private int mTies;
+    @SuppressWarnings("unused") @SerializedName("cash")           private int mCash;
+
+    @SuppressWarnings("unused") @SerializedName("id")        private String mId;
+    @SuppressWarnings("unused") @SerializedName("username")  private String mUsername;
+    @SuppressWarnings("unused") @SerializedName("avatar_id") private String mAvatarId;
+    @SuppressWarnings("unused") @SerializedName("full_name") private String mFullName;
+    @SuppressWarnings("unused") @SerializedName("email")     private String mEmail;
+
+    private String mPassword;
 
     // endregion
 

@@ -6,8 +6,6 @@ import com.blitz.app.utilities.json.JsonHelper;
 import com.blitz.app.utilities.rest.RestAPICallback;
 import com.blitz.app.utilities.rest.RestAPIObject;
 import com.blitz.app.utilities.rest.RestAPIOperation;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.reflect.TypeToken;
@@ -282,9 +280,6 @@ public final class ObjectModelDraft extends ObjectModel {
             draft.mLastUpdated    = JsonHelper.parseDate(jsonObject.get("last_updated"));
             draft.mStarted        = JsonHelper.parseDate(jsonObject.get("started"));
 
-            // Create a complex GSON builder.
-            Gson builder = new GsonBuilder().enableComplexMapKeySerialization().create();
-
             // Parse into objects.
             JsonObject jsonObjectPoints       = jsonObject.getAsJsonObject("points");
             JsonObject jsonObjectRatingChange = jsonObject.getAsJsonObject("rating_change");
@@ -293,25 +288,25 @@ public final class ObjectModelDraft extends ObjectModel {
 
             if (jsonObjectPoints != null && !jsonObjectPoints.isJsonNull()) {
 
-                draft.mPoints =  builder.fromJson(jsonObjectPoints,
+                draft.mPoints =  JsonHelper.builder().fromJson(jsonObjectPoints,
                         new TypeToken<HashMap<String, Float>>() { }.getType());
             }
 
             if (jsonObjectRatingChange != null && !jsonObjectRatingChange.isJsonNull()) {
 
-                draft.mRatingChange = builder.fromJson(jsonObjectRatingChange,
+                draft.mRatingChange = JsonHelper.builder().fromJson(jsonObjectRatingChange,
                         new TypeToken<HashMap<String, Integer>>() { }.getType());
             }
 
             if (jsonObjectRosters != null && !jsonObjectRosters.isJsonNull()) {
 
-                draft.mRosters = builder.fromJson(jsonObjectRosters,
+                draft.mRosters = JsonHelper.builder().fromJson(jsonObjectRosters,
                         new TypeToken<HashMap<String, ArrayList<String>>>() { }.getType());
             }
 
             if (jsonObjectUserInfo != null && !jsonObjectUserInfo.isJsonNull()) {
 
-                draft.mUserInfo = builder.fromJson(jsonObjectUserInfo,
+                draft.mUserInfo = JsonHelper.builder().fromJson(jsonObjectUserInfo,
                         new TypeToken<HashMap<String, ObjectModelUser>>() { }.getType());
             }
 

@@ -17,6 +17,21 @@ public class JsonHelper {
     // =============================================================================================
 
     /**
+     * Create a standard builder that
+     * can parse our dates and complex objects.
+     *
+     * @return Gson builder.
+     */
+    @SuppressWarnings("unused")
+    public static Gson builder() {
+
+        return new GsonBuilder()
+                .enableComplexMapKeySerialization()
+                .setDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS")
+                .create();
+    }
+
+    /**
      * Parse an array list json element.
      *
      * @param jsonElement Target json element.
