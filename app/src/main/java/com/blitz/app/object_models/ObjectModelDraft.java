@@ -6,8 +6,11 @@ import com.blitz.app.utilities.json.JsonHelper;
 import com.blitz.app.utilities.rest.RestAPICallback;
 import com.blitz.app.utilities.rest.RestAPIObject;
 import com.blitz.app.utilities.rest.RestAPIOperation;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
+import com.google.gson.reflect.TypeToken;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -279,11 +282,38 @@ public final class ObjectModelDraft extends ObjectModel {
             draft.mLastUpdated    = JsonHelper.parseDate(jsonObject.get("last_updated"));
             draft.mStarted        = JsonHelper.parseDate(jsonObject.get("started"));
 
-            // Parse the hash maps.
-            draft.mPoints       = JsonHelper.parseHashMap(jsonObject.getAsJsonObject("points"));
-            draft.mRatingChange = JsonHelper.parseHashMap(jsonObject.getAsJsonObject("rating_change"));
-            draft.mRosters      = JsonHelper.parseHashMap(jsonObject.getAsJsonObject("rosters"));
-            draft.mUserInfo     = JsonHelper.parseHashMap(jsonObject.getAsJsonObject("user_info"));
+            // Create a complex GSON builder.
+            Gson builder = new GsonBuilder().enableComplexMapKeySerialization().create();
+
+            // Parse into objects.
+            JsonObject jsonObjectPoints       = jsonObject.getAsJsonObject("points");
+            JsonObject jsonObjectRatingChange = jsonObject.getAsJsonObject("rating_change");
+            JsonObject jsonObjectRosters      = jsonObject.getAsJsonObject("rosters");
+            JsonObject jsonObjectUserInfo     = jsonObject.getAsJsonObject("user_info");
+
+            if (jsonObjectPoints != null && !jsonObjectPoints.isJsonNull()) {
+
+                draft.mPoints =  builder.fromJson(jsonObjectPoints,
+                        new TypeToken<HashMap<String, Float>>() { }.getType());
+            }
+
+            if (jsonObjectRatingChange != null && !jsonObjectRatingChange.isJsonNull()) {
+
+                draft.mRatingChange = builder.fromJson(jsonObjectRatingChange,
+                        new TypeToken<HashMap<String, Integer>>() { }.getType());
+            }
+
+            if (jsonObjectRosters != null && !jsonObjectRosters.isJsonNull()) {
+
+                draft.mRosters = builder.fromJson(jsonObjectRosters,
+                        new TypeToken<HashMap<String, ArrayList<String>>>() { }.getType());
+            }
+
+            if (jsonObjectUserInfo != null && !jsonObjectUserInfo.isJsonNull()) {
+
+                draft.mUserInfo = builder.fromJson(jsonObjectUserInfo,
+                        new TypeToken<HashMap<String, ObjectModelUser>>() { }.getType());
+            }
 
             // Parse the array lists.
             draft.mPositionsRequired = JsonHelper.parseArrayList(jsonObject.getAsJsonArray("positions_required"));
