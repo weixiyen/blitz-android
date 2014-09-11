@@ -72,7 +72,7 @@ class MatchInfoAdapter extends ArrayAdapter {
         v.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mActivity.startActivity(new Intent(mActivity, ViewModelDraftDetail.class));
+                mActivity.startActivity(new Intent(mActivity, MainScreenFragmentDraftDetail.class));
             }
         });
 
