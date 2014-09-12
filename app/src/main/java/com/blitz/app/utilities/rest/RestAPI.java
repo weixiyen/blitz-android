@@ -1,8 +1,10 @@
 package com.blitz.app.utilities.rest;
 
+import com.blitz.app.simple_models.Player;
 import com.google.gson.JsonObject;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import retrofit.Callback;
 import retrofit.http.Body;
@@ -80,6 +82,14 @@ public interface RestAPI {
 
     @PUT("/queue")
     void queue_put(@Body JsonObject body, Callback<JsonObject> callback);
+
+    @GET("/stats")
+    void stats_get(@Query("keys[]") List<String> playerIds,
+                   @Query("index")        String index,
+                   @Query("pluck[]")      String pluck,
+                   @Query("limit")        String limit,
+                   Callback<JsonObject> callback);
+
 
     @GET("/user/{user_id}")
     void user_get(@Path("user_id") String userId, Callback<JsonObject> callback);

@@ -46,10 +46,11 @@ public class MainScreenFragmentDraftDetail extends BaseActivity implements ViewM
         super.onCreate(savedInstanceState);
 
         // TODO remove this test code
+        Player p1 = new Player("Johnny Football", "SF", "QB", 2.234f);
         List<Pair<Player, Player>> testPlayers = new ArrayList<Pair<Player, Player>>();
-        testPlayers.add(null);
-        testPlayers.add(null);
-        testPlayers.add(null);
+        testPlayers.add(Pair.create(p1, p1));
+        testPlayers.add(Pair.create(p1, p1));
+        testPlayers.add(Pair.create(p1, p1));
         onPlayers(testPlayers);
 
     }

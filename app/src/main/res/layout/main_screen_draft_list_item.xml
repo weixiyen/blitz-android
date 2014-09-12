@@ -9,35 +9,35 @@
 
     <LinearLayout
         android:layout_width="0dp"
-        android:layout_weight="1"
+        android:layout_weight="2"
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <TextView
+        <TextView android:id="@+id/player1_position_team"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:text="QB - BAL"
+            android:text="QB - USA"
             />
-        <TextView
+        <TextView android:id="@+id/player1_name"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:text="Joe Flacco"
+            android:text="Rocky Balboa"
             />
-        <TextView
+        <TextView android:id="@+id/player1_game_result"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:text="W, 26-6 vs PIT"
+            android:text="W, 26-6 vs CCP"
             />
      </LinearLayout>
 
-    <TextView android:id="@+id/main_list_p1_score"
+    <TextView android:id="@+id/player1_score"
         android:layout_height="match_parent"
         android:layout_width="0dp"
         android:layout_weight="1"
         android:text="0.00"
         android:gravity="center"/>
 
-    <TextView android:id="@+id/main_list_p2_score"
+    <TextView android:id="@+id/player2_score"
         android:layout_height="match_parent"
         android:layout_width="0dp"
         android:layout_weight="1"
@@ -46,24 +46,24 @@
 
     <LinearLayout
         android:layout_width="0dp"
-        android:layout_weight="1"
+        android:layout_weight="2"
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <TextView
+        <TextView android:id="@+id/player2_position_team"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:text="QB - BAL"
+            android:text="QB - CCP"
             />
-        <TextView
+        <TextView android:id="@+id/player2_name"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:text="Joe Flacco"
+            android:text="Ivan Drago"
             />
-        <TextView
+        <TextView android:id="@+id/player2_game_result"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:text="W, 26-6 vs PIT"
+            android:text="L, 6-26 vs USA"
             />
     </LinearLayout>
 

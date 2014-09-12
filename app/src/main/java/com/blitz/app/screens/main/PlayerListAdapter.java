@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.TextView;
 
 import com.blitz.app.R;
 import com.blitz.app.simple_models.Player;
@@ -43,6 +44,25 @@ public class PlayerListAdapter extends ArrayAdapter {
                     .inflate(R.layout.main_screen_draft_list_item, null);
         }
 
+        Pair<Player, Player> players = mPlayers.get(position);
+
+        ((TextView) v.findViewById(R.id.player1_name)).setText(players.first.getName());
+        ((TextView) v.findViewById(R.id.player1_position_team)).setText(getPositionTeam(players.first));
+        ((TextView) v.findViewById(R.id.player1_score)).setText(getScore(players.first));
+
+        ((TextView) v.findViewById(R.id.player2_name)).setText(players.second.getName());
+        ((TextView) v.findViewById(R.id.player2_position_team)).setText(getPositionTeam(players.second));
+        ((TextView) v.findViewById(R.id.player2_score)).setText(getScore(players.second));
+
+
         return v;
+    }
+
+    private static String getScore(Player player) {
+        return String.format("%.02f", player.getScore());
+    }
+
+    private static String getPositionTeam(Player player) {
+        return player.getPosition() + " - " + player.getTeamName();
     }
 }
