@@ -18,6 +18,7 @@ import com.blitz.app.view_models.ViewModel;
 import com.blitz.app.view_models.ViewModelDraftDetail;
 import com.blitz.app.view_models.ViewModelGameLog;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.InjectView;
@@ -43,6 +44,13 @@ public class MainScreenFragmentDraftDetail extends BaseActivity implements ViewM
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        // TODO remove this test code
+        List<Pair<Player, Player>> testPlayers = new ArrayList<Pair<Player, Player>>();
+        testPlayers.add(null);
+        testPlayers.add(null);
+        testPlayers.add(null);
+        onPlayers(testPlayers);
 
     }
 
