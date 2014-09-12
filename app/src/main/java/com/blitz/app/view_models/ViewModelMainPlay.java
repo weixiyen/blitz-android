@@ -206,7 +206,7 @@ public class ViewModelMainPlay extends ViewModel {
 
                 // Show error dialog configured to
                 // log out user after user action.
-                new DialogError(mActivity).show(true, true);
+                new DialogError(mActivity).showUnauthorized();
             }
         });
     }

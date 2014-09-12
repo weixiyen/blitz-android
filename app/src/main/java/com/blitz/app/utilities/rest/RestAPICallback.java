@@ -91,7 +91,7 @@ public class RestAPICallback<T> implements Callback<T> {
         RestAPIObject restAPIObject = new RestAPIObject((JsonObject) jsonObject);
 
         // Finish the operation.
-        mOperation.finish(restAPIObject);
+        mOperation.finish(restAPIObject, null);
     }
 
     /**
@@ -102,13 +102,7 @@ public class RestAPICallback<T> implements Callback<T> {
     @Override
     public void failure(RetrofitError retrofitError) {
 
-        // Fetch response.
-        Response response = retrofitError.getResponse();
-
-        if (response == null) {
-            mOperation.finish(null, false, null);
-        } else {
-            mOperation.finish(null, false, response.getStatus());
-        }
+        // Finish with error.
+        mOperation.finish(null, retrofitError);
     }
 }
