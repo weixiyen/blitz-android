@@ -75,7 +75,8 @@ public class MainScreenFragmentDraftDetail extends BaseActivity implements ViewM
 
     @Override
     public void onMatchup(String player1Name, float player1score, String player2Name, float player2Score) {
-        ((TextView)findViewById(R.id.player1_name)).setText(player1Name);
+        ((TextView)findViewById(R.id.player_1_details).findViewById(R.id.player_name)).setText(player1Name);
+        ((TextView)findViewById(R.id.player_2_details).findViewById(R.id.player_name)).setText(player2Name);
     }
 
     // endregion

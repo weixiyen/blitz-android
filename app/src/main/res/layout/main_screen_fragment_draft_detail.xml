@@ -46,46 +46,27 @@
             android:layout_marginTop="0dp"
             android:background="@color/background_inner_dark"
             android:gravity="center_vertical|center"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:paddingBottom="10dp">
 
-            <TextView
-                style="@style/TextViewStyle"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_gravity="top"
-                android:layout_weight="1"
-                fontPath="@string/app_font_helvetica_condensed_bold"
-                android:gravity="center"
-                android:text="Player 1\n0.00"
-                android:textAllCaps="true"
-                android:textColor="@color/text_color_light"
-                android:textSize="20sp"/>
+            <include android:id="@+id/player_1_details"
+                layout="@layout/player_avatar_with_score"/>
 
             <TextView
                 style="@style/TextViewStyle"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_gravity="top"
-                android:layout_weight="1"
-                fontPath="@string/app_font_helvetica_condensed_bold"
                 android:gravity="center"
+                android:layout_weight=".25"
+                fontPath="@string/app_font_helvetica_condensed_bold"
                 android:text="vs"
                 android:textAllCaps="true"
                 android:textColor="@color/text_color_light"
                 android:textSize="20sp"/>
 
-            <TextView
-                style="@style/TextViewStyle"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="top"
-                android:layout_weight="1"
-                fontPath="@string/app_font_helvetica_condensed_bold"
-                android:gravity="center"
-                android:text="Player 2\n0.00"
-                android:textAllCaps="true"
-                android:textColor="@color/text_color_light"
-                android:textSize="20sp"/>
+            <include android:id="@+id/player_2_details"
+                layout="@layout/player_avatar_with_score"/>
+
         </LinearLayout>
 
         <View
