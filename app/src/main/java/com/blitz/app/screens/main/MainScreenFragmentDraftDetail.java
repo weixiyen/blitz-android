@@ -31,6 +31,8 @@ public class MainScreenFragmentDraftDetail extends BaseActivity implements ViewM
     // region Member Variables
     // =============================================================================================
 
+    private ViewModelDraftDetail mViewModel;
+
     @InjectView(R.id.main_draft_detail_player_list)     ListView mPlayerList;
 
     // endregion
@@ -43,16 +45,18 @@ public class MainScreenFragmentDraftDetail extends BaseActivity implements ViewM
      */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
+    }
 
-        // TODO remove this test code
-        Player p1 = new Player("Johnny Football", "SF", "QB", 2.234f);
-        List<Pair<Player, Player>> testPlayers = new ArrayList<Pair<Player, Player>>();
-        testPlayers.add(Pair.create(p1, p1));
-        testPlayers.add(Pair.create(p1, p1));
-        testPlayers.add(Pair.create(p1, p1));
-        onPlayers(testPlayers);
+    @Override
+    public ViewModel onFetchViewModel() {
 
+        if(mViewModel == null) {
+            mViewModel = new ViewModelDraftDetail(this, this);
+        }
+
+        return mViewModel;
     }
 
     // endregion
@@ -67,6 +71,11 @@ public class MainScreenFragmentDraftDetail extends BaseActivity implements ViewM
         if(mPlayerList != null) {
             mPlayerList.setAdapter(adapter);
         }
+    }
+
+    @Override
+    public void onMatchup(String player1Name, float player1score, String player2Name, float player2Score) {
+        ((TextView)findViewById(R.id.player1_name)).setText(player1Name);
     }
 
     // endregion
