@@ -6,6 +6,7 @@ import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -37,6 +38,28 @@ public class MainScreenFragmentDraftDetail extends BaseActivity implements ViewM
 
     // endregion
 
+    // region Private Methods
+    // =============================================================================================
+
+    private String formatScore(float score) {
+        return String.format("%.02f", score);
+    }
+
+    private void setName(int playerDetails, String name) {
+        ((TextView)findViewById(playerDetails).findViewById(R.id.player_name)).setText(name);
+    }
+
+    private void setScore(int playerDetails, float score) {
+        ((TextView)findViewById(playerDetails).findViewById(R.id.player_score)).setText(formatScore(score));
+    }
+
+    private void flipPlayer2Avatar() {
+        findViewById(R.id.player_2_details).findViewById(R.id.player_avatar).setScaleX(-1f);
+    }
+
+
+    // endregion
+
     // region Overwritten Methods
     // =============================================================================================
 
@@ -47,6 +70,8 @@ public class MainScreenFragmentDraftDetail extends BaseActivity implements ViewM
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
+
+        flipPlayer2Avatar();
     }
 
     @Override
@@ -75,8 +100,12 @@ public class MainScreenFragmentDraftDetail extends BaseActivity implements ViewM
 
     @Override
     public void onMatchup(String player1Name, float player1score, String player2Name, float player2Score) {
-        ((TextView)findViewById(R.id.player_1_details).findViewById(R.id.player_name)).setText(player1Name);
-        ((TextView)findViewById(R.id.player_2_details).findViewById(R.id.player_name)).setText(player2Name);
+
+        setName(R.id.player_1_details, player1Name);
+        setName(R.id.player_2_details, player2Name);
+
+        setScore(R.id.player_1_details, player1score);
+        setScore(R.id.player_2_details, player2Score);
     }
 
     // endregion

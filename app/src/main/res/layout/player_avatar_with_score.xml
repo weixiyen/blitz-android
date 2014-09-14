@@ -7,30 +7,28 @@ android:layout_height="match_parent"
 android:gravity="center"
 android:orientation="vertical">
 
-<TextView android:id="@+id/player1_avatar"
+<ImageView
+    android:id="@+id/player_avatar"
     android:layout_width="match_parent"
     android:layout_height="0dp"
     android:layout_weight="4"
-    android:gravity="center"
-
-    style="@style/TextViewStyle"
-    fontPath="@string/app_font_helvetica_condensed_bold"
-    android:textSize="20sp"
-    android:textColor="@color/text_color_light"
-
-    android:text="Helmet goes here"
-    android:textAllCaps="true"/>
+    android:padding="10dp"
+    android:contentDescription="player avatar"
+    android:src="@drawable/asset_bg_helmet_sample" />
 
 <TextView android:id="@+id/player_name"
     android:layout_width="match_parent"
     android:layout_height="0dp"
     android:layout_weight="1"
     android:gravity="center"
+    android:padding="5dp"
 
     style="@style/TextViewStyle"
     fontPath="@string/app_font_helvetica_condensed_bold"
     android:textSize="20sp"
     android:textColor="@color/text_color_light"
+    android:background="@android:color/transparent"
+    android:paddingBottom="5dp"
 
     android:text="Player 1"/>
 
@@ -44,6 +42,7 @@ android:orientation="vertical">
     fontPath="@string/app_font_helvetica_condensed_bold"
     android:textSize="20sp"
     android:textColor="@color/text_color_light"
+    android:background="@android:color/transparent"
 
     android:text="0.00"/>
 
