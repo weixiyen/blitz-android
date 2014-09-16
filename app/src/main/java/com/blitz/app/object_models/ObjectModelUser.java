@@ -10,6 +10,8 @@ import com.blitz.app.utilities.rest.RestAPIOperation;
 import com.google.gson.JsonObject;
 import com.google.gson.annotations.SerializedName;
 
+import retrofit.client.Response;
+
 /**
  * Created by mrkcsc on 7/9/14. Copyright 2014 Blitz Studios
  */
@@ -154,17 +156,15 @@ public class ObjectModelUser extends ObjectModel {
 
             /**
              * Triggered when a model operation fails.
-             *
-             * @param logout Should also log out the user.
              */
             @Override
-            public void failure(boolean logout) {
+            public void failure(Response response, boolean networkError) {
 
                 if (failure != null) {
                     failure.run();
                 } else {
 
-                    super.failure(logout);
+                    super.failure(response, networkError);
                 }
             }
         };

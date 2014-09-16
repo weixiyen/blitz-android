@@ -11,9 +11,7 @@ import android.widget.TextView;
 
 import com.blitz.app.R;
 import com.blitz.app.simple_models.Player;
-import com.blitz.app.view_models.HeadToHeadDraft;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**

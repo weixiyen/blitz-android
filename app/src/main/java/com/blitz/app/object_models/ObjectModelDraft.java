@@ -15,6 +15,8 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
+import retrofit.client.Response;
+
 /**
  * Created by mrkcsc on 7/27/14. Copyright 2014 Blitz Studios
  */
@@ -103,7 +105,7 @@ public final class ObjectModelDraft extends ObjectModel {
             public void success(RestAPIObject restAPIObject) {
 
                 // Set the offset.
-                setServerTimeOffset(getOperationTimeStart(), getmOperationTimeEnd());
+                setServerTimeOffset(getOperationTimeStart(), getOperationTimeEnd());
 
                 // Parse result into this draft.
                 parseDraft(ObjectModelDraft.this, restAPIObject.getJsonObject());
@@ -148,8 +150,11 @@ public final class ObjectModelDraft extends ObjectModel {
              * Force log out the user on failure.
              */
             @Override
-            public void failure(boolean logout) {
-                super.failure(true);
+            public void failure(Response response, boolean networkError) {
+
+                if (getDialogError() != null) {
+                    getDialogError().showUnauthorized();
+                }
             }
         };
 
@@ -289,25 +294,29 @@ public final class ObjectModelDraft extends ObjectModel {
             if (jsonObjectPoints != null && !jsonObjectPoints.isJsonNull()) {
 
                 draft.mPoints =  JsonHelper.builder().fromJson(jsonObjectPoints,
-                        new TypeToken<HashMap<String, Float>>() { }.getType());
+                        new TypeToken<HashMap<String, Float>>() {
+                        }.getType());
             }
 
             if (jsonObjectRatingChange != null && !jsonObjectRatingChange.isJsonNull()) {
 
                 draft.mRatingChange = JsonHelper.builder().fromJson(jsonObjectRatingChange,
-                        new TypeToken<HashMap<String, Integer>>() { }.getType());
+                        new TypeToken<HashMap<String, Integer>>() {
+                        }.getType());
             }
 
             if (jsonObjectRosters != null && !jsonObjectRosters.isJsonNull()) {
 
                 draft.mRosters = JsonHelper.builder().fromJson(jsonObjectRosters,
-                        new TypeToken<HashMap<String, ArrayList<String>>>() { }.getType());
+                        new TypeToken<HashMap<String, ArrayList<String>>>() {
+                        }.getType());
             }
 
             if (jsonObjectUserInfo != null && !jsonObjectUserInfo.isJsonNull()) {
 
                 draft.mUserInfo = JsonHelper.builder().fromJson(jsonObjectUserInfo,
-                        new TypeToken<HashMap<String, ObjectModelUser>>() { }.getType());
+                        new TypeToken<HashMap<String, ObjectModelUser>>() {
+                        }.getType());
             }
 
             // Parse the array lists.

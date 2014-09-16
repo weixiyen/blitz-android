@@ -1,6 +1,5 @@
 package com.blitz.app.utilities.rest;
 
-import com.blitz.app.simple_models.Player;
 import com.google.gson.JsonObject;
 
 import java.util.ArrayList;

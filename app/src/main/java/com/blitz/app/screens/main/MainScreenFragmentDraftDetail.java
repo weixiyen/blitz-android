@@ -1,25 +1,16 @@
 package com.blitz.app.screens.main;
 
-import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Pair;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import com.blitz.app.R;
 import com.blitz.app.simple_models.Player;
 import com.blitz.app.utilities.android.BaseActivity;
-import com.blitz.app.utilities.android.BaseFragment;
-import com.blitz.app.view_models.HeadToHeadDraft;
 import com.blitz.app.view_models.ViewModel;
 import com.blitz.app.view_models.ViewModelDraftDetail;
-import com.blitz.app.view_models.ViewModelGameLog;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.InjectView;

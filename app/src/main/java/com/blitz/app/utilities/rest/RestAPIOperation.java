@@ -8,6 +8,9 @@ import com.blitz.app.dialogs.loading.DialogLoading;
 
 import java.util.Date;
 
+import retrofit.RetrofitError;
+import retrofit.client.Response;
+
 /**
  * Created by Miguel Gaeta on 6/29/14. Copyright 2014 Blitz Studios
  */
@@ -83,22 +86,7 @@ public abstract class RestAPIOperation {
      *
      * @param restAPIObject Resulting rest object.
      */
-    void finish(RestAPIObject restAPIObject) {
-
-        // Operation is finished, pass in success/fail boolean.
-        finish(restAPIObject, !restAPIObject.hasErrors(), null);
-    }
-
-    /**
-     * Finish helper method that handles
-     * finishing the operation in sync with
-     * any dialogs/running UI events, etc.
-     *
-     * @param httpStatusCode HTTP status code.
-     * @param success Operation success.
-     * @param restAPIObject Resulting rest object.
-     */
-    void finish(final RestAPIObject restAPIObject, final boolean success, final Integer httpStatusCode) {
+    void finish(final RestAPIObject restAPIObject, final RetrofitError retrofitError) {
 
         // Set the end time.
         mOperationTimeEnd = new Date();
@@ -114,11 +102,24 @@ public abstract class RestAPIOperation {
             @Override
             public void didHide() {
 
-                if (success) {
-                    success(restAPIObject);
+                // If no error, or error result from the REST call.
+                if (retrofitError == null) {
+
+                    if (restAPIObject.hasErrors()) {
+
+                        // General failure.
+                        failure(null, false);
+
+                    } else {
+
+                        // Successful.
+                        success(restAPIObject);
+                    }
+
                 } else {
-                    failure(httpStatusCode != null &&
-                            httpStatusCode == 401);
+
+                    // Pass failed response and network error flags.
+                    failure(retrofitError.getResponse(), retrofitError.isNetworkError());
                 }
             }
         };
@@ -144,15 +145,48 @@ public abstract class RestAPIOperation {
     public abstract void success(RestAPIObject restAPIObject);
 
     /**
-     * Triggered when a model operation fails.
-     *
-     * @param logout Should also log out the user.
+     * Triggered when a REST operation suffers
+     * an error of some kind.
+     * @param response Response object (can be null).
+     * @param networkError Network error flag.
      */
-    public void failure(boolean logout) {
+    public void failure(Response response, boolean networkError) {
 
-        // Show the error dialog.
-        if (getDialogError() != null) {
-            getDialogError().show(true, logout);
+        // Fetch the error dialog.
+        DialogError dialogError = getDialogError();
+
+        if (dialogError != null) {
+
+            if (networkError) {
+
+                // Network error dialog.
+                dialogError.showNetworkError();
+
+            } else if (response != null) {
+
+                // Fetch HTTP status code.
+                int httpStatusCode = response.getStatus();
+
+                switch (httpStatusCode) {
+
+                    case 401:
+
+                        // Show unauthorized.
+                        dialogError.showUnauthorized();
+
+                        break;
+                    default:
+
+                        // Show generic error.
+                        getDialogError().show(true);
+
+                        break;
+                }
+            } else {
+
+                // Show generic error.
+                getDialogError().show(true);
+            }
         }
     }
 
@@ -183,8 +217,34 @@ public abstract class RestAPIOperation {
     }
 
     @SuppressWarnings("unused")
-    protected Date getmOperationTimeEnd() {
+    protected Date getOperationTimeEnd() {
         return mOperationTimeEnd;
+    }
+
+    /**
+     * Lazy load the error dialog.
+     *
+     * @return Error dialog.
+     */
+    protected DialogError getDialogError() {
+        if (mDialogError == null && mActivity != null) {
+            mDialogError = new DialogError(mActivity);
+        }
+
+        return mDialogError;
+    }
+
+    /**
+     * Lazy load the loading dialog.
+     *
+     * @return Loading dialog.
+     */
+    protected DialogLoading getDialogLoading() {
+        if (mDialogLoading == null && mActivity != null) {
+            mDialogLoading = new DialogLoading(mActivity);
+        }
+
+        return mDialogLoading;
     }
 
     //==============================================================================================
@@ -229,31 +289,5 @@ public abstract class RestAPIOperation {
 
         // Set the de-throttle callback.
         mOperationThrottleHandler.postDelayed(mOperationThrottleRunnable, 250);
-    }
-
-    /**
-     * Lazy load the error dialog.
-     *
-     * @return Error dialog.
-     */
-    private DialogError getDialogError() {
-        if (mDialogError == null && mActivity != null) {
-            mDialogError = new DialogError(mActivity);
-        }
-
-        return mDialogError;
-    }
-
-    /**
-     * Lazy load the loading dialog.
-     *
-     * @return Loading dialog.
-     */
-    private DialogLoading getDialogLoading() {
-        if (mDialogLoading == null && mActivity != null) {
-            mDialogLoading = new DialogLoading(mActivity);
-        }
-
-        return mDialogLoading;
     }
 }

@@ -46,34 +46,51 @@ public class DialogError extends BaseDialog {
     // =============================================================================================
 
     /**
-     * Add to default dialog show and also provide
-     * a flag for if a logout should occur.
-     *
-     * @param showContent Show dialog content.
-     * @param logout Should log out user.
+     * Show an error dialog for a user
+     * who cannot connect to the network.
      */
-    public void show(boolean showContent, boolean logout) {
-        super.show(showContent);
+    public void showNetworkError() {
+        super.show(true);
 
-        if (logout) {
+        // Set error text.
+        setText(R.string.error_network);
+    }
 
-            // Provide unauthorized message.
-            mDialogErrorMessage.setText(R.string.error_unauthorized);
+    /**
+     * Show an error dialog for a user
+     * who is not authorized.  Also log
+     * that user out.
+     */
+    public void showUnauthorized() {
+        super.show(true);
 
-            // Sign out user.
-            AuthHelper.instance().signOut();
+        // Provide unauthorized message.
+        setText(R.string.error_unauthorized);
 
-            // Set a dismiss listener.
-            setOnDismissListener(new Runnable() {
+        // Sign out user.
+        AuthHelper.instance().signOut();
 
-                @Override
-                public void run() {
+        // Set a dismiss listener.
+        setOnDismissListener(new Runnable() {
 
-                    // Bounce user back to the loading screen.
-                    mActivity.startActivity(new Intent(mActivity, LoadingScreen.class));
-                }
-            });
-        }
+            @Override
+            public void run() {
+
+                // Bounce user back to the loading screen.
+                mActivity.startActivity(new Intent(mActivity, LoadingScreen.class));
+            }
+        });
+    }
+
+    /**
+     * Set text of the error dialog.
+     *
+     * @param textResId Resource id for text.
+     */
+    public void setText(int textResId) {
+
+        // Set the text.
+        mDialogErrorMessage.setText(textResId);
     }
 
     // endregion
