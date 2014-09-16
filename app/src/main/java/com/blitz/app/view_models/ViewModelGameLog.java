@@ -21,10 +21,13 @@ public class ViewModelGameLog extends ViewModel {
     private final ViewModelGameLogCallbacks mCallbacks;
     private final SparseArray<List<HeadToHeadDraft>> mCache;
 
+    private int mCurrentWeek;
+
     public ViewModelGameLog(Activity activity, ViewModelGameLogCallbacks callbacks) {
         super(activity, callbacks);
         mCallbacks = callbacks;
         mCache = new SparseArray<List<HeadToHeadDraft>>(17);
+        mCurrentWeek = 1;
     }
 
     public void updateWeek(final int week) {
@@ -53,12 +56,14 @@ public class ViewModelGameLog extends ViewModel {
                     mCallbacks.onDrafts(matches);
                 }
          });
+
+        mCurrentWeek = week;
     }
 
     @Override
     public void initialize() {
 
-        updateWeek(1);
+        updateWeek(mCurrentWeek);
     }
 
     public interface ViewModelGameLogCallbacks extends ViewModel.ViewModelCallbacks {
