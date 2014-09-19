@@ -3,6 +3,7 @@ package com.blitz.app.view_models;
 import android.app.Activity;
 import android.util.Pair;
 
+import com.blitz.app.object_models.ObjectModelStats;
 import com.blitz.app.simple_models.Player;
 
 import java.util.ArrayList;
@@ -39,9 +40,12 @@ public class ViewModelDraftDetail extends ViewModel {
         ViewModelDraftDetailCallbacks callbacks =
         getCallbacks(ViewModelDraftDetailCallbacks.class);
 
-        callbacks.onMatchup("Galfgation", 1.23f, "mericsson", 4.45f);
+        callbacks.onMatchup("Galfgarion", 1.23f, "mericsson", 4.45f);
 
-        callbacks.onPlayers(testPlayers);
+        ObjectModelStats.fetchStats(callbacks);
+
+
+        //callbacks.onPlayers(testPlayers);
 
     }
 
