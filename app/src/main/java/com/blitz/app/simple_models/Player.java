@@ -6,31 +6,25 @@ package com.blitz.app.simple_models;
  * Created by Nate on 9/10/14.
  */
 public class Player {
-    private final String mName;
-    private final String mTeam;
-    private final String mPosition;
-    private final float  mScore;
+    private final String full_name;
+    private final String team;
+    private final String position;
 
     public Player(String name, String team, String position, float score) {
-        mName = name;
-        mTeam = team;
-        mPosition = position;
-        mScore = score;
+        full_name = name;
+        this.team = team;
+        this.position = position;
     }
 
-    public String getName() {
-        return mName;
+    public String getFullName() {
+        return full_name;
     }
 
     public String getTeamName() {
-        return mTeam;
-    }
-
-    public float getScore() {
-        return mScore;
+        return team;
     }
 
     public String getPosition() {
-        return mPosition;
+        return position;
     }
 }

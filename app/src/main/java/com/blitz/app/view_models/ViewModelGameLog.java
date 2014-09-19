@@ -4,12 +4,11 @@ import android.app.Activity;
 import android.util.SparseArray;
 
 import com.blitz.app.object_models.ObjectModelDraft;
+import com.blitz.app.simple_models.HeadToHeadDraft;
 import com.blitz.app.utilities.authentication.AuthHelper;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * A view model for game logs.
@@ -46,8 +45,10 @@ public class ViewModelGameLog extends ViewModel {
                     for(ObjectModelDraft draft: drafts) {
                         matches.add(new HeadToHeadDraft(
                                 draft.getTeamName(0),
+                                draft.getTeamRoster(0),
                                 draft.getTeamPoints(0),
                                 draft.getTeamName(1),
+                                draft.getTeamRoster(1),
                                 draft.getTeamPoints(1),
                                 "IN PROGRESS" // TODO: derive the status from the data.
                         ));

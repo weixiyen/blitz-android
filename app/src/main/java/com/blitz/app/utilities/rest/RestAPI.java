@@ -1,5 +1,7 @@
 package com.blitz.app.utilities.rest;
 
+import com.blitz.app.object_models.ObjectModelStats;
+import com.blitz.app.simple_models.Player;
 import com.google.gson.JsonObject;
 
 import java.util.ArrayList;
@@ -62,6 +64,13 @@ public interface RestAPI {
                     @Query("filter") String filter,            // Optional
                     @Query("order_by") String orderBy,         // Optional
                     @Query("limit") Integer limit, Callback<JsonObject> callback);
+
+    @GET("/stats?index=player_year_week_index&keys[]=5836814e-a6cf-48b6-a186-f53a249d7800_2014_2&keys[]=797c2a60-f657-4eff-b5fa-69e613603683_2014_2&keys[]=c265fa5a-bb12-4b01-a82c-1a5e40179563_2014_2&keys[]=e567e957-d080-44e9-b374-c681e579b589_2014_2&keys[]=2c698afa-2416-4094-848f-85205f60d57e_2014_2&keys[]=3a87ac36-b508-482a-afec-b00d30b2e3e3_2014_2&keys[]=ba838253-78a4-4301-8acf-0c8b987b9005_2014_2&keys[]=4c1b074d-a3e6-459e-9c84-c9ad41a375b7_2014_2&keys[]=bda20d7b-5998-4770-99b2-52318fcdc2ac_2014_2&keys[]=62d37e17-7d17-4a2c-9298-88e481ea76a1_2014_2&keys[]=131123be-6b1e-450d-b4c1-ae22c2b5fda5_2014_2&keys[]=8177501c-515b-4d41-9fdb-2dd283920ba0_2014_2&keys[]=070855e5-50ff-4470-84a4-47995c3be532_2014_2&keys[]=a665d15d-2337-43b8-beb9-e7c5a2bdafdb_2014_2&keys[]=38ead747-e1e1-4bf5-a6de-b38c69c87a6c_2014_2&keys[]=2fbe9479-324d-4763-a538-148fa3d172fd_2014_2&keys[]=4c16ffa6-c591-42d1-b3b6-0b1ff3848665_2014_2&keys[]=8cfb1991-6047-44b9-aec2-6af67dffa4a2_2014_2&limit=100&pluck[]=player_id&pluck[]=type&pluck[]=value&pluck[]=week&pluck[]=year")
+    void test_draft_get(Callback<RestAPIResult<ObjectModelStats>> listCallback);
+
+    @GET("/nfl_players?index=id")
+    void players_get(@Query("keys[]") List<String> playerIds,
+                     Callback<RestAPIResult<Player>> listCallback);
 
     @GET("/item/{item_id}")
     void item_get(@Path("item_id") String itemId, Callback<JsonObject> callback);

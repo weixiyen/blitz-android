@@ -71,6 +71,10 @@ public final class ObjectModelDraft extends ObjectModel {
         return mPoints.get(mUsers.get(team));
     }
 
+    public List<String> getTeamRoster(int team) {
+        return mRosters.get(mUsers.get(team));
+    }
+
     // endregion
 
     // region Public Methods
