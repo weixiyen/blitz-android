@@ -2,11 +2,12 @@ package com.blitz.app.object_models;
 
 import android.app.Activity;
 
+import com.blitz.app.dialogs.error.DialogError;
 import com.blitz.app.utilities.json.JsonHelper;
 import com.blitz.app.utilities.rest.RestAPICallback;
 import com.blitz.app.utilities.rest.RestAPIObject;
 import com.blitz.app.utilities.rest.RestAPIOperation;
-import com.google.gson.JsonArray;
+import com.blitz.app.utilities.rest.RestAPIResult;
 import com.google.gson.JsonObject;
 import com.google.gson.reflect.TypeToken;
 
@@ -15,6 +16,8 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
+import retrofit.Callback;
+import retrofit.RetrofitError;
 import retrofit.client.Response;
 
 /**
@@ -36,9 +39,9 @@ public final class ObjectModelDraft extends ObjectModel {
 
     @SuppressWarnings("unused") private String mId;
     @SuppressWarnings("unused") private String mChatId;
-    @SuppressWarnings("unused") private String mModel;
-    @SuppressWarnings("unused") private String mOwner;
-    @SuppressWarnings("unused") private String mGameStatus;
+    @SuppressWarnings("unused") private String model;
+    @SuppressWarnings("unused") private String owner;
+    @SuppressWarnings("unused") private String game_status;
     @SuppressWarnings("unused") private String mType;
     @SuppressWarnings("unused") private String mStatus;
 
@@ -50,29 +53,33 @@ public final class ObjectModelDraft extends ObjectModel {
     @SuppressWarnings("unused") private Date mLastUpdated;
     @SuppressWarnings("unused") private Date mStarted;
 
-    @SuppressWarnings("unused") private HashMap<String, Float>             mPoints;
-    @SuppressWarnings("unused") private HashMap<String, Integer>           mRatingChange;
-    @SuppressWarnings("unused") private HashMap<String, ArrayList<String>> mRosters;
-    @SuppressWarnings("unused") private HashMap<String, ObjectModelUser>   mUserInfo;
+    @SuppressWarnings("unused") private HashMap<String, Float> points;
+    @SuppressWarnings("unused") private HashMap<String, Integer> rating_change;
+    @SuppressWarnings("unused") private HashMap<String, ArrayList<String>> rosters;
+    @SuppressWarnings("unused") private HashMap<String, ObjectModelUser> user_info;
 
-    @SuppressWarnings("unused") private ArrayList<String> mPositionsRequired;
-    @SuppressWarnings("unused") private ArrayList<String> mUsers;
+    @SuppressWarnings("unused") private ArrayList<String> positions_required;
+    @SuppressWarnings("unused") private ArrayList<String> users;
 
     // endregion
 
     // region Getters
     // =============================================================================================
 
+    public String getId() {
+        return mId;
+    }
+
     public String getTeamName(int team) {
-        return mUserInfo.get(mUsers.get(team)).getUsername();
+        return user_info.get(users.get(team)).getUsername();
     }
 
     public float getTeamPoints(int team) {
-        return mPoints.get(mUsers.get(team));
+        return points.get(users.get(team));
     }
 
     public List<String> getTeamRoster(int team) {
-        return mRosters.get(mUsers.get(team));
+        return rosters.get(users.get(team));
     }
 
     // endregion
@@ -134,31 +141,22 @@ public final class ObjectModelDraft extends ObjectModel {
      * @param callback Success callback, provides the list of drafts.
      */
     @SuppressWarnings("unused")
-    public static void fetchActiveDraftsForUser(Activity activity, String userId,
+    public static void fetchActiveDraftsForUser(final Activity activity, String userId,
                                                 final DraftsCallback callback) {
 
-        RestAPIOperation operation = new RestAPIOperation(activity) {
-
+        Callback<RestAPIResult<ObjectModelDraft>> operation = new Callback<RestAPIResult<ObjectModelDraft>>() {
             @Override
-            public void success(RestAPIObject restAPIObject) {
-
-                // Fetch array of results.
-                JsonArray jsonArray = restAPIObject.getJsonObject().getAsJsonArray("results");
-
-                if (callback != null) {
-                    callback.onSuccess(parseDrafts(jsonArray));
-                }
+            public void success(RestAPIResult<ObjectModelDraft> result, Response response) {
+                callback.onSuccess(result.getResults());
             }
 
             /**
              * Force log out the user on failure.
              */
             @Override
-            public void failure(Response response, boolean networkError) {
-
-                if (getDialogError() != null) {
-                    getDialogError().showUnauthorized();
-                }
+            public void failure(RetrofitError error) {
+                DialogError dialog = new DialogError(activity);
+                dialog.showUnauthorized();
             }
         };
 
@@ -169,7 +167,7 @@ public final class ObjectModelDraft extends ObjectModel {
         String orderBy = "{\"created\": \"ASC\"}";
 
         mRestAPI.drafts_get(getKeys(userId), null, "users",
-                filter, orderBy, null, RestAPICallback.create(operation));
+                filter, orderBy, null, operation);
     }
 
     /**
@@ -190,17 +188,16 @@ public final class ObjectModelDraft extends ObjectModel {
                                           Integer limit,
                                           final DraftsCallback callback) {
 
-        RestAPIOperation operation = new RestAPIOperation(activity) {
+        Callback<RestAPIResult<ObjectModelDraft>> operation = new Callback<RestAPIResult<ObjectModelDraft>>() {
 
             @Override
-            public void success(RestAPIObject restAPIObject) {
+            public void success(RestAPIResult<ObjectModelDraft> result, Response response) {
+                callback.onSuccess(result.getResults());
+            }
 
-                // Fetch array of results.
-                JsonArray jsonArray = restAPIObject.getJsonObject().getAsJsonArray("results");
-
-                if (callback != null) {
-                    callback.onSuccess(parseDrafts(jsonArray));
-                }
+            @Override
+            public void failure(RetrofitError error) {
+                error.printStackTrace();
             }
         };
 
@@ -212,44 +209,13 @@ public final class ObjectModelDraft extends ObjectModel {
         String orderBy = "{\"completed\": \"DESC\", \"created\": \"DESC\"}";
 
         mRestAPI.drafts_get(getKeys(userId), getPluck(), "users",
-                filter, orderBy, limit, RestAPICallback.create(operation));
+                filter, orderBy, limit, operation);
     }
 
     // endregion
 
     // region Private Methods
     // =============================================================================================
-
-    /**
-     * Parse raw json result array into a list
-     * of draft object models.
-     *
-     * @param jsonArray Json object array.
-     *
-     * @return List of draft models.
-     */
-    private static ArrayList<ObjectModelDraft> parseDrafts(JsonArray jsonArray) {
-
-        // Create a new list of drafts.
-        ArrayList<ObjectModelDraft> drafts = new ArrayList<ObjectModelDraft>();
-
-        if (jsonArray != null) {
-
-            // Iterate over each draft json.
-            for (int i = 0; i < jsonArray.size(); i++) {
-
-                // Create a new draft.
-                ObjectModelDraft draft = new ObjectModelDraft();
-
-                // Populate it with json results.
-                parseDraft(draft, jsonArray.get(i).getAsJsonObject());
-
-                drafts.add(draft);
-            }
-        }
-
-        return drafts;
-    }
 
     /**
      * Parse a json object into a populated
@@ -274,8 +240,8 @@ public final class ObjectModelDraft extends ObjectModel {
             draft.mId         = JsonHelper.parseString(jsonObject.get("id"));
             draft.mChatId     = JsonHelper.parseString(jsonObject.get("chat_id"));
             draft.mType       = JsonHelper.parseString(jsonObject.get("model"));
-            draft.mOwner      = JsonHelper.parseString(jsonObject.get("owner"));
-            draft.mGameStatus = JsonHelper.parseString(jsonObject.get("game_status"));
+            draft.owner      = JsonHelper.parseString(jsonObject.get("owner"));
+            draft.game_status = JsonHelper.parseString(jsonObject.get("game_status"));
             draft.mType       = JsonHelper.parseString(jsonObject.get("type"));
             draft.mStatus     = JsonHelper.parseString(jsonObject.get("status"));
 
@@ -297,35 +263,35 @@ public final class ObjectModelDraft extends ObjectModel {
 
             if (jsonObjectPoints != null && !jsonObjectPoints.isJsonNull()) {
 
-                draft.mPoints =  JsonHelper.builder().fromJson(jsonObjectPoints,
+                draft.points =  JsonHelper.builder().fromJson(jsonObjectPoints,
                         new TypeToken<HashMap<String, Float>>() {
                         }.getType());
             }
 
             if (jsonObjectRatingChange != null && !jsonObjectRatingChange.isJsonNull()) {
 
-                draft.mRatingChange = JsonHelper.builder().fromJson(jsonObjectRatingChange,
+                draft.rating_change = JsonHelper.builder().fromJson(jsonObjectRatingChange,
                         new TypeToken<HashMap<String, Integer>>() {
                         }.getType());
             }
 
             if (jsonObjectRosters != null && !jsonObjectRosters.isJsonNull()) {
 
-                draft.mRosters = JsonHelper.builder().fromJson(jsonObjectRosters,
+                draft.rosters = JsonHelper.builder().fromJson(jsonObjectRosters,
                         new TypeToken<HashMap<String, ArrayList<String>>>() {
                         }.getType());
             }
 
             if (jsonObjectUserInfo != null && !jsonObjectUserInfo.isJsonNull()) {
 
-                draft.mUserInfo = JsonHelper.builder().fromJson(jsonObjectUserInfo,
+                draft.user_info = JsonHelper.builder().fromJson(jsonObjectUserInfo,
                         new TypeToken<HashMap<String, ObjectModelUser>>() {
                         }.getType());
             }
 
             // Parse the array lists.
-            draft.mPositionsRequired = JsonHelper.parseArrayList(jsonObject.getAsJsonArray("positions_required"));
-            draft.mUsers             = JsonHelper.parseArrayList(jsonObject.getAsJsonArray("users"));
+            draft.positions_required = JsonHelper.parseArrayList(jsonObject.getAsJsonArray("positions_required"));
+            draft.users = JsonHelper.parseArrayList(jsonObject.getAsJsonArray("users"));
         }
     }
 
