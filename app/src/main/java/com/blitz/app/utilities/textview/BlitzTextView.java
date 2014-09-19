@@ -14,6 +14,13 @@ import me.grantland.widget.AutofitTextView;
  */
 public class BlitzTextView extends AutofitTextView {
 
+    // region Member Variables
+    // =============================================================================================
+
+    private boolean ignoreTextChanges;
+
+    // endregion
+
     // region Constructors
     // =============================================================================================
 
@@ -31,6 +38,7 @@ public class BlitzTextView extends AutofitTextView {
                 (attrs, R.styleable.BlitzTextView);
 
         setupCachedText(styledAttributes);
+        setupClearDefault(styledAttributes);
 
         // Done reading attributes.
         styledAttributes.recycle();
@@ -45,6 +53,7 @@ public class BlitzTextView extends AutofitTextView {
                 (attrs, R.styleable.BlitzTextView, defStyle, 0);
 
         setupCachedText(styledAttributes);
+        setupClearDefault(styledAttributes);
 
         // Done reading attributes.
         styledAttributes.recycle();
@@ -58,6 +67,12 @@ public class BlitzTextView extends AutofitTextView {
     @Override
     protected void onTextChanged(java.lang.CharSequence text, int start, int lengthBefore, int lengthAfter) {
         super.onTextChanged(text, start, lengthBefore, lengthAfter);
+
+        if (ignoreTextChanges) {
+            ignoreTextChanges = false;
+
+            return;
+        }
 
         // If text changed in some way.
         if (lengthBefore != 0 || lengthAfter != 0) {
@@ -85,6 +100,30 @@ public class BlitzTextView extends AutofitTextView {
                 LogHelper.log("Restore cache bruh");
 
                 setText("");
+            }
+        }
+    }
+
+    /**
+     * If set, clear out any text set on this text view.
+     * Allows the developer to have good previews of
+     * the XML but not have it have any sort of flicker
+     * when loading the real text from the network.
+     *
+     * @param styledAttributes Custom attributes.
+     */
+    private void setupClearDefault(TypedArray styledAttributes) {
+
+        if (!isInEditMode() && styledAttributes.hasValue(R.styleable.BlitzTextView_clearDefault)) {
+
+            boolean clearDefault = styledAttributes.getBoolean
+                    (R.styleable.BlitzTextView_clearDefault, false);
+
+            if (clearDefault) {
+
+                ignoreTextChanges = true;
+
+                setText(null);
             }
         }
     }

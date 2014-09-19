@@ -35,6 +35,9 @@
 
         <!-- Should the text be cached. -->
         <attr name="cacheText" format="boolean" />
+
+        <!-- Should initial text be cleared. -->
+        <attr name="clearDefault" format="boolean" />
     </declare-styleable>
 
 </resources>
