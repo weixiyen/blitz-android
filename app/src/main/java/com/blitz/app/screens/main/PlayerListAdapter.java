@@ -44,11 +44,11 @@ public class PlayerListAdapter extends ArrayAdapter {
 
         Pair<Player, Player> players = mPlayers.get(position);
 
-        ((TextView) v.findViewById(R.id.player1_name)).setText(players.first.getName());
+        ((TextView) v.findViewById(R.id.player1_name)).setText(players.first.getFullName());
         ((TextView) v.findViewById(R.id.player1_position_team)).setText(getPositionTeam(players.first));
         ((TextView) v.findViewById(R.id.player1_score)).setText(getScore(players.first));
 
-        ((TextView) v.findViewById(R.id.player2_name)).setText(players.second.getName());
+        ((TextView) v.findViewById(R.id.player2_name)).setText(players.second.getFullName());
         ((TextView) v.findViewById(R.id.player2_position_team)).setText(getPositionTeam(players.second));
         ((TextView) v.findViewById(R.id.player2_score)).setText(getScore(players.second));
 

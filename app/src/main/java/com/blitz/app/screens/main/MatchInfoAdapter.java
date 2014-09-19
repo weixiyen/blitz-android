@@ -21,7 +21,10 @@ import java.util.List;
  *
  * Created by Nate on 9/7/14.
  */
-class MatchInfoAdapter extends ArrayAdapter {
+public class MatchInfoAdapter extends ArrayAdapter {
+
+    public static final String PLAYER_1_ROSTER = "MatchInfoAdapter.player1Roster";
+    public static final String PLAYER_2_ROSTER = "MatchInfoAdapter.player2Roster";
 
     private List<HeadToHeadDraft> mItems;
     private final Activity mActivity;
@@ -72,7 +75,10 @@ class MatchInfoAdapter extends ArrayAdapter {
         v.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mActivity.startActivity(new Intent(mActivity, MainScreenFragmentDraftDetail.class));
+                Intent intent = new Intent(mActivity, MainScreenFragmentDraftDetail.class);
+                intent.putExtra(PLAYER_1_ROSTER, new String[]{"070855e5-50ff-4470-84a4-47995c3be532"});
+                intent.putExtra(PLAYER_2_ROSTER, new String[]{"a665d15d-2337-43b8-beb9-e7c5a2bdafdb"});
+                mActivity.startActivity(intent);
             }
         });
 
