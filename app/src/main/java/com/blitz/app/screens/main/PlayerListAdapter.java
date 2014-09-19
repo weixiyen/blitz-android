@@ -57,7 +57,7 @@ public class PlayerListAdapter extends ArrayAdapter {
     }
 
     private static String getScore(Player player) {
-        return String.format("%.02f", player.getScore());
+        return String.format("%.02f", 0f); // TODO we should be consuming some other kind of object with this set
     }
 
     private static String getPositionTeam(Player player) {

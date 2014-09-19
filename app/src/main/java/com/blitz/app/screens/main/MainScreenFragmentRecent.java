@@ -10,7 +10,7 @@ import android.widget.TextView;
 
 import com.blitz.app.R;
 import com.blitz.app.utilities.android.BaseFragment;
-import com.blitz.app.view_models.HeadToHeadDraft;
+import com.blitz.app.simple_models.HeadToHeadDraft;
 import com.blitz.app.view_models.ViewModel;
 import com.blitz.app.view_models.ViewModelGameLog;
 

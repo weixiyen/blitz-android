@@ -7,15 +7,13 @@ package com.blitz.app.simple_models;
  */
 public class Player {
     private final String full_name;
-    private final String mTeam;
-    private final String mPosition;
-    private final float  mScore;
+    private final String team;
+    private final String position;
 
     public Player(String name, String team, String position, float score) {
         full_name = name;
-        mTeam = team;
-        mPosition = position;
-        mScore = score;
+        this.team = team;
+        this.position = position;
     }
 
     public String getFullName() {
@@ -23,14 +21,10 @@ public class Player {
     }
 
     public String getTeamName() {
-        return mTeam;
-    }
-
-    public float getScore() {
-        return mScore;
+        return team;
     }
 
     public String getPosition() {
-        return mPosition;
+        return position;
     }
 }
