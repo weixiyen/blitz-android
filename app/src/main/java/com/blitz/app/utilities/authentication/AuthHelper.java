@@ -117,6 +117,9 @@ public class AuthHelper {
         // to automatically jump to for debugging purposes.
         Class targetActivity = AppConfig.getJumpToActivity();
 
+        // Stop all music.
+        SoundHelper.instance().stopMusic();
+
         if (targetActivity == null) {
 
             // If user has passed the access queue.
@@ -242,23 +245,12 @@ public class AuthHelper {
                         @Override
                         public void onSuccess(List<ObjectModelDraft> drafts) {
 
-                            // Stop all music.
-                            SoundHelper.instance().stopMusic();
-
                             if (drafts.isEmpty()) {
-
-                                // Play the lobby music after loading.
-                                SoundHelper.instance().startMusic(R.raw.music_lobby_loop0,
-                                        R.raw.music_lobby_loopn);
 
                                 // Main screen.
                                 startActivity(activity, MainScreen.class);
 
                             } else {
-
-                                // Start the fast music.
-                                SoundHelper.instance().startMusic(R.raw.music_fast_loop_0,
-                                        R.raw.music_fast_loop_n);
 
                                 // Set the current draft and sync it.
                                 mCurrentDraft = drafts.get(drafts.size() - 1);
@@ -272,10 +264,6 @@ public class AuthHelper {
                                     }
                                 });
                             }
-
-                            // Disable music if needed.
-                            SoundHelper.instance().setMusicDisabled
-                                    (AppDataObject.settingsMusicDisabled.get());
                         }
                     });
         }
@@ -290,6 +278,22 @@ public class AuthHelper {
     private void startActivity(BaseActivity activity, Class targetActivity) {
 
         if (targetActivity != null) {
+
+            if (targetActivity.equals(DraftScreen.class)) {
+
+                // Start the fast music.
+                SoundHelper.instance().startMusic(R.raw.music_fast_loop_0,
+                        R.raw.music_fast_loop_n);
+            } else {
+
+                // Play the lobby music after loading.
+                SoundHelper.instance().startMusic(R.raw.music_lobby_loop0,
+                        R.raw.music_lobby_loopn);
+            }
+
+            // Disable music if needed.
+            SoundHelper.instance().setMusicDisabled
+                    (AppDataObject.settingsMusicDisabled.get());
 
             // Start target activity, clear the history.
             activity.startActivity(new Intent(activity, targetActivity), true);
