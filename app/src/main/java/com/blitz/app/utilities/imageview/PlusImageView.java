@@ -1,4 +1,4 @@
-package com.blitz.app.utilities.imageview_plus;
+package com.blitz.app.utilities.imageview;
 
 import android.content.ContentResolver;
 import android.content.Context;
@@ -29,7 +29,7 @@ import com.blitz.app.R;
  *
  * https://github.com/MeetMe/Android-ImageViewPlus/issues
  */
-public class ImageViewPlus extends ImageView {
+public class PlusImageView extends ImageView {
 
     private static final int CONTENT_LAYER_ID_EMPTY = -1;
 
@@ -67,15 +67,15 @@ public class ImageViewPlus extends ImageView {
 
     private Uri mContentUri;
 
-    public ImageViewPlus(final Context context) {
+    public PlusImageView(final Context context) {
         this(context, null);
     }
 
-    public ImageViewPlus(final Context context, final AttributeSet attrs) {
+    public PlusImageView(final Context context, final AttributeSet attrs) {
         this(context, attrs, 0);
     }
 
-    public ImageViewPlus(final Context context, final AttributeSet attrs, final int defStyle) {
+    public PlusImageView(final Context context, final AttributeSet attrs, final int defStyle) {
         super(context, attrs, defStyle);
         init(context, attrs, defStyle);
     }
@@ -83,15 +83,15 @@ public class ImageViewPlus extends ImageView {
     @SuppressWarnings("UnusedParameters")
     private void init(Context context, AttributeSet attrs, int defStyle) {
         if (attrs != null) {
-            TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.ImageViewPlus, 0, 0);
+            TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.PlusImageView, 0, 0);
 
             if (a != null) {
-                Drawable defaultDrawable = a.getDrawable(R.styleable.ImageViewPlus_defaultDrawable);
-                Drawable selectorDrawable = a.getDrawable(R.styleable.ImageViewPlus_layerDrawable);
-                int selectorLayerId = a.getResourceId(R.styleable.ImageViewPlus_contentLayerId, CONTENT_LAYER_ID_EMPTY);
-                int scaleType = a.getInt(R.styleable.ImageViewPlus_scaleType, -1);
+                Drawable defaultDrawable = a.getDrawable(R.styleable.PlusImageView_defaultDrawable);
+                Drawable selectorDrawable = a.getDrawable(R.styleable.PlusImageView_layerDrawable);
+                int selectorLayerId = a.getResourceId(R.styleable.PlusImageView_contentLayerId, CONTENT_LAYER_ID_EMPTY);
+                int scaleType = a.getInt(R.styleable.PlusImageView_scaleType, -1);
 
-                mTintColorList = a.getColorStateList(R.styleable.ImageViewPlus_overlayTintColor);
+                mTintColorList = a.getColorStateList(R.styleable.PlusImageView_overlayTintColor);
 
                 a.recycle();
 
@@ -419,9 +419,9 @@ public class ImageViewPlus extends ImageView {
 
     /**
      * Performs the automatic reset to the default drawable. This will also dispatch the
-     * {@link DefaultDrawableListener#onAutoResetDefaultDrawable(ImageViewPlus)} callback.
+     * {@link DefaultDrawableListener#onAutoResetDefaultDrawable(PlusImageView)} callback.
      *
-     * @see ImageViewPlus#resetToDefault()
+     * @see PlusImageView#resetToDefault()
      */
     protected void performAutoResetDefaultDrawable() {
         resetToDefault();
@@ -655,6 +655,6 @@ public class ImageViewPlus extends ImageView {
          *
          * @param view The view that had its drawable reset back to the default
          */
-        public void onAutoResetDefaultDrawable(final ImageViewPlus view);
+        public void onAutoResetDefaultDrawable(final PlusImageView view);
     }
 }

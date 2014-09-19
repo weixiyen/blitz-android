@@ -9,7 +9,7 @@
     tools:context="${packageName}.${activityClass}"
     tools:ignore="ButtonStyle,UnusedAttribute">
 
-    <com.blitz.app.utilities.imageview_plus.ImageViewPlus
+    <com.blitz.app.utilities.imageview.PlusImageView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:contentDescription="@string/empty_string"
