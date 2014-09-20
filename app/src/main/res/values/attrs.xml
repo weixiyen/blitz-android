@@ -31,13 +31,26 @@
     <!-- Custom attribute for Calligraphy -->
     <attr name="fontPath" format="string"/>
 
+    <!-- Should initial content of a view
+         be cleared (text images, etc). -->
+    <attr name="clearInitialContent" format="boolean" />
+
     <declare-styleable name="BlitzTextView">
 
         <!-- Should the text be cached. -->
         <attr name="cacheText" format="boolean" />
 
-        <!-- Should initial text be cleared. -->
-        <attr name="clearDefault" format="boolean" />
+        <attr name="clearInitialContent"/>
+
+    </declare-styleable>
+
+    <declare-styleable name="BlitzImageView">
+
+        <!-- Should the image be cached. -->
+        <attr name="cacheImage" format="boolean" />
+
+        <attr name="clearInitialContent"/>
+
     </declare-styleable>
 
 </resources>

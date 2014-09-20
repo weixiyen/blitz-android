@@ -33,7 +33,7 @@
             android:text="@string/lorum_ipsum_tiny"
             android:textColor="@color/text_color_light"
             android:textSize="20sp"
-            app:clearDefault="true"/>
+            app:clearInitialContent="true"/>
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -60,7 +60,7 @@
                 android:text="@string/number_large"
                 android:textColor="@color/text_color_link"
                 android:textSize="20sp"
-                app:clearDefault="true"/>
+                app:clearInitialContent="true"/>
         </LinearLayout>
 
         <LinearLayout
@@ -119,7 +119,7 @@
                 android:textAllCaps="true"
                 android:textColor="@color/text_color_light"
                 android:textSize="28sp"
-                app:clearDefault="true"/>
+                app:clearInitialContent="true"/>
 
             <com.blitz.app.utilities.textview.BlitzTextView
                 android:id="@+id/main_play_stats_losses"
@@ -135,16 +135,17 @@
                 android:textAllCaps="true"
                 android:textColor="@color/text_color_grey"
                 android:textSize="28sp"
-                app:clearDefault="true"/>
+                app:clearInitialContent="true"/>
         </LinearLayout>
     </LinearLayout>
 
-    <ImageView
+    <com.blitz.app.utilities.imageview.BlitzImageView
         android:id="@+id/main_play_stats_avatar"
         android:layout_width="@dimen/helmet_size"
         android:layout_height="@dimen/helmet_size"
         android:layout_marginLeft="5dp"
         android:contentDescription="@string/empty_string"
-        android:src="@drawable/asset_bg_helmet_sample" />
+        android:src="@drawable/asset_bg_helmet_sample"
+        app:clearInitialContent="true"/>
 
 </RelativeLayout>

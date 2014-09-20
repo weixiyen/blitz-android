@@ -106,6 +106,7 @@ public class BlitzTextView extends AutofitTextView {
 
     /**
      * If set, clear out any text set on this text view.
+     *
      * Allows the developer to have good previews of
      * the XML but not have it have any sort of flicker
      * when loading the real text from the network.
@@ -114,10 +115,10 @@ public class BlitzTextView extends AutofitTextView {
      */
     private void setupClearDefault(TypedArray styledAttributes) {
 
-        if (!isInEditMode() && styledAttributes.hasValue(R.styleable.BlitzTextView_clearDefault)) {
+        if (!isInEditMode() && styledAttributes.hasValue(R.styleable.BlitzTextView_clearInitialContent)) {
 
             boolean clearDefault = styledAttributes.getBoolean
-                    (R.styleable.BlitzTextView_clearDefault, false);
+                    (R.styleable.BlitzTextView_clearInitialContent, false);
 
             if (clearDefault) {
 
