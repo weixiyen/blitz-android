@@ -1,12 +1,21 @@
 package com.blitz.app.view_models;
 
 import android.app.Activity;
+import android.os.Bundle;
 import android.util.Pair;
 
+import com.blitz.app.object_models.ObjectModelStats;
+import com.blitz.app.screens.main.MatchInfoAdapter;
 import com.blitz.app.simple_models.Player;
+import com.blitz.app.utilities.rest.RestAPIResult;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+
+import retrofit.Callback;
+import retrofit.RetrofitError;
+import retrofit.client.Response;
 
 /**
  * View model for draft detail page.
@@ -27,22 +36,45 @@ public class ViewModelDraftDetail extends ViewModel {
 
     @Override
     public void initialize() {
-        // TODO remove this test code
-        Player p1 = new Player("Johnny Football", "SF", "QB", 2.234f);
-        Player p2 = new Player("Ivan Drago", "MOS", "QB", 4.555f);
 
-        List<Pair<Player, Player>> testPlayers = new ArrayList<Pair<Player, Player>>();
-        testPlayers.add(Pair.create(p1, p2));
-        testPlayers.add(Pair.create(p1, p1));
-        testPlayers.add(Pair.create(p2, p1));
+        Bundle extras = mActivity.getIntent().getExtras();
+        final String[] player1ids = (String[]) extras.get(MatchInfoAdapter.PLAYER_1_ROSTER);
+        final String[] player2ids = (String[]) extras.get(MatchInfoAdapter.PLAYER_2_ROSTER);
 
-        ViewModelDraftDetailCallbacks callbacks =
-        getCallbacks(ViewModelDraftDetailCallbacks.class);
+        ObjectModelStats.fetchRoster(Arrays.asList(player1ids), new Callback<RestAPIResult<Player>>() {
+            @Override
+            public void success(final RestAPIResult<Player> player1Result, Response response) {
 
-        callbacks.onMatchup("Galfgation", 1.23f, "mericsson", 4.45f);
+                ObjectModelStats.fetchRoster(Arrays.asList(player2ids), new Callback<RestAPIResult<Player>>() {
+                    @Override
+                    public void success(RestAPIResult<Player> player2Result, Response response) {
+                        final List<Player> p1roster = player1Result.getResults();
+                        final List<Player> p2roster = player2Result.getResults();
 
-        callbacks.onPlayers(testPlayers);
+                        ViewModelDraftDetailCallbacks callbacks =
+                                getCallbacks(ViewModelDraftDetailCallbacks.class);
 
+                        final List<Pair<Player, Player>> players = new ArrayList<Pair<Player, Player>>();
+                        for(int i=0; i < p1roster.size(); i++) {
+                            players.add(Pair.create(p1roster.get(i), p2roster.get(i)));
+                        }
+
+                        callbacks.onPlayers(players);
+                        callbacks.onMatchup("Galfgarion", 1.23f, "mericsson", 4.45f);
+                    }
+
+                    @Override
+                    public void failure(RetrofitError error) {
+                        error.printStackTrace();
+                    }
+                });
+            }
+
+            @Override
+            public void failure(RetrofitError error) {
+                error.printStackTrace();
+            }
+        });
     }
 
     public interface ViewModelDraftDetailCallbacks extends ViewModelCallbacks {
