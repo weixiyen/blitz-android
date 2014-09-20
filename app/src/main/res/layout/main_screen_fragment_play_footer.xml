@@ -1,7 +1,6 @@
-<?xml version="1.0" encoding="utf-8"?>
-
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="40dp"
@@ -12,26 +11,28 @@
     tools:context="${packageName}.${activityClass}"
     tools:ignore="ButtonStyle,UnusedAttribute">
 
-    <TextView
+    <com.blitz.app.utilities.textview.BlitzTextView
         android:id="@+id/main_play_cash_available"
         style="@style/TextViewStyle"
+        fontPath="@string/app_font_helvetica_condensed_bold"
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_gravity="center"
         android:layout_weight="1"
-        fontPath="@string/app_font_helvetica_condensed_bold"
         android:gravity="left|center_vertical"
         android:text="@string/you_have_cash"
         android:textColor="@color/text_color_light"
-        android:textSize="14sp"/>
+        android:textSize="14sp"
+        app:cacheText="true"
+        app:clearInitialContent="true"/>
 
     <TextView
         android:id="@+id/main_play_add_money"
         style="@style/TextViewStyle"
+        fontPath="@string/app_font_helvetica_condensed_bold"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_gravity="center"
-        fontPath="@string/app_font_helvetica_condensed_bold"
         android:gravity="center"
         android:text="@string/add_money"
         android:textColor="@color/selector_text_link"
@@ -39,12 +40,12 @@
 
     <TextView
         style="@style/TextViewStyle"
+        fontPath="@string/app_font_helvetica_condensed_bold"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_gravity="center"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
-        fontPath="@string/app_font_helvetica_condensed_bold"
         android:gravity="center"
         android:text="@string/pipe"
         android:textColor="@color/text_color_light"
@@ -53,9 +54,9 @@
     <TextView
         android:id="@+id/main_play_rules"
         style="@style/TextViewStyle"
+        fontPath="@string/app_font_helvetica_condensed_bold"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        fontPath="@string/app_font_helvetica_condensed_bold"
         android:gravity="center"
         android:text="@string/rules"
         android:textColor="@color/selector_text_link"

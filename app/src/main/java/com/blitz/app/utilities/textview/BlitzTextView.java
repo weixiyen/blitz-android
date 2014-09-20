@@ -5,7 +5,9 @@ import android.content.res.TypedArray;
 import android.util.AttributeSet;
 
 import com.blitz.app.R;
-import com.blitz.app.utilities.logging.LogHelper;
+import com.blitz.app.utilities.app.AppDataObject;
+
+import java.util.HashMap;
 
 import me.grantland.widget.AutofitTextView;
 
@@ -17,7 +19,13 @@ public class BlitzTextView extends AutofitTextView {
     // region Member Variables
     // =============================================================================================
 
-    private boolean ignoreTextChanges;
+    // String prefix for cached key dictionary.
+    private static final String CACHE_KEY_PREFIX = "id-";
+
+    // Should text changed be ignored.
+    private boolean mIgnoreTextChanges;
+
+    private boolean mCacheText;
 
     // endregion
 
@@ -68,8 +76,8 @@ public class BlitzTextView extends AutofitTextView {
     protected void onTextChanged(java.lang.CharSequence text, int start, int lengthBefore, int lengthAfter) {
         super.onTextChanged(text, start, lengthBefore, lengthAfter);
 
-        if (ignoreTextChanges) {
-            ignoreTextChanges = false;
+        if (mIgnoreTextChanges) {
+            mIgnoreTextChanges = false;
 
             return;
         }
@@ -77,7 +85,8 @@ public class BlitzTextView extends AutofitTextView {
         // If text changed in some way.
         if (lengthBefore != 0 || lengthAfter != 0) {
 
-            LogHelper.log("Changed it bruh: " + getId() + " | '" + text + "' " + start + " " + lengthBefore + " " + lengthAfter);
+            // Update cache if needed.
+            setCachedText(text.toString());
         }
     }
 
@@ -86,21 +95,56 @@ public class BlitzTextView extends AutofitTextView {
     // region Private Methods
     // =============================================================================================
 
+    /**
+     * Set text to the current cache value, if present.
+     */
+    private void setCachedText() {
+
+        // Can only cache if resource id is set.
+        if (mCacheText && getId() != -1) {
+
+            HashMap<String, String> cachedText = AppDataObject.cachedText.get();
+
+            if (cachedText.containsKey(CACHE_KEY_PREFIX + getId())) {
+
+                mIgnoreTextChanges = true;
+
+                setText(cachedText.get(CACHE_KEY_PREFIX + getId()));
+            }
+        }
+    }
+
+    /**
+     * Cache the specified text string.
+     *
+     * @param text Text to cache.
+     */
+    private void setCachedText(String text) {
+
+        if (mCacheText && getId() != -1) {
+
+            HashMap<String, String> cachedText = AppDataObject.cachedText.get();
+
+            // Update dictionary with new text.
+            cachedText.put(CACHE_KEY_PREFIX + getId(), text);
+
+            AppDataObject.cachedText.set(cachedText);
+        }
+    }
+
+    /**
+     * Setup text caching.
+     *
+     * @param styledAttributes Custom attributes.
+     */
     private void setupCachedText(TypedArray styledAttributes) {
 
         if (!isInEditMode() && styledAttributes.hasValue(R.styleable.BlitzTextView_cacheText)) {
 
-            boolean cacheText = styledAttributes.getBoolean
+            mCacheText = styledAttributes.getBoolean
                     (R.styleable.BlitzTextView_cacheText, false);
 
-            // Can only cache if resId is set.
-            if (cacheText && getId() != -1) {
-
-
-                LogHelper.log("Restore cache bruh");
-
-                setText("");
-            }
+            setCachedText();
         }
     }
 
@@ -122,7 +166,7 @@ public class BlitzTextView extends AutofitTextView {
 
             if (clearDefault) {
 
-                ignoreTextChanges = true;
+                mIgnoreTextChanges = true;
 
                 setText(null);
             }

@@ -1,4 +1,5 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="@dimen/screen_width"
@@ -33,6 +34,7 @@
             android:text="@string/lorum_ipsum_tiny"
             android:textColor="@color/text_color_light"
             android:textSize="20sp"
+            app:cacheText="true"
             app:clearInitialContent="true"/>
 
         <LinearLayout
@@ -60,6 +62,7 @@
                 android:text="@string/number_large"
                 android:textColor="@color/text_color_link"
                 android:textSize="20sp"
+                app:cacheText="true"
                 app:clearInitialContent="true"/>
         </LinearLayout>
 
@@ -119,6 +122,7 @@
                 android:textAllCaps="true"
                 android:textColor="@color/text_color_light"
                 android:textSize="28sp"
+                app:cacheText="true"
                 app:clearInitialContent="true"/>
 
             <com.blitz.app.utilities.textview.BlitzTextView
@@ -135,6 +139,7 @@
                 android:textAllCaps="true"
                 android:textColor="@color/text_color_grey"
                 android:textSize="28sp"
+                app:cacheText="true"
                 app:clearInitialContent="true"/>
         </LinearLayout>
     </LinearLayout>
