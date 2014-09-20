@@ -2,7 +2,6 @@ package com.blitz.app.screens.main;
 
 import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;
-import android.os.Bundle;
 import android.view.View;
 import android.view.animation.LinearInterpolator;
 import android.widget.ImageView;
@@ -47,22 +46,31 @@ public class MainScreenFragmentPlay extends BaseFragment implements ViewModelMai
     // View model object.
     private ViewModelMainPlay mViewModelMainPlay;
 
+    private ObjectAnimator mObjectAnimator;
+
     // endregion
 
     // region Overwritten Methods
     // =============================================================================================
 
     /**
-     * Initialize the fragment.
-     *
-     * @param savedInstanceState The saved instance state.
+     * Start animations.
      */
     @Override
-    protected void onCreateView(Bundle savedInstanceState) {
-        super.onCreateView(savedInstanceState);
+    public void onPause() {
+        super.onPause();
 
-        // Spin baby.
-        setupSpinningPlayButton();
+        setupSpinningPlayButton(false);
+    }
+
+    /**
+     * Stop animations.
+     */
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        setupSpinningPlayButton(true);
     }
 
     /**
@@ -87,25 +95,35 @@ public class MainScreenFragmentPlay extends BaseFragment implements ViewModelMai
     // =============================================================================================
 
     /**
-     * Animate play button.
+     * Animate the play button.
+     *
+     * @param suspend Suspend the animation.
      */
-    private void setupSpinningPlayButton() {
+    private void setupSpinningPlayButton(boolean suspend) {
 
-        // Create an animator for rotation.
-        ObjectAnimator objectAnimator = ObjectAnimator
-                .ofFloat(mPlayButtonHighlight, "rotation", 0, 360);
+        if (mObjectAnimator == null) {
 
-        // Time to spin.
-        objectAnimator.setDuration(1750);
+            // Create an animator for rotation.
+            mObjectAnimator = ObjectAnimator
+                    .ofFloat(mPlayButtonHighlight, "rotation", 0, 360);
 
-        // Repeat forever.
-        objectAnimator.setRepeatCount(ValueAnimator.INFINITE);
+            // Time to spin.
+            mObjectAnimator.setDuration(1750);
 
-        // Spin linearly.
-        objectAnimator.setInterpolator(new LinearInterpolator());
+            // Repeat forever.
+            mObjectAnimator.setRepeatCount(ValueAnimator.INFINITE);
 
-        // Start animating.
-        objectAnimator.start();
+            // Spin linearly.
+            mObjectAnimator.setInterpolator(new LinearInterpolator());
+        }
+
+        if (suspend) {
+
+            mObjectAnimator.start();
+        } else {
+
+            mObjectAnimator.end();
+        }
     }
 
     /**
