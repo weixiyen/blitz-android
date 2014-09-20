@@ -116,9 +116,9 @@ public class MainScreen extends BaseActivity implements ViewModelMain.ViewModelM
         MainScreenPagerAdapter adapter = new
                 MainScreenPagerAdapter(getSupportFragmentManager());
 
-        // We have a small static number of page - three
+        // We have a small static number of pages
         // so let them all be cached and not re-created.
-        mPager.setOffscreenPageLimit(2);
+        mPager.setOffscreenPageLimit(adapter.getCount() - 1);
 
         // Create adapter for the view pager.
         mPager.setAdapter(adapter);
