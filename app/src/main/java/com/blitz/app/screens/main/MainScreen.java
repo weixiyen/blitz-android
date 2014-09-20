@@ -11,7 +11,7 @@ import com.blitz.app.utilities.android.BaseActivity;
 import com.blitz.app.utilities.android.BaseDialog;
 import com.blitz.app.utilities.app.AppConfig;
 import com.blitz.app.utilities.authentication.AuthHelper;
-import com.blitz.app.utilities.viewpager.ViewPagerZoomOutTransformer;
+import com.blitz.app.utilities.viewpager.ViewPagerTransformerZoom;
 import com.blitz.app.view_models.ViewModel;
 import com.blitz.app.view_models.ViewModelMain;
 
@@ -124,7 +124,7 @@ public class MainScreen extends BaseActivity implements ViewModelMain.ViewModelM
         mPager.setAdapter(adapter);
 
         // Add a custom page transition effect.
-        mPager.setPageTransformer(true, new ViewPagerZoomOutTransformer());
+        mPager.setPageTransformer(true, new ViewPagerTransformerZoom());
 
         // Setup the page change listener.
         mPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {

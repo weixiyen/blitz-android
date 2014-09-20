@@ -4,10 +4,10 @@ import android.support.v4.view.ViewPager;
 import android.view.View;
 
 /**
- * Created by Miguel Gaeta on 6/1/14.
+ * Created by Miguel Gaeta on 6/1/14. Copyright 2014 Blitz Studios
  */
 @SuppressWarnings("unused")
-public class ViewPagerZoomOutTransformer implements ViewPager.PageTransformer {
+public class ViewPagerTransformerZoom implements ViewPager.PageTransformer {
 
     private static final float MIN_SCALE = 0.85f;
     private static final float MIN_ALPHA = 0.50f;

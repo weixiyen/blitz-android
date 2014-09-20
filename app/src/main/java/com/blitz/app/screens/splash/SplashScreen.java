@@ -8,7 +8,7 @@ import com.blitz.app.R;
 import com.blitz.app.screens.sign_in.SignInScreen;
 import com.blitz.app.screens.sign_up.SignUpScreen;
 import com.blitz.app.utilities.android.BaseActivity;
-import com.blitz.app.utilities.viewpager.ViewPagerDepthTransformer;
+import com.blitz.app.utilities.viewpager.ViewPagerTransformerDepth;
 import com.viewpagerindicator.CirclePageIndicator;
 
 import butterknife.InjectView;
@@ -83,7 +83,7 @@ public class SplashScreen extends BaseActivity {
         mPagerIndicator.setViewPager(mPager);
 
         // Add a custom page transition effect.
-        mPager.setPageTransformer(true, new ViewPagerDepthTransformer());
+        mPager.setPageTransformer(true, new ViewPagerTransformerDepth());
     }
 
     //==============================================================================================

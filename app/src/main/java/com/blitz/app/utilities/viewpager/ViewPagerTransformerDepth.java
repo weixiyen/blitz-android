@@ -4,10 +4,10 @@ import android.support.v4.view.ViewPager;
 import android.view.View;
 
 /**
- * Created by Miguel Gaeta on 6/1/14.
+ * Created by Miguel Gaeta on 6/1/14. Copyright 2014 Blitz Studios
  */
 @SuppressWarnings("unused")
-public class ViewPagerDepthTransformer implements ViewPager.PageTransformer {
+public class ViewPagerTransformerDepth implements ViewPager.PageTransformer {
 
     private static final float MIN_SCALE = 0.75f;
 
