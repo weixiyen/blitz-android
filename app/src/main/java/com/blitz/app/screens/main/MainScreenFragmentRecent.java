@@ -50,13 +50,36 @@ public class MainScreenFragmentRecent extends BaseFragment implements ViewModelG
         setupScrubber();
     }
 
-    public void onDrafts(List<HeadToHeadDraft> matches) {
+    @Override
+    public void onDrafts(List<HeadToHeadDraft> matches, ViewModelGameLog.Summary summary) {
         final MatchInfoAdapter adapter = new MatchInfoAdapter(getActivity().getApplicationContext(),
                 matches, getActivity());
 
         if(mRecentMatches != null) {
             mRecentMatches.setAdapter(adapter);
         }
+
+        ((TextView)getActivity().findViewById(R.id.wins)).setText(String.valueOf(summary.getWins()));
+        ((TextView)getActivity().findViewById(R.id.losses)).setText(String.valueOf(summary.getLosses()));
+        ((TextView)getActivity().findViewById(R.id.earnings)).setText(formatEarnings(summary.getEarningsCents()));
+        ((TextView)getActivity().findViewById(R.id.rating_change)).setText(formatRatingChange(summary.getRatingChange()));
+    }
+
+    private static String formatRatingChange(int change) {
+        String sign = "+";
+        if(change < 0) { // negative number already has a sign
+            sign = "";
+        }
+        return sign + change;
+    }
+
+    private static String formatEarnings(int cents) {
+        String sign = "+";
+        if(cents < 0) {
+            sign = "-";
+        }
+        String amount = String.format("$%.2f", Math.abs(cents / 100f));
+        return sign + amount;
     }
 
     // poor man's closure
