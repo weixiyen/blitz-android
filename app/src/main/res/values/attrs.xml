@@ -47,7 +47,7 @@
     <declare-styleable name="BlitzImageView">
 
         <!-- Should the image be cached. -->
-        <attr name="cacheImage" format="boolean" />
+        <attr name="cacheImageURL" format="boolean" />
 
         <attr name="clearInitialContent"/>
 

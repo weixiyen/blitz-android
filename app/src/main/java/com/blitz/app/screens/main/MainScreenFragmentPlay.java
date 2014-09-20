@@ -12,10 +12,10 @@ import com.blitz.app.R;
 import com.blitz.app.dialogs.info.DialogInfo;
 import com.blitz.app.utilities.android.BaseFragment;
 import com.blitz.app.utilities.app.AppConfig;
+import com.blitz.app.utilities.imageview.BlitzImageView;
 import com.blitz.app.utilities.rest.RestAPIOperation;
 import com.blitz.app.view_models.ViewModel;
 import com.blitz.app.view_models.ViewModelMainPlay;
-import com.squareup.picasso.Picasso;
 
 import butterknife.InjectView;
 import butterknife.OnClick;
@@ -42,7 +42,7 @@ public class MainScreenFragmentPlay extends BaseFragment implements ViewModelMai
     @InjectView(R.id.main_play_stats_rating)   TextView mStatsRating;
     @InjectView(R.id.main_play_stats_wins)     TextView mStatsWins;
     @InjectView(R.id.main_play_stats_losses)   TextView mStatsLosses;
-    @InjectView(R.id.main_play_stats_avatar)  ImageView mStatsAvatar;
+    @InjectView(R.id.main_play_stats_avatar) BlitzImageView mStatsAvatar;
 
     // View model object.
     private ViewModelMainPlay mViewModelMainPlay;
@@ -251,9 +251,7 @@ public class MainScreenFragmentPlay extends BaseFragment implements ViewModelMai
     public void onImgPath(String imgPath) {
 
         if (mStatsAvatar != null) {
-
-            // Load the helmet image.
-            Picasso.with(getActivity()).load(AppConfig.getCDNUrl() + imgPath).into(mStatsAvatar);
+            mStatsAvatar.setImageUrl(imgPath);
         }
     }
 

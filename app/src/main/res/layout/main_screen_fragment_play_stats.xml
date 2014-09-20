@@ -146,6 +146,7 @@
         android:layout_marginLeft="5dp"
         android:contentDescription="@string/empty_string"
         android:src="@drawable/asset_bg_helmet_sample"
+        app:cacheImageURL="true"
         app:clearInitialContent="true"/>
 
 </RelativeLayout>

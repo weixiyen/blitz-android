@@ -32,9 +32,12 @@ public class AppDataObject {
     public static final AppData<Boolean> settingsSoundDisabled = AppData.bool("SETTINGS_SOUND");
 
     // GCM related information (specifically, the application version and device registration id).
-    public static final AppData<Integer> gcmAppVersion            = AppData.integer("GCM_APP_VERSION");
-    public static final AppData<String> gcmRegistrationId         = AppData.string("GCM_REGISTRATION_ID");
-    public static final AppData<Boolean> gcmRegistrationPersisted = AppData.bool("GCM_REGISTRATION_PERSISTED");
-    public static final AppData<String> gcmDeviceId               = AppData.string("GCM_DEVICE_ID");
+    public static final AppData<Integer> gcmAppVersion             = AppData.integer("GCM_APP_VERSION");
+    public static final AppData<String>  gcmRegistrationId         = AppData.string("GCM_REGISTRATION_ID");
+    public static final AppData<Boolean> gcmRegistrationPersisted  = AppData.bool("GCM_REGISTRATION_PERSISTED");
+    public static final AppData<String>  gcmDeviceId               = AppData.string("GCM_DEVICE_ID");
 
+    // Cached content used for a cleaner looking UI.
+    public static final AppData<HashMap<String, String>> cachedImageUrls = AppData.dictionary("CACHED_IMAGE_URLS");
+    public static final AppData<HashMap<String, String>> cachedText = AppData.dictionary("CACHED_TEXT");
 }
