@@ -17,6 +17,53 @@ import java.util.List;
  */
 public class ViewModelGameLog extends ViewModel {
 
+    public final static class Summary {
+
+        private final List<HeadToHeadDraft> mDrafts;
+        private final int mRatingChange;
+        private final int mEarnings;
+        private final int mWins;
+        private final int mLosses;
+
+        Summary(List<HeadToHeadDraft> drafts) {
+            mDrafts = drafts;
+
+            int ratingChange = 0;
+            int wins = 0;
+            int losses = 0;
+            for(HeadToHeadDraft draft: mDrafts) {
+                ratingChange += draft.getPlayer1RatingChange();
+                if(draft.getPlayer1Score() > draft.getPlayer2Score()) {
+                    wins += 1;
+                } else if(draft.getPlayer1Score() < draft.getPlayer2Score()) {
+                    losses += 1;
+                }
+            }
+            mRatingChange = ratingChange;
+            mWins = wins;
+            mLosses = losses;
+
+            mEarnings = 0; // TODO calculate earnings
+
+        }
+
+        public int getWins() {
+            return mWins;
+        }
+
+        public int getLosses() {
+            return mLosses;
+        }
+
+        public int getEarningsCents() {
+            return mEarnings;
+        }
+
+        public int getRatingChange() {
+            return mRatingChange;
+        }
+    }
+
     private final ViewModelGameLogCallbacks mCallbacks;
     private final SparseArray<List<HeadToHeadDraft>> mCache;
 
@@ -33,7 +80,9 @@ public class ViewModelGameLog extends ViewModel {
 
         // Populate the UI with existing cached data if we already have it
         if(mCache.get(week) != null) {
-            mCallbacks.onDrafts(mCache.get(week));
+            List<HeadToHeadDraft> drafts = mCache.get(week);
+            mCallbacks.onDrafts(drafts, new Summary(drafts));
+            mCurrentWeek = week;
         }
 
         // Get fresh data from the server.
@@ -47,18 +96,20 @@ public class ViewModelGameLog extends ViewModel {
                                 draft.getTeamName(0),
                                 draft.getTeamRoster(0),
                                 draft.getTeamPoints(0),
+                                draft.getTeamRatingChange(0),
                                 draft.getTeamName(1),
                                 draft.getTeamRoster(1),
                                 draft.getTeamPoints(1),
-                                "IN PROGRESS" // TODO: derive the status from the data.
+                                draft.getTeamRatingChange(1),
+                                draft.getStatus()
                         ));
                     }
                     mCache.put(week, matches);
-                    mCallbacks.onDrafts(matches);
+                    mCurrentWeek = week;
+                    mCallbacks.onDrafts(matches, new Summary(matches));
                 }
          });
 
-        mCurrentWeek = week;
     }
 
     @Override
@@ -68,7 +119,7 @@ public class ViewModelGameLog extends ViewModel {
     }
 
     public interface ViewModelGameLogCallbacks extends ViewModel.ViewModelCallbacks {
-        public void onDrafts(List<HeadToHeadDraft> drafts);
+        public void onDrafts(List<HeadToHeadDraft> drafts, Summary summary);
     }
 }
 

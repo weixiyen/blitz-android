@@ -103,7 +103,7 @@
         android:gravity="center"
         android:orientation="horizontal">
 
-        <TextView
+        <TextView android:id="@+id/wins"
             style="@style/TextViewStyle"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -116,7 +116,7 @@
             android:textColor="@color/text_color_light"
             android:textSize="20sp"/>
 
-        <TextView
+        <TextView android:id="@+id/losses"
             style="@style/TextViewStyle"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -129,7 +129,7 @@
             android:textColor="@color/text_color_light"
             android:textSize="20sp"/>
 
-        <TextView
+        <TextView android:id="@+id/earnings"
             style="@style/TextViewStyle"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -142,7 +142,7 @@
             android:textColor="@color/text_color_light"
             android:textSize="20sp"/>
 
-        <TextView
+        <TextView android:id="@+id/rating_change"
             style="@style/TextViewStyle"
             android:layout_width="0dp"
             android:layout_height="wrap_content"

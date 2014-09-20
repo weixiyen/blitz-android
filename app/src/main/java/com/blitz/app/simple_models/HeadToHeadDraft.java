@@ -11,24 +11,33 @@ import java.util.List;
 public class HeadToHeadDraft {
 
     private final String mPlayer1Name;
-    private final float mPlayer1Score;
+    private final float  mPlayer1Score;
+    private final int    mPlayer1RatingChange;
+    private final List<String> mPlayer1Picks;
+
     private final String mPlayer2Name;
-    private final float mPlayer2Score;
-    private final List<String> picks;
+    private final float  mPlayer2Score;
+    private final int    mPlayer2RatingChange;
+    private final List<String> mPlayer2Picks;
+
     private final String mStatus;
 
-    public HeadToHeadDraft(String player1Name, List<String> player1Picks, float player1Score,
-                           String player2Name, List<String> player2Picks, float player2Score,
+    public HeadToHeadDraft(String player1Name, List<String> player1Picks, float player1Score, int player1RatingChange,
+                           String player2Name, List<String> player2Picks, float player2Score, int player2RatingChange,
                            String status) {
+
         mPlayer1Name  = player1Name;
         mPlayer1Score = player1Score;
+        mPlayer1Picks = player1Picks;
+        mPlayer1RatingChange = player1RatingChange;
+
+
         mPlayer2Name  = player2Name;
         mPlayer2Score = player2Score;
+        mPlayer2Picks = player2Picks;
+        mPlayer2RatingChange = player2RatingChange;
 
         mStatus       = status;
-
-        player1Picks.addAll(player2Picks);
-        picks = player1Picks;
     }
 
     public String getPlayer1Name() {
@@ -37,6 +46,14 @@ public class HeadToHeadDraft {
 
     public float getPlayer1Score() {
         return mPlayer1Score;
+    }
+
+    public int getPlayer1RatingChange() {
+        return mPlayer1RatingChange;
+    }
+
+    public int getPlayer2RatingChange() {
+        return mPlayer2RatingChange;
     }
 
     public String getPlayer2Name() {
@@ -52,18 +69,10 @@ public class HeadToHeadDraft {
     }
 
     public List<String> getPlayer1Picks() {
-        List<String> p1Picks = new ArrayList<String>();
-        for(int i=0; i < picks.size(); i+=2) {
-            p1Picks.add(picks.get(i));
-        }
-        return p1Picks;
+        return mPlayer1Picks;
     }
 
     public List<String> getPlayer2Picks() {
-        List<String> p2Picks = new ArrayList<String>();
-        for(int i=1; i < picks.size(); i+=2) {
-            p2Picks.add(picks.get(i));
-        }
-        return p2Picks;
+        return mPlayer2Picks;
     }
 }

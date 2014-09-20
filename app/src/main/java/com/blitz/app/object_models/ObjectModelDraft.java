@@ -82,6 +82,22 @@ public final class ObjectModelDraft extends ObjectModel {
         return rosters.get(users.get(team));
     }
 
+    public int getTeamRatingChange(int team) {
+        String key = users.get(team);
+        final int change;
+        if(rating_change.containsKey(key)) {
+            change = rating_change.get(key);
+        } else {
+            change = 0;
+        }
+
+        return change;
+    }
+
+    public String getStatus() {
+        return game_status;
+    }
+
     // endregion
 
     // region Public Methods
