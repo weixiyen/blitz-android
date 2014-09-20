@@ -8,7 +8,6 @@ import android.widget.ImageView;
 import com.blitz.app.R;
 import com.blitz.app.utilities.app.AppConfig;
 import com.blitz.app.utilities.app.AppDataObject;
-import com.blitz.app.utilities.logging.LogHelper;
 import com.squareup.picasso.Picasso;
 
 import java.util.HashMap;
@@ -76,8 +75,6 @@ public class BlitzImageView extends ImageView {
     public void setImageUrl(String url) {
 
         if (url != null) {
-
-            LogHelper.log("Loading: " + url);
 
             // Load the helmet image.
             Picasso.with(getContext())
