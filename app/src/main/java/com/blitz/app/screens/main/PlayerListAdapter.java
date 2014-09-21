@@ -2,6 +2,7 @@ package com.blitz.app.screens.main;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,6 +11,7 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import com.blitz.app.R;
+import com.blitz.app.screens.stats.PlayerWeekStatsScreen;
 import com.blitz.app.simple_models.Player;
 
 import java.util.List;
@@ -45,6 +47,13 @@ public class PlayerListAdapter extends ArrayAdapter {
         Pair<Player, Player> players = mPlayers.get(position);
 
         ((TextView) v.findViewById(R.id.player1_name)).setText(players.first.getFullName());
+        ((TextView) v.findViewById(R.id.player1_name)).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(mActivity, PlayerWeekStatsScreen.class);
+                mActivity.startActivity(intent);
+            }
+        });
         ((TextView) v.findViewById(R.id.player1_position_team)).setText(getPositionTeam(players.first));
         ((TextView) v.findViewById(R.id.player1_score)).setText(getScore(players.first));
 

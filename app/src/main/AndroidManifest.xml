@@ -84,6 +84,9 @@
         <activity android:name=".screens.main.MainScreenFragmentDraftDetail"
             android:windowSoftInputMode="stateHidden" />
 
+        <activity android:name=".screens.stats.PlayerWeekStatsScreen"
+            android:windowSoftInputMode="stateHidden" />
+
         <!--
           WakefulBroadcastReceiver that will receive intents from GCM
           services and hand them to the custom IntentService.
