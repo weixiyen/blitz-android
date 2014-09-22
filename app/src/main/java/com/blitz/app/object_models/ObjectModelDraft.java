@@ -2,11 +2,8 @@ package com.blitz.app.object_models;
 
 import android.app.Activity;
 
-import com.blitz.app.dialogs.error.DialogError;
 import com.blitz.app.utilities.json.JsonHelper;
-import com.blitz.app.utilities.rest.RestAPICallback;
-import com.blitz.app.utilities.rest.RestAPIObject;
-import com.blitz.app.utilities.rest.RestAPIOperation;
+import com.blitz.app.utilities.rest.RestAPICallbackCombined;
 import com.blitz.app.utilities.rest.RestAPIResult;
 import com.google.gson.JsonObject;
 import com.google.gson.reflect.TypeToken;
@@ -16,8 +13,6 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
-import retrofit.Callback;
-import retrofit.RetrofitError;
 import retrofit.client.Response;
 
 /**
@@ -125,17 +120,17 @@ public final class ObjectModelDraft extends ObjectModel {
             return;
         }
 
-        // Operation callbacks.
-        RestAPIOperation operation = new RestAPIOperation(activity) {
+        RestAPICallbackCombined<JsonObject> operation =
+                new RestAPICallbackCombined<JsonObject>(activity) {
 
             @Override
-            public void success(RestAPIObject restAPIObject) {
+            public void success(JsonObject jsonObject) {
 
                 // Set the offset.
                 setServerTimeOffset(getOperationTimeStart(), getOperationTimeEnd());
 
                 // Parse result into this draft.
-                parseDraft(ObjectModelDraft.this, restAPIObject.getJsonObject());
+                parseDraft(ObjectModelDraft.this, jsonObject);
 
                 // Now left queue.
                 if (callback != null) {
@@ -145,7 +140,7 @@ public final class ObjectModelDraft extends ObjectModel {
         };
 
         // Make api call.
-        mRestAPI.draft_get(mId, RestAPICallback.create(operation));
+        mRestAPI.draft_get(mId, operation);
     }
 
     /**
@@ -160,19 +155,22 @@ public final class ObjectModelDraft extends ObjectModel {
     public static void fetchActiveDraftsForUser(final Activity activity, String userId,
                                                 final DraftsCallback callback) {
 
-        Callback<RestAPIResult<ObjectModelDraft>> operation = new Callback<RestAPIResult<ObjectModelDraft>>() {
+        RestAPICallbackCombined<RestAPIResult<ObjectModelDraft>> op =
+                new RestAPICallbackCombined<RestAPIResult<ObjectModelDraft>>(activity) {
+
             @Override
-            public void success(RestAPIResult<ObjectModelDraft> result, Response response) {
-                callback.onSuccess(result.getResults());
+            public void success(RestAPIResult<ObjectModelDraft> jsonObject) {
+
+                callback.onSuccess(jsonObject.getResults());
             }
 
-            /**
-             * Force log out the user on failure.
-             */
             @Override
-            public void failure(RetrofitError error) {
-                DialogError dialog = new DialogError(activity);
-                dialog.showUnauthorized();
+            public void failure(Response response, boolean networkError) {
+
+                // Show unauthorized message.
+                if (getErrorDialog() != null) {
+                    getErrorDialog().showUnauthorized();
+                }
             }
         };
 
@@ -183,7 +181,7 @@ public final class ObjectModelDraft extends ObjectModel {
         String orderBy = "{\"created\": \"ASC\"}";
 
         mRestAPI.drafts_get(getKeys(userId), null, "users",
-                filter, orderBy, null, operation);
+                filter, orderBy, null, op);
     }
 
     /**
@@ -204,16 +202,13 @@ public final class ObjectModelDraft extends ObjectModel {
                                           Integer limit,
                                           final DraftsCallback callback) {
 
-        Callback<RestAPIResult<ObjectModelDraft>> operation = new Callback<RestAPIResult<ObjectModelDraft>>() {
+        RestAPICallbackCombined<RestAPIResult<ObjectModelDraft>> operation =
+                new RestAPICallbackCombined<RestAPIResult<ObjectModelDraft>>(activity) {
 
             @Override
-            public void success(RestAPIResult<ObjectModelDraft> result, Response response) {
-                callback.onSuccess(result.getResults());
-            }
+            public void success(RestAPIResult<ObjectModelDraft> jsonObject) {
 
-            @Override
-            public void failure(RetrofitError error) {
-                error.printStackTrace();
+                callback.onSuccess(jsonObject.getResults());
             }
         };
 
