@@ -2,7 +2,7 @@ package com.blitz.app.object_models;
 
 import android.app.Activity;
 
-import com.blitz.app.utilities.rest.RestAPICallbackCombined;
+import com.blitz.app.utilities.rest.RestAPICallback;
 import com.google.gson.JsonObject;
 
 /**
@@ -48,8 +48,8 @@ public class ObjectModelQueue extends ObjectModel {
                 mDraftKey =  mModelPreferences.currentActiveQueue();
 
                 // Define operation, call on queue up when complete.
-                RestAPICallbackCombined<JsonObject> operation =
-                        new RestAPICallbackCombined<JsonObject>(activity) {
+                RestAPICallback<JsonObject> operation =
+                        new RestAPICallback<JsonObject>(activity) {
 
                     @Override
                     public void success(JsonObject jsonObject) {
@@ -85,8 +85,8 @@ public class ObjectModelQueue extends ObjectModel {
         }
 
         // Operation callbacks.
-        RestAPICallbackCombined<JsonObject> operation =
-                new RestAPICallbackCombined<JsonObject>(activity) {
+        RestAPICallback<JsonObject> operation =
+                new RestAPICallback<JsonObject>(activity) {
 
             @Override
             public void success(JsonObject jsonObject) {
@@ -116,8 +116,8 @@ public class ObjectModelQueue extends ObjectModel {
         }
 
         // Operation callbacks.
-        RestAPICallbackCombined<JsonObject> operation =
-                new RestAPICallbackCombined<JsonObject>(activity) {
+        RestAPICallback<JsonObject> operation =
+                new RestAPICallback<JsonObject>(activity) {
 
             @Override
             public void success(JsonObject jsonObject) {

@@ -3,7 +3,7 @@ package com.blitz.app.object_models;
 import android.app.Activity;
 
 import com.blitz.app.utilities.app.AppConfig;
-import com.blitz.app.utilities.rest.RestAPICallbackCombined;
+import com.blitz.app.utilities.rest.RestAPICallback;
 import com.google.gson.JsonObject;
 
 /**
@@ -51,8 +51,8 @@ public class ObjectModelPreferences extends ObjectModel {
     public void Sync(Activity activity, final SyncCallback syncCallback) {
 
         // Define operation, call onSync when complete.
-        RestAPICallbackCombined<JsonObject> operation =
-                new RestAPICallbackCombined<JsonObject>(activity) {
+        RestAPICallback<JsonObject> operation =
+                new RestAPICallback<JsonObject>(activity) {
 
             @Override
             public void success(JsonObject jsonObject) {

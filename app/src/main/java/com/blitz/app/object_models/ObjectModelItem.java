@@ -3,7 +3,7 @@ package com.blitz.app.object_models;
 import android.app.Activity;
 
 import com.blitz.app.utilities.json.JsonHelper;
-import com.blitz.app.utilities.rest.RestAPICallbackCombined;
+import com.blitz.app.utilities.rest.RestAPICallback;
 import com.google.gson.JsonObject;
 
 import java.util.ArrayList;
@@ -42,8 +42,8 @@ public class ObjectModelItem extends ObjectModel {
     public static void get(Activity activity, String itemId, final ItemCallback callback) {
 
         // Operation callbacks.
-        RestAPICallbackCombined<JsonObject> operation =
-                new RestAPICallbackCombined<JsonObject>(activity) {
+        RestAPICallback<JsonObject> operation =
+                new RestAPICallback<JsonObject>(activity) {
 
             @Override
             public void success(JsonObject jsonObject) {

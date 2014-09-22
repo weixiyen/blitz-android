@@ -12,7 +12,7 @@ import com.blitz.app.utilities.animations.AnimHelperSpringsPresets;
 import com.blitz.app.utilities.animations.AnimHelperSpringsView;
 import com.blitz.app.utilities.authentication.AuthHelper;
 import com.blitz.app.utilities.keyboard.KeyboardUtility;
-import com.blitz.app.utilities.rest.RestAPICallbackCombined;
+import com.blitz.app.utilities.rest.RestAPICallback;
 
 import butterknife.InjectView;
 import butterknife.OnClick;
@@ -101,7 +101,7 @@ public class AccessCodeScreen extends BaseActivity {
     @OnClick(R.id.access_code_continue_with_code) @SuppressWarnings("unused")
     public void continueWithCode() {
 
-        if (RestAPICallbackCombined.shouldThrottle()) {
+        if (RestAPICallback.shouldThrottle()) {
             return;
         }
 

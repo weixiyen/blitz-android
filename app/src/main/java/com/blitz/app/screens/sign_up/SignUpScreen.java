@@ -7,7 +7,7 @@ import com.blitz.app.R;
 import com.blitz.app.object_models.ObjectModelUser;
 import com.blitz.app.utilities.android.BaseActivity;
 import com.blitz.app.utilities.authentication.AuthHelper;
-import com.blitz.app.utilities.rest.RestAPICallbackCombined;
+import com.blitz.app.utilities.rest.RestAPICallback;
 
 import butterknife.InjectView;
 import butterknife.OnClick;
@@ -57,7 +57,7 @@ public class SignUpScreen extends BaseActivity {
     @OnClick(R.id.sign_up_screen_sign_up) @SuppressWarnings("unused")
     public void sign_up() {
 
-        if (RestAPICallbackCombined.shouldThrottle()) {
+        if (RestAPICallback.shouldThrottle()) {
             return;
         }
 

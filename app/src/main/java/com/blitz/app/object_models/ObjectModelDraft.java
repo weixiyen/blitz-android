@@ -3,7 +3,7 @@ package com.blitz.app.object_models;
 import android.app.Activity;
 
 import com.blitz.app.utilities.json.JsonHelper;
-import com.blitz.app.utilities.rest.RestAPICallbackCombined;
+import com.blitz.app.utilities.rest.RestAPICallback;
 import com.blitz.app.utilities.rest.RestAPIResult;
 import com.google.gson.JsonObject;
 import com.google.gson.reflect.TypeToken;
@@ -120,8 +120,8 @@ public final class ObjectModelDraft extends ObjectModel {
             return;
         }
 
-        RestAPICallbackCombined<JsonObject> operation =
-                new RestAPICallbackCombined<JsonObject>(activity) {
+        RestAPICallback<JsonObject> operation =
+                new RestAPICallback<JsonObject>(activity) {
 
             @Override
             public void success(JsonObject jsonObject) {
@@ -155,8 +155,8 @@ public final class ObjectModelDraft extends ObjectModel {
     public static void fetchActiveDraftsForUser(final Activity activity, String userId,
                                                 final DraftsCallback callback) {
 
-        RestAPICallbackCombined<RestAPIResult<ObjectModelDraft>> operation =
-                new RestAPICallbackCombined<RestAPIResult<ObjectModelDraft>>(activity) {
+        RestAPICallback<RestAPIResult<ObjectModelDraft>> operation =
+                new RestAPICallback<RestAPIResult<ObjectModelDraft>>(activity) {
 
             @Override
             public void success(RestAPIResult<ObjectModelDraft> jsonObject) {
@@ -202,8 +202,8 @@ public final class ObjectModelDraft extends ObjectModel {
                                           Integer limit,
                                           final DraftsCallback callback) {
 
-        RestAPICallbackCombined<RestAPIResult<ObjectModelDraft>> operation =
-                new RestAPICallbackCombined<RestAPIResult<ObjectModelDraft>>(activity) {
+        RestAPICallback<RestAPIResult<ObjectModelDraft>> operation =
+                new RestAPICallback<RestAPIResult<ObjectModelDraft>>(activity) {
 
             @Override
             public void success(RestAPIResult<ObjectModelDraft> jsonObject) {

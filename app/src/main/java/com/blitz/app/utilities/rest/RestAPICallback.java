@@ -15,7 +15,7 @@ import retrofit.client.Response;
 /**
  * Created by Miguel Gaeta on 6/29/14. Copyright 2014 Blitz Studios
  */
-public abstract class RestAPICallbackCombined<T> implements Callback<T> {
+public abstract class RestAPICallback<T> implements Callback<T> {
 
     // region Member Variables
     // =============================================================================================
@@ -56,7 +56,7 @@ public abstract class RestAPICallbackCombined<T> implements Callback<T> {
      * usage of activity version.
      */
     @SuppressWarnings("unused")
-    private RestAPICallbackCombined() {
+    private RestAPICallback() {
 
     }
 
@@ -66,7 +66,7 @@ public abstract class RestAPICallbackCombined<T> implements Callback<T> {
      * @param activity Activity used for dialogs, can be null.
      */
     @SuppressWarnings("unused")
-    public RestAPICallbackCombined(Activity activity) {
+    public RestAPICallback(Activity activity) {
 
         // Set the activity.
         mActivity = activity;

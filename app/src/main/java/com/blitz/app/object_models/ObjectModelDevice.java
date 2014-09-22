@@ -2,7 +2,7 @@ package com.blitz.app.object_models;
 
 import android.app.Activity;
 
-import com.blitz.app.utilities.rest.RestAPICallbackCombined;
+import com.blitz.app.utilities.rest.RestAPICallback;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
@@ -36,8 +36,8 @@ public class ObjectModelDevice extends ObjectModel{
      */
     public void get(Activity activity, final Runnable callback) {
 
-        RestAPICallbackCombined<JsonObject> operation =
-                new RestAPICallbackCombined<JsonObject>(activity) {
+        RestAPICallback<JsonObject> operation =
+                new RestAPICallback<JsonObject>(activity) {
 
             @Override
             public void success(JsonObject jsonObject) {
@@ -64,8 +64,8 @@ public class ObjectModelDevice extends ObjectModel{
      */
     public void create(Activity activity, final Runnable callback) {
 
-        RestAPICallbackCombined<JsonObject> operation =
-                new RestAPICallbackCombined<JsonObject>(activity) {
+        RestAPICallback<JsonObject> operation =
+                new RestAPICallback<JsonObject>(activity) {
 
             @Override
             public void success(JsonObject jsonObject) {
@@ -99,8 +99,8 @@ public class ObjectModelDevice extends ObjectModel{
      */
     public void update(Activity activity, final Runnable callback) {
 
-        RestAPICallbackCombined<JsonObject> operation =
-                new RestAPICallbackCombined<JsonObject>(activity) {
+        RestAPICallback<JsonObject> operation =
+                new RestAPICallback<JsonObject>(activity) {
 
             @Override
             public void success(JsonObject jsonObject) {

@@ -3,7 +3,7 @@ package com.blitz.app.object_models;
 import android.util.Pair;
 
 import com.blitz.app.simple_models.Player;
-import com.blitz.app.utilities.rest.RestAPICallbackCombined;
+import com.blitz.app.utilities.rest.RestAPICallback;
 import com.blitz.app.utilities.rest.RestAPIResult;
 import com.blitz.app.view_models.ViewModelDraftDetail;
 
@@ -29,8 +29,8 @@ public class ObjectModelStats extends ObjectModel {
 
     public static void fetchStats(String[] player1Roster, String[] player2Roster, final ViewModelDraftDetail.ViewModelDraftDetailCallbacks callbacks) {
 
-        RestAPICallbackCombined<RestAPIResult<ObjectModelStats>> operation =
-                new RestAPICallbackCombined<RestAPIResult<ObjectModelStats>>(null) {
+        RestAPICallback<RestAPIResult<ObjectModelStats>> operation =
+                new RestAPICallback<RestAPIResult<ObjectModelStats>>(null) {
 
             @Override
             public void success(RestAPIResult<ObjectModelStats> operation) {

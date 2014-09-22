@@ -4,7 +4,7 @@ import android.app.Activity;
 import android.widget.EditText;
 
 import com.blitz.app.utilities.authentication.AuthHelper;
-import com.blitz.app.utilities.rest.RestAPICallbackCombined;
+import com.blitz.app.utilities.rest.RestAPICallback;
 import com.google.gson.JsonObject;
 import com.google.gson.annotations.SerializedName;
 
@@ -126,7 +126,7 @@ public class ObjectModelUser extends ObjectModel {
     public void getUser(Activity activity, final Runnable success, final Runnable failure) {
 
         // Rest operation.
-        RestAPICallbackCombined<JsonObject> operation = new RestAPICallbackCombined<JsonObject>(activity) {
+        RestAPICallback<JsonObject> operation = new RestAPICallback<JsonObject>(activity) {
 
             @Override
             public void success(JsonObject jsonObject) {
@@ -187,8 +187,8 @@ public class ObjectModelUser extends ObjectModel {
     public void signUp(Activity activity, final CallbackSignUp callback) {
 
         // Rest operation.
-        RestAPICallbackCombined<JsonObject> operation =
-                new RestAPICallbackCombined<JsonObject>(activity) {
+        RestAPICallback<JsonObject> operation =
+                new RestAPICallback<JsonObject>(activity) {
 
             @Override
             public void success(JsonObject jsonObject) {
@@ -230,8 +230,8 @@ public class ObjectModelUser extends ObjectModel {
     public void signIn(Activity activity, final CallbackSignIn callback) {
 
         // Rest operation.
-        RestAPICallbackCombined<JsonObject> operation =
-                new RestAPICallbackCombined<JsonObject>(activity) {
+        RestAPICallback<JsonObject> operation =
+                new RestAPICallback<JsonObject>(activity) {
 
             @Override
             public void success(JsonObject jsonObject) {
