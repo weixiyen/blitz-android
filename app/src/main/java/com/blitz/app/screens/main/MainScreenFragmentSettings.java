@@ -83,7 +83,6 @@ public class MainScreenFragmentSettings extends BaseFragment {
 
         pager.setPadding(pixelPadding, 0, pixelPadding, 0);
         pager.setClipToPadding(false);
-        pager.setPageMargin(0);
 
 
 
