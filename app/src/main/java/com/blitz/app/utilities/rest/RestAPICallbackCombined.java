@@ -1,7 +1,5 @@
 package com.blitz.app.utilities.rest;
 
-import com.google.gson.JsonObject;
-
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
@@ -9,7 +7,7 @@ import retrofit.client.Response;
 /**
  * Created by Miguel Gaeta on 6/29/14. Copyright 2014 Blitz Studios
  */
-public class RestAPICallbackCombined<T> implements Callback<T> {
+public abstract class RestAPICallbackCombined<T> implements Callback<T> {
 
     //==============================================================================================
     // Overwritten Methods
@@ -27,21 +25,41 @@ public class RestAPICallbackCombined<T> implements Callback<T> {
 
     /**
      * Assign our member variables.
-     *
-     * @param operation Operation object.
-     * @param isAuthentication Is this an authentication call.
      */
-    private RestAPICallbackCombined(boolean isAuthentication) {
+    public RestAPICallbackCombined() {
 
         // Set the operation.
         // TODO: Revise mOperation = operation;
 
         // Start operation as soon as initialized.
         // TODO: Revise mOperation.start();
+    }
 
-        // Set authentication flag.
+    // region Public Methods
+    // =============================================================================================
+
+    /**
+     * Is this an authentication callback.
+     *
+     * @param isAuthentication Is this an authentication call.
+     */
+    @SuppressWarnings("unused")
+    public void setIsAuthentication(boolean isAuthentication) {
         mIsAuthentication = isAuthentication;
     }
+
+    public void failure(Response response, boolean networkError) {
+
+    }
+
+    // endregion
+
+    // region Abstract Methods
+    // =============================================================================================
+
+    public abstract void success(T jsonObject);
+
+    // endregion
 
     //==============================================================================================
     // Overwritten Methods
@@ -63,10 +81,13 @@ public class RestAPICallbackCombined<T> implements Callback<T> {
         }
 
         // Create a new rest API object from the result.
-        RestAPIObject restAPIObject = new RestAPIObject((JsonObject) jsonObject);
+        // TODO: Revise RestAPIObject restAPIObject = new RestAPIObject((JsonObject) jsonObject);
 
         // Finish the operation.
         // TODO: Revise mOperation.finish(restAPIObject, null);
+
+        // TODO: Revise
+        success(jsonObject);
     }
 
     /**
