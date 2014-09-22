@@ -3,9 +3,7 @@ package com.blitz.app.object_models;
 import android.app.Activity;
 
 import com.blitz.app.utilities.json.JsonHelper;
-import com.blitz.app.utilities.rest.RestAPICallback;
-import com.blitz.app.utilities.rest.RestAPIObject;
-import com.blitz.app.utilities.rest.RestAPIOperation;
+import com.blitz.app.utilities.rest.RestAPICallbackCombined;
 import com.google.gson.JsonObject;
 
 import java.util.ArrayList;
@@ -44,16 +42,17 @@ public class ObjectModelItem extends ObjectModel {
     public static void get(Activity activity, String itemId, final ItemCallback callback) {
 
         // Operation callbacks.
-        RestAPIOperation operation = new RestAPIOperation(activity) {
+        RestAPICallbackCombined<JsonObject> operation =
+                new RestAPICallbackCombined<JsonObject>(activity) {
 
             @Override
-            public void success(RestAPIObject restAPIObject) {
+            public void success(JsonObject jsonObject) {
 
                 // Create new object.
                 ObjectModelItem objectModelItem = new ObjectModelItem();
 
                 // Parse json into the object.
-                parseItem(objectModelItem, restAPIObject.getJsonObject().getAsJsonObject("result"));
+                parseItem(objectModelItem, jsonObject.getAsJsonObject("result"));
 
                 // Now left queue.
                 if (callback != null) {
@@ -63,7 +62,7 @@ public class ObjectModelItem extends ObjectModel {
         };
 
         // Make api call.
-        mRestAPI.item_get(itemId, RestAPICallback.create(operation));
+        mRestAPI.item_get(itemId, operation);
     }
 
     /**

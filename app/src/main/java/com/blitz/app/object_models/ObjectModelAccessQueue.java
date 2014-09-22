@@ -2,9 +2,7 @@ package com.blitz.app.object_models;
 
 import android.app.Activity;
 
-import com.blitz.app.utilities.rest.RestAPICallback;
-import com.blitz.app.utilities.rest.RestAPIObject;
-import com.blitz.app.utilities.rest.RestAPIOperation;
+import com.blitz.app.utilities.rest.RestAPICallbackCombined;
 import com.google.gson.JsonObject;
 
 /**
@@ -72,13 +70,11 @@ public class ObjectModelAccessQueue extends ObjectModel {
      */
     public void sync(Activity activity, final Runnable callback) {
 
-        RestAPIOperation operation = new RestAPIOperation(activity) {
+        RestAPICallbackCombined<JsonObject> operation =
+                new RestAPICallbackCombined<JsonObject>(activity) {
 
             @Override
-            public void success(RestAPIObject restAPIObject) {
-
-                // Fetch resulting object.
-                JsonObject jsonObject = restAPIObject.getJsonObject();
+            public void success(JsonObject jsonObject) {
 
                 if (jsonObject != null) {
 
@@ -99,7 +95,7 @@ public class ObjectModelAccessQueue extends ObjectModel {
         };
 
         // Make rest call for code.
-        mRestAPI.access_queue_get(mDeviceId, RestAPICallback.create(operation));
+        mRestAPI.access_queue_get(mDeviceId, operation);
     }
 
     // endregion

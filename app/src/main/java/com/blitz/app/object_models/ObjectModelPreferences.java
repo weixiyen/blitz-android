@@ -3,9 +3,7 @@ package com.blitz.app.object_models;
 import android.app.Activity;
 
 import com.blitz.app.utilities.app.AppConfig;
-import com.blitz.app.utilities.rest.RestAPICallback;
-import com.blitz.app.utilities.rest.RestAPIObject;
-import com.blitz.app.utilities.rest.RestAPIOperation;
+import com.blitz.app.utilities.rest.RestAPICallbackCombined;
 import com.google.gson.JsonObject;
 
 /**
@@ -46,20 +44,18 @@ public class ObjectModelPreferences extends ObjectModel {
     /**
      * Sync user preferences.
      *
-     * @param mActivity Context for loading/error dialogs.
+     * @param activity Context for loading/error dialogs.
      *
      * @param syncCallback Completion callback.
      */
-    public void Sync(Activity mActivity, final SyncCallback syncCallback) {
+    public void Sync(Activity activity, final SyncCallback syncCallback) {
 
         // Define operation, call onSync when complete.
-        RestAPIOperation operation = new RestAPIOperation(mActivity) {
+        RestAPICallbackCombined<JsonObject> operation =
+                new RestAPICallbackCombined<JsonObject>(activity) {
 
             @Override
-            public void success(RestAPIObject restAPIObject) {
-
-                // Fetch json result.
-                JsonObject jsonObject = restAPIObject.getJsonObject();
+            public void success(JsonObject jsonObject) {
 
                 if (AppConfig.isProduction()) {
 
@@ -84,7 +80,7 @@ public class ObjectModelPreferences extends ObjectModel {
         };
 
         // Make api call.
-        mRestAPI.preferences_get(RestAPICallback.create(operation));
+        mRestAPI.preferences_get(operation);
     }
 
     // endregion

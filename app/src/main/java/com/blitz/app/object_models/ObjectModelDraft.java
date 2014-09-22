@@ -155,7 +155,7 @@ public final class ObjectModelDraft extends ObjectModel {
     public static void fetchActiveDraftsForUser(final Activity activity, String userId,
                                                 final DraftsCallback callback) {
 
-        RestAPICallbackCombined<RestAPIResult<ObjectModelDraft>> op =
+        RestAPICallbackCombined<RestAPIResult<ObjectModelDraft>> operation =
                 new RestAPICallbackCombined<RestAPIResult<ObjectModelDraft>>(activity) {
 
             @Override
@@ -181,7 +181,7 @@ public final class ObjectModelDraft extends ObjectModel {
         String orderBy = "{\"created\": \"ASC\"}";
 
         mRestAPI.drafts_get(getKeys(userId), null, "users",
-                filter, orderBy, null, op);
+                filter, orderBy, null, operation);
     }
 
     /**

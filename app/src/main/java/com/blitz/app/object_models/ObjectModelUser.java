@@ -4,9 +4,7 @@ import android.app.Activity;
 import android.widget.EditText;
 
 import com.blitz.app.utilities.authentication.AuthHelper;
-import com.blitz.app.utilities.rest.RestAPICallback;
-import com.blitz.app.utilities.rest.RestAPIObject;
-import com.blitz.app.utilities.rest.RestAPIOperation;
+import com.blitz.app.utilities.rest.RestAPICallbackCombined;
 import com.google.gson.JsonObject;
 import com.google.gson.annotations.SerializedName;
 
@@ -128,12 +126,10 @@ public class ObjectModelUser extends ObjectModel {
     public void getUser(Activity activity, final Runnable success, final Runnable failure) {
 
         // Rest operation.
-        RestAPIOperation operation = new RestAPIOperation(activity) {
+        RestAPICallbackCombined<JsonObject> operation = new RestAPICallbackCombined<JsonObject>(activity) {
 
             @Override
-            public void success(RestAPIObject restAPIObject) {
-
-                JsonObject jsonObject = restAPIObject.getJsonObject();
+            public void success(JsonObject jsonObject) {
 
                 if (jsonObject != null) {
 
@@ -154,9 +150,6 @@ public class ObjectModelUser extends ObjectModel {
                 }
             }
 
-            /**
-             * Triggered when a model operation fails.
-             */
             @Override
             public void failure(Response response, boolean networkError) {
 
@@ -173,7 +166,7 @@ public class ObjectModelUser extends ObjectModel {
         String userId = AuthHelper.instance().getUserId();
 
         // Make api call to fetch user data.
-        mRestAPI.user_get(userId, RestAPICallback.create(operation));
+        mRestAPI.user_get(userId, operation);
     }
 
     /**
@@ -194,13 +187,11 @@ public class ObjectModelUser extends ObjectModel {
     public void signUp(Activity activity, final CallbackSignUp callback) {
 
         // Rest operation.
-        RestAPIOperation operation = new RestAPIOperation(activity) {
+        RestAPICallbackCombined<JsonObject> operation =
+                new RestAPICallbackCombined<JsonObject>(activity) {
 
             @Override
-            public void success(RestAPIObject restAPIObject) {
-
-                // Fetch json result.
-                JsonObject jsonObject = restAPIObject.getJsonObject();
+            public void success(JsonObject jsonObject) {
 
                 if (jsonObject != null) {
 
@@ -218,6 +209,8 @@ public class ObjectModelUser extends ObjectModel {
             }
         };
 
+        operation.setIsAuthentication(true);
+
         // Construct POST body.
         JsonObject body = new JsonObject();
                    body.addProperty("email", mEmail);
@@ -225,7 +218,7 @@ public class ObjectModelUser extends ObjectModel {
                    body.addProperty("password", mPassword);
 
         // Make rest call for code.
-        mRestAPI.users_post(body, RestAPICallback.create(operation, true));
+        mRestAPI.users_post(body, operation);
     }
 
     /**
@@ -237,13 +230,11 @@ public class ObjectModelUser extends ObjectModel {
     public void signIn(Activity activity, final CallbackSignIn callback) {
 
         // Rest operation.
-        RestAPIOperation operation = new RestAPIOperation(activity) {
+        RestAPICallbackCombined<JsonObject> operation =
+                new RestAPICallbackCombined<JsonObject>(activity) {
 
             @Override
-            public void success(RestAPIObject restAPIObject) {
-
-                // Fetch json result.
-                JsonObject jsonObject = restAPIObject.getJsonObject();
+            public void success(JsonObject jsonObject) {
 
                 if (jsonObject != null) {
 
@@ -261,13 +252,15 @@ public class ObjectModelUser extends ObjectModel {
             }
         };
 
+        operation.setIsAuthentication(true);
+
         // Construct POST body.
         JsonObject body = new JsonObject();
                    body.addProperty("username", mUsername);
                    body.addProperty("password", mPassword);
 
         // Make auth rest call.
-        mRestAPI.auth_post(body, RestAPICallback.create(operation, true));
+        mRestAPI.auth_post(body, operation);
     }
 
     // endregion

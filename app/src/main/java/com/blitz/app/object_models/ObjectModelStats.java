@@ -3,6 +3,7 @@ package com.blitz.app.object_models;
 import android.util.Pair;
 
 import com.blitz.app.simple_models.Player;
+import com.blitz.app.utilities.rest.RestAPICallbackCombined;
 import com.blitz.app.utilities.rest.RestAPIResult;
 import com.blitz.app.view_models.ViewModelDraftDetail;
 
@@ -10,8 +11,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import retrofit.Callback;
-import retrofit.RetrofitError;
-import retrofit.client.Response;
 
 /**
  * Created by spiff on 9/18/14.
@@ -30,23 +29,23 @@ public class ObjectModelStats extends ObjectModel {
 
     public static void fetchStats(String[] player1Roster, String[] player2Roster, final ViewModelDraftDetail.ViewModelDraftDetailCallbacks callbacks) {
 
-        mRestAPI.test_stats_get(new Callback<RestAPIResult<ObjectModelStats>>() {
+        RestAPICallbackCombined<RestAPIResult<ObjectModelStats>> operation =
+                new RestAPICallbackCombined<RestAPIResult<ObjectModelStats>>(null) {
 
             @Override
-            public void success(RestAPIResult<ObjectModelStats> objectModelStats, Response response) {
+            public void success(RestAPIResult<ObjectModelStats> operation) {
 
                 List<Pair<Player, Player>> players = new ArrayList<Pair<Player, Player>>();
-                for (ObjectModelStats stat : objectModelStats.getResults()) {
+
+                for (ObjectModelStats stat : operation.getResults()) {
+
                     Player p = new Player(stat.getUserId(), "test", "test2", 0.0f);
                     players.add(Pair.create(p, p));
                 }
                 callbacks.onPlayers(players);
             }
+        };
 
-            @Override
-            public void failure(RetrofitError error) {
-                error.printStackTrace();
-            }
-        });
+        mRestAPI.test_stats_get(operation);
     }
 }

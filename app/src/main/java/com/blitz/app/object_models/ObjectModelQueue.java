@@ -2,9 +2,7 @@ package com.blitz.app.object_models;
 
 import android.app.Activity;
 
-import com.blitz.app.utilities.rest.RestAPICallback;
-import com.blitz.app.utilities.rest.RestAPIObject;
-import com.blitz.app.utilities.rest.RestAPIOperation;
+import com.blitz.app.utilities.rest.RestAPICallbackCombined;
 import com.google.gson.JsonObject;
 
 /**
@@ -50,10 +48,11 @@ public class ObjectModelQueue extends ObjectModel {
                 mDraftKey =  mModelPreferences.currentActiveQueue();
 
                 // Define operation, call on queue up when complete.
-                RestAPIOperation operation = new RestAPIOperation(activity) {
+                RestAPICallbackCombined<JsonObject> operation =
+                        new RestAPICallbackCombined<JsonObject>(activity) {
 
                     @Override
-                    public void success(RestAPIObject restAPIObject) {
+                    public void success(JsonObject jsonObject) {
 
                         // Now in queue.
                         if (callback != null) {
@@ -67,7 +66,7 @@ public class ObjectModelQueue extends ObjectModel {
                            body.addProperty("draft_key", mDraftKey);
 
                 // Make api call.
-                mRestAPI.queue_post(body, RestAPICallback.create(operation));
+                mRestAPI.queue_post(body, operation);
             }
         });
     }
@@ -86,10 +85,11 @@ public class ObjectModelQueue extends ObjectModel {
         }
 
         // Operation callbacks.
-        RestAPIOperation operation = new RestAPIOperation(activity) {
+        RestAPICallbackCombined<JsonObject> operation =
+                new RestAPICallbackCombined<JsonObject>(activity) {
 
             @Override
-            public void success(RestAPIObject restAPIObject) {
+            public void success(JsonObject jsonObject) {
 
                 // Now left queue.
                 if (callback != null) {
@@ -99,7 +99,7 @@ public class ObjectModelQueue extends ObjectModel {
         };
 
         // Make api call.
-        mRestAPI.queue_delete(mDraftKey, RestAPICallback.create(operation));
+        mRestAPI.queue_delete(mDraftKey, operation);
     }
 
     /**
@@ -116,10 +116,11 @@ public class ObjectModelQueue extends ObjectModel {
         }
 
         // Operation callbacks.
-        RestAPIOperation operation = new RestAPIOperation(activity) {
+        RestAPICallbackCombined<JsonObject> operation =
+                new RestAPICallbackCombined<JsonObject>(activity) {
 
             @Override
-            public void success(RestAPIObject restAPIObject) {
+            public void success(JsonObject jsonObject) {
 
                 // Now confirmed queue.
                 if (callback != null) {
@@ -133,7 +134,7 @@ public class ObjectModelQueue extends ObjectModel {
                    body.addProperty("draft_key", mDraftKey);
 
         // Make api call.
-        mRestAPI.queue_put(body, RestAPICallback.create(operation));
+        mRestAPI.queue_put(body, operation);
     }
 
     // endregion

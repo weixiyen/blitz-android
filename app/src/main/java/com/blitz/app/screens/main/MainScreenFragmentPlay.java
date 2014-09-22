@@ -12,7 +12,7 @@ import com.blitz.app.dialogs.info.DialogInfo;
 import com.blitz.app.utilities.android.BaseFragment;
 import com.blitz.app.utilities.app.AppConfig;
 import com.blitz.app.utilities.imageview.BlitzImageView;
-import com.blitz.app.utilities.rest.RestAPIOperation;
+import com.blitz.app.utilities.rest.RestAPICallbackCombined;
 import com.blitz.app.view_models.ViewModel;
 import com.blitz.app.view_models.ViewModelMainPlay;
 
@@ -284,7 +284,7 @@ public class MainScreenFragmentPlay extends BaseFragment implements ViewModelMai
     @OnClick(R.id.main_play_button) @SuppressWarnings("unused")
     public void playButtonClicked() {
 
-        if (RestAPIOperation.shouldThrottle()) {
+        if (RestAPICallbackCombined.shouldThrottle()) {
             return;
         }
 
