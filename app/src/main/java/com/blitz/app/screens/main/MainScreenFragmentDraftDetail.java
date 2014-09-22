@@ -1,7 +1,6 @@
 package com.blitz.app.screens.main;
 
 import android.os.Bundle;
-import android.util.Pair;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -25,8 +24,6 @@ public class MainScreenFragmentDraftDetail extends BaseActivity implements ViewM
     // =============================================================================================
 
     private ViewModelDraftDetail mViewModel;
-
-    private PlayerListAdapter mPlayerListAdapter;
 
     @InjectView(R.id.main_draft_detail_player_list)     ListView mPlayerList;
 

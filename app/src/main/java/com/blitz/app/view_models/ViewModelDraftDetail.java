@@ -2,16 +2,12 @@ package com.blitz.app.view_models;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.util.Pair;
 
 import com.blitz.app.object_models.ObjectModelGame;
 import com.blitz.app.object_models.ObjectModelStats;
 import com.blitz.app.screens.main.MatchInfoAdapter;
-import com.blitz.app.screens.main.PlayerListAdapter;
 import com.blitz.app.simple_models.Game;
 import com.blitz.app.simple_models.Player;
-import com.blitz.app.utilities.rest.RestAPI;
-import com.blitz.app.utilities.rest.RestAPIClient;
 import com.blitz.app.utilities.rest.RestAPIResult;
 
 import java.util.ArrayList;
@@ -64,7 +60,11 @@ public class ViewModelDraftDetail extends ViewModel {
                         ObjectModelGame.fetchGames(year, week, new Callback<List<Game>>() {
                             @Override
                             public void success(List<Game> games, Response response) {
-                                callbacks.onStuff(p1roster, p2roster, null, null);
+                                // build list of game results per pick
+                                List<Game> p1Games = getPlayerGames(p1roster, games);
+                                List<Game> p2Games = getPlayerGames(p2roster, games);
+
+                                callbacks.onStuff(p1roster, p2roster, p1Games, p2Games);
 
                                 callbacks.onMatchup(extras.getString(MatchInfoAdapter.PLAYER_1_NAME),
                                         extras.getFloat(MatchInfoAdapter.PLAYER_1_SCORE),
@@ -91,6 +91,25 @@ public class ViewModelDraftDetail extends ViewModel {
                 error.printStackTrace();
             }
         });
+    }
+
+    private List<Game> getPlayerGames(List<Player> roster, List<Game> games) {
+
+        List<Game> gamesForPlayers = new ArrayList<Game>(roster.size());
+
+        for(Player player: roster) {
+            Game playerGame = new Game();
+            for(Game game: games) {
+                if(player.getTeamName().equals(game.getAwayTeamName()) ||
+                        player.getTeamName().equals(game.getHomeTeamName())) {
+                    playerGame = game;
+                    break;
+                }
+            }
+            gamesForPlayers.add(playerGame);
+        }
+
+        return gamesForPlayers;
     }
 
     public interface ViewModelDraftDetailCallbacks extends ViewModelCallbacks {
