@@ -12,12 +12,14 @@
         android:layout_height="wrap_content"
         android:textColor="@color/text_color_link"
         android:gravity="center"
-        android:text="Stats"/>
+        android:text="Stats"
+        android:background="@color/background_navigation"/>
 
     <TableLayout
         android:layout_width="match_parent"
-        android:layout_height="160sp"
-        android:padding="10sp">
+        android:layout_height="150sp"
+        android:padding="10sp"
+        android:background="@color/background_inner_dark">
 
         <TableRow android:layout_height="60sp"
 
@@ -58,4 +60,13 @@
         </TableRow>
 
     </TableLayout>
+
+    <ListView
+        android:id="@+id/player_stats_list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:background="@color/background_inner"/>
+
+
 </LinearLayout>

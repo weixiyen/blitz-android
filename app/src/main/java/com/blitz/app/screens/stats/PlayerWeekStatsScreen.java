@@ -12,4 +12,5 @@ import butterknife.InjectView;
  */
 public class PlayerWeekStatsScreen extends BaseActivity {
 
+    @InjectView(R.id.player_stats_list) ListView mStats;
 }
