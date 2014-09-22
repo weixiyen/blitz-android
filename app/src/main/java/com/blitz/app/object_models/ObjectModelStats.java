@@ -26,26 +26,4 @@ public class ObjectModelStats extends ObjectModel {
 
         mRestAPI.players_get(playerIds, playerCallback);
     }
-
-    public static void fetchStats(String[] player1Roster, String[] player2Roster, final ViewModelDraftDetail.ViewModelDraftDetailCallbacks callbacks) {
-
-        RestAPICallback<RestAPIResult<ObjectModelStats>> operation =
-                new RestAPICallback<RestAPIResult<ObjectModelStats>>(null) {
-
-            @Override
-            public void success(RestAPIResult<ObjectModelStats> operation) {
-
-                List<Pair<Player, Player>> players = new ArrayList<Pair<Player, Player>>();
-
-                for (ObjectModelStats stat : operation.getResults()) {
-
-                    Player p = new Player(stat.getUserId(), "test", "test2", 0.0f);
-                    players.add(Pair.create(p, p));
-                }
-                callbacks.onPlayers(players);
-            }
-        };
-
-        mRestAPI.test_stats_get(operation);
-    }
 }

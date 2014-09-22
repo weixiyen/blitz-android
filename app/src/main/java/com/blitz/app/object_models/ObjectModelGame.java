@@ -27,11 +27,11 @@ public class ObjectModelGame extends ObjectModel {
             new ConcurrentHashMap<Pair<Integer, Integer>, List<Game>>();
 
     public static void fetchGames(int year, int week,
-                                final ViewModelDraftDetailCallbacks callback) {
+                                final Callback<List<Game>> callback) {
 
         final Pair<Integer, Integer> cacheKey = Pair.create(year, week);
         if(mCache.containsKey(cacheKey)) {
-            callback.onGames(mCache.get(cacheKey));
+            callback.success(mCache.get(cacheKey), null);
 
         } else {
 
@@ -41,7 +41,7 @@ public class ObjectModelGame extends ObjectModel {
                 public void success(RestAPIResult restAPIResult, Response response) {
 
                     mCache.put(cacheKey, restAPIResult.getResults());
-                    callback.onGames(restAPIResult.getResults());
+                    callback.success(restAPIResult.getResults(), null);
                 }
 
                 @Override
