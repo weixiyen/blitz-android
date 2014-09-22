@@ -37,7 +37,7 @@ public class ViewModelDraftDetail extends ViewModel {
     @Override
     public void initialize() {
 
-        Bundle extras = mActivity.getIntent().getExtras();
+        final Bundle extras = mActivity.getIntent().getExtras();
         final String[] player1ids = (String[]) extras.get(MatchInfoAdapter.PLAYER_1_ROSTER);
         final String[] player2ids = (String[]) extras.get(MatchInfoAdapter.PLAYER_2_ROSTER);
 
@@ -60,7 +60,10 @@ public class ViewModelDraftDetail extends ViewModel {
                         }
 
                         callbacks.onPlayers(players);
-                        callbacks.onMatchup("Galfgarion", 1.23f, "mericsson", 4.45f);
+                        callbacks.onMatchup(extras.getString(MatchInfoAdapter.PLAYER_1_NAME),
+                                extras.getFloat(MatchInfoAdapter.PLAYER_1_SCORE),
+                                extras.getString(MatchInfoAdapter.PLAYER_2_NAME),
+                                extras.getFloat(MatchInfoAdapter.PLAYER_2_SCORE));
                     }
 
                     @Override

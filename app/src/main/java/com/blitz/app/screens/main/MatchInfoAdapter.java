@@ -24,6 +24,10 @@ public class MatchInfoAdapter extends ArrayAdapter {
 
     public static final String PLAYER_1_ROSTER = "MatchInfoAdapter.player1Roster";
     public static final String PLAYER_2_ROSTER = "MatchInfoAdapter.player2Roster";
+    public static final String PLAYER_1_NAME = "MatchInfoAdapter.player1Name";
+    public static final String PLAYER_2_NAME = "MatchInfoAdapter.player2Name";
+    public static final String PLAYER_1_SCORE = "MatchInfoAdapter.player1Score";
+    public static final String PLAYER_2_SCORE = "MatchInfoAdapter.player2Score";
 
     private List<HeadToHeadDraft> mItems;
     private final Activity mActivity;
@@ -77,6 +81,10 @@ public class MatchInfoAdapter extends ArrayAdapter {
                 Intent intent = new Intent(mActivity, MainScreenFragmentDraftDetail.class);
                 intent.putExtra(PLAYER_1_ROSTER, draft.getPlayer1Picks().toArray(new String[0]));
                 intent.putExtra(PLAYER_2_ROSTER, draft.getPlayer2Picks().toArray(new String[0]));
+                intent.putExtra(PLAYER_1_NAME,   draft.getPlayer1Name());
+                intent.putExtra(PLAYER_2_NAME,   draft.getPlayer2Name());
+                intent.putExtra(PLAYER_1_SCORE,  draft.getPlayer1Score());
+                intent.putExtra(PLAYER_2_SCORE,  draft.getPlayer2Score());
                 mActivity.startActivity(intent);
             }
         });
