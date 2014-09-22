@@ -6,6 +6,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.blitz.app.R;
+import com.blitz.app.simple_models.Game;
 import com.blitz.app.simple_models.Player;
 import com.blitz.app.utilities.android.BaseActivity;
 import com.blitz.app.view_models.ViewModel;
@@ -24,6 +25,8 @@ public class MainScreenFragmentDraftDetail extends BaseActivity implements ViewM
     // =============================================================================================
 
     private ViewModelDraftDetail mViewModel;
+
+    private PlayerListAdapter mPlayerListAdapter;
 
     @InjectView(R.id.main_draft_detail_player_list)     ListView mPlayerList;
 
@@ -47,7 +50,6 @@ public class MainScreenFragmentDraftDetail extends BaseActivity implements ViewM
     private void flipPlayer2Avatar() {
         findViewById(R.id.player_2_details).findViewById(R.id.player_avatar).setScaleX(-1f);
     }
-
 
     // endregion
 
@@ -80,13 +82,10 @@ public class MainScreenFragmentDraftDetail extends BaseActivity implements ViewM
     // region Public Methods
     // =============================================================================================
 
-    public void onPlayers(List<Pair<Player, Player>> players) {
-        final PlayerListAdapter adapter = new PlayerListAdapter(getApplicationContext(),
-                players, this);
-
-        if(mPlayerList != null) {
-            mPlayerList.setAdapter(adapter);
-        }
+    @Override
+    public void onStuff(List<Player> p1roster, List<Player> p2Roster, List<Game> p1games, List<Game> p2games) {
+        mPlayerList.setAdapter(new PlayerListAdapter(getApplicationContext(), p1roster, p2Roster, p1games, p2games,
+                null, null, this));
     }
 
     @Override

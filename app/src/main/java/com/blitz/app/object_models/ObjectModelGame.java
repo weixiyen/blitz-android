@@ -51,7 +51,7 @@ public class ObjectModelGame extends ObjectModel {
                 }
             };
 
-            mRestAPI.games_get(year, week, apiCallback);
+            mRestAPI.games_get(String.valueOf(year) + "_" + week, apiCallback);
         }
     }
 }

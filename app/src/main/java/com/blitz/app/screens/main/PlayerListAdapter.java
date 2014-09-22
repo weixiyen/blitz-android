@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import com.blitz.app.R;
 import com.blitz.app.screens.stats.PlayerWeekStatsScreen;
+import com.blitz.app.simple_models.Game;
 import com.blitz.app.simple_models.Player;
 
 import java.util.List;
@@ -23,15 +24,26 @@ import java.util.List;
  */
 public class PlayerListAdapter extends ArrayAdapter {
 
-    private final List<Pair<Player, Player>> mPlayers;
+    private final List<Player> mPlayer1Picks;
+    private final List<Player> mPlayer2Picks;
+    private final List<Float> mPlayer1Scores;
+    private final List<Float> mPlayer2Scores;
+
     private final Activity mActivity;
 
-    public PlayerListAdapter(Context context, List<Pair<Player, Player>> players, Activity activity) {
+    public PlayerListAdapter(Context context, List<Player> player1picks, List<Player> player2picks,
+                             List<Game> player1games, List<Game> player2games,
+                             List<Float> player1scores, List<Float> player2scores,
+                             Activity activity) {
 
-        super(context, R.layout.main_screen_fragment_draft_detail, players);
+
+        super(context, R.layout.main_screen_fragment_draft_detail, player1picks);
         mActivity = activity;
 
-        mPlayers = players;
+        mPlayer1Picks = player1picks;
+        mPlayer2Picks = player2picks;
+        mPlayer1Scores = player1scores;
+        mPlayer2Scores = player2scores;
     }
 
     @Override
@@ -44,9 +56,24 @@ public class PlayerListAdapter extends ArrayAdapter {
                     .inflate(R.layout.main_screen_draft_list_item, null);
         }
 
-        Pair<Player, Player> players = mPlayers.get(position);
+        if(mPlayer1Picks != null && mPlayer2Picks != null) {
 
-        ((TextView) v.findViewById(R.id.player1_name)).setText(players.first.getFullName());
+            Player p1 = mPlayer1Picks.get(position);
+            Player p2 = mPlayer2Picks.get(position);
+            ((TextView) v.findViewById(R.id.player1_name)).setText(p1.getFullName());
+            ((TextView) v.findViewById(R.id.player1_position_team)).setText(getPositionTeam(p1));
+            ((TextView) v.findViewById(R.id.player2_name)).setText(p2.getFullName());
+            ((TextView) v.findViewById(R.id.player2_position_team)).setText(getPositionTeam(p2));
+        }
+
+        if(mPlayer1Scores != null && mPlayer2Scores != null) {
+
+            Float  s1 = mPlayer1Scores.get(position);
+            Float  s2 = mPlayer2Scores.get(position);
+            ((TextView) v.findViewById(R.id.player1_score)).setText(getScore(s1));
+            ((TextView) v.findViewById(R.id.player2_score)).setText(getScore(s2));
+        }
+
         ((TextView) v.findViewById(R.id.player1_name)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -54,19 +81,13 @@ public class PlayerListAdapter extends ArrayAdapter {
                 mActivity.startActivity(intent);
             }
         });
-        ((TextView) v.findViewById(R.id.player1_position_team)).setText(getPositionTeam(players.first));
-        ((TextView) v.findViewById(R.id.player1_score)).setText(getScore(players.first));
-
-        ((TextView) v.findViewById(R.id.player2_name)).setText(players.second.getFullName());
-        ((TextView) v.findViewById(R.id.player2_position_team)).setText(getPositionTeam(players.second));
-        ((TextView) v.findViewById(R.id.player2_score)).setText(getScore(players.second));
 
 
         return v;
     }
 
-    private static String getScore(Player player) {
-        return String.format("%.02f", 0f); // TODO we should be consuming some other kind of object with this set
+    private static String getScore(Float score) {
+        return String.format("%.02f", score); // TODO we should be consuming some other kind of object with this set
     }
 
     private static String getPositionTeam(Player player) {

@@ -4,9 +4,14 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.util.Pair;
 
+import com.blitz.app.object_models.ObjectModelGame;
 import com.blitz.app.object_models.ObjectModelStats;
 import com.blitz.app.screens.main.MatchInfoAdapter;
+import com.blitz.app.screens.main.PlayerListAdapter;
+import com.blitz.app.simple_models.Game;
 import com.blitz.app.simple_models.Player;
+import com.blitz.app.utilities.rest.RestAPI;
+import com.blitz.app.utilities.rest.RestAPIClient;
 import com.blitz.app.utilities.rest.RestAPIResult;
 
 import java.util.ArrayList;
@@ -38,8 +43,13 @@ public class ViewModelDraftDetail extends ViewModel {
     public void initialize() {
 
         final Bundle extras = mActivity.getIntent().getExtras();
-        final String[] player1ids = (String[]) extras.get(MatchInfoAdapter.PLAYER_1_ROSTER);
-        final String[] player2ids = (String[]) extras.get(MatchInfoAdapter.PLAYER_2_ROSTER);
+        final String[] player1ids = extras.getStringArray(MatchInfoAdapter.PLAYER_1_ROSTER);
+        final String[] player2ids = extras.getStringArray(MatchInfoAdapter.PLAYER_2_ROSTER);
+        final int week = extras.getInt(MatchInfoAdapter.WEEK);
+        final int year = extras.getInt(MatchInfoAdapter.YEAR);
+
+        final ViewModelDraftDetailCallbacks callbacks =
+                getCallbacks(ViewModelDraftDetailCallbacks.class);
 
         ObjectModelStats.fetchRoster(Arrays.asList(player1ids), new Callback<RestAPIResult<Player>>() {
             @Override
@@ -51,19 +61,22 @@ public class ViewModelDraftDetail extends ViewModel {
                         final List<Player> p1roster = player1Result.getResults();
                         final List<Player> p2roster = player2Result.getResults();
 
-                        ViewModelDraftDetailCallbacks callbacks =
-                                getCallbacks(ViewModelDraftDetailCallbacks.class);
+                        ObjectModelGame.fetchGames(year, week, new Callback<List<Game>>() {
+                            @Override
+                            public void success(List<Game> games, Response response) {
+                                callbacks.onStuff(p1roster, p2roster, null, null);
 
-                        final List<Pair<Player, Player>> players = new ArrayList<Pair<Player, Player>>();
-                        for(int i=0; i < p1roster.size(); i++) {
-                            players.add(Pair.create(p1roster.get(i), p2roster.get(i)));
-                        }
+                                callbacks.onMatchup(extras.getString(MatchInfoAdapter.PLAYER_1_NAME),
+                                        extras.getFloat(MatchInfoAdapter.PLAYER_1_SCORE),
+                                        extras.getString(MatchInfoAdapter.PLAYER_2_NAME),
+                                        extras.getFloat(MatchInfoAdapter.PLAYER_2_SCORE));
+                            }
 
-                        callbacks.onPlayers(players);
-                        callbacks.onMatchup(extras.getString(MatchInfoAdapter.PLAYER_1_NAME),
-                                extras.getFloat(MatchInfoAdapter.PLAYER_1_SCORE),
-                                extras.getString(MatchInfoAdapter.PLAYER_2_NAME),
-                                extras.getFloat(MatchInfoAdapter.PLAYER_2_SCORE));
+                            @Override
+                            public void failure(RetrofitError error) {
+                                error.printStackTrace();
+                            }
+                        });
                     }
 
                     @Override
@@ -82,7 +95,7 @@ public class ViewModelDraftDetail extends ViewModel {
 
     public interface ViewModelDraftDetailCallbacks extends ViewModelCallbacks {
 
-        void onPlayers(List<Pair<Player, Player>> players);
+        void onStuff(List<Player> p1roster, List<Player> p2Roster, List<Game> p1games, List<Game> p2games);
         void onMatchup(String player1Name, float player1score, String player2Name, float player2Score);
     }
 }

@@ -28,6 +28,8 @@ public class MatchInfoAdapter extends ArrayAdapter {
     public static final String PLAYER_2_NAME = "MatchInfoAdapter.player2Name";
     public static final String PLAYER_1_SCORE = "MatchInfoAdapter.player1Score";
     public static final String PLAYER_2_SCORE = "MatchInfoAdapter.player2Score";
+    public static final String YEAR = "MatchInfoAdapter.year";
+    public static final String WEEK = "MatchInfoAdapter.week";
 
     private List<HeadToHeadDraft> mItems;
     private final Activity mActivity;
