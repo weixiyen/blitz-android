@@ -15,6 +15,9 @@ public class RestAPIResult<T> {
     // Results field.
     @SerializedName("results") @SuppressWarnings("unused") private List<T> mResults;
 
+    // Result field (only one result).
+    @SerializedName("result") @SuppressWarnings("unused") private T mResult;
+
     // endregion
 
     // region Public Methods
@@ -29,6 +32,16 @@ public class RestAPIResult<T> {
     public List<T> getResults() {
 
         return mResults;
+    }
+
+    /**
+     * Fetch result object.
+     *
+     * @return Result of type.
+     */
+    public T getResult() {
+
+        return mResult;
     }
 
     // endregion
