@@ -2,11 +2,12 @@ package com.blitz.app.object_models;
 
 import android.app.Activity;
 
-import com.blitz.app.utilities.json.JsonHelper;
 import com.blitz.app.utilities.rest.RestAPICallback;
-import com.google.gson.JsonObject;
+import com.blitz.app.utilities.rest.RestAPIResult;
+import com.google.gson.annotations.SerializedName;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 /**
  * Created by mrkcsc on 9/9/14. Copyright 2014 Blitz Studios
@@ -16,16 +17,19 @@ public class ObjectModelItem extends ObjectModel {
     // region Member Variables
     // =============================================================================================
 
-    @SuppressWarnings("unused") private String mId;
-    @SuppressWarnings("unused") private String mTitle;
-    @SuppressWarnings("unused") private String mDescription;
-    @SuppressWarnings("unused") private String mItemType;
+    @SuppressWarnings("unused") @SerializedName("id")            private String mId;
+    @SuppressWarnings("unused") @SerializedName("title")         private String mTitle;
+    @SuppressWarnings("unused") @SerializedName("description")   private String mDescription;
+    @SuppressWarnings("unused") @SerializedName("item_type")     private String mItemType;
 
-    @SuppressWarnings("unused") private Boolean mIsRestricted;
+    @SuppressWarnings("unused") @SerializedName("is_restricted") private Boolean mIsRestricted;
 
-    @SuppressWarnings("unused") private Integer mPrice;
+    @SuppressWarnings("unused") @SerializedName("price")         private Integer mPrice;
 
-    @SuppressWarnings("unused") private ArrayList<String> imgPaths;
+    @SuppressWarnings("unused") @SerializedName("img_paths")     private ArrayList<String> imgPaths;
+
+    @SuppressWarnings("unused") @SerializedName("last_updated") private Date mLastUpdated;
+    @SuppressWarnings("unused") @SerializedName("created")      private Date mCreated;
 
     // endregion
 
@@ -42,21 +46,15 @@ public class ObjectModelItem extends ObjectModel {
     public static void get(Activity activity, String itemId, final ItemCallback callback) {
 
         // Operation callbacks.
-        RestAPICallback<JsonObject> operation =
-                new RestAPICallback<JsonObject>(activity) {
+        RestAPICallback<RestAPIResult<ObjectModelItem>> operation =
+                new RestAPICallback<RestAPIResult<ObjectModelItem>>(activity) {
 
             @Override
-            public void success(JsonObject jsonObject) {
-
-                // Create new object.
-                ObjectModelItem objectModelItem = new ObjectModelItem();
-
-                // Parse json into the object.
-                parseItem(objectModelItem, jsonObject.getAsJsonObject("result"));
+            public void success(RestAPIResult<ObjectModelItem> jsonObject) {
 
                 // Now left queue.
                 if (callback != null) {
-                    callback.onSuccess(objectModelItem);
+                    callback.onSuccess(jsonObject.getResult());
                 }
             }
         };
@@ -77,39 +75,6 @@ public class ObjectModelItem extends ObjectModel {
         }
 
         return null;
-    }
-
-    // endregion
-
-    // region Private Methods
-    // =============================================================================================
-
-    /**
-     * Parse a json object into a populated
-     * item object model.
-     *
-     * @param item Item object.
-     * @param jsonObject Json object.
-     */
-    private static void parseItem(ObjectModelItem item, JsonObject jsonObject) {
-
-        if (item != null) {
-
-            // Parse the strings.
-            item.mId          = JsonHelper.parseString(jsonObject.get("id"));
-            item.mTitle       = JsonHelper.parseString(jsonObject.get("title"));
-            item.mDescription = JsonHelper.parseString(jsonObject.get("description"));
-            item.mItemType    = JsonHelper.parseString(jsonObject.get("item_type"));
-
-            // Parse the integers.
-            item.mPrice = JsonHelper.parseInt(jsonObject.get("price"));
-
-            // Parse the booleans.
-            item.mIsRestricted = JsonHelper.parseBool(jsonObject.get("is_restricted"));
-
-            // Parse the array lists.
-            item.imgPaths = JsonHelper.parseArrayList(jsonObject.getAsJsonArray("img_paths"));
-        }
     }
 
     // endregion

@@ -1,6 +1,7 @@
 package com.blitz.app.utilities.rest;
 
 import com.blitz.app.object_models.ObjectModelDraft;
+import com.blitz.app.object_models.ObjectModelItem;
 import com.blitz.app.object_models.ObjectModelStats;
 import com.blitz.app.simple_models.Game;
 import com.blitz.app.simple_models.Player;
@@ -78,7 +79,7 @@ public interface RestAPI {
                      Callback<RestAPIResult<Player>> listCallback);
 
     @GET("/item/{item_id}")
-    void item_get(@Path("item_id") String itemId, Callback<JsonObject> callback);
+    void item_get(@Path("item_id") String itemId, Callback<RestAPIResult<ObjectModelItem>> callback);
 
     @GET("/items")
     void items_get(@Query("keys[]") ArrayList<String> keys, // Required
