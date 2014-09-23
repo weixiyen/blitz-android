@@ -99,8 +99,31 @@ public class PlayerListAdapter extends ArrayAdapter {
     }
 
     private static String getGameResult(Game game, Player player) {
-        return game.getHomeTeamName() + ":" + game.getHomeTeamScore() + " " +
-                game.getAwayTeamName() + ":" + game.getAwayTeamScore();
+
+        final int playerScore;
+        final int opponentScore;
+        final String prefix;
+        final String suffix;
+        if(game.getHomeTeamName().equals(player.getTeamName())) {
+            playerScore = game.getHomeTeamScore();
+            opponentScore = game.getAwayTeamScore();
+            suffix = " vs " + game.getAwayTeamName();
+        } else {
+            playerScore = game.getAwayTeamScore();
+            opponentScore = game.getHomeTeamScore();
+            suffix = " @ " + game.getHomeTeamName();
+        }
+
+        if(playerScore < opponentScore) {
+            prefix = "L";
+        } else if(playerScore > opponentScore) {
+            prefix = "W";
+        } else {
+            // according to Wikipedia, it is possible, though rare, to have a tie game
+            prefix = "T";
+        }
+
+        return prefix + ", " + playerScore + "-" + opponentScore + suffix;
     }
 
     private static String getScore(Float score) {
