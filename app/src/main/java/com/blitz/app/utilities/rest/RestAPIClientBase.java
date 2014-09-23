@@ -2,6 +2,8 @@ package com.blitz.app.utilities.rest;
 
 import com.blitz.app.utilities.app.AppConfig;
 import com.blitz.app.utilities.ssl.SSLHelper;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.squareup.okhttp.OkHttpClient;
 
 import javax.net.ssl.HostnameVerifier;
@@ -11,6 +13,8 @@ import javax.net.ssl.SSLSocketFactory;
 import retrofit.RestAdapter;
 import retrofit.android.AndroidLog;
 import retrofit.client.OkClient;
+import retrofit.converter.Converter;
+import retrofit.converter.GsonConverter;
 
 /**
  * Created by Miguel Gaeta on 6/25/14.
@@ -56,6 +60,7 @@ public class RestAPIClientBase {
         // Initialize the builder.
         RestAdapter.Builder builder = new RestAdapter.Builder()
                 .setClient(new OkClient(getOkHttpClient()))
+                .setConverter(getConverter())
                 .setEndpoint(API_URL);
 
         // If rest debugging turned on.
@@ -72,6 +77,21 @@ public class RestAPIClientBase {
     //==============================================================================================
     // Private Methods
     //==============================================================================================
+
+    /**
+     * Create a standard builder that
+     * can parse our dates and complex objects.
+     *
+     * @return Gson converter.
+     */
+    private Converter getConverter() {
+
+        Gson gson =  new GsonBuilder()
+                .setDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS")
+                .create();
+
+        return new GsonConverter(gson);
+    }
 
     /**
      * Fetch an http client that ignores, SSL
