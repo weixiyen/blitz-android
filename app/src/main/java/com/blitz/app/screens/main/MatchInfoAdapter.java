@@ -87,6 +87,8 @@ public class MatchInfoAdapter extends ArrayAdapter {
                 intent.putExtra(PLAYER_2_NAME,   draft.getPlayer2Name());
                 intent.putExtra(PLAYER_1_SCORE,  draft.getPlayer1Score());
                 intent.putExtra(PLAYER_2_SCORE,  draft.getPlayer2Score());
+                intent.putExtra(WEEK, draft.getWeek());
+                intent.putExtra(YEAR, draft.getYear());
                 mActivity.startActivity(intent);
             }
         });

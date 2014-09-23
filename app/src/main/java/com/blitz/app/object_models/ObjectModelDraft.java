@@ -29,8 +29,8 @@ public final class ObjectModelDraft extends ObjectModel {
     @SuppressWarnings("unused") private int mTimePerPick;
     @SuppressWarnings("unused") private int mRounds;
     @SuppressWarnings("unused") private int mUsersNeeded;
-    @SuppressWarnings("unused") private int mWeek;
-    @SuppressWarnings("unused") private int mYear;
+    @SuppressWarnings("unused") private int week;
+    @SuppressWarnings("unused") private int year;
 
     @SuppressWarnings("unused") private String mId;
     @SuppressWarnings("unused") private String mChatId;
@@ -87,6 +87,14 @@ public final class ObjectModelDraft extends ObjectModel {
         }
 
         return change;
+    }
+
+    public int getYear() {
+        return year;
+    }
+
+    public int getWeek() {
+        return week;
     }
 
     public String getStatus() {
@@ -244,8 +252,8 @@ public final class ObjectModelDraft extends ObjectModel {
             draft.mTimePerPick      = JsonHelper.parseInt(jsonObject.get("time_per_pick"));
             draft.mRounds           = JsonHelper.parseInt(jsonObject.get("rounds"));
             draft.mUsersNeeded      = JsonHelper.parseInt(jsonObject.get("users_needed"));
-            draft.mWeek             = JsonHelper.parseInt(jsonObject.get("week"));
-            draft.mYear             = JsonHelper.parseInt(jsonObject.get("year"));
+            draft.week = JsonHelper.parseInt(jsonObject.get("week"));
+            draft.year = JsonHelper.parseInt(jsonObject.get("year"));
 
             // Parse the strings.
             draft.mId         = JsonHelper.parseString(jsonObject.get("id"));
@@ -342,6 +350,8 @@ public final class ObjectModelDraft extends ObjectModel {
         pluck.add("game_status");
         pluck.add("user_info");
         pluck.add("rating_change");
+        pluck.add("week");
+        pluck.add("year");
 
         return pluck;
     }

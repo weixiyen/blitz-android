@@ -28,7 +28,7 @@ public class ObjectModelStats extends ObjectModel {
         mRestAPI.players_get(playerIds, playerCallback);
     }
 
-    public static void fetchStatsForPlayers(List<String> playerIds, int week, int year, final Callback<RestAPIResult<Stat>> callback) {
+    public static void fetchStatsForPlayers(List<String> playerIds, int year, int week, final Callback<RestAPIResult<Stat>> callback) {
         List<String> keys = new ArrayList<String>(playerIds.size());
 
         for(String id: playerIds) {

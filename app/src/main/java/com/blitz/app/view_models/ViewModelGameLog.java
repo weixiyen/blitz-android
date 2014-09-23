@@ -101,6 +101,8 @@ public class ViewModelGameLog extends ViewModel {
                                 draft.getTeamRoster(1),
                                 draft.getTeamPoints(1),
                                 draft.getTeamRatingChange(1),
+                                draft.getYear(),
+                                draft.getWeek(),
                                 draft.getStatus()
                         ));
                     }

@@ -20,11 +20,13 @@ public class HeadToHeadDraft {
     private final int    mPlayer2RatingChange;
     private final List<String> mPlayer2Picks;
 
+    private final int mYear;
+    private final int mWeek;
     private final String mStatus;
 
     public HeadToHeadDraft(String player1Name, List<String> player1Picks, float player1Score, int player1RatingChange,
                            String player2Name, List<String> player2Picks, float player2Score, int player2RatingChange,
-                           String status) {
+                           int year, int week, String status) {
 
         mPlayer1Name  = player1Name;
         mPlayer1Score = player1Score;
@@ -37,6 +39,8 @@ public class HeadToHeadDraft {
         mPlayer2Picks = player2Picks;
         mPlayer2RatingChange = player2RatingChange;
 
+        mYear = year;
+        mWeek = week;
         mStatus       = status;
     }
 
@@ -75,4 +79,8 @@ public class HeadToHeadDraft {
     public List<String> getPlayer2Picks() {
         return mPlayer2Picks;
     }
+
+    public int getYear() { return mYear; }
+
+    public int getWeek() { return mWeek; }
 }

@@ -99,7 +99,7 @@ public interface RestAPI {
     void queue_put(@Body JsonObject body, Callback<JsonObject> callback);
 
     @GET("/stats")
-    void stats_get(@Query("keys[]") List<String> playerIds,
+    void stats_get(@Query("keys[]") List<String> keys,
                    @Query("index")        String index,
                    @Query("pluck[]")      List<String> pluck,
                    @Query("limit")        int limit,
