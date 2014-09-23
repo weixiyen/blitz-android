@@ -119,6 +119,7 @@ public class ViewModelGameLog extends ViewModel {
     }
 
     public interface ViewModelGameLogCallbacks extends ViewModel.ViewModelCallbacks {
+
         public void onDrafts(List<HeadToHeadDraft> drafts, Summary summary);
     }
 }

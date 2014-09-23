@@ -80,9 +80,11 @@ public class MainScreenFragmentDraftDetail extends BaseActivity implements ViewM
     // =============================================================================================
 
     @Override
-    public void onStuff(List<Player> p1roster, List<Player> p2Roster, List<Game> p1games, List<Game> p2games) {
+    public void onStuff(List<Player> p1roster, List<Player> p2Roster,
+                        List<Game> p1games, List<Game> p2games,
+                        List<Float> p1Scores, List<Float> p2Scores) {
         mPlayerList.setAdapter(new PlayerListAdapter(getApplicationContext(), p1roster, p2Roster, p1games, p2games,
-                null, null, this));
+                p1Scores, p2Scores, this));
     }
 
     @Override

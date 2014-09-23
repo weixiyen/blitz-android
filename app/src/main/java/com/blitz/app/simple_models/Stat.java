@@ -7,9 +7,13 @@ public class Stat {
 
     private String player_id;
     private String type;
-    private int value;
+    private float value;
     private int week;
     private int year;
+
+    public String getPlayerId() {
+        return player_id;
+    }
 
     public String getStatName() {
         return type;

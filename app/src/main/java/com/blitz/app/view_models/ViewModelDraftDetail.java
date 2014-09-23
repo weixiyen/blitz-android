@@ -3,15 +3,21 @@ package com.blitz.app.view_models;
 import android.app.Activity;
 import android.os.Bundle;
 
+import com.blitz.app.object_models.ObjectModelDraft;
 import com.blitz.app.object_models.ObjectModelGame;
 import com.blitz.app.object_models.ObjectModelStats;
 import com.blitz.app.screens.main.MatchInfoAdapter;
 import com.blitz.app.simple_models.Game;
 import com.blitz.app.simple_models.Player;
+import com.blitz.app.simple_models.Stat;
+import com.blitz.app.utilities.logging.LogHelper;
 import com.blitz.app.utilities.rest.RestAPIResult;
+import com.google.common.collect.ArrayListMultimap;
+import com.google.common.collect.Multimap;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
 
 import retrofit.Callback;
@@ -57,19 +63,41 @@ public class ViewModelDraftDetail extends ViewModel {
                         final List<Player> p1roster = player1Result.getResults();
                         final List<Player> p2roster = player2Result.getResults();
 
+                        final List<String> allPlayerIds = new ArrayList<String>();
+                        allPlayerIds.addAll(Arrays.asList(player1ids));
+                        allPlayerIds.addAll(Arrays.asList(player2ids));
+
+
                         ObjectModelGame.fetchGames(year, week, new Callback<List<Game>>() {
                             @Override
-                            public void success(List<Game> games, Response response) {
-                                // build list of game results per pick
-                                List<Game> p1Games = getPlayerGames(p1roster, games);
-                                List<Game> p2Games = getPlayerGames(p2roster, games);
+                            public void success(final List<Game> games, Response response) {
 
-                                callbacks.onStuff(p1roster, p2roster, p1Games, p2Games);
+                                ObjectModelStats.fetchStatsForPlayers(allPlayerIds, year, week, new Callback<RestAPIResult<Stat>>() {
+                                    @Override
+                                    public void success(RestAPIResult<Stat> statRestAPIResult, Response response) {
+                                        // build list of game results per pick
+                                        List<Game> p1Games = getPlayerGames(p1roster, games);
+                                        List<Game> p2Games = getPlayerGames(p2roster, games);
 
-                                callbacks.onMatchup(extras.getString(MatchInfoAdapter.PLAYER_1_NAME),
-                                        extras.getFloat(MatchInfoAdapter.PLAYER_1_SCORE),
-                                        extras.getString(MatchInfoAdapter.PLAYER_2_NAME),
-                                        extras.getFloat(MatchInfoAdapter.PLAYER_2_SCORE));
+                                        Multimap<String, Stat> playerStats = buildPlayerStatsMap(statRestAPIResult.getResults());
+
+                                        List<Float> p1Scores = getRosterScores(player1ids, playerStats);
+                                        List<Float> p2Scores = getRosterScores(player2ids, playerStats);
+
+                                        callbacks.onStuff(p1roster, p2roster, p1Games, p2Games, p1Scores, p2Scores);
+
+                                        callbacks.onMatchup(extras.getString(MatchInfoAdapter.PLAYER_1_NAME),
+                                                extras.getFloat(MatchInfoAdapter.PLAYER_1_SCORE),
+                                                extras.getString(MatchInfoAdapter.PLAYER_2_NAME),
+                                                extras.getFloat(MatchInfoAdapter.PLAYER_2_SCORE));
+                                    }
+
+                                    @Override
+                                    public void failure(RetrofitError error) {
+                                        LogHelper.log(error.getStackTrace().toString());
+                                    }
+                                });
+
                             }
 
                             @Override
@@ -112,9 +140,34 @@ public class ViewModelDraftDetail extends ViewModel {
         return gamesForPlayers;
     }
 
+    private static List<Float> getRosterScores(String[] roster, Multimap<String, Stat> stats) {
+
+        List<Float> scores = new ArrayList<Float>(roster.length);
+        for(String playerId: roster) {
+            Collection<Stat> playerStats = stats.get(playerId);
+            float sum = 0;
+            for(Stat stat: playerStats) {
+                sum += stat.getPoints();
+            }
+            scores.add(sum);
+        }
+        return scores;
+    }
+
+    private Multimap<String, Stat> buildPlayerStatsMap(List<Stat> stats) {
+
+        Multimap<String, Stat> map = ArrayListMultimap.create();
+        for(Stat stat: stats) {
+            map.put(stat.getPlayerId(), stat);
+        }
+
+        return map;
+    }
+
     public interface ViewModelDraftDetailCallbacks extends ViewModelCallbacks {
 
-        void onStuff(List<Player> p1roster, List<Player> p2Roster, List<Game> p1games, List<Game> p2games);
+        void onStuff(List<Player> p1roster, List<Player> p2Roster, List<Game> p1Games,
+                     List<Game> p2Games, List<Float> p1Scores, List<Float> p2Scores);
         void onMatchup(String player1Name, float player1score, String player2Name, float player2Score);
     }
 }
