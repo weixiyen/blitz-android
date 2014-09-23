@@ -3,6 +3,7 @@ package com.blitz.app.object_models;
 import android.util.Pair;
 
 import com.blitz.app.simple_models.Player;
+import com.blitz.app.simple_models.Stat;
 import com.blitz.app.utilities.rest.RestAPICallback;
 import com.blitz.app.utilities.rest.RestAPIResult;
 import com.blitz.app.view_models.ViewModelDraftDetail;
@@ -13,7 +14,7 @@ import java.util.List;
 import retrofit.Callback;
 
 /**
- * Created by spiff on 9/18/14.
+ * Created by Nate on 9/18/14.
  */
 public class ObjectModelStats extends ObjectModel {
     private String player_id;
@@ -25,5 +26,12 @@ public class ObjectModelStats extends ObjectModel {
     public static void fetchRoster(List<String> playerIds, final Callback<RestAPIResult<Player>> playerCallback) {
 
         mRestAPI.players_get(playerIds, playerCallback);
+    }
+
+    public static void fetchStatsForPlayers(List<String> playerIds, final Callback<RestAPIResult<Stat>> callback) {
+        mRestAPI.stats_get(playerIds, "player_week_year_index",
+                null,
+                100,
+                callback);
     }
 }
