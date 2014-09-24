@@ -9,7 +9,7 @@
     <color name="button_color_0">#32587c</color>
     <color name="button_color_0_pressed">#386692</color>
 
-    <color name="text_color_light">#ffffff</color>
+    <color name="text_color_light">#FFFDFA</color>
     <color name="text_color_grey">#84909b</color>
     <color name="text_color_dark">#bbbbbb</color>
     <color name="text_color_red">#FF4200</color>
@@ -20,4 +20,8 @@
     <color name="text_color_link_pressed">#d0fdff</color>
 
     <color name="text_color_shadow">#BF000000</color>
+
+    <color name="text_color_medium_grey">#969696</color>
+    <color name="text_color_light_grey">#ACACAC</color>
+
 </resources>

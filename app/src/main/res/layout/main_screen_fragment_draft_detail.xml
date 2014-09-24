@@ -30,7 +30,7 @@
             fontPath="@string/app_font_helvetica_condensed_bold"
             android:gravity="center"
             android:paddingTop="0dp"
-            android:text="Week 1"
+            android:text="Matchup"
             android:textColor="@color/text_color_link"
             android:textSize="18sp" />
 
@@ -61,19 +61,13 @@
                 fontPath="@string/app_font_helvetica_condensed_bold"
                 android:text="vs"
                 android:textAllCaps="true"
-                android:textColor="@color/text_color_light"
+                android:textColor="@color/text_color_medium_grey"
                 android:textSize="20sp"/>
 
             <include android:id="@+id/player_2_details"
                 layout="@layout/player_avatar_with_score"/>
 
         </LinearLayout>
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_marginTop="0dp"
-            android:background="@color/background_inner_divider"/>
 
         <ListView
             android:id="@+id/main_draft_detail_player_list"

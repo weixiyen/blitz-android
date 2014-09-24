@@ -21,16 +21,12 @@ android:orientation="vertical">
     android:layout_height="0dp"
     android:layout_weight="1"
     android:gravity="center"
-    android:padding="5dp"
 
     style="@style/TextViewStyle"
     fontPath="@string/app_font_helvetica_condensed_bold"
-    android:textSize="20sp"
+    android:textSize="13sp"
     android:textColor="@color/text_color_light"
-    android:background="@android:color/transparent"
-    android:paddingBottom="5dp"
-
-    android:text="Player 1"/>
+    android:background="@android:color/transparent"/>
 
 <TextView android:id="@+id/player_score"
     android:layout_width="match_parent"
@@ -40,7 +36,7 @@ android:orientation="vertical">
 
     style="@style/TextViewStyle"
     fontPath="@string/app_font_helvetica_condensed_bold"
-    android:textSize="20sp"
+    android:textSize="22sp"
     android:textColor="@color/text_color_light"
     android:background="@android:color/transparent"
 

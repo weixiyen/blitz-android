@@ -5,7 +5,9 @@
     android:id="@+id/main_screen_draft_list_item"
     android:layout_height="match_parent"
     android:layout_width="match_parent"
-    android:orientation="horizontal">
+    android:orientation="horizontal"
+    android:paddingTop="10dp"
+    android:paddingBottom="10dp">
 
     <LinearLayout
         android:layout_width="0dp"
@@ -14,23 +16,29 @@
         android:orientation="vertical">
 
         <TextView android:id="@+id/player1_position_team"
+            style="@style/MatchupNflPlayerTeam"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:gravity="right"
             android:text="QB - USA"
             />
         <TextView android:id="@+id/player1_name"
+            style="@style/MatchupNflPlayerName"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:text="Rocky Balboa"
-            />
+            android:gravity="right"
+            android:text="Rocky Balboa"/>
         <TextView android:id="@+id/player1_game_result"
+            style="@style/MatchupNflGameResult"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:gravity="right"
             android:text="W, 26-6 vs CCP"
             />
      </LinearLayout>
 
     <TextView android:id="@+id/player1_score"
+        style="@style/MatchupNflPlayerScore"
         android:layout_height="match_parent"
         android:layout_width="0dp"
         android:layout_weight="1"
@@ -38,6 +46,7 @@
         android:gravity="center"/>
 
     <TextView android:id="@+id/player2_score"
+        style="@style/MatchupNflPlayerScore"
         android:layout_height="match_parent"
         android:layout_width="0dp"
         android:layout_weight="1"
@@ -51,16 +60,19 @@
         android:orientation="vertical">
 
         <TextView android:id="@+id/player2_position_team"
+            style="@style/MatchupNflPlayerTeam"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:text="QB - CCP"
             />
         <TextView android:id="@+id/player2_name"
+            style="@style/MatchupNflPlayerName"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:text="Ivan Drago"
             />
         <TextView android:id="@+id/player2_game_result"
+            style="@style/MatchupNflGameResult"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:text="L, 6-26 vs USA"

@@ -9,4 +9,6 @@
 
     <string name="app_font_helvetica_condensed_bold">fonts/HelveticaNeue-CondensedBold.otf</string>
 
+    <string name="app_font_matchup_player_name">fonts/HelveticaNeue-CondensedBold.otf</string>
+
 </resources>
