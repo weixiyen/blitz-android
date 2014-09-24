@@ -190,8 +190,8 @@ public class ViewModelMainPlay extends ViewModel {
                 }
 
                 // Fetch associated item model.
-                ObjectModelItem.get(mActivity, user.getAvatarId(),
-                        new ObjectModelItem.ItemCallback() {
+                ObjectModelItem.fetchItem(mActivity, user.getAvatarId(),
+                        new ObjectModelItem.CallbackItem() {
 
                             @Override
                             public void onSuccess(ObjectModelItem item) {
