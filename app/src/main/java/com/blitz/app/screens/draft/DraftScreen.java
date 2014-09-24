@@ -12,6 +12,7 @@ import com.blitz.app.utilities.animations.AnimHelperFade;
 import com.blitz.app.utilities.animations.AnimHelperSpringsGroup;
 import com.blitz.app.utilities.animations.AnimHelperSpringsPresets;
 import com.blitz.app.utilities.animations.AnimHelperSpringsView;
+import com.blitz.app.utilities.logging.LogHelper;
 import com.blitz.app.view_models.ViewModel;
 import com.blitz.app.view_models.ViewModelDraft;
 
@@ -143,7 +144,7 @@ public class DraftScreen extends BaseActivity implements ViewModelDraft.ViewMode
                 AnimHelperFade.setVisibility(mDraftLoadingSpinner, View.VISIBLE);
 
                 // Start the draft.
-                mViewModelDraft.startDrafting();
+                // TODO: Uncomment mViewModelDraft.startDrafting();
             }
         });
     }
@@ -228,6 +229,12 @@ public class DraftScreen extends BaseActivity implements ViewModelDraft.ViewMode
     public void onDraftingStarted() {
 
         playAnimationsIntroReversed();
+    }
+
+    @Override
+    public void onUserSynced(String userId, String userName, int rating, int wins, int losses, int ties, String itemAvatarUrl) {
+
+        LogHelper.log("We have user: " + userName + " " + itemAvatarUrl);
     }
 
     // endregion
