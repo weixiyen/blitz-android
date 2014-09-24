@@ -125,6 +125,16 @@ public final class ObjectModelDraft extends ObjectModel {
         return mGameStatus;
     }
 
+    /**
+     * Fetch list of users associated with this draft.
+     *
+     * @return List of user ids.
+     */
+    public List<String> getUsers() {
+
+        return mUsers;
+    }
+
     // endregion
 
     // region REST Methods
