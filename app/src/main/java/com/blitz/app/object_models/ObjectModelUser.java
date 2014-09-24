@@ -43,6 +43,16 @@ public class ObjectModelUser extends ObjectModel {
     // =============================================================================================
 
     /**
+     * Fetch id of this user.
+     *
+     * @return User id.
+     */
+    public String getId() {
+
+        return mId;
+    }
+
+    /**
      * Fetch username.
      */
     public String getUsername() {
