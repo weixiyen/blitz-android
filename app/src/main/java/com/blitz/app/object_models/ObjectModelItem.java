@@ -48,6 +48,16 @@ public class ObjectModelItem extends ObjectModel {
     // =============================================================================================
 
     /**
+     * Fetch item id.
+     *
+     * @return Item id.
+     */
+    public String getId() {
+
+        return mId;
+    }
+
+    /**
      * Get a default image path.
      */
     public String getDefaultImgPath() {

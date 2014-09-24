@@ -85,6 +85,16 @@ public class ObjectModelUser extends ObjectModel {
     }
 
     /**
+     * Fetch ties.
+     *
+     * @return Ties.
+     */
+    public int getTies() {
+
+        return mTies;
+    }
+
+    /**
      * Fetch cash.
      */
     public int getCash() {
