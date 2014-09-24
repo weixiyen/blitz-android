@@ -252,12 +252,15 @@ public class AuthHelper {
 
                             } else {
 
-                                // Set the current draft and sync it.
-                                mCurrentDraft = drafts.get(drafts.size() - 1);
-                                mCurrentDraft.sync(activity, mCurrentDraft.getId(), new Runnable() {
+                                String draftId = drafts.get(drafts.size() - 1).getId();
+
+                                ObjectModelDraft.fetchSyncedDraft(activity, draftId,
+                                        new ObjectModelDraft.DraftCallback() {
 
                                     @Override
-                                    public void run() {
+                                    public void onSuccess(ObjectModelDraft draft) {
+
+                                        setCurrentDraft(draft);
 
                                         // Drafting screen.
                                         startActivity(activity, DraftScreen.class);

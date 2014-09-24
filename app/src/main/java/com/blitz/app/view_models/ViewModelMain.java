@@ -147,12 +147,14 @@ public class ViewModelMain extends ViewModel {
                 // Fetch the draft id.
                 final String draftId = message.get("draft_id").getAsString();
 
-                ObjectModelDraft objectModelDraft = new ObjectModelDraft();
-
-                objectModelDraft.sync(mActivity, draftId, new Runnable() {
+                // Fetch the associated draft object.
+                ObjectModelDraft.fetchSyncedDraft(mActivity, draftId, new ObjectModelDraft.DraftCallback() {
 
                     @Override
-                    public void run() {
+                    public void onSuccess(ObjectModelDraft draft) {
+
+                        // Set it as the current draft.
+                        AuthHelper.instance().setCurrentDraft(draft);
 
                         // Fetch comet channel for this user.
                         String userCometChannel = "user:" + AppDataObject.userId.get();
@@ -164,9 +166,6 @@ public class ViewModelMain extends ViewModel {
                         callbacks.onEnterDraft(ViewModelMain.this);
                     }
                 });
-
-                // Set it as the current draft.
-                AuthHelper.instance().setCurrentDraft(objectModelDraft);
             }
         }
     }
