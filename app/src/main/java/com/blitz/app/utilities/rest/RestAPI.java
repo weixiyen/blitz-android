@@ -108,7 +108,8 @@ public interface RestAPI {
                    Callback<RestAPIResult<Stat>> callback);
 
     @GET("/user/{user_id}")
-    void user_get(@Path("user_id") String userId, Callback<JsonObject> callback);
+    void user_get(@Path("user_id") String userId,
+                  Callback<RestAPIResult<ObjectModelUser>> callback);
 
     @GET("/users")
     void users_get(@Query("keys[]") List<String> keys,   // Required

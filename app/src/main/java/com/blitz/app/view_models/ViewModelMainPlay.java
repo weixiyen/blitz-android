@@ -4,12 +4,12 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.os.Handler;
 
-import com.blitz.app.dialogs.error.DialogError;
 import com.blitz.app.object_models.ObjectModelItem;
 import com.blitz.app.object_models.ObjectModelQueue;
 import com.blitz.app.object_models.ObjectModelUser;
 import com.blitz.app.screens.main.MainScreenFragmentPlay;
 import com.blitz.app.utilities.app.AppDataObject;
+import com.blitz.app.utilities.authentication.AuthHelper;
 import com.blitz.app.utilities.comet.CometAPICallback;
 import com.blitz.app.utilities.comet.CometAPIManager;
 import com.google.gson.JsonObject;
@@ -169,14 +169,18 @@ public class ViewModelMainPlay extends ViewModel {
      */
     private void fetchUserInfo() {
 
-        // Fetch user object.
-        mModelUser.getUser(mActivity, new Runnable() {
+        // Fetch current user id.
+        String userId = AuthHelper.instance().getUserId();
+
+        // Fetch the current user.
+        ObjectModelUser.getUser(mActivity, userId, new ObjectModelUser.CallbackUser() {
 
             @Override
-            public void run() {
+            public void onSuccess(ObjectModelUser user) {
 
                 // Fetch callbacks.
-                final ViewModelMainPlayCallbacks callbacks = getCallbacks(ViewModelMainPlayCallbacks.class);
+                final ViewModelMainPlayCallbacks callbacks =
+                        getCallbacks(ViewModelMainPlayCallbacks.class);
 
                 if (callbacks != null) {
                     callbacks.onUsername(mModelUser.getUsername());
@@ -190,23 +194,14 @@ public class ViewModelMainPlay extends ViewModel {
                 ObjectModelItem.get(mActivity, mModelUser.getAvatarId(),
                         new ObjectModelItem.ItemCallback() {
 
-                    @Override
-                    public void onSuccess(ObjectModelItem item) {
+                            @Override
+                            public void onSuccess(ObjectModelItem item) {
 
-                        if (callbacks != null) {
-                            callbacks.onImgPath(item.getDefaultImgPath());
-                        }
-                    }
-                });
-            }
-        }, new Runnable() {
-
-            @Override
-            public void run() {
-
-                // Show error dialog configured to
-                // log out user after user action.
-                new DialogError(mActivity).showUnauthorized();
+                                if (callbacks != null) {
+                                    callbacks.onImgPath(item.getDefaultImgPath());
+                                }
+                            }
+                        });
             }
         });
     }

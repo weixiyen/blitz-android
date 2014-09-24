@@ -5,10 +5,12 @@ import android.widget.EditText;
 
 import com.blitz.app.utilities.authentication.AuthHelper;
 import com.blitz.app.utilities.rest.RestAPICallback;
+import com.blitz.app.utilities.rest.RestAPIResult;
 import com.google.gson.JsonObject;
 import com.google.gson.annotations.SerializedName;
 
-import retrofit.client.Response;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by mrkcsc on 7/9/14. Copyright 2014 Blitz Studios
@@ -123,50 +125,61 @@ public class ObjectModelUser extends ObjectModel {
      * id which means the user must be logged in.
      */
     @SuppressWarnings("unused")
-    public void getUser(Activity activity, final Runnable success, final Runnable failure) {
+    public static void getUser(Activity activity, String userId, final CallbackUser callback) {
 
         // Rest operation.
-        RestAPICallback<JsonObject> operation = new RestAPICallback<JsonObject>(activity) {
+        RestAPICallback<RestAPIResult<ObjectModelUser>> operation =
+                new RestAPICallback<RestAPIResult<ObjectModelUser>>(activity) {
 
             @Override
-            public void success(JsonObject jsonObject) {
+            public void success(RestAPIResult<ObjectModelUser> jsonObject) {
 
-                if (jsonObject != null) {
-
-                    // Fetch user object.
-                    JsonObject result = jsonObject.getAsJsonObject("result");
-
-                    // Fetch the data.
-                    mAvatarId = result.get("avatar_id").getAsString();
-                    mCash     = result.get("cash").getAsInt();
-                    mLosses   = result.get("losses").getAsInt();
-                    mRating   = result.get("rating").getAsInt();
-                    mUsername = result.get("username").getAsString();
-                    mWins     = result.get("wins").getAsInt();
-
-                    if (success != null) {
-                        success.run();
-                    }
-                }
-            }
-
-            @Override
-            public void failure(Response response, boolean networkError) {
-
-                if (failure != null) {
-                    failure.run();
-                } else {
-
-                    super.failure(response, networkError);
+                if (callback != null) {
+                    callback.onSuccess(jsonObject.getResult());
                 }
             }
         };
 
-        // Fetch user id.
-        String userId = AuthHelper.instance().getUserId();
-
         // Make api call to fetch user data.
         mRestAPI.user_get(userId, operation);
+    }
+
+    /**
+     * Fetch a lust of users (by user id).
+     *
+     * @param activity Activity for dialogs.
+     * @param userIds List of user id's.
+     * @param callback Callback.
+     */
+    @SuppressWarnings("unused")
+    public static void getUsers(Activity activity, List<String> userIds, final CallbackUsers callback) {
+
+        RestAPICallback<RestAPIResult<ObjectModelUser>> operation =
+                new RestAPICallback<RestAPIResult<ObjectModelUser>>(activity) {
+
+            @Override
+            public void success(RestAPIResult<ObjectModelUser> jsonObject) {
+
+                if (callback != null) {
+                    callback.onSuccess(jsonObject.getResults());
+                }
+            }
+        };
+
+        // Pluck a subset of the fields.
+        ArrayList<String> pluck = new ArrayList<String>();
+
+        pluck.add("id");
+        pluck.add("username");
+        pluck.add("status");
+        pluck.add("avatar_id");
+        pluck.add("rating");
+        pluck.add("wins");
+        pluck.add("losses");
+        pluck.add("ties");
+        pluck.add("cash");
+
+        mRestAPI.users_get(userIds, "id", pluck, null, null, operation);
     }
 
     /**
@@ -261,6 +274,16 @@ public class ObjectModelUser extends ObjectModel {
 
     public interface CallbackSignUp { public void onSignUp(); }
     public interface CallbackSignIn { public void onSignIn(); }
+
+    public interface CallbackUser {
+
+        public void onSuccess(ObjectModelUser user);
+    }
+
+    public interface CallbackUsers {
+
+        public void onSuccess(List<ObjectModelUser> users);
+    }
 
     // endregion
 }
