@@ -170,15 +170,6 @@ public class ObjectModelUser extends ObjectModel {
     }
 
     /**
-     * Get and populate the user model - requires a user
-     * id which means the user must be logged in.
-     */
-    @SuppressWarnings("unused")
-    public void getUser(Activity activity, final Runnable success) {
-        getUser(activity, success, null);
-    }
-
-    /**
      * Sign up (register) a user.
      *
      * @param activity Activity for dialogs.
