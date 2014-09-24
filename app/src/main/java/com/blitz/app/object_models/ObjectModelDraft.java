@@ -154,23 +154,21 @@ public final class ObjectModelDraft extends ObjectModel {
             return;
         }
 
-        RestAPICallback<RestAPIResult<ObjectModelDraft>> operation =
-                new RestAPICallback<RestAPIResult<ObjectModelDraft>>(activity) {
+        RestAPICallback<ObjectModelDraft> operation =
+                new RestAPICallback<ObjectModelDraft>(activity) {
 
             @Override
-            public void success(RestAPIResult<ObjectModelDraft> jsonObject) {
-
-                ObjectModelDraft result = jsonObject.getResult();
+            public void success(ObjectModelDraft jsonObject) {
 
                 // Set the server time offset.
-                if (jsonObject.getResult() != null) {
-                    jsonObject.getResult().setServerTimeOffset
+                if (jsonObject != null) {
+                    jsonObject.setServerTimeOffset
                             (getOperationTimeStart(), getOperationTimeEnd());
                 }
 
                 // Now left queue.
                 if (callback != null) {
-                    callback.onSuccess(jsonObject.getResult());
+                    callback.onSuccess(jsonObject);
                 }
             }
         };

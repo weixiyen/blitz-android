@@ -70,7 +70,9 @@ public interface RestAPI {
 
     @GET("/draft/{draft_id}")
     void draft_get(@Path("draft_id") String draftId,
-        Callback<RestAPIResult<ObjectModelDraft>> callback);
+        Callback<ObjectModelDraft> callback); // TODO: Result format needs to be changed to
+                                              // TODO: RestAPIResult format, but requires clients
+                                              // TODO: do the update together.
 
     @GET("/drafts")
     void drafts_get(@Query("keys[]") ArrayList<String> keys,   // Required
