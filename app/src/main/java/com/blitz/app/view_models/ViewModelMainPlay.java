@@ -30,7 +30,6 @@ public class ViewModelMainPlay extends ViewModel {
 
     // Object model.
     private ObjectModelQueue mModelQueue = new ObjectModelQueue();
-    private ObjectModelUser mModelUser = new ObjectModelUser();
 
     // Are we in queue.
     private boolean mInQueue;
@@ -183,15 +182,15 @@ public class ViewModelMainPlay extends ViewModel {
                         getCallbacks(ViewModelMainPlayCallbacks.class);
 
                 if (callbacks != null) {
-                    callbacks.onUsername(mModelUser.getUsername());
-                    callbacks.onRating  (mModelUser.getRating());
-                    callbacks.onWins    (mModelUser.getWins());
-                    callbacks.onLosses  (mModelUser.getLosses());
-                    callbacks.onCash    (mModelUser.getCash());
+                    callbacks.onUsername(user.getUsername());
+                    callbacks.onRating  (user.getRating());
+                    callbacks.onWins    (user.getWins());
+                    callbacks.onLosses  (user.getLosses());
+                    callbacks.onCash    (user.getCash());
                 }
 
                 // Fetch associated item model.
-                ObjectModelItem.get(mActivity, mModelUser.getAvatarId(),
+                ObjectModelItem.get(mActivity, user.getAvatarId(),
                         new ObjectModelItem.ItemCallback() {
 
                             @Override
