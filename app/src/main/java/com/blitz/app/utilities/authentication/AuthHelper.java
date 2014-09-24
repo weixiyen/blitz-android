@@ -260,10 +260,13 @@ public class AuthHelper {
                                     @Override
                                     public void onSuccess(ObjectModelDraft draft) {
 
-                                        setCurrentDraft(draft);
+                                        if (draft != null) {
+                                            setCurrentDraft(draft);
 
-                                        // Drafting screen.
-                                        startActivity(activity, DraftScreen.class);
+                                            startActivity(activity, DraftScreen.class);
+                                        } else {
+                                            startActivity(activity, MainScreen.class);
+                                        }
                                     }
                                 });
                             }
