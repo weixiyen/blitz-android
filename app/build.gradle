@@ -61,5 +61,5 @@ dependencies {
     compile "com.google.android.gms:play-services:5.0.89"
 
     // Google Guava collections
-    compile group: 'com.google.guava', name: 'guava', version: '12.0'
+    compile 'com.google.guava:guava:18.0'
 }
