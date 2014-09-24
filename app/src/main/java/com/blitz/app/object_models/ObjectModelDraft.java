@@ -6,6 +6,7 @@ import com.blitz.app.utilities.json.JsonHelper;
 import com.blitz.app.utilities.rest.RestAPICallback;
 import com.blitz.app.utilities.rest.RestAPIResult;
 import com.google.gson.JsonObject;
+import com.google.gson.annotations.SerializedName;
 import com.google.gson.reflect.TypeToken;
 
 import java.util.ArrayList;
@@ -25,36 +26,36 @@ public final class ObjectModelDraft extends ObjectModel {
 
     private long mServerTimeOffset;
 
-    @SuppressWarnings("unused") private int mDraftStartBuffer;
-    @SuppressWarnings("unused") private int mTimePerPick;
-    @SuppressWarnings("unused") private int mRounds;
-    @SuppressWarnings("unused") private int mUsersNeeded;
-    @SuppressWarnings("unused") private int week;
-    @SuppressWarnings("unused") private int year;
+    @SuppressWarnings("unused") @SerializedName("draft_start_buffer") private int mDraftStartBuffer;
+    @SuppressWarnings("unused") @SerializedName("time_per_pick")      private int mTimePerPick;
+    @SuppressWarnings("unused") @SerializedName("rounds")             private int mRounds;
+    @SuppressWarnings("unused") @SerializedName("users_needed")       private int mUsersNeeded;
+    @SuppressWarnings("unused") @SerializedName("week")               private int mWeek;
+    @SuppressWarnings("unused") @SerializedName("year")               private int mYear;
 
-    @SuppressWarnings("unused") private String mId;
-    @SuppressWarnings("unused") private String mChatId;
-    @SuppressWarnings("unused") private String model;
-    @SuppressWarnings("unused") private String owner;
-    @SuppressWarnings("unused") private String game_status;
-    @SuppressWarnings("unused") private String mType;
-    @SuppressWarnings("unused") private String mStatus;
+    @SuppressWarnings("unused") @SerializedName("id")          private String mId;
+    @SuppressWarnings("unused") @SerializedName("chat_id")     private String mChatId;
+    @SuppressWarnings("unused") @SerializedName("model")       private String mModel;
+    @SuppressWarnings("unused") @SerializedName("owner")       private String mOwner;
+    @SuppressWarnings("unused") @SerializedName("game_status") private String mGameStatus;
+    @SuppressWarnings("unused") @SerializedName("type")        private String mType;
+    @SuppressWarnings("unused") @SerializedName("status")      private String mStatus;
 
-    @SuppressWarnings("unused") private boolean mUserConfirmed;
+    @SuppressWarnings("unused") @SerializedName("user_confirmed") private boolean mUserConfirmed;
 
-    @SuppressWarnings("unused") private Date mCompleted;
-    @SuppressWarnings("unused") private Date mCreated;
-    @SuppressWarnings("unused") private Date mLastServerTime;
-    @SuppressWarnings("unused") private Date mLastUpdated;
-    @SuppressWarnings("unused") private Date mStarted;
+    @SuppressWarnings("unused") @SerializedName("completed")        private Date mCompleted;
+    @SuppressWarnings("unused") @SerializedName("created")          private Date mCreated;
+    @SuppressWarnings("unused") @SerializedName("last_server_time") private Date mLastServerTime;
+    @SuppressWarnings("unused") @SerializedName("last_updated")     private Date mLastUpdated;
+    @SuppressWarnings("unused") @SerializedName("started")          private Date mStarted;
 
-    @SuppressWarnings("unused") private HashMap<String, Float> points;
-    @SuppressWarnings("unused") private HashMap<String, Integer> rating_change;
-    @SuppressWarnings("unused") private HashMap<String, ArrayList<String>> rosters;
-    @SuppressWarnings("unused") private HashMap<String, ObjectModelUser> user_info;
+    @SuppressWarnings("unused") @SerializedName("points")        private HashMap<String, Float> mPoints;
+    @SuppressWarnings("unused") @SerializedName("rating_change") private HashMap<String, Integer> mRatingChange;
+    @SuppressWarnings("unused") @SerializedName("rosters")       private HashMap<String, ArrayList<String>> mRosters;
+    @SuppressWarnings("unused") @SerializedName("user_info")     private HashMap<String, ObjectModelUser> mUserInfo;
 
-    @SuppressWarnings("unused") private ArrayList<String> positions_required;
-    @SuppressWarnings("unused") private ArrayList<String> users;
+    @SuppressWarnings("unused") @SerializedName("positionsRequired") private ArrayList<String> mPositionsRequired;
+    @SuppressWarnings("unused") @SerializedName("users")             private ArrayList<String> mUsers;
 
     // endregion
 
@@ -66,22 +67,22 @@ public final class ObjectModelDraft extends ObjectModel {
     }
 
     public String getTeamName(int team) {
-        return user_info.get(users.get(team)).getUsername();
+        return mUserInfo.get(mUsers.get(team)).getUsername();
     }
 
     public float getTeamPoints(int team) {
-        return points.get(users.get(team));
+        return mPoints.get(mUsers.get(team));
     }
 
     public List<String> getTeamRoster(int team) {
-        return rosters.get(users.get(team));
+        return mRosters.get(mUsers.get(team));
     }
 
     public int getTeamRatingChange(int team) {
-        String key = users.get(team);
+        String key = mUsers.get(team);
         final int change;
-        if(rating_change.containsKey(key)) {
-            change = rating_change.get(key);
+        if(mRatingChange.containsKey(key)) {
+            change = mRatingChange.get(key);
         } else {
             change = 0;
         }
@@ -90,31 +91,21 @@ public final class ObjectModelDraft extends ObjectModel {
     }
 
     public int getYear() {
-        return year;
+        return mYear;
     }
 
     public int getWeek() {
-        return week;
+        return mWeek;
     }
 
     public String getStatus() {
-        return game_status;
+        return mGameStatus;
     }
 
     // endregion
 
-    // region Public Methods
+    // region REST Methods
     // =============================================================================================
-
-    /**
-     * Set the draft id.
-     *
-     * @param draftId Draft id.
-     */
-    public void setDraftId(String draftId) {
-
-        mId = draftId;
-    }
 
     /**
      * Fetch a draft given a draft id.
@@ -122,9 +113,9 @@ public final class ObjectModelDraft extends ObjectModel {
      * @param activity Associated activity.
      * @param callback Callback on completion.
      */
-    public void sync(final Activity activity, final Runnable callback) {
+    public void sync(final Activity activity, String draftId, final Runnable callback) {
 
-        if (mId == null) {
+        if (draftId == null) {
             return;
         }
 
@@ -148,7 +139,7 @@ public final class ObjectModelDraft extends ObjectModel {
         };
 
         // Make api call.
-        mRestAPI.draft_get(mId, operation);
+        mRestAPI.draft_get(draftId, operation);
     }
 
     /**
@@ -252,15 +243,15 @@ public final class ObjectModelDraft extends ObjectModel {
             draft.mTimePerPick      = JsonHelper.parseInt(jsonObject.get("time_per_pick"));
             draft.mRounds           = JsonHelper.parseInt(jsonObject.get("rounds"));
             draft.mUsersNeeded      = JsonHelper.parseInt(jsonObject.get("users_needed"));
-            draft.week = JsonHelper.parseInt(jsonObject.get("week"));
-            draft.year = JsonHelper.parseInt(jsonObject.get("year"));
+            draft.mWeek = JsonHelper.parseInt(jsonObject.get("week"));
+            draft.mYear = JsonHelper.parseInt(jsonObject.get("year"));
 
             // Parse the strings.
             draft.mId         = JsonHelper.parseString(jsonObject.get("id"));
             draft.mChatId     = JsonHelper.parseString(jsonObject.get("chat_id"));
             draft.mType       = JsonHelper.parseString(jsonObject.get("model"));
-            draft.owner      = JsonHelper.parseString(jsonObject.get("owner"));
-            draft.game_status = JsonHelper.parseString(jsonObject.get("game_status"));
+            draft.mOwner      = JsonHelper.parseString(jsonObject.get("owner"));
+            draft.mGameStatus = JsonHelper.parseString(jsonObject.get("game_status"));
             draft.mType       = JsonHelper.parseString(jsonObject.get("type"));
             draft.mStatus     = JsonHelper.parseString(jsonObject.get("status"));
 
@@ -282,35 +273,35 @@ public final class ObjectModelDraft extends ObjectModel {
 
             if (jsonObjectPoints != null && !jsonObjectPoints.isJsonNull()) {
 
-                draft.points =  JsonHelper.builder().fromJson(jsonObjectPoints,
+                draft.mPoints =  JsonHelper.builder().fromJson(jsonObjectPoints,
                         new TypeToken<HashMap<String, Float>>() {
                         }.getType());
             }
 
             if (jsonObjectRatingChange != null && !jsonObjectRatingChange.isJsonNull()) {
 
-                draft.rating_change = JsonHelper.builder().fromJson(jsonObjectRatingChange,
+                draft.mRatingChange = JsonHelper.builder().fromJson(jsonObjectRatingChange,
                         new TypeToken<HashMap<String, Integer>>() {
                         }.getType());
             }
 
             if (jsonObjectRosters != null && !jsonObjectRosters.isJsonNull()) {
 
-                draft.rosters = JsonHelper.builder().fromJson(jsonObjectRosters,
+                draft.mRosters = JsonHelper.builder().fromJson(jsonObjectRosters,
                         new TypeToken<HashMap<String, ArrayList<String>>>() {
                         }.getType());
             }
 
             if (jsonObjectUserInfo != null && !jsonObjectUserInfo.isJsonNull()) {
 
-                draft.user_info = JsonHelper.builder().fromJson(jsonObjectUserInfo,
+                draft.mUserInfo = JsonHelper.builder().fromJson(jsonObjectUserInfo,
                         new TypeToken<HashMap<String, ObjectModelUser>>() {
                         }.getType());
             }
 
             // Parse the array lists.
-            draft.positions_required = JsonHelper.parseArrayList(jsonObject.getAsJsonArray("positions_required"));
-            draft.users = JsonHelper.parseArrayList(jsonObject.getAsJsonArray("users"));
+            draft.mPositionsRequired = JsonHelper.parseArrayList(jsonObject.getAsJsonArray("positions_required"));
+            draft.mUsers = JsonHelper.parseArrayList(jsonObject.getAsJsonArray("users"));
         }
     }
 

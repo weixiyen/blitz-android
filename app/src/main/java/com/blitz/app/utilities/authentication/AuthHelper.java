@@ -254,7 +254,7 @@ public class AuthHelper {
 
                                 // Set the current draft and sync it.
                                 mCurrentDraft = drafts.get(drafts.size() - 1);
-                                mCurrentDraft.sync(activity, new Runnable() {
+                                mCurrentDraft.sync(activity, mCurrentDraft.getId(), new Runnable() {
 
                                     @Override
                                     public void run() {

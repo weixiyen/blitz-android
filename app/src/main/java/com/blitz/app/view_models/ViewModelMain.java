@@ -149,9 +149,7 @@ public class ViewModelMain extends ViewModel {
 
                 ObjectModelDraft objectModelDraft = new ObjectModelDraft();
 
-                // Set and sync the draft.
-                objectModelDraft.setDraftId(draftId);
-                objectModelDraft.sync(mActivity, new Runnable() {
+                objectModelDraft.sync(mActivity, draftId, new Runnable() {
 
                     @Override
                     public void run() {
