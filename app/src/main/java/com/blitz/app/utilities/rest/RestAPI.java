@@ -60,7 +60,8 @@ public interface RestAPI {
     void devices_post(@Body JsonObject body, Callback<JsonObject> callback);
 
     @GET("/draft/{draft_id}")
-    void draft_get(@Path("draft_id") String draftId, Callback<JsonObject> callback);
+    void draft_get(@Path("draft_id") String draftId,
+                   Callback<RestAPIResult<ObjectModelDraft>> callback);
 
     @GET("/drafts")
     void drafts_get(@Query("keys[]") ArrayList<String> keys,   // Required
