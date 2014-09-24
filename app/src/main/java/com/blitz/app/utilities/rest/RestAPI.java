@@ -3,6 +3,7 @@ package com.blitz.app.utilities.rest;
 import com.blitz.app.object_models.ObjectModelDraft;
 import com.blitz.app.object_models.ObjectModelItem;
 import com.blitz.app.object_models.ObjectModelStats;
+import com.blitz.app.object_models.ObjectModelUser;
 import com.blitz.app.simple_models.Game;
 import com.blitz.app.simple_models.Player;
 import com.blitz.app.simple_models.Stat;
@@ -107,6 +108,14 @@ public interface RestAPI {
 
     @GET("/user/{user_id}")
     void user_get(@Path("user_id") String userId, Callback<JsonObject> callback);
+
+    @GET("/users")
+    void users_get(@Query("keys[]") List<String> keys,   // Required
+                   @Query("index") String index,         // Required
+                   @Query("pluck[]") List<String> pluck, // Optional
+                   @Query("order_by") String orderBy,    // Optional
+                   @Query("limit") Integer limit,        // Optional
+                   Callback<RestAPIResult<ObjectModelUser>> callback);
 
     @POST("/users")
     void users_post(@Body JsonObject body, Callback<JsonObject> callback);
