@@ -100,11 +100,10 @@ public interface RestAPI {
 
     @GET("/stats")
     void stats_get(@Query("keys[]") List<String> keys,
-                   @Query("index")        String index,
-                   @Query("pluck[]")      List<String> pluck,
-                   @Query("limit")        int limit,
+                   @Query("index") String index,
+                   @Query("pluck[]") List<String> pluck,
+                   @Query("limit") Integer limit,
                    Callback<RestAPIResult<Stat>> callback);
-
 
     @GET("/user/{user_id}")
     void user_get(@Path("user_id") String userId, Callback<JsonObject> callback);
