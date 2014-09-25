@@ -1,13 +1,18 @@
 package com.blitz.app.view_models;
 
 import android.app.Activity;
+import android.os.Bundle;
 import android.os.Handler;
 
 import com.blitz.app.object_models.ObjectModelDraft;
 import com.blitz.app.object_models.ObjectModelItem;
 import com.blitz.app.object_models.ObjectModelUser;
+import com.blitz.app.screens.draft.DraftScreen;
 import com.blitz.app.utilities.authentication.AuthHelper;
+import com.blitz.app.utilities.comet.CometAPICallback;
+import com.blitz.app.utilities.comet.CometAPIManager;
 import com.blitz.app.utilities.logging.LogHelper;
+import com.google.gson.JsonObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -20,6 +25,9 @@ public class ViewModelDraft extends ViewModel {
 
     // region Member Variables
     // =============================================================================================
+
+    // Suspended flag.
+    private static final String STATE_DRAFT_SUSPENDED = "stateDraftSuspended";
 
     // State of the draft.
     public enum DraftState {
@@ -66,12 +74,13 @@ public class ViewModelDraft extends ViewModel {
     // =============================================================================================
 
     /**
-     * Initialize the view model.
+     * Start the view model.
      */
     @Override
     public void initialize() {
 
-        LogHelper.log("Start");
+        // Start comet.
+        cometCallbacksStart();
 
         // Start loop.
         gameLoopStart();
@@ -80,14 +89,49 @@ public class ViewModelDraft extends ViewModel {
         syncUsers();
     }
 
+    /**
+     * Stop the view model.
+     */
     @Override
     public void stop() {
         super.stop();
 
-        LogHelper.log("Stop");
+        // Stop comet.
+        cometCallbacksStop();
 
         // Stop loop.
         gameLoopStop();
+    }
+
+    /**
+     * Save a flag to note that we
+     * have suspended the state.
+     *
+     * @param savedInstanceState State bundle.
+     */
+    @Override
+    public void saveInstanceState(Bundle savedInstanceState) {
+        super.saveInstanceState(savedInstanceState);
+
+        // Draft is now suspended.
+        savedInstanceState.putBoolean(STATE_DRAFT_SUSPENDED, true);
+    }
+
+    /**
+     * Sync the draft when instance state
+     * is restored.
+     *
+     * @param savedInstanceState State bundle.
+     */
+    @Override
+    public void restoreInstanceState(Bundle savedInstanceState) {
+        super.restoreInstanceState(savedInstanceState);
+
+        if (savedInstanceState != null &&
+            savedInstanceState.getBoolean(STATE_DRAFT_SUSPENDED)) {
+
+            syncDraft();
+        }
     }
 
     // endregion
@@ -95,7 +139,6 @@ public class ViewModelDraft extends ViewModel {
     // region Public Methods
     // =============================================================================================
 
-    @SuppressWarnings("unused")
     public void startDrafting() {
 
         new Handler().postDelayed(new Runnable() {
@@ -112,6 +155,45 @@ public class ViewModelDraft extends ViewModel {
 
     // region Private Methods
     // =============================================================================================
+
+    /**
+     * If the draft gets suspended and we return,
+     * manually sync the draft model.
+     */
+    private void syncDraft() {
+
+        LogHelper.log("Syncing draft after a suspension.");
+    }
+
+    /**
+     * Start all callbacks.
+     */
+    private void cometCallbacksStart() {
+
+        // Subscribe.
+        CometAPIManager
+                .subscribeToChannel("draft:" + mDraftModel.getId())
+
+                .addCallback(DraftScreen.class, new CometAPICallback<DraftScreen>() {
+
+                    @Override
+                    public void messageReceived(DraftScreen receivingClass, JsonObject message) {
+
+
+                        LogHelper.log("Received: " + receivingClass + "  with message: " + message);
+                    }
+                }, "draftGameCallback");
+    }
+
+    /**
+     * Stop all comet callbacks.
+     */
+    private void cometCallbacksStop() {
+
+        // Unsubscribe.
+        CometAPIManager
+                .unsubscribeFromChannel("draft:" + mDraftModel.getId());
+    }
 
     /**
      * Starts the game loop.
@@ -137,7 +219,7 @@ public class ViewModelDraft extends ViewModel {
                     resolvePicks();
 
                     // Continue running the loop on a 100ms delay.
-                    mGameLoopHandler.postDelayed(mGameLoopRunnable, 3000);
+                    mGameLoopHandler.postDelayed(mGameLoopRunnable, 100);
                 }
             };
         }
