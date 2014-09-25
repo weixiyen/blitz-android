@@ -122,6 +122,17 @@ public final class ObjectModelDraft extends ObjectModel {
     }
 
     /**
+     * Fetch total rounds in the draft.
+     *
+     * @return Total rounds.
+     */
+    @SuppressWarnings("unused")
+    public int getRounds() {
+
+        return mRounds;
+    }
+
+    /**
      * Fetch draft year.
      *
      * @return Draft year.
