@@ -17,7 +17,7 @@ import retrofit.converter.Converter;
 import retrofit.converter.GsonConverter;
 
 /**
- * Created by Miguel Gaeta on 6/25/14.
+ * Created by Miguel Gaeta on 6/25/14. Copyright 2014 Blitz Studios
  */
 public class RestAPIClientBase {
 
