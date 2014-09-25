@@ -124,6 +124,11 @@ public class BaseActivity extends FragmentActivity {
     protected void onPause() {
         super.onPause();
 
+        // Stop view model.
+        if (getViewModel() != null) {
+            getViewModel().stop();
+        }
+
         if (mGoingBack) {
 
             // Run transitions, we going back.

@@ -57,8 +57,6 @@ public abstract class ViewModel {
      * Saves state of the view model.
      *
      * @param savedInstanceState State bundle.
-     *
-     * @return State bundle.
      */
     @SuppressWarnings("unused")
     public void saveInstanceState(Bundle savedInstanceState) {
@@ -70,6 +68,14 @@ public abstract class ViewModel {
      */
     @SuppressWarnings("unused")
     public abstract void initialize();
+
+    /**
+     * Stop the view model.
+     */
+    @SuppressWarnings("unused")
+    public void stop() {
+
+    }
 
     // endregion
 

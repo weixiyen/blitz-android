@@ -124,6 +124,11 @@ public class BaseFragment extends Fragment {
     public void onPause () {
         super.onPause();
 
+        // Stop view model.
+        if (getViewModel() != null) {
+            getViewModel().stop();
+        }
+
         // Remove fragment.
         CometAPIManager.configRemoveFragment(this);
     }
