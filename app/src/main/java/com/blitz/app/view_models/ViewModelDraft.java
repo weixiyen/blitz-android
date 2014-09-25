@@ -227,6 +227,8 @@ public class ViewModelDraft extends ViewModel {
 
         } else if (action.equals("show_choices")) {
 
+            // TODO: New function + restore JSON Helper.
+
             // Get array of choices.
             JsonArray choicesJson = message.get("choices").getAsJsonArray();
 
