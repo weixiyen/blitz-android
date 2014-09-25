@@ -88,6 +88,8 @@ public final class ObjectModelDraft extends ObjectModel {
     private ArrayList<String> mUsers;
     @SuppressWarnings("unused") @SerializedName("picks")
     private ArrayList<Pick> mPicks;
+    @SuppressWarnings("unused") @SerializedName("choices")
+    private ArrayList<ArrayList<String>> mChoices;
 
     // endregion
 
@@ -553,6 +555,105 @@ public final class ObjectModelDraft extends ObjectModel {
 
             mPlayerId = playerId;
               mUserId =   userId;
+        }
+    }
+
+    /**
+     * Player choice object.
+     */
+    @SuppressWarnings("unused")
+    public static class Choice {
+
+        private boolean mIsHomeTeam;
+
+        private float mAdpPpr;
+        private float mAdpDynasty;
+
+        private String mId;
+        private String mFullName;
+        private String mTeam;
+        private String mPosition;
+        private String mOpponent;
+
+        /**
+         * Set is home team boolean.
+         *
+         * @param isHomeTeam Is home team.
+         */
+        public void setIsHomeTeam(boolean isHomeTeam) {
+
+            mIsHomeTeam = isHomeTeam;
+        }
+
+        /**
+         * Set the other magic number.
+         *
+         * @param adpPpr Magic number.
+         */
+        public void setAdpPpr(float adpPpr) {
+
+            mAdpPpr = adpPpr;
+        }
+
+        /**
+         * Set the magic number.
+         *
+         * @param adpDynasty Magic number.
+         */
+        @SuppressWarnings("unused")
+        public void setAdpDynasty(float adpDynasty) {
+
+            mAdpDynasty = adpDynasty;
+        }
+
+        /**
+         * Set the id.
+         * @param id id.
+         */
+        public void setId(String id) {
+
+            mId = id;
+        }
+
+        /**
+         * Set the full choice name.
+         *
+         * @param fullName Full name.
+         */
+        public void setFullName(String fullName) {
+
+            mFullName = fullName;
+        }
+
+        /**
+         * Set the team name.
+         *
+         * @param team Team name.
+         */
+        public void setTeam(String team) {
+
+            mTeam = team;
+        }
+
+        /**
+         * Set the player position.
+         *
+         * @param position Player position.
+         */
+
+        public void setPosition(String position) {
+
+            mPosition = position;
+        }
+
+        /**
+         * Set the opponent string.
+         *
+         * @param opponent Opponent string.
+         */
+        public void setOpponent(String opponent) {
+
+            mOpponent = opponent;
         }
     }
 
