@@ -247,7 +247,7 @@ public class ViewModelDraft extends ViewModel {
                 choiceIds.add(id);
 
                 choice.setId(id);
-                choice.setFullName(choiceJsonObject.get("full_name").getAsString());
+
                 choice.setOpponent(choiceJsonObject.get("opponent").getAsString());
                 choice.setPosition(choiceJsonObject.get("position").getAsString());
                 choice.setTeam(choiceJsonObject.get("team").getAsString());
@@ -258,6 +258,14 @@ public class ViewModelDraft extends ViewModel {
                 if (isHomeTeam != null && !isHomeTeam.isJsonNull()) {
 
                     choice.setIsHomeTeam(isHomeTeam.getAsBoolean());
+                }
+
+                JsonElement fullName = choiceJsonObject.get("full_name");
+
+                // Set the full name (can sometimes be null).
+                if (fullName != null && !fullName.isJsonNull()) {
+
+                    choice.setFullName(fullName.getAsString());
                 }
 
                 // Add to draft model.
