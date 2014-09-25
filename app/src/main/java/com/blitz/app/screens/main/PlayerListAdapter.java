@@ -81,6 +81,9 @@ public class PlayerListAdapter extends ArrayAdapter {
         ((TextView) v.findViewById(R.id.player1_score)).setText(s1);
         ((TextView) v.findViewById(R.id.player2_score)).setText(s2);
 
+        setStatsNavigation((TextView) v.findViewById(R.id.player1_name), p1, s1);
+        setStatsNavigation((TextView) v.findViewById(R.id.player2_name), p2, s2);
+
         if(mPlayer1Games != null && mPlayer2Games != null) {
 
             Game g1 = mPlayer1Games.get(position);
@@ -89,26 +92,37 @@ public class PlayerListAdapter extends ArrayAdapter {
             ((TextView) v.findViewById(R.id.player2_game_result)).setText(getGameResult(g2, p2));
 
         }
+        
+        return v;
+    }
 
-        ((TextView) v.findViewById(R.id.player1_name)).setOnClickListener(new View.OnClickListener() {
+    /**
+     * Attaches an onClickListener to the input view which will navigate to the weekly stats
+     * screen for the input player.
+     * @param v the view to which the listener will be attached
+     * @param player the player whose stats will be shown
+     * @param formattedScore the pre-calculated score total for the player
+     */
+    private void setStatsNavigation(View v, final Player player, final String formattedScore) {
+        v.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(mActivity, PlayerWeekStatsScreen.class);
-                Collection<Stat> stats = mPlayerStats.get(p1.getId());
+                Collection<Stat> stats = mPlayerStats.get(player.getId());
                 String[] statNames = new String[stats.size()];
                 float[] statValues = new float[stats.size()];
                 float[] statPoints = new float[stats.size()];
 
-                int i=-1;
-                for(Stat stat : stats) {
+                int i = -1;
+                for (Stat stat : stats) {
                     i += 1;
                     statNames[i] = stat.getStatName();
                     statValues[i] = stat.getValue();
                     statPoints[i] = stat.getPoints();
                 }
-                intent.putExtra(PlayerWeekStatsScreen.FIRST_NAME, p1.getFirstName());
-                intent.putExtra(PlayerWeekStatsScreen.LAST_NAME, p1.getLastName());
-                intent.putExtra(PlayerWeekStatsScreen.TOTAL_POINTS, s1);
+                intent.putExtra(PlayerWeekStatsScreen.FIRST_NAME, player.getFirstName());
+                intent.putExtra(PlayerWeekStatsScreen.LAST_NAME, player.getLastName());
+                intent.putExtra(PlayerWeekStatsScreen.TOTAL_POINTS, formattedScore);
                 intent.putExtra(PlayerWeekStatsScreen.WEEK, mWeek);
                 intent.putExtra(STAT_NAMES, statNames);
                 intent.putExtra(STAT_VALUES, statValues);
@@ -116,9 +130,6 @@ public class PlayerListAdapter extends ArrayAdapter {
                 mActivity.startActivity(intent);
             }
         });
-
-
-        return v;
     }
 
     private static String getGameResult(Game game, Player player) {
