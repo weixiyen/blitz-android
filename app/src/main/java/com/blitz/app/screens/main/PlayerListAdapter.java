@@ -80,8 +80,8 @@ public class PlayerListAdapter extends ArrayAdapter {
         ((TextView) v.findViewById(R.id.player2_name)).setText(p2.getFullName());
         ((TextView) v.findViewById(R.id.player2_position_team)).setText(getPositionTeam(p2));
 
-        final Float  s1 = mPlayer1Scores.get(position);
-        Float  s2 = mPlayer2Scores.get(position);
+        final float s1 = mPlayer1Scores.get(position).floatValue();
+        float s2 = mPlayer2Scores.get(position);
 
         if(mPlayer1Scores != null && mPlayer2Scores != null) {
 
@@ -116,7 +116,7 @@ public class PlayerListAdapter extends ArrayAdapter {
                 }
                 intent.putExtra(PlayerWeekStatsScreen.FIRST_NAME, p1.getFirstName());
                 intent.putExtra(PlayerWeekStatsScreen.LAST_NAME, p1.getLastName());
-                intent.putExtra(PlayerWeekStatsScreen.TOTAL_POINTS, s1);
+                intent.putExtra(PlayerWeekStatsScreen.TOTAL_POINTS, (float)s1);
                 intent.putExtra(PlayerWeekStatsScreen.WEEK, mWeek);
                 intent.putExtra(STAT_NAMES, statNames);
                 intent.putExtra(STAT_VALUES, statValues);

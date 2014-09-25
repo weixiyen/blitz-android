@@ -19,7 +19,7 @@ public class PlayerWeekStatsScreen extends BaseActivity {
     public static final String FIRST_NAME = "PlayerWeekStatsScreen.firstName";
     public static final String LAST_NAME = "PlayerWeekStatsScreen.lastName";
     public static final String TOTAL_POINTS = "PlayerWeekStatsScreen.totalPoints";
-    public static final String WEEK = "PlayerWeekStatsScreen.totalPoints";
+    public static final String WEEK = "PlayerWeekStatsScreen.week";
 
     @InjectView(R.id.player_stats_list) ListView mStats;
 
@@ -40,6 +40,5 @@ public class PlayerWeekStatsScreen extends BaseActivity {
                 getIntent().getExtras().getStringArray(PlayerListAdapter.STAT_NAMES),
                 getIntent().getExtras().getFloatArray(PlayerListAdapter.STAT_VALUES),
                 getIntent().getExtras().getFloatArray(PlayerListAdapter.STAT_POINTS)));
-        ;
     }
 }

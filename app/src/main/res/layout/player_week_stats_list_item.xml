@@ -5,12 +5,12 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-    <TextView
+    <TextView android:id="@+id/stat_count_and_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="61 Rush Yards"/>
 
-    <TextView
+    <TextView android:id="@+id/stat_points"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="right"
