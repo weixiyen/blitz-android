@@ -2,6 +2,7 @@ package com.blitz.app.object_models;
 
 import android.app.Activity;
 
+import com.blitz.app.utilities.date.DateUtils;
 import com.blitz.app.utilities.rest.RestAPICallback;
 import com.blitz.app.utilities.rest.RestAPIResult;
 import com.google.gson.annotations.SerializedName;
@@ -455,24 +456,17 @@ public final class ObjectModelDraft extends ObjectModel {
     }
 
     /**
-     * Given a date, get amount of time since
-     * that date.
+     * Get seconds since a given date, but
+     * include the server time offset.
      *
-     * @param time Time.
+     * @param date Date in GMT.
      *
      * @return Seconds since that time.
      */
-    private int getSecondsSince(Date time) {
+    private int getSecondsSince(Date date) {
 
-        if (time == null) {
-
-            return 0;
-        }
-
-        // Fetch clients time, add the server offset.
-        long currentTimeWithOffset = new Date().getTime() + mServerTimeOffset;
-
-        return (int) (Math.abs(currentTimeWithOffset - time.getTime()) / 1000);
+        return (int) ((DateUtils.getTimeSinceDateInGMTAsMilliseconds(date)
+                + mServerTimeOffset) / 1000);
     }
 
     // endregion
@@ -491,12 +485,11 @@ public final class ObjectModelDraft extends ObjectModel {
         private String mUserId;
         @SuppressWarnings("unused") @SerializedName("position")
         private String mPosition;
+        @SuppressWarnings("unused") @SerializedName("timestamp")
+        private String mTimestamp;
 
         @SuppressWarnings("unused") @SerializedName("round")
         private int mRound;
-
-        @SuppressWarnings("unused") @SerializedName("timestamp")
-        private Date mTimestamp;
     }
 
     // endregion
