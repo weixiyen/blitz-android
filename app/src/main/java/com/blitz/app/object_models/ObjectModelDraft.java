@@ -249,6 +249,17 @@ public final class ObjectModelDraft extends ObjectModel {
     }
 
     /**
+     * Set the last round complete time.
+     *
+     * @param lastRoundCompleteTime Last round complete time.
+     */
+    @SuppressWarnings("unused")
+    public void setLastRoundCompleteTime(Date lastRoundCompleteTime) {
+
+        mLastRoundCompleteTime = lastRoundCompleteTime;
+    }
+
+    /**
      * Set the last time received from the server.
      *
      * @param lastServerTime Last server time.

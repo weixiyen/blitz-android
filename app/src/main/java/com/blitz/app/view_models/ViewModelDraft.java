@@ -13,6 +13,7 @@ import com.blitz.app.utilities.comet.CometAPICallback;
 import com.blitz.app.utilities.comet.CometAPIManager;
 import com.blitz.app.utilities.date.DateUtils;
 import com.blitz.app.utilities.logging.LogHelper;
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
 import java.util.ArrayList;
@@ -229,7 +230,25 @@ public class ViewModelDraft extends ViewModel {
 
         } else if (action.equals("pick_player")) {
 
+
+
             LogHelper.log("Pick player: " + message);
+        }
+
+        // Look for last round complete time json.
+        JsonElement lastRoundCompleteTimeJson = message.get("last_round_complete_time");
+
+        if (lastRoundCompleteTimeJson != null &&
+           !lastRoundCompleteTimeJson.isJsonNull()) {
+
+            // Fetch as string.
+            String lastRoundCompleteTime = lastRoundCompleteTimeJson.getAsString();
+
+            if (!lastRoundCompleteTime.equals("None")) {
+
+                mDraftModel.setLastRoundCompleteTime
+                        (DateUtils.getDateInGMT(lastRoundCompleteTime));
+            }
         }
     }
 
