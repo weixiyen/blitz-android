@@ -237,5 +237,11 @@ public class DraftScreen extends BaseActivity implements ViewModelDraft.ViewMode
         LogHelper.log("We have user: " + userName + " " + itemAvatarUrl);
     }
 
+    @Override
+    public void onDraftStateChanged(ViewModelDraft.DraftState state) {
+
+        LogHelper.log("Draft state changed: " + state);
+    }
+
     // endregion
 }

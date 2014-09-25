@@ -1,9 +1,9 @@
 package com.blitz.app.view_models;
 
 import android.app.Activity;
-import android.os.Bundle;
 import android.os.Handler;
 
+import com.blitz.app.object_models.ObjectModelDraft;
 import com.blitz.app.object_models.ObjectModelItem;
 import com.blitz.app.object_models.ObjectModelUser;
 import com.blitz.app.utilities.authentication.AuthHelper;
@@ -21,8 +21,23 @@ public class ViewModelDraft extends ViewModel {
     // region Member Variables
     // =============================================================================================
 
+    // State of the draft.
+    public enum DraftState {
+        DRAFT_PREVIEW, DRAFT_DRAFTING, DRAFT_COMPLETE
+    }
+
+    // Runs the main draft update loop.
     private Handler  mGameLoopHandler;
     private Runnable mGameLoopRunnable;
+
+    // Reference to latest draft model.
+    private ObjectModelDraft mDraftModel;
+
+    // Current draft state.
+    private DraftState mState;
+
+    // Callbacks.
+    private ViewModelDraftCallbacks mCallbacks;
 
     // endregion
 
@@ -37,6 +52,12 @@ public class ViewModelDraft extends ViewModel {
      */
     public ViewModelDraft(Activity activity, ViewModelCallbacks callbacks) {
         super(activity, callbacks);
+
+        // Set the draft model.
+        mDraftModel = AuthHelper.instance().getCurrentDraft();
+
+        // Set the callbacks.
+        mCallbacks = getCallbacks(ViewModelDraftCallbacks.class);
     }
 
     // endregion
@@ -50,30 +71,23 @@ public class ViewModelDraft extends ViewModel {
     @Override
     public void initialize() {
 
-        LogHelper.log("Init");
+        LogHelper.log("Start");
 
-        // Game loop.
-        //startLoop();
+        // Start loop.
+        gameLoopStart();
 
         // Fetch users.
         syncUsers();
     }
 
     @Override
-    public void restoreInstanceState(Bundle savedInstanceState) {
+    public void stop() {
+        super.stop();
 
-        LogHelper.log("Restore.");
+        LogHelper.log("Stop");
 
-        super.restoreInstanceState(savedInstanceState);
-    }
-
-    @Override
-    public void saveInstanceState(Bundle savedInstanceState) {
-
-        LogHelper.log("Save.");
-
-        // Game loop.
-        //stopLoop();
+        // Stop loop.
+        gameLoopStop();
     }
 
     // endregion
@@ -99,7 +113,10 @@ public class ViewModelDraft extends ViewModel {
     // region Private Methods
     // =============================================================================================
 
-    private void startLoop() {
+    /**
+     * Starts the game loop.
+     */
+    private void gameLoopStart() {
 
         if (mGameLoopHandler == null) {
             mGameLoopHandler = new Handler();
@@ -111,7 +128,13 @@ public class ViewModelDraft extends ViewModel {
                 @Override
                 public void run() {
 
-                    LogHelper.log("Loop.");
+                    // Sync state.
+                    resolveState();
+                    resolveCurrentRoundAndPosition();
+                    resolveRoundTimeRemaining();
+                    resolveRoundComplete();
+                    resolveChoices();
+                    resolvePicks();
 
                     // Continue running the loop on a 100ms delay.
                     mGameLoopHandler.postDelayed(mGameLoopRunnable, 3000);
@@ -122,7 +145,10 @@ public class ViewModelDraft extends ViewModel {
         mGameLoopHandler.post(mGameLoopRunnable);
     }
 
-    private void stopLoop() {
+    /**
+     * Stop the game loop.
+     */
+    private void gameLoopStop() {
 
         LogHelper.log("Loop stop.");
 
@@ -142,7 +168,7 @@ public class ViewModelDraft extends ViewModel {
     private void syncUsers() {
 
         // Users associated with this draft.
-        List<String> draftUserIds = AuthHelper.instance().getCurrentDraft().getUsers();
+        List<String> draftUserIds = mDraftModel.getUsers();
 
         // Fetch associated user objects.
         ObjectModelUser.getUsers(mActivity, draftUserIds, new ObjectModelUser.CallbackUsers() {
@@ -196,8 +222,8 @@ public class ViewModelDraft extends ViewModel {
      */
     private void userSyncedCallback(ObjectModelUser user, ObjectModelItem userAvatarItem) {
 
-        if (getCallbacks(ViewModelDraftCallbacks.class) != null) {
-            getCallbacks(ViewModelDraftCallbacks.class)
+        if (mCallbacks != null) {
+            mCallbacks
                     .onUserSynced(
                             user.getId(),
                             user.getUsername(),
@@ -207,6 +233,64 @@ public class ViewModelDraft extends ViewModel {
                             user.getTies(),
                             userAvatarItem == null ? null : userAvatarItem.getDefaultImgPath());
         }
+    }
+
+    // endregion
+
+    // region Resolve Methods
+    // =============================================================================================
+
+    /**
+     * Resolve the state of the draft.
+     */
+    private void resolveState() {
+
+        DraftState state;
+
+        // If draft complete and enough time has passed for the
+        // draft to be saved to disk, set state to complete.
+        if (mDraftModel.getCurrentRound() > mDraftModel.getRounds() &&
+            mDraftModel.getSecondsSinceLastRoundCompleteTime() > mDraftModel.getTimePerPostview()) {
+
+            state = DraftState.DRAFT_COMPLETE;
+
+        } else if (mDraftModel.getSecondsSinceStarted() < mDraftModel.getDraftStartBuffer()) {
+
+            state = DraftState.DRAFT_PREVIEW;
+
+        } else {
+
+            state = DraftState.DRAFT_DRAFTING;
+        }
+
+        if (mState != state) {
+            mState  = state;
+
+            // Draft state has changed.
+            if (mCallbacks != null) {
+                mCallbacks.onDraftStateChanged(mState);
+            }
+        }
+    }
+
+    private void resolveCurrentRoundAndPosition() {
+
+    }
+
+    private void resolveRoundTimeRemaining() {
+
+    }
+
+    private void resolveRoundComplete() {
+
+    }
+
+    private void resolveChoices() {
+
+    }
+
+    private void resolvePicks() {
+
     }
 
     // endregion
@@ -221,8 +305,10 @@ public class ViewModelDraft extends ViewModel {
 
         public void onDraftingStarted();
 
-        public void onUserSynced( String userId, String userName,
+        public void onUserSynced(String userId, String userName,
                 int rating, int wins, int losses, int ties, String itemAvatarUrl);
+
+        public void onDraftStateChanged(DraftState state);
     }
 
     // endregion
