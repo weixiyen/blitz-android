@@ -13,6 +13,7 @@ import com.blitz.app.utilities.comet.CometAPICallback;
 import com.blitz.app.utilities.comet.CometAPIManager;
 import com.blitz.app.utilities.date.DateUtils;
 import com.blitz.app.utilities.logging.LogHelper;
+import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
@@ -226,7 +227,45 @@ public class ViewModelDraft extends ViewModel {
 
         } else if (action.equals("show_choices")) {
 
-            LogHelper.log("New choices received: " + message);
+            // Get array of choices.
+            JsonArray choicesJson = message.get("choices").getAsJsonArray();
+
+            // List of choice ids.
+            ArrayList<String> choiceIds = new ArrayList<String>();
+
+            for (JsonElement choiceJson : choicesJson) {
+
+                // Fetch as json object.
+                JsonObject choiceJsonObject = choiceJson.getAsJsonObject();
+
+                // Create a choice object.
+                ObjectModelDraft.Choice choice = new ObjectModelDraft.Choice();
+
+                // Fetch choice id.
+                String id = choiceJsonObject.get("id").getAsString();
+
+                choiceIds.add(id);
+
+                choice.setId(id);
+                choice.setFullName(choiceJsonObject.get("full_name").getAsString());
+                choice.setOpponent(choiceJsonObject.get("opponent").getAsString());
+                choice.setPosition(choiceJsonObject.get("position").getAsString());
+                choice.setTeam(choiceJsonObject.get("team").getAsString());
+
+                JsonElement isHomeTeam = choiceJsonObject.get("is_home_team");
+
+                // Set home team (can sometimes be null).
+                if (isHomeTeam != null && !isHomeTeam.isJsonNull()) {
+
+                    choice.setIsHomeTeam(isHomeTeam.getAsBoolean());
+                }
+
+                // Add to draft model.
+                mDraftModel.addChoice(choice);
+            }
+
+            // Add to choices.
+            mDraftModel.addChoices(choiceIds);
 
         } else if (action.equals("pick_player")) {
 

@@ -23,7 +23,11 @@ public final class ObjectModelDraft extends ObjectModel {
     // region Member Variables
     // =============================================================================================
 
+    // More accurate client times.
     private long mServerTimeOffset;
+
+    // Map of players, used for live drafts only.
+    private HashMap<String, Choice> mPlayerDataMap;
 
     @SuppressWarnings("unused") @SerializedName("draft_start_buffer")
     private int mDraftStartBuffer;
@@ -275,6 +279,37 @@ public final class ObjectModelDraft extends ObjectModel {
         // Set the offset based on the current client time.
         mServerTimeOffset = Math.abs(mLastServerTime.getTime()
                 - DateUtils.getDateInGMT().getTime());
+    }
+
+    /**
+     * Add a new choice to this draft.
+     *
+     * @param choice Choice object.
+     */
+    @SuppressWarnings("unused")
+    public void addChoice(Choice choice) {
+
+        if (mPlayerDataMap == null) {
+            mPlayerDataMap = new HashMap<String, Choice>();
+        }
+
+        // Add to player data map.
+        mPlayerDataMap.put(choice.getId(), choice);
+    }
+
+    /**
+     * Add a new list of choices.
+     *
+     * @param choices List of choices.
+     */
+    @SuppressWarnings("unused")
+    public void addChoices(ArrayList<String> choices) {
+
+        if (mChoices == null) {
+            mChoices = new ArrayList<ArrayList<String>>();
+        }
+
+        mChoices.add(choices);
     }
 
     /**
@@ -566,14 +601,21 @@ public final class ObjectModelDraft extends ObjectModel {
 
         private boolean mIsHomeTeam;
 
-        private float mAdpPpr;
-        private float mAdpDynasty;
-
         private String mId;
         private String mFullName;
         private String mTeam;
         private String mPosition;
         private String mOpponent;
+
+        /**
+         * Get id.
+         *
+         * @return id.
+         */
+        public String getId() {
+
+            return mId;
+        }
 
         /**
          * Set is home team boolean.
@@ -583,27 +625,6 @@ public final class ObjectModelDraft extends ObjectModel {
         public void setIsHomeTeam(boolean isHomeTeam) {
 
             mIsHomeTeam = isHomeTeam;
-        }
-
-        /**
-         * Set the other magic number.
-         *
-         * @param adpPpr Magic number.
-         */
-        public void setAdpPpr(float adpPpr) {
-
-            mAdpPpr = adpPpr;
-        }
-
-        /**
-         * Set the magic number.
-         *
-         * @param adpDynasty Magic number.
-         */
-        @SuppressWarnings("unused")
-        public void setAdpDynasty(float adpDynasty) {
-
-            mAdpDynasty = adpDynasty;
         }
 
         /**
