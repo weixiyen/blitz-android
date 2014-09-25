@@ -188,6 +188,17 @@ public final class ObjectModelDraft extends ObjectModel {
         return mLastRoundCompleteTime;
     }
 
+    /**
+     * Get time the draft started.
+     *
+     * @return Time the draft started.
+     */
+    @SuppressWarnings("unused")
+    private Date getStarted() {
+
+        return mStarted;
+    }
+
     // endregion
 
     // region REST Methods
