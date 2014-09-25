@@ -87,7 +87,7 @@ public class RestAPIClientBase {
     private Converter getConverter() {
 
         Gson gson =  new GsonBuilder()
-                .setDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS")
+                .setDateFormat("yyyy-MM-dd'T'HH:mm:ss")
                 .create();
 
         return new GsonConverter(gson);
