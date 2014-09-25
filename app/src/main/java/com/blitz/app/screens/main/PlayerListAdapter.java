@@ -37,6 +37,7 @@ public class PlayerListAdapter extends ArrayAdapter {
     private final List<Game>   mPlayer1Games;
     private final List<Game>   mPlayer2Games;
     private final Multimap<String, Stat> mPlayerStats;
+    private final int mWeek;
 
     private final Activity mActivity;
 
@@ -44,6 +45,7 @@ public class PlayerListAdapter extends ArrayAdapter {
                              List<Game> player1games, List<Game> player2games,
                              List<Float> player1scores, List<Float> player2scores,
                              Multimap<String, Stat> playerStats,
+                             int week,
                              Activity activity) {
 
 
@@ -57,6 +59,7 @@ public class PlayerListAdapter extends ArrayAdapter {
         mPlayer1Scores = player1scores;
         mPlayer2Scores = player2scores;
         mPlayerStats = playerStats;
+        mWeek = week;
     }
 
     @Override
@@ -77,11 +80,11 @@ public class PlayerListAdapter extends ArrayAdapter {
         ((TextView) v.findViewById(R.id.player2_name)).setText(p2.getFullName());
         ((TextView) v.findViewById(R.id.player2_position_team)).setText(getPositionTeam(p2));
 
+        final Float  s1 = mPlayer1Scores.get(position);
+        Float  s2 = mPlayer2Scores.get(position);
 
         if(mPlayer1Scores != null && mPlayer2Scores != null) {
 
-            Float  s1 = mPlayer1Scores.get(position);
-            Float  s2 = mPlayer2Scores.get(position);
             ((TextView) v.findViewById(R.id.player1_score)).setText(getScore(s1));
             ((TextView) v.findViewById(R.id.player2_score)).setText(getScore(s2));
         }
@@ -111,6 +114,10 @@ public class PlayerListAdapter extends ArrayAdapter {
                     statValues[i] = stat.getValue();
                     statPoints[i] = stat.getPoints();
                 }
+                intent.putExtra(PlayerWeekStatsScreen.FIRST_NAME, p1.getFirstName());
+                intent.putExtra(PlayerWeekStatsScreen.LAST_NAME, p1.getLastName());
+                intent.putExtra(PlayerWeekStatsScreen.TOTAL_POINTS, s1);
+                intent.putExtra(PlayerWeekStatsScreen.WEEK, mWeek);
                 intent.putExtra(STAT_NAMES, statNames);
                 intent.putExtra(STAT_VALUES, statValues);
                 intent.putExtra(STAT_POINTS, statPoints);

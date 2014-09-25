@@ -94,9 +94,9 @@ public class MainScreenFragmentDraftDetail extends BaseActivity implements ViewM
     public void onStuff(List<Player> p1roster, List<Player> p2Roster,
                         List<Game> p1games, List<Game> p2games,
                         List<Float> p1Scores, List<Float> p2Scores,
-                        Multimap<String, Stat> playerStats) {
+                        Multimap<String, Stat> playerStats, int week) {
         mPlayerList.setAdapter(new PlayerListAdapter(getApplicationContext(), p1roster, p2Roster, p1games, p2games,
-                p1Scores, p2Scores, playerStats, this));
+                p1Scores, p2Scores, playerStats, week, this));
     }
 
     @Override
