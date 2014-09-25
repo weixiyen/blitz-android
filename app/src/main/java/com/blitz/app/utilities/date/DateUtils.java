@@ -10,6 +10,9 @@ import java.util.TimeZone;
  */
 public class DateUtils {
 
+    // region Public Methods
+    // =============================================================================================
+
     /**
      * Fetch date with GMT time zone.
      *
@@ -19,13 +22,13 @@ public class DateUtils {
     public static Date getDateInGMT() {
 
         // GMT date format.
-        SimpleDateFormat dateFormatGmt = new SimpleDateFormat("yyyy-MMM-dd HH:mm:ss");
+        SimpleDateFormat dateFormatGmt = getSimpleDateFormat();
 
         // Set a GMT time zone.
         dateFormatGmt.setTimeZone(TimeZone.getTimeZone("GMT"));
 
         // Local time zone format.
-        SimpleDateFormat dateFormatLocal = new SimpleDateFormat("yyyy-MMM-dd HH:mm:ss");
+        SimpleDateFormat dateFormatLocal = getSimpleDateFormat();
 
         try {
 
@@ -83,4 +86,21 @@ public class DateUtils {
         // Fetch milliseconds elapsed.
         return Math.abs(getDateInGMTMilliseconds() - date.getTime());
     }
+
+    // endregion
+
+    // region Private Methods
+    // =============================================================================================
+
+    /**
+     * Get a standard simple date format.
+     *
+     * @return Date format.
+     */
+    private static SimpleDateFormat getSimpleDateFormat() {
+
+        return new SimpleDateFormat("yyyy-MMM-dd HH:mm:ss.SSS");
+    }
+
+    // endregion
 }
