@@ -65,6 +65,8 @@ public final class ObjectModelDraft extends ObjectModel {
     private Date mLastUpdated;
     @SuppressWarnings("unused") @SerializedName("started")
     private Date mStarted;
+    @SuppressWarnings("unused") @SerializedName("last_round_complete_time")
+    private Date mLastRoundCompleteTime;
 
     @SuppressWarnings("unused") @SerializedName("points")
     private HashMap<String, Float> mPoints;
@@ -79,6 +81,8 @@ public final class ObjectModelDraft extends ObjectModel {
     private ArrayList<String> mPositionsRequired;
     @SuppressWarnings("unused") @SerializedName("users")
     private ArrayList<String> mUsers;
+    @SuppressWarnings("unused") @SerializedName("picks")
+    private ArrayList<Pick> mPicks;
 
     // endregion
 
@@ -87,6 +91,10 @@ public final class ObjectModelDraft extends ObjectModel {
 
     public String getId() {
         return mId;
+    }
+
+    public String getStatus() {
+        return mGameStatus;
     }
 
     public String getTeamName(int team) {
@@ -113,16 +121,38 @@ public final class ObjectModelDraft extends ObjectModel {
         return change;
     }
 
+    /**
+     * Fetch draft year.
+     *
+     * @return Draft year.
+     */
+    @SuppressWarnings("unused")
     public int getYear() {
+
         return mYear;
     }
 
+    /**
+     * Fetch draft week.
+     *
+     * @return Draft week.
+     */
+    @SuppressWarnings("unused")
     public int getWeek() {
+
         return mWeek;
     }
 
-    public String getStatus() {
-        return mGameStatus;
+    /**
+     * Fetch the current round in the draft.
+     *
+     * @return Draft round.
+     */
+    @SuppressWarnings("unused")
+    public int getCurrentRound() {
+
+        // The round is derived based on the picks so far.
+        return (mPicks == null ? 1 : mPicks.size() / 2) + 1;
     }
 
     /**
@@ -130,9 +160,21 @@ public final class ObjectModelDraft extends ObjectModel {
      *
      * @return List of user ids.
      */
+    @SuppressWarnings("unused")
     public List<String> getUsers() {
 
         return mUsers;
+    }
+
+    /**
+     * Get last round complete time.
+     *
+     * @return Last round complete time.
+     */
+    @SuppressWarnings("unused")
+    private Date getLastRoundCompleteTime() {
+
+        return mLastRoundCompleteTime;
     }
 
     // endregion
@@ -340,6 +382,30 @@ public final class ObjectModelDraft extends ObjectModel {
 
             mServerTimeOffset = 0;
         }
+    }
+
+    // endregion
+
+    // region Inner Class
+    // =============================================================================================
+
+    /**
+     * Player pick object.
+     */
+    public class Pick {
+
+        @SuppressWarnings("unused") @SerializedName("player_id")
+        private String mPlayerId;
+        @SuppressWarnings("unused") @SerializedName("user_id")
+        private String mUserId;
+        @SuppressWarnings("unused") @SerializedName("position")
+        private String mPosition;
+
+        @SuppressWarnings("unused") @SerializedName("round")
+        private int mRound;
+
+        @SuppressWarnings("unused") @SerializedName("timestamp")
+        private Date mTimestamp;
     }
 
     // endregion
