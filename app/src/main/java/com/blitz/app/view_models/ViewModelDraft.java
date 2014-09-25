@@ -11,10 +11,12 @@ import com.blitz.app.screens.draft.DraftScreen;
 import com.blitz.app.utilities.authentication.AuthHelper;
 import com.blitz.app.utilities.comet.CometAPICallback;
 import com.blitz.app.utilities.comet.CometAPIManager;
+import com.blitz.app.utilities.date.DateUtils;
 import com.blitz.app.utilities.logging.LogHelper;
 import com.google.gson.JsonObject;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -179,8 +181,11 @@ public class ViewModelDraft extends ViewModel {
                     @Override
                     public void messageReceived(DraftScreen receivingClass, JsonObject message) {
 
+                        // Handle the action.
+                        ((ViewModelDraft) receivingClass.onFetchViewModel())
+                                .cometHandleAction(message);
 
-                        LogHelper.log("Received: " + receivingClass + "  with message: " + message);
+
                     }
                 }, "draftGameCallback");
     }
@@ -193,6 +198,39 @@ public class ViewModelDraft extends ViewModel {
         // Unsubscribe.
         CometAPIManager
                 .unsubscribeFromChannel("draft:" + mDraftModel.getId());
+    }
+
+    /**
+     * Handle action received from comet.
+     *
+     * @param message Json message.
+     */
+    private void cometHandleAction(JsonObject message) {
+
+        // Get the action identifier.
+        String action = message.get("action").getAsString();
+
+        if (action == null) {
+
+            // Log with amplitude.
+            LogHelper.log("Unknown action.");
+
+        } else if (action.equals("sync_to_server_time")) {
+
+            // Fetch last server time.
+            Date lastServerTime = DateUtils.getDateInGMT
+                    (message.get("last_server_time").getAsString());
+
+            mDraftModel.setLastServerTime(lastServerTime);
+
+        } else if (action.equals("show_choices")) {
+
+            LogHelper.log("New choices received: " + message);
+
+        } else if (action.equals("pick_player")) {
+
+            LogHelper.log("Pick player: " + message);
+        }
     }
 
     /**

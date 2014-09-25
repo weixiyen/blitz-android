@@ -41,6 +41,29 @@ public class DateUtils {
     }
 
     /**
+     * Given a date json string, convert
+     * into associated GMT object.
+     *
+     * @param date Date json.
+     *
+     * @return Date object.
+     */
+    @SuppressWarnings("unused")
+    public static Date getDateInGMT(String date) {
+
+        // Create a special type of date format.
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+
+        try {
+
+            return simpleDateFormat.parse(date);
+
+        } catch (ParseException ignored) { }
+
+        return null;
+    }
+
+    /**
      * Fetch date with GMT time zone in milliseconds.
      *
      * @return Milliseconds.

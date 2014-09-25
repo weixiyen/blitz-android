@@ -91,7 +91,7 @@ public final class ObjectModelDraft extends ObjectModel {
 
     // endregion
 
-    // region Getters
+    // region Public Methods
     // =============================================================================================
 
     public String getId() {
@@ -246,6 +246,22 @@ public final class ObjectModelDraft extends ObjectModel {
     public Date getLastRoundCompleteTime() {
 
         return mLastRoundCompleteTime;
+    }
+
+    /**
+     * Set the last time received from the server.
+     *
+     * @param lastServerTime Last server time.
+     */
+    @SuppressWarnings("unused")
+    public void setLastServerTime(Date lastServerTime) {
+
+        // Update the last server time.
+        mLastServerTime = lastServerTime;
+
+        // Set the offset based on the current client time.
+        mServerTimeOffset = Math.abs(mLastServerTime.getTime()
+                - DateUtils.getDateInGMT().getTime());
     }
 
     // endregion
