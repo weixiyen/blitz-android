@@ -24,4 +24,6 @@
     <color name="text_color_medium_grey">#969696</color>
     <color name="text_color_light_grey">#ACACAC</color>
 
+    <color name="text_color_leader_blue">#00FDFB</color>
+
 </resources>

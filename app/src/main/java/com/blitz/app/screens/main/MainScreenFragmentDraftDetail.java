@@ -44,6 +44,15 @@ public class MainScreenFragmentDraftDetail extends BaseActivity implements ViewM
         ((TextView)findViewById(playerDetails).findViewById(R.id.player_score)).setText(formatScore(score));
     }
 
+    /**
+     * Updates the UI for the provided view group to show that the associated player has the
+     * higher score.
+     */
+    private void indicateLeader(int playerDetails) {
+        ((TextView)findViewById(playerDetails).findViewById(R.id.player_score))
+                .setTextColor(getResources().getColor(R.color.text_color_leader_blue));
+    }
+
     private void flipPlayer2Avatar() {
         findViewById(R.id.player_2_details).findViewById(R.id.player_avatar).setScaleX(-1f);
     }
@@ -95,6 +104,12 @@ public class MainScreenFragmentDraftDetail extends BaseActivity implements ViewM
 
         setScore(R.id.player_1_details, player1score);
         setScore(R.id.player_2_details, player2Score);
+
+        if(player1score > player2Score) {
+            indicateLeader(R.id.player_1_details);
+        } else if(player2Score > player1score) {
+            indicateLeader(R.id.player_2_details);
+        }
     }
 
     // endregion
