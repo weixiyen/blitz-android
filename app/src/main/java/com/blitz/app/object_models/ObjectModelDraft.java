@@ -275,6 +275,21 @@ public final class ObjectModelDraft extends ObjectModel {
                 - DateUtils.getDateInGMT().getTime());
     }
 
+    /**
+     * Add a pick to the picks array.
+     *
+     * @param pick Pick object.
+     */
+    @SuppressWarnings("unused")
+    public void addPick(Pick pick) {
+
+        if (mPicks == null) {
+            mPicks = new ArrayList<Pick>();
+        }
+
+        mPicks.add(pick);
+    }
+
     // endregion
 
     // region REST Methods
@@ -504,7 +519,7 @@ public final class ObjectModelDraft extends ObjectModel {
     /**
      * Player pick object.
      */
-    public class Pick {
+    public static class Pick {
 
         @SuppressWarnings("unused") @SerializedName("player_id")
         private String mPlayerId;
@@ -517,6 +532,28 @@ public final class ObjectModelDraft extends ObjectModel {
 
         @SuppressWarnings("unused") @SerializedName("round")
         private int mRound;
+
+        /**
+         * Used for JSON parsing into object.
+         */
+        @SuppressWarnings("unused")
+        public Pick() {
+
+        }
+
+        /**
+         * Create a pick object manually with
+         * a bare minimum of objects.
+         *
+         * @param playerId Player id.
+         * @param userId User id.
+         */
+        @SuppressWarnings("unused")
+        public Pick(String playerId, String userId) {
+
+            mPlayerId = playerId;
+              mUserId =   userId;
+        }
     }
 
     // endregion

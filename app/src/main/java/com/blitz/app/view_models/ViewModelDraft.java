@@ -230,9 +230,12 @@ public class ViewModelDraft extends ViewModel {
 
         } else if (action.equals("pick_player")) {
 
+            // Create a new pick object.
+            ObjectModelDraft.Pick pick = new ObjectModelDraft.Pick(
+                    message.get("player_id").getAsString(),
+                    message.get("user_id").getAsString());
 
-
-            LogHelper.log("Pick player: " + message);
+            mDraftModel.addPick(pick);
         }
 
         // Look for last round complete time json.
