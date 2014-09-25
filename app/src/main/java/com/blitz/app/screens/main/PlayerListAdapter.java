@@ -3,7 +3,6 @@ package com.blitz.app.screens.main;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,7 +13,10 @@ import com.blitz.app.R;
 import com.blitz.app.screens.stats.PlayerWeekStatsScreen;
 import com.blitz.app.simple_models.Game;
 import com.blitz.app.simple_models.Player;
+import com.blitz.app.simple_models.Stat;
+import com.google.common.collect.Multimap;
 
+import java.util.Collection;
 import java.util.List;
 
 /**
@@ -24,18 +26,24 @@ import java.util.List;
  */
 public class PlayerListAdapter extends ArrayAdapter {
 
+    public static final String STAT_NAMES = "PlayerListAdapter.statNames";
+    public static final String STAT_VALUES = "PlayerListAdapter.statValues";
+    public static final String STAT_POINTS = "PlayerListAdapter.statPoints";
+
     private final List<Player> mPlayer1Picks;
     private final List<Player> mPlayer2Picks;
     private final List<Float>  mPlayer1Scores;
     private final List<Float>  mPlayer2Scores;
     private final List<Game>   mPlayer1Games;
     private final List<Game>   mPlayer2Games;
+    private final Multimap<String, Stat> mPlayerStats;
 
     private final Activity mActivity;
 
     public PlayerListAdapter(Context context, List<Player> player1picks, List<Player> player2picks,
                              List<Game> player1games, List<Game> player2games,
                              List<Float> player1scores, List<Float> player2scores,
+                             Multimap<String, Stat> playerStats,
                              Activity activity) {
 
 
@@ -48,6 +56,7 @@ public class PlayerListAdapter extends ArrayAdapter {
         mPlayer2Games = player2games;
         mPlayer1Scores = player1scores;
         mPlayer2Scores = player2scores;
+        mPlayerStats = playerStats;
     }
 
     @Override
@@ -60,7 +69,7 @@ public class PlayerListAdapter extends ArrayAdapter {
                     .inflate(R.layout.main_screen_draft_list_item, null);
         }
 
-        Player p1 = mPlayer1Picks.get(position);
+        final Player p1 = mPlayer1Picks.get(position);
         Player p2 = mPlayer2Picks.get(position);
 
         ((TextView) v.findViewById(R.id.player1_name)).setText(p1.getFullName());
@@ -90,6 +99,21 @@ public class PlayerListAdapter extends ArrayAdapter {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(mActivity, PlayerWeekStatsScreen.class);
+                Collection<Stat> stats = mPlayerStats.get(p1.getId());
+                String[] statNames = new String[stats.size()];
+                float[] statValues = new float[stats.size()];
+                float[] statPoints = new float[stats.size()];
+
+                int i=-1;
+                for(Stat stat : stats) {
+                    i += 1;
+                    statNames[i] = stat.getStatName();
+                    statValues[i] = stat.getValue();
+                    statPoints[i] = stat.getPoints();
+                }
+                intent.putExtra(STAT_NAMES, statNames);
+                intent.putExtra(STAT_VALUES, statValues);
+                intent.putExtra(STAT_POINTS, statPoints);
                 mActivity.startActivity(intent);
             }
         });

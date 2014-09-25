@@ -3,7 +3,6 @@ package com.blitz.app.view_models;
 import android.app.Activity;
 import android.os.Bundle;
 
-import com.blitz.app.object_models.ObjectModelDraft;
 import com.blitz.app.object_models.ObjectModelGame;
 import com.blitz.app.object_models.ObjectModelStats;
 import com.blitz.app.screens.main.MatchInfoAdapter;
@@ -84,7 +83,7 @@ public class ViewModelDraftDetail extends ViewModel {
                                         List<Float> p1Scores = getRosterScores(player1ids, playerStats);
                                         List<Float> p2Scores = getRosterScores(player2ids, playerStats);
 
-                                        callbacks.onStuff(p1roster, p2roster, p1Games, p2Games, p1Scores, p2Scores);
+                                        callbacks.onStuff(p1roster, p2roster, p1Games, p2Games, p1Scores, p2Scores, playerStats);
 
                                         callbacks.onMatchup(extras.getString(MatchInfoAdapter.PLAYER_1_NAME),
                                                 extras.getFloat(MatchInfoAdapter.PLAYER_1_SCORE),
@@ -167,7 +166,7 @@ public class ViewModelDraftDetail extends ViewModel {
     public interface ViewModelDraftDetailCallbacks extends ViewModelCallbacks {
 
         void onStuff(List<Player> p1roster, List<Player> p2Roster, List<Game> p1Games,
-                     List<Game> p2Games, List<Float> p1Scores, List<Float> p2Scores);
+                     List<Game> p2Games, List<Float> p1Scores, List<Float> p2Scores, Multimap<String, Stat> playerStats);
         void onMatchup(String player1Name, float player1score, String player2Name, float player2Score);
     }
 }

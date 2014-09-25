@@ -87,4 +87,7 @@ public class Stat {
         }
     }
 
+    public float getValue() {
+        return value;
+    }
 }

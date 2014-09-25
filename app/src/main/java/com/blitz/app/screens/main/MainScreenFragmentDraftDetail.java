@@ -7,9 +7,11 @@ import android.widget.TextView;
 import com.blitz.app.R;
 import com.blitz.app.simple_models.Game;
 import com.blitz.app.simple_models.Player;
+import com.blitz.app.simple_models.Stat;
 import com.blitz.app.utilities.android.BaseActivity;
 import com.blitz.app.view_models.ViewModel;
 import com.blitz.app.view_models.ViewModelDraftDetail;
+import com.google.common.collect.Multimap;
 
 import java.util.List;
 
@@ -91,9 +93,10 @@ public class MainScreenFragmentDraftDetail extends BaseActivity implements ViewM
     @Override
     public void onStuff(List<Player> p1roster, List<Player> p2Roster,
                         List<Game> p1games, List<Game> p2games,
-                        List<Float> p1Scores, List<Float> p2Scores) {
+                        List<Float> p1Scores, List<Float> p2Scores,
+                        Multimap<String, Stat> playerStats) {
         mPlayerList.setAdapter(new PlayerListAdapter(getApplicationContext(), p1roster, p2Roster, p1games, p2games,
-                p1Scores, p2Scores, this));
+                p1Scores, p2Scores, playerStats, this));
     }
 
     @Override

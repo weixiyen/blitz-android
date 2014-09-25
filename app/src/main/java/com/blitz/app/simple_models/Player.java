@@ -9,8 +9,10 @@ public class Player {
     private final String full_name;
     private final String team;
     private final String position;
+    private final String id;
 
-    public Player(String name, String team, String position, float score) {
+    public Player(String id, String name, String team, String position, float score) {
+        this.id = id;
         full_name = name;
         this.team = team;
         this.position = position;
@@ -26,5 +28,9 @@ public class Player {
 
     public String getPosition() {
         return position;
+    }
+
+    public String getId() {
+        return id;
     }
 }
