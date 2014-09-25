@@ -31,8 +31,6 @@ public class StatAdapter extends ArrayAdapter {
         mStatNames = statNames;
         mStatValues = statValues;
         mStatPoints = statPoints;
-
-
     }
 
 

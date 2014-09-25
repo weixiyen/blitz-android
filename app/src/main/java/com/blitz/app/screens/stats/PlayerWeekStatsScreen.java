@@ -32,8 +32,7 @@ public class PlayerWeekStatsScreen extends BaseActivity {
         ((TextView)findViewById(R.id.last_name)).setText(getIntent().getStringExtra(LAST_NAME));
         ((TextView)findViewById(R.id.week)).setText(
                 Integer.toString(getIntent().getExtras().getInt(WEEK)));
-        ((TextView)findViewById(R.id.total_points)).setText(
-                String.format("%.2f", getIntent().getExtras().getFloat(TOTAL_POINTS)));
+        ((TextView)findViewById(R.id.total_points)).setText(getIntent().getStringExtra(TOTAL_POINTS));
 
 
         mStats.setAdapter(new StatAdapter(getApplicationContext(), this,

@@ -32,8 +32,6 @@ public class PlayerListAdapter extends ArrayAdapter {
 
     private final List<Player> mPlayer1Picks;
     private final List<Player> mPlayer2Picks;
-    private final List<Float>  mPlayer1Scores;
-    private final List<Float>  mPlayer2Scores;
     private final List<Game>   mPlayer1Games;
     private final List<Game>   mPlayer2Games;
     private final Multimap<String, Stat> mPlayerStats;
@@ -43,7 +41,6 @@ public class PlayerListAdapter extends ArrayAdapter {
 
     public PlayerListAdapter(Context context, List<Player> player1picks, List<Player> player2picks,
                              List<Game> player1games, List<Game> player2games,
-                             List<Float> player1scores, List<Float> player2scores,
                              Multimap<String, Stat> playerStats,
                              int week,
                              Activity activity) {
@@ -56,8 +53,6 @@ public class PlayerListAdapter extends ArrayAdapter {
         mPlayer2Picks = player2picks;
         mPlayer1Games = player1games;
         mPlayer2Games = player2games;
-        mPlayer1Scores = player1scores;
-        mPlayer2Scores = player2scores;
         mPlayerStats = playerStats;
         mWeek = week;
     }
@@ -80,14 +75,11 @@ public class PlayerListAdapter extends ArrayAdapter {
         ((TextView) v.findViewById(R.id.player2_name)).setText(p2.getFullName());
         ((TextView) v.findViewById(R.id.player2_position_team)).setText(getPositionTeam(p2));
 
-        final float s1 = mPlayer1Scores.get(position).floatValue();
-        float s2 = mPlayer2Scores.get(position);
+        final String s1 = getScore(p1, mPlayerStats);
+        final String s2 = getScore(p2, mPlayerStats);
 
-        if(mPlayer1Scores != null && mPlayer2Scores != null) {
-
-            ((TextView) v.findViewById(R.id.player1_score)).setText(getScore(s1));
-            ((TextView) v.findViewById(R.id.player2_score)).setText(getScore(s2));
-        }
+        ((TextView) v.findViewById(R.id.player1_score)).setText(s1);
+        ((TextView) v.findViewById(R.id.player2_score)).setText(s2);
 
         if(mPlayer1Games != null && mPlayer2Games != null) {
 
@@ -116,7 +108,7 @@ public class PlayerListAdapter extends ArrayAdapter {
                 }
                 intent.putExtra(PlayerWeekStatsScreen.FIRST_NAME, p1.getFirstName());
                 intent.putExtra(PlayerWeekStatsScreen.LAST_NAME, p1.getLastName());
-                intent.putExtra(PlayerWeekStatsScreen.TOTAL_POINTS, (float)s1);
+                intent.putExtra(PlayerWeekStatsScreen.TOTAL_POINTS, s1);
                 intent.putExtra(PlayerWeekStatsScreen.WEEK, mWeek);
                 intent.putExtra(STAT_NAMES, statNames);
                 intent.putExtra(STAT_VALUES, statValues);
@@ -157,8 +149,18 @@ public class PlayerListAdapter extends ArrayAdapter {
         return prefix + ", " + playerScore + "-" + opponentScore + suffix;
     }
 
-    private static String getScore(Float score) {
-        return String.format("%.02f", score); // TODO we should be consuming some other kind of object with this set
+    private static float getPlayerScore(String playerId, Multimap<String, Stat> stats) {
+
+        float scoreTotal = 0f;
+        for(Stat stat: stats.get(playerId)) {
+            scoreTotal += stat.getPoints();
+        }
+        return scoreTotal;
+    }
+
+    private static String getScore(Player player, Multimap<String, Stat> stats) {
+        float score = getPlayerScore(player.getId(), stats);
+        return String.format("%.02f", score);
     }
 
     private static String getPositionTeam(Player player) {
