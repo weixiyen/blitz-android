@@ -61,9 +61,8 @@ public abstract class ViewModel {
      * @return State bundle.
      */
     @SuppressWarnings("unused")
-    public Bundle saveInstanceState(Bundle savedInstanceState) {
+    public void saveInstanceState(Bundle savedInstanceState) {
 
-        return savedInstanceState;
     }
 
     /**

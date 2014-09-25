@@ -85,7 +85,7 @@ public class ViewModelMainPlay extends ViewModel {
      * @return Bundle with added state.
      */
     @Override
-    public Bundle saveInstanceState(Bundle savedInstanceState) {
+    public void saveInstanceState(Bundle savedInstanceState) {
         super.saveInstanceState(savedInstanceState);
 
         // Set seconds at suspension.
@@ -98,8 +98,6 @@ public class ViewModelMainPlay extends ViewModel {
 
         // Stop timer.
         stopQueueTimer(false);
-
-        return savedInstanceState;
     }
 
     /**

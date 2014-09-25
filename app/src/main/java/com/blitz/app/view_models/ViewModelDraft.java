@@ -1,11 +1,13 @@
 package com.blitz.app.view_models;
 
 import android.app.Activity;
+import android.os.Bundle;
 import android.os.Handler;
 
 import com.blitz.app.object_models.ObjectModelItem;
 import com.blitz.app.object_models.ObjectModelUser;
 import com.blitz.app.utilities.authentication.AuthHelper;
+import com.blitz.app.utilities.logging.LogHelper;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -15,6 +17,14 @@ import java.util.List;
  * Created by mrkcsc on 8/24/14. Copyright 2014 Blitz Studios
  */
 public class ViewModelDraft extends ViewModel {
+
+    // region Member Variables
+    // =============================================================================================
+
+    private Handler  mGameLoopHandler;
+    private Runnable mGameLoopRunnable;
+
+    // endregion
 
     // region Constructor
     // =============================================================================================
@@ -40,8 +50,30 @@ public class ViewModelDraft extends ViewModel {
     @Override
     public void initialize() {
 
+        LogHelper.log("Init");
+
+        // Game loop.
+        //startLoop();
+
         // Fetch users.
         syncUsers();
+    }
+
+    @Override
+    public void restoreInstanceState(Bundle savedInstanceState) {
+
+        LogHelper.log("Restore.");
+
+        super.restoreInstanceState(savedInstanceState);
+    }
+
+    @Override
+    public void saveInstanceState(Bundle savedInstanceState) {
+
+        LogHelper.log("Save.");
+
+        // Game loop.
+        //stopLoop();
     }
 
     // endregion
@@ -66,6 +98,41 @@ public class ViewModelDraft extends ViewModel {
 
     // region Private Methods
     // =============================================================================================
+
+    private void startLoop() {
+
+        if (mGameLoopHandler == null) {
+            mGameLoopHandler = new Handler();
+        }
+
+        if (mGameLoopRunnable == null) {
+            mGameLoopRunnable = new Runnable() {
+
+                @Override
+                public void run() {
+
+                    LogHelper.log("Loop.");
+
+                    // Continue running the loop on a 100ms delay.
+                    mGameLoopHandler.postDelayed(mGameLoopRunnable, 3000);
+                }
+            };
+        }
+
+        mGameLoopHandler.post(mGameLoopRunnable);
+    }
+
+    private void stopLoop() {
+
+        LogHelper.log("Loop stop.");
+
+        if (mGameLoopHandler  != null &&
+            mGameLoopRunnable != null) {
+
+            // Stop the timer.
+            mGameLoopHandler.removeCallbacks(mGameLoopRunnable);
+        }
+    }
 
     /**
      * Fetch relevant user information
@@ -154,8 +221,7 @@ public class ViewModelDraft extends ViewModel {
 
         public void onDraftingStarted();
 
-        public void onUserSynced(
-                String userId, String userName,
+        public void onUserSynced( String userId, String userName,
                 int rating, int wins, int losses, int ties, String itemAvatarUrl);
     }
 
