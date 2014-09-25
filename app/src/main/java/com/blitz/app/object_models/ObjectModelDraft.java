@@ -28,6 +28,10 @@ public final class ObjectModelDraft extends ObjectModel {
     private int mDraftStartBuffer;
     @SuppressWarnings("unused") @SerializedName("time_per_pick")
     private int mTimePerPick;
+    @SuppressWarnings("unused") @SerializedName("time_per_postview")
+    private int mTimePerPostview;
+    @SuppressWarnings("unused") @SerializedName("time_per_preview")
+    private int mTimePerPreview;
     @SuppressWarnings("unused") @SerializedName("rounds")
     private int mRounds;
     @SuppressWarnings("unused") @SerializedName("users_needed")
@@ -155,6 +159,61 @@ public final class ObjectModelDraft extends ObjectModel {
     }
 
     /**
+     * Time per preview in seconds.
+     *
+     * @return Time in seconds.
+     */
+    @SuppressWarnings("unused")
+    public int getTimePerPreview() {
+
+        return mTimePerPreview;
+    }
+
+    /**
+     * Time per post view in seconds.
+     *
+     * @return Time in seconds.
+     */
+    @SuppressWarnings("unused")
+    public int getTimePerPostview() {
+
+        return mTimePerPostview;
+    }
+
+    /**
+     * Seconds since draft started.
+     *
+     * @return Seconds since draft started.
+     */
+    @SuppressWarnings("unused")
+    public int getSecondsSinceStarted() {
+
+        return getSecondsSince(mStarted);
+    }
+
+    /**
+     * Seconds since last round completed.
+     *
+     * @return Seconds since last round completed.
+     */
+    @SuppressWarnings("unused")
+    public int getSecondsSinceLastRoundCompleteTime() {
+
+        return getSecondsSince(mLastRoundCompleteTime);
+    }
+
+    /**
+     * Buffer time before draft starts.
+     *
+     * @return Buffer time in seconds.
+     */
+    @SuppressWarnings("unused")
+    public int getDraftStartBuffer() {
+
+        return mDraftStartBuffer;
+    }
+
+    /**
      * Fetch the current round in the draft.
      *
      * @return Draft round.
@@ -183,20 +242,9 @@ public final class ObjectModelDraft extends ObjectModel {
      * @return Last round complete time.
      */
     @SuppressWarnings("unused")
-    private Date getLastRoundCompleteTime() {
+    public Date getLastRoundCompleteTime() {
 
         return mLastRoundCompleteTime;
-    }
-
-    /**
-     * Get time the draft started.
-     *
-     * @return Time the draft started.
-     */
-    @SuppressWarnings("unused")
-    private Date getStarted() {
-
-        return mStarted;
     }
 
     // endregion
@@ -404,6 +452,27 @@ public final class ObjectModelDraft extends ObjectModel {
 
             mServerTimeOffset = 0;
         }
+    }
+
+    /**
+     * Given a date, get amount of time since
+     * that date.
+     *
+     * @param time Time.
+     *
+     * @return Seconds since that time.
+     */
+    private int getSecondsSince(Date time) {
+
+        if (time == null) {
+
+            return 0;
+        }
+
+        // Fetch clients time, add the server offset.
+        long currentTimeWithOffset = new Date().getTime() + mServerTimeOffset;
+
+        return (int) (Math.abs(currentTimeWithOffset - time.getTime()) / 1000);
     }
 
     // endregion
