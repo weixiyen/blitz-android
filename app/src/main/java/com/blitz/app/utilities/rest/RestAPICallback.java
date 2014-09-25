@@ -5,6 +5,7 @@ import android.os.Handler;
 
 import com.blitz.app.dialogs.error.DialogError;
 import com.blitz.app.dialogs.loading.DialogLoading;
+import com.blitz.app.utilities.date.DateUtils;
 
 import java.util.Date;
 
@@ -72,7 +73,7 @@ public abstract class RestAPICallback<T> implements Callback<T> {
         mActivity = activity;
 
         // Set the start time.
-        mOperationTimeStart = new Date();
+        mOperationTimeStart = DateUtils.getDateInGMT();
 
         // Setup operation throttling.
         setOperationThrottle();
@@ -293,12 +294,10 @@ public abstract class RestAPICallback<T> implements Callback<T> {
     private void finish(final T jsonObject, final RetrofitError retrofitError) {
 
         // Set the end time.
-        mOperationTimeEnd = new Date();
+        mOperationTimeEnd = DateUtils.getDateInGMT();
 
         // Calculate operation time.
-        mOperationTimeMilliseconds =
-                mOperationTimeEnd.getTime() -
-                        mOperationTimeStart.getTime();
+        mOperationTimeMilliseconds = mOperationTimeEnd.getTime() - mOperationTimeStart.getTime();
 
         // Trigger operation callbacks after hide.
         DialogLoading.HideListener hideListener = new DialogLoading.HideListener() {
