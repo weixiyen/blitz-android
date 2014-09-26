@@ -1,5 +1,6 @@
 package com.blitz.app.utilities.rest;
 
+import com.google.gson.JsonObject;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
@@ -13,10 +14,15 @@ public class RestAPIResult<T> {
     // =============================================================================================
 
     // Results field.
-    @SerializedName("results") @SuppressWarnings("unused") private List<T> mResults;
+    @SerializedName("results") @SuppressWarnings("unused")
+    private List<T> mResults;
 
     // Result field (only one result).
-    @SerializedName("result") @SuppressWarnings("unused") private T mResult;
+    @SerializedName("result") @SuppressWarnings("unused")
+    private T mResult;
+
+    @SerializedName("errors") @SuppressWarnings("unused")
+    private JsonObject mErrors;
 
     // endregion
 
@@ -42,6 +48,16 @@ public class RestAPIResult<T> {
     public T getResult() {
 
         return mResult;
+    }
+
+    /**
+     * Is there an error in the result.
+     *
+     * @return Yes or no.
+     */
+    public boolean hasErrors() {
+
+        return mErrors != null && !mErrors.isJsonNull();
     }
 
     // endregion

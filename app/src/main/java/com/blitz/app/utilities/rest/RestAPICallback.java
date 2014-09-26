@@ -40,6 +40,9 @@ public abstract class RestAPICallback<T> implements Callback<T> {
     // Is this an auth call.
     private boolean mIsAuthentication;
 
+    // Should log out on failure.
+    private boolean mLogoutOnFailure;
+
     // endregion
 
     // region Abstract Methods
@@ -163,6 +166,17 @@ public abstract class RestAPICallback<T> implements Callback<T> {
     }
 
     /**
+     * Should we logout on general failure.
+     *
+     * @param logoutOnFailure Logout on failure.
+     */
+    @SuppressWarnings("unused")
+    public void setLogoutOnFailure(boolean logoutOnFailure) {
+
+        mLogoutOnFailure = logoutOnFailure;
+    }
+
+    /**
      * Triggered when a REST operation suffers
      * an error of some kind.
      *
@@ -176,6 +190,11 @@ public abstract class RestAPICallback<T> implements Callback<T> {
         DialogError dialogError = getErrorDialog();
 
         if (dialogError != null) {
+
+            if (mLogoutOnFailure) {
+
+                dialogError.showUnauthorized();
+            }
 
             if (networkError) {
 
@@ -308,8 +327,19 @@ public abstract class RestAPICallback<T> implements Callback<T> {
                 // If no error, or error result from the REST call.
                 if (retrofitError == null) {
 
-                    // Successful.
-                    success(jsonObject);
+                    // Check for generic server error in the json object.
+                    if (jsonObject != null &&
+                        jsonObject instanceof RestAPIResult
+                            && ((RestAPIResult) jsonObject).hasErrors()) {
+
+                        // Generic failure.
+                        failure(null, false);
+
+                    } else {
+
+                        // Successful.
+                        success(jsonObject);
+                    }
 
                 } else {
 
