@@ -17,10 +17,13 @@ import java.util.HashMap;
  */
 public class BlitzImageView extends ImageView {
 
-    // String prefix for cached key dictionary.
-    private static final String CACHE_KEY_PREFIX = "id-";
+    // region Member Variables
+    // =============================================================================================
 
+    // Should cache the image url.
     private boolean mCacheImageUrl;
+
+    // endregion
 
     // region Constructors
     // =============================================================================================
@@ -103,9 +106,9 @@ public class BlitzImageView extends ImageView {
 
             HashMap<String, String> cachedImageUrls = AppDataObject.cachedImageUrls.get();
 
-            if (cachedImageUrls.containsKey(CACHE_KEY_PREFIX + getId())) {
+            if (cachedImageUrls.containsKey(getResources().getResourceName(getId()))) {
 
-                return cachedImageUrls.get(CACHE_KEY_PREFIX + getId());
+                return cachedImageUrls.get(getResources().getResourceName(getId()));
             }
         }
 
@@ -124,7 +127,7 @@ public class BlitzImageView extends ImageView {
             HashMap<String, String> cachedImageUrls = AppDataObject.cachedImageUrls.get();
 
             // Update dictionary with new url.
-            cachedImageUrls.put(CACHE_KEY_PREFIX + getId(), url);
+            cachedImageUrls.put(getResources().getResourceName(getId()), url);
 
             AppDataObject.cachedImageUrls.set(cachedImageUrls);
         }

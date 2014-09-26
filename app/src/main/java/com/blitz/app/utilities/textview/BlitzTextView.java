@@ -19,12 +19,10 @@ public class BlitzTextView extends AutofitTextView {
     // region Member Variables
     // =============================================================================================
 
-    // String prefix for cached key dictionary.
-    private static final String CACHE_KEY_PREFIX = "id-";
-
     // Should text changed be ignored.
     private boolean mIgnoreTextChanges;
 
+    // Should cache the text.
     private boolean mCacheText;
 
     // endregion
@@ -98,18 +96,18 @@ public class BlitzTextView extends AutofitTextView {
     /**
      * Set text to the current cache value, if present.
      */
-    private void setCachedText() {
+    private void getCachedText() {
 
         // Can only cache if resource id is set.
         if (mCacheText && getId() != -1) {
 
             HashMap<String, String> cachedText = AppDataObject.cachedText.get();
 
-            if (cachedText.containsKey(CACHE_KEY_PREFIX + getId())) {
+            if (cachedText.containsKey(getResources().getResourceName(getId()))) {
 
                 mIgnoreTextChanges = true;
 
-                setText(cachedText.get(CACHE_KEY_PREFIX + getId()));
+                setText(cachedText.get(getResources().getResourceName(getId())));
             }
         }
     }
@@ -126,7 +124,7 @@ public class BlitzTextView extends AutofitTextView {
             HashMap<String, String> cachedText = AppDataObject.cachedText.get();
 
             // Update dictionary with new text.
-            cachedText.put(CACHE_KEY_PREFIX + getId(), text);
+            cachedText.put(getResources().getResourceName(getId()), text);
 
             AppDataObject.cachedText.set(cachedText);
         }
@@ -144,7 +142,7 @@ public class BlitzTextView extends AutofitTextView {
             mCacheText = styledAttributes.getBoolean
                     (R.styleable.BlitzTextView_cacheText, false);
 
-            setCachedText();
+            getCachedText();
         }
     }
 
