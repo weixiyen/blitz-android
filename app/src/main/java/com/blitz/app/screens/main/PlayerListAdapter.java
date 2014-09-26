@@ -81,8 +81,11 @@ public class PlayerListAdapter extends ArrayAdapter {
         ((TextView) v.findViewById(R.id.player1_score)).setText(s1);
         ((TextView) v.findViewById(R.id.player2_score)).setText(s2);
 
-        setStatsNavigation((TextView) v.findViewById(R.id.player1_name), p1, s1);
-        setStatsNavigation((TextView) v.findViewById(R.id.player2_name), p2, s2);
+        setStatsNavigation(v.findViewById(R.id.player1_details), p1, s1);
+        setStatsNavigation(v.findViewById(R.id.player2_details), p2, s2);
+
+        setStatsNavigation(v.findViewById(R.id.player1_score), p1, s1);
+        setStatsNavigation(v.findViewById(R.id.player2_score), p2, s2);
 
         if(mPlayer1Games != null && mPlayer2Games != null) {
 
@@ -90,9 +93,8 @@ public class PlayerListAdapter extends ArrayAdapter {
             Game g2 = mPlayer2Games.get(position);
             ((TextView) v.findViewById(R.id.player1_game_result)).setText(getGameResult(g1, p1));
             ((TextView) v.findViewById(R.id.player2_game_result)).setText(getGameResult(g2, p2));
-
         }
-        
+
         return v;
     }
 

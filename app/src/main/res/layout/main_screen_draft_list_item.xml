@@ -9,7 +9,7 @@
     android:paddingTop="10dp"
     android:paddingBottom="10dp">
 
-    <LinearLayout
+    <LinearLayout android:id="@+id/player1_details"
         android:layout_width="0dp"
         android:layout_weight="2"
         android:layout_height="wrap_content"
@@ -53,7 +53,7 @@
         android:text="0.00"
         android:gravity="center"/>
 
-    <LinearLayout
+    <LinearLayout android:id="@+id/player2_details"
         android:layout_width="0dp"
         android:layout_weight="2"
         android:layout_height="wrap_content"
