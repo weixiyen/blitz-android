@@ -81,8 +81,6 @@ public class ViewModelMainPlay extends ViewModel {
      * Clean up the UI and persist model state.
      *
      * @param savedInstanceState State information bundle.
-     *
-     * @return Bundle with added state.
      */
     @Override
     public void saveInstanceState(Bundle savedInstanceState) {
@@ -200,7 +198,7 @@ public class ViewModelMainPlay extends ViewModel {
                             }
                         });
             }
-        });
+        }, true);
     }
 
     /**

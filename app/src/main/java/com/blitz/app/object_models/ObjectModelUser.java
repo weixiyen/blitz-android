@@ -145,7 +145,8 @@ public class ObjectModelUser extends ObjectModel {
      * id which means the user must be logged in.
      */
     @SuppressWarnings("unused")
-    public static void getUser(Activity activity, String userId, final CallbackUser callback) {
+    public static void getUser(Activity activity, String userId,
+                               final CallbackUser callback, boolean logoutOnFailure) {
 
         // Rest operation.
         RestAPICallback<RestAPIResult<ObjectModelUser>> operation =
@@ -159,6 +160,8 @@ public class ObjectModelUser extends ObjectModel {
                 }
             }
         };
+
+        operation.setLogoutOnFailure(logoutOnFailure);
 
         // Make api call to fetch user data.
         mRestAPI.user_get(userId, operation);
