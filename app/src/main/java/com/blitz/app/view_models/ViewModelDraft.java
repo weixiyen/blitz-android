@@ -12,6 +12,7 @@ import com.blitz.app.utilities.authentication.AuthHelper;
 import com.blitz.app.utilities.comet.CometAPICallback;
 import com.blitz.app.utilities.comet.CometAPIManager;
 import com.blitz.app.utilities.date.DateUtils;
+import com.blitz.app.utilities.json.JsonHelper;
 import com.blitz.app.utilities.logging.LogHelper;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
@@ -227,8 +228,6 @@ public class ViewModelDraft extends ViewModel {
 
         } else if (action.equals("show_choices")) {
 
-            // TODO: New function + restore JSON Helper.
-
             // Get array of choices.
             JsonArray choicesJson = message.get("choices").getAsJsonArray();
 
@@ -244,31 +243,22 @@ public class ViewModelDraft extends ViewModel {
                 ObjectModelDraft.Choice choice = new ObjectModelDraft.Choice();
 
                 // Fetch choice id.
-                String id = choiceJsonObject.get("id").getAsString();
+                String id = JsonHelper.parseString(choiceJsonObject.get("id"));
 
                 choiceIds.add(id);
 
                 choice.setId(id);
 
-                choice.setOpponent(choiceJsonObject.get("opponent").getAsString());
-                choice.setPosition(choiceJsonObject.get("position").getAsString());
-                choice.setTeam(choiceJsonObject.get("team").getAsString());
-
-                JsonElement isHomeTeam = choiceJsonObject.get("is_home_team");
-
-                // Set home team (can sometimes be null).
-                if (isHomeTeam != null && !isHomeTeam.isJsonNull()) {
-
-                    choice.setIsHomeTeam(isHomeTeam.getAsBoolean());
-                }
-
-                JsonElement fullName = choiceJsonObject.get("full_name");
-
-                // Set the full name (can sometimes be null).
-                if (fullName != null && !fullName.isJsonNull()) {
-
-                    choice.setFullName(fullName.getAsString());
-                }
+                choice.setOpponent(
+                        JsonHelper.parseString(choiceJsonObject.get("opponent")));
+                choice.setPosition(
+                        JsonHelper.parseString(choiceJsonObject.get("position")));
+                choice.setTeam(
+                        JsonHelper.parseString(choiceJsonObject.get("team")));
+                choice.setFullName(
+                        JsonHelper.parseString(choiceJsonObject.get("full_name")));
+                choice.setIsHomeTeam(
+                        JsonHelper.parseBool(choiceJsonObject.get("is_home_team")));
 
                 // Add to draft model.
                 mDraftModel.addChoice(choice);
