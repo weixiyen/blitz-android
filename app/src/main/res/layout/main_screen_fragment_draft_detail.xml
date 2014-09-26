@@ -23,16 +23,8 @@
 
         <TextView
             android:id="@+id/main_recent_header"
-            style="@style/TextViewStyle"
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:background="#40000000"
-            fontPath="@string/app_font_helvetica_condensed_bold"
-            android:gravity="center"
-            android:paddingTop="0dp"
-            android:text="Matchup"
-            android:textColor="@color/text_color_link"
-            android:textSize="18sp" />
+            style="@style/NavigationTitle"
+            android:text="Matchup"/>
 
         <View
             android:layout_width="match_parent"

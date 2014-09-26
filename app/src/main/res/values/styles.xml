@@ -83,4 +83,37 @@
         <item name="android:textColor">@color/text_color_light_grey</item>
     </style>
 
+    <style name="StatInfoLabel">
+        <item name="android:textSize">15sp</item>
+        <item name="fontPath">@string/app_font_helvetica_condensed_bold</item>
+        <item name="android:textColor">@color/text_color_light_grey</item>
+        <item name="android:textAllCaps">true</item>
+    </style>
+
+    <style name="StatInfo">
+        <item name="android:textSize">25sp</item>
+        <item name="fontPath">@string/app_font_helvetica_condensed_bold</item>
+        <item name="android:textColor">@color/text_color_light</item>
+        <item name="android:textAllCaps">true</item>
+    </style>
+
+    <style name="StatListItem">
+        <item name="android:textSize">17sp</item>
+        <item name="fontPath">@string/app_font_helvetica_condensed_bold</item>
+        <item name="android:textColor">@color/text_color_light</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
+    <style name="NavigationTitle">
+        <item name="android:layout_height">40dp</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:background">@color/background_navigation</item>
+        <item name="fontPath">@string/app_font_helvetica_condensed_bold</item>
+        <item name="android:gravity">center</item>
+        <item name="android:paddingTop">0dp</item>
+        <item name="android:textColor">@color/text_color_link</item>
+        <item name="android:textSize">18sp</item>
+    </style>
+
 </resources>
