@@ -1,5 +1,6 @@
 package com.blitz.app.utilities.rest;
 
+import com.blitz.app.object_models.ObjectModelDevice;
 import com.blitz.app.object_models.ObjectModelDraft;
 import com.blitz.app.object_models.ObjectModelItem;
 import com.blitz.app.object_models.ObjectModelStats;
@@ -58,15 +59,15 @@ public interface RestAPI {
 
     @GET("/device/{device_id}")
     void device_get(@Path("device_id") String deviceId,
-        Callback<JsonObject> callback);
+        Callback<RestAPIResult<ObjectModelDevice>> callback);
 
     @PATCH("/device/{device_id}")
     void device_patch(@Path("device_id") String deviceId, @Body JsonObject body,
-        Callback<JsonObject> callback);
+        Callback<RestAPIResult<ObjectModelDevice>> callback);
 
     @POST("/devices")
     void devices_post(@Body JsonObject body,
-        Callback<JsonObject> callback);
+        Callback<RestAPIResult<ObjectModelDevice>> callback);
 
     @GET("/draft/{draft_id}")
     void draft_get(@Path("draft_id") String draftId,
