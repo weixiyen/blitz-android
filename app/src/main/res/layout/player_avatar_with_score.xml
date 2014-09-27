@@ -1,20 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
 android:layout_width="0dp"
 android:layout_weight="1"
 android:layout_height="match_parent"
 android:gravity="center"
 android:orientation="vertical">
 
-<ImageView
+
+<com.blitz.app.utilities.imageview.BlitzImageView
     android:id="@+id/player_avatar"
     android:layout_width="match_parent"
     android:layout_height="0dp"
     android:layout_weight="4"
     android:padding="10dp"
     android:contentDescription="player avatar"
-    android:src="@drawable/asset_bg_helmet_sample" />
+    android:src="@drawable/asset_bg_helmet_sample"
+    app:cacheImageURL="true"
+    app:clearInitialContent="false"/>
 
 <TextView android:id="@+id/player_name"
     android:layout_width="match_parent"
