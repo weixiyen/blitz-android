@@ -234,6 +234,34 @@ public class BaseDialog {
         }
     }
 
+    /**
+     * Set whether this dialog can be touched.  Only useable
+     * by direct dialog subclasses.
+     *
+     * @param touchable Is dialog touchable.
+     */
+    @SuppressWarnings("unused")
+    public void setTouchable(boolean touchable) {
+
+        mPopupWindow.setOutsideTouchable(touchable);
+        mPopupWindow.setTouchable(touchable);
+        mPopupWindow.setFocusable(touchable);
+    }
+
+    /**
+     * Popup is only dismissible if you provide
+     * a background drawable. http://bit.ly/1oaUSSy
+     *
+     * @param dismissible Boolean toggle.
+     */
+    @SuppressWarnings("unused")
+    public void setDismissible(boolean dismissible) {
+
+        // Provide a drawable if dismissible.
+        mPopupWindow.setBackgroundDrawable
+                (dismissible ? new ColorDrawable(Color.TRANSPARENT) : null);
+    }
+
     //==============================================================================================
     // Private Methods
     //==============================================================================================
@@ -335,38 +363,6 @@ public class BaseDialog {
 
         // State initially set to hidden.
         mDialogContentState = DialogContentState.HIDDEN;
-    }
-
-    //==============================================================================================
-    // Protected Methods
-    //==============================================================================================
-
-    /**
-     * Set whether this dialog can be touched.  Only useable
-     * by direct dialog subclasses.
-     *
-     * @param touchable Is dialog touchable.
-     */
-    @SuppressWarnings("unused")
-    protected void setTouchable(boolean touchable) {
-
-        mPopupWindow.setOutsideTouchable(touchable);
-        mPopupWindow.setTouchable(touchable);
-        mPopupWindow.setFocusable(touchable);
-    }
-
-    /**
-     * Popup is only dismissible if you provide
-     * a background drawable. http://bit.ly/1oaUSSy
-     *
-     * @param dismissible Boolean toggle.
-     */
-    @SuppressWarnings("unused")
-    protected void setDismissible(boolean dismissible) {
-
-        // Provide a drawable if dismissible.
-        mPopupWindow.setBackgroundDrawable
-                (dismissible ? new ColorDrawable(Color.TRANSPARENT) : null);
     }
 
     //==============================================================================================

@@ -188,6 +188,7 @@ public class MainScreen extends BaseActivity implements ViewModelMain.ViewModelM
             mDialogInfo = new DialogInfo(this);
 
             // Configure the dialog.
+            mDialogInfo.setDismissible(false);
             mDialogInfo.setInfoText(R.string.match_found);
             mDialogInfo.setInfoLeftButton(R.string.cancel, new Runnable() {
 
