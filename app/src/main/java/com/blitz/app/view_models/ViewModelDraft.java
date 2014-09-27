@@ -141,23 +141,6 @@ public class ViewModelDraft extends ViewModel {
 
     // endregion
 
-    // region Public Methods
-    // =============================================================================================
-
-    public void startDrafting() {
-
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-
-                // Dummy call to drafting started.
-                getCallbacks(ViewModelDraftCallbacks.class).onDraftingStarted();
-            }
-        }, 2000);
-    }
-
-    // endregion
-
     // region Private Methods
     // =============================================================================================
 
@@ -174,6 +157,12 @@ public class ViewModelDraft extends ViewModel {
      * Start all callbacks.
      */
     private void cometCallbacksStart() {
+
+        // Needs a valid draft model.
+        if (mDraftModel == null) {
+
+            return;
+        }
 
         // Subscribe.
         CometAPIManager
@@ -331,8 +320,6 @@ public class ViewModelDraft extends ViewModel {
      */
     private void gameLoopStop() {
 
-        LogHelper.log("Loop stop.");
-
         if (mGameLoopHandler  != null &&
             mGameLoopRunnable != null) {
 
@@ -483,8 +470,6 @@ public class ViewModelDraft extends ViewModel {
      * Drafting related callbacks.
      */
     public interface ViewModelDraftCallbacks extends ViewModelCallbacks {
-
-        public void onDraftingStarted();
 
         public void onUserSynced(String userId, String userName,
                 int rating, int wins, int losses, int ties, String itemAvatarUrl);
