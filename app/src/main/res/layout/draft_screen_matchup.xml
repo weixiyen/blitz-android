@@ -15,6 +15,7 @@
         android:layout_height="wrap_content">
 
         <com.blitz.app.utilities.textview.BlitzTextView
+            android:id="@+id/draft_matchup_username_left"
             style="@style/TextViewStyle"
             fontPath="@string/app_font_sports"
             android:layout_width="140dp"
@@ -30,6 +31,7 @@
             app:clearInitialContent="true"/>
 
         <com.blitz.app.utilities.imageview.BlitzImageView
+            android:id="@+id/draft_matchup_helmet_left"
             android:layout_width="120dp"
             android:layout_height="120dp"
             android:layout_marginLeft="10dp"
@@ -45,6 +47,7 @@
         android:layout_marginLeft="180dp">
 
         <com.blitz.app.utilities.textview.BlitzTextView
+            android:id="@+id/draft_matchup_username_right"
             style="@style/TextViewStyle"
             fontPath="@string/app_font_sports"
             android:layout_width="140dp"
@@ -60,6 +63,7 @@
             app:clearInitialContent="true"/>
 
         <com.blitz.app.utilities.imageview.BlitzImageView
+            android:id="@+id/draft_matchup_helmet_right"
             android:layout_width="120dp"
             android:layout_height="120dp"
             android:layout_marginLeft="10dp"

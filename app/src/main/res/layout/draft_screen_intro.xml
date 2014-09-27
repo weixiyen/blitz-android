@@ -26,7 +26,7 @@
             android:background="@drawable/asset_draft_container_matchup">
 
             <com.blitz.app.utilities.textview.BlitzTextView
-                android:id="@+id/draft_intro_user"
+                android:id="@+id/draft_intro_username_left"
                 style="@style/TextViewStyle"
                 fontPath="@string/app_font_sports"
                 android:layout_width="match_parent"
@@ -42,6 +42,7 @@
                 app:clearInitialContent="true"/>
 
             <com.blitz.app.utilities.textview.BlitzTextView
+                android:id="@+id/draft_intro_scorecard_left"
                 style="@style/TextViewStyle"
                 fontPath="@string/app_font_sports"
                 android:layout_width="match_parent"
@@ -70,7 +71,7 @@
                     android:src="@drawable/asset_play_icon_elo" />
 
                 <com.blitz.app.utilities.textview.BlitzTextView
-                    android:id="@+id/draft_intro_user_elo"
+                    android:id="@+id/draft_intro_elo_left"
                     style="@style/TextViewStyle"
                     fontPath="@string/app_font_sports"
                     android:layout_width="wrap_content"
@@ -125,7 +126,7 @@
             android:background="@drawable/asset_draft_container_matchup">
 
             <com.blitz.app.utilities.textview.BlitzTextView
-                android:id="@+id/draft_intro_opponent"
+                android:id="@+id/draft_intro_username_right"
                 style="@style/TextViewStyle"
                 fontPath="@string/app_font_sports"
                 android:layout_width="match_parent"
@@ -141,6 +142,7 @@
                 app:clearInitialContent="true"/>
 
             <com.blitz.app.utilities.textview.BlitzTextView
+                android:id="@+id/draft_intro_scorecard_right"
                 style="@style/TextViewStyle"
                 fontPath="@string/app_font_sports"
                 android:layout_width="match_parent"
@@ -169,7 +171,7 @@
                     android:src="@drawable/asset_play_icon_elo" />
 
                 <com.blitz.app.utilities.textview.BlitzTextView
-                    android:id="@+id/draft_intro_opponent_elo"
+                    android:id="@+id/draft_intro_elo_right"
                     style="@style/TextViewStyle"
                     fontPath="@string/app_font_sports"
                     android:layout_width="wrap_content"
