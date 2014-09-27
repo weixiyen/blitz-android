@@ -42,6 +42,7 @@ public class BlitzImageView extends ImageView {
                 (attrs, R.styleable.BlitzImageView);
 
         setupClearDefault(styledAttributes);
+
         setupCachedImageURL(styledAttributes);
 
         // Done reading attributes.
@@ -57,6 +58,7 @@ public class BlitzImageView extends ImageView {
                 (attrs, R.styleable.BlitzImageView, defStyle, 0);
 
         setupClearDefault(styledAttributes);
+
         setupCachedImageURL(styledAttributes);
 
         // Done reading attributes.

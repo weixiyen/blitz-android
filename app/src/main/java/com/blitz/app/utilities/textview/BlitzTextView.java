@@ -43,8 +43,9 @@ public class BlitzTextView extends AutofitTextView {
         TypedArray styledAttributes = getContext().obtainStyledAttributes
                 (attrs, R.styleable.BlitzTextView);
 
-        setupCachedText(styledAttributes);
         setupClearDefault(styledAttributes);
+
+        setupCachedText(styledAttributes);
 
         // Done reading attributes.
         styledAttributes.recycle();
@@ -58,8 +59,9 @@ public class BlitzTextView extends AutofitTextView {
         TypedArray styledAttributes = getContext().obtainStyledAttributes
                 (attrs, R.styleable.BlitzTextView, defStyle, 0);
 
-        setupCachedText(styledAttributes);
         setupClearDefault(styledAttributes);
+
+        setupCachedText(styledAttributes);
 
         // Done reading attributes.
         styledAttributes.recycle();
