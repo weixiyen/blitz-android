@@ -1,4 +1,19 @@
 apply plugin: 'com.android.application'
+apply plugin: 'crashlytics'
+
+repositories {
+    maven { url 'http://download.crashlytics.com/maven' }
+}
+
+buildscript {
+    repositories {
+        maven { url 'http://download.crashlytics.com/maven' }
+    }
+
+    dependencies {
+        classpath 'com.crashlytics.tools.gradle:crashlytics-gradle:1.12.0'
+    }
+}
 
 android {
     compileSdkVersion 20
@@ -32,6 +47,9 @@ dependencies {
     // Custom HTTP client that is better than the default.
     compile 'com.squareup.okhttp:okhttp-urlconnection:2.0.0'
     compile 'com.squareup.okhttp:okhttp:2.0.0'
+
+    // library for tracking crashes.
+    compile 'com.crashlytics.android:crashlytics:1.1.13'
 
     // Google json parsing library.
     compile 'com.google.code.gson:gson:2.3'
