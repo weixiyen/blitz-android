@@ -21,7 +21,7 @@ public class StatAdapter extends ArrayAdapter {
     final Activity mActivity;
 
     public StatAdapter(Context context, Activity activity, String[] statNames, float[] statValues, float[] statPoints) {
-        super(context, R.layout.player_week_stats_screen, statNames);
+        super(context, R.layout.stats_breakdown_screen, statNames);
 
         if(statNames.length != statValues.length || statNames.length != statPoints.length) {
             throw new IllegalArgumentException("Stat arrays must have the same length");

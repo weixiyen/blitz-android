@@ -17,7 +17,7 @@ android:orientation="vertical">
     android:padding="10dp"
     android:contentDescription="player avatar"
     android:src="@drawable/asset_bg_helmet_sample"
-    app:cacheImageURL="true"
+    app:cacheImageURL="false"
     app:clearInitialContent="false"/>
 
 <TextView android:id="@+id/player_name"

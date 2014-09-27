@@ -20,7 +20,7 @@ import butterknife.InjectView;
 /**
  * Created by mrkcsc on 7/14/14. Copyright 2014 Blitz Studios
  */
-public class MainScreenFragmentDraftDetail extends BaseActivity implements ViewModelDraftDetail.ViewModelDraftDetailCallbacks {
+public class MatchupScreen extends BaseActivity implements ViewModelDraftDetail.ViewModelDraftDetailCallbacks {
 
     // region Member Variables
     // =============================================================================================

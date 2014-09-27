@@ -12,9 +12,11 @@ import com.blitz.app.utilities.android.BaseActivity;
 import butterknife.InjectView;
 
 /**
+ * Screen that shows a player's stat breakdown.
+ *
  * Created by Nate on 9/20/14.
  */
-public class PlayerWeekStatsScreen extends BaseActivity {
+public class StatsBreakdownScreen extends BaseActivity {
 
     public static final String FIRST_NAME = "PlayerWeekStatsScreen.firstName";
     public static final String LAST_NAME = "PlayerWeekStatsScreen.lastName";

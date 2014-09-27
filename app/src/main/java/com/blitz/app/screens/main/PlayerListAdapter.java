@@ -10,7 +10,7 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import com.blitz.app.R;
-import com.blitz.app.screens.stats.PlayerWeekStatsScreen;
+import com.blitz.app.screens.stats.StatsBreakdownScreen;
 import com.blitz.app.simple_models.Game;
 import com.blitz.app.simple_models.Player;
 import com.blitz.app.simple_models.Stat;
@@ -46,7 +46,7 @@ public class PlayerListAdapter extends ArrayAdapter {
                              Activity activity) {
 
 
-        super(context, R.layout.main_screen_fragment_draft_detail, player1picks);
+        super(context, R.layout.matchup_screen, player1picks);
         mActivity = activity;
 
         mPlayer1Picks = player1picks;
@@ -109,7 +109,7 @@ public class PlayerListAdapter extends ArrayAdapter {
         v.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(mActivity, PlayerWeekStatsScreen.class);
+                Intent intent = new Intent(mActivity, StatsBreakdownScreen.class);
                 Collection<Stat> stats = mPlayerStats.get(player.getId());
                 String[] statNames = new String[stats.size()];
                 float[] statValues = new float[stats.size()];
@@ -122,10 +122,10 @@ public class PlayerListAdapter extends ArrayAdapter {
                     statValues[i] = stat.getValue();
                     statPoints[i] = stat.getPoints();
                 }
-                intent.putExtra(PlayerWeekStatsScreen.FIRST_NAME, player.getFirstName());
-                intent.putExtra(PlayerWeekStatsScreen.LAST_NAME, player.getLastName());
-                intent.putExtra(PlayerWeekStatsScreen.TOTAL_POINTS, formattedScore);
-                intent.putExtra(PlayerWeekStatsScreen.WEEK, mWeek);
+                intent.putExtra(StatsBreakdownScreen.FIRST_NAME, player.getFirstName());
+                intent.putExtra(StatsBreakdownScreen.LAST_NAME, player.getLastName());
+                intent.putExtra(StatsBreakdownScreen.TOTAL_POINTS, formattedScore);
+                intent.putExtra(StatsBreakdownScreen.WEEK, mWeek);
                 intent.putExtra(STAT_NAMES, statNames);
                 intent.putExtra(STAT_VALUES, statValues);
                 intent.putExtra(STAT_POINTS, statPoints);

@@ -80,7 +80,7 @@ public class MatchInfoAdapter extends ArrayAdapter {
         v.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(mActivity, MainScreenFragmentDraftDetail.class);
+                Intent intent = new Intent(mActivity, MatchupScreen.class);
                 intent.putExtra(PLAYER_1_ROSTER, draft.getPlayer1Picks().toArray(new String[0]));
                 intent.putExtra(PLAYER_2_ROSTER, draft.getPlayer2Picks().toArray(new String[0]));
                 intent.putExtra(PLAYER_1_NAME,   draft.getPlayer1Name());

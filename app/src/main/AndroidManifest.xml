@@ -81,10 +81,10 @@
         <activity android:name=".screens.web.WebScreen"
             android:windowSoftInputMode="stateHidden" />
 
-        <activity android:name=".screens.main.MainScreenFragmentDraftDetail"
+        <activity android:name=".screens.main.MatchupScreen"
             android:windowSoftInputMode="stateHidden" />
 
-        <activity android:name=".screens.stats.PlayerWeekStatsScreen"
+        <activity android:name=".screens.stats.StatsBreakdownScreen"
             android:windowSoftInputMode="stateHidden" />
 
         <!--
