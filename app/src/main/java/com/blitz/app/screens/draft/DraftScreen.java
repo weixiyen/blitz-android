@@ -13,6 +13,7 @@ import com.blitz.app.utilities.animations.AnimHelperSpringsGroup;
 import com.blitz.app.utilities.animations.AnimHelperSpringsPresets;
 import com.blitz.app.utilities.animations.AnimHelperSpringsView;
 import com.blitz.app.utilities.authentication.AuthHelper;
+import com.blitz.app.utilities.imageview.BlitzImageView;
 import com.blitz.app.view_models.ViewModel;
 import com.blitz.app.view_models.ViewModelDraft;
 
@@ -32,9 +33,13 @@ public class DraftScreen extends BaseActivity implements ViewModelDraft.ViewMode
     @InjectView(R.id.draft_intro_container_right) View mDraftIntroContainerRight;
     @InjectView(R.id.draft_intro_container_vs)    View mDraftIntroContainerVs;
 
-    // Matching containers.
-    @InjectView(R.id.draft_matchup_player_left)  View mDraftMatchupPlayerLeft;
-    @InjectView(R.id.draft_matchup_player_right) View mDraftMatchupPlayerRight;
+    // Matchup containers.
+    @InjectView(R.id.draft_matchup_player_left)    View mDraftMatchupPlayerLeft;
+    @InjectView(R.id.draft_matchup_player_right)   View mDraftMatchupPlayerRight;
+    @InjectView(R.id.draft_matchup_helmet_left)  BlitzImageView mDraftMatchupHelmetLeft;
+    @InjectView(R.id.draft_matchup_helmet_right) BlitzImageView mDraftMatchupHelmetRight;
+    @InjectView(R.id.draft_matchup_username_left)  TextView mDraftMatchupUsernameLeft;
+    @InjectView(R.id.draft_matchup_username_right) TextView mDraftMatchupUsernameRight;
 
     // Player containers.
     @InjectView(R.id.draft_player_tl) View mDraftPlayerTl;
@@ -48,7 +53,18 @@ public class DraftScreen extends BaseActivity implements ViewModelDraft.ViewMode
     // Header view for the draft.
     @InjectView(R.id.draft_header) TextView mDraftHeader;
 
+    // Drafting container view.
     @InjectView(R.id.draft_container_drafting) ViewGroup mDraftContainerDrafting;
+
+    // Actual content views of the intro section.
+    @InjectView(R.id.draft_intro_helmet_left)  BlitzImageView mDraftIntroHelmetLeft;
+    @InjectView(R.id.draft_intro_helmet_right) BlitzImageView mDraftIntroHelmetRight;
+    @InjectView(R.id.draft_intro_username_left)   TextView mDraftIntroUsernameLeft;
+    @InjectView(R.id.draft_intro_username_right)  TextView mDraftIntroUsernameRight;
+    @InjectView(R.id.draft_intro_scorecard_left)  TextView mDraftIntroScorecardLeft;
+    @InjectView(R.id.draft_intro_scorecard_right) TextView mDraftIntroScorecardRight;
+    @InjectView(R.id.draft_intro_elo_left)        TextView mDraftIntroEloLeft;
+    @InjectView(R.id.draft_intro_elo_right)       TextView mDraftIntroEloRight;
 
     // View model object.
     private ViewModelDraft mViewModelDraft;
@@ -66,22 +82,6 @@ public class DraftScreen extends BaseActivity implements ViewModelDraft.ViewMode
     // Tracks if player info loaded.
     private String mPlayer1Id;
     private String mPlayer2Id;
-
-    private String mPlayer1UserName;
-    private String mPlayer2UserName;
-
-    private int mPlayer1Wins;
-    private int mPlayer1Losses;
-    private int mPlayer1Ties;
-    private int mPlayer1Rating;
-
-    private int mPlayer2Wins;
-    private int mPlayer2Losses;
-    private int mPlayer2Ties;
-    private int mPlayer2Rating;
-
-    private String mPlayer1AvatarUrl;
-    private String mPlayer2AvatarUrl;
 
     // endregion
 
@@ -398,23 +398,45 @@ public class DraftScreen extends BaseActivity implements ViewModelDraft.ViewMode
 
         if (AuthHelper.instance().getUserId().equals(userId)) {
 
-            mPlayer1Id        = userId;
-            mPlayer1UserName  = userName;
-            mPlayer1Rating    = rating;
-            mPlayer1Wins      = wins;
-            mPlayer1Losses    = losses;
-            mPlayer1Ties      = ties;
-            mPlayer1AvatarUrl = itemAvatarUrl;
+            // Set id.
+            mPlayer1Id = userId;
+
+            mDraftIntroHelmetLeft
+                    .setImageUrl(itemAvatarUrl);
+            mDraftIntroUsernameLeft
+                    .setText(userName);
+            mDraftIntroEloLeft
+                    .setText(Integer.toString(rating));
+            mDraftIntroScorecardLeft
+                    .setText(Integer.toString(wins) + "-" +
+                             Integer.toString(ties) + "-" +
+                             Integer.toString(losses));
+
+            mDraftMatchupHelmetLeft
+                    .setImageUrl(itemAvatarUrl);
+            mDraftMatchupUsernameLeft
+                    .setText(userName);
 
         } else {
 
-            mPlayer2Id        = userId;
-            mPlayer2UserName  = userName;
-            mPlayer2Rating    = rating;
-            mPlayer2Wins      = wins;
-            mPlayer2Losses    = losses;
-            mPlayer2Ties      = ties;
-            mPlayer2AvatarUrl = itemAvatarUrl;
+            // Set id.
+            mPlayer2Id = userId;
+
+            mDraftIntroHelmetRight
+                    .setImageUrl(itemAvatarUrl);
+            mDraftIntroUsernameRight
+                    .setText(userName);
+            mDraftIntroEloRight
+                    .setText(Integer.toString(rating));
+            mDraftIntroScorecardRight
+                    .setText(Integer.toString(wins) + "-" +
+                             Integer.toString(ties) + "-" +
+                             Integer.toString(losses));
+
+            mDraftMatchupHelmetRight
+                    .setImageUrl(itemAvatarUrl);
+            mDraftMatchupUsernameRight
+                    .setText(userName);
         }
 
         syncDraftUIState();

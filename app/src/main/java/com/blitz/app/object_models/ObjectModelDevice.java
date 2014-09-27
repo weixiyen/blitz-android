@@ -3,8 +3,11 @@ package com.blitz.app.object_models;
 import android.app.Activity;
 
 import com.blitz.app.utilities.rest.RestAPICallback;
-import com.google.gson.JsonElement;
+import com.blitz.app.utilities.rest.RestAPIResult;
 import com.google.gson.JsonObject;
+import com.google.gson.annotations.SerializedName;
+
+import java.util.Date;
 
 /**
  * Created by mrkcsc on 8/10/14. Copyright 2014 Blitz Studios
@@ -14,13 +17,24 @@ public class ObjectModelDevice extends ObjectModel{
     // region Member Variables
     // =============================================================================================
 
+    @SuppressWarnings("unused") @SerializedName("id")
     private String mId;
-
+    @SuppressWarnings("unused") @SerializedName("device_id")
     private String mDeviceId;
+    @SuppressWarnings("unused") @SerializedName("device_type")
+    private String mDeviceType;
+    @SuppressWarnings("unused") @SerializedName("user_id")
     private String mUserId;
+    @SuppressWarnings("unused") @SerializedName("push_notification_token")
+    private String mPushNotificationToken;
 
-    private Boolean mPushNotificationsEnabled = null;
-    private String mPushNotificationToken = null;
+    @SuppressWarnings("unused") @SerializedName("push_notification_enabled")
+    private boolean mPushNotificationsEnabled;
+
+    @SuppressWarnings("unused") @SerializedName("created")
+    private Date mCreated;
+    @SuppressWarnings("unused") @SerializedName("last_updated")
+    private Date mLastUpdated;
 
     // endregion
 
@@ -28,30 +42,50 @@ public class ObjectModelDevice extends ObjectModel{
     // =============================================================================================
 
     /**
+     * Fetch the id of the device model.  This is NOT
+     * the same as the device id associated to a device.
+     *
+     * @return Id.
+     */
+    public String getId() {
+
+        return mId;
+    }
+
+    // endregion
+
+    // region REST Methods
+    // =============================================================================================
+
+    /**
      * Get specified device given a device id.  The model
      * will be populated based on the result.
      *
      * @param activity Activity for dialogs.
+     * @param deviceId Target device id.
      * @param callback Completion callback.
      */
-    public void get(Activity activity, final Runnable callback) {
+    @SuppressWarnings("unused")
+    public static void get(Activity activity, String deviceId, final CallbackDevice callback) {
 
-        RestAPICallback<JsonObject> operation =
-                new RestAPICallback<JsonObject>(activity) {
+        if (deviceId == null) {
+            return;
+        }
+
+        RestAPICallback<RestAPIResult<ObjectModelDevice>> operation =
+                new RestAPICallback<RestAPIResult<ObjectModelDevice>>(activity) {
 
             @Override
-            public void success(JsonObject jsonObject) {
+            public void success(RestAPIResult<ObjectModelDevice> jsonObject) {
 
-                // Populate model.
-                populateModel(jsonObject);
-
-                // Device model created.
-                callback.run();
+                if (callback != null) {
+                    callback.onSuccess(jsonObject.getResult());
+                }
             }
         };
 
         // Make rest call for code.
-        mRestAPI.device_get(mDeviceId, operation);
+        mRestAPI.device_get(deviceId, operation);
     }
 
     /**
@@ -60,28 +94,32 @@ public class ObjectModelDevice extends ObjectModel{
      * based on the result.
      *
      * @param activity Activity for dialogs.
+     * @param deviceId Target device id.
      * @param callback Completion callback.
      */
-    public void create(Activity activity, final Runnable callback) {
+    @SuppressWarnings("unused")
+    public static void create(Activity activity, String deviceId, final CallbackDevice callback) {
 
-        RestAPICallback<JsonObject> operation =
-                new RestAPICallback<JsonObject>(activity) {
+        if (deviceId == null) {
+            return;
+        }
+
+        RestAPICallback<RestAPIResult<ObjectModelDevice>> operation =
+                new RestAPICallback<RestAPIResult<ObjectModelDevice>>(activity) {
 
             @Override
-            public void success(JsonObject jsonObject) {
+            public void success(RestAPIResult<ObjectModelDevice> jsonObject) {
 
-                // Populate model.
-                populateModel(jsonObject);
-
-                // Device model created.
-                callback.run();
+                if (callback != null) {
+                    callback.onSuccess(jsonObject.getResult());
+                }
             }
         };
 
         // Create post body.
         JsonObject body = new JsonObject();
 
-        body.addProperty("device_id", mDeviceId);
+        body.addProperty("device_id", deviceId);
         body.addProperty("device_type", "ANDROID");
         body.addProperty("push_notification_enabled", false);
 
@@ -90,45 +128,59 @@ public class ObjectModelDevice extends ObjectModel{
     }
 
     /**
-     * Update device model with the currently
-     * set values.  Assumes the device has either
+     * Update device model with the provided
+     * values.  Assumes the device has either
      * been created or fetched.
      *
      * @param activity Activity for dialogs.
+     * @param id Target id.
+     * @param userId Associated user id.
+     * @param pushNotificationsEnabled Push notifications on or off.
+     * @param pushNotificationToken Push notification token.
      * @param callback Completion callback.
      */
-    public void update(Activity activity, final Runnable callback) {
+    @SuppressWarnings("unused")
+    public static void update(Activity activity,
+                              String id,
+                              String userId,
+                              Boolean pushNotificationsEnabled,
+                              String pushNotificationToken, final CallbackDevice callback) {
 
-        RestAPICallback<JsonObject> operation =
-                new RestAPICallback<JsonObject>(activity) {
+        if (id == null) {
+            return;
+        }
+
+        RestAPICallback<RestAPIResult<ObjectModelDevice>> operation =
+                new RestAPICallback<RestAPIResult<ObjectModelDevice>>(activity) {
 
             @Override
-            public void success(JsonObject jsonObject) {
+            public void success(RestAPIResult<ObjectModelDevice> jsonObject) {
 
-                // Device model updated.
-                callback.run();
+                if (callback != null) {
+                    callback.onSuccess(jsonObject.getResult());
+                }
             }
         };
 
         // Create object holding values to replace.
         JsonObject replace = new JsonObject();
 
-        if (mPushNotificationsEnabled != null) {
+        if (pushNotificationsEnabled != null) {
 
             // Update push notifications if needed.
-            replace.addProperty("push_notification_enabled", mPushNotificationsEnabled);
+            replace.addProperty("push_notification_enabled", pushNotificationsEnabled);
         }
 
-        if (mPushNotificationToken != null) {
+        if (pushNotificationToken != null) {
 
             // Update token if needed.
-            replace.addProperty("push_notification_token", mPushNotificationToken);
+            replace.addProperty("push_notification_token", pushNotificationToken);
         }
 
-        if (mUserId != null) {
+        if (userId != null) {
 
             // Update user id if needed.
-            replace.addProperty("user_id", mUserId);
+            replace.addProperty("user_id", userId);
         }
 
         // Create body.
@@ -138,87 +190,20 @@ public class ObjectModelDevice extends ObjectModel{
         body.add("replace", replace);
 
         // Make rest call for code.
-        mRestAPI.device_patch(mId, body, operation);
-    }
-
-    /**
-     * Set the push notification token. In android
-     * this is referred to as the registration id.
-     *
-     * @param pushNotificationToken Token.
-     */
-    @SuppressWarnings("unused")
-    public void setPushNotificationToken(String pushNotificationToken) {
-        mPushNotificationToken = pushNotificationToken;
-    }
-
-    /**
-     * Set whether this device has push notifications enabled.
-     *
-     * @param pushNotificationsEnabled Are push notifications enabled.
-     */
-    @SuppressWarnings("unused")
-    public void setPushNotificationsEnabled(boolean pushNotificationsEnabled) {
-        mPushNotificationsEnabled = pushNotificationsEnabled;
-    }
-
-    /**
-     * Set the device id, this is needed for any
-     * of the REST calls.
-     *
-     * @param deviceId Target device id.
-     */
-    @SuppressWarnings("unused")
-    public void setDeviceId(String deviceId) {
-        mDeviceId = deviceId;
-    }
-
-    /**
-     * Set the user id.
-     *
-     * @param userId User id.
-     */
-    @SuppressWarnings("unused")
-    public void setUserId(String userId) {
-        mUserId = userId;
+        mRestAPI.device_patch(id, body, operation);
     }
 
     // endregion
 
-    // region Private Methods
+    // region Callbacks
     // =============================================================================================
 
     /**
-     * Populate the model.  Should be called with
-     * a json result object that is populated
-     * with device model results.
+     * Single device returned.
      */
-    private void populateModel(JsonObject jsonObject) {
+    public interface CallbackDevice {
 
-        JsonElement element;
-
-        // Fetch id and device id.
-        mId = jsonObject.get("id").getAsString();
-        mDeviceId = jsonObject.get("device_id").getAsString();
-
-        // Fetch push notification info.
-        mPushNotificationsEnabled = jsonObject.get("push_notification_enabled").getAsBoolean();
-
-        element = jsonObject.get("push_notification_token");
-
-        if (!element.isJsonNull()) {
-
-            // Fetch notification token.
-            mPushNotificationToken = element.getAsString();
-        }
-
-        element = jsonObject.get("user_id");
-
-        if (!element.isJsonNull()) {
-
-            // Fetch user id.
-            mUserId = element.getAsString();
-        }
+        public void onSuccess(ObjectModelDevice device);
     }
 
     // endregion

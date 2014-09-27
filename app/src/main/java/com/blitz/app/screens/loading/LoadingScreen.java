@@ -9,6 +9,7 @@ import com.blitz.app.utilities.app.AppData;
 import com.blitz.app.utilities.authentication.AuthHelper;
 import com.blitz.app.utilities.gcm.GcmRegistrationHelper;
 import com.blitz.app.utilities.sound.SoundHelper;
+import com.crashlytics.android.Crashlytics;
 
 /**
  * Created by Miguel Gaeta on 6/28/14. Copyright 2014 Blitz Studios
@@ -34,6 +35,9 @@ public class LoadingScreen extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        // Enable crash logging.
+        Crashlytics.start(this);
 
         // Disable custom transitions.
         setCustomTransitions(null);

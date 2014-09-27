@@ -48,9 +48,6 @@ public class GcmRegistrationHelper {
     @SuppressWarnings("unused")
     public static boolean tryRegistration(Activity activity) {
 
-        // Obtain the application context.
-        Context context = activity.getApplicationContext();
-
         // Check device for Play Services APK.
         boolean hasPlayServices = checkPlayServices(activity);
 
@@ -58,15 +55,15 @@ public class GcmRegistrationHelper {
         if (hasPlayServices) {
 
             // If there is no registration id available.
-            if (getRegistrationId(context) == null) {
+            if (getRegistrationId(activity) == null) {
 
                 // Fetch it in background.
-                registerInBackground(context);
+                registerInBackground(activity);
 
             } else if (!AuthHelper.instance().isDeviceRegistered()) {
 
                 // Try to persist if not persisted.
-                sendRegistrationIdToBackend(context, getRegistrationId(context));
+                sendRegistrationIdToBackend(activity, getRegistrationId(activity));
             }
         }
 
@@ -158,22 +155,19 @@ public class GcmRegistrationHelper {
      */
     private static void sendRegistrationIdToBackend(Context context, final String registrationId) {
 
-        final ObjectModelDevice objectModelDevice = new ObjectModelDevice();
+        // Fetch device id.
+        final String deviceId = getDeviceId(context);
 
-        // Create a new device id registration.
-        objectModelDevice.setDeviceId(getDeviceId(context));
-        objectModelDevice.create(null, new Runnable() {
+        ObjectModelDevice.create(null, deviceId, new ObjectModelDevice.CallbackDevice() {
 
             @Override
-            public void run() {
+            public void onSuccess(ObjectModelDevice device) {
 
-                // Set push notification information and update.
-                objectModelDevice.setPushNotificationToken(registrationId);
-                objectModelDevice.setPushNotificationsEnabled(true);
-                objectModelDevice.update(null, new Runnable() {
+                ObjectModelDevice.update(null, device.getId(), null, true, registrationId,
+                        new ObjectModelDevice.CallbackDevice() {
 
                     @Override
-                    public void run() {
+                    public void onSuccess(ObjectModelDevice device) {
 
                         // Device registration persisted.
                         AppDataObject.gcmRegistrationPersisted.set(true);

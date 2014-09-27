@@ -46,6 +46,11 @@
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
 
+        <!-- Configuration key for crashlytics. -->
+        <meta-data
+            android:name="com.crashlytics.ApiKey"
+            android:value="d4cb78aaf6b799872810782b255420b38fbe554b"/>
+
         <!-- Main loading screen -->
         <activity android:name=".screens.loading.LoadingScreen">
             <intent-filter>
