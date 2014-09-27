@@ -5,6 +5,7 @@
     <string name="bullet">&#8226;</string>
     <string name="number_small">9</string>
     <string name="number_large">999</string>
+    <string name="number_scorecard">0–0–0</string>
 
     <string name="time">00:00</string>
 

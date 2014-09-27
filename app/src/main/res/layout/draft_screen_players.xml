@@ -1,5 +1,6 @@
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main_play"
     android:layout_width="@dimen/screen_width"
@@ -19,14 +20,15 @@
         android:background="@drawable/asset_draft_bg_player_normal"
         android:orientation="vertical">
 
-        <ImageView
+        <com.blitz.app.utilities.imageview.BlitzImageView
             android:layout_width="161dp"
             android:layout_height="106dp"
             android:layout_marginLeft="-8dp"
             android:contentDescription="@string/empty_string"
-            android:src="@drawable/asset_draft_placeholder_player_0" />
+            android:src="@drawable/asset_draft_placeholder_player_0"
+            app:clearInitialContent="true" />
 
-        <me.grantland.widget.AutofitTextView
+        <com.blitz.app.utilities.textview.BlitzTextView
             fontPath="@string/app_font_helvetica_condensed_bold"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -37,37 +39,40 @@
             android:singleLine="true"
             android:text="@string/lorum_ipsum_tiny"
             android:textColor="@color/text_color_black"
-            android:textSize="14sp"/>
+            android:textSize="14sp"
+            app:clearInitialContent="true"/>
 
-        <RelativeLayout
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
             android:orientation="horizontal">
 
-            <TextView
+            <com.blitz.app.utilities.textview.BlitzTextView
                 fontPath="@string/app_font_helvetica_condensed_bold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:gravity="center"
+                android:layout_weight=".5"
+                android:gravity="center|left"
                 android:singleLine="true"
                 android:text="@string/lorum_ipsum_word"
                 android:textColor="@color/text_color_grey"
-                android:textSize="12sp"/>
+                android:textSize="12sp"
+                app:clearInitialContent="true"/>
 
-            <TextView
+            <com.blitz.app.utilities.textview.BlitzTextView
                 fontPath="@string/app_font_helvetica_condensed_bold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:gravity="center"
+                android:layout_weight=".5"
+                android:gravity="center|right"
                 android:singleLine="true"
                 android:text="@string/lorum_ipsum_word"
                 android:textColor="@color/text_color_grey"
-                android:textSize="12sp"/>
-        </RelativeLayout>
+                android:textSize="12sp"
+                app:clearInitialContent="true"/>
+        </LinearLayout>
     </LinearLayout>
 
     <LinearLayout
@@ -81,14 +86,15 @@
         android:gravity="right"
         android:orientation="vertical">
 
-        <ImageView
+        <com.blitz.app.utilities.imageview.BlitzImageView
             android:layout_width="161dp"
             android:layout_height="106dp"
             android:layout_marginRight="-8dp"
             android:contentDescription="@string/empty_string"
-            android:src="@drawable/asset_draft_placeholder_player_1" />
+            android:src="@drawable/asset_draft_placeholder_player_1"
+            app:clearInitialContent="true" />
 
-        <me.grantland.widget.AutofitTextView
+        <com.blitz.app.utilities.textview.BlitzTextView
             fontPath="@string/app_font_helvetica_condensed_bold"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -99,37 +105,40 @@
             android:singleLine="true"
             android:text="@string/lorum_ipsum_tiny"
             android:textColor="@color/text_color_black"
-            android:textSize="14sp"/>
+            android:textSize="14sp"
+            app:clearInitialContent="true"/>
 
-        <RelativeLayout
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
             android:orientation="horizontal">
 
-            <TextView
+            <com.blitz.app.utilities.textview.BlitzTextView
                 fontPath="@string/app_font_helvetica_condensed_bold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:gravity="center"
+                android:layout_weight=".5"
+                android:gravity="center|left"
                 android:singleLine="true"
                 android:text="@string/lorum_ipsum_word"
                 android:textColor="@color/text_color_grey"
-                android:textSize="12sp"/>
+                android:textSize="12sp"
+                app:clearInitialContent="true"/>
 
-            <TextView
+            <com.blitz.app.utilities.textview.BlitzTextView
                 fontPath="@string/app_font_helvetica_condensed_bold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:gravity="center"
+                android:layout_weight=".5"
+                android:gravity="center|right"
                 android:singleLine="true"
                 android:text="@string/lorum_ipsum_word"
                 android:textColor="@color/text_color_grey"
-                android:textSize="12sp"/>
-        </RelativeLayout>
+                android:textSize="12sp"
+                app:clearInitialContent="true"/>
+        </LinearLayout>
     </LinearLayout>
 
     <LinearLayout
@@ -142,14 +151,15 @@
         android:background="@drawable/asset_draft_bg_player_normal"
         android:orientation="vertical">
 
-        <ImageView
+        <com.blitz.app.utilities.imageview.BlitzImageView
             android:layout_width="161dp"
             android:layout_height="106dp"
             android:layout_marginLeft="-8dp"
             android:contentDescription="@string/empty_string"
-            android:src="@drawable/asset_draft_placeholder_player_2" />
+            android:src="@drawable/asset_draft_placeholder_player_2"
+            app:clearInitialContent="true" />
 
-        <me.grantland.widget.AutofitTextView
+        <com.blitz.app.utilities.textview.BlitzTextView
             fontPath="@string/app_font_helvetica_condensed_bold"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -160,37 +170,40 @@
             android:singleLine="true"
             android:text="@string/lorum_ipsum_tiny"
             android:textColor="@color/text_color_black"
-            android:textSize="14sp"/>
+            android:textSize="14sp"
+            app:clearInitialContent="true"/>
 
-        <RelativeLayout
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
             android:orientation="horizontal">
 
-            <TextView
+            <com.blitz.app.utilities.textview.BlitzTextView
                 fontPath="@string/app_font_helvetica_condensed_bold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:gravity="center"
+                android:layout_weight=".5"
+                android:gravity="center|left"
                 android:singleLine="true"
                 android:text="@string/lorum_ipsum_word"
                 android:textColor="@color/text_color_grey"
-                android:textSize="12sp"/>
+                android:textSize="12sp"
+                app:clearInitialContent="true"/>
 
-            <TextView
+            <com.blitz.app.utilities.textview.BlitzTextView
                 fontPath="@string/app_font_helvetica_condensed_bold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:gravity="center"
+                android:layout_weight=".5"
+                android:gravity="center|right"
                 android:singleLine="true"
                 android:text="@string/lorum_ipsum_word"
                 android:textColor="@color/text_color_grey"
-                android:textSize="12sp"/>
-        </RelativeLayout>
+                android:textSize="12sp"
+                app:clearInitialContent="true"/>
+        </LinearLayout>
     </LinearLayout>
 
     <LinearLayout
@@ -204,14 +217,15 @@
         android:gravity="right"
         android:orientation="vertical">
 
-        <ImageView
+        <com.blitz.app.utilities.imageview.BlitzImageView
             android:layout_width="161dp"
             android:layout_height="106dp"
             android:layout_marginRight="-8dp"
             android:contentDescription="@string/empty_string"
-            android:src="@drawable/asset_draft_placeholder_player_3" />
+            android:src="@drawable/asset_draft_placeholder_player_3"
+            app:clearInitialContent="true" />
 
-        <me.grantland.widget.AutofitTextView
+        <com.blitz.app.utilities.textview.BlitzTextView
             fontPath="@string/app_font_helvetica_condensed_bold"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -222,36 +236,39 @@
             android:singleLine="true"
             android:text="@string/lorum_ipsum_tiny"
             android:textColor="@color/text_color_black"
-            android:textSize="14sp"/>
+            android:textSize="14sp"
+            app:clearInitialContent="true"/>
 
-        <RelativeLayout
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
             android:orientation="horizontal">
 
-            <TextView
+            <com.blitz.app.utilities.textview.BlitzTextView
                 fontPath="@string/app_font_helvetica_condensed_bold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:gravity="center"
+                android:layout_weight=".5"
+                android:gravity="center|left"
                 android:singleLine="true"
                 android:text="@string/lorum_ipsum_word"
                 android:textColor="@color/text_color_grey"
-                android:textSize="12sp"/>
+                android:textSize="12sp"
+                app:clearInitialContent="true"/>
 
-            <TextView
+            <com.blitz.app.utilities.textview.BlitzTextView
                 fontPath="@string/app_font_helvetica_condensed_bold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:gravity="center"
+                android:layout_weight=".5"
+                android:gravity="center|right"
                 android:singleLine="true"
                 android:text="@string/lorum_ipsum_word"
                 android:textColor="@color/text_color_grey"
-                android:textSize="12sp"/>
-        </RelativeLayout>
+                android:textSize="12sp"
+                app:clearInitialContent="true"/>
+        </LinearLayout>
     </LinearLayout>
 </RelativeLayout>
