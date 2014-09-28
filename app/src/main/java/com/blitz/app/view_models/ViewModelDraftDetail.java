@@ -110,8 +110,8 @@ public class ViewModelDraftDetail extends ViewModel {
                                                                         callbacks.onMatchup(extras.getString(MatchInfoAdapter.PLAYER_1_NAME),
                                                                                 extras.getFloat(MatchInfoAdapter.PLAYER_1_SCORE),
                                                                                 extras.getString(MatchInfoAdapter.PLAYER_2_NAME),
-                                                                                extras.getFloat(MatchInfoAdapter.PLAYER_2_SCORE),
-                                                                                null, null);
+                                                                                extras.getFloat(MatchInfoAdapter.PLAYER_2_SCORE)
+                                                                        );
                                                                     }
 
                                                                     @Override
@@ -185,8 +185,7 @@ public class ViewModelDraftDetail extends ViewModel {
                      List<Game> p2Games,
                      Multimap<String, Stat> playerStats, int week);
 
-        void onMatchup(String player1Name, float player1score, String player2Name, float player2Score,
-                       String player1AvatarId, String player2AvatarId);
+        void onMatchup(String player1Name, float player1score, String player2Name, float player2Score);
 
         void onAvatars(String player1AvatarUrl, String player2AvatarUrl);
     }

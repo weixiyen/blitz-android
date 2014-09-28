@@ -101,8 +101,7 @@ public class MatchupScreen extends BaseActivity implements ViewModelDraftDetail.
 
     @Override
     public void onMatchup(String player1Name, float player1score,
-                          String player2Name, float player2Score,
-                          String player1AvatarUrl, String player2AvatarUrl) {
+                          String player2Name, float player2Score) {
 
         setName(R.id.player1_details, player1Name);
         setName(R.id.player2_details, player2Name);
