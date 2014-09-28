@@ -27,7 +27,7 @@ public final class ObjectModelDraft extends ObjectModel {
     private long mServerTimeOffset;
 
     // Map of players, used for live drafts only.
-    private HashMap<String, Choice> mPlayerDataMap;
+    private HashMap<String, ObjectModelPlayer> mPlayerDataMap;
 
     @SuppressWarnings("unused") @SerializedName("draft_start_buffer")
     private int mDraftStartBuffer;
@@ -265,7 +265,7 @@ public final class ObjectModelDraft extends ObjectModel {
      * @return List of choices.
      */
     @SuppressWarnings("unused")
-    public ArrayList<String> getCurrentChoices() {
+    public ArrayList<String> getCurrentPlayerChoices() {
 
         if (mChoices != null && mChoices.size() > 0) {
 
@@ -292,10 +292,10 @@ public final class ObjectModelDraft extends ObjectModel {
      * @return Player data.
      */
     @SuppressWarnings("unused")
-    public HashMap<String, Choice> getPlayerDataMap() {
+    public HashMap<String, ObjectModelPlayer> getPlayerDataMap() {
 
         if (mPlayerDataMap == null) {
-            mPlayerDataMap = new HashMap<String, Choice>();
+            mPlayerDataMap = new HashMap<String, ObjectModelPlayer>();
         }
 
         return mPlayerDataMap;
@@ -345,10 +345,10 @@ public final class ObjectModelDraft extends ObjectModel {
      * @param choice Choice object.
      */
     @SuppressWarnings("unused")
-    public void addChoice(Choice choice) {
+    public void addChoice(ObjectModelPlayer choice) {
 
         if (mPlayerDataMap == null) {
-            mPlayerDataMap = new HashMap<String, Choice>();
+            mPlayerDataMap = new HashMap<String, ObjectModelPlayer>();
         }
 
         // Add to player data map.
@@ -648,91 +648,6 @@ public final class ObjectModelDraft extends ObjectModel {
 
             mPlayerId = playerId;
               mUserId =   userId;
-        }
-    }
-
-    /**
-     * Player choice object.
-     */
-    @SuppressWarnings("unused")
-    public static class Choice {
-
-        private boolean mIsHomeTeam;
-
-        private String mId;
-        private String mFullName;
-        private String mTeam;
-        private String mPosition;
-        private String mOpponent;
-
-        /**
-         * Get id.
-         *
-         * @return id.
-         */
-        public String getId() {
-
-            return mId;
-        }
-
-        /**
-         * Set is home team boolean.
-         *
-         * @param isHomeTeam Is home team.
-         */
-        public void setIsHomeTeam(boolean isHomeTeam) {
-
-            mIsHomeTeam = isHomeTeam;
-        }
-
-        /**
-         * Set the id.
-         * @param id id.
-         */
-        public void setId(String id) {
-
-            mId = id;
-        }
-
-        /**
-         * Set the full choice name.
-         *
-         * @param fullName Full name.
-         */
-        public void setFullName(String fullName) {
-
-            mFullName = fullName;
-        }
-
-        /**
-         * Set the team name.
-         *
-         * @param team Team name.
-         */
-        public void setTeam(String team) {
-
-            mTeam = team;
-        }
-
-        /**
-         * Set the player position.
-         *
-         * @param position Player position.
-         */
-
-        public void setPosition(String position) {
-
-            mPosition = position;
-        }
-
-        /**
-         * Set the opponent string.
-         *
-         * @param opponent Opponent string.
-         */
-        public void setOpponent(String opponent) {
-
-            mOpponent = opponent;
         }
     }
 

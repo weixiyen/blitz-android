@@ -2,6 +2,7 @@ package com.blitz.app.object_models;
 
 import android.app.Activity;
 
+import com.blitz.app.utilities.json.JsonHelper;
 import com.blitz.app.utilities.rest.RestAPICallback;
 import com.blitz.app.utilities.rest.RestAPIResult;
 import com.google.gson.JsonObject;
@@ -95,11 +96,28 @@ public class ObjectModelPlayer extends ObjectModel {
         mRestAPI.nfl_player_get(playerId, operation);
     }
 
+    /**
+     * Manually parse a JsonObject into
+     * a player object.  Should only ever really
+     * happen if comet send the client json.
+     *
+     * @param cometJson Json representing a player object.
+     *
+     * @return Player object.
+     */
     @SuppressWarnings("unused")
-    public static void fetchPlayerFromCometJson(Activity activity,
-                                                JsonObject cometJson,
-                                                final CallbackPlayer callback) {
+    public static ObjectModelPlayer fetchPlayerFromCometJson(JsonObject cometJson) {
 
+        ObjectModelPlayer player = new ObjectModelPlayer();
+
+        player.mId         = JsonHelper.parseString(cometJson.get("id"));
+        player.mOpponent   = JsonHelper.parseString(cometJson.get("opponent"));
+        player.mPosition   = JsonHelper.parseString(cometJson.get("position"));
+        player.mTeam       = JsonHelper.parseString(cometJson.get("team"));
+        player.mFullName   = JsonHelper.parseString(cometJson.get("full_name"));
+        player.mIsHomeTeam = JsonHelper.parseBool(cometJson.get("is_home_team"));
+
+        return player;
     }
 
     // endregion

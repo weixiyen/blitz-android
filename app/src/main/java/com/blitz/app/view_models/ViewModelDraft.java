@@ -6,6 +6,7 @@ import android.os.Handler;
 
 import com.blitz.app.object_models.ObjectModelDraft;
 import com.blitz.app.object_models.ObjectModelItem;
+import com.blitz.app.object_models.ObjectModelPlayer;
 import com.blitz.app.object_models.ObjectModelUser;
 import com.blitz.app.screens.draft.DraftScreen;
 import com.blitz.app.utilities.authentication.AuthHelper;
@@ -53,8 +54,8 @@ public class ViewModelDraft extends ViewModel {
     private String mRoundAndPosition;
 
     // Choice related structures.
-    private ArrayList<ObjectModelDraft.Choice> mCurrentChoices;
-    private Date mCurrentChoicesShowTime;
+    private ArrayList<ObjectModelPlayer> mCurrentPlayerChoices;
+    private Date mCurrentPlayerChoicesShowTime;
 
     // Callbacks.
     private ViewModelDraftCallbacks mCallbacks;
@@ -240,29 +241,12 @@ public class ViewModelDraft extends ViewModel {
                 // Fetch as json object.
                 JsonObject choiceJsonObject = choiceJson.getAsJsonObject();
 
-                // Create a choice object.
-                ObjectModelDraft.Choice choice = new ObjectModelDraft.Choice();
-
-                // Fetch choice id.
-                String id = JsonHelper.parseString(choiceJsonObject.get("id"));
-
-                choiceIds.add(id);
-
-                choice.setId(id);
-
-                choice.setOpponent(
-                        JsonHelper.parseString(choiceJsonObject.get("opponent")));
-                choice.setPosition(
-                        JsonHelper.parseString(choiceJsonObject.get("position")));
-                choice.setTeam(
-                        JsonHelper.parseString(choiceJsonObject.get("team")));
-                choice.setFullName(
-                        JsonHelper.parseString(choiceJsonObject.get("full_name")));
-                choice.setIsHomeTeam(
-                        JsonHelper.parseBool(choiceJsonObject.get("is_home_team")));
+                // Add to list of choice ids.
+                choiceIds.add(JsonHelper.parseString(choiceJsonObject.get("id")));
 
                 // Add to draft model.
-                mDraftModel.addChoice(choice);
+                mDraftModel.addChoice(ObjectModelPlayer
+                        .fetchPlayerFromCometJson(choiceJsonObject));
             }
 
             // Add to choices.
@@ -514,41 +498,42 @@ public class ViewModelDraft extends ViewModel {
     private void resolveChoices() {
 
         // Fetch current choice ids.
-        ArrayList<String> choiceIds = mDraftModel.getCurrentChoices();
+        ArrayList<String> playerChoiceIds = mDraftModel.getCurrentPlayerChoices();
 
-        if (choiceIds != null) {
+        if (playerChoiceIds != null) {
 
-            ArrayList<ObjectModelDraft.Choice> choices =
-                    new ArrayList<ObjectModelDraft.Choice>();
+            ArrayList<ObjectModelPlayer> playerChoices =
+                    new ArrayList<ObjectModelPlayer>();
 
-            ArrayList<String> choicesToSync = new ArrayList<String>();
+            ArrayList<String> playerChoicesToSync =
+                    new ArrayList<String>();
 
-            for (String playerId : choiceIds) {
+            for (String playerId : playerChoiceIds) {
 
                 if (mDraftModel.getPlayerDataMap().containsKey(playerId)) {
 
                     // Already been populated view comet server.
-                    choices.add(mDraftModel.getPlayerDataMap().get(playerId));
+                    playerChoices.add(mDraftModel.getPlayerDataMap().get(playerId));
 
                 } else {
 
                     // Need to fetch player data.
-                    choicesToSync.add(playerId);
+                    playerChoicesToSync.add(playerId);
                 }
             }
 
             // Fetch additional choice information.
-            if (choices.size() != choiceIds.size()) {
+            if (playerChoices.size() != playerChoiceIds.size()) {
 
-                syncChoicesWithoutData(choicesToSync);
+                syncChoicesWithoutData(playerChoicesToSync);
 
-            } else if (!choices.equals(mCurrentChoices)) {
+            } else if (!playerChoices.equals(mCurrentPlayerChoices)) {
 
-                mCurrentChoices = choices;
-                mCurrentChoicesShowTime = DateUtils.getDateInGMT();
+                mCurrentPlayerChoices = playerChoices;
+                mCurrentPlayerChoicesShowTime = DateUtils.getDateInGMT();
 
                 if (mCallbacks != null) {
-                    mCallbacks.onChoicesAvailable(mCurrentChoices);
+                    mCallbacks.onPlayerChoicesChanged(mCurrentPlayerChoices);
                 }
             }
         }
@@ -556,6 +541,7 @@ public class ViewModelDraft extends ViewModel {
 
     private void resolvePicks() {
 
+        // TODO: Implement me.
     }
 
     // endregion
@@ -575,7 +561,7 @@ public class ViewModelDraft extends ViewModel {
 
         public void onRoundAndPositionChanged(String roundAndPosition);
 
-        public void onChoicesAvailable(ArrayList<ObjectModelDraft.Choice> choices);
+        public void onPlayerChoicesChanged(ArrayList<ObjectModelPlayer> playerChoices);
     }
 
     // endregion

@@ -7,7 +7,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.blitz.app.R;
-import com.blitz.app.object_models.ObjectModelDraft;
+import com.blitz.app.object_models.ObjectModelPlayer;
 import com.blitz.app.utilities.android.BaseActivity;
 import com.blitz.app.utilities.animations.AnimHelperFade;
 import com.blitz.app.utilities.animations.AnimHelperSpringsGroup;
@@ -475,11 +475,17 @@ public class DraftScreen extends BaseActivity implements ViewModelDraft.ViewMode
         }
     }
 
+    /**
+     * Update the player choices UI when we
+     * receive new information.
+     *
+     * @param playerChoices List of choices.
+     */
     @Override
-    public void onChoicesAvailable(ArrayList<ObjectModelDraft.Choice> choices) {
+    public void onPlayerChoicesChanged(ArrayList<ObjectModelPlayer> playerChoices) {
 
-        // TODO: Do not expose ObjectModel.
-        LogHelper.log("Choices: " + choices);
+        // TODO: Implement UI Changes.
+        LogHelper.log("On player choices changed: " + playerChoices);
     }
 
     // endregion
