@@ -8,6 +8,7 @@ import com.blitz.app.utilities.rest.RestAPIResult;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -404,11 +405,13 @@ public final class ObjectModelDraft extends ObjectModel {
             return;
         }
 
-        RestAPICallback<ObjectModelDraft> operation =
-                new RestAPICallback<ObjectModelDraft>(activity) {
+        RestAPICallback<RestAPIResult<ObjectModelDraft>> operation =
+                new RestAPICallback<RestAPIResult<ObjectModelDraft>>(activity) {
 
             @Override
-            public void success(ObjectModelDraft jsonObject) {
+            public void success(RestAPIResult<ObjectModelDraft> result) {
+
+                ObjectModelDraft jsonObject = result.getResults().get(0);
 
                 // Set the server time offset.
                 if (jsonObject != null) {
@@ -424,7 +427,8 @@ public final class ObjectModelDraft extends ObjectModel {
         };
 
         // Make api call.
-        mRestAPI.draft_get(draftId, operation);
+        mRestAPI.drafts_get(Arrays.asList(draftId), null,
+                "id", "{\"model\":\"heads_up_draft\"}", null, 1, operation);
     }
 
     /**

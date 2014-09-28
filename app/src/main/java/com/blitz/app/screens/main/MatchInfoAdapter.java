@@ -30,6 +30,7 @@ public class MatchInfoAdapter extends ArrayAdapter {
     public static final String PLAYER_2_SCORE = "MatchInfoAdapter.player2Score";
     public static final String YEAR = "MatchInfoAdapter.year";
     public static final String WEEK = "MatchInfoAdapter.week";
+    public static final String DRAFT_ID = "MatchInfoAdapter.draftId";
 
     private List<HeadToHeadDraft> mItems;
     private final Activity mActivity;
@@ -89,6 +90,7 @@ public class MatchInfoAdapter extends ArrayAdapter {
                 intent.putExtra(PLAYER_2_SCORE,  draft.getPlayer2Score());
                 intent.putExtra(WEEK, draft.getWeek());
                 intent.putExtra(YEAR, draft.getYear());
+                intent.putExtra(DRAFT_ID, draft.getId());
                 mActivity.startActivity(intent);
             }
         });

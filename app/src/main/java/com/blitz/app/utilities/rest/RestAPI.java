@@ -76,8 +76,8 @@ public interface RestAPI {
                                               // TODO: do the update together.
 
     @GET("/drafts")
-    void drafts_get(@Query("keys[]") ArrayList<String> keys,   // Required
-                    @Query("pluck[]") ArrayList<String> pluck, // Optional
+    void drafts_get(@Query("keys[]") List<String> keys,        // Required
+                    @Query("pluck[]") List<String> pluck,       // Optional
                     @Query("index") String index,              // Required
                     @Query("filter") String filter,            // Optional
                     @Query("order_by") String orderBy,         // Optional

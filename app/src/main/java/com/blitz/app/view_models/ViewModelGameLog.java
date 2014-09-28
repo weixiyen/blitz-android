@@ -93,6 +93,7 @@ public class ViewModelGameLog extends ViewModel {
                     List<HeadToHeadDraft> matches = new ArrayList<HeadToHeadDraft>(drafts.size());
                     for(ObjectModelDraft draft: drafts) {
                         matches.add(new HeadToHeadDraft(
+                                draft.getId(),
                                 draft.getTeamName(0),
                                 draft.getTeamRoster(0),
                                 draft.getTeamPoints(0),

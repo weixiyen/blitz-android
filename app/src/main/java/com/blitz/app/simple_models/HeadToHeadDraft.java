@@ -1,6 +1,5 @@
 package com.blitz.app.simple_models;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -23,10 +22,13 @@ public class HeadToHeadDraft {
     private final int mYear;
     private final int mWeek;
     private final String mStatus;
+    private final String mId;
 
-    public HeadToHeadDraft(String player1Name, List<String> player1Picks, float player1Score, int player1RatingChange,
+    public HeadToHeadDraft(String id, String player1Name, List<String> player1Picks, float player1Score, int player1RatingChange,
                            String player2Name, List<String> player2Picks, float player2Score, int player2RatingChange,
                            int year, int week, String status) {
+
+        mId = id;
 
         mPlayer1Name  = player1Name;
         mPlayer1Score = player1Score;
@@ -83,4 +85,8 @@ public class HeadToHeadDraft {
     public int getYear() { return mYear; }
 
     public int getWeek() { return mWeek; }
+
+    public String getId() {
+        return mId;
+    }
 }
