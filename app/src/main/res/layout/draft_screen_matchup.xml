@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="@dimen/screen_width"
-    android:layout_height="wrap_content"
+    android:layout_height="148dp"
     android:layout_gravity="center"
     android:gravity="center"
     tools:context="${packageName}.${activityClass}"
