@@ -8,6 +8,7 @@ gen/
 # Android Studio
 .idea/workspace.xml
 .idea/dictionaries/
+.idea/libraries/
 .gradle
 build/
 
@@ -27,4 +28,3 @@ Thumbs.db
 # Java class files
 *.class
 
-.idea/libraries
