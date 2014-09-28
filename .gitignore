@@ -26,3 +26,5 @@ Thumbs.db
 
 # Java class files
 *.class
+
+.idea/libraries
