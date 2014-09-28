@@ -57,7 +57,7 @@ public class MatchupScreen extends BaseActivity implements ViewModelDraftDetail.
     }
 
     private void flipPlayer2Avatar() {
-        findViewById(R.id.player_2_details).findViewById(R.id.player_avatar).setScaleX(-1f);
+        findViewById(R.id.player2_details).findViewById(R.id.player_avatar).setScaleX(-1f);
     }
 
     // endregion
@@ -104,26 +104,26 @@ public class MatchupScreen extends BaseActivity implements ViewModelDraftDetail.
                           String player2Name, float player2Score,
                           String player1AvatarUrl, String player2AvatarUrl) {
 
-        setName(R.id.player_1_details, player1Name);
-        setName(R.id.player_2_details, player2Name);
+        setName(R.id.player1_details, player1Name);
+        setName(R.id.player2_details, player2Name);
 
-        setScore(R.id.player_1_details, player1score);
-        setScore(R.id.player_2_details, player2Score);
+        setScore(R.id.player1_details, player1score);
+        setScore(R.id.player2_details, player2Score);
 
         if(player1score > player2Score) {
-            indicateLeader(R.id.player_1_details);
+            indicateLeader(R.id.player1_details);
         } else if(player2Score > player1score) {
-            indicateLeader(R.id.player_2_details);
+            indicateLeader(R.id.player2_details);
         }
 
     }
 
     @Override
     public void onAvatars(String player1AvatarUrl, String player2AvatarUrl) {
-        ((BlitzImageView)findViewById(R.id.player_1_details).findViewById(R.id.player_avatar))
+        ((BlitzImageView)findViewById(R.id.player1_details).findViewById(R.id.player_avatar))
                 .setImageUrl(player1AvatarUrl);
 
-        ((BlitzImageView)findViewById(R.id.player_2_details).findViewById(R.id.player_avatar))
+        ((BlitzImageView)findViewById(R.id.player2_details).findViewById(R.id.player_avatar))
                 .setImageUrl(player2AvatarUrl);
     }
 

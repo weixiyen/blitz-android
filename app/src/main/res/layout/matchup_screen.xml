@@ -41,7 +41,7 @@
             android:orientation="horizontal"
             android:paddingBottom="10dp">
 
-            <include android:id="@+id/player_1_details"
+            <include android:id="@+id/player1_details"
                 layout="@layout/player_avatar_with_score"/>
 
             <TextView
@@ -56,7 +56,7 @@
                 android:textColor="@color/text_color_medium_grey"
                 android:textSize="20sp"/>
 
-            <include android:id="@+id/player_2_details"
+            <include android:id="@+id/player2_details"
                 layout="@layout/player_avatar_with_score"/>
 
         </LinearLayout>
