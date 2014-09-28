@@ -36,8 +36,11 @@ public class LoadingScreen extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        // Enable crash logging.
-        Crashlytics.start(this);
+        if (AppConfig.isProduction()) {
+
+            // Enable crash logging.
+            Crashlytics.start(this);
+        }
 
         // Disable custom transitions.
         setCustomTransitions(null);
