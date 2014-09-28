@@ -1,12 +1,8 @@
 package com.blitz.app.object_models;
 
-import android.util.Pair;
-
 import com.blitz.app.simple_models.Player;
 import com.blitz.app.simple_models.Stat;
-import com.blitz.app.utilities.rest.RestAPICallback;
 import com.blitz.app.utilities.rest.RestAPIResult;
-import com.blitz.app.view_models.ViewModelDraftDetail;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,7 +21,7 @@ public class ObjectModelStats extends ObjectModel {
 
     public static void fetchRoster(List<String> playerIds, final Callback<RestAPIResult<Player>> playerCallback) {
 
-        mRestAPI.players_get(playerIds, playerCallback);
+        mRestAPI.nfl_players_get(playerIds, "id", playerCallback);
     }
 
     public static void fetchStatsForPlayers(List<String> playerIds, int year, int week, final Callback<RestAPIResult<Stat>> callback) {

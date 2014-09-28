@@ -97,8 +97,9 @@ public interface RestAPI {
     void nfl_player_get(@Path("player_id") String playerId,
         Callback<RestAPIResult<ObjectModelPlayer>> callback);
 
-    @GET("/nfl_players?index=id")
-    void players_get(@Query("keys[]") List<String> playerIds,
+    @GET("/nfl_players")
+    void nfl_players_get(@Query("keys[]") List<String> playerIds, // Required
+                         @Query("index") String index,            // Required
         Callback<RestAPIResult<Player>> listCallback);
 
     @GET("/item/{item_id}")
