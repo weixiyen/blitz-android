@@ -3,6 +3,7 @@ package com.blitz.app.utilities.rest;
 import com.blitz.app.object_models.ObjectModelDevice;
 import com.blitz.app.object_models.ObjectModelDraft;
 import com.blitz.app.object_models.ObjectModelItem;
+import com.blitz.app.object_models.ObjectModelPlayer;
 import com.blitz.app.object_models.ObjectModelStats;
 import com.blitz.app.object_models.ObjectModelUser;
 import com.blitz.app.simple_models.Game;
@@ -91,6 +92,10 @@ public interface RestAPI {
     @GET("/nfl_games?index=year_week_index")
     void games_get(@Query("key") String key,
         Callback<RestAPIResult<Game>> callback);
+
+    @GET("/nfl_player/{player_id}")
+    void nfl_player_get(@Path("player_id") String playerId,
+        Callback<RestAPIResult<ObjectModelPlayer>> callback);
 
     @GET("/nfl_players?index=id")
     void players_get(@Query("keys[]") List<String> playerIds,
