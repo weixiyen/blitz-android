@@ -10,7 +10,6 @@ import com.blitz.app.simple_models.Game;
 import com.blitz.app.simple_models.Stat;
 import com.google.gson.JsonObject;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import retrofit.Callback;
@@ -106,7 +105,7 @@ public interface RestAPI {
         Callback<RestAPIResult<ObjectModelItem>> callback);
 
     @GET("/items")
-    void items_get(@Query("keys[]") ArrayList<String> keys, // Required
+    void items_get(@Query("keys[]") List<String> keys, // Required
                    @Query("index") String index,            // Required
                    @Query("filter") String filter,          // Optional
                    @Query("limit") Integer limit,           // Optional

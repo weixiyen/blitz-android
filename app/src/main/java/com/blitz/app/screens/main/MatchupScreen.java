@@ -9,6 +9,7 @@ import com.blitz.app.object_models.ObjectModelPlayer;
 import com.blitz.app.simple_models.Game;
 import com.blitz.app.simple_models.Stat;
 import com.blitz.app.utilities.android.BaseActivity;
+import com.blitz.app.utilities.imageview.BlitzImageView;
 import com.blitz.app.view_models.ViewModel;
 import com.blitz.app.view_models.ViewModelDraftDetail;
 import com.google.common.collect.Multimap;
@@ -99,7 +100,9 @@ public class MatchupScreen extends BaseActivity implements ViewModelDraftDetail.
     }
 
     @Override
-    public void onMatchup(String player1Name, float player1score, String player2Name, float player2Score) {
+    public void onMatchup(String player1Name, float player1score,
+                          String player2Name, float player2Score,
+                          String player1AvatarUrl, String player2AvatarUrl) {
 
         setName(R.id.player_1_details, player1Name);
         setName(R.id.player_2_details, player2Name);
@@ -112,7 +115,18 @@ public class MatchupScreen extends BaseActivity implements ViewModelDraftDetail.
         } else if(player2Score > player1score) {
             indicateLeader(R.id.player_2_details);
         }
+
     }
+
+    @Override
+    public void onAvatars(String player1AvatarUrl, String player2AvatarUrl) {
+        ((BlitzImageView)findViewById(R.id.player_1_details).findViewById(R.id.player_avatar))
+                .setImageUrl(player1AvatarUrl);
+
+        ((BlitzImageView)findViewById(R.id.player_2_details).findViewById(R.id.player_avatar))
+                .setImageUrl(player2AvatarUrl);
+    }
+
 
     // endregion
 }

@@ -5,6 +5,7 @@ import android.os.Bundle;
 
 import com.blitz.app.object_models.ObjectModelDraft;
 import com.blitz.app.object_models.ObjectModelGame;
+import com.blitz.app.object_models.ObjectModelItem;
 import com.blitz.app.object_models.ObjectModelPlayer;
 import com.blitz.app.object_models.ObjectModelStats;
 import com.blitz.app.screens.main.MatchInfoAdapter;
@@ -53,7 +54,7 @@ public class ViewModelDraftDetail extends ViewModel {
 
         ObjectModelDraft.fetchSyncedDraft(mActivity, draftId, new ObjectModelDraft.DraftCallback() {
             @Override
-            public void onSuccess(ObjectModelDraft draft) {
+            public void onSuccess(final ObjectModelDraft draft) {
 
                 final List<String> player1ids = draft.getTeamRoster(0);
                 final List<String> player2ids = draft.getTeamRoster(1);
@@ -94,10 +95,23 @@ public class ViewModelDraftDetail extends ViewModel {
                                                                         callbacks.onStuff(p1roster, p2roster, p1Games, p2Games,
                                                                                 playerStats, week);
 
+                                                                        ObjectModelItem.fetchItems(mActivity, Arrays.asList(
+                                                                                draft.getUserInfo(0).getAvatarId(),
+                                                                                draft.getUserInfo(1).getAvatarId()),
+                                                                                new ObjectModelItem.CallbackItems() {
+
+                                                                            @Override
+                                                                            public void onSuccess(List<ObjectModelItem> items) {
+
+                                                                                callbacks.onAvatars(items.get(0).getDefaultImgPath(), items.get(1).getDefaultImgPath());
+                                                                            }
+                                                                        });
+
                                                                         callbacks.onMatchup(extras.getString(MatchInfoAdapter.PLAYER_1_NAME),
                                                                                 extras.getFloat(MatchInfoAdapter.PLAYER_1_SCORE),
                                                                                 extras.getString(MatchInfoAdapter.PLAYER_2_NAME),
-                                                                                extras.getFloat(MatchInfoAdapter.PLAYER_2_SCORE));
+                                                                                extras.getFloat(MatchInfoAdapter.PLAYER_2_SCORE),
+                                                                                null, null);
                                                                     }
 
                                                                     @Override
@@ -171,6 +185,9 @@ public class ViewModelDraftDetail extends ViewModel {
                      List<Game> p2Games,
                      Multimap<String, Stat> playerStats, int week);
 
-        void onMatchup(String player1Name, float player1score, String player2Name, float player2Score);
+        void onMatchup(String player1Name, float player1score, String player2Name, float player2Score,
+                       String player1AvatarId, String player2AvatarId);
+
+        void onAvatars(String player1AvatarUrl, String player2AvatarUrl);
     }
 }

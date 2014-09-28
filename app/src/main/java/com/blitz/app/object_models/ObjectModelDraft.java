@@ -129,6 +129,18 @@ public final class ObjectModelDraft extends ObjectModel {
         return null;
     }
 
+    public ObjectModelUser getUserInfo(int team) {
+
+        if (mUsers != null &&
+                mUserInfo != null &&
+                mUserInfo.get(mUsers.get(team)) != null) {
+
+            return mUserInfo.get(mUsers.get(team));
+        }
+        
+        return null;
+    }
+
     public float getTeamPoints(int team) {
         return mPoints.get(mUsers.get(team));
     }

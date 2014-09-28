@@ -110,7 +110,7 @@ public class ObjectModelItem extends ObjectModel {
      * @param callback Callback for success.
      */
     @SuppressWarnings("unused")
-    public static void fetchItems(Activity activity, ArrayList<String> items,
+    public static void fetchItems(Activity activity, List<String> items,
                                   final CallbackItems callback) {
 
         RestAPICallback<RestAPIResult<ObjectModelItem>> operation =
