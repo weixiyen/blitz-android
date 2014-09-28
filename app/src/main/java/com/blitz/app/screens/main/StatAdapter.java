@@ -48,9 +48,11 @@ public class StatAdapter extends ArrayAdapter {
 
         if(position < mStatValues.length) {
 
-            final String statCountAndName = mStatValues[position] + " " + mStatNames[position];
+            final String statCountAndName = String.format("%d %s", (int)mStatValues[position],
+                    mStatNames[position]);
             ((TextView) v.findViewById(R.id.stat_count_and_name)).setText(statCountAndName);
-            ((TextView) v.findViewById(R.id.stat_points)).setText(String.format("%.2f", mStatPoints[position]));
+            ((TextView) v.findViewById(R.id.stat_points)).setText(String.format("%.2f",
+                    mStatPoints[position]));
         }
 
         return v;
