@@ -10,9 +10,9 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import com.blitz.app.R;
+import com.blitz.app.object_models.ObjectModelPlayer;
 import com.blitz.app.screens.stats.StatsBreakdownScreen;
 import com.blitz.app.simple_models.Game;
-import com.blitz.app.simple_models.Player;
 import com.blitz.app.simple_models.Stat;
 import com.google.common.collect.Multimap;
 
@@ -30,8 +30,8 @@ public class PlayerListAdapter extends ArrayAdapter {
     public static final String STAT_VALUES = "PlayerListAdapter.statValues";
     public static final String STAT_POINTS = "PlayerListAdapter.statPoints";
 
-    private final List<Player> mPlayer1Picks;
-    private final List<Player> mPlayer2Picks;
+    private final List<ObjectModelPlayer> mPlayer1Picks;
+    private final List<ObjectModelPlayer> mPlayer2Picks;
     private final List<Game>   mPlayer1Games;
     private final List<Game>   mPlayer2Games;
     private final Multimap<String, Stat> mPlayerStats;
@@ -39,7 +39,7 @@ public class PlayerListAdapter extends ArrayAdapter {
 
     private final Activity mActivity;
 
-    public PlayerListAdapter(Context context, List<Player> player1picks, List<Player> player2picks,
+    public PlayerListAdapter(Context context, List<ObjectModelPlayer> player1picks, List<ObjectModelPlayer> player2picks,
                              List<Game> player1games, List<Game> player2games,
                              Multimap<String, Stat> playerStats,
                              int week,
@@ -67,8 +67,8 @@ public class PlayerListAdapter extends ArrayAdapter {
                     .inflate(R.layout.main_screen_draft_list_item, null);
         }
 
-        final Player p1 = mPlayer1Picks.get(position);
-        Player p2 = mPlayer2Picks.get(position);
+        final ObjectModelPlayer p1 = mPlayer1Picks.get(position);
+        ObjectModelPlayer p2 = mPlayer2Picks.get(position);
 
         ((TextView) v.findViewById(R.id.player1_name)).setText(p1.getFullName());
         ((TextView) v.findViewById(R.id.player1_position_team)).setText(getPositionTeam(p1));
@@ -105,7 +105,7 @@ public class PlayerListAdapter extends ArrayAdapter {
      * @param player the player whose stats will be shown
      * @param formattedScore the pre-calculated score total for the player
      */
-    private void setStatsNavigation(View v, final Player player, final String formattedScore) {
+    private void setStatsNavigation(View v, final ObjectModelPlayer player, final String formattedScore) {
         v.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -134,13 +134,13 @@ public class PlayerListAdapter extends ArrayAdapter {
         });
     }
 
-    private static String getGameResult(Game game, Player player) {
+    private static String getGameResult(Game game, ObjectModelPlayer player) {
 
         final int playerScore;
         final int opponentScore;
         final String prefix;
         final String suffix;
-        if(game.getHomeTeamName().equals(player.getTeamName())) {
+        if(game.getHomeTeamName().equals(player.getTeam())) {
             playerScore = game.getHomeTeamScore();
             opponentScore = game.getAwayTeamScore();
             suffix = " vs " + game.getAwayTeamName();
@@ -171,12 +171,12 @@ public class PlayerListAdapter extends ArrayAdapter {
         return scoreTotal;
     }
 
-    private static String getScore(Player player, Multimap<String, Stat> stats) {
+    private static String getScore(ObjectModelPlayer player, Multimap<String, Stat> stats) {
         float score = getPlayerScore(player.getId(), stats);
         return String.format("%.02f", score);
     }
 
-    private static String getPositionTeam(Player player) {
-        return player.getPosition() + " - " + player.getTeamName();
+    private static String getPositionTeam(ObjectModelPlayer player) {
+        return player.getPosition() + " - " + player.getTeam();
     }
 }

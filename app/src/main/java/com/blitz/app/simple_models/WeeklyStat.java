@@ -1,22 +1,24 @@
 package com.blitz.app.simple_models;
 
+import com.blitz.app.object_models.ObjectModelPlayer;
+
 /**
  * Created by spiff on 9/21/14.
  */
 public class WeeklyStat {
 
 
-    private final Player mPlayer;
+    private final ObjectModelPlayer mPlayer;
     private final Game mGame;
     private final float mScore;
 
-    public WeeklyStat(Player player, Game game, float score) {
+    public WeeklyStat(ObjectModelPlayer player, Game game, float score) {
         this.mPlayer = player;
         this.mGame = game;
         this.mScore = score;
     }
 
-    public Player getPlayer() {
+    public ObjectModelPlayer getPlayer() {
         return mPlayer;
     }
 

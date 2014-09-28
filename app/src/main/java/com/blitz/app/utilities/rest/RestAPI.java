@@ -7,7 +7,6 @@ import com.blitz.app.object_models.ObjectModelPlayer;
 import com.blitz.app.object_models.ObjectModelStats;
 import com.blitz.app.object_models.ObjectModelUser;
 import com.blitz.app.simple_models.Game;
-import com.blitz.app.simple_models.Player;
 import com.blitz.app.simple_models.Stat;
 import com.google.gson.JsonObject;
 
@@ -100,7 +99,7 @@ public interface RestAPI {
     @GET("/nfl_players")
     void nfl_players_get(@Query("keys[]") List<String> playerIds, // Required
                          @Query("index") String index,            // Required
-        Callback<RestAPIResult<Player>> listCallback);
+        Callback<RestAPIResult<ObjectModelPlayer>> listCallback);
 
     @GET("/item/{item_id}")
     void item_get(@Path("item_id") String itemId,

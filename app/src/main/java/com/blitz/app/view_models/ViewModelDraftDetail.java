@@ -4,10 +4,10 @@ import android.app.Activity;
 import android.os.Bundle;
 
 import com.blitz.app.object_models.ObjectModelGame;
+import com.blitz.app.object_models.ObjectModelPlayer;
 import com.blitz.app.object_models.ObjectModelStats;
 import com.blitz.app.screens.main.MatchInfoAdapter;
 import com.blitz.app.simple_models.Game;
-import com.blitz.app.simple_models.Player;
 import com.blitz.app.simple_models.Stat;
 import com.blitz.app.utilities.logging.LogHelper;
 import com.blitz.app.utilities.rest.RestAPIResult;
@@ -52,15 +52,16 @@ public class ViewModelDraftDetail extends ViewModel {
         final ViewModelDraftDetailCallbacks callbacks =
                 getCallbacks(ViewModelDraftDetailCallbacks.class);
 
-        ObjectModelStats.fetchRoster(Arrays.asList(player1ids), new Callback<RestAPIResult<Player>>() {
+        ObjectModelStats.fetchRoster(Arrays.asList(player1ids), new Callback<RestAPIResult<ObjectModelPlayer>>() {
             @Override
-            public void success(final RestAPIResult<Player> player1Result, Response response) {
+            public void success(final RestAPIResult<ObjectModelPlayer> player1Result, Response response) {
 
-                ObjectModelStats.fetchRoster(Arrays.asList(player2ids), new Callback<RestAPIResult<Player>>() {
+                ObjectModelStats.fetchRoster(Arrays.asList(player2ids), new Callback<RestAPIResult<ObjectModelPlayer>>() {
                     @Override
-                    public void success(RestAPIResult<Player> player2Result, Response response) {
-                        final List<Player> p1roster = player1Result.getResults();
-                        final List<Player> p2roster = player2Result.getResults();
+                    public void success(RestAPIResult<ObjectModelPlayer> player2Result, Response response) {
+
+                        final List<ObjectModelPlayer> p1roster = player1Result.getResults();
+                        final List<ObjectModelPlayer> p2roster = player2Result.getResults();
 
                         final List<String> allPlayerIds = new ArrayList<String>();
                         allPlayerIds.addAll(Arrays.asList(player1ids));
@@ -121,15 +122,15 @@ public class ViewModelDraftDetail extends ViewModel {
         });
     }
 
-    private List<Game> getPlayerGames(List<Player> roster, List<Game> games) {
+    private List<Game> getPlayerGames(List<ObjectModelPlayer> roster, List<Game> games) {
 
         List<Game> gamesForPlayers = new ArrayList<Game>(roster.size());
 
-        for(Player player: roster) {
+        for(ObjectModelPlayer player : roster) {
             Game playerGame = new Game();
             for(Game game: games) {
-                if(player.getTeamName().equals(game.getAwayTeamName()) ||
-                        player.getTeamName().equals(game.getHomeTeamName())) {
+                if(player.getTeam().equals(game.getAwayTeamName()) ||
+                        player.getTeam().equals(game.getHomeTeamName())) {
                     playerGame = game;
                     break;
                 }
@@ -166,7 +167,7 @@ public class ViewModelDraftDetail extends ViewModel {
 
     public interface ViewModelDraftDetailCallbacks extends ViewModelCallbacks {
 
-        void onStuff(List<Player> p1roster, List<Player> p2Roster, List<Game> p1Games,
+        void onStuff(List<ObjectModelPlayer> p1roster, List<ObjectModelPlayer> p2Roster, List<Game> p1Games,
                      List<Game> p2Games,
                      Multimap<String, Stat> playerStats, int week);
 
