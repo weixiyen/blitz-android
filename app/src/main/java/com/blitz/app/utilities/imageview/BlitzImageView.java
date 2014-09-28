@@ -2,6 +2,12 @@ package com.blitz.app.utilities.imageview;
 
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
+import android.graphics.Paint;
+import android.graphics.PorterDuff;
+import android.graphics.PorterDuffXfermode;
 import android.util.AttributeSet;
 import android.widget.ImageView;
 
@@ -9,6 +15,8 @@ import com.blitz.app.R;
 import com.blitz.app.utilities.app.AppConfig;
 import com.blitz.app.utilities.app.AppDataObject;
 import com.squareup.picasso.Picasso;
+import com.squareup.picasso.RequestCreator;
+import com.squareup.picasso.Transformation;
 
 import java.util.HashMap;
 
@@ -77,14 +85,37 @@ public class BlitzImageView extends ImageView {
      *
      * @param url Target URL, do not include base path.
      */
+    @SuppressWarnings("unused")
     public void setImageUrl(String url) {
+
+        setImageUrl(url, null);
+    }
+
+    /**
+     * Add another way to set an image - specifically
+     * a URL from the inter-webs.  Powered
+     * by Picasso by square.
+     *
+     * @param url Target URL, do not include base path.
+     * @param maskResourceId Resource image mask.
+     */
+    @SuppressWarnings("unused")
+    public void setImageUrl(String url, final Integer maskResourceId) {
 
         if (url != null) {
 
-            // Load the helmet image.
-            Picasso.with(getContext())
-                    .load(AppConfig.getCDNUrl() + url)
-                    .into(this);
+            // Initialize with url prefixed with blitz CDN.
+            RequestCreator requestCreator = Picasso.with(getContext())
+                    .load(AppConfig.getCDNUrl() + url);
+
+            if (maskResourceId != null) {
+
+                requestCreator = requestCreator
+                        .transform(getMaskedTransformation(maskResourceId));
+            }
+
+            // Load into image.
+            requestCreator.into(this);
 
             // Update cached url.
             setCachedImageUrl(url);
@@ -174,6 +205,51 @@ public class BlitzImageView extends ImageView {
                 setImageDrawable(null);
             }
         }
+    }
+
+    /**
+     * Fetch a transformer to mask an image bitmap
+     * source with some arbitrary image mask.
+     *
+     * @param maskResourceId Image mask resource.
+     *
+     * @return Transformation.
+     */
+    private Transformation getMaskedTransformation(final int maskResourceId) {
+
+        return new Transformation() {
+
+            @Override
+            public Bitmap transform(Bitmap source) {
+
+                // Fetch mask bitmap.
+                Bitmap mask = BitmapFactory.decodeResource
+                        (getResources(), maskResourceId);
+
+                // Create a result bitmap of same size as mask.
+                Bitmap result = Bitmap.createBitmap(mask.getWidth(),
+                        mask.getHeight(), Bitmap.Config.ARGB_8888);
+
+
+                Canvas mCanvas = new Canvas(result);
+                Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG);
+                paint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.DST_IN));
+                mCanvas.drawBitmap(source, 0, 0, null);
+                mCanvas.drawBitmap(mask, 0, 0, paint);
+                paint.setXfermode(null);
+
+                // Cleanup.
+                source.recycle();
+
+                return result;
+            }
+
+            @Override
+            public String key() {
+
+                return "blitz()";
+            }
+        };
     }
 
     // endregion
