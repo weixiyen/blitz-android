@@ -7,7 +7,7 @@ import com.blitz.app.utilities.rest.RestAPIResult;
 import com.google.gson.JsonObject;
 import com.google.gson.annotations.SerializedName;
 
-import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Miguel on 9/27/2014. Copyright 2014 Blitz Studios
@@ -42,9 +42,24 @@ public class ObjectModelPlayer extends ObjectModel {
 
     @SuppressWarnings("unused")
     public static void fetchPlayers(Activity activity,
-                                    ArrayList<String> playerIds,
+                                    List<String> playerIds,
                                     final CallbackPlayers callback) {
 
+        RestAPICallback<RestAPIResult<ObjectModelPlayer>> operation =
+                new RestAPICallback<RestAPIResult<ObjectModelPlayer>>(activity) {
+
+                    @Override
+                    public void success(RestAPIResult<ObjectModelPlayer> jsonObject) {
+
+                        // Now left queue.
+                        if (callback != null) {
+                            callback.onSuccess(jsonObject.getResults());
+                        }
+                    }
+                };
+
+        // Make api call.
+        mRestAPI.nfl_players_get(playerIds, "id", operation);
     }
 
     /**
@@ -197,12 +212,12 @@ public class ObjectModelPlayer extends ObjectModel {
 
     public interface CallbackPlayer {
 
-        public void onSuccess(ObjectModelPlayer draft);
+        public void onSuccess(ObjectModelPlayer player);
     }
 
     public interface CallbackPlayers {
 
-        public void onSuccess(ObjectModelPlayer draft);
+        public void onSuccess(List<ObjectModelPlayer> players);
     }
 
     // endregion

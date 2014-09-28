@@ -52,27 +52,29 @@ public class ViewModelDraftDetail extends ViewModel {
         final ViewModelDraftDetailCallbacks callbacks =
                 getCallbacks(ViewModelDraftDetailCallbacks.class);
 
-        ObjectModelStats.fetchRoster(Arrays.asList(player1ids), new Callback<RestAPIResult<ObjectModelPlayer>>() {
+        ObjectModelPlayer.fetchPlayers(mActivity, Arrays.asList(player1ids),
+                new ObjectModelPlayer.CallbackPlayers() {
+
             @Override
-            public void success(final RestAPIResult<ObjectModelPlayer> player1Result, Response response) {
+            public void onSuccess(final List<ObjectModelPlayer> p1roster) {
 
-                ObjectModelStats.fetchRoster(Arrays.asList(player2ids), new Callback<RestAPIResult<ObjectModelPlayer>>() {
+                ObjectModelPlayer.fetchPlayers(mActivity, Arrays.asList(player2ids),
+                        new ObjectModelPlayer.CallbackPlayers() {
+
                     @Override
-                    public void success(RestAPIResult<ObjectModelPlayer> player2Result, Response response) {
-
-                        final List<ObjectModelPlayer> p1roster = player1Result.getResults();
-                        final List<ObjectModelPlayer> p2roster = player2Result.getResults();
+                    public void onSuccess(final List<ObjectModelPlayer> p2roster) {
 
                         final List<String> allPlayerIds = new ArrayList<String>();
                         allPlayerIds.addAll(Arrays.asList(player1ids));
                         allPlayerIds.addAll(Arrays.asList(player2ids));
 
-
                         ObjectModelGame.fetchGames(year, week, new Callback<List<Game>>() {
                             @Override
                             public void success(final List<Game> games, Response response) {
 
-                                ObjectModelStats.fetchStatsForPlayers(allPlayerIds, year, week, new Callback<RestAPIResult<Stat>>() {
+                                ObjectModelStats.fetchStatsForPlayers(allPlayerIds, year, week,
+                                        new Callback<RestAPIResult<Stat>>() {
+
                                     @Override
                                     public void success(RestAPIResult<Stat> statRestAPIResult, Response response) {
                                         // build list of game results per pick
@@ -80,9 +82,6 @@ public class ViewModelDraftDetail extends ViewModel {
                                         List<Game> p2Games = getPlayerGames(p2roster, games);
 
                                         Multimap<String, Stat> playerStats = buildPlayerStatsMap(statRestAPIResult.getResults());
-
-                                        List<Float> p1Scores = getRosterScores(player1ids, playerStats);
-                                        List<Float> p2Scores = getRosterScores(player2ids, playerStats);
 
                                         callbacks.onStuff(p1roster, p2roster, p1Games, p2Games,
                                                 playerStats, week);
@@ -95,10 +94,9 @@ public class ViewModelDraftDetail extends ViewModel {
 
                                     @Override
                                     public void failure(RetrofitError error) {
-                                        LogHelper.log(error.getStackTrace().toString());
+                                        LogHelper.log(Arrays.toString(error.getStackTrace()));
                                     }
                                 });
-
                             }
 
                             @Override
@@ -107,17 +105,7 @@ public class ViewModelDraftDetail extends ViewModel {
                             }
                         });
                     }
-
-                    @Override
-                    public void failure(RetrofitError error) {
-                        error.printStackTrace();
-                    }
                 });
-            }
-
-            @Override
-            public void failure(RetrofitError error) {
-                error.printStackTrace();
             }
         });
     }

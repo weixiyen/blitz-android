@@ -18,11 +18,6 @@ public class ObjectModelStats extends ObjectModel {
         return player_id;
     }
 
-    public static void fetchRoster(List<String> playerIds, final Callback<RestAPIResult<ObjectModelPlayer>> playerCallback) {
-
-        mRestAPI.nfl_players_get(playerIds, "id", playerCallback);
-    }
-
     public static void fetchStatsForPlayers(List<String> playerIds, int year, int week, final Callback<RestAPIResult<Stat>> callback) {
         List<String> keys = new ArrayList<String>(playerIds.size());
 
