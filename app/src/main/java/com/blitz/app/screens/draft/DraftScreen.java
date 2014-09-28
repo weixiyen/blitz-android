@@ -34,12 +34,12 @@ public class DraftScreen extends BaseActivity implements ViewModelDraft.ViewMode
     @InjectView(R.id.draft_intro_container_vs)    View mDraftIntroContainerVs;
 
     // Matchup containers.
-    @InjectView(R.id.draft_matchup_player_left)    View mDraftMatchupPlayerLeft;
-    @InjectView(R.id.draft_matchup_player_right)   View mDraftMatchupPlayerRight;
+    @InjectView(R.id.draft_matchup_player_left)            View mDraftMatchupPlayerLeft;
+    @InjectView(R.id.draft_matchup_player_right)           View mDraftMatchupPlayerRight;
     @InjectView(R.id.draft_matchup_helmet_left)  BlitzImageView mDraftMatchupHelmetLeft;
     @InjectView(R.id.draft_matchup_helmet_right) BlitzImageView mDraftMatchupHelmetRight;
-    @InjectView(R.id.draft_matchup_username_left)  TextView mDraftMatchupUsernameLeft;
-    @InjectView(R.id.draft_matchup_username_right) TextView mDraftMatchupUsernameRight;
+    @InjectView(R.id.draft_matchup_username_left)      TextView mDraftMatchupUsernameLeft;
+    @InjectView(R.id.draft_matchup_username_right)     TextView mDraftMatchupUsernameRight;
 
     // Player containers.
     @InjectView(R.id.draft_player_tl) View mDraftPlayerTl;
@@ -59,12 +59,12 @@ public class DraftScreen extends BaseActivity implements ViewModelDraft.ViewMode
     // Actual content views of the intro section.
     @InjectView(R.id.draft_intro_helmet_left)  BlitzImageView mDraftIntroHelmetLeft;
     @InjectView(R.id.draft_intro_helmet_right) BlitzImageView mDraftIntroHelmetRight;
-    @InjectView(R.id.draft_intro_username_left)   TextView mDraftIntroUsernameLeft;
-    @InjectView(R.id.draft_intro_username_right)  TextView mDraftIntroUsernameRight;
-    @InjectView(R.id.draft_intro_scorecard_left)  TextView mDraftIntroScorecardLeft;
-    @InjectView(R.id.draft_intro_scorecard_right) TextView mDraftIntroScorecardRight;
-    @InjectView(R.id.draft_intro_elo_left)        TextView mDraftIntroEloLeft;
-    @InjectView(R.id.draft_intro_elo_right)       TextView mDraftIntroEloRight;
+    @InjectView(R.id.draft_intro_username_left)      TextView mDraftIntroUsernameLeft;
+    @InjectView(R.id.draft_intro_username_right)     TextView mDraftIntroUsernameRight;
+    @InjectView(R.id.draft_intro_scorecard_left)     TextView mDraftIntroScorecardLeft;
+    @InjectView(R.id.draft_intro_scorecard_right)    TextView mDraftIntroScorecardRight;
+    @InjectView(R.id.draft_intro_elo_left)           TextView mDraftIntroEloLeft;
+    @InjectView(R.id.draft_intro_elo_right)          TextView mDraftIntroEloRight;
 
     // View model object.
     private ViewModelDraft mViewModelDraft;
@@ -455,6 +455,20 @@ public class DraftScreen extends BaseActivity implements ViewModelDraft.ViewMode
         mDraftState = state;
 
         syncDraftUIState();
+    }
+
+    /**
+     * Update header label when new round
+     * string comes in.
+     *
+     * @param roundAndPosition New round and position if available.
+     */
+    @Override
+    public void onRoundAndPositionChanged(String roundAndPosition) {
+
+        if (mDraftHeader != null) {
+            mDraftHeader.setText(roundAndPosition);
+        }
     }
 
     // endregion

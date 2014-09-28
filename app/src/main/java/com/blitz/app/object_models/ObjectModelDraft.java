@@ -86,7 +86,7 @@ public final class ObjectModelDraft extends ObjectModel {
     @SuppressWarnings("unused") @SerializedName("user_info")
     private HashMap<String, ObjectModelUser> mUserInfo;
 
-    @SuppressWarnings("unused") @SerializedName("positionsRequired")
+    @SuppressWarnings("unused") @SerializedName("positions_required")
     private ArrayList<String> mPositionsRequired;
     @SuppressWarnings("unused") @SerializedName("users")
     private ArrayList<String> mUsers;
@@ -257,6 +257,17 @@ public final class ObjectModelDraft extends ObjectModel {
     public List<String> getUsers() {
 
         return mUsers;
+    }
+
+    /**
+     * Fetch positions required for this draft.
+     *
+     * @return Positions required for this draft.
+     */
+    @SuppressWarnings("unused")
+    public ArrayList<String> getPositionsRequired() {
+
+        return mPositionsRequired;
     }
 
     /**

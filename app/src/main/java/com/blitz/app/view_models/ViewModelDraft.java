@@ -49,6 +49,9 @@ public class ViewModelDraft extends ViewModel {
     // Current draft state.
     private DraftState mState;
 
+    // String of the current round.
+    private String mRoundAndPosition;
+
     // Callbacks.
     private ViewModelDraftCallbacks mCallbacks;
 
@@ -441,8 +444,48 @@ public class ViewModelDraft extends ViewModel {
         }
     }
 
+    /**
+     * Set the round and position string identifier
+     * and emit the value any time it changes.
+     */
     private void resolveCurrentRoundAndPosition() {
 
+        // All round have been completed.
+        if (mDraftModel.getCurrentRound() > mDraftModel.getRounds()) {
+
+            return;
+        }
+
+        // Start with just round identifier.
+        String roundAndPosition = "Round " + mDraftModel.getCurrentRound();
+
+        // Add position if that string is available.
+        if (mDraftModel.getPositionsRequired() != null &&
+            mDraftModel.getPositionsRequired().get(mDraftModel.getCurrentRound() - 1) != null) {
+
+            roundAndPosition += " - " +
+                    mDraftModel.getPositionsRequired().get(mDraftModel.getCurrentRound() - 1);
+        }
+
+        if (mDraftModel.getCurrentRound() == mDraftModel.getRounds()) {
+
+            // Last round (FLEX pick).
+            roundAndPosition = "Final Round!";
+        }
+
+        if (!roundAndPosition.equals(mRoundAndPosition) && mState != DraftState.DRAFT_PREVIEW) {
+
+            if (mDraftModel.getCurrentRound() == 1 ||
+                    mDraftModel.getSecondsSinceLastRoundCompleteTime() >
+                            mDraftModel.getTimePerPostview()) {
+
+                mRoundAndPosition = roundAndPosition;
+
+                if (mCallbacks != null) {
+                    mCallbacks.onRoundAndPositionChanged(mRoundAndPosition);
+                }
+            }
+        }
     }
 
     private void resolveRoundTimeRemaining() {
@@ -475,6 +518,8 @@ public class ViewModelDraft extends ViewModel {
                 int rating, int wins, int losses, int ties, String itemAvatarUrl);
 
         public void onDraftStateChanged(DraftState state);
+
+        public void onRoundAndPositionChanged(String roundAndPosition);
     }
 
     // endregion
