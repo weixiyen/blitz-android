@@ -108,8 +108,24 @@ public final class ObjectModelDraft extends ObjectModel {
         return mGameStatus;
     }
 
+    /**
+     * Fetch the team name.
+     *
+     * @param team Team id.
+     *
+     * @return Team name string.
+     */
+    @SuppressWarnings("unused")
     public String getTeamName(int team) {
-        return mUserInfo.get(mUsers.get(team)).getUsername();
+
+        if (mUsers != null &&
+                mUserInfo != null &&
+                mUserInfo.get(mUsers.get(team)) != null) {
+
+            return mUserInfo.get(mUsers.get(team)).getUsername();
+        }
+
+        return null;
     }
 
     public float getTeamPoints(int team) {
