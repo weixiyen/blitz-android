@@ -14,23 +14,28 @@ import java.util.ArrayList;
  */
 public class ObjectModelPlayer extends ObjectModel {
 
+    // region Member Variables
+    // =============================================================================================
+
     @SuppressWarnings("unused") @SerializedName("id")
-    private String id;
+    private String mId;
     @SuppressWarnings("unused") @SerializedName("full_name")
-    private String full_name;
+    private String mFullName;
     @SuppressWarnings("unused") @SerializedName("first_name")
-    private String first_name;
+    private String mFirstName;
     @SuppressWarnings("unused") @SerializedName("last_name")
-    private String last_name;
+    private String mLastName;
     @SuppressWarnings("unused") @SerializedName("team")
-    private String team;
+    private String mTeam;
     @SuppressWarnings("unused") @SerializedName("position")
-    private String position;
+    private String mPosition;
     @SuppressWarnings("unused") @SerializedName("opponent")
-    private String opponent;
+    private String mOpponent;
 
     @SuppressWarnings("unused") @SerializedName("is_home_team")
     private boolean mIsHomeTeam;
+
+    // endregion
 
     // region REST Methods
     // =============================================================================================
@@ -87,10 +92,102 @@ public class ObjectModelPlayer extends ObjectModel {
     // region Public Methods
     // =============================================================================================
 
+    /**
+     * Fetch player id.
+     *
+     * @return Player id.
+     */
     @SuppressWarnings("unused")
-    public String fetchPhotoUrl() {
+    public String getId() {
 
-        return null;
+        return mId;
+    }
+
+    /**
+     * Fetch full name of player or team.
+     *
+     * @return Full name.
+     */
+    @SuppressWarnings("unused")
+    public String getFullName() {
+
+        return mFullName;
+    }
+
+    /**
+     * Fetch first name.
+     *
+     * @return First name.
+     */
+    @SuppressWarnings("unused")
+    public String getFirstName() {
+
+        return mFirstName;
+    }
+
+    /**
+     * Fetch last name.
+     *
+     * @return Last name.
+     */
+    @SuppressWarnings("unused")
+    public String getLastName() {
+
+        return mLastName;
+    }
+
+    /**
+     * Fetch team name.
+     *
+     * @return Team name.
+     */
+    @SuppressWarnings("unused")
+    public String getTeam() {
+        return mTeam;
+    }
+
+    /**
+     * Fetch player position.
+     *
+     * @return Player position.
+     */
+    @SuppressWarnings("unused")
+    public String getPosition() {
+
+        return mPosition;
+    }
+
+    /**
+     * Fetch opponent.
+     *
+     * @return Opponent.
+     */
+    @SuppressWarnings("unused")
+    public String getOpponent() {
+
+        return mOpponent;
+    }
+
+    /**
+     * Fetch url of player photo.
+     *
+     * @return Player photo url.
+     */
+    @SuppressWarnings("unused")
+    public String getPhotoUrl() {
+
+        return null; // TODO: Implement
+    }
+
+    /**
+     * Is this a home team.
+     *
+     * @return Is home team.
+     */
+    @SuppressWarnings("unused")
+    public boolean getIsHomeTeam() {
+
+        return mIsHomeTeam;
     }
 
     // endregion
