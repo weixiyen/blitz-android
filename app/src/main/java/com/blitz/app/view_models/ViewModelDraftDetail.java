@@ -3,6 +3,7 @@ package com.blitz.app.view_models;
 import android.app.Activity;
 import android.os.Bundle;
 
+import com.blitz.app.object_models.ObjectModelDraft;
 import com.blitz.app.object_models.ObjectModelGame;
 import com.blitz.app.object_models.ObjectModelPlayer;
 import com.blitz.app.object_models.ObjectModelStats;
@@ -44,70 +45,81 @@ public class ViewModelDraftDetail extends ViewModel {
     public void initialize() {
 
         final Bundle extras = mActivity.getIntent().getExtras();
-        final String[] player1ids = extras.getStringArray(MatchInfoAdapter.PLAYER_1_ROSTER);
-        final String[] player2ids = extras.getStringArray(MatchInfoAdapter.PLAYER_2_ROSTER);
-        final int week = extras.getInt(MatchInfoAdapter.WEEK);
-        final int year = extras.getInt(MatchInfoAdapter.YEAR);
+        final String draftId = extras.getString(MatchInfoAdapter.DRAFT_ID);
+
 
         final ViewModelDraftDetailCallbacks callbacks =
                 getCallbacks(ViewModelDraftDetailCallbacks.class);
 
-        ObjectModelPlayer.fetchPlayers(mActivity, Arrays.asList(player1ids),
-                new ObjectModelPlayer.CallbackPlayers() {
-
+        ObjectModelDraft.fetchSyncedDraft(mActivity, draftId, new ObjectModelDraft.DraftCallback() {
             @Override
-            public void onSuccess(final List<ObjectModelPlayer> p1roster) {
+            public void onSuccess(ObjectModelDraft draft) {
 
-                ObjectModelPlayer.fetchPlayers(mActivity, Arrays.asList(player2ids),
+                final List<String> player1ids = draft.getTeamRoster(0);
+                final List<String> player2ids = draft.getTeamRoster(1);
+                final int week = draft.getWeek();
+                final int year = draft.getYear();
+
+                ObjectModelPlayer.fetchPlayers(mActivity, player1ids,
                         new ObjectModelPlayer.CallbackPlayers() {
 
-                    @Override
-                    public void onSuccess(final List<ObjectModelPlayer> p2roster) {
-
-                        final List<String> allPlayerIds = new ArrayList<String>();
-                        allPlayerIds.addAll(Arrays.asList(player1ids));
-                        allPlayerIds.addAll(Arrays.asList(player2ids));
-
-                        ObjectModelGame.fetchGames(year, week, new Callback<List<Game>>() {
                             @Override
-                            public void success(final List<Game> games, Response response) {
+                            public void onSuccess(final List<ObjectModelPlayer> p1roster) {
 
-                                ObjectModelStats.fetchStatsForPlayers(allPlayerIds, year, week,
-                                        new Callback<RestAPIResult<Stat>>() {
+                                ObjectModelPlayer.fetchPlayers(mActivity, player2ids,
+                                        new ObjectModelPlayer.CallbackPlayers() {
 
-                                    @Override
-                                    public void success(RestAPIResult<Stat> statRestAPIResult, Response response) {
-                                        // build list of game results per pick
-                                        List<Game> p1Games = getPlayerGames(p1roster, games);
-                                        List<Game> p2Games = getPlayerGames(p2roster, games);
+                                            @Override
+                                            public void onSuccess(final List<ObjectModelPlayer> p2roster) {
 
-                                        Multimap<String, Stat> playerStats = buildPlayerStatsMap(statRestAPIResult.getResults());
+                                                final List<String> allPlayerIds = new ArrayList<String>();
+                                                allPlayerIds.addAll(player1ids);
+                                                allPlayerIds.addAll(player2ids);
 
-                                        callbacks.onStuff(p1roster, p2roster, p1Games, p2Games,
-                                                playerStats, week);
+                                                ObjectModelGame.fetchGames(year, week, new Callback<List<Game>>() {
+                                                    @Override
+                                                    public void success(final List<Game> games, Response response) {
 
-                                        callbacks.onMatchup(extras.getString(MatchInfoAdapter.PLAYER_1_NAME),
-                                                extras.getFloat(MatchInfoAdapter.PLAYER_1_SCORE),
-                                                extras.getString(MatchInfoAdapter.PLAYER_2_NAME),
-                                                extras.getFloat(MatchInfoAdapter.PLAYER_2_SCORE));
-                                    }
+                                                        ObjectModelStats.fetchStatsForPlayers(allPlayerIds, year, week,
+                                                                new Callback<RestAPIResult<Stat>>() {
 
-                                    @Override
-                                    public void failure(RetrofitError error) {
-                                        LogHelper.log(Arrays.toString(error.getStackTrace()));
-                                    }
-                                });
-                            }
+                                                                    @Override
+                                                                    public void success(RestAPIResult<Stat> statRestAPIResult, Response response) {
+                                                                        // build list of game results per pick
+                                                                        List<Game> p1Games = getPlayerGames(p1roster, games);
+                                                                        List<Game> p2Games = getPlayerGames(p2roster, games);
 
-                            @Override
-                            public void failure(RetrofitError error) {
-                                error.printStackTrace();
+                                                                        Multimap<String, Stat> playerStats = buildPlayerStatsMap(statRestAPIResult.getResults());
+
+                                                                        callbacks.onStuff(p1roster, p2roster, p1Games, p2Games,
+                                                                                playerStats, week);
+
+                                                                        callbacks.onMatchup(extras.getString(MatchInfoAdapter.PLAYER_1_NAME),
+                                                                                extras.getFloat(MatchInfoAdapter.PLAYER_1_SCORE),
+                                                                                extras.getString(MatchInfoAdapter.PLAYER_2_NAME),
+                                                                                extras.getFloat(MatchInfoAdapter.PLAYER_2_SCORE));
+                                                                    }
+
+                                                                    @Override
+                                                                    public void failure(RetrofitError error) {
+                                                                        LogHelper.log(Arrays.toString(error.getStackTrace()));
+                                                                    }
+                                                                });
+                                                    }
+
+                                                    @Override
+                                                    public void failure(RetrofitError error) {
+                                                        error.printStackTrace();
+                                                    }
+                                                });
+                                            }
+                                        });
                             }
                         });
-                    }
-                });
             }
         });
+
+
     }
 
     private List<Game> getPlayerGames(List<ObjectModelPlayer> roster, List<Game> games) {
