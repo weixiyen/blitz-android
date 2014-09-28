@@ -52,6 +52,10 @@ public class ViewModelDraft extends ViewModel {
     // String of the current round.
     private String mRoundAndPosition;
 
+    // Choice related structures.
+    private ArrayList<ObjectModelDraft.Choice> mCurrentChoices;
+    private Date mCurrentChoicesShowTime;
+
     // Callbacks.
     private ViewModelDraftCallbacks mCallbacks;
 
@@ -153,7 +157,12 @@ public class ViewModelDraft extends ViewModel {
      */
     private void syncDraft() {
 
-        LogHelper.log("Syncing draft after a suspension.");
+        // TODO: Implement me.
+    }
+
+    private void syncChoicesWithoutData(ArrayList<String> choices) {
+
+        // TODO: Implement me.
     }
 
     /**
@@ -310,7 +319,7 @@ public class ViewModelDraft extends ViewModel {
                     resolvePicks();
 
                     // Continue running the loop on a 100ms delay.
-                    mGameLoopHandler.postDelayed(mGameLoopRunnable, 100);
+                    mGameLoopHandler.postDelayed(mGameLoopRunnable, 250);
                 }
             };
         }
@@ -490,14 +499,59 @@ public class ViewModelDraft extends ViewModel {
 
     private void resolveRoundTimeRemaining() {
 
+        // TODO: Implement me.
     }
 
     private void resolveRoundComplete() {
 
+        // TODO: Implement me.
     }
 
+    /**
+     * Resolve the choices the player has to
+     * choose from.
+     */
     private void resolveChoices() {
 
+        // Fetch current choice ids.
+        ArrayList<String> choiceIds = mDraftModel.getCurrentChoices();
+
+        if (choiceIds != null) {
+
+            ArrayList<ObjectModelDraft.Choice> choices =
+                    new ArrayList<ObjectModelDraft.Choice>();
+
+            ArrayList<String> choicesToSync = new ArrayList<String>();
+
+            for (String playerId : choiceIds) {
+
+                if (mDraftModel.getPlayerDataMap().containsKey(playerId)) {
+
+                    // Already been populated view comet server.
+                    choices.add(mDraftModel.getPlayerDataMap().get(playerId));
+
+                } else {
+
+                    // Need to fetch player data.
+                    choicesToSync.add(playerId);
+                }
+            }
+
+            // Fetch additional choice information.
+            if (choices.size() != choiceIds.size()) {
+
+                syncChoicesWithoutData(choicesToSync);
+
+            } else if (!choices.equals(mCurrentChoices)) {
+
+                mCurrentChoices = choices;
+                mCurrentChoicesShowTime = DateUtils.getDateInGMT();
+
+                if (mCallbacks != null) {
+                    mCallbacks.onChoicesAvailable(mCurrentChoices);
+                }
+            }
+        }
     }
 
     private void resolvePicks() {
@@ -520,6 +574,8 @@ public class ViewModelDraft extends ViewModel {
         public void onDraftStateChanged(DraftState state);
 
         public void onRoundAndPositionChanged(String roundAndPosition);
+
+        public void onChoicesAvailable(ArrayList<ObjectModelDraft.Choice> choices);
     }
 
     // endregion

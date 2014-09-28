@@ -7,6 +7,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.blitz.app.R;
+import com.blitz.app.object_models.ObjectModelDraft;
 import com.blitz.app.utilities.android.BaseActivity;
 import com.blitz.app.utilities.animations.AnimHelperFade;
 import com.blitz.app.utilities.animations.AnimHelperSpringsGroup;
@@ -14,8 +15,11 @@ import com.blitz.app.utilities.animations.AnimHelperSpringsPresets;
 import com.blitz.app.utilities.animations.AnimHelperSpringsView;
 import com.blitz.app.utilities.authentication.AuthHelper;
 import com.blitz.app.utilities.imageview.BlitzImageView;
+import com.blitz.app.utilities.logging.LogHelper;
 import com.blitz.app.view_models.ViewModel;
 import com.blitz.app.view_models.ViewModelDraft;
+
+import java.util.ArrayList;
 
 import butterknife.InjectView;
 
@@ -469,6 +473,13 @@ public class DraftScreen extends BaseActivity implements ViewModelDraft.ViewMode
         if (mDraftHeader != null) {
             mDraftHeader.setText(roundAndPosition);
         }
+    }
+
+    @Override
+    public void onChoicesAvailable(ArrayList<ObjectModelDraft.Choice> choices) {
+
+        // TODO: Do not expose ObjectModel.
+        LogHelper.log("Choices: " + choices);
     }
 
     // endregion

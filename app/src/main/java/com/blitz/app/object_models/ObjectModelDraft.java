@@ -260,6 +260,22 @@ public final class ObjectModelDraft extends ObjectModel {
     }
 
     /**
+     * Fetch a list of current player choices.
+     *
+     * @return List of choices.
+     */
+    @SuppressWarnings("unused")
+    public ArrayList<String> getCurrentChoices() {
+
+        if (mChoices != null && mChoices.size() > 0) {
+
+            return mChoices.get(mChoices.size() - 1);
+        }
+
+        return null;
+    }
+
+    /**
      * Fetch positions required for this draft.
      *
      * @return Positions required for this draft.
@@ -268,6 +284,21 @@ public final class ObjectModelDraft extends ObjectModel {
     public ArrayList<String> getPositionsRequired() {
 
         return mPositionsRequired;
+    }
+
+    /**
+     * Fetch map of player data.
+     *
+     * @return Player data.
+     */
+    @SuppressWarnings("unused")
+    public HashMap<String, Choice> getPlayerDataMap() {
+
+        if (mPlayerDataMap == null) {
+            mPlayerDataMap = new HashMap<String, Choice>();
+        }
+
+        return mPlayerDataMap;
     }
 
     /**
