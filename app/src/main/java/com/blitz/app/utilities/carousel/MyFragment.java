@@ -30,7 +30,7 @@ public class MyFragment extends Fragment {
         }
 
         MyLinearLayout l = (MyLinearLayout)
-                inflater.inflate(R.layout.mf, container, false);
+                inflater.inflate(R.layout.blitz_carousel_helmet, container, false);
 
         int pos = this.getArguments().getInt("pos");
 
