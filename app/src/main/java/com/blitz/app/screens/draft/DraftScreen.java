@@ -17,6 +17,7 @@ import com.blitz.app.utilities.animations.AnimHelperSpringsPresets;
 import com.blitz.app.utilities.animations.AnimHelperSpringsView;
 import com.blitz.app.utilities.authentication.AuthHelper;
 import com.blitz.app.utilities.imageview.BlitzImageView;
+import com.blitz.app.utilities.logging.LogHelper;
 import com.blitz.app.utilities.textview.BlitzTextView;
 import com.blitz.app.view_models.ViewModel;
 import com.blitz.app.view_models.ViewModelDraft;
@@ -428,6 +429,7 @@ public class DraftScreen extends BaseActivity implements ViewModelDraft.ViewMode
             R.id.draft_player_br })
     @SuppressWarnings("unused")
     public void playerClicked(View playerView) {
+        LogHelper.log("Player clicked: " + playerView.getTag());
 
         if (playerView.getTag() != null) {
 
