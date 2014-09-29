@@ -33,12 +33,17 @@
         android:layout_alignBottom="@+id/web_header"
         android:background="@color/background_inner_divider"/>
 
-    <com.blitz.app.utilities.android.BaseWebView
-        android:id="@+id/web_view_container"
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="50dp"
-        android:background="@color/background_inner"/>
+        android:background="@color/background_inner">
+
+        <com.blitz.app.utilities.android.BaseWebView
+            android:id="@+id/web_view_container"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+    </FrameLayout>
 
     <ProgressBar
         android:id="@+id/web_view_loading"

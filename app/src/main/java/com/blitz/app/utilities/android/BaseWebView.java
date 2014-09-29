@@ -3,6 +3,7 @@ package com.blitz.app.utilities.android;
 import android.content.Context;
 import android.net.http.SslError;
 import android.os.Build;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.util.AttributeSet;
 import android.view.View;
@@ -11,21 +12,24 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ProgressBar;
 
+import com.blitz.app.utilities.animations.AnimHelper;
+import com.blitz.app.utilities.animations.AnimHelperFade;
+
 /**
- * Created by mrkcsc on 8/20/14.
+ * Created by mrkcsc on 8/20/14. Copyright 2014 Blitz Studios
  */
 public class BaseWebView extends WebView {
 
-    //==============================================================================================
-    // Member Variables
-    //==============================================================================================
+    // region Member Variables
+    // =============================================================================================
 
     // Progress bar for loading.
     private ProgressBar mLoadingView;
 
-    //==============================================================================================
-    // Constructors
-    //==============================================================================================
+    // endregion
+
+    // region Constructors
+    // =============================================================================================
 
     /**
      * Configure custom web view.
@@ -57,9 +61,10 @@ public class BaseWebView extends WebView {
         configureWebView();
     }
 
-    //==============================================================================================
-    // Public Methods
-    //==============================================================================================
+    // endregion
+
+    // region Public Methods
+    // =============================================================================================
 
     /**
      * Set the loading view.
@@ -71,14 +76,18 @@ public class BaseWebView extends WebView {
         mLoadingView = loadingView;
     }
 
-    //==============================================================================================
-    // Private Methods
-    //==============================================================================================
+    // endregion
+
+    // region Private Methods
+    // =============================================================================================
 
     /**
      * Configure the web view.
      */
     private void configureWebView() {
+
+        // Hide initially.
+        setVisibility(INVISIBLE);
 
         // Set web-view as transparent.
         setBackgroundColor(0x00000000);
@@ -97,7 +106,8 @@ public class BaseWebView extends WebView {
              * of SSL so this should be revised someday.
              */
             @Override
-            public void onReceivedSslError(WebView view, @NonNull SslErrorHandler handler, SslError error) {
+            public void onReceivedSslError(WebView view,
+                                           @NonNull SslErrorHandler handler, SslError error) {
 
                 // Continue.
                 handler.proceed();
@@ -115,7 +125,22 @@ public class BaseWebView extends WebView {
                 if (mLoadingView != null) {
                     mLoadingView.setVisibility(View.GONE);
                 }
+
+                // Wait for page transition.
+                new Handler().postDelayed(new Runnable() {
+
+                    @Override
+                    public void run() {
+
+                        // Fade in the web view.
+                        AnimHelperFade.setVisibility(BaseWebView.this, VISIBLE,
+                                AnimHelper.getConfigAnimTimeStandard(getContext()) * 2);
+                    }
+
+                }, AnimHelper.getConfigAnimTimeStandard(getContext()));
             }
         });
     }
+
+    // endregion
 }

@@ -10,6 +10,7 @@ import android.widget.Switch;
 import com.blitz.app.R;
 import com.blitz.app.screens.loading.LoadingScreen;
 import com.blitz.app.screens.web.WebScreen;
+import com.blitz.app.utilities.android.BaseActivity;
 import com.blitz.app.utilities.android.BaseFragment;
 import com.blitz.app.utilities.app.AppConfig;
 import com.blitz.app.utilities.app.AppData;
@@ -132,6 +133,8 @@ public class MainScreenFragmentSettings extends BaseFragment implements ViewMode
         // Pass parameters to the web screen.
         intent.putExtra(WebScreen.PARAM_URL, AppConfig.getTermsOfUseUrl());
         intent.putExtra(WebScreen.PARAM_TITLE, "Terms Of Use");
+        intent.putExtra(WebScreen.PARAM_TRANSITION_TYPE,
+                BaseActivity.CustomTransition.T_SLIDE_VERTICAL);
 
         startActivity(intent);
     }
@@ -142,13 +145,15 @@ public class MainScreenFragmentSettings extends BaseFragment implements ViewMode
     @OnClick(R.id.main_settings_privacy_policy) @SuppressWarnings("unused")
     public void privacyPolicyClicked() {
 
-        Intent i = new Intent(this.getActivity(), WebScreen.class);
+        Intent intent = new Intent(this.getActivity(), WebScreen.class);
 
         // Pass parameters to the web screen.
-        i.putExtra(WebScreen.PARAM_URL, AppConfig.getPrivacyPolicyUrl());
-        i.putExtra(WebScreen.PARAM_TITLE, "Privacy Policy");
+        intent.putExtra(WebScreen.PARAM_URL, AppConfig.getPrivacyPolicyUrl());
+        intent.putExtra(WebScreen.PARAM_TITLE, "Privacy Policy");
+        intent.putExtra(WebScreen.PARAM_TRANSITION_TYPE,
+                BaseActivity.CustomTransition.T_SLIDE_VERTICAL);
 
-        startActivity(i);
+        startActivity(intent);
     }
 
     /**
