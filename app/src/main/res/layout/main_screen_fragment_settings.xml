@@ -48,7 +48,8 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="20dp"
-                android:background="@color/background_inner_dark"/>
+                android:background="@color/background_inner_dark"
+                android:visibility="gone"/>
 
             <android.support.v4.view.ViewPager
                 android:id="@+id/main_settings_carousel"
@@ -56,12 +57,14 @@
                 android:layout_height="@dimen/helmet_size"
                 android:background="@color/background_inner_dark"
                 android:gravity="center"
-                android:overScrollMode="never" />
+                android:overScrollMode="never"
+                android:visibility="gone"/>
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
-                android:background="@color/background_inner_dark"/>
+                android:background="@color/background_inner_dark"
+                android:visibility="gone"/>
 
             <View
                 android:layout_width="match_parent"
@@ -98,7 +101,8 @@
                 android:paddingRight="25dp"
                 android:text="Change Password"
                 android:textColor="@color/text_color_dark"
-                android:textSize="16sp"/>
+                android:textSize="16sp"
+                android:visibility="gone"/>
 
             <View
                 android:layout_width="match_parent"
@@ -116,7 +120,8 @@
                 android:paddingRight="25dp"
                 android:text="@string/push_notifications"
                 android:textColor="@color/text_color_light"
-                android:textSize="16sp"/>
+                android:textSize="16sp"
+                android:visibility="gone"/>
 
             <View
                 android:layout_width="match_parent"
@@ -134,7 +139,8 @@
                 android:paddingRight="25dp"
                 android:text="@string/music_and_sounds"
                 android:textColor="@color/text_color_light"
-                android:textSize="16sp"/>
+                android:textSize="16sp"
+                android:visibility="gone"/>
 
             <View
                 android:layout_width="match_parent"
@@ -149,7 +155,8 @@
                 android:gravity="center"
                 android:orientation="vertical"
                 android:paddingLeft="25dp"
-                android:paddingRight="25dp">
+                android:paddingRight="25dp"
+                android:visibility="gone">
 
                 <TextView
                     style="@style/TextViewStyle"
@@ -182,6 +189,13 @@
                 android:layout_height="1dp"
                 android:background="@color/background_inner_divider"/>
 
+            <!-- Invitation links -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="gone">
+
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
@@ -353,6 +367,7 @@
                     android:textColor="@color/text_color_link"
                     android:textSize="20sp"/>
             </RelativeLayout>
+            </LinearLayout>
 
             <View
                 android:layout_width="match_parent"
