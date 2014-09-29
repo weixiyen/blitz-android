@@ -95,7 +95,7 @@ public class ViewModelDraftDetail extends ViewModel {
                                                                         callbacks.onStuff(p1roster, p2roster, p1Games, p2Games,
                                                                                 playerStats, week);
 
-                                                                        ObjectModelItem.fetchItems(mActivity, Arrays.asList(
+                                                                        ObjectModelItem.fetchAvatars(mActivity, Arrays.asList(
                                                                                 draft.getUserInfo(0).getAvatarId(),
                                                                                 draft.getUserInfo(1).getAvatarId()),
                                                                                 new ObjectModelItem.CallbackItems() {
