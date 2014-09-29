@@ -20,10 +20,13 @@ public class AnimHelperFade extends AnimHelper {
      *
      * @param view Target view.
      * @param visibility Target visibility.
+     * @param duration Transition time.
      * @param forceTransition If set it will force the animation
      *                        even if going from same visibility state.
      */
-    public static void setVisibility(final View view, final int visibility, boolean forceTransition) {
+    @SuppressWarnings("unused")
+    public static void setVisibility(final View view, final int visibility,
+                                     int duration, boolean forceTransition)  {
 
         // Don't animate if already set.
         if (view.getVisibility() == visibility && !forceTransition) {
@@ -68,7 +71,7 @@ public class AnimHelperFade extends AnimHelper {
         ObjectAnimator alphaAnimator = ObjectAnimator.ofFloat(view, "alpha", alphaFrom, alphaTo);
 
         // Set the default duration.
-        alphaAnimator.setDuration(getConfigAnimTimeStandard(view.getContext()));
+        alphaAnimator.setDuration(duration);
 
         // Set animation end callback.
         alphaAnimator.addListener(new AnimatorListenerAdapter() {
@@ -89,11 +92,27 @@ public class AnimHelperFade extends AnimHelper {
     }
 
     /**
+     * Sets the visibility of a view but layers a
+     * fade animation into it to make it
+     * more appealing.
+     *
+     * @param view Target view.
+     * @param visibility Target visibility.
+     */
+    @SuppressWarnings("unused")
+    public static void setVisibility(final View view, final int visibility, int duration) {
+
+        setVisibility(view, visibility, duration, false);
+    }
+
+    /**
      * By default do not force transition.
      */
+    @SuppressWarnings("unused")
     public static void setVisibility(final View view, final int visibility) {
 
-        setVisibility(view, visibility, false);
+        setVisibility(view, visibility,
+                getConfigAnimTimeStandard(view.getContext()));
     }
 
     // endregion
