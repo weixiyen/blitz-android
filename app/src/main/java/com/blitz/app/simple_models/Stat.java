@@ -11,6 +11,8 @@ public class Stat {
     private int week;
     private int year;
 
+    private static final String UNSUPPORTED = "Unsupported";
+
     public String getPlayerId() {
         return player_id;
     }
@@ -67,7 +69,7 @@ public class Stat {
                 return "Points Allowed";
             }
 
-            return "Unsupported";
+            return UNSUPPORTED;
 
     }
 
@@ -141,5 +143,9 @@ public class Stat {
 
     public float getValue() {
         return value;
+    }
+
+    public boolean isSupported() {
+        return !UNSUPPORTED.equals(getStatName());
     }
 }

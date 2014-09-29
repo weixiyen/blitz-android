@@ -96,16 +96,16 @@ public class ViewModelDraftDetail extends ViewModel {
                                                                                 playerStats, week);
 
                                                                         ObjectModelItem.fetchAvatars(mActivity, Arrays.asList(
-                                                                                draft.getUserInfo(0).getAvatarId(),
-                                                                                draft.getUserInfo(1).getAvatarId()),
+                                                                                        draft.getUserInfo(0).getAvatarId(),
+                                                                                        draft.getUserInfo(1).getAvatarId()),
                                                                                 new ObjectModelItem.CallbackItems() {
 
-                                                                            @Override
-                                                                            public void onSuccess(List<ObjectModelItem> items) {
+                                                                                    @Override
+                                                                                    public void onSuccess(List<ObjectModelItem> items) {
 
-                                                                                callbacks.onAvatars(items.get(0).getDefaultImgPath(), items.get(1).getDefaultImgPath());
-                                                                            }
-                                                                        });
+                                                                                        callbacks.onAvatars(items.get(0).getDefaultImgPath(), items.get(1).getDefaultImgPath());
+                                                                                    }
+                                                                                });
 
                                                                         callbacks.onMatchup(extras.getString(MatchInfoAdapter.PLAYER_1_NAME),
                                                                                 extras.getFloat(MatchInfoAdapter.PLAYER_1_SCORE),
@@ -173,7 +173,9 @@ public class ViewModelDraftDetail extends ViewModel {
 
         Multimap<String, Stat> map = ArrayListMultimap.create();
         for(Stat stat: stats) {
-            map.put(stat.getPlayerId(), stat);
+            if(stat.isSupported()) {
+                map.put(stat.getPlayerId(), stat);
+            }
         }
 
         return map;
