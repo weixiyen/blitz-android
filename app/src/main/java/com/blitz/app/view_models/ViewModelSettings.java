@@ -2,6 +2,9 @@ package com.blitz.app.view_models;
 
 import android.app.Activity;
 
+import com.blitz.app.object_models.ObjectModelUser;
+import com.blitz.app.utilities.authentication.AuthHelper;
+
 /**
  * Created by Nate on 9/28/14.
  */
@@ -20,9 +23,16 @@ public class ViewModelSettings extends ViewModel {
     @Override
     public void initialize() {
 
-        ViewModelSettingsCallbacks callbacks = getCallbacks(ViewModelSettingsCallbacks.class);
-        callbacks.onEmail("spiffy1911@gmail.com");
+        final ViewModelSettingsCallbacks callbacks = getCallbacks(ViewModelSettingsCallbacks.class);
 
+        ObjectModelUser.getUser(mActivity, AuthHelper.instance().getUserId(),
+                new ObjectModelUser.CallbackUser() {
+            @Override
+            public void onSuccess(ObjectModelUser user) {
+
+                callbacks.onEmail(user.getEmail());
+            }
+        }, false);
     }
 
     public interface ViewModelSettingsCallbacks extends ViewModelCallbacks {

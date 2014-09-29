@@ -111,6 +111,13 @@ public class ObjectModelUser extends ObjectModel {
     }
 
     /**
+     * Fetch email.
+     */
+    public String getEmail() {
+        return mEmail;
+    }
+
+    /**
      * Set email.
      *
      * @param email Email.
