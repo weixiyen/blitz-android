@@ -16,11 +16,13 @@ import com.blitz.app.utilities.app.AppData;
 import com.blitz.app.utilities.app.AppDataObject;
 import com.blitz.app.utilities.authentication.AuthHelper;
 import com.blitz.app.utilities.carousel.MyPagerAdapter;
-import com.blitz.app.utilities.reflection.ReflectionHelper;
+import com.blitz.app.utilities.logging.LogHelper;
 import com.blitz.app.utilities.sound.SoundHelper;
 import com.blitz.app.utilities.textview.BlitzTextView;
 import com.blitz.app.view_models.ViewModel;
 import com.blitz.app.view_models.ViewModelSettings;
+
+import java.util.List;
 
 import butterknife.InjectView;
 import butterknife.OnClick;
@@ -33,10 +35,13 @@ public class MainScreenFragmentSettings extends BaseFragment implements ViewMode
     // region Member Variables
     // =============================================================================================
 
-    @InjectView(R.id.main_screen_fragment_settings_toggle_music) Switch mSettingsToggleMusic;
-    @InjectView(R.id.main_screen_fragment_settings_toggle_sound) Switch mSettingsToggleSound;
+    // Toggle switches.
+    @InjectView(R.id.main_screen_fragment_settings_toggle_music)
+    Switch mSettingsToggleMusic;
+    @InjectView(R.id.main_screen_fragment_settings_toggle_sound)
+    Switch mSettingsToggleSound;
 
-    // Reset button (only display for QA).
+    // Reset button.
     @InjectView(R.id.main_settings_reset)
     View mSettingsReset;
     @InjectView(R.id.main_settings_reset_border)
@@ -46,20 +51,12 @@ public class MainScreenFragmentSettings extends BaseFragment implements ViewMode
     @InjectView(R.id.main_settings_email)
     BlitzTextView mSettingsEmail;
 
-    public @InjectView(R.id.main_settings_carousel) ViewPager pager;
+    // Helmet view pager.
+    @InjectView(R.id.main_settings_carousel)
+    ViewPager mCarouselViewPager;
 
-    public MyPagerAdapter adapter;
-
-    public final static int PAGES = 5;
-    // You can choose a bigger number for LOOPS, but you know, nobody will fling
-// more than 1000 times just in order to test your "infinite" ViewPager :D
-    public final static int LOOPS = 1000;
-    public final static int FIRST_PAGE = PAGES * LOOPS / 2;
-    public final static float BIG_SCALE = 1.0f;
-    public final static float SMALL_SCALE = 0.7f;
-    public final static float DIFF_SCALE = BIG_SCALE - SMALL_SCALE;
-
-    private ViewModelSettings mViewModel;
+    // View model.
+    private ViewModelSettings mViewModelSettings;
 
     // endregion
 
@@ -74,27 +71,6 @@ public class MainScreenFragmentSettings extends BaseFragment implements ViewMode
     @Override
     protected void onCreateView(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        adapter = new MyPagerAdapter(this, getChildFragmentManager());
-
-        pager.setAdapter(adapter);
-        pager.setOnPageChangeListener(adapter);
-        // Set current item to the middle page so we can fling to both
-        // directions left and right
-        pager.setCurrentItem(FIRST_PAGE);
-        // Necessary or the pager will only have one extra page to show
-        // make this at least however many pages you can see
-        pager.setOffscreenPageLimit(3);
-        // Set margin for pages as a negative number, so a part of next and
-        // previous pages will be showed
-
-        int pixelPadding = ReflectionHelper.densityPixelsToPixels(getActivity(), 90);
-        int pagePadding = ReflectionHelper.densityPixelsToPixels(getActivity(), 10);
-
-        pager.setPadding(pixelPadding, 0, pixelPadding, 0);
-        pager.setClipToPadding(false);
-
-
 
         // Initialize switch states.
         mSettingsToggleMusic.setChecked(!AppDataObject.settingsMusicDisabled.get());
@@ -116,11 +92,11 @@ public class MainScreenFragmentSettings extends BaseFragment implements ViewMode
     @Override
     public ViewModel onFetchViewModel() {
 
-        if (mViewModel == null) {
-            mViewModel = new ViewModelSettings(getActivity(), this);
+        if (mViewModelSettings == null) {
+            mViewModelSettings = new ViewModelSettings(getActivity(), this);
         }
 
-        return mViewModel;
+        return mViewModelSettings;
     }
 
     // endregion
@@ -212,11 +188,27 @@ public class MainScreenFragmentSettings extends BaseFragment implements ViewMode
      * @param email Email address.
      */
     @Override
-    public void onEmail(String email) {
+    public void onEmailChanged(String email) {
 
         if (mSettingsEmail != null) {
             mSettingsEmail.setText(email);
         }
+    }
+
+    /**
+     * When avatars are received, create and/or
+     * update the helmet carousel.
+     *
+     * @param avatarIds List of ids.
+     * @param avatarUrls List of urls.
+     */
+    @Override
+    public void onAvatarsChanged(List<String> avatarIds, List<String> avatarUrls) {
+
+        LogHelper.log("Avatars received.");
+
+        // Create the avatar carousel.
+        MyPagerAdapter.createWithViewPager(mCarouselViewPager, getChildFragmentManager());
     }
 
     // endregion

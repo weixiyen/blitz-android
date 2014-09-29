@@ -5,14 +5,12 @@ import android.graphics.Canvas;
 import android.util.AttributeSet;
 import android.widget.LinearLayout;
 
-import com.blitz.app.screens.main.MainScreenFragmentSettings;
-
 /**
- * Created by mrkcsc on 8/17/14.
+ * Created by mrkcsc on 8/17/14. Copyright 2014 Blitz Studios
  */
 public class MyLinearLayout extends LinearLayout {
 
-    private float scale = MainScreenFragmentSettings.BIG_SCALE;
+    private float scale = MyPagerAdapter.BIG_SCALE;
 
     public MyLinearLayout(Context context, AttributeSet attrs) {
         super(context, attrs);
