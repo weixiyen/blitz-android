@@ -16,6 +16,7 @@
         android:layout_alignParentLeft="true"
         android:layout_marginLeft="10dp"
         android:layout_marginTop="10dp"
+        android:background="@drawable/asset_draft_player_bg"
         android:orientation="vertical">
 
         <com.blitz.app.utilities.imageview.BlitzImageView
@@ -24,8 +25,7 @@
             android:layout_height="145dp"
             android:layout_centerHorizontal="true"
             android:contentDescription="@string/empty_string"
-            android:scaleType="centerCrop"
-            android:src="@drawable/asset_draft_player_bg"/>
+            android:scaleType="centerCrop"/>
 
         <com.blitz.app.utilities.textview.BlitzTextView
             android:id="@+id/draft_player_name_tl"
@@ -88,6 +88,7 @@
         android:layout_alignParentRight="true"
         android:layout_marginRight="10dp"
         android:layout_marginTop="10dp"
+        android:background="@drawable/asset_draft_player_bg"
         android:orientation="vertical">
 
         <com.blitz.app.utilities.imageview.BlitzImageView
@@ -96,8 +97,7 @@
             android:layout_height="145dp"
             android:layout_centerHorizontal="true"
             android:contentDescription="@string/empty_string"
-            android:scaleType="centerCrop"
-            android:src="@drawable/asset_draft_player_bg"/>
+            android:scaleType="centerCrop"/>
 
         <com.blitz.app.utilities.textview.BlitzTextView
             android:id="@+id/draft_player_name_tr"
@@ -162,6 +162,7 @@
         android:layout_marginBottom="10dp"
         android:layout_marginLeft="10dp"
         android:layout_marginTop="10dp"
+        android:background="@drawable/asset_draft_player_bg"
         android:orientation="vertical">
 
         <com.blitz.app.utilities.imageview.BlitzImageView
@@ -170,8 +171,7 @@
             android:layout_height="145dp"
             android:layout_centerHorizontal="true"
             android:contentDescription="@string/empty_string"
-            android:scaleType="centerCrop"
-            android:src="@drawable/asset_draft_player_bg"/>
+            android:scaleType="centerCrop"/>
 
         <com.blitz.app.utilities.textview.BlitzTextView
             android:id="@+id/draft_player_name_bl"
@@ -236,6 +236,7 @@
         android:layout_marginBottom="10dp"
         android:layout_marginRight="10dp"
         android:layout_marginTop="10dp"
+        android:background="@drawable/asset_draft_player_bg"
         android:orientation="vertical">
 
         <com.blitz.app.utilities.imageview.BlitzImageView
@@ -244,8 +245,7 @@
             android:layout_height="145dp"
             android:layout_centerHorizontal="true"
             android:contentDescription="@string/empty_string"
-            android:scaleType="centerCrop"
-            android:src="@drawable/asset_draft_player_bg"/>
+            android:scaleType="centerCrop"/>
 
         <com.blitz.app.utilities.textview.BlitzTextView
             android:id="@+id/draft_player_name_br"
