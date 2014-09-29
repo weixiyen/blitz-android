@@ -46,32 +46,23 @@
             android:gravity="bottom"
             android:orientation="vertical">
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="20dp"
-                android:background="@color/background_inner_dark"
-                android:visibility="gone"/>
-
             <android.support.v4.view.ViewPager
                 android:id="@+id/main_settings_carousel"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/helmet_size"
                 android:background="@color/background_inner_dark"
                 android:gravity="center"
-                android:overScrollMode="never"
-                android:visibility="gone"/>
+                android:overScrollMode="never"/>
 
             <View
                 android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:background="@color/background_inner_dark"
-                android:visibility="gone"/>
+                android:layout_height="25dp"
+                android:background="@color/background_inner_dark"/>
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:background="@color/background_inner_divider"
-                android:visibility="gone"/>
+                android:background="@color/background_inner_divider"/>
 
             <com.blitz.app.utilities.textview.BlitzTextView
                 android:id="@+id/main_settings_email"

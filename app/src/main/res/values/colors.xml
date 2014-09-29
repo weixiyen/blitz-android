@@ -1,7 +1,7 @@
 <resources>
     <color name="background_transparent">@android:color/transparent</color>
     <color name="background_inner">#BF333333</color>
-    <color name="background_inner_dark">#BF222222</color>
+    <color name="background_inner_dark">#222222</color>
     <color name="background_inner_divider">#353535</color>
     <color name="background_dialog">#BF000000</color>
     <color name="background_navigation">#40000000</color>
