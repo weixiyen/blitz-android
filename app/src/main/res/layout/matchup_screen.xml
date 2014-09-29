@@ -32,34 +32,52 @@
             android:background="@color/background_inner_divider_light"/>
 
 
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="180dp"
-            android:layout_marginTop="0dp"
-            android:background="@color/background_inner_dark"
-            android:gravity="center_vertical|center"
-            android:orientation="horizontal"
-            android:paddingBottom="10dp">
+            android:layout_height="180dp">
 
-            <include android:id="@+id/player1_details"
-                layout="@layout/player_avatar_with_score"/>
-
-            <TextView
+            <TextView android:id="@+id/loading_message"
                 style="@style/TextViewStyle"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
                 android:gravity="center"
-                android:layout_weight=".25"
                 fontPath="@string/app_font_helvetica_condensed_bold"
-                android:text="vs"
+                android:text="@string/matchup_loading_message"
                 android:textAllCaps="true"
                 android:textColor="@color/text_color_medium_grey"
                 android:textSize="20sp"/>
 
-            <include android:id="@+id/player2_details"
-                layout="@layout/player_avatar_with_score"/>
+            <LinearLayout android:id="@+id/matchup_data"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="0dp"
+                android:background="@color/background_inner_dark"
+                android:gravity="center_vertical|center"
+                android:orientation="horizontal"
+                android:paddingBottom="10dp"
+                android:visibility="invisible">
 
-        </LinearLayout>
+                <include android:id="@+id/player1_details"
+                    layout="@layout/player_avatar_with_score"/>
+
+                <TextView
+                    style="@style/TextViewStyle"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:layout_weight=".25"
+                    fontPath="@string/app_font_helvetica_condensed_bold"
+                    android:text="vs"
+                    android:textAllCaps="true"
+                    android:textColor="@color/text_color_medium_grey"
+                    android:textSize="20sp"/>
+
+                <include android:id="@+id/player2_details"
+                    layout="@layout/player_avatar_with_score"/>
+
+            </LinearLayout>
+
+        </RelativeLayout>
 
         <ListView
             android:id="@+id/main_draft_detail_player_list"

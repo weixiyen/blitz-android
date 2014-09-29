@@ -1,6 +1,7 @@
 package com.blitz.app.screens.main;
 
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -115,6 +116,8 @@ public class MatchupScreen extends BaseActivity implements ViewModelDraftDetail.
             indicateLeader(R.id.player2_details);
         }
 
+        findViewById(R.id.loading_message).setVisibility(View.INVISIBLE);
+        findViewById(R.id.matchup_data).setVisibility(View.VISIBLE);
     }
 
     @Override
