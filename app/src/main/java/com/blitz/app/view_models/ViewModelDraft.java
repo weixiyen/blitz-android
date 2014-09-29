@@ -170,18 +170,18 @@ public class ViewModelDraft extends ViewModel {
             ObjectModelDraft.pickPlayer(null, mDraftModel.getId(), playerId,
                     new ObjectModelDraft.DraftCallback() {
 
-                @Override
-                public void onSuccess(ObjectModelDraft draft) {
+                        @Override
+                        public void onSuccess(ObjectModelDraft draft) {
 
-                    // Update the current draft.
-                    AuthHelper.instance().setCurrentDraft(draft);
+                            // Update the current draft.
+                            AuthHelper.instance().setCurrentDraft(draft);
 
-                    // Set the draft model.
-                    mDraftModel = draft;
+                            // Set the draft model.
+                            mDraftModel = draft;
 
-                    mPickingLocked = false;
-                }
-            });
+                            mPickingLocked = false;
+                        }
+                    });
         }
     }
 
@@ -299,12 +299,15 @@ public class ViewModelDraft extends ViewModel {
 
         } else if (action.equals("pick_player")) {
 
-            // Create a new pick object.
-            ObjectModelDraft.Pick pick = new ObjectModelDraft.Pick(
-                    message.get("player_id").getAsString(),
-                    message.get("user_id").getAsString());
+            if(mDraftModel != null) {
 
-            mDraftModel.addPick(pick);
+                // Create a new pick object.
+                ObjectModelDraft.Pick pick = new ObjectModelDraft.Pick(
+                        message.get("player_id").getAsString(),
+                        message.get("user_id").getAsString());
+
+                mDraftModel.addPick(pick);
+            }
         }
 
         // Look for last round complete time json.
