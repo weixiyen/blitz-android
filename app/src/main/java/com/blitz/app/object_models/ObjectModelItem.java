@@ -44,7 +44,8 @@ public class ObjectModelItem extends ObjectModel {
     @SuppressWarnings("unused") @SerializedName("created")
     private Date mCreated;
 
-    private static Map<String, ObjectModelItem> sAvatarCache = new ConcurrentHashMap<String, ObjectModelItem>();
+    private static Map<String, ObjectModelItem> sAvatarCache
+            = new ConcurrentHashMap<String, ObjectModelItem>();
 
     // endregion
 
@@ -109,8 +110,9 @@ public class ObjectModelItem extends ObjectModel {
     /**
      * The cache must be initialized before you call this.
      *
-     * @param avatarIds
-     * @return a list of avatar URLs in order corresponding to the input avatarIds
+     * @param avatarIds Avatar ids.
+     *
+     * @return A list of avatar urls in order corresponding to the input avatar ids.
      */
     private static List<ObjectModelItem> getAvatarUrlsFromCache(List<String> avatarIds) {
 
@@ -124,37 +126,33 @@ public class ObjectModelItem extends ObjectModel {
     public static void fetchAvatars(Activity activity, final List<String> avatarIds,
                                        final CallbackItems callback) {
 
-        if(callback != null) {
+        if (!sAvatarCache.isEmpty()) {
 
-            if (!sAvatarCache.isEmpty()) {
+            callback.onSuccess(getAvatarUrlsFromCache(avatarIds));
+        } else {
 
-                callback.onSuccess(getAvatarUrlsFromCache(avatarIds));
-            } else {
+            RestAPICallback<RestAPIResult<ObjectModelItem>> operation =
+                    new RestAPICallback<RestAPIResult<ObjectModelItem>>(activity) {
 
-                RestAPICallback<RestAPIResult<ObjectModelItem>> operation =
-                        new RestAPICallback<RestAPIResult<ObjectModelItem>>(activity) {
+                        @Override
+                        public void success(RestAPIResult<ObjectModelItem> items) {
 
-                            @Override
-                            public void success(RestAPIResult<ObjectModelItem> items) {
+                            sAvatarCache.clear();
 
-                                sAvatarCache.clear();
-
-                                for (ObjectModelItem item : items.getResults()) {
-                                    sAvatarCache.put(item.getId(), item);
-                                }
-
-                                if (callback != null) {
-
-                                    callback.onSuccess(getAvatarUrlsFromCache(avatarIds));
-                                }
+                            for (ObjectModelItem item : items.getResults()) {
+                                sAvatarCache.put(item.getId(), item);
                             }
-                        };
+
+                            if (callback != null) {
+
+                                callback.onSuccess(getAvatarUrlsFromCache(avatarIds));
+                            }
+                        }
+                    };
 
 
-                mRestAPI.items_get(avatarIds, "id", null, null, operation);
-            }
+            mRestAPI.items_get(avatarIds, "id", null, null, operation);
         }
-
     }
 
     /**
@@ -181,6 +179,38 @@ public class ObjectModelItem extends ObjectModel {
         };
 
         mRestAPI.items_get(items, "id", null, null, operation);
+    }
+
+    /**
+     * Fetch avatar items owned by a user.
+     *
+     * @param activity Activity for dialogs.
+     * @param userId User id.
+     * @param callback Callback for success.
+     */
+    @SuppressWarnings("unused")
+    public static void fetchItemsOwnedByUser(Activity activity, String userId, final CallbackItems callback) {
+
+        RestAPICallback<RestAPIResult<ObjectModelItem>> operation =
+                new RestAPICallback<RestAPIResult<ObjectModelItem>>(activity) {
+
+                    @Override
+                    public void success(RestAPIResult<ObjectModelItem> jsonObject) {
+
+                        if (callback != null) {
+                            callback.onSuccess(jsonObject.getResults());
+                        }
+                    }
+                };
+
+        List<String> keys = new ArrayList<String>();
+
+        keys.add(userId);
+
+        // Only get avatar types.
+        String filter = "{ \"item_type\": \"AVATAR\"}";
+
+        mRestAPI.items_get(keys, "user_id", filter, null, operation);
     }
 
     // endregion
