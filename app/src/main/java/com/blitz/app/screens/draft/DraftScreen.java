@@ -429,8 +429,11 @@ public class DraftScreen extends BaseActivity implements ViewModelDraft.ViewMode
     @SuppressWarnings("unused")
     public void playerClicked(View playerView) {
 
-        // Pick player and provide player id.
-        mViewModelDraft.pickPlayer(playerView.getTag().toString());
+        if (playerView.getTag() != null) {
+
+            // Pick player and provide player id.
+            mViewModelDraft.pickPlayer(playerView.getTag().toString());
+        }
     }
 
     // endregion

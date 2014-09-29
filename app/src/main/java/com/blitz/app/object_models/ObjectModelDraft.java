@@ -6,6 +6,7 @@ import com.blitz.app.utilities.authentication.AuthHelper;
 import com.blitz.app.utilities.date.DateUtils;
 import com.blitz.app.utilities.rest.RestAPICallback;
 import com.blitz.app.utilities.rest.RestAPIResult;
+import com.google.gson.JsonObject;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.ArrayList;
@@ -436,6 +437,49 @@ public final class ObjectModelDraft extends ObjectModel {
 
     // region REST Methods
     // =============================================================================================
+
+    /**
+     * Pick a player.
+     *
+     * @param activity Activity fo loading/error dialogs.
+     * @param draftId Draft id.
+     * @param playerId Player id.
+     * @param callback Callback on completion.
+     */
+    @SuppressWarnings("unused")
+    public static void pickPlayer(final Activity activity, String draftId, String playerId,
+                                  final DraftCallback callback) {
+
+        if (draftId == null || playerId == null) {
+
+            return;
+        }
+
+        RestAPICallback<RestAPIResult<ObjectModelDraft>> operation =
+                new RestAPICallback<RestAPIResult<ObjectModelDraft>>(activity) {
+
+                    @Override
+                    public void success(RestAPIResult<ObjectModelDraft> result) {
+
+                        // Now left queue.
+                        if (callback != null) {
+                            callback.onSuccess(result.getResult());
+                        }
+                    }
+                };
+
+        // Create object holding values to replace.
+        JsonObject jsonReplace   = new JsonObject();
+        JsonObject jsonPicks     = new JsonObject();
+        JsonObject jsonPlayerIds = new JsonObject();
+
+        jsonPlayerIds.addProperty("player_id", playerId);
+        jsonPicks.add("picks", jsonPlayerIds);
+        jsonReplace.add("append", jsonPicks);
+
+        // Make api call.
+        mRestAPI.draft_patch(draftId, jsonReplace, operation);
+    }
 
     /**
      * Fetch a draft given a draft id.

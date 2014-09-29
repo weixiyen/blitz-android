@@ -167,7 +167,21 @@ public class ViewModelDraft extends ViewModel {
 
             mPickingLocked = true;
 
-            // TODO: Implement me.
+            ObjectModelDraft.pickPlayer(null, mDraftModel.getId(), playerId,
+                    new ObjectModelDraft.DraftCallback() {
+
+                @Override
+                public void onSuccess(ObjectModelDraft draft) {
+
+                    // Update the current draft.
+                    AuthHelper.instance().setCurrentDraft(draft);
+
+                    // Set the draft model.
+                    mDraftModel = draft;
+
+                    mPickingLocked = false;
+                }
+            });
         }
     }
 
