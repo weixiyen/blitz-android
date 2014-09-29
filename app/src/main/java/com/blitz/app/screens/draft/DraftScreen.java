@@ -17,7 +17,6 @@ import com.blitz.app.utilities.animations.AnimHelperSpringsPresets;
 import com.blitz.app.utilities.animations.AnimHelperSpringsView;
 import com.blitz.app.utilities.authentication.AuthHelper;
 import com.blitz.app.utilities.imageview.BlitzImageView;
-import com.blitz.app.utilities.logging.LogHelper;
 import com.blitz.app.utilities.textview.BlitzTextView;
 import com.blitz.app.view_models.ViewModel;
 import com.blitz.app.view_models.ViewModelDraft;
@@ -26,6 +25,7 @@ import java.util.List;
 
 import butterknife.InjectView;
 import butterknife.InjectViews;
+import butterknife.OnClick;
 
 /**
  * Created by mrkcsc on 7/27/14. Copyright 2014 Blitz Studios
@@ -418,6 +418,23 @@ public class DraftScreen extends BaseActivity implements ViewModelDraft.ViewMode
 
     // endregion
 
+    // region Click Methods
+    // =============================================================================================
+
+    @OnClick({
+            R.id.draft_player_tl,
+            R.id.draft_player_tr,
+            R.id.draft_player_bl,
+            R.id.draft_player_br })
+    @SuppressWarnings("unused")
+    public void playerClicked(View playerView) {
+
+        // Pick player and provide player id.
+        mViewModelDraft.pickPlayer(playerView.getTag().toString());
+    }
+
+    // endregion
+
     // region View Model Callbacks
     // =============================================================================================
 
@@ -508,14 +525,13 @@ public class DraftScreen extends BaseActivity implements ViewModelDraft.ViewMode
         if (mDraftHeader != null) {
             mDraftHeader.setText(roundAndPosition);
         }
-
-        LogHelper.log("New round: " + roundAndPosition);
     }
 
     /**
      * Update the player choices UI when we
      * receive new information.
      *
+     * @param playerIds Player ids.
      * @param playerPhotoUrls Photo urls.
      * @param playerFullNames Full names.
      * @param playerPositions Positions.
@@ -523,10 +539,16 @@ public class DraftScreen extends BaseActivity implements ViewModelDraft.ViewMode
      */
     @Override
     public void onPlayerChoicesChanged(
+            List<String> playerIds,
             List<String> playerPhotoUrls,
             List<String> playerFullNames,
             List<String> playerPositions,
             List<String> playerOpponents) {
+
+        mDraftPlayerTl.setTag(playerIds.get(0));
+        mDraftPlayerTr.setTag(playerIds.get(1));
+        mDraftPlayerBl.setTag(playerIds.get(2));
+        mDraftPlayerBr.setTag(playerIds.get(3));
 
         for (int i = 0; i < playerPhotoUrls.size(); i++) {
 

@@ -2,6 +2,7 @@ package com.blitz.app.object_models;
 
 import android.app.Activity;
 
+import com.blitz.app.utilities.authentication.AuthHelper;
 import com.blitz.app.utilities.date.DateUtils;
 import com.blitz.app.utilities.rest.RestAPICallback;
 import com.blitz.app.utilities.rest.RestAPIResult;
@@ -159,6 +160,39 @@ public final class ObjectModelDraft extends ObjectModel {
         }
 
         return change;
+    }
+
+    /**
+     * Find out if the user can draft
+     * a a player.
+     *
+     * @return Can user draft a player.
+     */
+    @SuppressWarnings("unused")
+    public boolean getCanUserDraft() {
+
+        // Are any player picks available.
+        boolean picksAvailable = mChoices != null &&
+                (mPicks == null || mChoices.size() > (mPicks.size() / 2));
+
+        if (picksAvailable) {
+
+            // If a single pick has already been made.
+            if (mPicks != null && mPicks.size() % 2 == 1) {
+
+                Pick latestPick = mPicks.get(mPicks.size() - 1);
+
+                // If this user made the latest pick, can't pick again!
+                if (AuthHelper.instance().getUserId().equals(latestPick.mUserId)) {
+
+                    return false;
+                }
+            }
+
+            return true;
+        }
+
+        return false;
     }
 
     /**

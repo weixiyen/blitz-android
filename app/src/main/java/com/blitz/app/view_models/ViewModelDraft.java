@@ -53,6 +53,9 @@ public class ViewModelDraft extends ViewModel {
     // String of the current round.
     private String mRoundAndPosition;
 
+    // Prevents spamming of picks.
+    private boolean mPickingLocked;
+
     // Choice related structures.
     private List<ObjectModelPlayer> mCurrentPlayerChoices;
     private Date mCurrentPlayerChoicesShowTime;
@@ -149,6 +152,27 @@ public class ViewModelDraft extends ViewModel {
 
     // endregion
 
+    // region Public Methods
+    // =============================================================================================
+
+    /**
+     * Pick a player.
+     *
+     * @param playerId Player id.
+     */
+    public void pickPlayer(String playerId) {
+
+        // If player id provided, and we are allowed to draft a player.
+        if (playerId != null && !(mPickingLocked || mDraftModel.getCanUserDraft())) {
+
+            mPickingLocked = true;
+
+            // TODO: Implement me.
+        }
+    }
+
+    // endregion
+
     // region Private Methods
     // =============================================================================================
 
@@ -161,6 +185,13 @@ public class ViewModelDraft extends ViewModel {
         // TODO: Implement me.
     }
 
+    /**
+     * When coming back from a sleep state, we might
+     * not have received choice data. Need to
+     * make a rest call to retrieve it.
+     *
+     * @param choices Choice id's to sync.
+     */
     private void syncChoicesWithoutData(ArrayList<String> choices) {
 
         // TODO: Implement me.
@@ -413,6 +444,7 @@ public class ViewModelDraft extends ViewModel {
         mCurrentPlayerChoicesShowTime
                 = DateUtils.getDateInGMT();
 
+        List<String> playerIds       = new ArrayList<String>();
         List<String> playerPhotoUrls = new ArrayList<String>();
         List<String> playerFullNames = new ArrayList<String>();
         List<String> playerPositions = new ArrayList<String>();
@@ -420,6 +452,10 @@ public class ViewModelDraft extends ViewModel {
 
         for (ObjectModelPlayer playerChoice : mCurrentPlayerChoices) {
 
+            // List of player id's.
+            playerIds.add(playerChoice.getId());
+
+            // Rest of player information.
             playerPhotoUrls.add(playerChoice.getPhotoUrl());
             playerFullNames.add(playerChoice.getFullName());
             playerPositions.add(playerChoice.getPosition() + " - " + playerChoice.getTeam());
@@ -427,8 +463,8 @@ public class ViewModelDraft extends ViewModel {
         }
 
         if (mCallbacks != null) {
-            mCallbacks.onPlayerChoicesChanged(playerPhotoUrls, playerFullNames,
-                    playerPositions, playerOpponents);
+            mCallbacks.onPlayerChoicesChanged(playerIds, playerPhotoUrls,
+                    playerFullNames, playerPositions, playerOpponents);
         }
     }
 
@@ -590,6 +626,7 @@ public class ViewModelDraft extends ViewModel {
         public void onRoundAndPositionChanged(String roundAndPosition);
 
         public void onPlayerChoicesChanged(
+                List<String> playerIds,
                 List<String> playerPhotoUrls,
                 List<String> playerFullNames,
                 List<String> playerPositions,
