@@ -5,13 +5,12 @@ import android.content.Context;
 import com.blitz.app.R;
 
 /**
- * Created by mrkcsc on 8/20/14.
+ * Created by mrkcsc on 8/20/14. Copyright 2014 Blitz Studios
  */
 public class AnimHelper {
 
-    //==============================================================================================
-    // Protected Methods
-    //==============================================================================================
+    // region Protected Methods
+    // =============================================================================================
 
     /**
      * Fetch the standard animation time, used
@@ -21,9 +20,11 @@ public class AnimHelper {
      *
      * @return Standard animation time.
      */
-    protected static int getConfigAnimTimeStandard(Context context) {
+    public static int getConfigAnimTimeStandard(Context context) {
 
         // Time to transition an activity.
         return context.getResources().getInteger(R.integer.config_screen_translation_time);
     }
+
+    // endregion
 }
