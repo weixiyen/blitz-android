@@ -18,6 +18,8 @@ import com.squareup.picasso.Picasso;
 import com.squareup.picasso.RequestCreator;
 import com.squareup.picasso.Transformation;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.HashMap;
 
 /**
@@ -97,24 +99,23 @@ public class BlitzImageView extends ImageView {
      * by Picasso by square.
      *
      * @param url Target URL, do not include base path.
-     * @param maskResourceId Resource image mask.
+     * @param maskAssetUrl Asset url.
      */
     @SuppressWarnings("unused")
-    public void setImageUrl(String url, final Integer maskResourceId) {
+    public void setImageUrl(String url, final String maskAssetUrl) {
 
         if (url != null) {
 
-            // Initialize with url prefixed with blitz CDN.
             RequestCreator requestCreator = Picasso.with(getContext())
                     .load(AppConfig.getCDNUrl() + url);
 
-            if (maskResourceId != null) {
+            if (maskAssetUrl != null) {
 
-                requestCreator = requestCreator
-                        .transform(getMaskedTransformation(maskResourceId));
+                // Add mask if provided.
+                requestCreator = requestCreator.transform(getMaskedTransformation(maskAssetUrl));
             }
 
-            // Load into image.
+            // Load into this image.
             requestCreator.into(this);
 
             // Update cached url.
@@ -211,35 +212,44 @@ public class BlitzImageView extends ImageView {
      * Fetch a transformer to mask an image bitmap
      * source with some arbitrary image mask.
      *
-     * @param maskResourceId Image mask resource.
+     * @param maskAssetUrl Asset url.
      *
      * @return Transformation.
      */
-    private Transformation getMaskedTransformation(final int maskResourceId) {
+    private Transformation getMaskedTransformation(final String maskAssetUrl) {
 
         return new Transformation() {
 
             @Override
             public Bitmap transform(Bitmap source) {
 
-                // Fetch mask bitmap.
-                Bitmap mask = BitmapFactory.decodeResource
-                        (getResources(), maskResourceId);
+                Bitmap sourceMask = getMask(maskAssetUrl);
 
                 // Create a result bitmap of same size as mask.
-                Bitmap result = Bitmap.createBitmap(mask.getWidth(),
-                        mask.getHeight(), Bitmap.Config.ARGB_8888);
-
+                Bitmap result = Bitmap.createBitmap(source.getWidth(),
+                        source.getHeight(), Bitmap.Config.ARGB_8888);
 
                 Canvas mCanvas = new Canvas(result);
+
                 Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG);
                 paint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.DST_IN));
+
                 mCanvas.drawBitmap(source, 0, 0, null);
-                mCanvas.drawBitmap(mask, 0, 0, paint);
+
+                if (sourceMask != null) {
+
+                    // Apply the mask if it exists.
+                    mCanvas.drawBitmap(sourceMask, 0, 0, paint);
+                }
+
                 paint.setXfermode(null);
 
                 // Cleanup.
                 source.recycle();
+
+                if (sourceMask != null) {
+                    sourceMask.recycle();
+                }
 
                 return result;
             }
@@ -250,6 +260,29 @@ public class BlitzImageView extends ImageView {
                 return "blitz()";
             }
         };
+    }
+
+    /**
+     * Fetch a bitmap mask from an asset URL.  This
+     * will not apply any sort of scaling or DPI
+     * calculations, the bitmap will be raw pixel size.
+     *
+     * @param maskAssetUrl Asset url.
+     *
+     * @return Decoded bitmap.
+     */
+    private Bitmap getMask(String maskAssetUrl) {
+
+        InputStream inputStream = null;
+
+        try {
+
+            // Attempt to fetch input stream for asset.
+            inputStream = getContext().getAssets().open(maskAssetUrl);
+
+        } catch (IOException ignored) { }
+
+        return BitmapFactory.decodeStream(inputStream);
     }
 
     // endregion
