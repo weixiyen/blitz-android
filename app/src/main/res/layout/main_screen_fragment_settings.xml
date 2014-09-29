@@ -68,7 +68,7 @@
                 android:layout_height="1dp"
                 android:background="@color/background_inner_divider"/>
 
-            <Button
+            <Button android:id="@+id/email"
                 style="@style/ButtonStyle"
                 fontPath="@string/app_font_helvetica_condensed_bold"
                 android:layout_width="match_parent"

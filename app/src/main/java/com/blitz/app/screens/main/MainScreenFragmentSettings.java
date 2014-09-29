@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.view.View;
+import android.widget.Button;
 import android.widget.Switch;
 
 import com.blitz.app.R;
@@ -17,6 +18,8 @@ import com.blitz.app.utilities.authentication.AuthHelper;
 import com.blitz.app.utilities.carousel.MyPagerAdapter;
 import com.blitz.app.utilities.reflection.ReflectionHelper;
 import com.blitz.app.utilities.sound.SoundHelper;
+import com.blitz.app.view_models.ViewModel;
+import com.blitz.app.view_models.ViewModelSettings;
 
 import butterknife.InjectView;
 import butterknife.OnClick;
@@ -24,7 +27,7 @@ import butterknife.OnClick;
 /**
  * Created by mrkcsc on 7/14/14. Copyright 2014 Blitz Studios
  */
-public class MainScreenFragmentSettings extends BaseFragment {
+public class MainScreenFragmentSettings extends BaseFragment implements ViewModelSettings.ViewModelSettingsCallbacks {
 
     // region Member Variables
     // =============================================================================================
@@ -48,6 +51,8 @@ public class MainScreenFragmentSettings extends BaseFragment {
     public final static float BIG_SCALE = 1.0f;
     public final static float SMALL_SCALE = 0.7f;
     public final static float DIFF_SCALE = BIG_SCALE - SMALL_SCALE;
+
+    private ViewModelSettings mViewModel;
 
     // endregion
 
@@ -170,6 +175,21 @@ public class MainScreenFragmentSettings extends BaseFragment {
 
         // Bounce user back to the loading screen.
         startActivity(new Intent(this.getActivity(), LoadingScreen.class));
+    }
+
+    @Override
+    public void onEmail(String email) {
+
+        ((Button)getActivity().findViewById(R.id.email)).setText(email);
+    }
+
+    @Override
+    public ViewModel onFetchViewModel() {
+
+        if(mViewModel == null) {
+            mViewModel = new ViewModelSettings(getActivity(), this);
+        }
+        return mViewModel;
     }
 
     // endregion
