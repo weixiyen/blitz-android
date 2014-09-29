@@ -209,7 +209,23 @@ public class ObjectModelPlayer extends ObjectModel {
     @SuppressWarnings("unused")
     public String getPhotoUrl() {
 
-        return null; // TODO: Implement
+        String baseUrl = "players/";
+
+        if (mOpponent != null) {
+
+            // Url for teams.
+            return baseUrl + "def/" + mOpponent.toLowerCase() + ".jpg";
+        }
+
+        // Fetch photo url components.
+        String componentName = mFullName.replace(" ", "_").replace(".", "").toLowerCase();
+        String componentPosition = mPosition.toLowerCase();
+        String componentTeam = mTeam.toLowerCase();
+
+        // Construct path.
+        String path = componentName + "_" + componentPosition + "_" + componentTeam;
+
+        return baseUrl + "off/" + path + ".jpg";
     }
 
     /**
