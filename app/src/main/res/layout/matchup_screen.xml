@@ -29,7 +29,7 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:background="@color/background_inner_divider_light"/>
+            android:background="@color/background_inner_divider"/>
 
 
         <RelativeLayout
@@ -91,7 +91,7 @@
             android:id="@+id/main_recent_footer_border_0"
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:background="@color/background_inner_divider_light"/>
+            android:background="@color/background_inner_divider"/>
 
     </LinearLayout>
 

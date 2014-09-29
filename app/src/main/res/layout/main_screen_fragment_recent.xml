@@ -33,7 +33,7 @@
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:layout_alignBottom="@+id/main_recent_header"
-        android:background="@color/background_inner_divider_light"/>
+        android:background="@color/background_inner_divider"/>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -197,5 +197,5 @@
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:layout_alignTop="@+id/main_recent_scrubber"
-        android:background="@color/background_inner_divider_light"/>
+        android:background="@color/background_inner_divider"/>
 </RelativeLayout>

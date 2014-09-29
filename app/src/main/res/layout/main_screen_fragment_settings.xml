@@ -32,12 +32,13 @@
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:layout_alignBottom="@+id/main_settings_header"
-        android:background="@color/background_inner_divider_light"/>
+        android:background="@color/background_inner_divider"/>
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="110dp">
+        android:layout_marginTop="110dp"
+        android:background="@color/background_inner">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -69,7 +70,8 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:background="@color/background_inner_divider"/>
+                android:background="@color/background_inner_divider"
+                android:visibility="gone"/>
 
             <Button android:id="@+id/email"
                 style="@style/ButtonStyle"
@@ -87,7 +89,8 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:background="@color/background_inner_divider"/>
+                android:background="@color/background_inner_divider"
+                android:visibility="gone"/>
 
             <Button
                 style="@style/ButtonStyle"
@@ -107,7 +110,8 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:background="@color/background_inner_divider"/>
+                android:background="@color/background_inner_divider"
+                android:visibility="gone"/>
 
             <Switch
                 android:id="@+id/main_screen_fragment_settings_toggle_sound"
@@ -126,7 +130,8 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:background="@color/background_inner_divider"/>
+                android:background="@color/background_inner_divider"
+                android:visibility="gone"/>
 
             <Switch
                 android:id="@+id/main_screen_fragment_settings_toggle_music"
@@ -145,7 +150,8 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:background="@color/background_inner_divider"/>
+                android:background="@color/background_inner_divider"
+                android:visibility="gone"/>
 
             <LinearLayout
                 style="@style/ButtonStyle"
@@ -187,7 +193,8 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:background="@color/background_inner_divider"/>
+                android:background="@color/background_inner_divider"
+                android:visibility="gone"/>
 
             <!-- Invitation links -->
             <LinearLayout
@@ -381,7 +388,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
                 android:layout_gravity="center_horizontal"
-                android:background="@color/background_inner"
+                android:background="@color/background_transparent"
                 android:gravity="center|left"
                 android:paddingLeft="25dp"
                 android:paddingRight="25dp"
@@ -400,7 +407,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
                 android:layout_gravity="center_horizontal"
-                android:background="@color/background_inner"
+                android:background="@color/background_transparent"
                 android:gravity="center|left"
                 android:paddingLeft="25dp"
                 android:paddingRight="25dp"
@@ -418,7 +425,7 @@
                 fontPath="@string/app_font_helvetica_condensed_bold"
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
-                android:background="@color/background_inner"
+                android:background="@color/background_transparent"
                 android:gravity="center|left"
                 android:paddingLeft="25dp"
                 android:paddingRight="25dp"
@@ -437,7 +444,7 @@
                 fontPath="@string/app_font_helvetica_condensed_bold"
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
-                android:background="@color/background_inner"
+                android:background="@color/background_transparent"
                 android:gravity="center|left"
                 android:paddingLeft="25dp"
                 android:paddingRight="25dp"
