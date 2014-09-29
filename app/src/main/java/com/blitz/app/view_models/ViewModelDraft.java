@@ -54,7 +54,7 @@ public class ViewModelDraft extends ViewModel {
     private String mRoundAndPosition;
 
     // Choice related structures.
-    private ArrayList<ObjectModelPlayer> mCurrentPlayerChoices;
+    private List<ObjectModelPlayer> mCurrentPlayerChoices;
     private Date mCurrentPlayerChoicesShowTime;
 
     // Callbacks.
@@ -399,6 +399,39 @@ public class ViewModelDraft extends ViewModel {
         }
     }
 
+    /**
+     * Given a new list of player choices, update
+     * the current choices and emit relevant
+     * information through the view model callbacks.
+     *
+     * @param playerChoices Player choice objects.
+     */
+    private void updatePlayerChoices(List<ObjectModelPlayer> playerChoices) {
+
+        // Update player choices and timestamp.
+        mCurrentPlayerChoices= playerChoices;
+        mCurrentPlayerChoicesShowTime
+                = DateUtils.getDateInGMT();
+
+        List<String> playerPhotoUrls = new ArrayList<String>();
+        List<String> playerFullNames = new ArrayList<String>();
+        List<String> playerPositions = new ArrayList<String>();
+        List<String> playerOpponents = new ArrayList<String>();
+
+        for (ObjectModelPlayer playerChoice : mCurrentPlayerChoices) {
+
+            playerPhotoUrls.add(playerChoice.getPhotoUrl());
+            playerFullNames.add(playerChoice.getFullName());
+            playerPositions.add(playerChoice.getPosition() + " - " + playerChoice.getTeam());
+            playerOpponents.add(playerChoice.getOpponent());
+        }
+
+        if (mCallbacks != null) {
+            mCallbacks.onPlayerChoicesChanged(playerPhotoUrls, playerFullNames,
+                    playerPositions, playerOpponents);
+        }
+    }
+
     // endregion
 
     // region Resolve Methods
@@ -529,12 +562,7 @@ public class ViewModelDraft extends ViewModel {
 
             } else if (!playerChoices.equals(mCurrentPlayerChoices)) {
 
-                mCurrentPlayerChoices = playerChoices;
-                mCurrentPlayerChoicesShowTime = DateUtils.getDateInGMT();
-
-                if (mCallbacks != null) {
-                    mCallbacks.onPlayerChoicesChanged(mCurrentPlayerChoices);
-                }
+                updatePlayerChoices(playerChoices);
             }
         }
     }
@@ -561,7 +589,11 @@ public class ViewModelDraft extends ViewModel {
 
         public void onRoundAndPositionChanged(String roundAndPosition);
 
-        public void onPlayerChoicesChanged(ArrayList<ObjectModelPlayer> playerChoices);
+        public void onPlayerChoicesChanged(
+                List<String> playerPhotoUrls,
+                List<String> playerFullNames,
+                List<String> playerPositions,
+                List<String> playerOpponents);
     }
 
     // endregion

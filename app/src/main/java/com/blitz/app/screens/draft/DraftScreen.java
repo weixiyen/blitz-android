@@ -7,7 +7,6 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.blitz.app.R;
-import com.blitz.app.object_models.ObjectModelPlayer;
 import com.blitz.app.utilities.android.BaseActivity;
 import com.blitz.app.utilities.animations.AnimHelperFade;
 import com.blitz.app.utilities.animations.AnimHelperSpringsGroup;
@@ -16,12 +15,14 @@ import com.blitz.app.utilities.animations.AnimHelperSpringsView;
 import com.blitz.app.utilities.authentication.AuthHelper;
 import com.blitz.app.utilities.imageview.BlitzImageView;
 import com.blitz.app.utilities.logging.LogHelper;
+import com.blitz.app.utilities.textview.BlitzTextView;
 import com.blitz.app.view_models.ViewModel;
 import com.blitz.app.view_models.ViewModelDraft;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.InjectView;
+import butterknife.InjectViews;
 
 /**
  * Created by mrkcsc on 7/27/14. Copyright 2014 Blitz Studios
@@ -50,6 +51,34 @@ public class DraftScreen extends BaseActivity implements ViewModelDraft.ViewMode
     @InjectView(R.id.draft_player_tr) View mDraftPlayerTr;
     @InjectView(R.id.draft_player_bl) View mDraftPlayerBl;
     @InjectView(R.id.draft_player_br) View mDraftPlayerBr;
+
+    @InjectViews({
+            R.id.draft_player_image_tl,
+            R.id.draft_player_image_tr,
+            R.id.draft_player_image_bl,
+            R.id.draft_player_image_br
+    }) List<BlitzImageView> mDraftPlayerImages;
+
+    @InjectViews({
+            R.id.draft_player_name_tl,
+            R.id.draft_player_name_tr,
+            R.id.draft_player_name_bl,
+            R.id.draft_player_name_br
+    }) List<BlitzTextView> mDraftPlayerNames;
+
+    @InjectViews({
+            R.id.draft_player_info_tl,
+            R.id.draft_player_info_tr,
+            R.id.draft_player_info_bl,
+            R.id.draft_player_info_br
+    }) List<BlitzTextView> mDraftPlayerPositions;
+
+    @InjectViews({
+            R.id.draft_player_opponent_tl,
+            R.id.draft_player_opponent_tr,
+            R.id.draft_player_opponent_bl,
+            R.id.draft_player_opponent_br
+    }) List<BlitzTextView> mDraftPlayerOpponents;
 
     // Loading spinner for the draft.
     @InjectView(R.id.draft_loading) ProgressBar mDraftLoadingSpinner;
@@ -473,19 +502,37 @@ public class DraftScreen extends BaseActivity implements ViewModelDraft.ViewMode
         if (mDraftHeader != null) {
             mDraftHeader.setText(roundAndPosition);
         }
+
+        LogHelper.log("New round: " + roundAndPosition);
     }
 
     /**
      * Update the player choices UI when we
      * receive new information.
      *
-     * @param playerChoices List of choices.
+     * @param playerPhotoUrls Photo urls.
+     * @param playerFullNames Full names.
+     * @param playerPositions Positions.
+     * @param playerOpponents Opponents.
      */
     @Override
-    public void onPlayerChoicesChanged(ArrayList<ObjectModelPlayer> playerChoices) {
+    public void onPlayerChoicesChanged(
+            List<String> playerPhotoUrls,
+            List<String> playerFullNames,
+            List<String> playerPositions,
+            List<String> playerOpponents) {
 
-        // TODO: Implement UI Changes.
-        LogHelper.log("On player choices changed: " + playerChoices);
+        for (int i = 0; i < playerPhotoUrls.size(); i++) {
+
+            mDraftPlayerImages
+                    .get(i).setImageUrl(playerPhotoUrls.get(i), "images/raw_player_mask.png");
+            mDraftPlayerNames
+                    .get(i).setText(playerFullNames.get(i));
+            mDraftPlayerPositions
+                    .get(i).setText(playerPositions.get(i));
+            mDraftPlayerOpponents
+                    .get(i).setText(playerOpponents.get(i));
+        }
     }
 
     // endregion

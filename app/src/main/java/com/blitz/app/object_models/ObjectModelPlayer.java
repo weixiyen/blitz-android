@@ -211,7 +211,7 @@ public class ObjectModelPlayer extends ObjectModel {
 
         String baseUrl = "players/";
 
-        if (mOpponent != null) {
+        if (mFullName == null) {
 
             // Url for teams.
             return baseUrl + "def/" + mOpponent.toLowerCase() + ".jpg";
