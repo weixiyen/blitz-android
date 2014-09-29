@@ -1,5 +1,6 @@
 package com.blitz.app.screens.draft;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
@@ -7,6 +8,8 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.blitz.app.R;
+import com.blitz.app.screens.main.MatchInfoAdapter;
+import com.blitz.app.screens.main.MatchupScreen;
 import com.blitz.app.utilities.android.BaseActivity;
 import com.blitz.app.utilities.animations.AnimHelperFade;
 import com.blitz.app.utilities.animations.AnimHelperSpringsGroup;
@@ -222,9 +225,12 @@ public class DraftScreen extends BaseActivity implements ViewModelDraft.ViewMode
                 // Immediately switch state.
                 mDraftStateCurrent = mDraftState;
 
-                // Re-enter the main application.
-                AuthHelper.instance().setCurrentDraft(null);
-                AuthHelper.instance().tryEnterMainApp(this);
+                // Navigate to the Matchup screen for the completed draft.
+                Intent intent = new Intent(this, MatchupScreen.class);
+                intent.putExtra(MatchInfoAdapter.DRAFT_ID, AuthHelper.instance().getCurrentDraft().getId());
+                intent.putExtra(MatchupScreen.NAVIGATE_TO_PLAY_SCREEN, true);
+                AuthHelper.instance().setCurrentDraft(null); // We're done with this draft.
+                startActivity(intent);
 
                 break;
         }

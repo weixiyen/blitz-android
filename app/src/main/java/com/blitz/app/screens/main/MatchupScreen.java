@@ -10,6 +10,7 @@ import com.blitz.app.object_models.ObjectModelPlayer;
 import com.blitz.app.simple_models.Game;
 import com.blitz.app.simple_models.Stat;
 import com.blitz.app.utilities.android.BaseActivity;
+import com.blitz.app.utilities.authentication.AuthHelper;
 import com.blitz.app.utilities.imageview.BlitzImageView;
 import com.blitz.app.view_models.ViewModel;
 import com.blitz.app.view_models.ViewModelDraftDetail;
@@ -23,6 +24,8 @@ import butterknife.InjectView;
  * Created by mrkcsc on 7/14/14. Copyright 2014 Blitz Studios
  */
 public class MatchupScreen extends BaseActivity implements ViewModelDraftDetail.ViewModelDraftDetailCallbacks {
+
+    public static final String NAVIGATE_TO_PLAY_SCREEN = "MatchupScreen.navigateToPlayScreen";
 
     // region Member Variables
     // =============================================================================================
@@ -127,6 +130,21 @@ public class MatchupScreen extends BaseActivity implements ViewModelDraftDetail.
 
         ((BlitzImageView)findViewById(R.id.player2_details).findViewById(R.id.player_avatar))
                 .setImageUrl(player2AvatarUrl);
+    }
+
+    /**
+     * Conditionally navigate to the main screen.
+     */
+    @Override
+    public void onBackPressed() {
+
+        if (getIntent().getBooleanExtra(NAVIGATE_TO_PLAY_SCREEN, false)) {
+
+            AuthHelper.instance().tryEnterMainApp(this);
+        } else {
+
+            super.onBackPressed();
+        }
     }
 
 
