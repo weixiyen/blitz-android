@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.view.View;
-import android.widget.Button;
 import android.widget.Switch;
 
 import com.blitz.app.R;
@@ -19,6 +18,7 @@ import com.blitz.app.utilities.authentication.AuthHelper;
 import com.blitz.app.utilities.carousel.MyPagerAdapter;
 import com.blitz.app.utilities.reflection.ReflectionHelper;
 import com.blitz.app.utilities.sound.SoundHelper;
+import com.blitz.app.utilities.textview.BlitzTextView;
 import com.blitz.app.view_models.ViewModel;
 import com.blitz.app.view_models.ViewModelSettings;
 
@@ -37,8 +37,14 @@ public class MainScreenFragmentSettings extends BaseFragment implements ViewMode
     @InjectView(R.id.main_screen_fragment_settings_toggle_sound) Switch mSettingsToggleSound;
 
     // Reset button (only display for QA).
-    @InjectView(R.id.main_settings_reset)        View mSettingsReset;
-    @InjectView(R.id.main_settings_reset_border) View mSettingsResetBorder;
+    @InjectView(R.id.main_settings_reset)
+    View mSettingsReset;
+    @InjectView(R.id.main_settings_reset_border)
+    View mSettingsResetBorder;
+
+    // Settings email button.
+    @InjectView(R.id.main_settings_email)
+    BlitzTextView mSettingsEmail;
 
     public @InjectView(R.id.main_settings_carousel) ViewPager pager;
 
@@ -68,8 +74,6 @@ public class MainScreenFragmentSettings extends BaseFragment implements ViewMode
     @Override
     protected void onCreateView(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-
 
         adapter = new MyPagerAdapter(this, getChildFragmentManager());
 
@@ -102,6 +106,21 @@ public class MainScreenFragmentSettings extends BaseFragment implements ViewMode
             mSettingsReset      .setVisibility(View.GONE);
             mSettingsResetBorder.setVisibility(View.GONE);
         }
+    }
+
+    /**
+     * Fetch the view model.
+     *
+     * @return View model object.
+     */
+    @Override
+    public ViewModel onFetchViewModel() {
+
+        if (mViewModel == null) {
+            mViewModel = new ViewModelSettings(getActivity(), this);
+        }
+
+        return mViewModel;
     }
 
     // endregion
@@ -182,19 +201,22 @@ public class MainScreenFragmentSettings extends BaseFragment implements ViewMode
         startActivity(new Intent(this.getActivity(), LoadingScreen.class));
     }
 
+    // endregion
+
+    // region View Model Callbacks
+    // =============================================================================================
+
+    /**
+     * Current email address received.
+     *
+     * @param email Email address.
+     */
     @Override
     public void onEmail(String email) {
 
-        ((Button)getActivity().findViewById(R.id.email)).setText(email);
-    }
-
-    @Override
-    public ViewModel onFetchViewModel() {
-
-        if(mViewModel == null) {
-            mViewModel = new ViewModelSettings(getActivity(), this);
+        if (mSettingsEmail != null) {
+            mSettingsEmail.setText(email);
         }
-        return mViewModel;
     }
 
     // endregion

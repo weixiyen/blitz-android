@@ -73,8 +73,9 @@
                 android:background="@color/background_inner_divider"
                 android:visibility="gone"/>
 
-            <Button android:id="@+id/email"
-                style="@style/ButtonStyle"
+            <com.blitz.app.utilities.textview.BlitzTextView
+                android:id="@+id/main_settings_email"
+                style="@style/TextViewStyle"
                 fontPath="@string/app_font_helvetica_condensed_bold"
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
@@ -83,7 +84,7 @@
                 android:gravity="center|left"
                 android:paddingLeft="25dp"
                 android:paddingRight="25dp"
-                android:text="miguel@miguelgaeta.com"
+                android:text="@string/lorum_ipsum_tiny"
                 android:textSize="16sp"/>
 
             <View
@@ -110,8 +111,7 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:background="@color/background_inner_divider"
-                android:visibility="gone"/>
+                android:background="@color/background_inner_divider"/>
 
             <Switch
                 android:id="@+id/main_screen_fragment_settings_toggle_sound"
@@ -119,19 +119,17 @@
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
                 android:layout_gravity="center_horizontal"
-                android:background="@color/background_inner"
+                android:background="@color/background_transparent"
                 android:paddingLeft="25dp"
                 android:paddingRight="25dp"
                 android:text="@string/push_notifications"
-                android:textColor="@color/text_color_light"
-                android:textSize="16sp"
-                android:visibility="gone"/>
+                android:textColor="@color/text_color_light_grey"
+                android:textSize="16sp"/>
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:background="@color/background_inner_divider"
-                android:visibility="gone"/>
+                android:background="@color/background_inner_divider"/>
 
             <Switch
                 android:id="@+id/main_screen_fragment_settings_toggle_music"
@@ -139,13 +137,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
                 android:layout_gravity="center_horizontal"
-                android:background="@color/background_inner"
+                android:background="@color/background_transparent"
                 android:paddingLeft="25dp"
                 android:paddingRight="25dp"
                 android:text="@string/music_and_sounds"
-                android:textColor="@color/text_color_light"
-                android:textSize="16sp"
-                android:visibility="gone"/>
+                android:textColor="@color/text_color_light_grey"
+                android:textSize="16sp"/>
 
             <View
                 android:layout_width="match_parent"
@@ -387,6 +384,7 @@
                 fontPath="@string/app_font_helvetica_condensed_bold"
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
+                android:textColor="@color/text_color_light_grey"
                 android:layout_gravity="center_horizontal"
                 android:background="@color/background_transparent"
                 android:gravity="center|left"
@@ -406,6 +404,7 @@
                 fontPath="@string/app_font_helvetica_condensed_bold"
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
+                android:textColor="@color/text_color_light_grey"
                 android:layout_gravity="center_horizontal"
                 android:background="@color/background_transparent"
                 android:gravity="center|left"
@@ -428,6 +427,7 @@
                 android:background="@color/background_transparent"
                 android:gravity="center|left"
                 android:paddingLeft="25dp"
+                android:textColor="@color/text_color_light_grey"
                 android:paddingRight="25dp"
                 android:text="@string/logout"
                 android:textSize="16sp"/>
@@ -449,6 +449,7 @@
                 android:paddingLeft="25dp"
                 android:paddingRight="25dp"
                 android:text="@string/reset"
+                android:textColor="@color/text_color_light_grey"
                 android:textSize="16sp"/>
 
             <View
