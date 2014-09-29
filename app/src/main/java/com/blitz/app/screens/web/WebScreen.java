@@ -25,6 +25,9 @@ public class WebScreen extends BaseActivity {
     // Title for this view set based on this.
     public static final String PARAM_TITLE = "PARAM_TITLE";
 
+    // Transition type.
+    public static final String PARAM_TRANSITION_TYPE = "PARAM_TRANSITION_TYPE";
+
     @InjectView(R.id.web_view_container) BaseWebView mWebView;
     @InjectView(R.id.web_view_loading) ProgressBar mProgressBar;
     @InjectView(R.id.web_header) TextView mHeader;
@@ -35,7 +38,7 @@ public class WebScreen extends BaseActivity {
     // =============================================================================================
 
     /**
-     * Run custom transitions if needed.
+     * Setup creation.
      *
      * @param savedInstanceState Instance parameters.
      */
@@ -43,10 +46,32 @@ public class WebScreen extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        parseIntentParameters();
+    }
+
+    // endregion
+
+    // region Private Methods
+    // =============================================================================================
+
+    /**
+     * Parse various intent parameters
+     * passed as the settings to this activity.
+     */
+    private void parseIntentParameters() {
+
         // Fetch intent with params.
         Intent intent = getIntent();
 
         if (intent != null) {
+
+            CustomTransition customTransitionType = (CustomTransition)intent
+                    .getSerializableExtra(PARAM_TRANSITION_TYPE);
+
+            if (customTransitionType != null) {
+
+                setCustomTransitions(customTransitionType);
+            }
 
             // Set the spinner.
             mWebView.setLoadingView(mProgressBar);
