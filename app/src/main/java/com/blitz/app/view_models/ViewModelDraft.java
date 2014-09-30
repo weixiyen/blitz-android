@@ -35,10 +35,6 @@ public class ViewModelDraft extends ViewModel {
     // Suspended flag.
     private static final String STATE_DRAFT_SUSPENDED = "stateDraftSuspended";
 
-    public void setDraftModel(ObjectModelDraft mDraftModel) {
-        this.mDraftModel = mDraftModel;
-    }
-
     // State of the draft.
     public enum DraftState {
         DRAFT_PREVIEW, DRAFT_DRAFTING, DRAFT_COMPLETE
@@ -185,9 +181,10 @@ public class ViewModelDraft extends ViewModel {
 
                             LogHelper.log("Player picked: " + playerId + "\nDraft updated!");
 
-                            // Set the draft model.
-                            setDraftModel(draft);
+                            // Update the draft.
+                            mDraftModel = draft;
 
+                            // Picking no longer locked.
                             mPickingLocked = false;
                         }
                     });
