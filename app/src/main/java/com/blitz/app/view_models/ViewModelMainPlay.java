@@ -215,7 +215,7 @@ public class ViewModelMainPlay extends ViewModel {
 
                         if (getCallbacks(ViewModelMainPlayCallbacks.class) != null) {
                             getCallbacks(ViewModelMainPlayCallbacks.class)
-                                    .onImgPath(item.getDefaultImgPath());
+                                    .onAvatarUrl(item.getDefaultImgPath());
                         }
                     }
                 });
@@ -371,7 +371,7 @@ public class ViewModelMainPlay extends ViewModel {
         public void onWins(int wins);
         public void onLosses(int losses);
         public void onCash(int cash);
-        public void onImgPath(String imgPath);
+        public void onAvatarUrl(String avatarUrl);
     }
 
     // endregion

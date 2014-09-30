@@ -10,6 +10,7 @@ import android.widget.TextView;
 import com.blitz.app.R;
 import com.blitz.app.dialogs.info.DialogInfo;
 import com.blitz.app.utilities.android.BaseFragment;
+import com.blitz.app.utilities.animations.AnimHelperCrossFade;
 import com.blitz.app.utilities.app.AppConfig;
 import com.blitz.app.utilities.imageview.BlitzImageView;
 import com.blitz.app.utilities.rest.RestAPICallback;
@@ -283,10 +284,14 @@ public class MainScreenFragmentPlay extends BaseFragment implements ViewModelMai
      * When image path changes.
      */
     @Override
-    public void onImgPath(String imgPath) {
+    public void onAvatarUrl(String avatarUrl) {
 
-        if (mStatsAvatar != null) {
-            mStatsAvatar.setImageUrl(imgPath);
+        // If container exists, and this is a unique url.
+        if (mStatsAvatar != null && mStatsAvatar.getImageUrl() != null &&
+                !mStatsAvatar.getImageUrl().equals(avatarUrl)) {
+
+            // Set image url with a nice cross fade effect.
+            AnimHelperCrossFade.setImageUrl(mStatsAvatar, avatarUrl);
         }
     }
 
