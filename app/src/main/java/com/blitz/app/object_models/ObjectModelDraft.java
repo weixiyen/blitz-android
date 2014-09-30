@@ -308,6 +308,17 @@ public final class ObjectModelDraft extends ObjectModel {
     }
 
     /**
+     * Get picks made so far.
+     *
+     * @return List of picks.
+     */
+    @SuppressWarnings("unused")
+    public List<Pick> getPicks() {
+
+        return mPicks;
+    }
+
+    /**
      * Fetch a list of current player choices.
      *
      * @return List of choices.
