@@ -226,12 +226,16 @@ public class DraftScreen extends BaseActivity implements ViewModelDraft.ViewMode
                 // Immediately switch state.
                 mDraftStateCurrent = mDraftState;
 
-                // Navigate to the Matchup screen for the completed draft.
+                // Navigate to matchup screen for the completed draft.
                 Intent intent = new Intent(this, MatchupScreen.class);
-                intent.putExtra(MatchInfoAdapter.DRAFT_ID, AuthHelper.instance().getCurrentDraft().getId());
+                intent.putExtra(MatchInfoAdapter.DRAFT_ID,
+                        AuthHelper.instance().getCurrentDraft().getId());
                 intent.putExtra(MatchupScreen.NAVIGATE_TO_PLAY_SCREEN, true);
-                AuthHelper.instance().setCurrentDraft(null); // We're done with this draft.
+
                 startActivity(intent);
+
+                // Clear the active draft.
+                AuthHelper.instance().setCurrentDraft(null);
 
                 break;
         }

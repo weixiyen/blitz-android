@@ -80,6 +80,9 @@ public class ViewModelDraft extends ViewModel {
     public ViewModelDraft(Activity activity, ViewModelCallbacks callbacks) {
         super(activity, callbacks);
 
+        // Set the draft model.
+        mDraftModel = AuthHelper.instance().getCurrentDraft();
+
         // Set the callbacks.
         mCallbacks = getCallbacks(ViewModelDraftCallbacks.class);
     }
@@ -95,26 +98,14 @@ public class ViewModelDraft extends ViewModel {
     @Override
     public void initialize() {
 
-        ObjectModelDraft.fetchActiveDraftsForUser(null, AuthHelper.instance().getUserId(), new ObjectModelDraft.DraftsCallback() {
-            @Override
-            public void onSuccess(List<ObjectModelDraft> drafts) {
+        // Start comet.
+        cometCallbacksStart();
 
-                if (drafts == null || drafts.size() != 1) {
-                    throw new IllegalStateException();
-                }
+        // Fetch users.
+        syncUsers();
 
-                final ObjectModelDraft draft = drafts.get(0);
-
-                // Start comet.
-                cometCallbacksStart(draft);
-
-                // Fetch users.
-                syncUsers(draft);
-
-                // Start loop.
-                gameLoopStart(draft);
-            }
-        });
+        // Start loop.
+        gameLoopStart();
     }
 
     /**
@@ -125,9 +116,7 @@ public class ViewModelDraft extends ViewModel {
         super.stop();
 
         // Stop comet.
-        if(mDraftModel != null) {
-            cometCallbacksStop(mDraftModel);
-        }
+        cometCallbacksStop();
 
         // Stop loop.
         gameLoopStop();
@@ -157,6 +146,12 @@ public class ViewModelDraft extends ViewModel {
     public void restoreInstanceState(Bundle savedInstanceState) {
         super.restoreInstanceState(savedInstanceState);
 
+        // Sync the draft if needed.
+        if (savedInstanceState != null &&
+            savedInstanceState.getBoolean(STATE_DRAFT_SUSPENDED)) {
+
+            syncDraft();
+        }
     }
 
     // endregion
@@ -200,6 +195,15 @@ public class ViewModelDraft extends ViewModel {
     // =============================================================================================
 
     /**
+     * If the draft gets suspended and we return,
+     * manually sync the draft model.
+     */
+    private void syncDraft() {
+
+        // TODO: Implement me.
+    }
+
+    /**
      * When coming back from a sleep state, we might
      * not have received choice data. Need to
      * make a rest call to retrieve it.
@@ -214,10 +218,11 @@ public class ViewModelDraft extends ViewModel {
     /**
      * Start all callbacks.
      */
-    private void cometCallbacksStart(final ObjectModelDraft draft) {
+    private void cometCallbacksStart() {
+
             // Subscribe.
             CometAPIManager
-                    .subscribeToChannel("draft:" + draft.getId())
+                    .subscribeToChannel("draft:" + mDraftModel.getId())
                     .addCallback(DraftScreen.class, new CometAPICallback<DraftScreen>() {
 
                         @Override
@@ -225,7 +230,7 @@ public class ViewModelDraft extends ViewModel {
 
                             // Handle the action.
                             ((ViewModelDraft) receivingClass.onFetchViewModel())
-                                    .cometHandleAction(message, draft);
+                                    .cometHandleAction(message, mDraftModel);
                         }
                     }, "draftGameCallback");
     }
@@ -233,11 +238,11 @@ public class ViewModelDraft extends ViewModel {
     /**
      * Stop all comet callbacks.
      */
-    private void cometCallbacksStop(ObjectModelDraft draft) {
+    private void cometCallbacksStop() {
 
         // Unsubscribe.
         CometAPIManager
-                .unsubscribeFromChannel("draft:" + draft.getId());
+                .unsubscribeFromChannel("draft:" + mDraftModel.getId());
     }
 
     /**
@@ -320,7 +325,7 @@ public class ViewModelDraft extends ViewModel {
     /**
      * Starts the game loop.
      */
-    private void gameLoopStart(final ObjectModelDraft initialDraft) {
+    private void gameLoopStart() {
 
         if (mGameLoopHandler == null) {
             mGameLoopHandler = new Handler();
@@ -329,24 +334,15 @@ public class ViewModelDraft extends ViewModel {
         if (mGameLoopRunnable == null) {
             mGameLoopRunnable = new Runnable() {
 
-
-
-
                 @Override
                 public void run() {
 
-                    if(mDraftModel == null) {
-                        mDraftModel = initialDraft;
-                    }
-
-                    final ObjectModelDraft draft = mDraftModel; // get the current state
-
                     // Sync state.
-                    resolveState(draft);
-                    resolveCurrentRoundAndPosition(draft);
+                    resolveState();
+                    resolveCurrentRoundAndPosition();
                     resolveRoundTimeRemaining();
                     resolveRoundComplete();
-                    resolveChoices(draft);
+                    resolveChoices();
                     resolvePicks();
 
                     // Continue running the loop on a 100ms delay.
@@ -376,10 +372,10 @@ public class ViewModelDraft extends ViewModel {
      * for the users that belong to this
      * draft and fire off relevant callbacks.
      */
-    private void syncUsers(ObjectModelDraft draft) {
+    private void syncUsers() {
 
         // Users associated with this draft.
-        List<String> draftUserIds = draft.getUsers();
+        List<String> draftUserIds = mDraftModel.getUsers();
 
         // Fetch associated user objects.
         ObjectModelUser.getUsers(mActivity, draftUserIds, new ObjectModelUser.CallbackUsers() {
@@ -492,18 +488,18 @@ public class ViewModelDraft extends ViewModel {
     /**
      * Resolve the state of the draft.
      */
-    private void resolveState(ObjectModelDraft draft) {
+    private void resolveState() {
 
         DraftState state;
 
         // If draft complete and enough time has passed for the
         // draft to be saved to disk, set state to complete.
-        if (draft.getCurrentRound() > draft.getRounds() &&
-            draft.getSecondsSinceLastRoundCompleteTime() > draft.getTimePerPostview()) {
+        if (mDraftModel.getCurrentRound() > mDraftModel.getRounds() &&
+            mDraftModel.getSecondsSinceLastRoundCompleteTime() > mDraftModel.getTimePerPostview()) {
 
             state = DraftState.DRAFT_COMPLETE;
 
-        } else if (draft.getSecondsSinceStarted() < draft.getDraftStartBuffer()) {
+        } else if (mDraftModel.getSecondsSinceStarted() < mDraftModel.getDraftStartBuffer()) {
 
             state = DraftState.DRAFT_PREVIEW;
 
@@ -526,26 +522,26 @@ public class ViewModelDraft extends ViewModel {
      * Set the round and position string identifier
      * and emit the value any time it changes.
      */
-    private void resolveCurrentRoundAndPosition(ObjectModelDraft draft) {
+    private void resolveCurrentRoundAndPosition() {
 
         // All round have been completed.
-        if (draft.getCurrentRound() > draft.getRounds()) {
+        if (mDraftModel.getCurrentRound() > mDraftModel.getRounds()) {
 
             return;
         }
 
         // Start with just round identifier.
-        String roundAndPosition = "Round " + draft.getCurrentRound();
+        String roundAndPosition = "Round " + mDraftModel.getCurrentRound();
 
         // Add position if that string is available.
-        if (draft.getPositionsRequired() != null &&
-            draft.getPositionsRequired().get(draft.getCurrentRound() - 1) != null) {
+        if (mDraftModel.getPositionsRequired() != null &&
+            mDraftModel.getPositionsRequired().get(mDraftModel.getCurrentRound() - 1) != null) {
 
             roundAndPosition += " - " +
-                    draft.getPositionsRequired().get(draft.getCurrentRound() - 1);
+                    mDraftModel.getPositionsRequired().get(mDraftModel.getCurrentRound() - 1);
         }
 
-        if (draft.getCurrentRound() == draft.getRounds()) {
+        if (mDraftModel.getCurrentRound() == mDraftModel.getRounds()) {
 
             // Last round (FLEX pick).
             roundAndPosition = "Final Round!";
@@ -553,9 +549,9 @@ public class ViewModelDraft extends ViewModel {
 
         if (!roundAndPosition.equals(mRoundAndPosition) && mState != DraftState.DRAFT_PREVIEW) {
 
-            if (draft.getCurrentRound() == 1 ||
-                    draft.getSecondsSinceLastRoundCompleteTime() >
-                            draft.getTimePerPostview()) {
+            if (mDraftModel.getCurrentRound() == 1 ||
+                mDraftModel.getSecondsSinceLastRoundCompleteTime() >
+                        mDraftModel.getTimePerPostview()) {
 
                 mRoundAndPosition = roundAndPosition;
 
@@ -580,10 +576,10 @@ public class ViewModelDraft extends ViewModel {
      * Resolve the choices the player has to
      * choose from.
      */
-    private void resolveChoices(ObjectModelDraft draft) {
+    private void resolveChoices() {
 
         // Fetch current choice ids.
-        ArrayList<String> playerChoiceIds = draft.getCurrentPlayerChoices();
+        ArrayList<String> playerChoiceIds = mDraftModel.getCurrentPlayerChoices();
 
         if (playerChoiceIds != null) {
 
@@ -595,10 +591,10 @@ public class ViewModelDraft extends ViewModel {
 
             for (String playerId : playerChoiceIds) {
 
-                if (draft.getPlayerDataMap().containsKey(playerId)) {
+                if (mDraftModel.getPlayerDataMap().containsKey(playerId)) {
 
                     // Already been populated view comet server.
-                    playerChoices.add(draft.getPlayerDataMap().get(playerId));
+                    playerChoices.add(mDraftModel.getPlayerDataMap().get(playerId));
 
                 } else {
 
