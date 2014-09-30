@@ -568,5 +568,19 @@ public class DraftScreen extends BaseActivity implements ViewModelDraft.ViewMode
         }
     }
 
+    /**
+     * Update the player pick UI when
+     * new picks are received.
+     *
+     * @param playerIds Players picked.
+     * @param userIds Users who made the pick.
+     */
+    public void onPicksChanged(
+            List<String> playerIds,
+            List<String> userIds) {
+
+        LogHelper.log("Players: " + playerIds.toString() + " " + userIds.toString());
+    }
+
     // endregion
 }

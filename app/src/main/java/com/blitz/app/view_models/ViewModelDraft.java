@@ -58,7 +58,10 @@ public class ViewModelDraft extends ViewModel {
 
     // Choice related structures.
     private List<ObjectModelPlayer> mCurrentPlayerChoices;
-    private Date mCurrentPlayerChoicesShowTime;
+    private Date mCurrentPlayerChoicesShowTime; // TODO: Implement this.
+
+    // Picks so far.
+    private List<ObjectModelDraft.Pick> mCurrentPicks;
 
     // Callbacks.
     private ViewModelDraftCallbacks mCallbacks;
@@ -616,9 +619,83 @@ public class ViewModelDraft extends ViewModel {
         }
     }
 
+    /**
+     * Resolve and emit the player picks.
+     */
     private void resolvePicks() {
 
-        // TODO: Implement me.
+        // No choices yet received.
+        if (mDraftModel.getChoices() == null ||
+            mDraftModel.getChoices().size() == 0) {
+
+            return;
+        }
+
+        // No picks yet received.
+        if (mDraftModel.getPicks() == null) {
+
+            return;
+        }
+
+        List<ObjectModelDraft.Pick> currentPicks = new ArrayList<ObjectModelDraft.Pick>();
+
+        // If both round picks have been made.
+        if (mDraftModel.getChoices().size() ==
+                mDraftModel.getPicks().size() / 2 &&
+                mDraftModel.getPicks().size() % 2 == 0) {
+
+            // Both picks are current.
+            currentPicks.add(mDraftModel.getPicks().get(mDraftModel.getPicks().size() - 1));
+            currentPicks.add(mDraftModel.getPicks().get(mDraftModel.getPicks().size() - 2));
+
+        } else if (mDraftModel.getChoices().size() >
+                mDraftModel.getPicks().size() / 2 &&
+                mDraftModel.getPicks().size() % 2 == 1) {
+
+            // Only one pick made.
+            currentPicks.add(mDraftModel.getPicks().get(mDraftModel.getPicks().size() - 1));
+        }
+
+        // Update picks.
+        updatePicks(currentPicks);
+    }
+
+    // endregion
+
+    // region Update Methods
+    // =============================================================================================
+
+    /**
+     * Given a list of the current picks, see if they
+     * have changed from the cached current picks.
+     *
+     * If so, serialize the data and emit it via
+     * the callback interface.
+     *
+     * @param currentPicks Current picks.
+     */
+    private void updatePicks(List<ObjectModelDraft.Pick> currentPicks) {
+
+        // If at least one pick and different than current picks.
+        if (currentPicks.size() > 0 && !currentPicks.equals(mCurrentPicks)) {
+
+            // Update current picks.
+            mCurrentPicks = currentPicks;
+
+            List<String> playerIds = new ArrayList<String>();
+            List<String> userIds = new ArrayList<String>();
+
+            // Serialize the player and user ids.
+            for (ObjectModelDraft.Pick pick : currentPicks) {
+
+                playerIds.add(pick.getPlayerId());
+                  userIds.add(pick.getUserId());
+            }
+
+            if (mCallbacks != null) {
+                mCallbacks.onPicksChanged(playerIds, userIds);
+            }
+        }
     }
 
     // endregion
@@ -644,6 +721,10 @@ public class ViewModelDraft extends ViewModel {
                 List<String> playerFullNames,
                 List<String> playerPositions,
                 List<String> playerOpponents);
+
+        public void onPicksChanged(
+                List<String> playerIds,
+                List<String> userIds);
     }
 
     // endregion
