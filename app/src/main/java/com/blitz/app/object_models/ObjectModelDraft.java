@@ -765,6 +765,28 @@ public final class ObjectModelDraft extends ObjectModel {
             mPlayerId = playerId;
               mUserId =   userId;
         }
+
+        /**
+         * Get player Id.
+         *
+         * @return Player id.
+         */
+        @SuppressWarnings("unused")
+        public String getPlayerId() {
+
+            return mPlayerId;
+        }
+
+        /**
+         * Get user id associated with pick.
+         *
+         * @return User id.
+         */
+        @SuppressWarnings("unused")
+        public String getUserId() {
+
+            return mUserId;
+        }
     }
 
     // endregion
