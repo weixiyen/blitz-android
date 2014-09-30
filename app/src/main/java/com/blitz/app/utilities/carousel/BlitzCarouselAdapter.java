@@ -21,11 +21,9 @@ public class BlitzCarouselAdapter extends FragmentPagerAdapter implements
     // region Member Variables
     // =============================================================================================
 
-    final static int PAGES = 5;
     // You can choose a bigger number for LOOPS, but you know, nobody will fling
     // more than 1000 times just in order to test your "infinite" ViewPager :D
     final static int LOOPS = 1000;
-    final static int FIRST_PAGE = PAGES * LOOPS / 2;
 
     final static float MAX_SCALE = 1.0f;
     final static float MIN_SCALE = 0.7f;
@@ -35,7 +33,7 @@ public class BlitzCarouselAdapter extends FragmentPagerAdapter implements
     private BlitzCarouselScalingView cur = null;
     private BlitzCarouselScalingView next = null;
 
-    private Context context;
+    private Context mContext;
 
     private ViewPager mViewPager;
 
@@ -43,7 +41,8 @@ public class BlitzCarouselAdapter extends FragmentPagerAdapter implements
 
     private float scale;
 
-    private int mPages;
+    private int mPageCount;
+    private int mFirstPage;
 
     // endregion
 
@@ -57,17 +56,16 @@ public class BlitzCarouselAdapter extends FragmentPagerAdapter implements
      * @param viewPager Valid view pager.
      * @param fragmentManager Fragment manager.
      */
-    private BlitzCarouselAdapter(ViewPager viewPager, FragmentManager fragmentManager) {
+    private BlitzCarouselAdapter(ViewPager viewPager, FragmentManager fragmentManager,
+                                 int pageCount) {
         super(fragmentManager);
 
-        // Assign view pager.
+        // Assign member variables.
         mViewPager = viewPager;
-
-        // Assign fragment manager.
+        mContext = viewPager.getContext();
         mFragmentManager = fragmentManager;
-
-        // Assign context.
-        context = viewPager.getContext();
+        mPageCount = pageCount;
+        mFirstPage = pageCount * LOOPS / 2;
     }
 
     // endregion
@@ -76,59 +74,58 @@ public class BlitzCarouselAdapter extends FragmentPagerAdapter implements
                                            List<String> avatarIds, List<String> avatarUrls) {
 
         // Assert valid id's and urls are provided.
-        if (avatarIds == null || avatarUrls == null
+        if (avatarIds == null || avatarUrls == null || viewPager == null
                 || avatarIds.size() != avatarUrls.size()) {
 
             return;
         }
 
-        if (viewPager != null) {
+        BlitzCarouselAdapter adapter = new BlitzCarouselAdapter
+                (viewPager, fragmentManager, avatarIds.size());
 
-            BlitzCarouselAdapter adapter = new BlitzCarouselAdapter(viewPager, fragmentManager);
+        // Assign the adapter.
+        viewPager.setAdapter(adapter);
 
-            adapter.mPages = avatarIds.size();
+        // Assign it as page change listener.
+        viewPager.setOnPageChangeListener(adapter);
 
-            // Assign the adapter.
-            viewPager.setAdapter(adapter);
+        // Set current item to the middle page so we can
+        // fling to both directions left and right.
+        viewPager.setCurrentItem(adapter.mFirstPage);
 
-            // Assign it as page change listener.
-            viewPager.setOnPageChangeListener(adapter);
+        // Necessary or the pager will only have one extra page to show
+        // make this at least however many pages you can see.
+        viewPager.setOffscreenPageLimit(3);
 
-            // Set current item to the middle page so we can fling to both
-            // directions left and right
-            viewPager.setCurrentItem(FIRST_PAGE);
-            // Necessary or the pager will only have one extra page to show
-            // make this at least however many pages you can see
-            viewPager.setOffscreenPageLimit(3);
-            // Set margin for pages as a negative number, so a part of next and
-            // previous pages will be showed
+        // Set padding for pages as a negative number,
+        // so a part of next and previous pages will be showed
+        int pixelPadding = ReflectionHelper.densityPixelsToPixels
+                (viewPager.getContext(), 90);
 
-            int pixelPadding = ReflectionHelper.densityPixelsToPixels(viewPager.getContext(), 90);
-
-            viewPager.setPadding(pixelPadding, 0, pixelPadding, 0);
-            viewPager.setClipToPadding(false);
-        }
+        // Assign and clip the padding.
+        viewPager.setPadding(pixelPadding, 0, pixelPadding, 0);
+        viewPager.setClipToPadding(false);
     }
 
     @Override
     public Fragment getItem(int position)
     {
 // make the first pager bigger than others
-        if (position == FIRST_PAGE)
+        if (position == mFirstPage)
             scale = MAX_SCALE;
         else
             scale = MIN_SCALE;
-        position = position % PAGES;
+        position = position % mPageCount;
 
         LogHelper.log("Item: " + position);
 
-        return BlitzCarouselAdapterFragment.newInstance(context, position, scale);
+        return BlitzCarouselAdapterFragment.newInstance(mContext, position, scale);
     }
 
     @Override
     public int getCount()
     {
-        return PAGES * LOOPS;
+        return mPageCount * LOOPS;
     }
 
     @Override
