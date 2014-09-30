@@ -2,6 +2,7 @@ package com.blitz.app.screens.main;
 
 import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;
+import android.content.Intent;
 import android.view.View;
 import android.view.animation.LinearInterpolator;
 import android.widget.ImageView;
@@ -9,6 +10,7 @@ import android.widget.TextView;
 
 import com.blitz.app.R;
 import com.blitz.app.dialogs.info.DialogInfo;
+import com.blitz.app.screens.leaderboard.LeaderboardScreen;
 import com.blitz.app.utilities.android.BaseFragment;
 import com.blitz.app.utilities.animations.AnimHelperCrossFade;
 import com.blitz.app.utilities.app.AppConfig;
@@ -340,6 +342,17 @@ public class MainScreenFragmentPlay extends BaseFragment implements ViewModelMai
 
         // Rules coming soon.
         createBasicInfoDialog(R.string.rules_coming_soon);
+    }
+
+    /**
+     * Leaderboard clicked.
+     */
+    @OnClick(R.id.main_play_leaderboard_link) @SuppressWarnings("unused")
+    public void leaderboardClicked() {
+
+        // Navigate to leaderboard.
+        Intent intent = new Intent(getActivity(), LeaderboardScreen.class);
+        startActivity(intent);
     }
 
     // endregion

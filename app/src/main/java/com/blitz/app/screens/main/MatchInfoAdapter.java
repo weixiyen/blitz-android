@@ -1,7 +1,6 @@
 package com.blitz.app.screens.main;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.view.LayoutInflater;
@@ -35,8 +34,9 @@ public class MatchInfoAdapter extends ArrayAdapter {
     private List<HeadToHeadDraft> mItems;
     private final Activity mActivity;
 
-    public MatchInfoAdapter(Context context, List<HeadToHeadDraft> items, Activity activity) {
-        super(context, R.layout.main_screen_fragment_recent_list_item, items);
+    public MatchInfoAdapter(List<HeadToHeadDraft> items, Activity activity) {
+
+        super(activity, R.layout.main_screen_fragment_recent_list_item, items);
         mItems = items;
         mActivity = activity;
     }

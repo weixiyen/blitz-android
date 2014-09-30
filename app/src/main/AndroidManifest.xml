@@ -92,6 +92,9 @@
         <activity android:name=".screens.stats.StatsBreakdownScreen"
             android:windowSoftInputMode="stateHidden" />
 
+        <activity android:name=".screens.leaderboard.LeaderboardScreen"
+            android:windowSoftInputMode="stateHidden" />
+
         <!--
           WakefulBroadcastReceiver that will receive intents from GCM
           services and hand them to the custom IntentService.
