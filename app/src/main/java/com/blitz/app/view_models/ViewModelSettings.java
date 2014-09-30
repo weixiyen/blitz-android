@@ -14,6 +14,17 @@ import java.util.List;
  */
 public class ViewModelSettings extends ViewModel {
 
+    // region Member Variables
+    // =============================================================================================
+
+    // List of the avatars this user owns.
+    private List<ObjectModelItem> mUserAvatars;
+
+    // The current avatar of this user.
+    private String mUserAvatarIdCurrent;
+
+    // endregion
+
     // region Constructor
     // =============================================================================================
 
@@ -29,7 +40,7 @@ public class ViewModelSettings extends ViewModel {
 
     // endregion
 
-    // region Public Methods
+    // region Overwritten Methods
     // =============================================================================================
 
     /**
@@ -40,6 +51,20 @@ public class ViewModelSettings extends ViewModel {
 
         fetchUserInfo();
         fetchUserAvatars();
+    }
+
+    // endregion
+
+
+    // region Public Methods
+    // =============================================================================================
+
+    /**
+     * Update the user avatar.
+     */
+    public void updateUserAvatar(String itemAvatarId) {
+
+        // TODO: Implement.
     }
 
     // endregion
@@ -59,19 +84,9 @@ public class ViewModelSettings extends ViewModel {
                     @Override
                     public void onSuccess(List<ObjectModelItem> items) {
 
-                        List<String> avatarIds = new ArrayList<String>();
-                        List<String> avatarUrls = new ArrayList<String>();
+                        mUserAvatars = items;
 
-                        for (ObjectModelItem item : items) {
-
-                            avatarIds.add(item.getId());
-                            avatarUrls.add(item.getDefaultImgPath());
-                        }
-
-                        if (getCallbacks(ViewModelSettingsCallbacks.class) != null) {
-                            getCallbacks(ViewModelSettingsCallbacks.class)
-                                    .onAvatarsChanged(avatarIds, avatarUrls);
-                        }
+                        trySyncAvatars();
                     }
                 });
     }
@@ -93,8 +108,46 @@ public class ViewModelSettings extends ViewModel {
                             getCallbacks(ViewModelSettingsCallbacks.class)
                                     .onEmailChanged(user.getEmail());
                         }
+
+                        // Fetch associated item model.
+                        ObjectModelItem.fetchItem(mActivity, user.getAvatarId(),
+                                new ObjectModelItem.CallbackItem() {
+
+                                    @Override
+                                    public void onSuccess(ObjectModelItem item) {
+
+                                        mUserAvatarIdCurrent = item.getId();
+
+                                        trySyncAvatars();
+                                    }
+                                });
                     }
                 }, true);
+    }
+
+    /**
+     * Need both user avatars and the current avatar
+     * id before we can emit information to receiver.
+     */
+    private void trySyncAvatars() {
+
+        // If we have user avatars and the current avatar id.
+        if (mUserAvatars != null && mUserAvatarIdCurrent != null) {
+
+            List<String> avatarIds = new ArrayList<String>();
+            List<String> avatarUrls = new ArrayList<String>();
+
+            for (ObjectModelItem item : mUserAvatars) {
+
+                avatarIds.add(item.getId());
+                avatarUrls.add(item.getDefaultImgPath());
+            }
+
+            if (getCallbacks(ViewModelSettingsCallbacks.class) != null) {
+                getCallbacks(ViewModelSettingsCallbacks.class)
+                        .onAvatarsChanged(avatarIds, avatarUrls, mUserAvatarIdCurrent);
+            }
+        }
     }
 
     // endregion
@@ -105,7 +158,8 @@ public class ViewModelSettings extends ViewModel {
     public interface ViewModelSettingsCallbacks extends ViewModelCallbacks {
 
         public void onEmailChanged(String email);
-        public void onAvatarsChanged(List<String> avatarIds, List<String> avatarUrls);
+        public void onAvatarsChanged(List<String> userAvatarIds,
+                                     List<String> userAvatarUrls, String userAvatarId);
     }
 
     // endregion

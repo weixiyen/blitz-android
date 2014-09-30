@@ -29,7 +29,9 @@ import butterknife.OnClick;
 /**
  * Created by mrkcsc on 7/14/14. Copyright 2014 Blitz Studios
  */
-public class MainScreenFragmentSettings extends BaseFragment implements ViewModelSettings.ViewModelSettingsCallbacks {
+public class MainScreenFragmentSettings extends BaseFragment implements
+        ViewModelSettings.ViewModelSettingsCallbacks,
+        BlitzCarouselAdapter.BlitzCarouselAdapterCallbacks {
 
     // region Member Variables
     // =============================================================================================
@@ -178,7 +180,7 @@ public class MainScreenFragmentSettings extends BaseFragment implements ViewMode
 
     // endregion
 
-    // region View Model Callbacks
+    // region View Model & Carousel Callbacks
     // =============================================================================================
 
     /**
@@ -198,15 +200,30 @@ public class MainScreenFragmentSettings extends BaseFragment implements ViewMode
      * When avatars are received, create and/or
      * update the helmet carousel.
      *
-     * @param avatarIds List of ids.
-     * @param avatarUrls List of urls.
+     * @param userAvatarIds List of ids.
+     * @param userAvatarUrls List of urls.
+     * @param userAvatarId Current user avatar id.
      */
     @Override
-    public void onAvatarsChanged(List<String> avatarIds, List<String> avatarUrls) {
+    public void onAvatarsChanged(List<String> userAvatarIds,
+                                 List<String> userAvatarUrls, String userAvatarId) {
 
         // Create the avatar carousel.
-        BlitzCarouselAdapter.createWithViewPager(mCarouselViewPager,
-                getChildFragmentManager(), avatarIds, avatarUrls);
+        BlitzCarouselAdapter.createWithViewPager(mCarouselViewPager, getChildFragmentManager(),
+                userAvatarIds, userAvatarUrls, userAvatarId, this);
+    }
+
+    /**
+     * When a carousel item is selected,
+     * update the user information.
+     *
+     * @param itemId Helmet id.
+     */
+    @Override
+    public void onCarouselItemSelected(String itemId) {
+
+        // Update avatar.
+        mViewModelSettings.updateUserAvatar(itemId);
     }
 
     // endregion

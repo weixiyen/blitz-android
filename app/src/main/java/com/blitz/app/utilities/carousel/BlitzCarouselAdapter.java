@@ -7,7 +7,6 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 
 import com.blitz.app.R;
-import com.blitz.app.utilities.logging.LogHelper;
 import com.blitz.app.utilities.reflection.ReflectionHelper;
 
 import java.util.List;
@@ -42,34 +41,24 @@ public class BlitzCarouselAdapter extends FragmentPagerAdapter implements
     private List<String> mAvatarIds;
     private List<String> mAvatarUrls;
 
+    // Handle to the adapter callbacks.
+    private BlitzCarouselAdapterCallbacks mCallbacks;
+
     // endregion
 
     // region Constructors
     // =============================================================================================
 
     /**
-     * Create a new carousel adapter.  Requires a view pager
-     * and a fragment manager to internally handle operations.
+     * Create a new carousel adapter.
      *
-     * @param viewPager Valid view pager.
      * @param fragmentManager Fragment manager.
      */
-    private BlitzCarouselAdapter(ViewPager viewPager, FragmentManager fragmentManager,
-                                 List<String> avatarIds, List<String> avatarUrls) {
+    private BlitzCarouselAdapter(FragmentManager fragmentManager) {
         super(fragmentManager);
 
-        // Assign member variables.
+        // Save the fragment manager.
         mFragmentManager = fragmentManager;
-        mViewPager = viewPager;
-        mContext = viewPager.getContext();
-
-        // Set the data source.
-        mAvatarIds = avatarIds;
-        mAvatarUrls = avatarUrls;
-
-        // Page count is the id count.
-        mPageCount = avatarIds.size();
-        mFirstPage = avatarIds.size() * LOOPS / 2;
     }
 
     // endregion
@@ -82,21 +71,42 @@ public class BlitzCarouselAdapter extends FragmentPagerAdapter implements
      *
      * @param viewPager View pager to be the carousel.
      * @param fragmentManager Fragment manager.
-     * @param avatarIds Avatar ids.
-     * @param avatarUrls Avatar urls.
+     * @param itemIds List of ids.
+     * @param itemUrls List of item urls.
+     * @param selectedItemId Selected id.
+     * @param callbacks Callbacks.
      */
     public static void createWithViewPager(ViewPager viewPager, FragmentManager fragmentManager,
-                                           List<String> avatarIds, List<String> avatarUrls) {
+                                           List<String> itemIds,
+                                           List<String> itemUrls,
+                                           String selectedItemId,
+                                           BlitzCarouselAdapterCallbacks callbacks) {
 
         // Assert valid id's and urls are provided.
-        if (avatarIds == null || avatarUrls == null || viewPager == null
-                || avatarIds.size() != avatarUrls.size()) {
+        if (itemIds == null || itemUrls == null || viewPager == null
+                || itemIds.size() != itemUrls.size()) {
 
             return;
         }
 
         BlitzCarouselAdapter adapter = new BlitzCarouselAdapter
-                (viewPager, fragmentManager, avatarIds, avatarUrls);
+                (fragmentManager);
+
+        // Assign member variables.
+        adapter.mViewPager = viewPager;
+        adapter.mContext = viewPager.getContext();
+
+        // Set the callbacks.
+        adapter.mCallbacks = callbacks;
+
+        // Set the data source.
+        adapter.mAvatarIds = itemIds;
+        adapter.mAvatarUrls = itemUrls;
+
+        // Page count is the id count.
+        adapter.mPageCount = itemIds.size();
+        adapter.mFirstPage = itemIds.size() * LOOPS / 2
+                + itemIds.indexOf(selectedItemId);
 
         // Assign the adapter.
         viewPager.setAdapter(adapter);
@@ -192,7 +202,12 @@ public class BlitzCarouselAdapter extends FragmentPagerAdapter implements
     @Override
     public void onPageSelected(int position) {
 
-        LogHelper.log("Page selected: " + (position % mPageCount));
+        // Get the true position.
+        position = position % mPageCount;
+
+        if (mCallbacks != null) {
+            mCallbacks.onCarouselItemSelected(mAvatarIds.get(position));
+        }
     }
 
     /**
@@ -235,6 +250,16 @@ public class BlitzCarouselAdapter extends FragmentPagerAdapter implements
     private String getFragmentTag(int position) {
 
         return "android:switcher:" + mViewPager.getId() + ":" + position;
+    }
+
+    // endregion
+
+    // region Callbacks Interface
+    // =============================================================================================
+
+    public interface BlitzCarouselAdapterCallbacks {
+
+        public void onCarouselItemSelected(String itemId);
     }
 
     // endregion
