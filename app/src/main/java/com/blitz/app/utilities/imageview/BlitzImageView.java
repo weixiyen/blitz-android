@@ -33,6 +33,9 @@ public class BlitzImageView extends ImageView {
     // Should cache the image url.
     private boolean mCacheImageUrl;
 
+    // Image url, if any.
+    private String mImageUrl;
+
     // endregion
 
     // region Constructors
@@ -99,28 +102,61 @@ public class BlitzImageView extends ImageView {
      * by Picasso by square.
      *
      * @param url Target URL, do not include base path.
-     * @param maskAssetUrl Asset url.
+     * @param maskAssetUrl Target asset url, should live in assets directory.
      */
     @SuppressWarnings("unused")
     public void setImageUrl(String url, final String maskAssetUrl) {
 
-        if (url != null) {
+        setImageUrl(url, maskAssetUrl, false);
+    }
 
-            RequestCreator requestCreator = Picasso.with(getContext())
-                    .load(AppConfig.getCDNUrl() + url);
+    /**
+     * Add another way to set an image - specifically
+     * a URL from the inter-webs.  Powered
+     * by Picasso by square.
+     *
+     * @param url Target URL, do not include base path.
+     * @param maskAssetUrl Target asset url, should live in assets directory.
+     * @param cacheUrlOnly If set, we only want to cache the url and not download
+     *                     and set the image.
+     */
+    @SuppressWarnings("unused")
+    public void setImageUrl(String url, final String maskAssetUrl, boolean cacheUrlOnly) {
 
-            if (maskAssetUrl != null) {
+        // Set the url.
+        mImageUrl = url;
 
-                // Add mask if provided.
-                requestCreator = requestCreator.transform(getMaskedTransformation(maskAssetUrl));
+        if (mImageUrl != null) {
+
+            if (!cacheUrlOnly) {
+
+                RequestCreator requestCreator = Picasso.with(getContext())
+                        .load(AppConfig.getCDNUrl() + mImageUrl);
+
+                if (maskAssetUrl != null) {
+
+                    // Add mask if provided.
+                    requestCreator = requestCreator.transform(getMaskedTransformation(maskAssetUrl));
+                }
+
+                // Load into this image.
+                requestCreator.into(this);
             }
 
-            // Load into this image.
-            requestCreator.into(this);
-
             // Update cached url.
-            setCachedImageUrl(url);
+            setCachedImageUrl(mImageUrl);
         }
+    }
+
+    /**
+     * Fetch currently set image url.
+     *
+     * @return Image url (if any).
+     */
+    @SuppressWarnings("unused")
+    public String getImageUrl() {
+
+        return mImageUrl;
     }
 
     // endregion
@@ -133,7 +169,7 @@ public class BlitzImageView extends ImageView {
      *
      * @return Cached url, or null if it does not exist.
      */
-    private String getCachedImageUrl() {
+    public String getCachedImageUrl() {
 
         // Can only cache if resource id is set.
         if (mCacheImageUrl && getId() != -1) {
