@@ -14,6 +14,6 @@
         android:layout_height="@dimen/helmet_size"
         android:contentDescription="@string/empty_string"
         android:src="@drawable/asset_bg_helmet_sample"
-        app:clearInitialContent="false" />
+        app:clearInitialContent="true" />
 
 </com.blitz.app.utilities.carousel.BlitzCarouselScalingView>

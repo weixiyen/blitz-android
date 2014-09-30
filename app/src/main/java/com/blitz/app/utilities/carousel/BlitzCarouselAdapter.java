@@ -21,28 +21,26 @@ public class BlitzCarouselAdapter extends FragmentPagerAdapter implements
     // region Member Variables
     // =============================================================================================
 
-    // You can choose a bigger number for LOOPS, but you know, nobody will fling
-    // more than 1000 times just in order to test your "infinite" ViewPager :D
+    // Makes view pager infinite for
+    // all practical purposes.
     final static int LOOPS = 1000;
 
+    // Min and max scaling.
     final static float MAX_SCALE = 1.0f;
     final static float MIN_SCALE = 0.7f;
 
+    // Difference between mix and max scales.
     final static float DIFF_SCALE = MAX_SCALE - MIN_SCALE;
 
-    private BlitzCarouselScalingView cur = null;
-    private BlitzCarouselScalingView next = null;
-
     private Context mContext;
-
     private ViewPager mViewPager;
-
     private FragmentManager mFragmentManager;
-
-    private float scale;
 
     private int mPageCount;
     private int mFirstPage;
+
+    private List<String> mAvatarIds;
+    private List<String> mAvatarUrls;
 
     // endregion
 
@@ -57,19 +55,36 @@ public class BlitzCarouselAdapter extends FragmentPagerAdapter implements
      * @param fragmentManager Fragment manager.
      */
     private BlitzCarouselAdapter(ViewPager viewPager, FragmentManager fragmentManager,
-                                 int pageCount) {
+                                 List<String> avatarIds, List<String> avatarUrls) {
         super(fragmentManager);
 
         // Assign member variables.
+        mFragmentManager = fragmentManager;
         mViewPager = viewPager;
         mContext = viewPager.getContext();
-        mFragmentManager = fragmentManager;
-        mPageCount = pageCount;
-        mFirstPage = pageCount * LOOPS / 2;
+
+        // Set the data source.
+        mAvatarIds = avatarIds;
+        mAvatarUrls = avatarUrls;
+
+        // Page count is the id count.
+        mPageCount = avatarIds.size();
+        mFirstPage = avatarIds.size() * LOOPS / 2;
     }
 
     // endregion
 
+    // region Public Methods
+    // =============================================================================================
+
+    /**
+     * Create adapter and configure it carousel style.
+     *
+     * @param viewPager View pager to be the carousel.
+     * @param fragmentManager Fragment manager.
+     * @param avatarIds Avatar ids.
+     * @param avatarUrls Avatar urls.
+     */
     public static void createWithViewPager(ViewPager viewPager, FragmentManager fragmentManager,
                                            List<String> avatarIds, List<String> avatarUrls) {
 
@@ -81,7 +96,7 @@ public class BlitzCarouselAdapter extends FragmentPagerAdapter implements
         }
 
         BlitzCarouselAdapter adapter = new BlitzCarouselAdapter
-                (viewPager, fragmentManager, avatarIds.size());
+                (viewPager, fragmentManager, avatarIds, avatarUrls);
 
         // Assign the adapter.
         viewPager.setAdapter(adapter);
@@ -107,57 +122,120 @@ public class BlitzCarouselAdapter extends FragmentPagerAdapter implements
         viewPager.setClipToPadding(false);
     }
 
+    // endregion
+
+    // region Overwritten Methods
+    // =============================================================================================
+
+    /**
+     * Fetch item at specified position.
+     *
+     * @param position Current position.
+     *
+     * @return Fragment at position.
+     */
     @Override
-    public Fragment getItem(int position)
-    {
-// make the first pager bigger than others
-        if (position == mFirstPage)
-            scale = MAX_SCALE;
-        else
-            scale = MIN_SCALE;
+    public Fragment getItem(int position) {
+
+        // Make the first pager bigger than others.
+        float mScale = position == mFirstPage ? MAX_SCALE : MIN_SCALE;
+
         position = position % mPageCount;
 
-        LogHelper.log("Item: " + position);
-
-        return BlitzCarouselAdapterFragment.newInstance(mContext, position, scale);
+        return BlitzCarouselAdapterFragment.newInstance(mContext, mScale,
+                mAvatarIds.get(position), mAvatarUrls.get(position));
     }
 
+    /**
+     * Fetch count, will be a multiple of the
+     * actual page count to allow for
+     * infinite scrolling.
+     *
+     * @return Page count.
+     */
     @Override
-    public int getCount()
-    {
+    public int getCount() {
+
         return mPageCount * LOOPS;
     }
 
+    /**
+     * Set the scale values when page changes.
+     *
+     * @param position Current position.
+     * @param positionOffset Position offset.
+     * @param positionOffsetPixels Offset in pixels.
+     */
     @Override
     public void onPageScrolled(int position, float positionOffset,
-                               int positionOffsetPixels)
-    {
-        if (positionOffset >= 0f && positionOffset <= 1f)
-        {
-            cur = getRootView(position);
-            next = getRootView(position +1);
-            cur.setScale(MAX_SCALE
-                    - DIFF_SCALE * positionOffset);
-            next.setScale(MIN_SCALE
-                    + DIFF_SCALE * positionOffset);
+                               int positionOffsetPixels) {
+
+        if (positionOffset >= 0f && positionOffset <= 1f) {
+
+            BlitzCarouselScalingView rootViewCurrent
+                    = getRootView(position);
+            BlitzCarouselScalingView rootViewNext
+                    = getRootView(position + 1);
+
+            rootViewCurrent.setScale
+                    (MAX_SCALE - DIFF_SCALE * positionOffset);
+            rootViewNext.setScale
+                    (MIN_SCALE + DIFF_SCALE * positionOffset);
         }
     }
 
+    /**
+     * No need to do anything here.
+     *
+     * @param position New page position.
+     */
     @Override
-    public void onPageSelected(int position) {}
+    public void onPageSelected(int position) {
 
-    @Override
-    public void onPageScrollStateChanged(int state) {}
-
-    private BlitzCarouselScalingView getRootView(int position)
-    {
-        return (BlitzCarouselScalingView)
-                mFragmentManager.findFragmentByTag(getFragmentTag(position))
-                        .getView().findViewById(R.id.blitz_carousel_helmet);
+        LogHelper.log("Page selected: " + (position % mPageCount));
     }
 
-    private String getFragmentTag(int position)
-    {
+    /**
+     * No need to do anything here.
+     *
+     * @param state New state.
+     */
+    @Override
+    public void onPageScrollStateChanged(int state) { }
+
+    // endregion
+
+    // region Private Methods
+    // =============================================================================================
+
+    /**
+     * Fetch root view at position.
+     *
+     * @param position View pager position.
+     *
+     * @return Root view at position.
+     */
+    private BlitzCarouselScalingView getRootView(int position) {
+
+        // Fetch fragment at current position.
+        Fragment fragmentAtPosition = mFragmentManager
+                .findFragmentByTag(getFragmentTag(position));
+
+        return (BlitzCarouselScalingView)fragmentAtPosition.getView()
+                .findViewById(R.id.blitz_carousel_helmet);
+    }
+
+    /**
+     * Get fragment tag at a specified position.
+     *
+     * @param position View pager position.
+     *
+     * @return Fragment tag.
+     */
+    private String getFragmentTag(int position) {
+
         return "android:switcher:" + mViewPager.getId() + ":" + position;
     }
+
+    // endregion
 }

@@ -8,20 +8,65 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.blitz.app.R;
+import com.blitz.app.utilities.imageview.BlitzImageView;
 
 /**
  * Created by mrkcsc on 8/17/14. Copyright 2014 Blitz Studios
  */
 public class BlitzCarouselAdapterFragment extends Fragment {
 
-    public static Fragment newInstance(Context context, int pos, float scale)
-    {
-        Bundle b = new Bundle();
-        b.putInt("pos", pos);
-        b.putFloat("scale", scale);
-        return Fragment.instantiate(context, BlitzCarouselAdapterFragment.class.getName(), b);
+    // region Member Variables
+    // =============================================================================================
+
+    // Bundle parameters
+    public static final String PARAM_CAROUSEL_ITEM_ID  = "PARAM_CAROUSEL_ITEM_ID";
+    public static final String PARAM_CAROUSEL_ITEM_URL = "PARAM_CAROUSEL_ITEM_URL";
+    public static final String PARAM_CAROUSEL_SCALE    = "PARAM_CAROUSEL_SCALE";
+
+    // endregion
+
+    // region Public Methods
+    // =============================================================================================
+
+    /**
+     * Create a new instance of the fragment.
+     *
+     * @param context Context.
+     * @param scale Scale of the view.
+     * @param carouselItemId Item id.
+     * @param carouselItemUrl Item url.
+     *
+     * @return Instance of the fragment.
+     */
+    public static Fragment newInstance(Context context, float scale,
+                                       String carouselItemId, String carouselItemUrl) {
+
+        Bundle bundle = new Bundle();
+
+        bundle.putString(PARAM_CAROUSEL_ITEM_ID, carouselItemId);
+        bundle.putString(PARAM_CAROUSEL_ITEM_URL, carouselItemUrl);
+
+        bundle.putFloat(PARAM_CAROUSEL_SCALE, scale);
+
+        return Fragment.instantiate(context,
+                BlitzCarouselAdapterFragment.class.getName(), bundle);
     }
 
+    // endregion
+
+    // region Overwritten Methods
+    // =============================================================================================
+
+    /**
+     * When view is created, inflate associated view
+     * and configure it with associated parameters.
+     *
+     * @param inflater Inflater.
+     * @param container Container.
+     * @param savedInstanceState Instance state.
+     *
+     * @return Inflated view.
+     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -29,15 +74,29 @@ public class BlitzCarouselAdapterFragment extends Fragment {
             return null;
         }
 
-        BlitzCarouselScalingView l = (BlitzCarouselScalingView)
-                inflater.inflate(R.layout.blitz_carousel_helmet, container, false);
+        // Inflate the target view.
+        BlitzCarouselScalingView helmetView = (BlitzCarouselScalingView)inflater
+                .inflate(R.layout.blitz_carousel_helmet, container, false);
 
-        int pos = getArguments().getInt("pos");
+        BlitzImageView helmetImage = (BlitzImageView)helmetView
+                .findViewById(R.id.blitz_carousel_helmet_image);
 
-        float scale = this.getArguments().getFloat("scale");
+        if (getArguments() != null) {
 
-        l.setScale(scale);
+            String itemUrl = getArguments().getString(PARAM_CAROUSEL_ITEM_URL);
+            String itemId = getArguments().getString(PARAM_CAROUSEL_ITEM_ID);
 
-        return l;
+            // Get current scale size.
+            float itemScale = getArguments().getFloat(PARAM_CAROUSEL_SCALE);
+
+            helmetView.setTag(itemId);
+            helmetView.setScale(itemScale);
+
+            helmetImage.setImageUrl(itemUrl);
+        }
+
+        return helmetView;
     }
+
+    // endregion
 }
