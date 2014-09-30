@@ -324,6 +324,17 @@ public final class ObjectModelDraft extends ObjectModel {
     }
 
     /**
+     * Get list of all round choices.
+     *
+     * @return List of choices for each round.
+     */
+    @SuppressWarnings("unused")
+    public ArrayList<ArrayList<String>> getChoices() {
+
+        return mChoices;
+    }
+
+    /**
      * Fetch positions required for this draft.
      *
      * @return Positions required for this draft.
