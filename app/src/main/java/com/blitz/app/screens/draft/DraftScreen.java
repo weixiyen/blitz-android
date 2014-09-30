@@ -24,6 +24,7 @@ import com.blitz.app.view_models.ViewModelDraft;
 
 import java.util.List;
 
+import butterknife.ButterKnife;
 import butterknife.InjectView;
 import butterknife.InjectViews;
 import butterknife.OnClick;
@@ -50,11 +51,12 @@ public class DraftScreen extends BaseActivity implements ViewModelDraft.ViewMode
     @InjectView(R.id.draft_matchup_username_left)      TextView mDraftMatchupUsernameLeft;
     @InjectView(R.id.draft_matchup_username_right)     TextView mDraftMatchupUsernameRight;
 
-    // Player containers.
-    @InjectView(R.id.draft_player_tl) View mDraftPlayerTl;
-    @InjectView(R.id.draft_player_tr) View mDraftPlayerTr;
-    @InjectView(R.id.draft_player_bl) View mDraftPlayerBl;
-    @InjectView(R.id.draft_player_br) View mDraftPlayerBr;
+    @InjectViews({
+            R.id.draft_player_tl,
+            R.id.draft_player_tr,
+            R.id.draft_player_bl,
+            R.id.draft_player_br
+    }) List<View> mDraftPlayers;
 
     @InjectViews({
             R.id.draft_player_image_tl,
@@ -83,6 +85,13 @@ public class DraftScreen extends BaseActivity implements ViewModelDraft.ViewMode
             R.id.draft_player_opponent_bl,
             R.id.draft_player_opponent_br
     }) List<BlitzTextView> mDraftPlayerOpponents;
+
+    @InjectViews({
+            R.id.draft_player_stats_tl,
+            R.id.draft_player_stats_tr,
+            R.id.draft_player_stats_bl,
+            R.id.draft_player_stats_br
+    }) List<View> mDraftPlayerStats;
 
     // Loading spinner for the draft.
     @InjectView(R.id.draft_loading) ProgressBar mDraftLoadingSpinner;
@@ -400,10 +409,10 @@ public class DraftScreen extends BaseActivity implements ViewModelDraft.ViewMode
 
         // Players pop in.
         getAnimations().createHelper(20, 10)
-                .addHelperView(AnimHelperSpringsView.from(mDraftPlayerTl, AnimHelperSpringsPresets.SCALE_UP))
-                .addHelperView(AnimHelperSpringsView.from(mDraftPlayerTr, AnimHelperSpringsPresets.SCALE_UP))
-                .addHelperView(AnimHelperSpringsView.from(mDraftPlayerBl, AnimHelperSpringsPresets.SCALE_UP))
-                .addHelperView(AnimHelperSpringsView.from(mDraftPlayerBr, AnimHelperSpringsPresets.SCALE_UP));
+                .addHelperView(AnimHelperSpringsView.from(mDraftPlayers.get(0), AnimHelperSpringsPresets.SCALE_UP))
+                .addHelperView(AnimHelperSpringsView.from(mDraftPlayers.get(1), AnimHelperSpringsPresets.SCALE_UP))
+                .addHelperView(AnimHelperSpringsView.from(mDraftPlayers.get(2), AnimHelperSpringsPresets.SCALE_UP))
+                .addHelperView(AnimHelperSpringsView.from(mDraftPlayers.get(3), AnimHelperSpringsPresets.SCALE_UP));
 
         getAnimations().setOnCompleteListener(new Runnable() {
 
@@ -554,13 +563,10 @@ public class DraftScreen extends BaseActivity implements ViewModelDraft.ViewMode
             List<String> playerPositions,
             List<String> playerOpponents) {
 
-        mDraftPlayerTl.setTag(playerIds.get(0));
-        mDraftPlayerTr.setTag(playerIds.get(1));
-        mDraftPlayerBl.setTag(playerIds.get(2));
-        mDraftPlayerBr.setTag(playerIds.get(3));
+        for (int i = 0; i < playerIds.size(); i++) {
 
-        for (int i = 0; i < playerPhotoUrls.size(); i++) {
-
+            mDraftPlayers
+                    .get(i).setTag(playerIds.get(i));
             mDraftPlayerImages
                     .get(i).setImageUrl(playerPhotoUrls.get(i), "images/raw_player_mask.png");
             mDraftPlayerNames
@@ -570,6 +576,36 @@ public class DraftScreen extends BaseActivity implements ViewModelDraft.ViewMode
             mDraftPlayerOpponents
                     .get(i).setText(playerOpponents.get(i));
         }
+
+        // Reset selected state of top part of player cards.
+        ButterKnife.apply(mDraftPlayerNames, new ButterKnife.Action<View>() {
+
+            @Override
+            public void apply(View view, int index) {
+
+                view.setBackgroundResource(R.drawable.asset_draft_player_mask_top);
+            }
+        });
+
+        // Reset selected state of bot part of player cards.
+        ButterKnife.apply(mDraftPlayerStats, new ButterKnife.Action<View>() {
+
+            @Override
+            public void apply(View view, int index) {
+
+                view.setBackgroundResource(R.drawable.asset_draft_player_mask_bot);
+            }
+        });
+
+        // Restore alpha.
+        ButterKnife.apply(mDraftPlayerImages, new ButterKnife.Action<View>() {
+
+            @Override
+            public void apply(View view, int index) {
+
+                view.setAlpha(1.0f);
+            }
+        });
     }
 
     /**
@@ -583,7 +619,32 @@ public class DraftScreen extends BaseActivity implements ViewModelDraft.ViewMode
             List<String> playerIds,
             List<String> userIds) {
 
-        LogHelper.log("Players: " + playerIds.toString() + " " + userIds.toString());
+        for (int i = 0; i < mDraftPlayers.size(); i++) {
+
+            // Fetch player id.
+            String draftPlayerId = (String)mDraftPlayers.get(i).getTag();
+
+            for (int j = 0; j < playerIds.size(); j++) {
+
+                if (draftPlayerId.equals(playerIds.get(j))) {
+
+                    // Check if this pick made by the user.
+                    boolean pickedByUser = userIds.get(j).equals
+                            (AuthHelper.instance().getUserId());
+
+                    mDraftPlayerNames.get(i).setBackgroundResource(pickedByUser ?
+                            R.drawable.asset_draft_player_mask_top_s1 :
+                            R.drawable.asset_draft_player_mask_top_s2);
+
+                    mDraftPlayerStats.get(i).setBackgroundResource(pickedByUser ?
+                            R.drawable.asset_draft_player_mask_bot_s1 :
+                            R.drawable.asset_draft_player_mask_bot_s2);
+
+                    // Fade out the image.
+                    mDraftPlayerImages.get(i).setAlpha(0.5f);
+                }
+            }
+        }
     }
 
     // endregion
