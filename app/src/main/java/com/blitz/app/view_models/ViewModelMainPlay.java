@@ -39,6 +39,8 @@ public class ViewModelMainPlay extends ViewModel {
     private static final String STATE_TIME_SUSPENDED = "timeSuspected";
     private static final String STATE_IN_QUEUE = "stateInQueue";
 
+    private String mUserAvatarId;
+
     // endregion
 
     // region Constructor
@@ -114,6 +116,9 @@ public class ViewModelMainPlay extends ViewModel {
             mSecondsInQueue += secondsSinceSinceSaved;
         }
 
+        // Fetch user info.
+        fetchUserInfo();
+
         // Initialize container state.
         showQueueContainer(null, false);
 
@@ -178,8 +183,15 @@ public class ViewModelMainPlay extends ViewModel {
                     callbacks.onCash    (user.getCash());
                 }
 
-                // Update helmet.
-                updateHelmet(user.getAvatarId());
+                // If a new avatar id is found.
+                if (!user.getAvatarId().equals(mUserAvatarId)) {
+
+                    // Assign it.
+                    mUserAvatarId = user.getAvatarId();
+
+                    // Update helmet.
+                    updateHelmet();
+                }
             }
         }, true);
     }
@@ -192,10 +204,10 @@ public class ViewModelMainPlay extends ViewModel {
     /**
      * Attempt to update the user helmet.
      */
-    private void updateHelmet(String itemAvatarId) {
+    private void updateHelmet() {
 
         // Fetch associated item model.
-        ObjectModelItem.fetchItem(mActivity, itemAvatarId,
+        ObjectModelItem.fetchItem(mActivity, mUserAvatarId,
                 new ObjectModelItem.CallbackItem() {
 
                     @Override
