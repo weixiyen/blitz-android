@@ -15,7 +15,7 @@ import com.blitz.app.utilities.app.AppConfig;
 import com.blitz.app.utilities.app.AppData;
 import com.blitz.app.utilities.app.AppDataObject;
 import com.blitz.app.utilities.authentication.AuthHelper;
-import com.blitz.app.utilities.carousel.MyPagerAdapter;
+import com.blitz.app.utilities.carousel.BlitzCarouselAdapter;
 import com.blitz.app.utilities.sound.SoundHelper;
 import com.blitz.app.utilities.textview.BlitzTextView;
 import com.blitz.app.view_models.ViewModel;
@@ -205,7 +205,7 @@ public class MainScreenFragmentSettings extends BaseFragment implements ViewMode
     public void onAvatarsChanged(List<String> avatarIds, List<String> avatarUrls) {
 
         // Create the avatar carousel.
-        MyPagerAdapter.createWithViewPager(mCarouselViewPager,
+        BlitzCarouselAdapter.createWithViewPager(mCarouselViewPager,
                 getChildFragmentManager(), avatarIds, avatarUrls);
     }
 

@@ -1,4 +1,4 @@
-<com.blitz.app.utilities.carousel.MyLinearLayout
+<com.blitz.app.utilities.carousel.BlitzCarouselScalingView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/blitz_carousel_helmet"
@@ -16,4 +16,4 @@
         android:src="@drawable/asset_bg_helmet_sample"
         app:clearInitialContent="false" />
 
-</com.blitz.app.utilities.carousel.MyLinearLayout>
+</com.blitz.app.utilities.carousel.BlitzCarouselScalingView>

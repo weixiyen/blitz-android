@@ -15,23 +15,25 @@ import java.util.List;
 /**
  * Created by mrkcsc on 8/17/14. Copyright 2014 Blitz Studios
  */
-public class MyPagerAdapter extends FragmentPagerAdapter implements
+public class BlitzCarouselAdapter extends FragmentPagerAdapter implements
         ViewPager.OnPageChangeListener {
 
     // region Member Variables
     // =============================================================================================
 
-    public final static int PAGES = 5;
+    final static int PAGES = 5;
     // You can choose a bigger number for LOOPS, but you know, nobody will fling
     // more than 1000 times just in order to test your "infinite" ViewPager :D
-    public final static int LOOPS = 1000;
-    public final static int FIRST_PAGE = PAGES * LOOPS / 2;
-    public final static float BIG_SCALE = 1.0f;
-    public final static float SMALL_SCALE = 0.7f;
-    public final static float DIFF_SCALE = BIG_SCALE - SMALL_SCALE;
+    final static int LOOPS = 1000;
+    final static int FIRST_PAGE = PAGES * LOOPS / 2;
 
-    private MyLinearLayout cur = null;
-    private MyLinearLayout next = null;
+    final static float MAX_SCALE = 1.0f;
+    final static float MIN_SCALE = 0.7f;
+
+    final static float DIFF_SCALE = MAX_SCALE - MIN_SCALE;
+
+    private BlitzCarouselScalingView cur = null;
+    private BlitzCarouselScalingView next = null;
 
     private Context context;
 
@@ -55,7 +57,7 @@ public class MyPagerAdapter extends FragmentPagerAdapter implements
      * @param viewPager Valid view pager.
      * @param fragmentManager Fragment manager.
      */
-    private MyPagerAdapter(ViewPager viewPager, FragmentManager fragmentManager) {
+    private BlitzCarouselAdapter(ViewPager viewPager, FragmentManager fragmentManager) {
         super(fragmentManager);
 
         // Assign view pager.
@@ -82,7 +84,7 @@ public class MyPagerAdapter extends FragmentPagerAdapter implements
 
         if (viewPager != null) {
 
-            MyPagerAdapter adapter = new MyPagerAdapter(viewPager, fragmentManager);
+            BlitzCarouselAdapter adapter = new BlitzCarouselAdapter(viewPager, fragmentManager);
 
             adapter.mPages = avatarIds.size();
 
@@ -113,14 +115,14 @@ public class MyPagerAdapter extends FragmentPagerAdapter implements
     {
 // make the first pager bigger than others
         if (position == FIRST_PAGE)
-            scale = BIG_SCALE;
+            scale = MAX_SCALE;
         else
-            scale = SMALL_SCALE;
+            scale = MIN_SCALE;
         position = position % PAGES;
 
         LogHelper.log("Item: " + position);
 
-        return MyFragment.newInstance(context, position, scale);
+        return BlitzCarouselAdapterFragment.newInstance(context, position, scale);
     }
 
     @Override
@@ -137,9 +139,9 @@ public class MyPagerAdapter extends FragmentPagerAdapter implements
         {
             cur = getRootView(position);
             next = getRootView(position +1);
-            cur.setScaleBoth(BIG_SCALE
+            cur.setScale(MAX_SCALE
                     - DIFF_SCALE * positionOffset);
-            next.setScaleBoth(SMALL_SCALE
+            next.setScale(MIN_SCALE
                     + DIFF_SCALE * positionOffset);
         }
     }
@@ -150,9 +152,9 @@ public class MyPagerAdapter extends FragmentPagerAdapter implements
     @Override
     public void onPageScrollStateChanged(int state) {}
 
-    private MyLinearLayout getRootView(int position)
+    private BlitzCarouselScalingView getRootView(int position)
     {
-        return (MyLinearLayout)
+        return (BlitzCarouselScalingView)
                 mFragmentManager.findFragmentByTag(getFragmentTag(position))
                         .getView().findViewById(R.id.blitz_carousel_helmet);
     }

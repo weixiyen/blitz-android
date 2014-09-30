@@ -10,16 +10,16 @@ import android.view.ViewGroup;
 import com.blitz.app.R;
 
 /**
- * Created by mrkcsc on 8/17/14.
+ * Created by mrkcsc on 8/17/14. Copyright 2014 Blitz Studios
  */
-public class MyFragment extends Fragment {
+public class BlitzCarouselAdapterFragment extends Fragment {
 
     public static Fragment newInstance(Context context, int pos, float scale)
     {
         Bundle b = new Bundle();
         b.putInt("pos", pos);
         b.putFloat("scale", scale);
-        return Fragment.instantiate(context, MyFragment.class.getName(), b);
+        return Fragment.instantiate(context, BlitzCarouselAdapterFragment.class.getName(), b);
     }
 
     @Override
@@ -29,15 +29,14 @@ public class MyFragment extends Fragment {
             return null;
         }
 
-        MyLinearLayout l = (MyLinearLayout)
+        BlitzCarouselScalingView l = (BlitzCarouselScalingView)
                 inflater.inflate(R.layout.blitz_carousel_helmet, container, false);
 
-        int pos = this.getArguments().getInt("pos");
-
+        int pos = getArguments().getInt("pos");
 
         float scale = this.getArguments().getFloat("scale");
 
-        l.setScaleBoth(scale);
+        l.setScale(scale);
 
         return l;
     }
