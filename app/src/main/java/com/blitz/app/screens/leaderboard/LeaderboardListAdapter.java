@@ -46,8 +46,8 @@ public class LeaderboardListAdapter extends ArrayAdapter<ObjectModelUser> {
 
         setText(v, R.id.list_index, Integer.toString(position + 1));
         setText(v, R.id.user_name, leader.getUsername());
-        setText(v, R.id.wins, Integer.toString(leader.getWins()));
-        setText(v, R.id.losses, Integer.toString(leader.getLosses()));
+        setText(v, R.id.wins, "W" + leader.getWins());
+        setText(v, R.id.losses, "L" + leader.getLosses());
         setText(v, R.id.rating, Integer.toString(leader.getRating()));
 
         return v;
