@@ -166,6 +166,8 @@ public class ViewModelDraft extends ViewModel {
      */
     public void pickPlayer(final String playerId) {
 
+        // TODO: Put back true client locking behavior.
+
         // If player id provided, and we are allowed to draft a player.
         if (playerId != null && mDraftModel != null) {
 
@@ -176,11 +178,6 @@ public class ViewModelDraft extends ViewModel {
 
                         @Override
                         public void onSuccess(ObjectModelDraft draft) {
-
-                            LogHelper.log("Player picked: " + playerId + "\nDraft updated!");
-
-                            // Update the draft.
-                            mDraftModel = draft;
 
                             // Picking no longer locked.
                             mPickingLocked = false;
