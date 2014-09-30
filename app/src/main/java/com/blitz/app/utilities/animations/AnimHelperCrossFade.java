@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.ImageView;
 
 import com.blitz.app.utilities.app.AppConfig;
+import com.blitz.app.utilities.imageview.BlitzImageView;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Target;
 
@@ -61,7 +62,7 @@ public class AnimHelperCrossFade extends AnimHelper {
      * @param imageUrl Target image url.
      */
     @SuppressWarnings("unused")
-    public static void setImageUrl(final ImageView imageView, final String imageUrl) {
+    public static void setImageUrl(final BlitzImageView imageView, final String imageUrl) {
 
         // Prepend the CDN url.
         String fullImageUrl = AppConfig.getCDNUrl() + imageUrl;
@@ -76,6 +77,9 @@ public class AnimHelperCrossFade extends AnimHelper {
 
                 // Set the transition.
                 setTransitionDrawable(imageView.getDrawable(), drawableTo, imageView);
+
+                // Set url for caching purposes.
+                imageView.setImageUrl(imageUrl, null, true);
             }
 
             @Override
