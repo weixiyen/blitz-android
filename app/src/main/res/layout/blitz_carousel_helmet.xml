@@ -1,17 +1,19 @@
 <com.blitz.app.utilities.carousel.MyLinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/root"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/blitz_carousel_helmet"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@android:color/transparent"
     android:gravity="center"
     android:orientation="vertical">
 
-    <ImageView
-        android:id="@+id/content"
+    <com.blitz.app.utilities.imageview.BlitzImageView
+        android:id="@+id/blitz_carousel_helmet_image"
         android:layout_width="@dimen/helmet_size"
         android:layout_height="@dimen/helmet_size"
         android:contentDescription="@string/empty_string"
-        android:src="@drawable/asset_bg_helmet_sample" />
+        android:src="@drawable/asset_bg_helmet_sample"
+        app:clearInitialContent="false" />
 
 </com.blitz.app.utilities.carousel.MyLinearLayout>

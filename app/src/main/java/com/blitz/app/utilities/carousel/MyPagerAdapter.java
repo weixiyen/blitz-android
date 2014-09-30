@@ -7,7 +7,10 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 
 import com.blitz.app.R;
+import com.blitz.app.utilities.logging.LogHelper;
 import com.blitz.app.utilities.reflection.ReflectionHelper;
+
+import java.util.List;
 
 /**
  * Created by mrkcsc on 8/17/14. Copyright 2014 Blitz Studios
@@ -38,6 +41,8 @@ public class MyPagerAdapter extends FragmentPagerAdapter implements
 
     private float scale;
 
+    private int mPages;
+
     // endregion
 
     // region Constructors
@@ -65,11 +70,21 @@ public class MyPagerAdapter extends FragmentPagerAdapter implements
 
     // endregion
 
-    public static void createWithViewPager(ViewPager viewPager, FragmentManager fragmentManager) {
+    public static void createWithViewPager(ViewPager viewPager, FragmentManager fragmentManager,
+                                           List<String> avatarIds, List<String> avatarUrls) {
+
+        // Assert valid id's and urls are provided.
+        if (avatarIds == null || avatarUrls == null
+                || avatarIds.size() != avatarUrls.size()) {
+
+            return;
+        }
 
         if (viewPager != null) {
 
             MyPagerAdapter adapter = new MyPagerAdapter(viewPager, fragmentManager);
+
+            adapter.mPages = avatarIds.size();
 
             // Assign the adapter.
             viewPager.setAdapter(adapter);
@@ -102,6 +117,8 @@ public class MyPagerAdapter extends FragmentPagerAdapter implements
         else
             scale = SMALL_SCALE;
         position = position % PAGES;
+
+        LogHelper.log("Item: " + position);
 
         return MyFragment.newInstance(context, position, scale);
     }
@@ -136,8 +153,8 @@ public class MyPagerAdapter extends FragmentPagerAdapter implements
     private MyLinearLayout getRootView(int position)
     {
         return (MyLinearLayout)
-                mFragmentManager.findFragmentByTag(this.getFragmentTag(position))
-                        .getView().findViewById(R.id.root);
+                mFragmentManager.findFragmentByTag(getFragmentTag(position))
+                        .getView().findViewById(R.id.blitz_carousel_helmet);
     }
 
     private String getFragmentTag(int position)

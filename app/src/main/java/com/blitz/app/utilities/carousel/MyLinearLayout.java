@@ -26,6 +26,7 @@ public class MyLinearLayout extends LinearLayout {
 // invalidate() function will call onDraw(Canvas)
 // to redraw the view for you
     }
+
     @Override
     protected void onDraw(Canvas canvas) {
 // The main mechanism to display scale animation, you can customize it
