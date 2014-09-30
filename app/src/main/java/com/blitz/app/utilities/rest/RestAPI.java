@@ -132,6 +132,10 @@ public interface RestAPI {
     void user_get(@Path("user_id") String userId,
         Callback<RestAPIResult<ObjectModelUser>> callback);
 
+    @PATCH("/user")
+    void user_patch(@Body JsonObject body,
+                    Callback<RestAPIResult<ObjectModelUser>> callback);
+
     @GET("/users")
     void users_get(@Query("keys[]") List<String> keys,   // Required
                    @Query("index") String index,         // Required
