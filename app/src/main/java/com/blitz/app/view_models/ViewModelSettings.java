@@ -64,7 +64,8 @@ public class ViewModelSettings extends ViewModel {
      */
     public void updateUserAvatar(String itemAvatarId) {
 
-        // TODO: Implement.
+        // Silently update the users avatar.
+        ObjectModelUser.updateAvatar(null, itemAvatarId, null);
     }
 
     // endregion

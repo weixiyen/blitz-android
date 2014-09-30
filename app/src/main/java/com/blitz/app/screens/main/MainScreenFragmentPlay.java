@@ -74,6 +74,23 @@ public class MainScreenFragmentPlay extends BaseFragment implements ViewModelMai
     }
 
     /**
+     * Every time this fragment becomes visible,
+     * we should make sure the helmet is updated
+     * to the most recent one.
+     *
+     * @param isVisibleToUser Is fragment visible to user.
+     */
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+
+        // Try to update helmet if needed.
+        if (mViewModelMainPlay != null && isVisibleToUser) {
+            mViewModelMainPlay.fetchUserInfo();
+        }
+    }
+
+    /**
      * This method requests an instance of the view
      * model to operate on for lifecycle callbacks.
      *

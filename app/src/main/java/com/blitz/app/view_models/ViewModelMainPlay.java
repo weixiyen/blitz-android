@@ -34,6 +34,7 @@ public class ViewModelMainPlay extends ViewModel {
     // Are we in queue.
     private boolean mInQueue;
 
+    // State identifiers.
     private static final String STATE_SECONDS = "stateSeconds";
     private static final String STATE_TIME_SUSPENDED = "timeSuspected";
     private static final String STATE_IN_QUEUE = "stateInQueue";
@@ -116,9 +117,6 @@ public class ViewModelMainPlay extends ViewModel {
         // Initialize container state.
         showQueueContainer(null, false);
 
-        // Fetch user info.
-        fetchUserInfo();
-
         // Setup comet.
         setupCometCallbacks();
     }
@@ -153,19 +151,14 @@ public class ViewModelMainPlay extends ViewModel {
         }
     }
 
-    // endregion
-
-    // region Private Methods
-    // =============================================================================================
-
     /**
      * Fetch and broadcast user information relevant
      * to the play view model.
      */
-    private void fetchUserInfo() {
+    public void fetchUserInfo() {
 
         // Fetch current user id.
-        String userId = AuthHelper.instance().getUserId();
+        final String userId = AuthHelper.instance().getUserId();
 
         // Fetch the current user.
         ObjectModelUser.getUser(mActivity, userId, new ObjectModelUser.CallbackUser() {
@@ -185,20 +178,35 @@ public class ViewModelMainPlay extends ViewModel {
                     callbacks.onCash    (user.getCash());
                 }
 
-                // Fetch associated item model.
-                ObjectModelItem.fetchItem(mActivity, user.getAvatarId(),
-                        new ObjectModelItem.CallbackItem() {
-
-                            @Override
-                            public void onSuccess(ObjectModelItem item) {
-
-                                if (callbacks != null) {
-                                    callbacks.onImgPath(item.getDefaultImgPath());
-                                }
-                            }
-                        });
+                // Update helmet.
+                updateHelmet(user.getAvatarId());
             }
         }, true);
+    }
+
+    // endregion
+
+    // region Private Methods
+    // =============================================================================================
+
+    /**
+     * Attempt to update the user helmet.
+     */
+    private void updateHelmet(String itemAvatarId) {
+
+        // Fetch associated item model.
+        ObjectModelItem.fetchItem(mActivity, itemAvatarId,
+                new ObjectModelItem.CallbackItem() {
+
+                    @Override
+                    public void onSuccess(ObjectModelItem item) {
+
+                        if (getCallbacks(ViewModelMainPlayCallbacks.class) != null) {
+                            getCallbacks(ViewModelMainPlayCallbacks.class)
+                                    .onImgPath(item.getDefaultImgPath());
+                        }
+                    }
+                });
     }
 
     /**
