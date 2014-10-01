@@ -11,13 +11,12 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="127dp"
         android:background="@drawable/asset_bg_profile_play"
         android:gravity="center_horizontal"
         android:orientation="vertical"
         android:paddingLeft="120dp"
-        android:paddingRight="10dp"
-        android:paddingTop="5dp">
+        android:paddingRight="10dp">
 
         <com.blitz.app.utilities.textview.BlitzTextView
             android:id="@+id/main_play_stats_username"
@@ -27,8 +26,6 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:paddingBottom="5dp"
-            android:paddingLeft="5dp"
-            android:paddingRight="5dp"
             android:paddingTop="10dp"
             android:singleLine="true"
             android:text="@string/lorum_ipsum_tiny"
@@ -46,6 +43,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="-6dp"
+                android:layout_marginLeft="-6dp"
                 android:contentDescription="@string/empty_string"
                 android:src="@drawable/asset_play_icon_elo" />
 
@@ -56,8 +54,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:paddingLeft="5dp"
-                android:paddingRight="5dp"
                 android:singleLine="true"
                 android:text="@string/number_large"
                 android:textColor="@color/text_color_link"
@@ -69,20 +65,18 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
             android:gravity="center"
+            android:layout_marginTop="3dp"
             android:orientation="horizontal">
 
             <TextView
                 style="@style/TextViewStyle"
                 fontPath="@string/app_font_sports"
-                android:layout_width="70dp"
+                android:layout_width="60dp"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:paddingLeft="5dp"
-                android:paddingRight="5dp"
                 android:singleLine="true"
-                android:text="@string/win"
+                android:text="@string/wins"
                 android:textAllCaps="true"
                 android:textColor="@color/text_color_light"
                 android:textSize="16sp"/>
@@ -90,11 +84,9 @@
             <TextView
                 style="@style/TextViewStyle"
                 fontPath="@string/app_font_sports"
-                android:layout_width="70dp"
+                android:layout_width="60dp"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:paddingLeft="5dp"
-                android:paddingRight="5dp"
                 android:singleLine="true"
                 android:text="@string/loss"
                 android:textAllCaps="true"
@@ -112,16 +104,14 @@
                 android:id="@+id/main_play_stats_wins"
                 style="@style/TextViewStyle"
                 fontPath="@string/app_font_sports"
-                android:layout_width="70dp"
+                android:layout_width="60dp"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:paddingLeft="5dp"
-                android:paddingRight="5dp"
                 android:singleLine="true"
                 android:text="@string/number_small"
                 android:textAllCaps="true"
                 android:textColor="@color/text_color_light"
-                android:textSize="28sp"
+                android:textSize="24sp"
                 app:cacheText="true"
                 app:clearInitialContent="true"/>
 
@@ -129,16 +119,14 @@
                 android:id="@+id/main_play_stats_losses"
                 style="@style/TextViewStyle"
                 fontPath="@string/app_font_sports"
-                android:layout_width="70dp"
+                android:layout_width="60dp"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:paddingLeft="5dp"
-                android:paddingRight="5dp"
                 android:singleLine="true"
                 android:text="@string/number_small"
                 android:textAllCaps="true"
                 android:textColor="@color/text_color_grey"
-                android:textSize="28sp"
+                android:textSize="24sp"
                 app:cacheText="true"
                 app:clearInitialContent="true"/>
         </LinearLayout>
@@ -150,13 +138,11 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:padding="5dp"
-            android:paddingTop="15dp"
-            android:singleLine="true"
+            android:layout_marginTop="5dp"
             android:text="@string/leaderboard_link_text"
             android:textAllCaps="true"
             android:textColor="@color/text_color_link"
-            android:textSize="18sp"/>
+            android:textSize="16sp"/>
 
     </LinearLayout>
 
@@ -165,6 +151,7 @@
         android:layout_width="@dimen/helmet_size"
         android:layout_height="@dimen/helmet_size"
         android:layout_marginLeft="5dp"
+        android:layout_marginTop="-5dp"
         android:contentDescription="@string/empty_string"
         android:src="@drawable/asset_bg_helmet_sample"
         app:cacheImageURL="true"
