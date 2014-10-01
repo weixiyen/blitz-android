@@ -103,7 +103,7 @@ public class BlitzImage {
                                      CallbackImageUrls callback) {
 
         // Call multiple load, with no masks.
-        loadImageUrls(context, imageUrls, new ArrayList<String>(), callback);
+        loadImageUrls(context, imageUrls, new ArrayList<String>(imageUrls.size()), callback);
     }
 
     /**
