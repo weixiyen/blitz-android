@@ -8,10 +8,8 @@ import android.os.Build;
 import android.view.View;
 import android.widget.ImageView;
 
-import com.blitz.app.utilities.app.AppConfig;
+import com.blitz.app.utilities.image.BlitzImage;
 import com.blitz.app.utilities.image.BlitzImageView;
-import com.squareup.picasso.Picasso;
-import com.squareup.picasso.Target;
 
 /**
  * Created by mrkcsc on 8/20/14. Copyright 2014 Blitz Studios
@@ -64,18 +62,18 @@ public class AnimHelperCrossFade extends AnimHelper {
     @SuppressWarnings("unused")
     public static void setImageUrl(final BlitzImageView imageView, final String imageUrl) {
 
-        // Prepend the CDN url.
-        String fullImageUrl = AppConfig.getCDNUrl() + imageUrl;
-
-        Target target = new Target() {
+        // Load image before cross fading.
+        BlitzImage.loadImageUrl(imageView.getContext(), imageUrl,
+                new BlitzImage.CallbackImageUrl() {
 
             @Override
-            public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
+            public void onSuccess(Bitmap image) {
 
-                // Turn our bitmap into a drawable.
-                BitmapDrawable drawableTo = new BitmapDrawable(imageView.getResources(), bitmap);
-
+                // Drawable from.
                 Drawable drawableFrom = imageView.getDrawable();
+
+                // Drawable to.
+                BitmapDrawable drawableTo = new BitmapDrawable(imageView.getResources(), image);
 
                 // If no image set.
                 if (drawableFrom == null) {
@@ -92,16 +90,7 @@ public class AnimHelperCrossFade extends AnimHelper {
                 // Set url for caching purposes.
                 imageView.setImageUrl(imageUrl, null, true);
             }
-
-            @Override
-            public void onBitmapFailed(Drawable errorDrawable) { }
-
-            @Override
-            public void onPrepareLoad(Drawable placeHolderDrawable) { }
-        };
-
-        // Load the image url and do cross fade on completion.
-        Picasso.with(imageView.getContext()).load(fullImageUrl).into(target);
+        });
     }
 
     //==============================================================================================
