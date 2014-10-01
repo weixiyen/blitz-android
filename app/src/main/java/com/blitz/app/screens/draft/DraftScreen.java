@@ -1,6 +1,7 @@
 package com.blitz.app.screens.draft;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,11 +12,13 @@ import com.blitz.app.R;
 import com.blitz.app.screens.main.MatchInfoAdapter;
 import com.blitz.app.screens.main.MatchupScreen;
 import com.blitz.app.utilities.android.BaseActivity;
+import com.blitz.app.utilities.animations.AnimHelperCrossFade;
 import com.blitz.app.utilities.animations.AnimHelperFade;
 import com.blitz.app.utilities.animations.AnimHelperSpringsGroup;
 import com.blitz.app.utilities.animations.AnimHelperSpringsPresets;
 import com.blitz.app.utilities.animations.AnimHelperSpringsView;
 import com.blitz.app.utilities.authentication.AuthHelper;
+import com.blitz.app.utilities.image.BlitzImage;
 import com.blitz.app.utilities.image.BlitzImageView;
 import com.blitz.app.utilities.logging.LogHelper;
 import com.blitz.app.utilities.textview.BlitzTextView;
@@ -557,53 +560,66 @@ public class DraftScreen extends BaseActivity implements ViewModelDraft.ViewMode
      */
     @Override
     public void onPlayerChoicesChanged(
-            List<String> playerIds,
-            List<String> playerPhotoUrls,
-            List<String> playerFullNames,
-            List<String> playerPositions,
-            List<String> playerOpponents) {
+            final List<String> playerIds,
+            final List<String> playerPhotoUrls,
+            final List<String> playerFullNames,
+            final List<String> playerPositions,
+            final List<String> playerOpponents) {
 
-        for (int i = 0; i < playerIds.size(); i++) {
-
-            mDraftPlayers
-                    .get(i).setTag(playerIds.get(i));
-            mDraftPlayerImages
-                    .get(i).setImageUrl(playerPhotoUrls.get(i), "images/raw_player_mask.png");
-            mDraftPlayerNames
-                    .get(i).setText(playerFullNames.get(i));
-            mDraftPlayerPositions
-                    .get(i).setText(playerPositions.get(i));
-            mDraftPlayerOpponents
-                    .get(i).setText(playerOpponents.get(i));
-        }
-
-        // Reset selected state of top part of player cards.
-        ButterKnife.apply(mDraftPlayerNames, new ButterKnife.Action<View>() {
+        // Load the new images before proceeding.
+        BlitzImage.loadImageUrls(this, playerPhotoUrls, "images/raw_player_mask.png",
+                new BlitzImage.CallbackImageUrls() {
 
             @Override
-            public void apply(View view, int index) {
+            public void onSuccess(List<Bitmap> images) {
 
-                view.setBackgroundResource(R.drawable.asset_draft_player_mask_top);
-            }
-        });
+                for (int i = 0; i < playerIds.size(); i++) {
 
-        // Reset selected state of bot part of player cards.
-        ButterKnife.apply(mDraftPlayerStats, new ButterKnife.Action<View>() {
+                    // Cross fade baby.
+                    AnimHelperCrossFade.setImageBitmap
+                            (mDraftPlayerImages.get(i), images.get(i));
 
-            @Override
-            public void apply(View view, int index) {
+                    mDraftPlayers
+                            .get(i).setTag(playerIds.get(i));
+                    mDraftPlayerNames
+                            .get(i).setText(playerFullNames.get(i));
+                    mDraftPlayerPositions
+                            .get(i).setText(playerPositions.get(i));
+                    mDraftPlayerOpponents
+                            .get(i).setText(playerOpponents.get(i));
+                }
 
-                view.setBackgroundResource(R.drawable.asset_draft_player_mask_bot);
-            }
-        });
+                // Reset selected state of top part of player cards.
+                ButterKnife.apply(mDraftPlayerNames, new ButterKnife.Action<View>() {
 
-        // Restore alpha.
-        ButterKnife.apply(mDraftPlayerImages, new ButterKnife.Action<View>() {
+                    @Override
+                    public void apply(View view, int index) {
 
-            @Override
-            public void apply(View view, int index) {
+                        view.setBackgroundResource
+                                (R.drawable.asset_draft_player_mask_top);
+                    }
+                });
 
-                view.setAlpha(1.0f);
+                // Reset selected state of bot part of player cards.
+                ButterKnife.apply(mDraftPlayerStats, new ButterKnife.Action<View>() {
+
+                    @Override
+                    public void apply(View view, int index) {
+
+                        view.setBackgroundResource
+                                (R.drawable.asset_draft_player_mask_bot);
+                    }
+                });
+
+                // Restore alpha.
+                ButterKnife.apply(mDraftPlayerImages, new ButterKnife.Action<View>() {
+
+                    @Override
+                    public void apply(View view, int index) {
+
+                        view.setAlpha(1.0f);
+                    }
+                });
             }
         });
     }
