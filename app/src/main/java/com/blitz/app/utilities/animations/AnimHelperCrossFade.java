@@ -53,6 +53,22 @@ public class AnimHelperCrossFade extends AnimHelper {
     }
 
     /**
+     * Cross fade bitmap resource.
+     *
+     * @param imageView Image view.
+     * @param bitmap Bitmap.
+     */
+    @SuppressWarnings("unused")
+    public static void setImageBitmap(ImageView imageView, Bitmap bitmap) {
+
+        // Drawable to.
+        BitmapDrawable drawableTo = new BitmapDrawable(imageView.getResources(), bitmap);
+
+        // Set the transition.
+        setTransitionDrawable(imageView.getDrawable(), drawableTo, imageView);
+    }
+
+    /**
      * Cross fade image resource, except it is
      * a remote URL.
      *
@@ -69,23 +85,11 @@ public class AnimHelperCrossFade extends AnimHelper {
             @Override
             public void onSuccess(Bitmap image) {
 
-                // Drawable from.
-                Drawable drawableFrom = imageView.getDrawable();
-
                 // Drawable to.
                 BitmapDrawable drawableTo = new BitmapDrawable(imageView.getResources(), image);
 
-                // If no image set.
-                if (drawableFrom == null) {
-
-                    // We cant perform a cross fade.
-                    imageView.setImageDrawable(drawableTo);
-
-                } else {
-
-                    // Set the cross fade transition.
-                    setTransitionDrawable(imageView.getDrawable(), drawableTo, imageView);
-                }
+                // Set the transition.
+                setTransitionDrawable(imageView.getDrawable(), drawableTo, imageView);
 
                 // Set url for caching purposes.
                 imageView.setImageUrl(imageUrl, null, true);
@@ -109,14 +113,23 @@ public class AnimHelperCrossFade extends AnimHelper {
     private static void setTransitionDrawable(Drawable drawableFrom,
                                               Drawable drawableTo, ImageView targetImageView) {
 
-        // Create transition drawable.
-        TransitionDrawable td = getTransitionDrawable(drawableFrom, drawableTo);
+        // If no image set.
+        if (drawableFrom == null) {
 
-        // Set the transition drawable.
-        targetImageView.setImageDrawable(td);
+            // We cant perform a cross fade.
+            targetImageView.setImageDrawable(drawableTo);
 
-        // Enable cross fade.
-        td.startTransition(getConfigAnimTimeStandard(targetImageView.getContext()));
+        } else {
+
+            // Create transition drawable.
+            TransitionDrawable td = getTransitionDrawable(drawableFrom, drawableTo);
+
+            // Set the transition drawable.
+            targetImageView.setImageDrawable(td);
+
+            // Enable cross fade.
+            td.startTransition(getConfigAnimTimeStandard(targetImageView.getContext()));
+        }
     }
 
     /**
