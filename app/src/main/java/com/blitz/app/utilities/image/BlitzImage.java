@@ -56,21 +56,6 @@ public class BlitzImage {
     }
 
     /**
-     * Load a list of image urls.
-     *
-     * @param context Context.
-     * @param imageUrls List of urls.
-     * @param callback Callback fired when images loaded.
-     */
-    @SuppressWarnings("unused")
-    public static void loadImageUrls(Context context, List<String> imageUrls,
-                                     CallbackImageUrls callback) {
-
-        // Call multiple load, with no masks.
-        loadImageUrls(context, imageUrls, null, callback);
-    }
-
-    /**
      * Load a single image with optional mask
      * to go with it.
      *
@@ -104,6 +89,51 @@ public class BlitzImage {
                 }
             }
         });
+    }
+
+    /**
+     * Load a list of image urls.
+     *
+     * @param context Context.
+     * @param imageUrls List of urls.
+     * @param callback Callback fired when images loaded.
+     */
+    @SuppressWarnings("unused")
+    public static void loadImageUrls(Context context, List<String> imageUrls,
+                                     CallbackImageUrls callback) {
+
+        // Call multiple load, with no masks.
+        loadImageUrls(context, imageUrls, new ArrayList<String>(), callback);
+    }
+
+    /**
+     * Load image urls with a shared mask asset.
+     *
+     * @param context Context.
+     * @param imageUrls Array of image urls we are loading.
+     * @param maskAssetUrl Asset to mask.
+     * @param callback Callback fired when images loaded.
+     */
+    @SuppressWarnings("unused")
+    public static void loadImageUrls(Context context, List<String> imageUrls,
+                                     String maskAssetUrl, CallbackImageUrls callback) {
+
+        // Need at least one image url.
+        if (imageUrls == null || imageUrls.size() > 0) {
+
+            return;
+        }
+
+        // Create a list of masked asset urls.
+        List<String> maskAssetUrls = new ArrayList<String>();
+
+        for (String ignored : imageUrls) {
+
+            maskAssetUrls.add(maskAssetUrl);
+        }
+
+        // Call multiple load, with no masks.
+        loadImageUrls(context, imageUrls, maskAssetUrls, callback);
     }
 
     /**
