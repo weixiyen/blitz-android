@@ -3,23 +3,12 @@ package com.blitz.app.utilities.image;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.Canvas;
-import android.graphics.Paint;
-import android.graphics.PorterDuff;
-import android.graphics.PorterDuffXfermode;
 import android.util.AttributeSet;
 import android.widget.ImageView;
 
 import com.blitz.app.R;
-import com.blitz.app.utilities.app.AppConfig;
 import com.blitz.app.utilities.app.AppDataObject;
-import com.squareup.picasso.Picasso;
-import com.squareup.picasso.RequestCreator;
-import com.squareup.picasso.Transformation;
 
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.HashMap;
 
 /**
@@ -88,12 +77,12 @@ public class BlitzImageView extends ImageView {
      * a URL from the inter-webs.  Powered
      * by Picasso by square.
      *
-     * @param url Target URL, do not include base path.
+     * @param imageUrl Target URL, do not include base path.
      */
     @SuppressWarnings("unused")
-    public void setImageUrl(String url) {
+    public void setImageUrl(String imageUrl) {
 
-        setImageUrl(url, null);
+        setImageUrl(imageUrl, null);
     }
 
     /**
@@ -101,13 +90,13 @@ public class BlitzImageView extends ImageView {
      * a URL from the inter-webs.  Powered
      * by Picasso by square.
      *
-     * @param url Target URL, do not include base path.
+     * @param imageUrl Target URL, do not include base path.
      * @param maskAssetUrl Target asset url, should live in assets directory.
      */
     @SuppressWarnings("unused")
-    public void setImageUrl(String url, final String maskAssetUrl) {
+    public void setImageUrl(String imageUrl, final String maskAssetUrl) {
 
-        setImageUrl(url, maskAssetUrl, false);
+        setImageUrl(imageUrl, maskAssetUrl, false);
     }
 
     /**
@@ -115,37 +104,33 @@ public class BlitzImageView extends ImageView {
      * a URL from the inter-webs.  Powered
      * by Picasso by square.
      *
-     * @param url Target URL, do not include base path.
+     * @param imageUrl Target URL, do not include base path.
      * @param maskAssetUrl Target asset url, should live in assets directory.
      * @param cacheUrlOnly If set, we only want to cache the url and not download
      *                     and set the image.
      */
     @SuppressWarnings("unused")
-    public void setImageUrl(String url, final String maskAssetUrl, boolean cacheUrlOnly) {
+    public void setImageUrl(String imageUrl, final String maskAssetUrl, boolean cacheUrlOnly) {
 
         // Set the url.
-        mImageUrl = url;
+        mImageUrl = imageUrl;
 
-        if (mImageUrl != null) {
+        if (!cacheUrlOnly) {
 
-            if (!cacheUrlOnly) {
+            // Load image url and mask url.
+            BlitzImage.loadImageUrl(getContext(), mImageUrl, maskAssetUrl,
+                    new BlitzImage.CallbackImageUrl() {
 
-                RequestCreator requestCreator = Picasso.with(getContext())
-                        .load(AppConfig.getCDNUrl() + mImageUrl);
+                @Override
+                public void onSuccess(Bitmap image) {
 
-                if (maskAssetUrl != null) {
-
-                    // Add mask if provided.
-                    requestCreator = requestCreator.transform(getMaskedTransformation(maskAssetUrl));
+                    setImageBitmap(image);
                 }
-
-                // Load into this image.
-                requestCreator.into(this);
-            }
-
-            // Update cached url.
-            setCachedImageUrl(mImageUrl);
+            });
         }
+
+        // Update cached url.
+        setCachedImageUrl(mImageUrl);
     }
 
     /**
@@ -169,7 +154,7 @@ public class BlitzImageView extends ImageView {
      *
      * @return Cached url, or null if it does not exist.
      */
-    public String getCachedImageUrl() {
+    private String getCachedImageUrl() {
 
         // Can only cache if resource id is set.
         if (mCacheImageUrl && getId() != -1) {
@@ -242,83 +227,6 @@ public class BlitzImageView extends ImageView {
                 setImageDrawable(null);
             }
         }
-    }
-
-    /**
-     * Fetch a transformer to mask an image bitmap
-     * source with some arbitrary image mask.
-     *
-     * @param maskAssetUrl Asset url.
-     *
-     * @return Transformation.
-     */
-    private Transformation getMaskedTransformation(final String maskAssetUrl) {
-
-        return new Transformation() {
-
-            @Override
-            public Bitmap transform(Bitmap source) {
-
-                Bitmap sourceMask = getMask(maskAssetUrl);
-
-                // Create a result bitmap of same size as mask.
-                Bitmap result = Bitmap.createBitmap(source.getWidth(),
-                        source.getHeight(), Bitmap.Config.ARGB_8888);
-
-                Canvas mCanvas = new Canvas(result);
-
-                Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG);
-                paint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.DST_IN));
-
-                mCanvas.drawBitmap(source, 0, 0, null);
-
-                if (sourceMask != null) {
-
-                    // Apply the mask if it exists.
-                    mCanvas.drawBitmap(sourceMask, 0, 0, paint);
-                }
-
-                paint.setXfermode(null);
-
-                // Cleanup.
-                source.recycle();
-
-                if (sourceMask != null) {
-                    sourceMask.recycle();
-                }
-
-                return result;
-            }
-
-            @Override
-            public String key() {
-
-                return "blitz()";
-            }
-        };
-    }
-
-    /**
-     * Fetch a bitmap mask from an asset URL.  This
-     * will not apply any sort of scaling or DPI
-     * calculations, the bitmap will be raw pixel size.
-     *
-     * @param maskAssetUrl Asset url.
-     *
-     * @return Decoded bitmap.
-     */
-    private Bitmap getMask(String maskAssetUrl) {
-
-        InputStream inputStream = null;
-
-        try {
-
-            // Attempt to fetch input stream for asset.
-            inputStream = getContext().getAssets().open(maskAssetUrl);
-
-        } catch (IOException ignored) { }
-
-        return BitmapFactory.decodeStream(inputStream);
     }
 
     // endregion
