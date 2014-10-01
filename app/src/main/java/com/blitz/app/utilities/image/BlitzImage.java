@@ -19,6 +19,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * Created by mrkcsc on 9/30/14. Copyright 2014 Blitz Studios
@@ -26,6 +27,15 @@ import java.util.List;
  * Handles loading image urls from the network.
  */
 public class BlitzImage {
+
+    // region Image URL Methods
+    // =============================================================================================
+
+    // Picasso targets are weak, so we need to hold onto them.
+    private static ConcurrentHashMap<Integer, Target> mTargets =
+            new ConcurrentHashMap<Integer, Target>();
+
+    // endregion
 
     // region Image URL Methods
     // =============================================================================================
@@ -122,11 +132,7 @@ public class BlitzImage {
 
         for (int i = 0; i < imageUrls.size(); i++) {
 
-            // Create a target to handle the loaded image urls.
-            Target imageUrlTarget = fetchImageUrlTarget(images, imageUrls, callback);
-
-            RequestCreator requestCreator = Picasso
-                    .with(context)
+            RequestCreator requestCreator = Picasso.with(context)
                     .load(AppConfig.getCDNUrl() + imageUrls.get(i));
 
             // Add a masking transform if a url exists for it.
@@ -136,6 +142,12 @@ public class BlitzImage {
                 requestCreator = requestCreator.transform
                         (getMaskAssetTransformation(context, maskAssetUrls.get(i)));
             }
+
+            // Create a target to handle the loaded image urls.
+            Target imageUrlTarget = fetchImageUrlTarget(images, imageUrls, callback);
+
+            // Place into targets map.
+            mTargets.put(System.identityHashCode(imageUrlTarget), imageUrlTarget);
 
             // Load into target.
             requestCreator.into(imageUrlTarget);
@@ -185,11 +197,18 @@ public class BlitzImage {
                         callback.onSuccess(images);
                     }
                 }
+
+                // Now done with this target.
+                mTargets.remove(System.identityHashCode(this));
             }
 
             @Override
             public void onBitmapFailed
-                    (Drawable errorDrawable) { }
+                    (Drawable errorDrawable) {
+
+                // Now done with this target.
+                mTargets.remove(System.identityHashCode(this));
+            }
 
             @Override
             public void onPrepareLoad
