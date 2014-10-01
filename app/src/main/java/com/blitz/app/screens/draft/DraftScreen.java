@@ -621,8 +621,14 @@ public class DraftScreen extends BaseActivity implements ViewModelDraft.ViewMode
 
         for (int i = 0; i < mDraftPlayers.size(); i++) {
 
-            // Fetch player id.
+            // Fetch player id inside the view tag.
             String draftPlayerId = (String)mDraftPlayers.get(i).getTag();
+
+            // Continue if no tag set yet.
+            if (draftPlayerId == null) {
+
+                continue;
+            }
 
             for (int j = 0; j < playerIds.size(); j++) {
 
