@@ -8,7 +8,7 @@
     android:gravity="center"
     android:orientation="vertical">
 
-    <com.blitz.app.utilities.imageview.BlitzImageView
+    <com.blitz.app.utilities.image.BlitzImageView
         android:id="@+id/blitz_carousel_helmet_image"
         android:layout_width="@dimen/helmet_size"
         android:layout_height="@dimen/helmet_size"

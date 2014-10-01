@@ -30,7 +30,7 @@
             android:textSize="16sp"
             app:clearInitialContent="true"/>
 
-        <com.blitz.app.utilities.imageview.BlitzImageView
+        <com.blitz.app.utilities.image.BlitzImageView
             android:id="@+id/draft_matchup_helmet_left"
             android:layout_width="120dp"
             android:layout_height="120dp"
@@ -62,7 +62,7 @@
             android:textSize="16sp"
             app:clearInitialContent="true"/>
 
-        <com.blitz.app.utilities.imageview.BlitzImageView
+        <com.blitz.app.utilities.image.BlitzImageView
             android:id="@+id/draft_matchup_helmet_right"
             android:layout_width="120dp"
             android:layout_height="120dp"

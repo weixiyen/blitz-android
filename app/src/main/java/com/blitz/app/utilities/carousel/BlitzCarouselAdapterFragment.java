@@ -8,7 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.blitz.app.R;
-import com.blitz.app.utilities.imageview.BlitzImageView;
+import com.blitz.app.utilities.image.BlitzImageView;
 
 /**
  * Created by mrkcsc on 8/17/14. Copyright 2014 Blitz Studios

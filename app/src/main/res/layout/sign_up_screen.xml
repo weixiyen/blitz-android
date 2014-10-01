@@ -7,7 +7,7 @@
     tools:context="${packageName}.${activityClass}"
     tools:ignore="ButtonStyle,UnusedAttribute,TextFields">
 
-    <com.blitz.app.utilities.imageview.PlusImageView
+    <com.blitz.app.utilities.image.BlitzImageViewPlus
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:contentDescription="@string/empty_string"

@@ -1,6 +1,6 @@
 <resources>
 
-    <declare-styleable name="PlusImageView">
+    <declare-styleable name="BlitzImageViewPlus">
 
         <!-- Sets a drawable as the default/fallback of this ImageViewPlus -->
         <attr name="defaultDrawable" format="reference" />

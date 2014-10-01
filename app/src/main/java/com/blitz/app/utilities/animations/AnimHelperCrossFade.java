@@ -9,7 +9,7 @@ import android.view.View;
 import android.widget.ImageView;
 
 import com.blitz.app.utilities.app.AppConfig;
-import com.blitz.app.utilities.imageview.BlitzImageView;
+import com.blitz.app.utilities.image.BlitzImageView;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Target;
 

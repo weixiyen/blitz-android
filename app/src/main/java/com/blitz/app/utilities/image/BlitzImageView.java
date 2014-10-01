@@ -1,4 +1,4 @@
-package com.blitz.app.utilities.imageview;
+package com.blitz.app.utilities.image;
 
 import android.content.Context;
 import android.content.res.TypedArray;

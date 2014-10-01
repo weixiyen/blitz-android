@@ -19,7 +19,7 @@
         android:background="@drawable/asset_draft_player_bg"
         android:orientation="vertical">
 
-        <com.blitz.app.utilities.imageview.BlitzImageView
+        <com.blitz.app.utilities.image.BlitzImageView
             android:id="@+id/draft_player_image_tl"
             android:layout_width="145dp"
             android:layout_height="145dp"
@@ -92,7 +92,7 @@
         android:background="@drawable/asset_draft_player_bg"
         android:orientation="vertical">
 
-        <com.blitz.app.utilities.imageview.BlitzImageView
+        <com.blitz.app.utilities.image.BlitzImageView
             android:id="@+id/draft_player_image_tr"
             android:layout_width="145dp"
             android:layout_height="145dp"
@@ -167,7 +167,7 @@
         android:background="@drawable/asset_draft_player_bg"
         android:orientation="vertical">
 
-        <com.blitz.app.utilities.imageview.BlitzImageView
+        <com.blitz.app.utilities.image.BlitzImageView
             android:id="@+id/draft_player_image_bl"
             android:layout_width="145dp"
             android:layout_height="145dp"
@@ -242,7 +242,7 @@
         android:background="@drawable/asset_draft_player_bg"
         android:orientation="vertical">
 
-        <com.blitz.app.utilities.imageview.BlitzImageView
+        <com.blitz.app.utilities.image.BlitzImageView
             android:id="@+id/draft_player_image_br"
             android:layout_width="145dp"
             android:layout_height="145dp"

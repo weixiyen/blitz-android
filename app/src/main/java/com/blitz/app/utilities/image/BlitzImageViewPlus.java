@@ -1,4 +1,4 @@
-package com.blitz.app.utilities.imageview;
+package com.blitz.app.utilities.image;
 
 import android.content.ContentResolver;
 import android.content.Context;
@@ -29,7 +29,7 @@ import com.blitz.app.R;
  *
  * https://github.com/MeetMe/Android-ImageViewPlus/issues
  */
-public class PlusImageView extends ImageView {
+public class BlitzImageViewPlus extends ImageView {
 
     private static final int CONTENT_LAYER_ID_EMPTY = -1;
 
@@ -67,15 +67,15 @@ public class PlusImageView extends ImageView {
 
     private Uri mContentUri;
 
-    public PlusImageView(final Context context) {
+    public BlitzImageViewPlus(final Context context) {
         this(context, null);
     }
 
-    public PlusImageView(final Context context, final AttributeSet attrs) {
+    public BlitzImageViewPlus(final Context context, final AttributeSet attrs) {
         this(context, attrs, 0);
     }
 
-    public PlusImageView(final Context context, final AttributeSet attrs, final int defStyle) {
+    public BlitzImageViewPlus(final Context context, final AttributeSet attrs, final int defStyle) {
         super(context, attrs, defStyle);
         init(context, attrs, defStyle);
     }
@@ -83,15 +83,15 @@ public class PlusImageView extends ImageView {
     @SuppressWarnings("UnusedParameters")
     private void init(Context context, AttributeSet attrs, int defStyle) {
         if (attrs != null) {
-            TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.PlusImageView, 0, 0);
+            TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.BlitzImageViewPlus, 0, 0);
 
             if (a != null) {
-                Drawable defaultDrawable = a.getDrawable(R.styleable.PlusImageView_defaultDrawable);
-                Drawable selectorDrawable = a.getDrawable(R.styleable.PlusImageView_layerDrawable);
-                int selectorLayerId = a.getResourceId(R.styleable.PlusImageView_contentLayerId, CONTENT_LAYER_ID_EMPTY);
-                int scaleType = a.getInt(R.styleable.PlusImageView_scaleType, -1);
+                Drawable defaultDrawable = a.getDrawable(R.styleable.BlitzImageViewPlus_defaultDrawable);
+                Drawable selectorDrawable = a.getDrawable(R.styleable.BlitzImageViewPlus_layerDrawable);
+                int selectorLayerId = a.getResourceId(R.styleable.BlitzImageViewPlus_contentLayerId, CONTENT_LAYER_ID_EMPTY);
+                int scaleType = a.getInt(R.styleable.BlitzImageViewPlus_scaleType, -1);
 
-                mTintColorList = a.getColorStateList(R.styleable.PlusImageView_overlayTintColor);
+                mTintColorList = a.getColorStateList(R.styleable.BlitzImageViewPlus_overlayTintColor);
 
                 a.recycle();
 
@@ -419,9 +419,9 @@ public class PlusImageView extends ImageView {
 
     /**
      * Performs the automatic reset to the default drawable. This will also dispatch the
-     * {@link DefaultDrawableListener#onAutoResetDefaultDrawable(PlusImageView)} callback.
+     * {@link DefaultDrawableListener#onAutoResetDefaultDrawable(BlitzImageViewPlus)} callback.
      *
-     * @see PlusImageView#resetToDefault()
+     * @see BlitzImageViewPlus#resetToDefault()
      */
     protected void performAutoResetDefaultDrawable() {
         resetToDefault();
@@ -655,6 +655,6 @@ public class PlusImageView extends ImageView {
          *
          * @param view The view that had its drawable reset back to the default
          */
-        public void onAutoResetDefaultDrawable(final PlusImageView view);
+        public void onAutoResetDefaultDrawable(final BlitzImageViewPlus view);
     }
 }

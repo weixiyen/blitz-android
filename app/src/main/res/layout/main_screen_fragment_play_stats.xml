@@ -146,7 +146,7 @@
 
     </LinearLayout>
 
-    <com.blitz.app.utilities.imageview.BlitzImageView
+    <com.blitz.app.utilities.image.BlitzImageView
         android:id="@+id/main_play_stats_avatar"
         android:layout_width="@dimen/helmet_size"
         android:layout_height="@dimen/helmet_size"

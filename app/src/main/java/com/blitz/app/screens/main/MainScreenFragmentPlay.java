@@ -14,7 +14,7 @@ import com.blitz.app.screens.leaderboard.LeaderboardScreen;
 import com.blitz.app.utilities.android.BaseFragment;
 import com.blitz.app.utilities.animations.AnimHelperCrossFade;
 import com.blitz.app.utilities.app.AppConfig;
-import com.blitz.app.utilities.imageview.BlitzImageView;
+import com.blitz.app.utilities.image.BlitzImageView;
 import com.blitz.app.utilities.rest.RestAPICallback;
 import com.blitz.app.view_models.ViewModel;
 import com.blitz.app.view_models.ViewModelMainPlay;
@@ -40,10 +40,10 @@ public class MainScreenFragmentPlay extends BaseFragment implements ViewModelMai
 
     @InjectView(R.id.main_play_cash_available) TextView mCashAvailable;
 
-    @InjectView(R.id.main_play_stats_username) TextView mStatsUserName;
-    @InjectView(R.id.main_play_stats_rating)   TextView mStatsRating;
-    @InjectView(R.id.main_play_stats_wins)     TextView mStatsWins;
-    @InjectView(R.id.main_play_stats_losses)   TextView mStatsLosses;
+    @InjectView(R.id.main_play_stats_username)     TextView mStatsUserName;
+    @InjectView(R.id.main_play_stats_rating)       TextView mStatsRating;
+    @InjectView(R.id.main_play_stats_wins)         TextView mStatsWins;
+    @InjectView(R.id.main_play_stats_losses)       TextView mStatsLosses;
     @InjectView(R.id.main_play_stats_avatar) BlitzImageView mStatsAvatar;
 
     // View model object.

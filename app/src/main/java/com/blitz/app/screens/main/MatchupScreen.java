@@ -11,7 +11,7 @@ import com.blitz.app.simple_models.Game;
 import com.blitz.app.simple_models.Stat;
 import com.blitz.app.utilities.android.BaseActivity;
 import com.blitz.app.utilities.authentication.AuthHelper;
-import com.blitz.app.utilities.imageview.BlitzImageView;
+import com.blitz.app.utilities.image.BlitzImageView;
 import com.blitz.app.view_models.ViewModel;
 import com.blitz.app.view_models.ViewModelDraftDetail;
 import com.google.common.collect.Multimap;
