@@ -56,4 +56,5 @@
     <string name="win">win</string>
     <string name="you_have_cash">You have $0.00</string>
     <string name="matchup_loading_message">Loading Matchup Data</string>
+    <string name="leaderboard_link_text">Leaderboard</string>
 </resources>

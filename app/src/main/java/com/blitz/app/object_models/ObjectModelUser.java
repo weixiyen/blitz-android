@@ -110,8 +110,23 @@ public class ObjectModelUser extends ObjectModel {
         mRestAPI.user_get(userId, operation);
     }
 
+    public static void getTopPlayersWithLimit(Activity activity, final int limit,
+                                              final CallbackUsers callback) {
+
+        final RestAPICallback<RestAPIResult<ObjectModelUser>> operation =
+                new RestAPICallback<RestAPIResult<ObjectModelUser>>(activity) {
+                    @Override
+                    public void success(RestAPIResult<ObjectModelUser> result) {
+                        callback.onSuccess(result.getResults());
+                    }
+                };
+
+        final String orderBy = "{\"rating\":\"DESC\"}";
+        mRestAPI.users_get(limit, orderBy, operation);
+    }
+
     /**
-     * Fetch a lust of users (by user id).
+     * Fetch a list of users (by user id).
      *
      * @param activity Activity for dialogs.
      * @param userIds List of user id's.

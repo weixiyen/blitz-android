@@ -52,8 +52,8 @@ public class MainScreenFragmentRecent extends BaseFragment implements ViewModelG
 
     @Override
     public void onDrafts(List<HeadToHeadDraft> matches, ViewModelGameLog.Summary summary) {
-        final MatchInfoAdapter adapter = new MatchInfoAdapter(getActivity().getApplicationContext(),
-                matches, getActivity());
+
+        final MatchInfoAdapter adapter = new MatchInfoAdapter(matches, getActivity());
 
         if(mRecentMatches != null) {
             mRecentMatches.setAdapter(adapter);
