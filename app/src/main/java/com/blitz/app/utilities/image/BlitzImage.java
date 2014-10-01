@@ -32,6 +32,7 @@ public class BlitzImage {
     // =============================================================================================
 
     // Picasso targets are weak, so we need to hold onto them.
+    @SuppressWarnings("MismatchedQueryAndUpdateOfCollection")
     private static ConcurrentHashMap<Integer, Target> mTargets =
             new ConcurrentHashMap<Integer, Target>();
 
@@ -119,7 +120,7 @@ public class BlitzImage {
                                      String maskAssetUrl, CallbackImageUrls callback) {
 
         // Need at least one image url.
-        if (imageUrls == null || imageUrls.size() > 0) {
+        if (imageUrls == null || imageUrls.size() == 0) {
 
             return;
         }
