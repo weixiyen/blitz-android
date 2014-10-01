@@ -75,8 +75,19 @@ public class AnimHelperCrossFade extends AnimHelper {
                 // Turn our bitmap into a drawable.
                 BitmapDrawable drawableTo = new BitmapDrawable(imageView.getResources(), bitmap);
 
-                // Set the transition.
-                setTransitionDrawable(imageView.getDrawable(), drawableTo, imageView);
+                Drawable drawableFrom = imageView.getDrawable();
+
+                // If no image set.
+                if (drawableFrom == null) {
+
+                    // We cant perform a cross fade.
+                    imageView.setImageDrawable(drawableTo);
+
+                } else {
+
+                    // Set the cross fade transition.
+                    setTransitionDrawable(imageView.getDrawable(), drawableTo, imageView);
+                }
 
                 // Set url for caching purposes.
                 imageView.setImageUrl(imageUrl, null, true);
