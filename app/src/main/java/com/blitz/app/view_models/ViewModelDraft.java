@@ -58,7 +58,14 @@ public class ViewModelDraft extends ViewModel {
 
     // Choice related structures.
     private List<ObjectModelPlayer> mCurrentPlayerChoices;
-    private Date mCurrentPlayerChoicesShowTime; // TODO: Implement this.
+    private Date mCurrentPlayerChoicesShowTime;
+
+    // Round time information.
+    private int mRoundTimeRemaining;
+    private boolean mRoundTimeRemainingHidden;
+
+    // Are the choices hidden.
+    private boolean mChoicesViewHidden;
 
     // Picks so far.
     private List<ObjectModelDraft.Pick> mCurrentPicks;
@@ -559,9 +566,48 @@ public class ViewModelDraft extends ViewModel {
         }
     }
 
+    /**
+     * Resolve the time remaining in the round
+     * and some additional choice information regarding round time.
+     */
     private void resolveRoundTimeRemaining() {
 
-        // TODO: Implement me.
+        int secondsElapsedThisRound;
+
+        if (mDraftModel.getLastRoundCompleteTime() != null) {
+
+            // Seconds since last round completed, minus post/pre view time.
+            secondsElapsedThisRound = mDraftModel.getSecondsSinceLastRoundCompleteTime()
+                    - mDraftModel.getTimePerPostview() - mDraftModel.getTimePerPreview();
+
+        } else {
+
+            // Otherwise, seconds for the first round elapsed time.
+            secondsElapsedThisRound = mDraftModel.getSecondsSinceStarted()
+                    - mDraftModel.getDraftStartBuffer() - mDraftModel.getTimePerPreview();
+        }
+
+        int roundTimeRemaining = mDraftModel.getTimePerPick() - secondsElapsedThisRound;
+
+        // Are we currently in the pick window.
+        boolean isInPickWindow = roundTimeRemaining > 0 && roundTimeRemaining <
+                mDraftModel.getTimePerPick();
+
+        // Is round complete.
+        boolean isRoundComplete =
+                mDraftModel.getChoices() != null && mDraftModel.getPicks() != null &&
+                        mDraftModel.getChoices().size() == mDraftModel.getPicks().size() / 2;
+
+        // Are we in post pick window.
+        boolean isInPostView = roundTimeRemaining -
+                mDraftModel.getTimePerPreview() > mDraftModel.getTimePerPick();
+
+        // Is the choices view hidden.
+        boolean isChoicesViewHidden = !(isInPickWindow || isInPostView) ||
+                mDraftModel.getCurrentPlayerChoices() == null;
+
+        updateRoundTimeRemaining(roundTimeRemaining,
+                !isInPickWindow || isRoundComplete, isChoicesViewHidden);
     }
 
     private void resolveRoundComplete() {
@@ -659,6 +705,64 @@ public class ViewModelDraft extends ViewModel {
     // =============================================================================================
 
     /**
+     * Update round time remaining, whether or not that
+     * timer is hidden, and if the choices view should be hidden.
+     *
+     * @param roundTimeRemaining Current round time remaining.
+     * @param roundTimeRemainingHidden Round time remaining is hidden.
+     * @param choicesViewHidden Choices view hidden.
+     */
+    private void updateRoundTimeRemaining(int roundTimeRemaining,
+                                          boolean roundTimeRemainingHidden,
+                                          boolean choicesViewHidden) {
+
+        // Update round time remaining if needed.
+        if (mRoundTimeRemaining != roundTimeRemaining) {
+            mRoundTimeRemaining = roundTimeRemaining;
+
+            if (mCallbacks != null) {
+                mCallbacks.onRoundTimeRemainingChanged(mRoundTimeRemaining);
+            }
+        }
+
+        // Update round time remaining hidden if needed.
+        if (mRoundTimeRemainingHidden != roundTimeRemainingHidden) {
+            mRoundTimeRemainingHidden = roundTimeRemainingHidden;
+
+            if (mCallbacks != null) {
+                mCallbacks.onRoundTimeRemainingHiddenChanged(mRoundTimeRemainingHidden);
+            }
+        }
+
+        // If we are still in the draft.
+        if (mDraftModel.getCurrentRound() <= mDraftModel.getRounds() &&
+                mCurrentPlayerChoicesShowTime != null && choicesViewHidden) {
+
+            int secondsSinceChoicesShownTime = (int)(DateUtils
+                    .getTimeSinceDateInGMTAsMilliseconds(mCurrentPlayerChoicesShowTime)) / 1000;
+
+            LogHelper.log("Seconds since choices shown time: " +
+                    secondsSinceChoicesShownTime + " " + mDraftModel.getTimePerPostview());
+
+            // Keep choices showing for a bit longer
+            // to fit the post view time window.
+            if (secondsSinceChoicesShownTime < mDraftModel.getTimePerPostview()) {
+
+                choicesViewHidden = false;
+            }
+        }
+
+        // Update choices view hidden if needed.
+        if (mChoicesViewHidden != choicesViewHidden) {
+            mChoicesViewHidden = choicesViewHidden;
+
+            if (mCallbacks != null) {
+                mCallbacks.onChoicesViewHiddenChanged(mChoicesViewHidden);
+            }
+        }
+    }
+
+    /**
      * Given a list of the current picks, see if they
      * have changed from the cached current picks.
      *
@@ -718,6 +822,11 @@ public class ViewModelDraft extends ViewModel {
         public void onPicksChanged(
                 List<String> playerIds,
                 List<String> userIds);
+
+        public void onRoundTimeRemainingChanged(int roundTimeRemaining);
+        public void onRoundTimeRemainingHiddenChanged(boolean roundTimeRemainingHidden);
+
+        public void onChoicesViewHiddenChanged(boolean onChoicesViewHidden);
     }
 
     // endregion

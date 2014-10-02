@@ -669,5 +669,23 @@ public class DraftScreen extends BaseActivity implements ViewModelDraft.ViewMode
         }
     }
 
+    @Override
+    public void onRoundTimeRemainingChanged(int roundTimeRemaining) {
+
+        // TODO: Implement.
+    }
+
+    @Override
+    public void onRoundTimeRemainingHiddenChanged(boolean roundTimeRemainingHidden) {
+
+        // TODO: Implement.
+    }
+
+    @Override
+    public void onChoicesViewHiddenChanged(boolean onChoicesViewHidden) {
+
+        // TODO: Implement.
+    }
+
     // endregion
 }
