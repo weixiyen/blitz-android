@@ -234,7 +234,7 @@ public class ViewModelDraft extends ViewModel {
 
                             // Handle the action.
                             ((ViewModelDraft) receivingClass.onFetchViewModel())
-                                    .cometHandleAction(message, mDraftModel);
+                                    .cometHandleAction(message);
                         }
                     }, "draftGameCallback");
     }
@@ -254,7 +254,7 @@ public class ViewModelDraft extends ViewModel {
      *
      * @param message Json message.
      */
-    private void cometHandleAction(JsonObject message, ObjectModelDraft draft) {
+    private void cometHandleAction(JsonObject message) {
 
         // Get the action identifier.
         String action = message.get("action").getAsString();
@@ -270,7 +270,7 @@ public class ViewModelDraft extends ViewModel {
             Date lastServerTime = DateUtils.getDateInGMT
                     (message.get("last_server_time").getAsString());
 
-            draft.setLastServerTime(lastServerTime);
+            mDraftModel.setLastServerTime(lastServerTime);
 
         } else if (action.equals("show_choices")) {
 
@@ -289,24 +289,21 @@ public class ViewModelDraft extends ViewModel {
                 choiceIds.add(JsonHelper.parseString(choiceJsonObject.get("id")));
 
                 // Add to draft model.
-                draft.addChoice(ObjectModelPlayer
+                mDraftModel.addChoice(ObjectModelPlayer
                         .fetchPlayerFromCometJson(choiceJsonObject));
             }
 
             // Add to choices.
-            draft.addChoices(choiceIds);
+            mDraftModel.addChoices(choiceIds);
 
         } else if (action.equals("pick_player")) {
 
-            if(draft != null) {
+            // Create a new pick object.
+            ObjectModelDraft.Pick pick = new ObjectModelDraft.Pick(
+                    message.get("player_id").getAsString(),
+                    message.get("user_id").getAsString());
 
-                // Create a new pick object.
-                ObjectModelDraft.Pick pick = new ObjectModelDraft.Pick(
-                        message.get("player_id").getAsString(),
-                        message.get("user_id").getAsString());
-
-                draft.addPick(pick);
-            }
+            mDraftModel.addPick(pick);
         }
 
         // Look for last round complete time json.
@@ -320,7 +317,7 @@ public class ViewModelDraft extends ViewModel {
 
             if (!lastRoundCompleteTime.equals("None")) {
 
-                draft.setLastRoundCompleteTime
+                mDraftModel.setLastRoundCompleteTime
                         (DateUtils.getDateInGMT(lastRoundCompleteTime));
             }
         }
