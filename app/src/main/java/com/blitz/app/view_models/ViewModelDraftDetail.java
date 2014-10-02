@@ -18,7 +18,6 @@ import com.google.common.collect.Multimap;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.List;
 
 import retrofit.Callback;
@@ -107,10 +106,10 @@ public class ViewModelDraftDetail extends ViewModel {
                                                                                     }
                                                                                 });
 
-                                                                        callbacks.onMatchup(extras.getString(MatchInfoAdapter.PLAYER_1_NAME),
-                                                                                extras.getFloat(MatchInfoAdapter.PLAYER_1_SCORE),
-                                                                                extras.getString(MatchInfoAdapter.PLAYER_2_NAME),
-                                                                                extras.getFloat(MatchInfoAdapter.PLAYER_2_SCORE)
+                                                                        callbacks.onMatchup(draft.getTeamName(0),
+                                                                                draft.getTeamPoints(0),
+                                                                                draft.getTeamName(1),
+                                                                                draft.getTeamPoints(1)
                                                                         );
                                                                     }
 
@@ -153,20 +152,6 @@ public class ViewModelDraftDetail extends ViewModel {
         }
 
         return gamesForPlayers;
-    }
-
-    private static List<Float> getRosterScores(String[] roster, Multimap<String, Stat> stats) {
-
-        List<Float> scores = new ArrayList<Float>(roster.length);
-        for(String playerId: roster) {
-            Collection<Stat> playerStats = stats.get(playerId);
-            float sum = 0;
-            for(Stat stat: playerStats) {
-                sum += stat.getPoints();
-            }
-            scores.add(sum);
-        }
-        return scores;
     }
 
     private Multimap<String, Stat> buildPlayerStatsMap(List<Stat> stats) {

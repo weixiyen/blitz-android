@@ -19,16 +19,8 @@ import java.util.List;
  *
  * Created by Nate on 9/7/14.
  */
-public class MatchInfoAdapter extends ArrayAdapter {
+public class MatchInfoAdapter extends ArrayAdapter<HeadToHeadDraft> {
 
-    public static final String PLAYER_1_ROSTER = "MatchInfoAdapter.player1Roster";
-    public static final String PLAYER_2_ROSTER = "MatchInfoAdapter.player2Roster";
-    public static final String PLAYER_1_NAME = "MatchInfoAdapter.player1Name";
-    public static final String PLAYER_2_NAME = "MatchInfoAdapter.player2Name";
-    public static final String PLAYER_1_SCORE = "MatchInfoAdapter.player1Score";
-    public static final String PLAYER_2_SCORE = "MatchInfoAdapter.player2Score";
-    public static final String YEAR = "MatchInfoAdapter.year";
-    public static final String WEEK = "MatchInfoAdapter.week";
     public static final String DRAFT_ID = "MatchInfoAdapter.draftId";
 
     private List<HeadToHeadDraft> mItems;
@@ -76,24 +68,17 @@ public class MatchInfoAdapter extends ArrayAdapter {
             TextView status = (TextView) v.findViewById(R.id.main_list_status);
             status.setText(draft.getStatus() + "\n" +
                     draft.getPlayer1Name() + " vs " + draft.getPlayer2Name());
-        }
 
-        v.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(mActivity, MatchupScreen.class);
-                intent.putExtra(PLAYER_1_ROSTER, draft.getPlayer1Picks().toArray(new String[0]));
-                intent.putExtra(PLAYER_2_ROSTER, draft.getPlayer2Picks().toArray(new String[0]));
-                intent.putExtra(PLAYER_1_NAME,   draft.getPlayer1Name());
-                intent.putExtra(PLAYER_2_NAME,   draft.getPlayer2Name());
-                intent.putExtra(PLAYER_1_SCORE,  draft.getPlayer1Score());
-                intent.putExtra(PLAYER_2_SCORE,  draft.getPlayer2Score());
-                intent.putExtra(WEEK, draft.getWeek());
-                intent.putExtra(YEAR, draft.getYear());
-                intent.putExtra(DRAFT_ID, draft.getId());
-                mActivity.startActivity(intent);
-            }
-        });
+            v.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(mActivity, MatchupScreen.class);
+
+                    intent.putExtra(DRAFT_ID, draft.getId());
+                    mActivity.startActivity(intent);
+                }
+            });
+        }
 
         return v;
     }
