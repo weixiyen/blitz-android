@@ -252,6 +252,17 @@ public final class ObjectModelDraft extends ObjectModel {
     }
 
     /**
+     * Fetch amount of time for a given pick.
+     *
+     * @return Time per pick.
+     */
+    @SuppressWarnings("unused")
+    public int getTimePerPick() {
+
+        return mTimePerPick;
+    }
+
+    /**
      * Seconds since draft started.
      *
      * @return Seconds since draft started.
