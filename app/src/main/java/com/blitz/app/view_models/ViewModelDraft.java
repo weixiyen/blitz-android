@@ -173,10 +173,9 @@ public class ViewModelDraft extends ViewModel {
      */
     public void pickPlayer(final String playerId) {
 
-        // TODO: Put back true client locking behavior.
-
         // If player id provided, and we are allowed to draft a player.
-        if (playerId != null && mDraftModel != null && mDraftModel.getCanUserDraft()) {
+        if (playerId != null && mDraftModel != null
+                && mDraftModel.getCanUserDraft() && !mPickingLocked) {
 
             // Picking now locked.
             mPickingLocked = true;
