@@ -738,9 +738,6 @@ public class ViewModelDraft extends ViewModel {
             int secondsSinceChoicesShownTime = (int)(DateUtils
                     .getTimeSinceDateInGMTAsMilliseconds(mCurrentPlayerChoicesShowTime)) / 1000;
 
-            LogHelper.log("Seconds since choices shown time: " +
-                    secondsSinceChoicesShownTime + " " + mDraftModel.getTimePerPostview());
-
             // Keep choices showing for a bit longer
             // to fit the post view time window.
             if (secondsSinceChoicesShownTime < mDraftModel.getTimePerPostview()) {

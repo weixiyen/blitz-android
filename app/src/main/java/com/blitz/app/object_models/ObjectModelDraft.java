@@ -10,7 +10,6 @@ import com.google.gson.JsonObject;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -528,30 +527,26 @@ public final class ObjectModelDraft extends ObjectModel {
             return;
         }
 
-        RestAPICallback<RestAPIResult<ObjectModelDraft>> operation =
-                new RestAPICallback<RestAPIResult<ObjectModelDraft>>(activity) {
+        RestAPICallback<ObjectModelDraft> operation =
+                new RestAPICallback<ObjectModelDraft>(activity) {
 
             @Override
-            public void success(RestAPIResult<ObjectModelDraft> result) {
-
-                ObjectModelDraft jsonObject = result.getResults().get(0);
+            public void success(ObjectModelDraft result) {
 
                 // Set the server time offset.
-                if (jsonObject != null) {
-                    jsonObject.setServerTimeOffset
-                            (getOperationTimeStart(), getOperationTimeEnd());
+                if (result != null) {
+                    result.setServerTimeOffset(getOperationTimeStart(), getOperationTimeEnd());
                 }
 
                 // Now left queue.
                 if (callback != null) {
-                    callback.onSuccess(jsonObject);
+                    callback.onSuccess(result);
                 }
             }
         };
 
         // Make api call.
-        mRestAPI.drafts_get(Arrays.asList(draftId), null,
-                "id", "{\"model\":\"heads_up_draft\"}", null, 1, operation);
+        mRestAPI.draft_get(draftId, operation);
     }
 
     /**

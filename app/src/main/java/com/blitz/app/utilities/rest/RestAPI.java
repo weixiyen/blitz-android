@@ -68,6 +68,12 @@ public interface RestAPI {
     void devices_post(@Body JsonObject body,
         Callback<RestAPIResult<ObjectModelDevice>> callback);
 
+    @GET("/draft/{draft_id}")
+    void draft_get(@Path("draft_id") String draftId,
+                   Callback<ObjectModelDraft> callback); // TODO: Result format needs to be changed to
+                                                         // TODO: RestAPIResult format, but requires clients
+                                                         // TODO: do the update together.
+
     @GET("/drafts")
     void drafts_get(@Query("keys[]") List<String> keys,   // Required
                     @Query("pluck[]") List<String> pluck, // Optional
