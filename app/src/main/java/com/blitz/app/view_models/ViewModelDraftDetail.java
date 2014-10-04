@@ -5,24 +5,21 @@ import android.os.Bundle;
 
 import com.blitz.app.object_models.ObjectModelDraft;
 import com.blitz.app.object_models.ObjectModelGame;
-import com.blitz.app.object_models.ObjectModelItem;
 import com.blitz.app.object_models.ObjectModelPlayer;
 import com.blitz.app.object_models.ObjectModelStats;
 import com.blitz.app.screens.main.MatchInfoAdapter;
 import com.blitz.app.simple_models.Game;
 import com.blitz.app.simple_models.Stat;
-import com.blitz.app.utilities.logging.LogHelper;
+import com.blitz.app.utilities.authentication.AuthHelper;
+import com.blitz.app.utilities.rest.RestAPICallback;
 import com.blitz.app.utilities.rest.RestAPIResult;
 import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.Multimap;
 
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
-
-import retrofit.Callback;
-import retrofit.RetrofitError;
-import retrofit.client.Response;
+import java.util.Map;
 
 /**
  * View model for draft detail page.
@@ -30,6 +27,13 @@ import retrofit.client.Response;
  * Created by Nate on 9/10/14.
  */
 public class ViewModelDraftDetail extends ViewModel {
+
+    List<ObjectModelPlayer>   mRoster1;
+    List<ObjectModelPlayer>   mRoster2;
+    List<Game>                mGames;
+    private ObjectModelDraft  mDraft;
+    private Multimap<String, Stat> mPlayerStatsMap;
+    private boolean           mInitialized = false;
 
     /**
      * Creating a new view model requires an activity and a callback.
@@ -44,95 +48,118 @@ public class ViewModelDraftDetail extends ViewModel {
     @Override
     public void initialize() {
 
+        if(mInitialized) return;
+
         final Bundle extras = mActivity.getIntent().getExtras();
         final String draftId = extras.getString(MatchInfoAdapter.DRAFT_ID);
 
-
-        final ViewModelDraftDetailCallbacks callbacks =
-                getCallbacks(ViewModelDraftDetailCallbacks.class);
+        final ViewModelDraftDetailCallbacks callbacks = getCallbacks(ViewModelDraftDetailCallbacks.class);
 
         ObjectModelDraft.fetchSyncedDraft(mActivity, draftId, new ObjectModelDraft.DraftCallback() {
             @Override
             public void onSuccess(final ObjectModelDraft draft) {
 
-                final List<String> player1ids = draft.getTeamRoster(0);
-                final List<String> player2ids = draft.getTeamRoster(1);
-                final int week = draft.getWeek();
-                final int year = draft.getYear();
+                mDraft = draft;
 
-                ObjectModelPlayer.fetchPlayers(mActivity, player1ids,
+                final List<String> playerIds = new ArrayList<String>(draft.getPicks().size());
+
+                for (ObjectModelDraft.Pick pick : draft.getPicks()) {
+                    playerIds.add(pick.getPlayerId());
+                }
+
+                ObjectModelPlayer.fetchPlayers(mActivity, playerIds,
                         new ObjectModelPlayer.CallbackPlayers() {
 
                             @Override
-                            public void onSuccess(final List<ObjectModelPlayer> p1roster) {
+                            public void onSuccess(List<ObjectModelPlayer> players) {
 
-                                ObjectModelPlayer.fetchPlayers(mActivity, player2ids,
-                                        new ObjectModelPlayer.CallbackPlayers() {
+                                Map<String, ObjectModelPlayer> playerMap =
+                                        new HashMap<String, ObjectModelPlayer>();
 
-                                            @Override
-                                            public void onSuccess(final List<ObjectModelPlayer> p2roster) {
+                                for (ObjectModelPlayer player: players) {
 
-                                                final List<String> allPlayerIds = new ArrayList<String>();
-                                                allPlayerIds.addAll(player1ids);
-                                                allPlayerIds.addAll(player2ids);
+                                    playerMap.put(player.getId(), player);
+                                }
 
-                                                ObjectModelGame.fetchGames(year, week, new Callback<List<Game>>() {
-                                                    @Override
-                                                    public void success(final List<Game> games, Response response) {
-
-                                                        ObjectModelStats.fetchStatsForPlayers(allPlayerIds, year, week,
-                                                                new Callback<RestAPIResult<Stat>>() {
-
-                                                                    @Override
-                                                                    public void success(RestAPIResult<Stat> statRestAPIResult, Response response) {
-                                                                        // build list of game results per pick
-                                                                        List<Game> p1Games = getPlayerGames(p1roster, games);
-                                                                        List<Game> p2Games = getPlayerGames(p2roster, games);
-
-                                                                        Multimap<String, Stat> playerStats = buildPlayerStatsMap(statRestAPIResult.getResults());
-
-                                                                        callbacks.onStuff(p1roster, p2roster, p1Games, p2Games,
-                                                                                playerStats, week);
-
-                                                                        ObjectModelItem.fetchAvatars(mActivity, Arrays.asList(
-                                                                                        draft.getUserInfo(0).getAvatarId(),
-                                                                                        draft.getUserInfo(1).getAvatarId()),
-                                                                                new ObjectModelItem.CallbackItems() {
-
-                                                                                    @Override
-                                                                                    public void onSuccess(List<ObjectModelItem> items) {
-
-                                                                                        callbacks.onAvatars(items.get(0).getDefaultImgPath(), items.get(1).getDefaultImgPath());
-                                                                                    }
-                                                                                });
-
-                                                                        callbacks.onMatchup(draft.getTeamName(0),
-                                                                                draft.getTeamPoints(0),
-                                                                                draft.getTeamName(1),
-                                                                                draft.getTeamPoints(1)
-                                                                        );
-                                                                    }
-
-                                                                    @Override
-                                                                    public void failure(RetrofitError error) {
-                                                                        LogHelper.log(Arrays.toString(error.getStackTrace()));
-                                                                    }
-                                                                });
-                                                    }
-
-                                                    @Override
-                                                    public void failure(RetrofitError error) {
-                                                        error.printStackTrace();
-                                                    }
-                                                });
-                                            }
-                                        });
+                                populateRosters(playerMap);
+                                onSyncComplete(callbacks);
                             }
                         });
+
+                // TODO: if SIMULATE
+
+                final int week = draft.getWeek();
+                final int year = draft.getYear();
+
+                ObjectModelGame.fetchGames(year, week, new RestAPICallback<List<Game>>(mActivity) {
+                    @Override
+                    public void success(List<Game> games) {
+
+                        mGames = games;
+                        onSyncComplete(callbacks);
+                    }
+                });
+
+                ObjectModelStats.fetchStatsForPlayers(playerIds, year, week,
+                        new RestAPICallback<RestAPIResult<Stat>>(mActivity) {
+
+                    @Override
+                    public void success(RestAPIResult<Stat> stats) {
+
+                        mPlayerStatsMap = buildPlayerStatsMap(stats.getResults());
+                        onSyncComplete(callbacks);
+                    }
+                });
             }
         });
+    }
+
+    private synchronized void onSyncComplete(ViewModelDraftDetailCallbacks callbacks) {
+
+        if (!mInitialized &&
+                mRoster1 != null && mRoster2 != null &&
+                mGames != null &&
+                mDraft != null &&
+                mPlayerStatsMap != null) {
+
+            List<Game> player1Games = getPlayerGames(mRoster1, mGames);
+            List<Game> player2Games = getPlayerGames(mRoster2, mGames);
+
+            callbacks.onStuff(mRoster1, mRoster2, player1Games, player2Games,
+                    mPlayerStatsMap, mDraft.getWeek());
+
+            mInitialized = true;
+        }
+    }
+
+    private void populateRosters(Map<String, ObjectModelPlayer> playersDict) {
+
+        final List<ObjectModelPlayer> myPicks = new ArrayList<ObjectModelPlayer>();
+        final List<ObjectModelPlayer> opponentPicks = new ArrayList<ObjectModelPlayer>();
+
+        for(Map.Entry<String, List<String>> entry : mDraft.getRosters().entrySet()) {
+
+            for(String playerId : entry.getValue()) {
+
+                if (!playersDict.containsKey(playerId)) {
+                    continue;
+                }
+
+                String userId = entry.getKey();
+
+                if (userId.equals(AuthHelper.instance().getUserId())) {
+
+                    myPicks.add(playersDict.get(playerId));
+                } else {
+
+                    opponentPicks.add(playersDict.get(playerId));
+                }
+            }
+        }
 
 
+        mRoster1 = myPicks;
+        mRoster2 = opponentPicks;
     }
 
     private List<Game> getPlayerGames(List<ObjectModelPlayer> roster, List<Game> games) {

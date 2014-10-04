@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import retrofit.client.Response;
 
@@ -84,7 +85,7 @@ public final class ObjectModelDraft extends ObjectModel {
     @SuppressWarnings("unused") @SerializedName("rating_change")
     private HashMap<String, Integer> mRatingChange;
     @SuppressWarnings("unused") @SerializedName("rosters")
-    private HashMap<String, ArrayList<String>> mRosters;
+    private Map<String, List<String>> mRosters;
     @SuppressWarnings("unused") @SerializedName("user_info")
     private HashMap<String, ObjectModelUser> mUserInfo;
 
@@ -148,6 +149,10 @@ public final class ObjectModelDraft extends ObjectModel {
 
     public List<String> getTeamRoster(int team) {
         return mRosters.get(mUsers.get(team));
+    }
+
+    public Map<String, List<String>> getRosters() {
+        return mRosters;
     }
 
     public int getTeamRatingChange(int team) {
