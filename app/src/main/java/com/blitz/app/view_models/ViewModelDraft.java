@@ -35,6 +35,9 @@ public class ViewModelDraft extends ViewModel {
     // Suspended flag.
     private static final String STATE_DRAFT_SUSPENDED = "stateDraftSuspended";
 
+    // Tracks paused state of the view model.
+    private boolean mWasPaused;
+
     // State of the draft.
     public enum DraftState {
         DRAFT_PREVIEW, DRAFT_DRAFTING, DRAFT_COMPLETE
@@ -106,22 +109,52 @@ public class ViewModelDraft extends ViewModel {
     @Override
     public void initialize() {
 
-        // Start comet.
-        cometCallbacksStart();
+        // If we are coming back from a paused state,
+        // the draft model may be null or out of date.
+        // We also may have missed comet events.  Explicitly
+        // re-sync the draft state in this case, otherwise
+        // normal initialization flow runs immediately.
+        if (mWasPaused) {
+            mWasPaused = false;
 
-        // Fetch users.
-        syncUsers();
+            syncDraft(new Runnable() {
 
-        // Start loop.
-        gameLoopStart();
+                @Override
+                public void run() {
+
+                    // Make another call to initialize
+                    // once we are synced with server.
+                    initialize();
+                }
+            });
+        } else {
+
+            // Start comet.
+            cometCallbacksStart();
+
+            // Fetch users.
+            syncUsers();
+
+            // Start loop.
+            gameLoopStart();
+        }
     }
 
     /**
-     * Stop the view model.
+     * This is called when the associated
+     * activity is thrown into a paused state.  Before
+     * that happens, set it as paused, and
+     * cleanup any running callbacks or loops.
      */
     @Override
     public void stop() {
         super.stop();
+
+        // Now paused, under normal conditions, the
+        // view model object will remain in memory,
+        // causing a re-sync when initialized is called
+        // when the user returns to the app.
+        mWasPaused = true;
 
         // Stop comet.
         cometCallbacksStop();
@@ -140,7 +173,9 @@ public class ViewModelDraft extends ViewModel {
     public void saveInstanceState(Bundle savedInstanceState) {
         super.saveInstanceState(savedInstanceState);
 
-        // Draft is now suspended.
+        // Draft is now suspended, however most of the time,
+        // the activity will simply be resumed, and so the
+        // saved instance state will not be required.
         savedInstanceState.putBoolean(STATE_DRAFT_SUSPENDED, true);
     }
 
@@ -154,11 +189,20 @@ public class ViewModelDraft extends ViewModel {
     public void restoreInstanceState(Bundle savedInstanceState) {
         super.restoreInstanceState(savedInstanceState);
 
-        // Sync the draft if needed.
+        // This can only happen if the device goes into a low
+        // memory situation and the associated activity is
+        // destroyed and the user re-enters the application
+        // directly into the draft screen instead of the
+        // normal loading float - unlikely but possible on some
+        // lower end devices.
         if (savedInstanceState != null &&
             savedInstanceState.getBoolean(STATE_DRAFT_SUSPENDED)) {
 
-            syncDraft();
+            // Simulate a paused state.
+            mWasPaused = true;
+
+            // Re-initialize normally.
+            initialize();
         }
     }
 
@@ -203,9 +247,15 @@ public class ViewModelDraft extends ViewModel {
      * If the draft gets suspended and we return,
      * manually sync the draft model.
      */
-    private void syncDraft() {
+    private void syncDraft(Runnable onSynced) {
+
+        LogHelper.log("Syncing the draft.");
 
         // TODO: Implement me.
+
+        if (onSynced != null) {
+            onSynced.run();
+        }
     }
 
     /**
