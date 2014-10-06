@@ -592,19 +592,7 @@ public class ViewModelDraft extends ViewModel {
             roundAndPosition = "Final Round!";
         }
 
-        if (!roundAndPosition.equals(mRoundAndPosition) && mState != DraftState.DRAFT_PREVIEW) {
-
-            if (mDraftModel.getCurrentRound() == 1 ||
-                mDraftModel.getSecondsSinceLastRoundCompleteTime() >
-                        mDraftModel.getTimePerPostview()) {
-
-                mRoundAndPosition = roundAndPosition;
-
-                if (mCallbacks != null) {
-                    mCallbacks.onRoundAndPositionChanged(mRoundAndPosition);
-                }
-            }
-        }
+        updateCurrentRoundAndPosition(roundAndPosition);
     }
 
     /**
@@ -779,6 +767,29 @@ public class ViewModelDraft extends ViewModel {
             // Draft state has changed.
             if (mCallbacks != null) {
                 mCallbacks.onDraftStateChanged(mState);
+            }
+        }
+    }
+
+    /**
+     * Update the round and position string when
+     * it changes.
+     *
+     * @param roundAndPosition Current round and position.
+     */
+    private void updateCurrentRoundAndPosition(String roundAndPosition) {
+
+        if (!roundAndPosition.equals(mRoundAndPosition) && mState != DraftState.DRAFT_PREVIEW) {
+
+            if (mDraftModel.getCurrentRound() == 1 ||
+                    mDraftModel.getSecondsSinceLastRoundCompleteTime() >
+                            mDraftModel.getTimePerPostview()) {
+
+                mRoundAndPosition = roundAndPosition;
+
+                if (mCallbacks != null) {
+                    mCallbacks.onRoundAndPositionChanged(mRoundAndPosition);
+                }
             }
         }
     }
