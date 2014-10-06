@@ -15,20 +15,44 @@
         android:src="@drawable/asset_bg_main"
         app:scaleType="topCrop" />
 
-    <TextView
-        android:id="@+id/draft_header"
-        style="@style/TextViewStyle"
-        fontPath="@string/app_font_sports"
+    <LinearLayout
+        android:id="@+id/draft_container_intro"
         android:layout_width="match_parent"
-        android:layout_height="75dp"
-        android:layout_marginTop="20dp"
-        android:alpha=".75"
+        android:layout_height="match_parent"
+        android:layout_centerHorizontal="true"
         android:gravity="center"
-        android:singleLine="true"
-        android:text="@string/get_ready"
-        android:textAllCaps="true"
-        android:textColor="@color/text_color_light"
-        android:textSize="36sp"/>
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/draft_header"
+            style="@style/TextViewStyle"
+            fontPath="@string/app_font_sports"
+            android:layout_width="match_parent"
+            android:layout_height="75dp"
+            android:alpha=".75"
+            android:gravity="center"
+            android:paddingTop="20dp"
+            android:singleLine="true"
+            android:text="@string/get_ready"
+            android:textAllCaps="true"
+            android:textColor="@color/text_color_light"
+            android:textSize="36sp"/>
+
+        <include
+            android:id="@+id/draft_intro"
+            layout="@layout/draft_screen_intro"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"/>
+
+        <ProgressBar
+            android:id="@+id/draft_loading"
+            style="?android:attr/progressBarStyleLarge"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingBottom="25dp"
+            android:visibility="invisible"/>
+    </LinearLayout>
 
     <LinearLayout
         android:id="@+id/draft_container_drafting"
@@ -52,9 +76,9 @@
             android:singleLine="true"
             android:text="@string/get_ready"
             android:textAllCaps="true"
-            android:visibility="invisible"
             android:textColor="@color/text_color_light"
-            android:textSize="36sp"/>
+            android:textSize="36sp"
+            android:visibility="invisible"/>
 
         <include
             layout="@layout/draft_screen_matchup"
@@ -68,22 +92,4 @@
             android:layout_gravity="center"
             android:layout_weight="1"/>
     </LinearLayout>
-
-    <include
-        android:id="@+id/draft_intro"
-        layout="@layout/draft_screen_intro"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"/>
-
-    <ProgressBar
-        android:id="@+id/draft_loading"
-        style="?android:attr/progressBarStyleLarge"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="25dp"
-        android:visibility="invisible"/>
-
 </RelativeLayout>
