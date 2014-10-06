@@ -221,6 +221,81 @@ public class ViewModelDraft extends ViewModel {
     }
 
     /**
+     * Fetch relevant user information
+     * for the users that belong to this
+     * draft and fire off relevant callbacks.
+     */
+    private void syncUsers() {
+
+        // Users associated with this draft.
+        List<String> draftUserIds = mDraftModel.getUsers();
+
+        // Fetch associated user objects.
+        ObjectModelUser.getUsers(mActivity, draftUserIds, new ObjectModelUser.CallbackUsers() {
+
+            @Override
+            public void onSuccess(final List<ObjectModelUser> users) {
+
+                final ArrayList<String> userAvatarItemIds =
+                        new ArrayList<String>();
+
+                // Get list of item ids.
+                for (ObjectModelUser user : users) {
+
+                    userAvatarItemIds.add(user.getAvatarId());
+                }
+
+                // Need to fetch each users item object to complete the sync.
+                ObjectModelItem.fetchItems(mActivity, userAvatarItemIds,
+                        new ObjectModelItem.CallbackItems() {
+
+                            @Override
+                            public void onSuccess(List<ObjectModelItem> items) {
+
+                                HashMap<String, ObjectModelItem> itemsIds =
+                                        new HashMap<String, ObjectModelItem>();
+
+                                for (ObjectModelItem item : items) {
+
+                                    itemsIds.put(item.getId(), item);
+                                }
+
+                                for (ObjectModelUser user : users) {
+
+                                    // User is synced, may have avatar
+                                    // information as well.
+                                    syncUsersCallback(user,
+                                            itemsIds.containsKey(user.getAvatarId()) ?
+                                                    itemsIds.get(user.getAvatarId()) : null);
+                                }
+                            }
+                        });
+            }
+        });
+    }
+
+    /**
+     * Given a user and avatar, make callback.
+     *
+     * @param user User object.
+     * @param userAvatarItem User avatar object.
+     */
+    private void syncUsersCallback(ObjectModelUser user, ObjectModelItem userAvatarItem) {
+
+        if (mCallbacks != null) {
+            mCallbacks
+                    .onUserSynced(
+                            user.getId(),
+                            user.getUsername(),
+                            user.getRating(),
+                            user.getWins(),
+                            user.getLosses(),
+                            user.getTies(),
+                            userAvatarItem == null ? null : userAvatarItem.getDefaultImgPath());
+        }
+    }
+
+    /**
      * Start all callbacks.
      */
     private void cometCallbacksStart() {
@@ -366,81 +441,6 @@ public class ViewModelDraft extends ViewModel {
 
             // Stop the timer.
             mGameLoopHandler.removeCallbacks(mGameLoopRunnable);
-        }
-    }
-
-    /**
-     * Fetch relevant user information
-     * for the users that belong to this
-     * draft and fire off relevant callbacks.
-     */
-    private void syncUsers() {
-
-        // Users associated with this draft.
-        List<String> draftUserIds = mDraftModel.getUsers();
-
-        // Fetch associated user objects.
-        ObjectModelUser.getUsers(mActivity, draftUserIds, new ObjectModelUser.CallbackUsers() {
-
-            @Override
-            public void onSuccess(final List<ObjectModelUser> users) {
-
-                final ArrayList<String> userAvatarItemIds =
-                        new ArrayList<String>();
-
-                // Get list of item ids.
-                for (ObjectModelUser user : users) {
-
-                    userAvatarItemIds.add(user.getAvatarId());
-                }
-
-                // Need to fetch each users item object to complete the sync.
-                ObjectModelItem.fetchItems(mActivity, userAvatarItemIds,
-                        new ObjectModelItem.CallbackItems() {
-
-                    @Override
-                    public void onSuccess(List<ObjectModelItem> items) {
-
-                        HashMap<String, ObjectModelItem> itemsIds =
-                                new HashMap<String, ObjectModelItem>();
-
-                        for (ObjectModelItem item : items) {
-
-                            itemsIds.put(item.getId(), item);
-                        }
-
-                        for (ObjectModelUser user : users) {
-
-                            // User is synced, may have avatar
-                            // information as well.
-                            userSyncedCallback(user,
-                                    itemsIds.containsKey(user.getAvatarId()) ?
-                                    itemsIds.get(user.getAvatarId()) : null);
-                        }
-                    }
-                });
-            }
-        });
-    }
-
-    /**
-     * Given a user and avatar, make callback.
-     *
-     * @param user User object.
-     * @param userAvatarItem User avatar object.
-     */
-    private void userSyncedCallback(ObjectModelUser user, ObjectModelItem userAvatarItem) {
-
-        if (mCallbacks != null) {
-            mCallbacks
-                    .onUserSynced(
-                            user.getId(),
-                            user.getUsername(),
-                            user.getRating(),
-                            user.getWins(),
-                            user.getLosses(),
-                            user.getTies(),
-                            userAvatarItem == null ? null : userAvatarItem.getDefaultImgPath());
         }
     }
 
