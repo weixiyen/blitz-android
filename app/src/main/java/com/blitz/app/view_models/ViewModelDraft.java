@@ -23,6 +23,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by mrkcsc on 8/24/14. Copyright 2014 Blitz Studios
@@ -308,8 +309,7 @@ public class ViewModelDraft extends ViewModel {
             @Override
             public void onSuccess(final List<ObjectModelUser> users) {
 
-                final ArrayList<String> userAvatarItemIds =
-                        new ArrayList<String>();
+                final List<String> userAvatarItemIds = new ArrayList<String>();
 
                 // Get list of item ids.
                 for (ObjectModelUser user : users) {
@@ -324,7 +324,7 @@ public class ViewModelDraft extends ViewModel {
                             @Override
                             public void onSuccess(List<ObjectModelItem> items) {
 
-                                HashMap<String, ObjectModelItem> itemsIds =
+                                Map<String, ObjectModelItem> itemsIds =
                                         new HashMap<String, ObjectModelItem>();
 
                                 for (ObjectModelItem item : items) {
@@ -426,7 +426,7 @@ public class ViewModelDraft extends ViewModel {
             JsonArray choicesJson = message.get("choices").getAsJsonArray();
 
             // List of choice ids.
-            ArrayList<String> choiceIds = new ArrayList<String>();
+            List<String> choiceIds = new ArrayList<String>();
 
             for (JsonElement choiceJson : choicesJson) {
 
@@ -660,11 +660,9 @@ public class ViewModelDraft extends ViewModel {
 
         if (playerChoiceIds != null) {
 
-            ArrayList<ObjectModelPlayer> playerChoices =
-                    new ArrayList<ObjectModelPlayer>();
+            List<ObjectModelPlayer> playerChoices = new ArrayList<ObjectModelPlayer>();
 
-            ArrayList<String> playerChoicesToSync =
-                    new ArrayList<String>();
+            List<String> playerChoicesToSync = new ArrayList<String>();
 
             for (String playerId : playerChoiceIds) {
 
@@ -851,8 +849,8 @@ public class ViewModelDraft extends ViewModel {
      * @param playerChoices Loaded player choices.
      * @param playerChoicesToSync Player ids for choices that need to be synced.
      */
-    private void updateChoices(ArrayList<ObjectModelPlayer> playerChoices,
-                               ArrayList<String> playerChoicesToSync) {
+    private void updateChoices(List<ObjectModelPlayer> playerChoices,
+                               List<String> playerChoicesToSync) {
 
         if (!playerChoicesToSync.isEmpty()) {
 

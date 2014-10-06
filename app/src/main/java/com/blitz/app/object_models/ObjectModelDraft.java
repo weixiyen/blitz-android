@@ -489,7 +489,7 @@ public final class ObjectModelDraft extends ObjectModel {
      * @param choices List of choices.
      */
     @SuppressWarnings("unused")
-    public void addChoices(ArrayList<String> choices) {
+    public void addChoices(List<String> choices) {
 
         if (mChoices == null) {
             mChoices = new ArrayList<List<String>>();
