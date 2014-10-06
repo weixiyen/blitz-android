@@ -103,11 +103,25 @@ public final class ObjectModelDraft extends ObjectModel {
     // region Public Methods
     // =============================================================================================
 
+    /**
+     * Fetch the draft id.
+     *
+     * @return Draft id.
+     */
+    @SuppressWarnings("unused")
     public String getId() {
+
         return mId;
     }
 
+    /**
+     * Fetch draft status.
+     *
+     * @return Draft status.
+     */
+    @SuppressWarnings("unused")
     public String getStatus() {
+
         return mGameStatus;
     }
 
@@ -131,40 +145,17 @@ public final class ObjectModelDraft extends ObjectModel {
         return null;
     }
 
-    public ObjectModelUser getUserInfo(int team) {
-
-        if (mUsers != null &&
-                mUserInfo != null &&
-                mUserInfo.get(mUsers.get(team)) != null) {
-
-            return mUserInfo.get(mUsers.get(team));
-        }
-        
-        return null;
-    }
-
+    /**
+     * Get points of a specified player team.
+     *
+     * @param team Team id.
+     *
+     * @return Points.
+     */
+    @SuppressWarnings("unused")
     public float getTeamPoints(int team) {
+
         return mPoints.get(mUsers.get(team));
-    }
-
-    public List<String> getTeamRoster(int team) {
-        return mRosters.get(mUsers.get(team));
-    }
-
-    public Map<String, List<String>> getRosters() {
-        return mRosters;
-    }
-
-    public int getTeamRatingChange(int team) {
-        String key = mUsers.get(team);
-        final int change;
-        if(mRatingChange.containsKey(key)) {
-            change = mRatingChange.get(key);
-        } else {
-            change = 0;
-        }
-
-        return change;
     }
 
     /**
@@ -201,6 +192,16 @@ public final class ObjectModelDraft extends ObjectModel {
     }
 
     /**
+     * Is the draft complete.
+     */
+    @SuppressWarnings("unused")
+    public boolean getIsDraftComplete() {
+
+        return mStatus != null &&
+               mStatus.equals("completed");
+    }
+
+    /**
      * Fetch total rounds in the draft.
      *
      * @return Total rounds.
@@ -231,6 +232,26 @@ public final class ObjectModelDraft extends ObjectModel {
     public int getWeek() {
 
         return mWeek;
+    }
+
+    /**
+     * Get the rating change for a given team.
+     *
+     * @param team Team id.
+     *
+     * @return Rating change.
+     */
+    @SuppressWarnings("unused")
+    public int getTeamRatingChange(int team) {
+        String key = mUsers.get(team);
+        final int change;
+        if(mRatingChange.containsKey(key)) {
+            change = mRatingChange.get(key);
+        } else {
+            change = 0;
+        }
+
+        return change;
     }
 
     /**
@@ -323,6 +344,18 @@ public final class ObjectModelDraft extends ObjectModel {
     }
 
     /**
+     * Get a specified team roster.
+     *
+     * @param team Team id.
+     *
+     * @return Team roster.
+     */
+    @SuppressWarnings("unused")
+    public List<String> getTeamRoster(int team) {
+        return mRosters.get(mUsers.get(team));
+    }
+
+    /**
      * Get picks made so far.
      *
      * @return List of picks.
@@ -384,6 +417,16 @@ public final class ObjectModelDraft extends ObjectModel {
         }
 
         return mPlayerDataMap;
+    }
+
+    /**
+     * Get player rosters.
+     *
+     * @return List of player rosters.
+     */
+    @SuppressWarnings("unused")
+    public Map<String, List<String>> getRosters() {
+        return mRosters;
     }
 
     /**
@@ -686,13 +729,6 @@ public final class ObjectModelDraft extends ObjectModel {
      */
     private boolean isDrafting() {
         return mStatus != null && mStatus.equals("drafting");
-    }
-
-    /**
-     * Is the draft complete.
-     */
-    private boolean isDraftComplete() {
-        return mStatus != null && mStatus.equals("completed");
     }
 
     /**
