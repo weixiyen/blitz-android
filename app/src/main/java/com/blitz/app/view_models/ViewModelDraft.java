@@ -259,18 +259,6 @@ public class ViewModelDraft extends ViewModel {
     }
 
     /**
-     * When coming back from a sleep state, we might
-     * not have received choice data. Need to
-     * make a rest call to retrieve it.
-     *
-     * @param choices Choice id's to sync.
-     */
-    private void syncChoicesWithoutData(ArrayList<String> choices) {
-
-        // TODO: Implement me.
-    }
-
-    /**
      * Fetch relevant user information
      * for the users that belong to this
      * draft and fire off relevant callbacks.
@@ -494,44 +482,6 @@ public class ViewModelDraft extends ViewModel {
         }
     }
 
-    /**
-     * Given a new list of player choices, update
-     * the current choices and emit relevant
-     * information through the view model callbacks.
-     *
-     * @param playerChoices Player choice objects.
-     */
-    private void updatePlayerChoices(List<ObjectModelPlayer> playerChoices) {
-
-        // Update player choices and timestamp.
-        mCurrentPlayerChoices= playerChoices;
-        mCurrentPlayerChoicesShowTime
-                = DateUtils.getDateInGMT();
-
-        List<String> playerIds       = new ArrayList<String>();
-        List<String> playerPhotoUrls = new ArrayList<String>();
-        List<String> playerFullNames = new ArrayList<String>();
-        List<String> playerPositions = new ArrayList<String>();
-        List<String> playerOpponents = new ArrayList<String>();
-
-        for (ObjectModelPlayer playerChoice : mCurrentPlayerChoices) {
-
-            // List of player id's.
-            playerIds.add(playerChoice.getId());
-
-            // Rest of player information.
-            playerPhotoUrls.add(playerChoice.getPhotoUrl());
-            playerFullNames.add(playerChoice.getFullName());
-            playerPositions.add(playerChoice.getPosition() + " - " + playerChoice.getTeam());
-            playerOpponents.add(playerChoice.getOpponent());
-        }
-
-        if (mCallbacks != null) {
-            mCallbacks.onPlayerChoicesChanged(playerIds, playerPhotoUrls,
-                    playerFullNames, playerPositions, playerOpponents);
-        }
-    }
-
     // endregion
 
     // region Resolve Methods
@@ -696,15 +646,7 @@ public class ViewModelDraft extends ViewModel {
                 }
             }
 
-            // Fetch additional choice information.
-            if (playerChoices.size() != playerChoiceIds.size()) {
-
-                syncChoicesWithoutData(playerChoicesToSync);
-
-            } else if (!playerChoices.equals(mCurrentPlayerChoices)) {
-
-                updatePlayerChoices(playerChoices);
-            }
+            updateChoices(playerChoices, playerChoicesToSync);
         }
     }
 
@@ -864,6 +806,68 @@ public class ViewModelDraft extends ViewModel {
                 mCallbacks.onRoundCompleteHiddenChanged(roundCompleteHidden);
             }
         }
+    }
+
+    /**
+     * Given the current set of player choices and
+     * the player choices that need syncing, either
+     * sync the missing choices, or emit the new
+     * choices if they have changed.
+     *
+     * @param playerChoices Loaded player choices.
+     * @param playerChoicesToSync Player ids for choices that need to be synced.
+     */
+    private void updateChoices(ArrayList<ObjectModelPlayer> playerChoices,
+                               ArrayList<String> playerChoicesToSync) {
+
+        if (playerChoicesToSync.isEmpty()) {
+
+            // Need to fetch any missing player choices before
+            // we can emit the player choices.
+            updateChoicesWithoutData(playerChoicesToSync);
+
+        } else if (!playerChoices.equals(mCurrentPlayerChoices)) {
+
+            // Update player choices and timestamp.
+            mCurrentPlayerChoices= playerChoices;
+            mCurrentPlayerChoicesShowTime
+                    = DateUtils.getDateInGMT();
+
+            List<String> playerIds       = new ArrayList<String>();
+            List<String> playerPhotoUrls = new ArrayList<String>();
+            List<String> playerFullNames = new ArrayList<String>();
+            List<String> playerPositions = new ArrayList<String>();
+            List<String> playerOpponents = new ArrayList<String>();
+
+            for (ObjectModelPlayer playerChoice : mCurrentPlayerChoices) {
+
+                // List of player id's.
+                playerIds.add(playerChoice.getId());
+
+                // Rest of player information.
+                playerPhotoUrls.add(playerChoice.getPhotoUrl());
+                playerFullNames.add(playerChoice.getFullName());
+                playerPositions.add(playerChoice.getPosition() + " - " + playerChoice.getTeam());
+                playerOpponents.add(playerChoice.getOpponent());
+            }
+
+            if (mCallbacks != null) {
+                mCallbacks.onPlayerChoicesChanged(playerIds, playerPhotoUrls,
+                        playerFullNames, playerPositions, playerOpponents);
+            }
+        }
+    }
+
+    /**
+     * When coming back from a sleep state, we might
+     * not have received choice data. Need to
+     * make a rest call to retrieve it.
+     *
+     * @param choices Choice id's to sync.
+     */
+    private void updateChoicesWithoutData(ArrayList<String> choices) {
+
+        // TODO: Implement me.
     }
 
     /**
