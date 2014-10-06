@@ -24,7 +24,7 @@
         android:orientation="vertical">
 
         <TextView
-            android:id="@+id/draft_header"
+            android:id="@+id/draft_intro_header"
             style="@style/TextViewStyle"
             fontPath="@string/app_font_sports"
             android:layout_width="match_parent"
@@ -65,20 +65,19 @@
         android:visibility="gone">
 
         <TextView
-            android:id="@+id/draft_game_header"
+            android:id="@+id/draft_matchup_header"
             style="@style/TextViewStyle"
             fontPath="@string/app_font_sports"
             android:layout_width="match_parent"
             android:layout_height="75dp"
             android:layout_marginTop="20dp"
             android:alpha=".75"
+            android:background="@color/text_color_black"
             android:gravity="center"
             android:singleLine="true"
-            android:text="@string/get_ready"
             android:textAllCaps="true"
             android:textColor="@color/text_color_light"
-            android:textSize="36sp"
-            android:visibility="invisible"/>
+            android:textSize="36sp"/>
 
         <include
             layout="@layout/draft_screen_matchup"

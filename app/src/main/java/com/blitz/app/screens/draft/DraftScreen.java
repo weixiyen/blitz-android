@@ -45,7 +45,19 @@ public class DraftScreen extends BaseActivity implements ViewModelDraft.ViewMode
     @InjectView(R.id.draft_intro_container_right) View mDraftIntroContainerRight;
     @InjectView(R.id.draft_intro_container_vs)    View mDraftIntroContainerVs;
 
+    // Actual content views of the intro section.
+    @InjectView(R.id.draft_intro_header)             TextView mDraftIntroHeader;
+    @InjectView(R.id.draft_intro_helmet_left)  BlitzImageView mDraftIntroHelmetLeft;
+    @InjectView(R.id.draft_intro_helmet_right) BlitzImageView mDraftIntroHelmetRight;
+    @InjectView(R.id.draft_intro_username_left)      TextView mDraftIntroUsernameLeft;
+    @InjectView(R.id.draft_intro_username_right)     TextView mDraftIntroUsernameRight;
+    @InjectView(R.id.draft_intro_scorecard_left)     TextView mDraftIntroScorecardLeft;
+    @InjectView(R.id.draft_intro_scorecard_right)    TextView mDraftIntroScorecardRight;
+    @InjectView(R.id.draft_intro_elo_left)           TextView mDraftIntroEloLeft;
+    @InjectView(R.id.draft_intro_elo_right)          TextView mDraftIntroEloRight;
+
     // Matchup containers.
+    @InjectView(R.id.draft_matchup_header)             TextView mDraftMatchupHeader;
     @InjectView(R.id.draft_matchup_player_left)            View mDraftMatchupPlayerLeft;
     @InjectView(R.id.draft_matchup_player_right)           View mDraftMatchupPlayerRight;
     @InjectView(R.id.draft_matchup_helmet_left)  BlitzImageView mDraftMatchupHelmetLeft;
@@ -98,21 +110,8 @@ public class DraftScreen extends BaseActivity implements ViewModelDraft.ViewMode
     // Loading spinner for the draft.
     @InjectView(R.id.draft_loading) ProgressBar mDraftLoadingSpinner;
 
-    // Header view for the draft.
-    @InjectView(R.id.draft_header) TextView mDraftHeader;
-
     // Drafting container view.
     @InjectView(R.id.draft_container_drafting) ViewGroup mDraftContainerDrafting;
-
-    // Actual content views of the intro section.
-    @InjectView(R.id.draft_intro_helmet_left)  BlitzImageView mDraftIntroHelmetLeft;
-    @InjectView(R.id.draft_intro_helmet_right) BlitzImageView mDraftIntroHelmetRight;
-    @InjectView(R.id.draft_intro_username_left)      TextView mDraftIntroUsernameLeft;
-    @InjectView(R.id.draft_intro_username_right)     TextView mDraftIntroUsernameRight;
-    @InjectView(R.id.draft_intro_scorecard_left)     TextView mDraftIntroScorecardLeft;
-    @InjectView(R.id.draft_intro_scorecard_right)    TextView mDraftIntroScorecardRight;
-    @InjectView(R.id.draft_intro_elo_left)           TextView mDraftIntroEloLeft;
-    @InjectView(R.id.draft_intro_elo_right)          TextView mDraftIntroEloRight;
 
     // View model object.
     private ViewModelDraft mViewModelDraft;
@@ -145,7 +144,7 @@ public class DraftScreen extends BaseActivity implements ViewModelDraft.ViewMode
         super.onCreate(savedInstanceState);
 
         // Blank screen on create.
-        setIntroUIVisibility(false);
+        setIntroVisibility(false);
     }
 
     /**
@@ -292,13 +291,17 @@ public class DraftScreen extends BaseActivity implements ViewModelDraft.ViewMode
      *
      * @param visible Is visible.
      */
-    private void setIntroUIVisibility(boolean visible) {
+    private void setIntroVisibility(boolean visible) {
+
+        int visibility = visible ? View.VISIBLE : View.GONE;
 
         // Set the intro UI visibility.
         mDraftIntroContainer
-                .setVisibility(visible ? View.VISIBLE : View.GONE);
-        mDraftHeader
-                .setVisibility(visible ? View.VISIBLE : View.GONE);
+                .setVisibility(visibility);
+        mDraftIntroHeader
+                .setVisibility(visibility);
+        mDraftLoadingSpinner
+                .setVisibility(visibility);
     }
 
     // endregion
@@ -313,7 +316,7 @@ public class DraftScreen extends BaseActivity implements ViewModelDraft.ViewMode
 
         setAnimationsRunning(true);
 
-        setIntroUIVisibility(true);
+        setIntroVisibility(true);
 
         // Containers smash.
         getAnimations().createHelper(20, 4)
@@ -322,7 +325,7 @@ public class DraftScreen extends BaseActivity implements ViewModelDraft.ViewMode
 
         // Header flies down.
         getAnimations().createHelper(5, 5)
-                .addHelperView(AnimHelperSpringsView.from(mDraftHeader, AnimHelperSpringsPresets.SLIDE_DOWN));
+                .addHelperView(AnimHelperSpringsView.from(mDraftIntroHeader, AnimHelperSpringsPresets.SLIDE_DOWN));
 
         // Set a springs completion listener.
         getAnimations().setOnCompleteListener(new Runnable() {
@@ -362,7 +365,7 @@ public class DraftScreen extends BaseActivity implements ViewModelDraft.ViewMode
 
         // Header flies up.
         getAnimations().createHelper(5, 5)
-                .addHelperView(AnimHelperSpringsView.from(mDraftHeader, AnimHelperSpringsPresets.SLIDE_DOWN_REVERSED));
+                .addHelperView(AnimHelperSpringsView.from(mDraftIntroHeader, AnimHelperSpringsPresets.SLIDE_DOWN_REVERSED));
 
         // Fade out vs and spinner.
         AnimHelperFade.setVisibility(mDraftIntroContainerVs, View.INVISIBLE);
@@ -390,9 +393,7 @@ public class DraftScreen extends BaseActivity implements ViewModelDraft.ViewMode
 
         setAnimationsRunning(true);
 
-        // Hide the intro UI.
-        mDraftIntroContainer.setVisibility(View.GONE);
-        mDraftLoadingSpinner.setVisibility(View.GONE);
+        setIntroVisibility(false);
 
         // Bring back the drafting container.
         mDraftContainerDrafting.setVisibility(View.VISIBLE);
@@ -402,7 +403,7 @@ public class DraftScreen extends BaseActivity implements ViewModelDraft.ViewMode
 
         // Header flies down.
         getAnimations().createHelper(5, 5)
-                .addHelperView(AnimHelperSpringsView.from(mDraftHeader, AnimHelperSpringsPresets.SLIDE_DOWN));
+                .addHelperView(AnimHelperSpringsView.from(mDraftMatchupHeader, AnimHelperSpringsPresets.SLIDE_DOWN));
 
         // Containers smash.
         getAnimations().createHelper(20, 5)
@@ -541,8 +542,8 @@ public class DraftScreen extends BaseActivity implements ViewModelDraft.ViewMode
     @Override
     public void onRoundAndPositionChanged(String roundAndPosition) {
 
-        if (mDraftHeader != null) {
-            mDraftHeader.setText(roundAndPosition);
+        if (mDraftMatchupHeader != null) {
+            mDraftMatchupHeader.setText(roundAndPosition);
         }
     }
 
