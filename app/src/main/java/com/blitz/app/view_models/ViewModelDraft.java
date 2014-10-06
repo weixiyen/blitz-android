@@ -58,6 +58,7 @@ public class ViewModelDraft extends ViewModel {
 
     // Prevents spamming of picks.
     private boolean mPickingLocked;
+    private boolean mSyncingChoicesLocked;
 
     // Choice related structures.
     private List<ObjectModelPlayer> mCurrentPlayerChoices;
@@ -248,8 +249,6 @@ public class ViewModelDraft extends ViewModel {
      * manually sync the draft model.
      */
     private void syncDraft(Runnable onSynced) {
-
-        LogHelper.log("Syncing the draft.");
 
         // TODO: Implement me.
 
@@ -867,7 +866,19 @@ public class ViewModelDraft extends ViewModel {
      */
     private void updateChoicesWithoutData(ArrayList<String> choices) {
 
-        // TODO: Implement me.
+        if (!mSyncingChoicesLocked) {
+             mSyncingChoicesLocked = true;
+
+            ObjectModelPlayer.fetchPlayers(null, choices,
+                    new ObjectModelPlayer.CallbackPlayers() {
+
+                @Override
+                public void onSuccess(List<ObjectModelPlayer> players) {
+
+                    // TODO: Implement me.
+                }
+            });
+        }
     }
 
     /**
