@@ -680,7 +680,13 @@ public class DraftScreen extends BaseActivity implements ViewModelDraft.ViewMode
     }
 
     @Override
-    public void onChoicesViewHiddenChanged(boolean onChoicesViewHidden) {
+    public void onChoicesViewHiddenChanged(boolean choicesViewHidden) {
+
+        // TODO: Implement.
+    }
+
+    @Override
+    public void onRoundCompleteHiddenChanged(boolean completeHidden) {
 
         // TODO: Implement.
     }

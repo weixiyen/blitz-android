@@ -63,6 +63,7 @@ public class ViewModelDraft extends ViewModel {
     // Round time information.
     private int mRoundTimeRemaining;
     private boolean mRoundTimeRemainingHidden;
+    private boolean mRoundCompleteHidden;
 
     // Are the choices hidden.
     private boolean mChoicesViewHidden;
@@ -509,14 +510,7 @@ public class ViewModelDraft extends ViewModel {
             state = DraftState.DRAFT_DRAFTING;
         }
 
-        if (mState != state) {
-            mState  = state;
-
-            // Draft state has changed.
-            if (mCallbacks != null) {
-                mCallbacks.onDraftStateChanged(mState);
-            }
-        }
+        updateState(state);
     }
 
     /**
@@ -607,9 +601,30 @@ public class ViewModelDraft extends ViewModel {
                 !isInPickWindow || isRoundComplete, isChoicesViewHidden);
     }
 
+    /**
+     * Calculate the boolean if should
+     * show or hide the round complete time.
+     */
     private void resolveRoundComplete() {
 
-        // TODO: Implement me.
+        boolean roundCompleteHidden;
+
+        if (mDraftModel.getLastRoundCompleteTime() == null ||
+            mDraftModel.getChoices()               == null ||
+            mDraftModel.getPicks()                 == null) {
+
+            roundCompleteHidden = true;
+        } else {
+
+
+            boolean roundComplete = mDraftModel.getChoices().size()
+                    == mDraftModel.getPicks().size() / 2;
+
+            roundCompleteHidden = !(mDraftModel.getSecondsSinceLastRoundCompleteTime() <
+                    mDraftModel.getTimePerPostview() && roundComplete);
+        }
+
+        updateRoundComplete(roundCompleteHidden);
     }
 
     /**
@@ -702,6 +717,23 @@ public class ViewModelDraft extends ViewModel {
     // =============================================================================================
 
     /**
+     * Update the state variable if it changes.
+     *
+     * @param state Current draft state.
+     */
+    private void updateState(DraftState state) {
+
+        if (mState != state) {
+            mState  = state;
+
+            // Draft state has changed.
+            if (mCallbacks != null) {
+                mCallbacks.onDraftStateChanged(mState);
+            }
+        }
+    }
+
+    /**
      * Update round time remaining, whether or not that
      * timer is hidden, and if the choices view should be hidden.
      *
@@ -757,6 +789,23 @@ public class ViewModelDraft extends ViewModel {
     }
 
     /**
+     * Update round complete hidden flag
+     * and emit event when changed.
+     *
+     * @param roundCompleteHidden Is round complete hidden.
+     */
+    private void updateRoundComplete(boolean roundCompleteHidden) {
+
+        if (mRoundCompleteHidden != roundCompleteHidden) {
+            mRoundCompleteHidden = roundCompleteHidden;
+
+            if (mCallbacks != null) {
+                mCallbacks.onRoundCompleteHiddenChanged(roundCompleteHidden);
+            }
+        }
+    }
+
+    /**
      * Given a list of the current picks, see if they
      * have changed from the cached current picks.
      *
@@ -799,13 +848,17 @@ public class ViewModelDraft extends ViewModel {
      */
     public interface ViewModelDraftCallbacks extends ViewModelCallbacks {
 
+        // User information received.
         public void onUserSynced(String userId, String userName,
                 int rating, int wins, int losses, int ties, String itemAvatarUrl);
 
+        // Draft state updated.
         public void onDraftStateChanged(DraftState state);
 
+        // New round string.
         public void onRoundAndPositionChanged(String roundAndPosition);
 
+        // New list of player choices.
         public void onPlayerChoicesChanged(
                 List<String> playerIds,
                 List<String> playerPhotoUrls,
@@ -813,14 +866,20 @@ public class ViewModelDraft extends ViewModel {
                 List<String> playerPositions,
                 List<String> playerOpponents);
 
+        // New pick received.
         public void onPicksChanged(
                 List<String> playerIds,
                 List<String> userIds);
 
+        // Round time remaining update.
         public void onRoundTimeRemainingChanged(int roundTimeRemaining);
         public void onRoundTimeRemainingHiddenChanged(boolean roundTimeRemainingHidden);
 
-        public void onChoicesViewHiddenChanged(boolean onChoicesViewHidden);
+        // Should choices be displayed yet.
+        public void onChoicesViewHiddenChanged(boolean choicesViewHidden);
+
+        // Is the round complete UI hidden.
+        public void onRoundCompleteHiddenChanged(boolean completeHidden);
     }
 
     // endregion
