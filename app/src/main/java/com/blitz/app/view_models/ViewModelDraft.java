@@ -310,7 +310,7 @@ public class ViewModelDraft extends ViewModel {
 
                             // Handle the action.
                             ((ViewModelDraft) receivingClass.onFetchViewModel())
-                                    .cometHandleAction(message);
+                                    .cometCallbacksHandleAction(message);
                         }
                     }, "draftGameCallback");
     }
@@ -330,7 +330,7 @@ public class ViewModelDraft extends ViewModel {
      *
      * @param message Json message.
      */
-    private void cometHandleAction(JsonObject message) {
+    private void cometCallbacksHandleAction(JsonObject message) {
 
         // Get the action identifier.
         String action = message.get("action").getAsString();
