@@ -1,17 +1,18 @@
-<RelativeLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="@dimen/screen_width"
-    android:layout_height="148dp"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
     android:layout_gravity="center"
     android:gravity="center"
+    android:orientation="horizontal"
     tools:context="${packageName}.${activityClass}"
     tools:ignore="ButtonStyle,UnusedAttribute">
 
     <RelativeLayout
         android:id="@+id/draft_matchup_player_left"
-        android:layout_width="wrap_content"
+        android:layout_width="140dp"
         android:layout_height="wrap_content">
 
         <com.blitz.app.utilities.textview.BlitzTextView
@@ -40,11 +41,25 @@
             app:clearInitialContent="true" />
     </RelativeLayout>
 
+    <me.grantland.widget.AutofitTextView
+        android:id="@+id/draft_matchup_container_vs"
+        style="@style/TextViewStyle"
+        fontPath="@string/app_font_sports"
+        android:layout_width="40dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:gravity="center"
+        android:singleLine="true"
+        android:text="@string/vs"
+        android:textAllCaps="true"
+        android:textColor="#c1c5cb"
+        android:textSize="28sp"
+        android:visibility="invisible"/>
+
     <RelativeLayout
         android:id="@+id/draft_matchup_player_right"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="180dp">
+        android:layout_width="140dp"
+        android:layout_height="wrap_content">
 
         <com.blitz.app.utilities.textview.BlitzTextView
             android:id="@+id/draft_matchup_username_right"
@@ -72,4 +87,4 @@
             android:src="@drawable/asset_bg_helmet_sample"
             app:clearInitialContent="true" />
     </RelativeLayout>
-</RelativeLayout>
+</LinearLayout>
