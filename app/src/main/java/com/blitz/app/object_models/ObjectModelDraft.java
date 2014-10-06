@@ -81,22 +81,22 @@ public final class ObjectModelDraft extends ObjectModel {
     private Date mLastRoundCompleteTime;
 
     @SuppressWarnings("unused") @SerializedName("points")
-    private HashMap<String, Float> mPoints;
+    private Map<String, Float> mPoints;
     @SuppressWarnings("unused") @SerializedName("rating_change")
-    private HashMap<String, Integer> mRatingChange;
+    private Map<String, Integer> mRatingChange;
     @SuppressWarnings("unused") @SerializedName("rosters")
     private Map<String, List<String>> mRosters;
     @SuppressWarnings("unused") @SerializedName("user_info")
-    private HashMap<String, ObjectModelUser> mUserInfo;
+    private Map<String, ObjectModelUser> mUserInfo;
 
     @SuppressWarnings("unused") @SerializedName("positions_required")
-    private ArrayList<String> mPositionsRequired;
+    private List<String> mPositionsRequired;
     @SuppressWarnings("unused") @SerializedName("users")
-    private ArrayList<String> mUsers;
+    private List<String> mUsers;
     @SuppressWarnings("unused") @SerializedName("picks")
-    private ArrayList<Pick> mPicks;
+    private List<Pick> mPicks;
     @SuppressWarnings("unused") @SerializedName("choices")
-    private ArrayList<ArrayList<String>> mChoices;
+    private List<List<String>> mChoices;
 
     // endregion
 
@@ -372,7 +372,7 @@ public final class ObjectModelDraft extends ObjectModel {
      * @return List of choices.
      */
     @SuppressWarnings("unused")
-    public ArrayList<String> getCurrentPlayerChoices() {
+    public List<String> getCurrentPlayerChoices() {
 
         if (mChoices != null && mChoices.size() > 0) {
 
@@ -388,7 +388,7 @@ public final class ObjectModelDraft extends ObjectModel {
      * @return List of choices for each round.
      */
     @SuppressWarnings("unused")
-    public ArrayList<ArrayList<String>> getChoices() {
+    public List<List<String>> getChoices() {
 
         return mChoices;
     }
@@ -399,7 +399,7 @@ public final class ObjectModelDraft extends ObjectModel {
      * @return Positions required for this draft.
      */
     @SuppressWarnings("unused")
-    public ArrayList<String> getPositionsRequired() {
+    public List<String> getPositionsRequired() {
 
         return mPositionsRequired;
     }
@@ -410,7 +410,7 @@ public final class ObjectModelDraft extends ObjectModel {
      * @return Player data.
      */
     @SuppressWarnings("unused")
-    public HashMap<String, ObjectModelPlayer> getPlayerDataMap() {
+    public Map<String, ObjectModelPlayer> getPlayerDataMap() {
 
         if (mPlayerDataMap == null) {
             mPlayerDataMap = new HashMap<String, ObjectModelPlayer>();
@@ -492,7 +492,7 @@ public final class ObjectModelDraft extends ObjectModel {
     public void addChoices(ArrayList<String> choices) {
 
         if (mChoices == null) {
-            mChoices = new ArrayList<ArrayList<String>>();
+            mChoices = new ArrayList<List<String>>();
         }
 
         mChoices.add(choices);
