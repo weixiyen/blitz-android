@@ -248,13 +248,48 @@ public class ViewModelDraft extends ViewModel {
      * If the draft gets suspended and we return,
      * manually sync the draft model.
      */
-    private void syncDraft(Runnable onSynced) {
+    private void syncDraft(final Runnable onSynced) {
 
-        // TODO: Implement me.
+        // Clear current choices.
+        mCurrentPlayerChoices = null;
 
-        if (onSynced != null) {
-            onSynced.run();
-        }
+        ObjectModelDraft.fetchSyncedDraft(mActivity, mDraftModel.getId(),
+                new ObjectModelDraft.DraftCallback() {
+
+            @Override
+            public void onSuccess(ObjectModelDraft draft) {
+
+                // Update draft model.
+                mDraftModel = draft;
+
+                if (mDraftModel.getIsDraftComplete()) {
+
+                    // Draft is now complete.
+                    updateState(DraftState.DRAFT_COMPLETE);
+
+                } else {
+
+                    // If picks are available.
+                    if (mDraftModel.getPicks() != null) {
+
+                        List<String> playerIds = new ArrayList<String>();
+
+                        for (ObjectModelDraft.Pick pick : mDraftModel.getPicks()) {
+
+                            playerIds.add(pick.getPlayerId());
+                        }
+
+                        // Update all player picks with actual data - these are
+                        // all also choices so this method will work.
+                        updateChoicesWithoutData(playerIds);
+                    }
+
+                    if (onSynced != null) {
+                        onSynced.run();
+                    }
+                }
+            }
+        });
     }
 
     /**
@@ -621,7 +656,7 @@ public class ViewModelDraft extends ViewModel {
     private void resolveChoices() {
 
         // Fetch current choice ids.
-        ArrayList<String> playerChoiceIds = mDraftModel.getCurrentPlayerChoices();
+        List<String> playerChoiceIds = mDraftModel.getCurrentPlayerChoices();
 
         if (playerChoiceIds != null) {
 
@@ -819,7 +854,7 @@ public class ViewModelDraft extends ViewModel {
     private void updateChoices(ArrayList<ObjectModelPlayer> playerChoices,
                                ArrayList<String> playerChoicesToSync) {
 
-        if (playerChoicesToSync.isEmpty()) {
+        if (!playerChoicesToSync.isEmpty()) {
 
             // Need to fetch any missing player choices before
             // we can emit the player choices.
@@ -864,7 +899,12 @@ public class ViewModelDraft extends ViewModel {
      *
      * @param choices Choice id's to sync.
      */
-    private void updateChoicesWithoutData(ArrayList<String> choices) {
+    private void updateChoicesWithoutData(List<String> choices) {
+
+        if (choices == null || choices.isEmpty()) {
+
+            return;
+        }
 
         if (!mSyncingChoicesLocked) {
              mSyncingChoicesLocked = true;
