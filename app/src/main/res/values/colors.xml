@@ -5,6 +5,7 @@
     <color name="background_inner_divider">#353535</color>
     <color name="background_dialog">#BF000000</color>
     <color name="background_navigation">#40000000</color>
+    <color name="background_white">#FFFFFFFF</color>
 
     <color name="button_color_0">#32587c</color>
     <color name="button_color_0_pressed">#386692</color>

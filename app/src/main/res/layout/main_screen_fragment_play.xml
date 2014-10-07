@@ -42,6 +42,22 @@
             android:layout_weight="1"/>
     </LinearLayout>
 
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center">
+
+        <android.support.v4.view.ViewPager
+            android:id="@+id/rules_pager"
+            android:layout_width="300dp"
+            android:layout_height="400dp"
+            android:layout_gravity="center"
+
+            android:visibility="gone"
+            />
+        </RelativeLayout>
+
+
     <include
         layout="@layout/main_screen_fragment_play_footer"
         android:layout_width="match_parent"
