@@ -1,4 +1,4 @@
-<LinearLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -13,7 +13,8 @@
     <RelativeLayout
         android:id="@+id/draft_matchup_player_left"
         android:layout_width="140dp"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_toLeftOf="@+id/draft_matchup_container_vs">
 
         <com.blitz.app.utilities.textview.BlitzTextView
             android:id="@+id/draft_matchup_username_left"
@@ -46,20 +47,23 @@
         style="@style/TextViewStyle"
         fontPath="@string/app_font_sports"
         android:layout_width="40dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
-        android:gravity="center"
+        android:layout_height="148dp"
+        android:paddingBottom="8dp"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:gravity="center|bottom"
         android:singleLine="true"
         android:text="@string/vs"
         android:textAllCaps="true"
         android:textColor="#c1c5cb"
-        android:textSize="28sp"
+        android:textSize="24sp"
         android:visibility="invisible"/>
 
     <RelativeLayout
         android:id="@+id/draft_matchup_player_right"
         android:layout_width="140dp"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/draft_matchup_container_vs">
 
         <com.blitz.app.utilities.textview.BlitzTextView
             android:id="@+id/draft_matchup_username_right"
@@ -87,4 +91,39 @@
             android:src="@drawable/asset_bg_helmet_sample"
             app:clearInitialContent="true" />
     </RelativeLayout>
-</LinearLayout>
+
+    <ImageView
+        android:id="@+id/draft_matchup_spinner"
+        android:layout_width="75dp"
+        android:layout_height="75dp"
+        android:layout_centerHorizontal="true"
+        android:contentDescription="@string/empty_string"
+        android:scaleType="center"
+        android:visibility="gone"
+        android:src="@drawable/asset_draft_round_time_spinner" />
+
+    <TextView
+        android:id="@+id/draft_matchup_time_remaining"
+        style="@style/TextViewStyle"
+        fontPath="@string/app_font_sports"
+        android:layout_width="75dp"
+        android:layout_height="75dp"
+        android:layout_centerHorizontal="true"
+        android:gravity="center"
+        android:visibility="gone"
+        android:text="@string/number_small"
+        android:textSize="36sp"/>
+
+    <me.grantland.widget.AutofitTextView
+        android:id="@+id/draft_matchup_round_complete"
+        style="@style/TextViewStyle"
+        fontPath="@string/app_font_sports"
+        android:layout_width="75dp"
+        android:layout_height="75dp"
+        android:layout_centerHorizontal="true"
+        android:gravity="center"
+        android:lines="2"
+        android:text="@string/round_complete"
+        android:textAllCaps="true"
+        android:visibility="gone"/>
+</RelativeLayout>

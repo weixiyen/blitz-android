@@ -64,6 +64,10 @@ public class DraftScreen extends BaseActivity implements ViewModelDraft.ViewMode
     @InjectView(R.id.draft_matchup_helmet_right) BlitzImageView mDraftMatchupHelmetRight;
     @InjectView(R.id.draft_matchup_username_left)      TextView mDraftMatchupUsernameLeft;
     @InjectView(R.id.draft_matchup_username_right)     TextView mDraftMatchupUsernameRight;
+    @InjectView(R.id.draft_matchup_spinner)                View mDraftMatchupSpinner;
+    @InjectView(R.id.draft_matchup_time_remaining)     TextView mDraftMatchupTimeRemaining;
+    @InjectView(R.id.draft_matchup_round_complete)         View mDraftMatchupRoundComplete;
+    @InjectView(R.id.draft_matchup_container_vs)       TextView mDraftMatchupContainerVs;
 
     @InjectViews({
             R.id.draft_player_tl,
@@ -421,6 +425,9 @@ public class DraftScreen extends BaseActivity implements ViewModelDraft.ViewMode
 
             @Override
             public void run() {
+
+                // Fade in the vs label.
+                AnimHelperFade.setVisibility(mDraftMatchupContainerVs, View.VISIBLE);
 
                 // Now in the draft state.
                 mDraftStateCurrent = ViewModelDraft.DraftState.DRAFT_DRAFTING;
