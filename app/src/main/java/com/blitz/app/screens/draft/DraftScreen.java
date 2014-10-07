@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.LinearInterpolator;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -451,6 +452,45 @@ public class DraftScreen extends BaseActivity implements ViewModelDraft.ViewMode
      */
     private void playAnimationsPlayers(final boolean reverse) {
 
+        if (!reverse) {
+
+            // Reset selected state of top part of player cards.
+            ButterKnife.apply(mDraftPlayerNames, new ButterKnife.Action<View>() {
+
+                @Override
+                public void apply(View view, int index) {
+
+                    view.setBackgroundResource
+                            (R.drawable.asset_draft_player_mask_top);
+                }
+            });
+
+            // Reset selected state of bot part of player cards.
+            ButterKnife.apply(mDraftPlayerStats, new ButterKnife.Action<View>() {
+
+                @Override
+                public void apply(View view, int index) {
+
+                    view.setBackgroundResource
+                            (R.drawable.asset_draft_player_mask_bot);
+                }
+            });
+
+            // Restore alpha.
+            ButterKnife.apply(mDraftPlayerImages, new ButterKnife.Action<ImageView>() {
+
+                @Override
+                public void apply(ImageView view, int index) {
+
+                    // Remove image.
+                    view.setImageBitmap(null);
+
+                    // Restore alpha.
+                    view.setAlpha(1.0f);
+                }
+            });
+        }
+
         // Reset selected state of top part of player cards.
         ButterKnife.apply(mDraftPlayers, new ButterKnife.Action<View>() {
 
@@ -638,50 +678,21 @@ public class DraftScreen extends BaseActivity implements ViewModelDraft.ViewMode
                     // Cross fade baby.
                     AnimHelperCrossFade.setImageBitmap
                             (mDraftPlayerImages.get(i), images.get(i));
-
-                    mDraftPlayers
-                            .get(i).setTag(playerIds.get(i));
-                    mDraftPlayerNames
-                            .get(i).setText(playerFullNames.get(i));
-                    mDraftPlayerPositions
-                            .get(i).setText(playerPositions.get(i));
-                    mDraftPlayerOpponents
-                            .get(i).setText(playerOpponents.get(i));
                 }
-
-                // Reset selected state of top part of player cards.
-                ButterKnife.apply(mDraftPlayerNames, new ButterKnife.Action<View>() {
-
-                    @Override
-                    public void apply(View view, int index) {
-
-                        view.setBackgroundResource
-                                (R.drawable.asset_draft_player_mask_top);
-                    }
-                });
-
-                // Reset selected state of bot part of player cards.
-                ButterKnife.apply(mDraftPlayerStats, new ButterKnife.Action<View>() {
-
-                    @Override
-                    public void apply(View view, int index) {
-
-                        view.setBackgroundResource
-                                (R.drawable.asset_draft_player_mask_bot);
-                    }
-                });
-
-                // Restore alpha.
-                ButterKnife.apply(mDraftPlayerImages, new ButterKnife.Action<View>() {
-
-                    @Override
-                    public void apply(View view, int index) {
-
-                        view.setAlpha(1.0f);
-                    }
-                });
             }
         });
+
+        for (int i = 0; i < playerIds.size(); i++) {
+
+            mDraftPlayers
+                    .get(i).setTag(playerIds.get(i));
+            mDraftPlayerNames
+                    .get(i).setText(playerFullNames.get(i));
+            mDraftPlayerPositions
+                    .get(i).setText(playerPositions.get(i));
+            mDraftPlayerOpponents
+                    .get(i).setText(playerOpponents.get(i));
+        }
     }
 
     /**
