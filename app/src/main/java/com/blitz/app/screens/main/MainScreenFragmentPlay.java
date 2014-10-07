@@ -175,8 +175,13 @@ public class MainScreenFragmentPlay extends BaseFragment implements ViewModelMai
             content.add(style + getString(resourceId));
         }
 
+        // Formatting to make the pages look like cards
+        mRulesPager.setClipToPadding(false);
+        mRulesPager.setPageMargin(12);
+
         // Set up rules view pager.
         mRulesPager.setAdapter(new RulesPagerAdapter(getChildFragmentManager(), content));
+
 
         // Set up on click listener for toggling rules visibility
         mRulesButton.setOnClickListener(new View.OnClickListener() {
