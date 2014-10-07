@@ -5,8 +5,8 @@
     android:layout_width="@dimen/screen_width"
     android:layout_height="wrap_content"
     android:layout_gravity="center"
-    android:gravity="center"
     android:alpha=".90"
+    android:gravity="center"
     android:orientation="horizontal"
     tools:context="${packageName}.${activityClass}"
     tools:ignore="ButtonStyle,UnusedAttribute,SmallSp">
@@ -18,7 +18,8 @@
         android:layout_alignParentLeft="true"
         android:layout_marginLeft="10dp"
         android:background="@drawable/asset_draft_player_bg"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:visibility="invisible">
 
         <com.blitz.app.utilities.image.BlitzImageView
             android:id="@+id/draft_player_image_tl"
@@ -90,7 +91,8 @@
         android:layout_alignParentRight="true"
         android:layout_marginRight="10dp"
         android:background="@drawable/asset_draft_player_bg"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:visibility="invisible">
 
         <com.blitz.app.utilities.image.BlitzImageView
             android:id="@+id/draft_player_image_tr"
@@ -164,7 +166,8 @@
         android:layout_marginLeft="10dp"
         android:layout_marginTop="10dp"
         android:background="@drawable/asset_draft_player_bg"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:visibility="invisible">
 
         <com.blitz.app.utilities.image.BlitzImageView
             android:id="@+id/draft_player_image_bl"
@@ -238,7 +241,8 @@
         android:layout_marginRight="10dp"
         android:layout_marginTop="10dp"
         android:background="@drawable/asset_draft_player_bg"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:visibility="invisible">
 
         <com.blitz.app.utilities.image.BlitzImageView
             android:id="@+id/draft_player_image_br"

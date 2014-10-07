@@ -425,13 +425,6 @@ public class DraftScreen extends BaseActivity implements ViewModelDraft.ViewMode
                 .addHelperView(AnimHelperSpringsView.from(mDraftMatchupPlayerLeft,  AnimHelperSpringsPresets.SLIDE_RIGHT))
                 .addHelperView(AnimHelperSpringsView.from(mDraftMatchupPlayerRight, AnimHelperSpringsPresets.SLIDE_LEFT));
 
-        // Players pop in.
-        getAnimations().createHelper(20, 10)
-                .addHelperView(AnimHelperSpringsView.from(mDraftPlayers.get(0), AnimHelperSpringsPresets.SCALE_UP))
-                .addHelperView(AnimHelperSpringsView.from(mDraftPlayers.get(1), AnimHelperSpringsPresets.SCALE_UP))
-                .addHelperView(AnimHelperSpringsView.from(mDraftPlayers.get(2), AnimHelperSpringsPresets.SCALE_UP))
-                .addHelperView(AnimHelperSpringsView.from(mDraftPlayers.get(3), AnimHelperSpringsPresets.SCALE_UP));
-
         getAnimations().setOnCompleteListener(new Runnable() {
 
             @Override
@@ -449,6 +442,24 @@ public class DraftScreen extends BaseActivity implements ViewModelDraft.ViewMode
 
         // Start it up.
         getAnimations().enable();
+    }
+
+    /**
+     * Play the player show hide animation.
+     *
+     * @param reverse Is animation reversed.
+     */
+    private void playAnimationsPlayers(final boolean reverse) {
+
+        // Reset selected state of top part of player cards.
+        ButterKnife.apply(mDraftPlayers, new ButterKnife.Action<View>() {
+
+            @Override
+            public void apply(View view, int index) {
+
+                AnimHelperFade.setVisibility(view, reverse ? View.INVISIBLE : View.VISIBLE);
+            }
+        });
     }
 
     /**
@@ -744,28 +755,21 @@ public class DraftScreen extends BaseActivity implements ViewModelDraft.ViewMode
 
         mRoundTimeRemainingHidden = roundTimeRemainingHidden;
 
-        if (roundTimeRemainingHidden) {
+        // Set visibility of the UI.
+        AnimHelperFade.setVisibility(mDraftMatchupSpinner,
+                roundTimeRemainingHidden ? View.GONE : View.VISIBLE);
+        AnimHelperFade.setVisibility(mDraftMatchupTimeRemaining,
+                roundTimeRemainingHidden ? View.GONE : View.VISIBLE);
 
-            // Hide the views and stop the spinner.
-            AnimHelperFade.setVisibility(mDraftMatchupSpinner, View.GONE);
-            AnimHelperFade.setVisibility(mDraftMatchupTimeRemaining, View.GONE);
-
-            playSpinnerAnimation(true);
-
-        } else {
-
-            // Show the views and start the spinner.
-            AnimHelperFade.setVisibility(mDraftMatchupSpinner, View.VISIBLE);
-            AnimHelperFade.setVisibility(mDraftMatchupTimeRemaining, View.VISIBLE);
-
-            playSpinnerAnimation(false);
-        }
+        // Start or stop the spinner animation.
+        playSpinnerAnimation(roundTimeRemainingHidden);
     }
 
     @Override
     public void onChoicesViewHiddenChanged(boolean choicesViewHidden) {
 
-        // TODO: Implement.
+        // Either show or hide the players.
+        playAnimationsPlayers(choicesViewHidden);
     }
 
     /**
