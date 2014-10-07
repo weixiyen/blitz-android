@@ -14,7 +14,6 @@ import com.blitz.app.utilities.comet.CometAPICallback;
 import com.blitz.app.utilities.comet.CometAPIManager;
 import com.blitz.app.utilities.date.DateUtils;
 import com.blitz.app.utilities.json.JsonHelper;
-import com.blitz.app.utilities.logging.LogHelper;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -407,12 +406,7 @@ public class ViewModelDraft extends ViewModel {
         // Get the action identifier.
         String action = message.get("action").getAsString();
 
-        if (action == null) {
-
-            // Log with amplitude.
-            LogHelper.log("Unknown action.");
-
-        } else if (action.equals("sync_to_server_time")) {
+        if (action.equals("sync_to_server_time")) {
 
             // Fetch last server time.
             Date lastServerTime = DateUtils.getDateInGMT
@@ -469,6 +463,11 @@ public class ViewModelDraft extends ViewModel {
                         (DateUtils.getDateInGMT(lastRoundCompleteTime));
             }
         }
+
+        // Execute the game loop immediately so the UI
+        // can instantly respond to comet events that
+        // change the draft model.
+        gameLoopExecute();
     }
 
     /**
@@ -487,12 +486,7 @@ public class ViewModelDraft extends ViewModel {
                 public void run() {
 
                     // Sync state.
-                    resolveState();
-                    resolveCurrentRoundAndPosition();
-                    resolveRoundTimeRemaining();
-                    resolveRoundComplete();
-                    resolveChoices();
-                    resolvePicks();
+                    gameLoopExecute();
 
                     // Continue running the loop on a 100ms delay.
                     mGameLoopHandler.postDelayed(mGameLoopRunnable, 250);
@@ -514,6 +508,21 @@ public class ViewModelDraft extends ViewModel {
             // Stop the timer.
             mGameLoopHandler.removeCallbacks(mGameLoopRunnable);
         }
+    }
+
+    /**
+     * Raw code of what happens on
+     * each game loop.
+     */
+    private void gameLoopExecute() {
+
+        // Sync state.
+        resolveState();
+        resolveCurrentRoundAndPosition();
+        resolveRoundTimeRemaining();
+        resolveRoundComplete();
+        resolveChoices();
+        resolvePicks();
     }
 
     // endregion
