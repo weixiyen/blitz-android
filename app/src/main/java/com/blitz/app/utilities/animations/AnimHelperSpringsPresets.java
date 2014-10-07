@@ -26,5 +26,6 @@ public enum AnimHelperSpringsPresets {
     SLIDE_LEFT_REVERSED,
 
     // Scale up from nothing.
-    SCALE_UP
+    SCALE_UP,
+    SCALE_DOWN
 }

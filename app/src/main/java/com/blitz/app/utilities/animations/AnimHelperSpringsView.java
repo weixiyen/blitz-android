@@ -177,6 +177,11 @@ public class AnimHelperSpringsView {
                 mScaleTo   = 1;
                 mScale = true;
                 break;
+            case SCALE_DOWN:
+                mScaleFrom = 1;
+                mScaleTo   = 0;
+                mScale = true;
+                break;
         }
 
         // Initialize the value.
