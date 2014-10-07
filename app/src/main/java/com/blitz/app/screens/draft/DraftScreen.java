@@ -1,10 +1,13 @@
 package com.blitz.app.screens.draft;
 
+import android.animation.ObjectAnimator;
+import android.animation.ValueAnimator;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.LinearInterpolator;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -134,6 +137,11 @@ public class DraftScreen extends BaseActivity implements ViewModelDraft.ViewMode
     private String mPlayer1Id;
     private String mPlayer2Id;
 
+    private boolean mRoundTimeRemainingHidden;
+
+    // Used for spinner animations.
+    private ObjectAnimator mObjectAnimator;
+
     // endregion
 
     // region Overwritten Methods
@@ -173,6 +181,9 @@ public class DraftScreen extends BaseActivity implements ViewModelDraft.ViewMode
 
         // Disable animations.
         getAnimations().disable();
+
+        // Stop spinner.
+        playSpinnerAnimation(true);
     }
 
     /**
@@ -440,6 +451,38 @@ public class DraftScreen extends BaseActivity implements ViewModelDraft.ViewMode
         getAnimations().enable();
     }
 
+    /**
+     * Animate the draft spinner.
+     *
+     * @param suspend Suspend the animation.
+     */
+    private void playSpinnerAnimation(boolean suspend) {
+
+        if (mObjectAnimator == null) {
+
+            // Create an animator for rotation.
+            mObjectAnimator = ObjectAnimator
+                    .ofFloat(mDraftMatchupSpinner, "rotation", 0, 360);
+
+            // Time to spin.
+            mObjectAnimator.setDuration(1750);
+
+            // Repeat forever.
+            mObjectAnimator.setRepeatCount(ValueAnimator.INFINITE);
+
+            // Spin linearly.
+            mObjectAnimator.setInterpolator(new LinearInterpolator());
+        }
+
+        if (suspend) {
+
+            mObjectAnimator.end();
+        } else {
+
+            mObjectAnimator.start();
+        }
+    }
+
     // endregion
 
     // region Click Methods
@@ -675,16 +718,48 @@ public class DraftScreen extends BaseActivity implements ViewModelDraft.ViewMode
         }
     }
 
+    /**
+     * Update the text of the time remaining label, which
+     * may or may not be currently visible to the user.
+     *
+     * @param roundTimeRemaining Time remaining.
+     */
     @Override
     public void onRoundTimeRemainingChanged(int roundTimeRemaining) {
 
-        // TODO: Implement.
+        // Update text view exists and not hidden.
+        if (mDraftMatchupTimeRemaining != null && !mRoundTimeRemainingHidden) {
+            mDraftMatchupTimeRemaining.setText(Integer.toString(roundTimeRemaining));
+        }
     }
 
+    /**
+     * Toggles the visibility of the time remaining, this
+     * includes the spinner.
+     *
+     * @param roundTimeRemainingHidden Is time remaining hidden.
+     */
     @Override
     public void onRoundTimeRemainingHiddenChanged(boolean roundTimeRemainingHidden) {
 
-        // TODO: Implement.
+        mRoundTimeRemainingHidden = roundTimeRemainingHidden;
+
+        if (roundTimeRemainingHidden) {
+
+            // Hide the views and stop the spinner.
+            AnimHelperFade.setVisibility(mDraftMatchupSpinner, View.GONE);
+            AnimHelperFade.setVisibility(mDraftMatchupTimeRemaining, View.GONE);
+
+            playSpinnerAnimation(true);
+
+        } else {
+
+            // Show the views and start the spinner.
+            AnimHelperFade.setVisibility(mDraftMatchupSpinner, View.VISIBLE);
+            AnimHelperFade.setVisibility(mDraftMatchupTimeRemaining, View.VISIBLE);
+
+            playSpinnerAnimation(false);
+        }
     }
 
     @Override
@@ -693,10 +768,17 @@ public class DraftScreen extends BaseActivity implements ViewModelDraft.ViewMode
         // TODO: Implement.
     }
 
+    /**
+     * Is the round complete label showing.
+     *
+     * @param completeHidden Round complete label.
+     */
     @Override
     public void onRoundCompleteHiddenChanged(boolean completeHidden) {
 
-        // TODO: Implement.
+        // Toggle visibility of round complete.
+        AnimHelperFade.setVisibility(mDraftMatchupRoundComplete,
+                completeHidden ? View.GONE : View.VISIBLE);
     }
 
     // endregion
