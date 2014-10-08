@@ -14,6 +14,7 @@ import com.blitz.app.utilities.comet.CometAPICallback;
 import com.blitz.app.utilities.comet.CometAPIManager;
 import com.blitz.app.utilities.date.DateUtils;
 import com.blitz.app.utilities.json.JsonHelper;
+import com.blitz.app.utilities.logging.LogHelper;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -626,7 +627,8 @@ public class ViewModelDraft extends ViewModel {
 
         // Is the choices view hidden.
         boolean isChoicesViewHidden = !(isInPickWindow || isInPostView) ||
-                mDraftModel.getCurrentPlayerChoices() == null;
+                mDraftModel.getChoices() == null ||
+                mDraftModel.getChoices().isEmpty();
 
         updateRoundTimeRemaining(roundTimeRemaining,
                 !isInPickWindow || isRoundComplete, isChoicesViewHidden);
@@ -811,12 +813,14 @@ public class ViewModelDraft extends ViewModel {
         if (mDraftModel.getCurrentRound() <= mDraftModel.getRounds() &&
                 mCurrentPlayerChoicesShowTime != null && choicesViewHidden) {
 
-            int secondsSinceChoicesShownTime = (int)(DateUtils
-                    .getTimeSinceDateInGMTAsMilliseconds(mCurrentPlayerChoicesShowTime)) / 1000;
+            int secondsSinceChoicesShownTime = (int)Math.floor((DateUtils
+                    .getTimeSinceDateInGMTAsMilliseconds(mCurrentPlayerChoicesShowTime)) / 1000);
 
             // Keep choices showing for a bit longer
             // to fit the post view time window.
             if (secondsSinceChoicesShownTime < mDraftModel.getTimePerPostview()) {
+
+                LogHelper.log("Overriding choices no longer hidden.");
 
                 choicesViewHidden = false;
             }
