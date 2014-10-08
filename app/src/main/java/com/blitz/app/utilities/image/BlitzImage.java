@@ -219,6 +219,28 @@ public class BlitzImage {
             @Override
             public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
 
+                addImage(bitmap);
+            }
+
+            @Override
+            public void onBitmapFailed
+                    (Drawable errorDrawable) {
+
+                addImage(null);
+            }
+
+            @Override
+            public void onPrepareLoad
+                    (Drawable placeHolderDrawable) { }
+
+            /**
+             * Add an image result (even if it is null) to the
+             * results array of bitmaps.
+             *
+             * @param bitmap Loaded or null bitmap.
+             */
+            private void addImage(Bitmap bitmap) {
+
                 images.add(bitmap);
 
                 // If all images have been added.
@@ -232,18 +254,6 @@ public class BlitzImage {
                 // Now done with this target.
                 mTargets.remove(System.identityHashCode(this));
             }
-
-            @Override
-            public void onBitmapFailed
-                    (Drawable errorDrawable) {
-
-                // Now done with this target.
-                mTargets.remove(System.identityHashCode(this));
-            }
-
-            @Override
-            public void onPrepareLoad
-                    (Drawable placeHolderDrawable) { }
         };
     }
 
