@@ -463,8 +463,8 @@ public final class ObjectModelDraft extends ObjectModel {
         mLastServerTime = lastServerTime;
 
         // Set the offset based on the current client time.
-        mServerTimeOffset = Math.abs(mLastServerTime.getTime()
-                - DateUtils.getDateInGMT().getTime());
+        mServerTimeOffset = DateUtils
+                .getTimeSinceDateInGMTAsMilliseconds(mLastServerTime);
     }
 
     /**
@@ -765,8 +765,8 @@ public final class ObjectModelDraft extends ObjectModel {
      */
     private int getSecondsSince(Date date) {
 
-        return (int) ((DateUtils.getTimeSinceDateInGMTAsMilliseconds(date)
-                + mServerTimeOffset) / 1000);
+        return (int) Math.floor((DateUtils.getTimeSinceDateInGMTAsMilliseconds(date)
+                - mServerTimeOffset) / 1000.0f);
     }
 
     // endregion

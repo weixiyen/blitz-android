@@ -489,7 +489,7 @@ public class ViewModelDraft extends ViewModel {
                     gameLoopExecute();
 
                     // Continue running the loop on a 100ms delay.
-                    mGameLoopHandler.postDelayed(mGameLoopRunnable, 250);
+                    mGameLoopHandler.postDelayed(mGameLoopRunnable, 100);
                 }
             };
         }
@@ -612,7 +612,7 @@ public class ViewModelDraft extends ViewModel {
         int roundTimeRemaining = mDraftModel.getTimePerPick() - secondsElapsedThisRound;
 
         // Are we currently in the pick window.
-        boolean isInPickWindow = roundTimeRemaining > 0 && roundTimeRemaining <
+        boolean isInPickWindow = roundTimeRemaining > 0 && roundTimeRemaining <=
                 mDraftModel.getTimePerPick();
 
         // Is round complete.
@@ -789,8 +789,8 @@ public class ViewModelDraft extends ViewModel {
                                           boolean roundTimeRemainingHidden,
                                           boolean choicesViewHidden) {
 
-        // Update round time remaining if needed.
-        if (mRoundTimeRemaining != roundTimeRemaining) {
+        // Update round time remaining if changed and not hidden.
+        if (mRoundTimeRemaining != roundTimeRemaining && !roundTimeRemainingHidden) {
             mRoundTimeRemaining = roundTimeRemaining;
 
             if (mCallbacks != null) {
