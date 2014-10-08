@@ -138,8 +138,6 @@ public class DraftScreen extends BaseActivity implements ViewModelDraft.ViewMode
     private String mPlayer1Id;
     private String mPlayer2Id;
 
-    private boolean mRoundTimeRemainingHidden;
-
     // Used for spinner animations.
     private ObjectAnimator mObjectAnimator;
 
@@ -750,7 +748,7 @@ public class DraftScreen extends BaseActivity implements ViewModelDraft.ViewMode
     public void onRoundTimeRemainingChanged(int roundTimeRemaining) {
 
         // Update text view exists and not hidden.
-        if (mDraftMatchupTimeRemaining != null && !mRoundTimeRemainingHidden) {
+        if (mDraftMatchupTimeRemaining != null) {
             mDraftMatchupTimeRemaining.setText(Integer.toString(roundTimeRemaining));
         }
     }
@@ -763,8 +761,6 @@ public class DraftScreen extends BaseActivity implements ViewModelDraft.ViewMode
      */
     @Override
     public void onRoundTimeRemainingHiddenChanged(boolean roundTimeRemainingHidden) {
-
-        mRoundTimeRemainingHidden = roundTimeRemainingHidden;
 
         // Set visibility of the UI.
         AnimHelperFade.setVisibility(mDraftMatchupSpinner,
