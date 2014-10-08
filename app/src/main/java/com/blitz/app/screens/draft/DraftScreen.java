@@ -776,6 +776,11 @@ public class DraftScreen extends BaseActivity implements ViewModelDraft.ViewMode
         playSpinnerAnimation(roundTimeRemainingHidden);
     }
 
+    /**
+     * Show or hide the choices view.
+     *
+     * @param choicesViewHidden Is choices view hidden.
+     */
     @Override
     public void onChoicesViewHiddenChanged(boolean choicesViewHidden) {
 
