@@ -14,7 +14,6 @@ import com.blitz.app.utilities.comet.CometAPICallback;
 import com.blitz.app.utilities.comet.CometAPIManager;
 import com.blitz.app.utilities.date.DateUtils;
 import com.blitz.app.utilities.json.JsonHelper;
-import com.blitz.app.utilities.logging.LogHelper;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -219,6 +218,8 @@ public class ViewModelDraft extends ViewModel {
      * @param playerId Player id.
      */
     public void pickPlayer(final String playerId) {
+
+        // TODO: Handle failure.
 
         // If player id provided, and we are allowed to draft a player.
         if (playerId != null && mDraftModel != null
@@ -819,8 +820,6 @@ public class ViewModelDraft extends ViewModel {
             // Keep choices showing for a bit longer
             // to fit the post view time window.
             if (secondsSinceChoicesShownTime < mDraftModel.getTimePerPostview()) {
-
-                LogHelper.log("Overriding choices no longer hidden.");
 
                 choicesViewHidden = false;
             }

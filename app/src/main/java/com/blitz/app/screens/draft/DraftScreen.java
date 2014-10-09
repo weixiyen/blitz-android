@@ -29,6 +29,7 @@ import com.blitz.app.view_models.ViewModel;
 import com.blitz.app.view_models.ViewModelDraft;
 
 import java.util.List;
+import java.util.Map;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
@@ -669,13 +670,13 @@ public class DraftScreen extends BaseActivity implements ViewModelDraft.ViewMode
                 new BlitzImage.CallbackImageUrls() {
 
             @Override
-            public void onSuccess(List<Bitmap> images) {
+            public void onSuccess(Map<String, Bitmap> images) {
 
                 for (int i = 0; i < playerIds.size(); i++) {
 
                     // Cross fade baby.
                     AnimHelperCrossFade.setImageBitmap
-                            (mDraftPlayerImages.get(i), images.get(i));
+                            (mDraftPlayerImages.get(i), images.get(playerPhotoUrls.get(i)));
                 }
             }
         });

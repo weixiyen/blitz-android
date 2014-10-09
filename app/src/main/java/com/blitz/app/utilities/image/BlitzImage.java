@@ -19,7 +19,9 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
@@ -103,7 +105,7 @@ public class BlitzImage {
      * @param callback Callback fired when image loaded.
      */
     @SuppressWarnings("unused")
-    public void loadImageUrl(String imageUrl, String maskAssetUrl,
+    public void loadImageUrl(final String imageUrl, String maskAssetUrl,
                              final CallbackImageUrl callback) {
 
         loadImageUrls(
@@ -111,10 +113,10 @@ public class BlitzImage {
                 Arrays.asList(maskAssetUrl), new CallbackImageUrls() {
 
             @Override
-            public void onSuccess(List<Bitmap> images) {
+            public void onSuccess(Map<String, Bitmap> images) {
 
                 if (callback != null) {
-                    callback.onSuccess(images.get(0));
+                    callback.onSuccess(images.get(imageUrl));
                 }
             }
         });
@@ -182,7 +184,7 @@ public class BlitzImage {
         }
 
         // Result images.
-        final List<Bitmap> images = new ArrayList<Bitmap>();
+        final Map<String, Bitmap> images = new HashMap<String, Bitmap>();
 
         for (int i = 0; i < imageUrls.size(); i++) {
 
@@ -197,8 +199,9 @@ public class BlitzImage {
                         (getMaskAssetTransformation(mContext, maskAssetUrls.get(i)));
             }
 
-            // Create a target to handle the loaded image urls.
-            Target imageUrlTarget = fetchImageUrlTarget(images, imageUrls, callback);
+            // Create a target to handle the loaded bitmaps.
+            Target imageUrlTarget = fetchImageUrlTarget(images,
+                    imageUrls.get(i), imageUrls.size(), callback);
 
             // Place into targets map.
             mTargets.put(System.identityHashCode(imageUrlTarget), imageUrlTarget);
@@ -218,16 +221,17 @@ public class BlitzImage {
      * into some array of images. As part of a
      * larger list of image urls.
      *
-     * @param images Array of loaded bitmaps to add to.
-     * @param imageUrls Array of image urls we are loading.
-     *
-     * @param callback Callback.
+     * @param images Map images loading into.
+     * @param imageUrl Target image url.
+     * @param imageUrls Total image urls.
+     * @param callback Callback fired when images loaded.
      *
      * @return Picasso target class (load images into it).
      */
     private static Target fetchImageUrlTarget(
-            final List<Bitmap> images,
-            final List<String> imageUrls,
+            final Map<String, Bitmap> images,
+            final String imageUrl,
+            final Integer imageUrls,
             final CallbackImageUrls callback) {
 
         return new Target() {
@@ -265,10 +269,10 @@ public class BlitzImage {
              */
             private void addImage(Bitmap bitmap) {
 
-                images.add(bitmap);
+                images.put(imageUrl, bitmap);
 
                 // If all images have been added.
-                if (images.size() == imageUrls.size()) {
+                if (images.size() == imageUrls) {
 
                     if (callback != null) {
                         callback.onSuccess(images);
@@ -380,7 +384,7 @@ public class BlitzImage {
     public interface CallbackImageUrls {
 
         // List of bitmaps.
-        public void onSuccess(List<Bitmap> images);
+        public void onSuccess(Map<String, Bitmap> images);
     }
 
     // endregion
