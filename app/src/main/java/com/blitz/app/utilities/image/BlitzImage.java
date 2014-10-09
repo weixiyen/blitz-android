@@ -18,6 +18,7 @@ import com.squareup.picasso.Transformation;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -28,13 +29,52 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 public class BlitzImage {
 
-    // region Image URL Methods
+    // region Member Variables
     // =============================================================================================
 
     // Picasso targets are weak, so we need to hold onto them.
     @SuppressWarnings("MismatchedQueryAndUpdateOfCollection")
     private static ConcurrentHashMap<Integer, Target> mTargets =
             new ConcurrentHashMap<Integer, Target>();
+
+    // Context object.
+    private Context mContext;
+
+    // endregion
+
+    // region Constructors
+    // =============================================================================================
+
+    @SuppressWarnings("unused")
+    private BlitzImage() {
+
+    }
+
+    /**
+     * Create with context.
+     *
+     * @param context Context.
+     */
+    private BlitzImage(Context context) {
+        mContext = context;
+    }
+
+    // endregion
+
+    // region Public Methods
+    // =============================================================================================
+
+    /**
+     * Create an instance using a context.
+     *
+     * @param context Context.
+     *
+     * @return Initialized blitz image.
+     */
+    public static BlitzImage from(Context context) {
+
+        return new BlitzImage(context);
+    }
 
     // endregion
 
@@ -44,43 +84,31 @@ public class BlitzImage {
     /**
      * Load an image url.
      *
-     * @param context Context.
      * @param imageUrl Image url.
      * @param callback Callback fired when image loaded.
      */
     @SuppressWarnings("unused")
-    public static void loadImageUrl(Context context, String imageUrl,
-                                    CallbackImageUrl callback) {
+    public void loadImageUrl(String imageUrl, CallbackImageUrl callback) {
 
         // Call single load, with no mask.
-        loadImageUrl(context, imageUrl, null, callback);
+        loadImageUrl(imageUrl, null, callback);
     }
 
     /**
      * Load a single image with optional mask
      * to go with it.
      *
-     * @param context Context.
      * @param imageUrl Image url.
      * @param maskAssetUrl Asset to mask.
      * @param callback Callback fired when image loaded.
      */
     @SuppressWarnings("unused")
-    public static void loadImageUrl(Context context, String imageUrl, String maskAssetUrl,
-                                    final CallbackImageUrl callback) {
+    public void loadImageUrl(String imageUrl, String maskAssetUrl,
+                             final CallbackImageUrl callback) {
 
-        // Create a list with out image url.
-        List<String> imageUrls = new ArrayList<String>();
-
-        imageUrls.add(imageUrl);
-
-        // Create a list with one asset.
-        List<String> maskAssetUrls = new ArrayList<String>();
-
-        maskAssetUrls.add(maskAssetUrl);
-
-        // Now call multiple load.
-        loadImageUrls(context, imageUrls, maskAssetUrls, new CallbackImageUrls() {
+        loadImageUrls(
+                Arrays.asList(imageUrl),
+                Arrays.asList(maskAssetUrl), new CallbackImageUrls() {
 
             @Override
             public void onSuccess(List<Bitmap> images) {
@@ -95,29 +123,26 @@ public class BlitzImage {
     /**
      * Load a list of image urls.
      *
-     * @param context Context.
      * @param imageUrls List of urls.
      * @param callback Callback fired when images loaded.
      */
     @SuppressWarnings("unused")
-    public static void loadImageUrls(Context context, List<String> imageUrls,
-                                     CallbackImageUrls callback) {
+    public void loadImageUrls(List<String> imageUrls, CallbackImageUrls callback) {
 
         // Call multiple load, with no masks.
-        loadImageUrls(context, imageUrls, new ArrayList<String>(imageUrls.size()), callback);
+        loadImageUrls(imageUrls, new ArrayList<String>(imageUrls.size()), callback);
     }
 
     /**
      * Load image urls with a shared mask asset.
      *
-     * @param context Context.
      * @param imageUrls Array of image urls we are loading.
      * @param maskAssetUrl Asset to mask.
      * @param callback Callback fired when images loaded.
      */
     @SuppressWarnings("unused")
-    public static void loadImageUrls(Context context, List<String> imageUrls,
-                                     String maskAssetUrl, CallbackImageUrls callback) {
+    public void loadImageUrls(List<String> imageUrls,
+                              String maskAssetUrl, CallbackImageUrls callback) {
 
         // Need at least one image url.
         if (imageUrls == null || imageUrls.size() == 0) {
@@ -134,23 +159,21 @@ public class BlitzImage {
         }
 
         // Call multiple load, with no masks.
-        loadImageUrls(context, imageUrls, maskAssetUrls, callback);
+        loadImageUrls(imageUrls, maskAssetUrls, callback);
     }
 
     /**
      * Load a series of image urls with optional
      * series of masks to go with it.
      *
-     * @param context Context.
      * @param imageUrls List of urls.
      * @param maskAssetUrls List of assets to mask.
      * @param callback Callback fired when images loaded.
      */
     @SuppressWarnings("unused")
-    public static void loadImageUrls(Context context,
-                                     final List<String> imageUrls,
-                                     final List<String> maskAssetUrls,
-                                     final CallbackImageUrls callback) {
+    public void loadImageUrls(final List<String> imageUrls,
+                              final List<String> maskAssetUrls,
+                              final CallbackImageUrls callback) {
 
         // Need at least one url.
         if (imageUrls == null) {
@@ -163,7 +186,7 @@ public class BlitzImage {
 
         for (int i = 0; i < imageUrls.size(); i++) {
 
-            RequestCreator requestCreator = Picasso.with(context)
+            RequestCreator requestCreator = Picasso.with(mContext)
                     .load(AppConfig.getCDNUrl() + imageUrls.get(i));
 
             // Add a masking transform if a url exists for it.
@@ -171,7 +194,7 @@ public class BlitzImage {
 
                 // Add mask if provided.
                 requestCreator = requestCreator.transform
-                        (getMaskAssetTransformation(context, maskAssetUrls.get(i)));
+                        (getMaskAssetTransformation(mContext, maskAssetUrls.get(i)));
             }
 
             // Create a target to handle the loaded image urls.
@@ -202,9 +225,10 @@ public class BlitzImage {
      *
      * @return Picasso target class (load images into it).
      */
-    private static Target fetchImageUrlTarget(final List<Bitmap> images,
-                                              final List<String> imageUrls,
-                                              final CallbackImageUrls callback) {
+    private static Target fetchImageUrlTarget(
+            final List<Bitmap> images,
+            final List<String> imageUrls,
+            final CallbackImageUrls callback) {
 
         return new Target() {
 
@@ -266,7 +290,8 @@ public class BlitzImage {
      *
      * @return Decoded bitmap.
      */
-    private static Bitmap getMaskAsset(Context context, String maskAssetUrl) {
+    private static Bitmap getMaskAsset(
+            Context context, String maskAssetUrl) {
 
         InputStream inputStream = null;
 
@@ -288,8 +313,8 @@ public class BlitzImage {
      *
      * @return Transformation.
      */
-    private static Transformation getMaskAssetTransformation(final Context context,
-                                                             final String maskAssetUrl) {
+    private static Transformation getMaskAssetTransformation(
+            final Context context, final String maskAssetUrl) {
 
         return new Transformation() {
 

@@ -665,7 +665,7 @@ public class DraftScreen extends BaseActivity implements ViewModelDraft.ViewMode
             final List<String> playerOpponents) {
 
         // Load the new images before proceeding.
-        BlitzImage.loadImageUrls(this, playerPhotoUrls, "images/raw_player_mask.png",
+        BlitzImage.from(this).loadImageUrls(playerPhotoUrls, "images/raw_player_mask.png",
                 new BlitzImage.CallbackImageUrls() {
 
             @Override

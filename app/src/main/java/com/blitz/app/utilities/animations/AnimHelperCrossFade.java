@@ -79,7 +79,7 @@ public class AnimHelperCrossFade extends AnimHelper {
     public static void setImageUrl(final BlitzImageView imageView, final String imageUrl) {
 
         // Load image before cross fading.
-        BlitzImage.loadImageUrl(imageView.getContext(), imageUrl,
+        BlitzImage.from(imageView.getContext()).loadImageUrl(imageUrl,
                 new BlitzImage.CallbackImageUrl() {
 
             @Override

@@ -118,7 +118,7 @@ public class BlitzImageView extends ImageView {
         if (!cacheUrlOnly) {
 
             // Load image url and mask url.
-            BlitzImage.loadImageUrl(getContext(), mImageUrl, maskAssetUrl,
+            BlitzImage.from(getContext()).loadImageUrl(mImageUrl, maskAssetUrl,
                     new BlitzImage.CallbackImageUrl() {
 
                 @Override
