@@ -86,7 +86,7 @@
         <activity android:name=".screens.web.WebScreen"
             android:windowSoftInputMode="stateHidden" />
 
-        <activity android:name=".screens.main.MatchupScreen"
+        <activity android:name=".screens.matchup.MatchupScreen"
             android:windowSoftInputMode="stateHidden" />
 
         <activity android:name=".screens.stats.StatsBreakdownScreen"

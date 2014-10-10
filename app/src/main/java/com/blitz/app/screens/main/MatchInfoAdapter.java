@@ -10,6 +10,7 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import com.blitz.app.R;
+import com.blitz.app.screens.matchup.MatchupScreen;
 import com.blitz.app.simple_models.HeadToHeadDraft;
 
 import java.util.List;

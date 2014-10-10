@@ -14,7 +14,7 @@ import android.widget.TextView;
 
 import com.blitz.app.R;
 import com.blitz.app.screens.main.MatchInfoAdapter;
-import com.blitz.app.screens.main.MatchupScreen;
+import com.blitz.app.screens.matchup.MatchupScreen;
 import com.blitz.app.utilities.android.BaseActivity;
 import com.blitz.app.utilities.animations.AnimHelperCrossFade;
 import com.blitz.app.utilities.animations.AnimHelperFade;
