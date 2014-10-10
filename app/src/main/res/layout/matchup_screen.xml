@@ -2,7 +2,6 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/main_draft_detail"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="${packageName}.${activityClass}"
@@ -31,17 +30,16 @@
             android:layout_height="1dp"
             android:background="@color/background_inner_divider"/>
 
-
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="180dp">
 
             <TextView android:id="@+id/loading_message"
                 style="@style/TextViewStyle"
+                fontPath="@string/app_font_helvetica_condensed_bold"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="center"
-                fontPath="@string/app_font_helvetica_condensed_bold"
                 android:text="@string/matchup_loading_message"
                 android:textAllCaps="true"
                 android:textColor="@color/text_color_medium_grey"
@@ -62,11 +60,11 @@
 
                 <TextView
                     style="@style/TextViewStyle"
+                    fontPath="@string/app_font_helvetica_condensed_bold"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:gravity="center"
                     android:layout_weight=".25"
-                    fontPath="@string/app_font_helvetica_condensed_bold"
+                    android:gravity="center"
                     android:text="vs"
                     android:textAllCaps="true"
                     android:textColor="@color/text_color_medium_grey"
@@ -83,9 +81,9 @@
             android:id="@+id/main_draft_detail_player_list"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:gravity="center"
             android:layout_marginTop="0dp"
-            android:background="@color/background_inner"/>
+            android:background="@color/background_inner"
+            android:gravity="center"/>
 
         <View
             android:id="@+id/main_recent_footer_border_0"
