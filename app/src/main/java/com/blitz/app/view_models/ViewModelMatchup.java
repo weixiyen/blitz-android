@@ -3,14 +3,14 @@ package com.blitz.app.view_models;
 import android.app.Activity;
 import android.os.Bundle;
 
+import com.blitz.app.rest_models.RestModelCallback;
 import com.blitz.app.rest_models.RestModelDraft;
 import com.blitz.app.rest_models.RestModelGame;
 import com.blitz.app.rest_models.RestModelItem;
 import com.blitz.app.rest_models.RestModelPlayer;
 import com.blitz.app.rest_models.RestModelStats;
 import com.blitz.app.rest_models.RestModelUser;
-import com.blitz.app.rest_models.RestModelCallback;
-import com.blitz.app.screens.main.MatchInfoAdapter;
+import com.blitz.app.screens.matchup.MatchupScreen;
 import com.blitz.app.simple_models.Game;
 import com.blitz.app.simple_models.Stat;
 import com.blitz.app.utilities.authentication.AuthHelper;
@@ -32,6 +32,9 @@ import java.util.Map;
  */
 public class ViewModelMatchup extends ViewModel {
 
+    // region Member Variables
+    // =============================================================================================
+
     RestModelUser mPlayer1;
     RestModelUser mPlayer2;
     List<RestModelPlayer>   mRoster1;
@@ -43,14 +46,29 @@ public class ViewModelMatchup extends ViewModel {
     private Multimap<String, Stat> mPlayerStatsMap;
     private boolean           mInitialized = false;
 
+    // endregion
+
     /**
-     * Creating a new view model requires an activity and a callback.
-     *
-     * @param activity  Activity is used for any android context actions.
-     * @param callbacks Callbacks so that the view model can communicate changes.
+     * Disallow the default constructor.
      */
-    public ViewModelMatchup(Activity activity, ViewModelDraftDetailCallbacks callbacks) {
+    @SuppressWarnings("unused")
+    private ViewModelMatchup(Activity activity, ViewModelDraftDetailCallbacks callbacks) {
         super(activity, callbacks);
+    }
+
+    /**
+     * Use default constructor, but also provide a draft id.
+     *
+     * @param activity Activity.
+     * @param callbacks Callbacks.
+     * @param draftId Associated draft id.
+     */
+    @SuppressWarnings("unused")
+    public ViewModelMatchup(Activity activity,
+                             ViewModelDraftDetailCallbacks callbacks, String draftId) {
+        super(activity, callbacks);
+
+        // TODO: Initialize.
     }
 
     @Override
@@ -59,7 +77,7 @@ public class ViewModelMatchup extends ViewModel {
         if(mInitialized) return;
 
         final Bundle extras = mActivity.getIntent().getExtras();
-        final String draftId = extras.getString(MatchInfoAdapter.DRAFT_ID);
+        final String draftId = extras.getString(MatchupScreen.PARAM_DRAFT_ID);
 
         final ViewModelDraftDetailCallbacks callbacks = getCallbacks(ViewModelDraftDetailCallbacks.class);
 

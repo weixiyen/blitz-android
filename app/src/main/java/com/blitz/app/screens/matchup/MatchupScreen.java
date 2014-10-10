@@ -26,14 +26,47 @@ import butterknife.InjectView;
  */
 public class MatchupScreen extends BaseActivity implements ViewModelMatchup.ViewModelDraftDetailCallbacks {
 
-    public static final String NAVIGATE_TO_PLAY_SCREEN = "MatchupScreen.navigateToPlayScreen";
-
     // region Member Variables
     // =============================================================================================
+
+    // Did we enter this screen directly from finishing a draft.
+    public static final String PARAM_IS_FROM_DRAFT = "MatchupScreen.navigateToPlayScreen";
+
+    // The passed in draft id.
+    public static final String PARAM_DRAFT_ID = "MatchInfoAdapter.draftId";
+
+    // The draft that this matchup is
+    // associated with, cannot be null.
+    private String mDraftId;
 
     private ViewModelMatchup mViewModel;
 
     @InjectView(R.id.main_draft_detail_player_list)     ListView mPlayerList;
+
+    // endregion
+
+    // region Overwritten Methods
+    // =============================================================================================
+
+    /**
+     * Setup the recent matches UI.
+     */
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        flipPlayer2Avatar();
+    }
+
+    @Override
+    public ViewModel onFetchViewModel() {
+
+        if (mViewModel == null) {
+            mViewModel = new ViewModelMatchup(this, this, mDraftId);
+        }
+
+        return mViewModel;
+    }
 
     // endregion
 
@@ -63,32 +96,6 @@ public class MatchupScreen extends BaseActivity implements ViewModelMatchup.View
 
     private void flipPlayer2Avatar() {
         findViewById(R.id.player2_details).findViewById(R.id.player_avatar).setScaleX(-1f);
-    }
-
-    // endregion
-
-    // region Overwritten Methods
-    // =============================================================================================
-
-    /**
-     * Setup the recent matches UI.
-     */
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-
-        super.onCreate(savedInstanceState);
-
-        flipPlayer2Avatar();
-    }
-
-    @Override
-    public ViewModel onFetchViewModel() {
-
-        if(mViewModel == null) {
-            mViewModel = new ViewModelMatchup(this, this);
-        }
-
-        return mViewModel;
     }
 
     // endregion
@@ -139,7 +146,7 @@ public class MatchupScreen extends BaseActivity implements ViewModelMatchup.View
     @Override
     public void onBackPressed() {
 
-        if (getIntent().getBooleanExtra(NAVIGATE_TO_PLAY_SCREEN, false)) {
+        if (getIntent().getBooleanExtra(PARAM_IS_FROM_DRAFT, false)) {
 
             AuthHelper.instance().tryEnterMainApp(this);
         } else {

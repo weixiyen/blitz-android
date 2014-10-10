@@ -22,8 +22,6 @@ import java.util.List;
  */
 public class MatchInfoAdapter extends ArrayAdapter<HeadToHeadDraft> {
 
-    public static final String DRAFT_ID = "MatchInfoAdapter.draftId";
-
     private List<HeadToHeadDraft> mItems;
     private final Activity mActivity;
 
@@ -75,7 +73,7 @@ public class MatchInfoAdapter extends ArrayAdapter<HeadToHeadDraft> {
                 public void onClick(View view) {
                     Intent intent = new Intent(mActivity, MatchupScreen.class);
 
-                    intent.putExtra(DRAFT_ID, draft.getId());
+                    intent.putExtra(MatchupScreen.PARAM_DRAFT_ID, draft.getId());
                     mActivity.startActivity(intent);
                 }
             });

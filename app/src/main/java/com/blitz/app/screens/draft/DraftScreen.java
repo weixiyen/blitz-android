@@ -13,7 +13,6 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.blitz.app.R;
-import com.blitz.app.screens.main.MatchInfoAdapter;
 import com.blitz.app.screens.matchup.MatchupScreen;
 import com.blitz.app.utilities.android.BaseActivity;
 import com.blitz.app.utilities.animations.AnimHelperCrossFade;
@@ -253,9 +252,9 @@ public class DraftScreen extends BaseActivity implements ViewModelDraft.ViewMode
 
                 // Navigate to matchup screen for the completed draft.
                 Intent intent = new Intent(this, MatchupScreen.class);
-                intent.putExtra(MatchInfoAdapter.DRAFT_ID,
+                intent.putExtra(MatchupScreen.PARAM_DRAFT_ID,
                         AuthHelper.instance().getCurrentDraft().getId());
-                intent.putExtra(MatchupScreen.NAVIGATE_TO_PLAY_SCREEN, true);
+                intent.putExtra(MatchupScreen.PARAM_IS_FROM_DRAFT, true);
 
                 startActivity(intent);
 
