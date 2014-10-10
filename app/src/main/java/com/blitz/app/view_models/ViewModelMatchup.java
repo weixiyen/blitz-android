@@ -46,11 +46,15 @@ public class ViewModelMatchup extends ViewModel {
 
     // endregion
 
+
+    // region Constructors
+    // =============================================================================================
+
     /**
      * Disallow the default constructor.
      */
     @SuppressWarnings("unused")
-    private ViewModelMatchup(Activity activity, ViewModelDraftDetailCallbacks callbacks) {
+    private ViewModelMatchup(Activity activity, ViewModelMatchupCallbacks callbacks) {
         super(activity, callbacks);
     }
 
@@ -63,103 +67,118 @@ public class ViewModelMatchup extends ViewModel {
      */
     @SuppressWarnings("unused")
     public ViewModelMatchup(Activity activity,
-                            final ViewModelDraftDetailCallbacks callbacks, String draftId) {
+                            final ViewModelMatchupCallbacks callbacks, String draftId) {
         super(activity, callbacks);
 
-        RestModelDraft.fetchSyncedDraft(mActivity, draftId, new RestModelCallback<RestModelDraft>() {
+        RestModelDraft.fetchSyncedDraft(mActivity, draftId,
+                new RestModelCallback<RestModelDraft>() {
+
             @Override
             public void onSuccess(final RestModelDraft draft) {
 
+                // Set the draft.
                 mDraft = draft;
 
-                final List<String> playerIds = new ArrayList<String>(draft.getPicks().size());
-
-                for (RestModelDraft.Pick pick : draft.getPicks()) {
-                    playerIds.add(pick.getPlayerId());
-                }
-
-                RestModelPlayer.fetchPlayers(null, playerIds,
-                        new RestModelPlayer.CallbackPlayers() {
-
-                            @Override
-                            public void onSuccess(List<RestModelPlayer> players) {
-
-                                Map<String, RestModelPlayer> playerMap =
-                                        new HashMap<String, RestModelPlayer>();
-
-                                for (RestModelPlayer player : players) {
-
-                                    playerMap.put(player.getId(), player);
-                                }
-
-                                populateRosters(playerMap);
-                                onSyncComplete(callbacks);
-                            }
-                        });
-
-                // TODO: if SIMULATE
-
-                final int week = draft.getWeek();
-                final int year = draft.getYear();
-
-                RestModelGame.fetchGames(year, week, new RestAPICallback<List<Game>>(null) {
-                    @Override
-                    public void success(List<Game> games) {
-
-                        mGames = games;
-                        onSyncComplete(callbacks);
-                    }
-                });
-
-                RestModelStats.fetchStatsForPlayers(playerIds, year, week,
-                        new RestAPICallback<RestAPIResult<Stat>>(null) {
-
-                            @Override
-                            public void success(RestAPIResult<Stat> stats) {
-
-                                mPlayerStatsMap = buildPlayerStatsMap(stats.getResults());
-                                onSyncComplete(callbacks);
-                            }
-                        });
-
-                RestModelUser.getUsers(null, mDraft.getUsers(), new RestModelUser.CallbackUsers() {
-                    @Override
-                    public void onSuccess(List<RestModelUser> users) {
-
-                        for (RestModelUser user : users) {
-                            if (user.getId().equals(AuthHelper.instance().getUserId())) {
-                                mPlayer1 = user;
-                            } else {
-                                mPlayer2 = user;
-                            }
-                        }
-
-                        RestModelItem.fetchAvatars(null,
-                                Arrays.asList(mPlayer1.getAvatarId(), mPlayer2.getAvatarId()),
-                                new RestModelItem.CallbackItems() {
-                                    @Override
-                                    public void onSuccess(List<RestModelItem> items) {
-                                        for (RestModelItem item : items) {
-                                            if (mPlayer1.getAvatarId().equals(item.getId())) {
-                                                mAvatarUrl1 = item.getDefaultImgPath();
-                                            } else {
-                                                mAvatarUrl2 = item.getDefaultImgPath();
-                                            }
-                                        }
-                                    }
-                                });
-                    }
-                });
+                // TODO: Split up.
+                setupModel();
             }
         });
     }
+
+    // endregion
 
     @Override
     public void initialize() {
 
     }
 
-    private synchronized void onSyncComplete(ViewModelDraftDetailCallbacks callbacks) {
+    // region Private Methods
+    // =============================================================================================
+
+    private void setupModel() {
+
+        final ViewModelMatchupCallbacks callbacks = getCallbacks(ViewModelMatchupCallbacks.class);
+
+        final List<String> playerIds = new ArrayList<String>(mDraft.getPicks().size());
+
+        for (RestModelDraft.Pick pick : mDraft.getPicks()) {
+            playerIds.add(pick.getPlayerId());
+        }
+
+        RestModelPlayer.fetchPlayers(null, playerIds,
+                new RestModelPlayer.CallbackPlayers() {
+
+                    @Override
+                    public void onSuccess(List<RestModelPlayer> players) {
+
+                        Map<String, RestModelPlayer> playerMap =
+                                new HashMap<String, RestModelPlayer>();
+
+                        for (RestModelPlayer player : players) {
+
+                            playerMap.put(player.getId(), player);
+                        }
+
+                        populateRosters(playerMap);
+                        onSyncComplete(callbacks);
+                    }
+                });
+
+
+        final int week = mDraft.getWeek();
+        final int year = mDraft.getYear();
+
+        RestModelGame.fetchGames(year, week, new RestAPICallback<List<Game>>(null) {
+            @Override
+            public void success(List<Game> games) {
+
+                mGames = games;
+                onSyncComplete(callbacks);
+            }
+        });
+
+        RestModelStats.fetchStatsForPlayers(playerIds, year, week,
+                new RestAPICallback<RestAPIResult<Stat>>(null) {
+
+                    @Override
+                    public void success(RestAPIResult<Stat> stats) {
+
+                        mPlayerStatsMap = buildPlayerStatsMap(stats.getResults());
+                        onSyncComplete(callbacks);
+                    }
+                });
+
+        RestModelUser.getUsers(null, mDraft.getUsers(), new RestModelUser.CallbackUsers() {
+            @Override
+            public void onSuccess(List<RestModelUser> users) {
+
+                for (RestModelUser user : users) {
+                    if (user.getId().equals(AuthHelper.instance().getUserId())) {
+                        mPlayer1 = user;
+                    } else {
+                        mPlayer2 = user;
+                    }
+                }
+
+                RestModelItem.fetchAvatars(null,
+                        Arrays.asList(mPlayer1.getAvatarId(), mPlayer2.getAvatarId()),
+                        new RestModelItem.CallbackItems() {
+                            @Override
+                            public void onSuccess(List<RestModelItem> items) {
+                                for (RestModelItem item : items) {
+                                    if (mPlayer1.getAvatarId().equals(item.getId())) {
+                                        mAvatarUrl1 = item.getDefaultImgPath();
+                                    } else {
+                                        mAvatarUrl2 = item.getDefaultImgPath();
+                                    }
+                                }
+                            }
+                        });
+            }
+        });
+    }
+
+    private synchronized void onSyncComplete(ViewModelMatchupCallbacks callbacks) {
 
         if (!mInitialized && // only do this once
                 mPlayer1 != null && mPlayer2 != null &&
@@ -259,7 +278,15 @@ public class ViewModelMatchup extends ViewModel {
         return map;
     }
 
-    public interface ViewModelDraftDetailCallbacks extends ViewModelCallbacks {
+    // endregion
+
+    // region Callbacks Interface
+    // =============================================================================================
+
+    /**
+     * Callbacks.
+     */
+    public interface ViewModelMatchupCallbacks extends ViewModelCallbacks {
 
         void onStuff(List<RestModelPlayer> p1roster, List<RestModelPlayer> p2Roster, List<Game> p1Games,
                      List<Game> p2Games,
@@ -269,4 +296,6 @@ public class ViewModelMatchup extends ViewModel {
 
         void onAvatars(String player1AvatarUrl, String player2AvatarUrl);
     }
+
+    // endregion
 }

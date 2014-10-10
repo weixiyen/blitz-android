@@ -25,7 +25,7 @@ import butterknife.InjectView;
 /**
  * Created by mrkcsc on 7/14/14. Copyright 2014 Blitz Studios
  */
-public class MatchupScreen extends BaseActivity implements ViewModelMatchup.ViewModelDraftDetailCallbacks {
+public class MatchupScreen extends BaseActivity implements ViewModelMatchup.ViewModelMatchupCallbacks {
 
     // region Member Variables
     // =============================================================================================
@@ -87,6 +87,12 @@ public class MatchupScreen extends BaseActivity implements ViewModelMatchup.View
         }
     }
 
+    /**
+     * Fetch view model with draft id, which
+     * requires immediate parameter parsing.
+     *
+     * @return Initialized view model.
+     */
     @Override
     public ViewModel onFetchViewModel() {
 
