@@ -3,7 +3,6 @@ package com.blitz.app.screens.main;
 import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;
 import android.content.Intent;
-import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.view.animation.LinearInterpolator;
 import android.widget.ImageView;
@@ -19,9 +18,6 @@ import com.blitz.app.utilities.image.BlitzImageView;
 import com.blitz.app.utilities.rest.RestAPICallback;
 import com.blitz.app.view_models.ViewModel;
 import com.blitz.app.view_models.ViewModelMainPlay;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import butterknife.InjectView;
 import butterknife.OnClick;
@@ -44,15 +40,11 @@ public class MainScreenFragmentPlay extends BaseFragment implements ViewModelMai
 
     @InjectView(R.id.main_play_cash_available) TextView mCashAvailable;
 
-    @InjectView(R.id.main_play_rules)              TextView mRulesButton;
-
     @InjectView(R.id.main_play_stats_username)     TextView mStatsUserName;
     @InjectView(R.id.main_play_stats_rating)       TextView mStatsRating;
     @InjectView(R.id.main_play_stats_wins)         TextView mStatsWins;
     @InjectView(R.id.main_play_stats_losses)       TextView mStatsLosses;
     @InjectView(R.id.main_play_stats_avatar) BlitzImageView mStatsAvatar;
-
-    @InjectView(R.id.rules_pager) ViewPager mRulesPager;
 
     // View model object.
     private ViewModelMainPlay mViewModelMainPlay;
@@ -114,8 +106,6 @@ public class MainScreenFragmentPlay extends BaseFragment implements ViewModelMai
             mViewModelMainPlay = new ViewModelMainPlay(getActivity(), this);
         }
 
-        setupRulesViewPager();
-
         return mViewModelMainPlay;
     }
 
@@ -154,46 +144,6 @@ public class MainScreenFragmentPlay extends BaseFragment implements ViewModelMai
 
             mObjectAnimator.end();
         }
-    }
-
-    /**
-     * Create view pager for the rules.
-     * TODO: the rules pager probably ought to live in a dialog that is inflated on demand.
-     */
-    private void setupRulesViewPager() {
-
-        int[] contentResources = new int[] {
-                R.string.rules_heads_up_draft,
-                R.string.rules_scoring_offense,
-                R.string.rules_scoring_defense,
-                R.string.rules_blitz_rating
-        };
-
-        String style = getString(R.string.rules_style);
-        List<String> content = new ArrayList<String>(contentResources.length);
-        for(int resourceId: contentResources) {
-            content.add(style + getString(resourceId));
-        }
-
-        // Formatting to make the pages look like cards
-        mRulesPager.setClipToPadding(false);
-        mRulesPager.setPageMargin(12);
-
-        // Set up rules view pager.
-        mRulesPager.setAdapter(new RulesPagerAdapter(getChildFragmentManager(), content));
-
-
-        // Set up on click listener for toggling rules visibility
-        mRulesButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if(mRulesPager.getVisibility() == View.VISIBLE) {
-                    mRulesPager.setVisibility(View.GONE);
-                } else {
-                    mRulesPager.setVisibility(View.VISIBLE);
-                }
-            }
-        });
     }
 
     /**
@@ -390,8 +340,8 @@ public class MainScreenFragmentPlay extends BaseFragment implements ViewModelMai
     @OnClick(R.id.main_play_rules) @SuppressWarnings("unused")
     public void rulesClicked() {
 
-        // Rules coming soon.
-        createBasicInfoDialog(R.string.rules_coming_soon);
+        RulesDialog rulesDialog = new RulesDialog();
+        rulesDialog.show(getChildFragmentManager(), "rules");
     }
 
     /**
