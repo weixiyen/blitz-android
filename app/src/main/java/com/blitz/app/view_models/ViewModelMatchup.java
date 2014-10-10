@@ -33,19 +33,22 @@ public class ViewModelMatchup extends ViewModel {
     // region Member Variables
     // =============================================================================================
 
-    RestModelUser mPlayer1;
-    RestModelUser mPlayer2;
+    // Associated users.
+    private RestModelUser mPlayer1;
+    private RestModelUser mPlayer2;
+
+    // Associated user avatars.
+    private String mPlayer1AvatarUrl;
+    private String mPlayer2AvatarUrl;
+
     List<RestModelPlayer>   mRoster1;
     List<RestModelPlayer>   mRoster2;
-    String                    mAvatarUrl1;
-    String                    mAvatarUrl2;
+
     List<Game>                mGames;
     private RestModelDraft mDraft;
     private Multimap<String, Stat> mPlayerStatsMap;
-    private boolean           mInitialized = false;
 
     // endregion
-
 
     // region Constructors
     // =============================================================================================
@@ -81,6 +84,7 @@ public class ViewModelMatchup extends ViewModel {
 
                 // TODO: Split up.
                 setupModel();
+                setupUserInfo();
             }
         });
     }
@@ -92,14 +96,60 @@ public class ViewModelMatchup extends ViewModel {
 
     }
 
+    // region Setup Methods
+    // =============================================================================================
+
+
+    private void setupUserInfo() {
+
+        RestModelUser.getUsers(null, mDraft.getUsers(), new RestModelUser.CallbackUsers() {
+
+            @Override
+            public void onSuccess(List<RestModelUser> users) {
+
+                for (RestModelUser user : users) {
+                    if (user.getId().equals(AuthHelper.instance().getUserId())) {
+                        mPlayer1 = user;
+                    } else {
+                        mPlayer2 = user;
+                    }
+                }
+
+                // Fetch associated avatar ids.
+                List<String> playerAvatarIds = Arrays.asList(
+                        mPlayer1.getAvatarId(),
+                        mPlayer2.getAvatarId());
+
+                // Fetch associated items.
+                RestModelItem.fetchItems(null, playerAvatarIds,
+                        new RestModelItem.CallbackItems() {
+
+                            @Override
+                            public void onSuccess(List<RestModelItem> items) {
+                                for (RestModelItem item : items) {
+
+                                    if (mPlayer1.getAvatarId().equals(item.getId())) {
+                                        mPlayer1AvatarUrl = item.getDefaultImgPath();
+                                    } else {
+                                        mPlayer2AvatarUrl = item.getDefaultImgPath();
+                                    }
+
+                                    onSyncComplete();
+                                }
+                            }
+                        });
+            }
+        });
+    }
+
+    // endregion
+
     // region Private Methods
     // =============================================================================================
 
     private void setupModel() {
 
-        final ViewModelMatchupCallbacks callbacks = getCallbacks(ViewModelMatchupCallbacks.class);
-
-        final List<String> playerIds = new ArrayList<String>(mDraft.getPicks().size());
+        final List<String> playerIds = new ArrayList<String>();
 
         for (RestModelDraft.Pick pick : mDraft.getPicks()) {
             playerIds.add(pick.getPlayerId());
@@ -120,7 +170,7 @@ public class ViewModelMatchup extends ViewModel {
                         }
 
                         populateRosters(playerMap);
-                        onSyncComplete(callbacks);
+                        onSyncComplete();
                     }
                 });
 
@@ -133,7 +183,7 @@ public class ViewModelMatchup extends ViewModel {
             public void success(List<Game> games) {
 
                 mGames = games;
-                onSyncComplete(callbacks);
+                onSyncComplete();
             }
         });
 
@@ -144,49 +194,22 @@ public class ViewModelMatchup extends ViewModel {
                     public void success(RestAPIResult<Stat> stats) {
 
                         mPlayerStatsMap = buildPlayerStatsMap(stats.getResults());
-                        onSyncComplete(callbacks);
+                        onSyncComplete();
                     }
                 });
-
-        RestModelUser.getUsers(null, mDraft.getUsers(), new RestModelUser.CallbackUsers() {
-            @Override
-            public void onSuccess(List<RestModelUser> users) {
-
-                for (RestModelUser user : users) {
-                    if (user.getId().equals(AuthHelper.instance().getUserId())) {
-                        mPlayer1 = user;
-                    } else {
-                        mPlayer2 = user;
-                    }
-                }
-
-                RestModelItem.fetchAvatars(null,
-                        Arrays.asList(mPlayer1.getAvatarId(), mPlayer2.getAvatarId()),
-                        new RestModelItem.CallbackItems() {
-                            @Override
-                            public void onSuccess(List<RestModelItem> items) {
-                                for (RestModelItem item : items) {
-                                    if (mPlayer1.getAvatarId().equals(item.getId())) {
-                                        mAvatarUrl1 = item.getDefaultImgPath();
-                                    } else {
-                                        mAvatarUrl2 = item.getDefaultImgPath();
-                                    }
-                                }
-                            }
-                        });
-            }
-        });
     }
 
-    private synchronized void onSyncComplete(ViewModelMatchupCallbacks callbacks) {
+    private synchronized void onSyncComplete() {
 
-        if (!mInitialized && // only do this once
-                mPlayer1 != null && mPlayer2 != null &&
-                mRoster1 != null && mRoster2 != null &&
-                mGames != null &&
-                mDraft != null &&
-                mAvatarUrl1 != null && mAvatarUrl2 != null &&
-                mPlayerStatsMap != null) {
+        final ViewModelMatchupCallbacks callbacks =
+                getCallbacks(ViewModelMatchupCallbacks.class);
+
+        if (mPlayer1 != null && mPlayer2 != null &&
+            mRoster1 != null && mRoster2 != null &&
+            mGames != null &&
+            mDraft != null &&
+            mPlayer1AvatarUrl != null && mPlayer2AvatarUrl != null &&
+            mPlayerStatsMap != null) {
 
             List<Game> p1Games = getPlayerGames(mRoster1, mGames);
             List<Game> p2Games = getPlayerGames(mRoster2, mGames);
@@ -195,12 +218,11 @@ public class ViewModelMatchup extends ViewModel {
 
             callbacks.onMatchup(mPlayer1.getUsername(), p1Score,
                                 mPlayer2.getUsername(), p2Score);
+
             callbacks.onStuff(mRoster1, mRoster2, p1Games, p2Games,
                     mPlayerStatsMap, mDraft.getWeek());
 
-            callbacks.onAvatars(mAvatarUrl1, mAvatarUrl2);
-
-            mInitialized = true;
+            callbacks.onAvatars(mPlayer1AvatarUrl, mPlayer2AvatarUrl);
         }
     }
 
