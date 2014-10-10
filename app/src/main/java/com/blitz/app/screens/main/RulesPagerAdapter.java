@@ -36,15 +36,5 @@ public class RulesPagerAdapter extends FragmentStatePagerAdapter {
         return mContent.size();
     }
 
-    /**
-     * Scale the page width so that the pages look more like cards. See:
-     * https://github.com/thecodepath/android_guides/wiki/ViewPager-with-FragmentPagerAdapter
-     */
-    @Override
-    public float getPageWidth(int _) {
-
-        return 0.93f;
-    }
-
 }
 
