@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.blitz.app.R;
+import com.blitz.app.utilities.reflection.ReflectionHelper;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -40,7 +41,11 @@ public class RulesDialog extends DialogFragment {
 
         // Formatting to make the pages look like cards
         rulesPager.setClipToPadding(false);
-        rulesPager.setPageMargin(12);
+        int pixelPadding = ReflectionHelper.densityPixelsToPixels
+                (rulesPager.getContext(), 20);
+
+        // Assign and clip the padding.
+        rulesPager.setPadding(pixelPadding, 0, pixelPadding, 0);
 
         // Set up rules view pager.
         rulesPager.setAdapter(new RulesPagerAdapter(getChildFragmentManager(), content, this));
