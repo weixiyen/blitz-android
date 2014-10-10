@@ -261,7 +261,7 @@ public class ViewModelDraft extends ViewModel {
         mCurrentPlayerChoices = null;
 
         ObjectModelDraft.fetchSyncedDraft(mActivity, mDraftModel.getId(),
-                new ObjectModelDraft.DraftCallback() {
+                new RestModelCallback<ObjectModelDraft>() {
 
             @Override
             public void onSuccess(ObjectModelDraft draft) {

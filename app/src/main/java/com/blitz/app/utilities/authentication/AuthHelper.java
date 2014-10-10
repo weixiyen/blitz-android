@@ -4,6 +4,8 @@ import android.content.Intent;
 
 import com.blitz.app.R;
 import com.blitz.app.object_models.ObjectModelDraft;
+import com.blitz.app.object_models.RestModelCallback;
+import com.blitz.app.object_models.RestModelCallbacks;
 import com.blitz.app.screens.access_queue.AccessQueueScreen;
 import com.blitz.app.screens.draft.DraftScreen;
 import com.blitz.app.screens.main.MainScreen;
@@ -240,7 +242,7 @@ public class AuthHelper {
 
             // Attempt to fetch active drafts for the user.
             ObjectModelDraft.fetchActiveDraftsForUser(activity, AppDataObject.userId.get(),
-                    new ObjectModelDraft.DraftsCallback() {
+                    new RestModelCallbacks<ObjectModelDraft>() {
 
                         @Override
                         public void onSuccess(List<ObjectModelDraft> drafts) {
@@ -255,7 +257,7 @@ public class AuthHelper {
                                 String draftId = drafts.get(drafts.size() - 1).getId();
 
                                 ObjectModelDraft.fetchSyncedDraft(activity, draftId,
-                                        new ObjectModelDraft.DraftCallback() {
+                                        new RestModelCallback<ObjectModelDraft>() {
 
                                     @Override
                                     public void onSuccess(ObjectModelDraft draft) {

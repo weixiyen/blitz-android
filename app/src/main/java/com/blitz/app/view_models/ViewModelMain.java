@@ -3,6 +3,7 @@ package com.blitz.app.view_models;
 import android.app.Activity;
 
 import com.blitz.app.object_models.ObjectModelDraft;
+import com.blitz.app.object_models.RestModelCallback;
 import com.blitz.app.utilities.comet.CometAPICallback;
 import com.blitz.app.utilities.comet.CometAPIManager;
 import com.blitz.app.object_models.ObjectModelQueue;
@@ -148,7 +149,8 @@ public class ViewModelMain extends ViewModel {
                 final String draftId = message.get("draft_id").getAsString();
 
                 // Fetch the associated draft object.
-                ObjectModelDraft.fetchSyncedDraft(mActivity, draftId, new ObjectModelDraft.DraftCallback() {
+                ObjectModelDraft.fetchSyncedDraft(mActivity, draftId,
+                        new RestModelCallback<ObjectModelDraft>() {
 
                     @Override
                     public void onSuccess(ObjectModelDraft draft) {

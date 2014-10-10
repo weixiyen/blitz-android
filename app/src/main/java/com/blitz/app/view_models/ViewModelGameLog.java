@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.util.SparseArray;
 
 import com.blitz.app.object_models.ObjectModelDraft;
+import com.blitz.app.object_models.RestModelCallbacks;
 import com.blitz.app.simple_models.HeadToHeadDraft;
 import com.blitz.app.utilities.authentication.AuthHelper;
 
@@ -87,7 +88,7 @@ public class ViewModelGameLog extends ViewModel {
 
         // Get fresh data from the server.
         ObjectModelDraft.fetchDraftsForUser(mActivity, AuthHelper.instance().getUserId(), week, 2014, null,
-            new ObjectModelDraft.DraftsCallback() {
+            new RestModelCallbacks<ObjectModelDraft>() {
                 @Override
                 public void onSuccess(List<ObjectModelDraft> drafts) {
                     List<HeadToHeadDraft> matches = new ArrayList<HeadToHeadDraft>(drafts.size());

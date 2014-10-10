@@ -9,6 +9,7 @@ import com.blitz.app.object_models.ObjectModelItem;
 import com.blitz.app.object_models.ObjectModelPlayer;
 import com.blitz.app.object_models.ObjectModelStats;
 import com.blitz.app.object_models.ObjectModelUser;
+import com.blitz.app.object_models.RestModelCallback;
 import com.blitz.app.screens.main.MatchInfoAdapter;
 import com.blitz.app.simple_models.Game;
 import com.blitz.app.simple_models.Stat;
@@ -62,7 +63,7 @@ public class ViewModelDraftDetail extends ViewModel {
 
         final ViewModelDraftDetailCallbacks callbacks = getCallbacks(ViewModelDraftDetailCallbacks.class);
 
-        ObjectModelDraft.fetchSyncedDraft(mActivity, draftId, new ObjectModelDraft.DraftCallback() {
+        ObjectModelDraft.fetchSyncedDraft(mActivity, draftId, new RestModelCallback<ObjectModelDraft>() {
             @Override
             public void onSuccess(final ObjectModelDraft draft) {
 

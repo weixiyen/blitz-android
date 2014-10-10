@@ -578,7 +578,7 @@ public final class ObjectModelDraft extends ObjectModel {
      */
     @SuppressWarnings("unused")
     public static void fetchSyncedDraft(final Activity activity, String draftId,
-                                        final DraftCallback callback) {
+                                        final RestModelCallback<ObjectModelDraft> callback) {
 
         if (draftId == null) {
             return;
@@ -615,8 +615,9 @@ public final class ObjectModelDraft extends ObjectModel {
      * @param callback Success callback, provides the list of drafts.
      */
     @SuppressWarnings("unused")
-    public static void fetchActiveDraftsForUser(final Activity activity, String userId,
-                                                final DraftsCallback callback) {
+    public static void fetchActiveDraftsForUser(
+            final Activity activity, String userId,
+            final RestModelCallbacks<ObjectModelDraft> callback) {
 
         RestAPICallback<RestAPIResult<ObjectModelDraft>> operation =
                 new RestAPICallback<RestAPIResult<ObjectModelDraft>>(activity) {
@@ -663,7 +664,7 @@ public final class ObjectModelDraft extends ObjectModel {
                                           Integer week,
                                           Integer year,
                                           Integer limit,
-                                          final DraftsCallback callback) {
+                                          final RestModelCallbacks<ObjectModelDraft> callback) {
 
         RestAPICallback<RestAPIResult<ObjectModelDraft>> operation =
                 new RestAPICallback<RestAPIResult<ObjectModelDraft>>(activity) {
@@ -843,21 +844,6 @@ public final class ObjectModelDraft extends ObjectModel {
 
             return mUserId;
         }
-    }
-
-    // endregion
-
-    // region Callbacks
-    // =============================================================================================
-
-    public interface DraftCallback {
-
-        public void onSuccess(ObjectModelDraft draft);
-    }
-
-    public interface DraftsCallback {
-
-        public void onSuccess(List<ObjectModelDraft> drafts);
     }
 
     // endregion
