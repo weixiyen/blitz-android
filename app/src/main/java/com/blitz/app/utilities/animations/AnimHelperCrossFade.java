@@ -11,6 +11,8 @@ import android.widget.ImageView;
 import com.blitz.app.utilities.image.BlitzImage;
 import com.blitz.app.utilities.image.BlitzImageView;
 
+import java.util.Map;
+
 /**
  * Created by mrkcsc on 8/20/14. Copyright 2014 Blitz Studios
  */
@@ -80,13 +82,14 @@ public class AnimHelperCrossFade extends AnimHelper {
 
         // Load image before cross fading.
         BlitzImage.from(imageView.getContext()).loadImageUrl(imageUrl,
-                new BlitzImage.CallbackImageUrl() {
+                new BlitzImage.CallbackImageUrls() {
 
             @Override
-            public void onSuccess(Bitmap image) {
+            public void onSuccess(Map<String, Bitmap> images) {
 
                 // Drawable to.
-                BitmapDrawable drawableTo = new BitmapDrawable(imageView.getResources(), image);
+                BitmapDrawable drawableTo = new BitmapDrawable
+                        (imageView.getResources(), images.get(imageUrl));
 
                 // Set the transition.
                 setTransitionDrawable(imageView.getDrawable(), drawableTo, imageView);

@@ -90,7 +90,7 @@ public class BlitzImage {
      * @param callback Callback fired when image loaded.
      */
     @SuppressWarnings("unused")
-    public void loadImageUrl(String imageUrl, CallbackImageUrl callback) {
+    public void loadImageUrl(String imageUrl, CallbackImageUrls callback) {
 
         // Call single load, with no mask.
         loadImageUrl(imageUrl, null, callback);
@@ -106,20 +106,9 @@ public class BlitzImage {
      */
     @SuppressWarnings("unused")
     public void loadImageUrl(final String imageUrl, String maskAssetUrl,
-                             final CallbackImageUrl callback) {
+                             final CallbackImageUrls callback) {
 
-        loadImageUrls(
-                Arrays.asList(imageUrl),
-                Arrays.asList(maskAssetUrl), new CallbackImageUrls() {
-
-            @Override
-            public void onSuccess(Map<String, Bitmap> images) {
-
-                if (callback != null) {
-                    callback.onSuccess(images.get(imageUrl));
-                }
-            }
-        });
+        loadImageUrls(Arrays.asList(imageUrl), Arrays.asList(maskAssetUrl), callback);
     }
 
     /**
@@ -368,15 +357,6 @@ public class BlitzImage {
 
     // region Callbacks
     // =============================================================================================
-
-    /**
-     * Callback when image url is loaded.
-     */
-    public interface CallbackImageUrl {
-
-        // Single bitmap.
-        public void onSuccess(Bitmap image);
-    }
 
     /**
      * Callback when image urls are loaded.

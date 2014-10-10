@@ -10,6 +10,7 @@ import com.blitz.app.R;
 import com.blitz.app.utilities.app.AppDataObject;
 
 import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by mrkcsc on 9/18/14. Copyright 2014 Blitz Studios
@@ -119,12 +120,15 @@ public class BlitzImageView extends ImageView {
 
             // Load image url and mask url.
             BlitzImage.from(getContext()).loadImageUrl(mImageUrl, maskAssetUrl,
-                    new BlitzImage.CallbackImageUrl() {
+                    new BlitzImage.CallbackImageUrls() {
 
                 @Override
-                public void onSuccess(Bitmap image) {
+                public void onSuccess(Map<String, Bitmap> images) {
 
-                    setImageBitmap(image);
+                    if (images.containsKey(mImageUrl)) {
+
+                        setImageBitmap(images.get(mImageUrl));
+                    }
                 }
             });
         }
