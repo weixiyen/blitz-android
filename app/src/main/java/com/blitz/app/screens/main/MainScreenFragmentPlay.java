@@ -289,8 +289,8 @@ public class MainScreenFragmentPlay extends BaseFragment implements ViewModelMai
     public void onAvatarUrl(String avatarUrl) {
 
         // If container exists, and this is a unique url.
-        if (mStatsAvatar != null && mStatsAvatar.getImageUrl() != null &&
-                !mStatsAvatar.getImageUrl().equals(avatarUrl)) {
+        if (mStatsAvatar != null && (mStatsAvatar.getImageUrl() == null ||
+                !mStatsAvatar.getImageUrl().equals(avatarUrl))) {
 
             // Set image url with a nice cross fade effect.
             AnimHelperCrossFade.setImageUrl(mStatsAvatar, avatarUrl);
