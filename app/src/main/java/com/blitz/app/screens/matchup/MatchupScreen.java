@@ -14,7 +14,7 @@ import com.blitz.app.utilities.android.BaseActivity;
 import com.blitz.app.utilities.authentication.AuthHelper;
 import com.blitz.app.utilities.image.BlitzImageView;
 import com.blitz.app.view_models.ViewModel;
-import com.blitz.app.view_models.ViewModelDraftDetail;
+import com.blitz.app.view_models.ViewModelMatchup;
 import com.google.common.collect.Multimap;
 
 import java.util.List;
@@ -24,14 +24,14 @@ import butterknife.InjectView;
 /**
  * Created by mrkcsc on 7/14/14. Copyright 2014 Blitz Studios
  */
-public class MatchupScreen extends BaseActivity implements ViewModelDraftDetail.ViewModelDraftDetailCallbacks {
+public class MatchupScreen extends BaseActivity implements ViewModelMatchup.ViewModelDraftDetailCallbacks {
 
     public static final String NAVIGATE_TO_PLAY_SCREEN = "MatchupScreen.navigateToPlayScreen";
 
     // region Member Variables
     // =============================================================================================
 
-    private ViewModelDraftDetail mViewModel;
+    private ViewModelMatchup mViewModel;
 
     @InjectView(R.id.main_draft_detail_player_list)     ListView mPlayerList;
 
@@ -85,7 +85,7 @@ public class MatchupScreen extends BaseActivity implements ViewModelDraftDetail.
     public ViewModel onFetchViewModel() {
 
         if(mViewModel == null) {
-            mViewModel = new ViewModelDraftDetail(this, this);
+            mViewModel = new ViewModelMatchup(this, this);
         }
 
         return mViewModel;

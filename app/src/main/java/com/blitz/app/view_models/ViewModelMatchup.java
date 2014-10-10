@@ -30,7 +30,7 @@ import java.util.Map;
  *
  * Created by Nate on 9/10/14.
  */
-public class ViewModelDraftDetail extends ViewModel {
+public class ViewModelMatchup extends ViewModel {
 
     RestModelUser mPlayer1;
     RestModelUser mPlayer2;
@@ -49,7 +49,7 @@ public class ViewModelDraftDetail extends ViewModel {
      * @param activity  Activity is used for any android context actions.
      * @param callbacks Callbacks so that the view model can communicate changes.
      */
-    public ViewModelDraftDetail(Activity activity, ViewModelDraftDetailCallbacks callbacks) {
+    public ViewModelMatchup(Activity activity, ViewModelDraftDetailCallbacks callbacks) {
         super(activity, callbacks);
     }
 
