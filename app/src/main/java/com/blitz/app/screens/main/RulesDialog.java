@@ -40,9 +40,9 @@ public class RulesDialog extends DialogFragment {
         ViewPager rulesPager = (ViewPager) v.findViewById(R.id.dialog_rules_pager);
 
         // Formatting to make the pages look like cards
-       // rulesPager.setClipToPadding(false);
+        rulesPager.setClipToPadding(false);
         int pixelPadding = ReflectionHelper.densityPixelsToPixels
-                (rulesPager.getContext(), 10);
+                (rulesPager.getContext(), 20);
 
         // Assign and clip the padding.
         rulesPager.setPadding(pixelPadding, 0, pixelPadding, 0);
