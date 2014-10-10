@@ -1,5 +1,6 @@
 package com.blitz.app.screens.main;
 
+import android.support.v4.app.DialogFragment;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,6 +20,14 @@ import com.blitz.app.utilities.android.BaseFragment;
 public class RulesFragment extends BaseFragment {
 
     private String mContent;
+    private DialogFragment mDialog;
+
+    public static RulesFragment newInstance(DialogFragment dialog) {
+
+        RulesFragment fragment = new RulesFragment();
+        fragment.mDialog = dialog;
+        return fragment;
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, final ViewGroup container,
@@ -29,9 +38,12 @@ public class RulesFragment extends BaseFragment {
         closeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View _) {
-                container.setVisibility(View.GONE);
+                if(mDialog != null) {
+                    mDialog.dismiss();
+                }
             }
         });
+
         WebView webView = (WebView) view.findViewById(R.id.content);
         webView.loadData(mContent, "text/html", "utf-8");
         return view;
