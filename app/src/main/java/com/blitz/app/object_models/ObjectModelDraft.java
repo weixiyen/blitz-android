@@ -528,7 +528,7 @@ public final class ObjectModelDraft extends ObjectModel {
      */
     @SuppressWarnings("unused")
     public static void pickPlayer(final Activity activity, String draftId, String playerId,
-                                  final DraftCallback callback) {
+                                  final RestModelCallback<ObjectModelDraft> callback) {
 
         if (draftId == null || playerId == null) {
 
@@ -544,6 +544,15 @@ public final class ObjectModelDraft extends ObjectModel {
                         // Now left queue.
                         if (callback != null) {
                             callback.onSuccess(result.getResult());
+                        }
+                    }
+
+                    @Override
+                    public void failure(Response response, boolean networkError) {
+                        super.failure(response, networkError);
+
+                        if (callback != null) {
+                            callback.onFailure();
                         }
                     }
                 };

@@ -8,6 +8,7 @@ import com.blitz.app.object_models.ObjectModelDraft;
 import com.blitz.app.object_models.ObjectModelItem;
 import com.blitz.app.object_models.ObjectModelPlayer;
 import com.blitz.app.object_models.ObjectModelUser;
+import com.blitz.app.object_models.RestModelCallback;
 import com.blitz.app.screens.draft.DraftScreen;
 import com.blitz.app.utilities.authentication.AuthHelper;
 import com.blitz.app.utilities.comet.CometAPICallback;
@@ -219,8 +220,6 @@ public class ViewModelDraft extends ViewModel {
      */
     public void pickPlayer(final String playerId) {
 
-        // TODO: Handle failure.
-
         // If player id provided, and we are allowed to draft a player.
         if (playerId != null && mDraftModel != null
                 && mDraftModel.getCanUserDraft() && !mPickingLocked) {
@@ -229,15 +228,21 @@ public class ViewModelDraft extends ViewModel {
             mPickingLocked = true;
 
             ObjectModelDraft.pickPlayer(null, mDraftModel.getId(), playerId,
-                    new ObjectModelDraft.DraftCallback() {
+                    new RestModelCallback<ObjectModelDraft>() {
 
-                        @Override
-                        public void onSuccess(ObjectModelDraft draft) {
+                @Override
+                public void onSuccess(ObjectModelDraft object) {
 
-                            // Picking no longer locked.
-                            mPickingLocked = false;
-                        }
-                    });
+                    mPickingLocked = false;
+                }
+
+                @Override
+                public void onFailure() {
+                    super.onFailure();
+
+                    mPickingLocked = false;
+                }
+            });
         }
     }
 
