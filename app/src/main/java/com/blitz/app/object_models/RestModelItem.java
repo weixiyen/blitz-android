@@ -16,7 +16,7 @@ import java.util.concurrent.ConcurrentHashMap;
  * Created by mrkcsc on 9/9/14. Copyright 2014 Blitz Studios
  */
 @SuppressWarnings("MismatchedQueryAndUpdateOfCollection")
-public class ObjectModelItem extends ObjectModel {
+public class RestModelItem extends RestModel {
 
     // region Member Variables
     // =============================================================================================
@@ -44,8 +44,8 @@ public class ObjectModelItem extends ObjectModel {
     @SuppressWarnings("unused") @SerializedName("created")
     private Date mCreated;
 
-    private static Map<String, ObjectModelItem> sAvatarCache
-            = new ConcurrentHashMap<String, ObjectModelItem>();
+    private static Map<String, RestModelItem> sAvatarCache
+            = new ConcurrentHashMap<String, RestModelItem>();
 
     // endregion
 
@@ -91,11 +91,11 @@ public class ObjectModelItem extends ObjectModel {
     @SuppressWarnings("unused")
     public static void fetchItem(Activity activity, String itemId, final CallbackItem callback) {
 
-        RestAPICallback<RestAPIResult<ObjectModelItem>> operation =
-                new RestAPICallback<RestAPIResult<ObjectModelItem>>(activity) {
+        RestAPICallback<RestAPIResult<RestModelItem>> operation =
+                new RestAPICallback<RestAPIResult<RestModelItem>>(activity) {
 
                     @Override
-                    public void success(RestAPIResult<ObjectModelItem> jsonObject) {
+                    public void success(RestAPIResult<RestModelItem> jsonObject) {
 
                         // Now left queue.
                         if (callback != null) {
@@ -114,9 +114,9 @@ public class ObjectModelItem extends ObjectModel {
      *
      * @return A list of avatar urls in order corresponding to the input avatar ids.
      */
-    private static List<ObjectModelItem> getAvatarUrlsFromCache(List<String> avatarIds) {
+    private static List<RestModelItem> getAvatarUrlsFromCache(List<String> avatarIds) {
 
-        List<ObjectModelItem> items = new ArrayList<ObjectModelItem>(avatarIds.size());
+        List<RestModelItem> items = new ArrayList<RestModelItem>(avatarIds.size());
         for(String id: avatarIds) {
             items.add(sAvatarCache.get(id));
         }
@@ -131,15 +131,15 @@ public class ObjectModelItem extends ObjectModel {
             callback.onSuccess(getAvatarUrlsFromCache(avatarIds));
         } else {
 
-            RestAPICallback<RestAPIResult<ObjectModelItem>> operation =
-                    new RestAPICallback<RestAPIResult<ObjectModelItem>>(activity) {
+            RestAPICallback<RestAPIResult<RestModelItem>> operation =
+                    new RestAPICallback<RestAPIResult<RestModelItem>>(activity) {
 
                         @Override
-                        public void success(RestAPIResult<ObjectModelItem> items) {
+                        public void success(RestAPIResult<RestModelItem> items) {
 
                             sAvatarCache.clear();
 
-                            for (ObjectModelItem item : items.getResults()) {
+                            for (RestModelItem item : items.getResults()) {
                                 sAvatarCache.put(item.getId(), item);
                             }
 
@@ -166,11 +166,11 @@ public class ObjectModelItem extends ObjectModel {
     public static void fetchItems(Activity activity, List<String> items,
                                   final CallbackItems callback) {
 
-        RestAPICallback<RestAPIResult<ObjectModelItem>> operation =
-                new RestAPICallback<RestAPIResult<ObjectModelItem>>(activity) {
+        RestAPICallback<RestAPIResult<RestModelItem>> operation =
+                new RestAPICallback<RestAPIResult<RestModelItem>>(activity) {
 
             @Override
-            public void success(RestAPIResult<ObjectModelItem> jsonObject) {
+            public void success(RestAPIResult<RestModelItem> jsonObject) {
 
                 if (callback != null) {
                     callback.onSuccess(jsonObject.getResults());
@@ -191,11 +191,11 @@ public class ObjectModelItem extends ObjectModel {
     @SuppressWarnings("unused")
     public static void fetchItemsOwnedByUser(Activity activity, String userId, final CallbackItems callback) {
 
-        RestAPICallback<RestAPIResult<ObjectModelItem>> operation =
-                new RestAPICallback<RestAPIResult<ObjectModelItem>>(activity) {
+        RestAPICallback<RestAPIResult<RestModelItem>> operation =
+                new RestAPICallback<RestAPIResult<RestModelItem>>(activity) {
 
                     @Override
-                    public void success(RestAPIResult<ObjectModelItem> jsonObject) {
+                    public void success(RestAPIResult<RestModelItem> jsonObject) {
 
                         if (callback != null) {
                             callback.onSuccess(jsonObject.getResults());
@@ -220,12 +220,12 @@ public class ObjectModelItem extends ObjectModel {
 
     public interface CallbackItem {
 
-        public void onSuccess(ObjectModelItem item);
+        public void onSuccess(RestModelItem item);
     }
 
     public interface CallbackItems {
 
-        public void onSuccess(List<ObjectModelItem> items);
+        public void onSuccess(List<RestModelItem> items);
     }
 
     // endregion

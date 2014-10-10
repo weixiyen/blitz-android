@@ -8,7 +8,7 @@ import com.google.gson.JsonObject;
 /**
  * Created by mrkcsc on 7/20/14. Copyright 2014 Blitz Studios
  */
-public class ObjectModelQueue extends ObjectModel {
+public class RestModelQueue extends RestModel {
 
     // region Member Variables
     // =============================================================================================
@@ -18,7 +18,7 @@ public class ObjectModelQueue extends ObjectModel {
     private static String mDraftKey;
 
     // Preferences model used to sync.
-    private ObjectModelPreferences mModelPreferences;
+    private RestModelPreferences mModelPreferences;
 
     // endregion
 
@@ -35,11 +35,11 @@ public class ObjectModelQueue extends ObjectModel {
     public void queueUp(final Activity activity, final Runnable callback) {
 
         if (mModelPreferences == null) {
-            mModelPreferences = new ObjectModelPreferences();
+            mModelPreferences = new RestModelPreferences();
         }
 
         // First sync preferences to get the active draft key.
-        mModelPreferences.Sync(activity, new ObjectModelPreferences.SyncCallback() {
+        mModelPreferences.Sync(activity, new RestModelPreferences.SyncCallback() {
 
             @Override
             public void onSync() {

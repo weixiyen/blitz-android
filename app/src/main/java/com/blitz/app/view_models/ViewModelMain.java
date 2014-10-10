@@ -2,11 +2,11 @@ package com.blitz.app.view_models;
 
 import android.app.Activity;
 
-import com.blitz.app.object_models.ObjectModelDraft;
+import com.blitz.app.object_models.RestModelDraft;
 import com.blitz.app.object_models.RestModelCallback;
+import com.blitz.app.object_models.RestModelQueue;
 import com.blitz.app.utilities.comet.CometAPICallback;
 import com.blitz.app.utilities.comet.CometAPIManager;
-import com.blitz.app.object_models.ObjectModelQueue;
 import com.blitz.app.screens.main.MainScreen;
 import com.blitz.app.utilities.app.AppDataObject;
 import com.blitz.app.utilities.authentication.AuthHelper;
@@ -21,7 +21,7 @@ public class ViewModelMain extends ViewModel {
     // =============================================================================================
 
     // Queue model.
-    private ObjectModelQueue mModelQueue;
+    private RestModelQueue mModelQueue;
 
     // endregion
 
@@ -149,25 +149,25 @@ public class ViewModelMain extends ViewModel {
                 final String draftId = message.get("draft_id").getAsString();
 
                 // Fetch the associated draft object.
-                ObjectModelDraft.fetchSyncedDraft(mActivity, draftId,
-                        new RestModelCallback<ObjectModelDraft>() {
+                RestModelDraft.fetchSyncedDraft(mActivity, draftId,
+                        new RestModelCallback<RestModelDraft>() {
 
-                    @Override
-                    public void onSuccess(ObjectModelDraft draft) {
+                            @Override
+                            public void onSuccess(RestModelDraft draft) {
 
-                        // Set it as the current draft.
-                        AuthHelper.instance().setCurrentDraft(draft);
+                                // Set it as the current draft.
+                                AuthHelper.instance().setCurrentDraft(draft);
 
-                        // Fetch comet channel for this user.
-                        String userCometChannel = "user:" + AppDataObject.userId.get();
+                                // Fetch comet channel for this user.
+                                String userCometChannel = "user:" + AppDataObject.userId.get();
 
-                        // Unsubscribe them from it.
-                        CometAPIManager.unsubscribeFromChannel(userCometChannel);
+                                // Unsubscribe them from it.
+                                CometAPIManager.unsubscribeFromChannel(userCometChannel);
 
-                        // Run UI callback.
-                        callbacks.onEnterDraft(ViewModelMain.this);
-                    }
-                });
+                                // Run UI callback.
+                                callbacks.onEnterDraft(ViewModelMain.this);
+                            }
+                        });
             }
         }
     }
@@ -177,11 +177,11 @@ public class ViewModelMain extends ViewModel {
      *
      * @return Queue model instance.
      */
-    private ObjectModelQueue getModelQueue() {
+    private RestModelQueue getModelQueue() {
 
         // Lazy load the model.
         if (mModelQueue == null) {
-            mModelQueue = new ObjectModelQueue();
+            mModelQueue = new RestModelQueue();
         }
 
         return mModelQueue;

@@ -13,7 +13,7 @@ import java.util.List;
 /**
  * Created by Miguel on 9/27/2014. Copyright 2014 Blitz Studios
  */
-public class ObjectModelPlayer extends ObjectModel {
+public class RestModelPlayer extends RestModel {
 
     // region Member Variables
     // =============================================================================================
@@ -46,11 +46,11 @@ public class ObjectModelPlayer extends ObjectModel {
                                     List<String> playerIds,
                                     final CallbackPlayers callback) {
 
-        RestAPICallback<RestAPIResult<ObjectModelPlayer>> operation =
-                new RestAPICallback<RestAPIResult<ObjectModelPlayer>>(activity) {
+        RestAPICallback<RestAPIResult<RestModelPlayer>> operation =
+                new RestAPICallback<RestAPIResult<RestModelPlayer>>(activity) {
 
                     @Override
-                    public void success(RestAPIResult<ObjectModelPlayer> jsonObject) {
+                    public void success(RestAPIResult<RestModelPlayer> jsonObject) {
 
                         // Now left queue.
                         if (callback != null) {
@@ -79,11 +79,11 @@ public class ObjectModelPlayer extends ObjectModel {
             return;
         }
 
-        RestAPICallback<RestAPIResult<ObjectModelPlayer>> operation =
-                new RestAPICallback<RestAPIResult<ObjectModelPlayer>>(activity) {
+        RestAPICallback<RestAPIResult<RestModelPlayer>> operation =
+                new RestAPICallback<RestAPIResult<RestModelPlayer>>(activity) {
 
                     @Override
-                    public void success(RestAPIResult<ObjectModelPlayer> jsonObject) {
+                    public void success(RestAPIResult<RestModelPlayer> jsonObject) {
 
                         // Now left queue.
                         if (callback != null) {
@@ -106,9 +106,9 @@ public class ObjectModelPlayer extends ObjectModel {
      * @return Player object.
      */
     @SuppressWarnings("unused")
-    public static ObjectModelPlayer fetchPlayerFromCometJson(JsonObject cometJson) {
+    public static RestModelPlayer fetchPlayerFromCometJson(JsonObject cometJson) {
 
-        ObjectModelPlayer player = new ObjectModelPlayer();
+        RestModelPlayer player = new RestModelPlayer();
 
         player.mId         = JsonHelper.parseString(cometJson.get("id"));
         player.mOpponent   = JsonHelper.parseString(cometJson.get("opponent"));
@@ -246,12 +246,12 @@ public class ObjectModelPlayer extends ObjectModel {
 
     public interface CallbackPlayer {
 
-        public void onSuccess(ObjectModelPlayer player);
+        public void onSuccess(RestModelPlayer player);
     }
 
     public interface CallbackPlayers {
 
-        public void onSuccess(List<ObjectModelPlayer> players);
+        public void onSuccess(List<RestModelPlayer> players);
     }
 
     // endregion

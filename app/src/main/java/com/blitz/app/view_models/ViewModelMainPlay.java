@@ -4,9 +4,9 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.os.Handler;
 
-import com.blitz.app.object_models.ObjectModelItem;
-import com.blitz.app.object_models.ObjectModelQueue;
-import com.blitz.app.object_models.ObjectModelUser;
+import com.blitz.app.object_models.RestModelItem;
+import com.blitz.app.object_models.RestModelQueue;
+import com.blitz.app.object_models.RestModelUser;
 import com.blitz.app.screens.main.MainScreenFragmentPlay;
 import com.blitz.app.utilities.app.AppDataObject;
 import com.blitz.app.utilities.authentication.AuthHelper;
@@ -29,7 +29,7 @@ public class ViewModelMainPlay extends ViewModel {
     private Runnable mSecondsInQueueRunnable;
 
     // Object model.
-    private ObjectModelQueue mModelQueue = new ObjectModelQueue();
+    private RestModelQueue mModelQueue = new RestModelQueue();
 
     // Are we in queue.
     private boolean mInQueue;
@@ -166,10 +166,10 @@ public class ViewModelMainPlay extends ViewModel {
         final String userId = AuthHelper.instance().getUserId();
 
         // Fetch the current user.
-        ObjectModelUser.getUser(mActivity, userId, new ObjectModelUser.CallbackUser() {
+        RestModelUser.getUser(mActivity, userId, new RestModelUser.CallbackUser() {
 
             @Override
-            public void onSuccess(ObjectModelUser user) {
+            public void onSuccess(RestModelUser user) {
 
                 // Fetch callbacks.
                 final ViewModelMainPlayCallbacks callbacks =
@@ -177,10 +177,10 @@ public class ViewModelMainPlay extends ViewModel {
 
                 if (callbacks != null) {
                     callbacks.onUsername(user.getUsername());
-                    callbacks.onRating  (user.getRating());
-                    callbacks.onWins    (user.getWins());
-                    callbacks.onLosses  (user.getLosses());
-                    callbacks.onCash    (user.getCash());
+                    callbacks.onRating(user.getRating());
+                    callbacks.onWins(user.getWins());
+                    callbacks.onLosses(user.getLosses());
+                    callbacks.onCash(user.getCash());
                 }
 
                 // If a new avatar id is found.
@@ -207,11 +207,11 @@ public class ViewModelMainPlay extends ViewModel {
     private void updateHelmet() {
 
         // Fetch associated item model.
-        ObjectModelItem.fetchItem(mActivity, mUserAvatarId,
-                new ObjectModelItem.CallbackItem() {
+        RestModelItem.fetchItem(mActivity, mUserAvatarId,
+                new RestModelItem.CallbackItem() {
 
                     @Override
-                    public void onSuccess(ObjectModelItem item) {
+                    public void onSuccess(RestModelItem item) {
 
                         if (getCallbacks(ViewModelMainPlayCallbacks.class) != null) {
                             getCallbacks(ViewModelMainPlayCallbacks.class)

@@ -8,7 +8,7 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import com.blitz.app.R;
-import com.blitz.app.object_models.ObjectModelUser;
+import com.blitz.app.object_models.RestModelUser;
 
 import java.util.List;
 
@@ -17,15 +17,15 @@ import java.util.List;
  *
  * Created by Nate on 9/30/14.
  */
-public class LeaderboardListAdapter extends ArrayAdapter<ObjectModelUser> {
+public class LeaderboardListAdapter extends ArrayAdapter<RestModelUser> {
 
-    final List<ObjectModelUser> mLeaders;
+    final List<RestModelUser> mLeaders;
 
     /**
      *
      * @param leaders the top N users ordered by rating in descending order.
      */
-    public LeaderboardListAdapter(Context context, List<ObjectModelUser> leaders) {
+    public LeaderboardListAdapter(Context context, List<RestModelUser> leaders) {
 
         super(context, R.layout.leaderboard_screen, leaders);
         mLeaders = leaders;
@@ -42,7 +42,7 @@ public class LeaderboardListAdapter extends ArrayAdapter<ObjectModelUser> {
                     .inflate(R.layout.leaderboard_list_item, null);
         }
 
-        ObjectModelUser leader = mLeaders.get(position);
+        RestModelUser leader = mLeaders.get(position);
 
         setText(v, R.id.list_index, Integer.toString(position + 1));
         setText(v, R.id.user_name, leader.getUsername());

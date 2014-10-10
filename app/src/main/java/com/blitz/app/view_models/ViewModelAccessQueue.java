@@ -2,7 +2,7 @@ package com.blitz.app.view_models;
 
 import android.app.Activity;
 
-import com.blitz.app.object_models.ObjectModelAccessQueue;
+import com.blitz.app.object_models.RestModelAccessQueue;
 import com.blitz.app.utilities.gcm.GcmRegistrationHelper;
 
 /**
@@ -13,7 +13,7 @@ public class ViewModelAccessQueue extends ViewModel {
     // region Member Variables
     // =============================================================================================
 
-    private ObjectModelAccessQueue mModelAccessQueue;
+    private RestModelAccessQueue mModelAccessQueue;
 
     // endregion
 
@@ -42,7 +42,7 @@ public class ViewModelAccessQueue extends ViewModel {
     public void initialize() {
 
         // Initialize access queue model.
-        mModelAccessQueue = new ObjectModelAccessQueue();
+        mModelAccessQueue = new RestModelAccessQueue();
 
         // Set the device id and sync.
         mModelAccessQueue.setDeviceId(GcmRegistrationHelper.getDeviceId(mActivity));

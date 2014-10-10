@@ -21,7 +21,7 @@ import retrofit.client.Response;
  * Created by mrkcsc on 7/27/14. Copyright 2014 Blitz Studios
  */
 @SuppressWarnings("MismatchedQueryAndUpdateOfCollection")
-public final class ObjectModelDraft extends ObjectModel {
+public final class RestModelDraft extends RestModel {
 
     // region Member Variables
     // =============================================================================================
@@ -30,7 +30,7 @@ public final class ObjectModelDraft extends ObjectModel {
     private long mServerTimeOffset;
 
     // Map of players, used for live drafts only.
-    private HashMap<String, ObjectModelPlayer> mPlayerDataMap;
+    private HashMap<String, RestModelPlayer> mPlayerDataMap;
 
     @SuppressWarnings("unused") @SerializedName("draft_start_buffer")
     private int mDraftStartBuffer;
@@ -87,7 +87,7 @@ public final class ObjectModelDraft extends ObjectModel {
     @SuppressWarnings("unused") @SerializedName("rosters")
     private Map<String, List<String>> mRosters;
     @SuppressWarnings("unused") @SerializedName("user_info")
-    private Map<String, ObjectModelUser> mUserInfo;
+    private Map<String, RestModelUser> mUserInfo;
 
     @SuppressWarnings("unused") @SerializedName("positions_required")
     private List<String> mPositionsRequired;
@@ -410,10 +410,10 @@ public final class ObjectModelDraft extends ObjectModel {
      * @return Player data.
      */
     @SuppressWarnings("unused")
-    public Map<String, ObjectModelPlayer> getPlayerDataMap() {
+    public Map<String, RestModelPlayer> getPlayerDataMap() {
 
         if (mPlayerDataMap == null) {
-            mPlayerDataMap = new HashMap<String, ObjectModelPlayer>();
+            mPlayerDataMap = new HashMap<String, RestModelPlayer>();
         }
 
         return mPlayerDataMap;
@@ -473,10 +473,10 @@ public final class ObjectModelDraft extends ObjectModel {
      * @param choice Choice object.
      */
     @SuppressWarnings("unused")
-    public void addChoice(ObjectModelPlayer choice) {
+    public void addChoice(RestModelPlayer choice) {
 
         if (mPlayerDataMap == null) {
-            mPlayerDataMap = new HashMap<String, ObjectModelPlayer>();
+            mPlayerDataMap = new HashMap<String, RestModelPlayer>();
         }
 
         // Add to player data map.
@@ -528,18 +528,18 @@ public final class ObjectModelDraft extends ObjectModel {
      */
     @SuppressWarnings("unused")
     public static void pickPlayer(final Activity activity, String draftId, String playerId,
-                                  final RestModelCallback<ObjectModelDraft> callback) {
+                                  final RestModelCallback<RestModelDraft> callback) {
 
         if (draftId == null || playerId == null) {
 
             return;
         }
 
-        RestAPICallback<RestAPIResult<ObjectModelDraft>> operation =
-                new RestAPICallback<RestAPIResult<ObjectModelDraft>>(activity) {
+        RestAPICallback<RestAPIResult<RestModelDraft>> operation =
+                new RestAPICallback<RestAPIResult<RestModelDraft>>(activity) {
 
                     @Override
-                    public void success(RestAPIResult<ObjectModelDraft> result) {
+                    public void success(RestAPIResult<RestModelDraft> result) {
 
                         // Now left queue.
                         if (callback != null) {
@@ -578,17 +578,17 @@ public final class ObjectModelDraft extends ObjectModel {
      */
     @SuppressWarnings("unused")
     public static void fetchSyncedDraft(final Activity activity, String draftId,
-                                        final RestModelCallback<ObjectModelDraft> callback) {
+                                        final RestModelCallback<RestModelDraft> callback) {
 
         if (draftId == null) {
             return;
         }
 
-        RestAPICallback<ObjectModelDraft> operation =
-                new RestAPICallback<ObjectModelDraft>(activity) {
+        RestAPICallback<RestModelDraft> operation =
+                new RestAPICallback<RestModelDraft>(activity) {
 
             @Override
-            public void success(ObjectModelDraft result) {
+            public void success(RestModelDraft result) {
 
                 // Set the server time offset.
                 if (result != null) {
@@ -617,13 +617,13 @@ public final class ObjectModelDraft extends ObjectModel {
     @SuppressWarnings("unused")
     public static void fetchActiveDraftsForUser(
             final Activity activity, String userId,
-            final RestModelCallbacks<ObjectModelDraft> callback) {
+            final RestModelCallbacks<RestModelDraft> callback) {
 
-        RestAPICallback<RestAPIResult<ObjectModelDraft>> operation =
-                new RestAPICallback<RestAPIResult<ObjectModelDraft>>(activity) {
+        RestAPICallback<RestAPIResult<RestModelDraft>> operation =
+                new RestAPICallback<RestAPIResult<RestModelDraft>>(activity) {
 
             @Override
-            public void success(RestAPIResult<ObjectModelDraft> jsonObject) {
+            public void success(RestAPIResult<RestModelDraft> jsonObject) {
 
                 callback.onSuccess(jsonObject.getResults());
             }
@@ -664,13 +664,13 @@ public final class ObjectModelDraft extends ObjectModel {
                                           Integer week,
                                           Integer year,
                                           Integer limit,
-                                          final RestModelCallbacks<ObjectModelDraft> callback) {
+                                          final RestModelCallbacks<RestModelDraft> callback) {
 
-        RestAPICallback<RestAPIResult<ObjectModelDraft>> operation =
-                new RestAPICallback<RestAPIResult<ObjectModelDraft>>(activity) {
+        RestAPICallback<RestAPIResult<RestModelDraft>> operation =
+                new RestAPICallback<RestAPIResult<RestModelDraft>>(activity) {
 
             @Override
-            public void success(RestAPIResult<ObjectModelDraft> jsonObject) {
+            public void success(RestAPIResult<RestModelDraft> jsonObject) {
 
                 callback.onSuccess(jsonObject.getResults());
             }

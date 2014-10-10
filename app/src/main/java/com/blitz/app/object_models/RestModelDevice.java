@@ -12,7 +12,7 @@ import java.util.Date;
 /**
  * Created by mrkcsc on 8/10/14. Copyright 2014 Blitz Studios
  */
-public class ObjectModelDevice extends ObjectModel{
+public class RestModelDevice extends RestModel {
 
     // region Member Variables
     // =============================================================================================
@@ -72,11 +72,11 @@ public class ObjectModelDevice extends ObjectModel{
             return;
         }
 
-        RestAPICallback<RestAPIResult<ObjectModelDevice>> operation =
-                new RestAPICallback<RestAPIResult<ObjectModelDevice>>(activity) {
+        RestAPICallback<RestAPIResult<RestModelDevice>> operation =
+                new RestAPICallback<RestAPIResult<RestModelDevice>>(activity) {
 
             @Override
-            public void success(RestAPIResult<ObjectModelDevice> jsonObject) {
+            public void success(RestAPIResult<RestModelDevice> jsonObject) {
 
                 if (callback != null) {
                     callback.onSuccess(jsonObject.getResult());
@@ -104,11 +104,11 @@ public class ObjectModelDevice extends ObjectModel{
             return;
         }
 
-        RestAPICallback<RestAPIResult<ObjectModelDevice>> operation =
-                new RestAPICallback<RestAPIResult<ObjectModelDevice>>(activity) {
+        RestAPICallback<RestAPIResult<RestModelDevice>> operation =
+                new RestAPICallback<RestAPIResult<RestModelDevice>>(activity) {
 
             @Override
-            public void success(RestAPIResult<ObjectModelDevice> jsonObject) {
+            public void success(RestAPIResult<RestModelDevice> jsonObject) {
 
                 if (callback != null) {
                     callback.onSuccess(jsonObject.getResult());
@@ -150,11 +150,11 @@ public class ObjectModelDevice extends ObjectModel{
             return;
         }
 
-        RestAPICallback<RestAPIResult<ObjectModelDevice>> operation =
-                new RestAPICallback<RestAPIResult<ObjectModelDevice>>(activity) {
+        RestAPICallback<RestAPIResult<RestModelDevice>> operation =
+                new RestAPICallback<RestAPIResult<RestModelDevice>>(activity) {
 
             @Override
-            public void success(RestAPIResult<ObjectModelDevice> jsonObject) {
+            public void success(RestAPIResult<RestModelDevice> jsonObject) {
 
                 if (callback != null) {
                     callback.onSuccess(jsonObject.getResult());
@@ -203,7 +203,7 @@ public class ObjectModelDevice extends ObjectModel{
      */
     public interface CallbackDevice {
 
-        public void onSuccess(ObjectModelDevice device);
+        public void onSuccess(RestModelDevice device);
     }
 
     // endregion

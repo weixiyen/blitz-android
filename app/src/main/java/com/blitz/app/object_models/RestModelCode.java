@@ -8,7 +8,7 @@ import com.google.gson.JsonObject;
 /**
  * Created by Miguel Gaeta on 6/28/14. Copyright 2014 Blitz Studios
  */
-public class ObjectModelCode extends ObjectModel {
+public class RestModelCode extends RestModel {
 
     // region Member Variables
     // =============================================================================================

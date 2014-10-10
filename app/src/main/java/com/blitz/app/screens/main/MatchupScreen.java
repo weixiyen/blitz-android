@@ -6,7 +6,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.blitz.app.R;
-import com.blitz.app.object_models.ObjectModelPlayer;
+import com.blitz.app.object_models.RestModelPlayer;
 import com.blitz.app.simple_models.Game;
 import com.blitz.app.simple_models.Stat;
 import com.blitz.app.utilities.android.BaseActivity;
@@ -96,7 +96,7 @@ public class MatchupScreen extends BaseActivity implements ViewModelDraftDetail.
     // =============================================================================================
 
     @Override
-    public void onStuff(List<ObjectModelPlayer> p1roster, List<ObjectModelPlayer> p2Roster,
+    public void onStuff(List<RestModelPlayer> p1roster, List<RestModelPlayer> p2Roster,
                         List<Game> p1games, List<Game> p2games,
                         Multimap<String, Stat> playerStats, int week) {
         mPlayerList.setAdapter(new PlayerListAdapter(this, p1roster, p2Roster, p1games, p2games,

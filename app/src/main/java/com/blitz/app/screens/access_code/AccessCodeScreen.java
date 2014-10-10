@@ -5,7 +5,7 @@ import android.view.View;
 import android.widget.EditText;
 
 import com.blitz.app.R;
-import com.blitz.app.object_models.ObjectModelCode;
+import com.blitz.app.object_models.RestModelCode;
 import com.blitz.app.utilities.android.BaseActivity;
 import com.blitz.app.utilities.animations.AnimHelperSpringsGroup;
 import com.blitz.app.utilities.animations.AnimHelperSpringsPresets;
@@ -34,7 +34,7 @@ public class AccessCodeScreen extends BaseActivity {
     private AnimHelperSpringsGroup mAnimations;
 
     // Model.
-    private ObjectModelCode mObjectModelCode;
+    private RestModelCode mObjectModelCode;
 
     // endregion
 
@@ -106,14 +106,14 @@ public class AccessCodeScreen extends BaseActivity {
         }
 
         if (mObjectModelCode == null) {
-            mObjectModelCode = new ObjectModelCode();
+            mObjectModelCode = new RestModelCode();
         }
 
         // Provide code user inputted.
         mObjectModelCode.setValue(mCode.getText().toString());
 
         // Attempt to redeem it.
-        mObjectModelCode.redeemCode(this, new ObjectModelCode.RedeemCodeCallback() {
+        mObjectModelCode.redeemCode(this, new RestModelCode.RedeemCodeCallback() {
 
             @Override
             public void onRedeemCode() {

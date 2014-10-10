@@ -7,7 +7,7 @@ import android.content.pm.PackageManager;
 import android.os.AsyncTask;
 import android.provider.Settings;
 
-import com.blitz.app.object_models.ObjectModelDevice;
+import com.blitz.app.object_models.RestModelDevice;
 import com.blitz.app.utilities.app.AppConfig;
 import com.blitz.app.utilities.app.AppDataObject;
 import com.blitz.app.utilities.authentication.AuthHelper;
@@ -158,21 +158,21 @@ public class GcmRegistrationHelper {
         // Fetch device id.
         final String deviceId = getDeviceId(context);
 
-        ObjectModelDevice.create(null, deviceId, new ObjectModelDevice.CallbackDevice() {
+        RestModelDevice.create(null, deviceId, new RestModelDevice.CallbackDevice() {
 
             @Override
-            public void onSuccess(ObjectModelDevice device) {
+            public void onSuccess(RestModelDevice device) {
 
-                ObjectModelDevice.update(null, device.getId(), null, true, registrationId,
-                        new ObjectModelDevice.CallbackDevice() {
+                RestModelDevice.update(null, device.getId(), null, true, registrationId,
+                        new RestModelDevice.CallbackDevice() {
 
-                    @Override
-                    public void onSuccess(ObjectModelDevice device) {
+                            @Override
+                            public void onSuccess(RestModelDevice device) {
 
-                        // Device registration persisted.
-                        AppDataObject.gcmRegistrationPersisted.set(true);
-                    }
-                });
+                                // Device registration persisted.
+                                AppDataObject.gcmRegistrationPersisted.set(true);
+                            }
+                        });
             }
         });
     }

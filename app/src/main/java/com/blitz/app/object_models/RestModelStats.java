@@ -11,7 +11,7 @@ import retrofit.Callback;
 /**
  * Created by Nate on 9/18/14. Copyright 2014 Blitz Studios
  */
-public class ObjectModelStats extends ObjectModel {
+public class RestModelStats extends RestModel {
     private String player_id;
 
     public String getUserId() {

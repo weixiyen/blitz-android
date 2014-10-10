@@ -3,7 +3,7 @@ package com.blitz.app.object_models;
 /**
  * Created by mrkcsc on 10/9/14. Copyright 2014 Blitz Studios
  */
-public abstract class RestModelCallback<T extends ObjectModel> {
+public abstract class RestModelCallback<T extends RestModel> {
 
     /**
      * Emit response object on success

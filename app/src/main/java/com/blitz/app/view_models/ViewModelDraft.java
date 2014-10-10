@@ -4,10 +4,10 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.os.Handler;
 
-import com.blitz.app.object_models.ObjectModelDraft;
-import com.blitz.app.object_models.ObjectModelItem;
-import com.blitz.app.object_models.ObjectModelPlayer;
-import com.blitz.app.object_models.ObjectModelUser;
+import com.blitz.app.object_models.RestModelDraft;
+import com.blitz.app.object_models.RestModelItem;
+import com.blitz.app.object_models.RestModelPlayer;
+import com.blitz.app.object_models.RestModelUser;
 import com.blitz.app.object_models.RestModelCallback;
 import com.blitz.app.screens.draft.DraftScreen;
 import com.blitz.app.utilities.authentication.AuthHelper;
@@ -49,7 +49,7 @@ public class ViewModelDraft extends ViewModel {
     private Runnable mGameLoopRunnable;
 
     // Reference to latest draft model.
-    private ObjectModelDraft mDraftModel;
+    private RestModelDraft mDraftModel;
 
     // Current draft state.
     private DraftState mState;
@@ -62,7 +62,7 @@ public class ViewModelDraft extends ViewModel {
     private boolean mSyncingChoicesLocked;
 
     // Choice related structures.
-    private List<ObjectModelPlayer> mCurrentPlayerChoices;
+    private List<RestModelPlayer> mCurrentPlayerChoices;
     private Date mCurrentPlayerChoicesShowTime;
 
     // Round time information.
@@ -74,7 +74,7 @@ public class ViewModelDraft extends ViewModel {
     private boolean mChoicesViewHidden;
 
     // Picks so far.
-    private List<ObjectModelDraft.Pick> mCurrentPicks;
+    private List<RestModelDraft.Pick> mCurrentPicks;
 
     // Callbacks.
     private ViewModelDraftCallbacks mCallbacks;
@@ -227,22 +227,22 @@ public class ViewModelDraft extends ViewModel {
             // Picking now locked.
             mPickingLocked = true;
 
-            ObjectModelDraft.pickPlayer(null, mDraftModel.getId(), playerId,
-                    new RestModelCallback<ObjectModelDraft>() {
+            RestModelDraft.pickPlayer(null, mDraftModel.getId(), playerId,
+                    new RestModelCallback<RestModelDraft>() {
 
-                @Override
-                public void onSuccess(ObjectModelDraft object) {
+                        @Override
+                        public void onSuccess(RestModelDraft object) {
 
-                    mPickingLocked = false;
-                }
+                            mPickingLocked = false;
+                        }
 
-                @Override
-                public void onFailure() {
-                    super.onFailure();
+                        @Override
+                        public void onFailure() {
+                            super.onFailure();
 
-                    mPickingLocked = false;
-                }
-            });
+                            mPickingLocked = false;
+                        }
+                    });
         }
     }
 
@@ -260,43 +260,43 @@ public class ViewModelDraft extends ViewModel {
         // Clear current choices.
         mCurrentPlayerChoices = null;
 
-        ObjectModelDraft.fetchSyncedDraft(mActivity, mDraftModel.getId(),
-                new RestModelCallback<ObjectModelDraft>() {
+        RestModelDraft.fetchSyncedDraft(mActivity, mDraftModel.getId(),
+                new RestModelCallback<RestModelDraft>() {
 
-            @Override
-            public void onSuccess(ObjectModelDraft draft) {
+                    @Override
+                    public void onSuccess(RestModelDraft draft) {
 
-                // Update draft model.
-                mDraftModel = draft;
+                        // Update draft model.
+                        mDraftModel = draft;
 
-                if (mDraftModel.getIsDraftComplete()) {
+                        if (mDraftModel.getIsDraftComplete()) {
 
-                    // Draft is now complete.
-                    updateState(DraftState.DRAFT_COMPLETE);
+                            // Draft is now complete.
+                            updateState(DraftState.DRAFT_COMPLETE);
 
-                } else {
+                        } else {
 
-                    // If picks are available.
-                    if (mDraftModel.getPicks() != null) {
+                            // If picks are available.
+                            if (mDraftModel.getPicks() != null) {
 
-                        List<String> playerIds = new ArrayList<String>();
+                                List<String> playerIds = new ArrayList<String>();
 
-                        for (ObjectModelDraft.Pick pick : mDraftModel.getPicks()) {
+                                for (RestModelDraft.Pick pick : mDraftModel.getPicks()) {
 
-                            playerIds.add(pick.getPlayerId());
+                                    playerIds.add(pick.getPlayerId());
+                                }
+
+                                // Update all player picks with actual data - these are
+                                // all also choices so this method will work.
+                                updateChoicesWithoutData(playerIds);
+                            }
+
+                            if (onSynced != null) {
+                                onSynced.run();
+                            }
                         }
-
-                        // Update all player picks with actual data - these are
-                        // all also choices so this method will work.
-                        updateChoicesWithoutData(playerIds);
                     }
-
-                    if (onSynced != null) {
-                        onSynced.run();
-                    }
-                }
-            }
-        });
+                });
     }
 
     /**
@@ -310,35 +310,35 @@ public class ViewModelDraft extends ViewModel {
         List<String> draftUserIds = mDraftModel.getUsers();
 
         // Fetch associated user objects.
-        ObjectModelUser.getUsers(mActivity, draftUserIds, new ObjectModelUser.CallbackUsers() {
+        RestModelUser.getUsers(mActivity, draftUserIds, new RestModelUser.CallbackUsers() {
 
             @Override
-            public void onSuccess(final List<ObjectModelUser> users) {
+            public void onSuccess(final List<RestModelUser> users) {
 
                 final List<String> userAvatarItemIds = new ArrayList<String>();
 
                 // Get list of item ids.
-                for (ObjectModelUser user : users) {
+                for (RestModelUser user : users) {
 
                     userAvatarItemIds.add(user.getAvatarId());
                 }
 
                 // Need to fetch each users item object to complete the sync.
-                ObjectModelItem.fetchItems(mActivity, userAvatarItemIds,
-                        new ObjectModelItem.CallbackItems() {
+                RestModelItem.fetchItems(mActivity, userAvatarItemIds,
+                        new RestModelItem.CallbackItems() {
 
                             @Override
-                            public void onSuccess(List<ObjectModelItem> items) {
+                            public void onSuccess(List<RestModelItem> items) {
 
-                                Map<String, ObjectModelItem> itemsIds =
-                                        new HashMap<String, ObjectModelItem>();
+                                Map<String, RestModelItem> itemsIds =
+                                        new HashMap<String, RestModelItem>();
 
-                                for (ObjectModelItem item : items) {
+                                for (RestModelItem item : items) {
 
                                     itemsIds.put(item.getId(), item);
                                 }
 
-                                for (ObjectModelUser user : users) {
+                                for (RestModelUser user : users) {
 
                                     // User is synced, may have avatar
                                     // information as well.
@@ -358,7 +358,7 @@ public class ViewModelDraft extends ViewModel {
      * @param user User object.
      * @param userAvatarItem User avatar object.
      */
-    private void syncUsersCallback(ObjectModelUser user, ObjectModelItem userAvatarItem) {
+    private void syncUsersCallback(RestModelUser user, RestModelItem userAvatarItem) {
 
         if (mCallbacks != null) {
             mCallbacks
@@ -438,7 +438,7 @@ public class ViewModelDraft extends ViewModel {
                 choiceIds.add(JsonHelper.parseString(choiceJsonObject.get("id")));
 
                 // Add to draft model.
-                mDraftModel.addChoice(ObjectModelPlayer
+                mDraftModel.addChoice(RestModelPlayer
                         .fetchPlayerFromCometJson(choiceJsonObject));
             }
 
@@ -448,7 +448,7 @@ public class ViewModelDraft extends ViewModel {
         } else if (action.equals("pick_player")) {
 
             // Create a new pick object.
-            ObjectModelDraft.Pick pick = new ObjectModelDraft.Pick(
+            RestModelDraft.Pick pick = new RestModelDraft.Pick(
                     message.get("player_id").getAsString(),
                     message.get("user_id").getAsString());
 
@@ -677,7 +677,7 @@ public class ViewModelDraft extends ViewModel {
 
         if (playerChoiceIds != null) {
 
-            List<ObjectModelPlayer> playerChoices = new ArrayList<ObjectModelPlayer>();
+            List<RestModelPlayer> playerChoices = new ArrayList<RestModelPlayer>();
 
             List<String> playerChoicesToSync = new ArrayList<String>();
 
@@ -717,7 +717,7 @@ public class ViewModelDraft extends ViewModel {
             return;
         }
 
-        List<ObjectModelDraft.Pick> currentPicks = new ArrayList<ObjectModelDraft.Pick>();
+        List<RestModelDraft.Pick> currentPicks = new ArrayList<RestModelDraft.Pick>();
 
         // If both round picks have been made.
         if (mDraftModel.getChoices().size() ==
@@ -866,7 +866,7 @@ public class ViewModelDraft extends ViewModel {
      * @param playerChoices Loaded player choices.
      * @param playerChoicesToSync Player ids for choices that need to be synced.
      */
-    private void updateChoices(List<ObjectModelPlayer> playerChoices,
+    private void updateChoices(List<RestModelPlayer> playerChoices,
                                List<String> playerChoicesToSync) {
 
         if (!playerChoicesToSync.isEmpty()) {
@@ -888,7 +888,7 @@ public class ViewModelDraft extends ViewModel {
             List<String> playerPositions = new ArrayList<String>();
             List<String> playerOpponents = new ArrayList<String>();
 
-            for (ObjectModelPlayer playerChoice : mCurrentPlayerChoices) {
+            for (RestModelPlayer playerChoice : mCurrentPlayerChoices) {
 
                 // List of player id's.
                 playerIds.add(playerChoice.getId());
@@ -924,15 +924,15 @@ public class ViewModelDraft extends ViewModel {
         if (!mSyncingChoicesLocked) {
              mSyncingChoicesLocked = true;
 
-            ObjectModelPlayer.fetchPlayers(null, choices,
-                    new ObjectModelPlayer.CallbackPlayers() {
+            RestModelPlayer.fetchPlayers(null, choices,
+                    new RestModelPlayer.CallbackPlayers() {
 
-                @Override
-                public void onSuccess(List<ObjectModelPlayer> players) {
+                        @Override
+                        public void onSuccess(List<RestModelPlayer> players) {
 
-                    // TODO: Implement me.
-                }
-            });
+                            // TODO: Implement me.
+                        }
+                    });
         }
     }
 
@@ -945,7 +945,7 @@ public class ViewModelDraft extends ViewModel {
      *
      * @param currentPicks Current picks.
      */
-    private void updatePicks(List<ObjectModelDraft.Pick> currentPicks) {
+    private void updatePicks(List<RestModelDraft.Pick> currentPicks) {
 
         // If at least one pick and different than current picks.
         if (currentPicks.size() > 0 && !currentPicks.equals(mCurrentPicks)) {
@@ -957,7 +957,7 @@ public class ViewModelDraft extends ViewModel {
             List<String> userIds = new ArrayList<String>();
 
             // Serialize the player and user ids.
-            for (ObjectModelDraft.Pick pick : currentPicks) {
+            for (RestModelDraft.Pick pick : currentPicks) {
 
                 playerIds.add(pick.getPlayerId());
                   userIds.add(pick.getUserId());

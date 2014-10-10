@@ -6,7 +6,7 @@ import com.blitz.app.utilities.rest.RestAPIClient;
 /**
  * Created by mrkcsc on 9/7/14. Copyright 2014 Blitz Studios
  */
-public class ObjectModel {
+public class RestModel {
 
     // region Member Variables
     // =============================================================================================

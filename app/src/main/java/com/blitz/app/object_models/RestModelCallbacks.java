@@ -5,7 +5,7 @@ import java.util.List;
 /**
  * Created by mrkcsc on 10/9/14. Copyright 2014 Blitz Studios
  */
-public abstract class RestModelCallbacks<T extends ObjectModel> {
+public abstract class RestModelCallbacks<T extends RestModel> {
 
     /**
      * Emit response object list on success

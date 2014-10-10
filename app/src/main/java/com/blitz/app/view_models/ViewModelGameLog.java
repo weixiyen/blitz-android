@@ -3,7 +3,7 @@ package com.blitz.app.view_models;
 import android.app.Activity;
 import android.util.SparseArray;
 
-import com.blitz.app.object_models.ObjectModelDraft;
+import com.blitz.app.object_models.RestModelDraft;
 import com.blitz.app.object_models.RestModelCallbacks;
 import com.blitz.app.simple_models.HeadToHeadDraft;
 import com.blitz.app.utilities.authentication.AuthHelper;
@@ -87,32 +87,32 @@ public class ViewModelGameLog extends ViewModel {
         }
 
         // Get fresh data from the server.
-        ObjectModelDraft.fetchDraftsForUser(mActivity, AuthHelper.instance().getUserId(), week, 2014, null,
-            new RestModelCallbacks<ObjectModelDraft>() {
-                @Override
-                public void onSuccess(List<ObjectModelDraft> drafts) {
-                    List<HeadToHeadDraft> matches = new ArrayList<HeadToHeadDraft>(drafts.size());
-                    for(ObjectModelDraft draft: drafts) {
-                        matches.add(new HeadToHeadDraft(
-                                draft.getId(),
-                                draft.getTeamName(0),
-                                draft.getTeamRoster(0),
-                                draft.getTeamPoints(0),
-                                draft.getTeamRatingChange(0),
-                                draft.getTeamName(1),
-                                draft.getTeamRoster(1),
-                                draft.getTeamPoints(1),
-                                draft.getTeamRatingChange(1),
-                                draft.getYear(),
-                                draft.getWeek(),
-                                draft.getStatus()
-                        ));
+        RestModelDraft.fetchDraftsForUser(mActivity, AuthHelper.instance().getUserId(), week, 2014, null,
+                new RestModelCallbacks<RestModelDraft>() {
+                    @Override
+                    public void onSuccess(List<RestModelDraft> drafts) {
+                        List<HeadToHeadDraft> matches = new ArrayList<HeadToHeadDraft>(drafts.size());
+                        for (RestModelDraft draft : drafts) {
+                            matches.add(new HeadToHeadDraft(
+                                    draft.getId(),
+                                    draft.getTeamName(0),
+                                    draft.getTeamRoster(0),
+                                    draft.getTeamPoints(0),
+                                    draft.getTeamRatingChange(0),
+                                    draft.getTeamName(1),
+                                    draft.getTeamRoster(1),
+                                    draft.getTeamPoints(1),
+                                    draft.getTeamRatingChange(1),
+                                    draft.getYear(),
+                                    draft.getWeek(),
+                                    draft.getStatus()
+                            ));
+                        }
+                        mCache.put(week, matches);
+                        mCurrentWeek = week;
+                        mCallbacks.onDrafts(matches, new Summary(matches));
                     }
-                    mCache.put(week, matches);
-                    mCurrentWeek = week;
-                    mCallbacks.onDrafts(matches, new Summary(matches));
-                }
-         });
+                });
 
     }
 

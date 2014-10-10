@@ -10,7 +10,7 @@ import com.google.gson.JsonObject;
  * Created by Miguel Gaeta on 6/26/14. Copyright 2014 Blitz Studios
  */
 @SuppressWarnings("unused")
-public class ObjectModelPreferences extends ObjectModel {
+public class RestModelPreferences extends RestModel {
 
     // region Member Variables
     // =============================================================================================

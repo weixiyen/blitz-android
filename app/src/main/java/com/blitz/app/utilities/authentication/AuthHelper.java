@@ -3,7 +3,7 @@ package com.blitz.app.utilities.authentication;
 import android.content.Intent;
 
 import com.blitz.app.R;
-import com.blitz.app.object_models.ObjectModelDraft;
+import com.blitz.app.object_models.RestModelDraft;
 import com.blitz.app.object_models.RestModelCallback;
 import com.blitz.app.object_models.RestModelCallbacks;
 import com.blitz.app.screens.access_queue.AccessQueueScreen;
@@ -32,7 +32,7 @@ public class AuthHelper {
     private static AuthHelper mInstance;
 
     // There can be only one current draft.
-    private ObjectModelDraft mCurrentDraft;
+    private RestModelDraft mCurrentDraft;
 
     //==============================================================================================
     // Public Methods
@@ -204,7 +204,7 @@ public class AuthHelper {
      * @return Current draft object.
      */
     @SuppressWarnings("unused")
-    public ObjectModelDraft getCurrentDraft() {
+    public RestModelDraft getCurrentDraft() {
 
         return mCurrentDraft;
     }
@@ -215,7 +215,7 @@ public class AuthHelper {
      * @param objectModelDraft Draft model object.
      */
     @SuppressWarnings("unused")
-    public void setCurrentDraft(ObjectModelDraft objectModelDraft) {
+    public void setCurrentDraft(RestModelDraft objectModelDraft) {
 
         mCurrentDraft = objectModelDraft;
     }
@@ -241,11 +241,11 @@ public class AuthHelper {
         } else {
 
             // Attempt to fetch active drafts for the user.
-            ObjectModelDraft.fetchActiveDraftsForUser(activity, AppDataObject.userId.get(),
-                    new RestModelCallbacks<ObjectModelDraft>() {
+            RestModelDraft.fetchActiveDraftsForUser(activity, AppDataObject.userId.get(),
+                    new RestModelCallbacks<RestModelDraft>() {
 
                         @Override
-                        public void onSuccess(List<ObjectModelDraft> drafts) {
+                        public void onSuccess(List<RestModelDraft> drafts) {
 
                             if (drafts.isEmpty()) {
 
@@ -256,21 +256,21 @@ public class AuthHelper {
 
                                 String draftId = drafts.get(drafts.size() - 1).getId();
 
-                                ObjectModelDraft.fetchSyncedDraft(activity, draftId,
-                                        new RestModelCallback<ObjectModelDraft>() {
+                                RestModelDraft.fetchSyncedDraft(activity, draftId,
+                                        new RestModelCallback<RestModelDraft>() {
 
-                                    @Override
-                                    public void onSuccess(ObjectModelDraft draft) {
+                                            @Override
+                                            public void onSuccess(RestModelDraft draft) {
 
-                                        if (draft != null) {
-                                            setCurrentDraft(draft);
+                                                if (draft != null) {
+                                                    setCurrentDraft(draft);
 
-                                            startActivity(activity, DraftScreen.class);
-                                        } else {
-                                            startActivity(activity, MainScreen.class);
-                                        }
-                                    }
-                                });
+                                                    startActivity(activity, DraftScreen.class);
+                                                } else {
+                                                    startActivity(activity, MainScreen.class);
+                                                }
+                                            }
+                                        });
                             }
                         }
                     });

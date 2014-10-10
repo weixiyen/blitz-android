@@ -2,8 +2,8 @@ package com.blitz.app.view_models;
 
 import android.app.Activity;
 
-import com.blitz.app.object_models.ObjectModelItem;
-import com.blitz.app.object_models.ObjectModelUser;
+import com.blitz.app.object_models.RestModelItem;
+import com.blitz.app.object_models.RestModelUser;
 import com.blitz.app.utilities.authentication.AuthHelper;
 
 import java.util.ArrayList;
@@ -18,7 +18,7 @@ public class ViewModelSettings extends ViewModel {
     // =============================================================================================
 
     // List of the avatars this user owns.
-    private List<ObjectModelItem> mUserAvatars;
+    private List<RestModelItem> mUserAvatars;
 
     // The current avatar of this user.
     private String mUserAvatarIdCurrent;
@@ -65,7 +65,7 @@ public class ViewModelSettings extends ViewModel {
     public void updateUserAvatar(String itemAvatarId) {
 
         // Silently update the users avatar.
-        ObjectModelUser.updateAvatar(null, itemAvatarId, null);
+        RestModelUser.updateAvatar(null, itemAvatarId, null);
     }
 
     // endregion
@@ -79,11 +79,11 @@ public class ViewModelSettings extends ViewModel {
     private void fetchUserAvatars() {
 
         // Fetch avatars owned by this user.
-        ObjectModelItem.fetchItemsOwnedByUser(mActivity, AuthHelper.instance().getUserId(),
-                new ObjectModelItem.CallbackItems() {
+        RestModelItem.fetchItemsOwnedByUser(mActivity, AuthHelper.instance().getUserId(),
+                new RestModelItem.CallbackItems() {
 
                     @Override
-                    public void onSuccess(List<ObjectModelItem> items) {
+                    public void onSuccess(List<RestModelItem> items) {
 
                         mUserAvatars = items;
 
@@ -99,11 +99,11 @@ public class ViewModelSettings extends ViewModel {
     private void fetchUserInfo() {
 
         // Fetch user information.
-        ObjectModelUser.getUser(mActivity, AuthHelper.instance().getUserId(),
-                new ObjectModelUser.CallbackUser() {
+        RestModelUser.getUser(mActivity, AuthHelper.instance().getUserId(),
+                new RestModelUser.CallbackUser() {
 
                     @Override
-                    public void onSuccess(ObjectModelUser user) {
+                    public void onSuccess(RestModelUser user) {
 
                         if (getCallbacks(ViewModelSettingsCallbacks.class) != null) {
                             getCallbacks(ViewModelSettingsCallbacks.class)
@@ -111,11 +111,11 @@ public class ViewModelSettings extends ViewModel {
                         }
 
                         // Fetch associated item model.
-                        ObjectModelItem.fetchItem(mActivity, user.getAvatarId(),
-                                new ObjectModelItem.CallbackItem() {
+                        RestModelItem.fetchItem(mActivity, user.getAvatarId(),
+                                new RestModelItem.CallbackItem() {
 
                                     @Override
-                                    public void onSuccess(ObjectModelItem item) {
+                                    public void onSuccess(RestModelItem item) {
 
                                         mUserAvatarIdCurrent = item.getId();
 
@@ -138,7 +138,7 @@ public class ViewModelSettings extends ViewModel {
             List<String> avatarIds = new ArrayList<String>();
             List<String> avatarUrls = new ArrayList<String>();
 
-            for (ObjectModelItem item : mUserAvatars) {
+            for (RestModelItem item : mUserAvatars) {
 
                 avatarIds.add(item.getId());
                 avatarUrls.add(item.getDefaultImgPath());

@@ -3,13 +3,8 @@ package com.blitz.app.object_models;
 import android.util.Pair;
 
 import com.blitz.app.simple_models.Game;
-import com.blitz.app.utilities.rest.RestAPI;
-import com.blitz.app.utilities.rest.RestAPICallback;
 import com.blitz.app.utilities.rest.RestAPIResult;
-import com.blitz.app.view_models.ViewModelDraftDetail.ViewModelDraftDetailCallbacks;
-import com.google.android.gms.maps.MapsInitializer;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -21,7 +16,7 @@ import retrofit.client.Response;
 /**
  * Created by Nate on 9/21/14.
  */
-public class ObjectModelGame extends ObjectModel {
+public class RestModelGame extends RestModel {
 
     private static Map<Pair<Integer, Integer>, List<Game>> mCache =
             new ConcurrentHashMap<Pair<Integer, Integer>, List<Game>>();

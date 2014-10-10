@@ -3,7 +3,7 @@ package com.blitz.app.screens.leaderboard;
 import android.widget.ListView;
 
 import com.blitz.app.R;
-import com.blitz.app.object_models.ObjectModelUser;
+import com.blitz.app.object_models.RestModelUser;
 import com.blitz.app.utilities.android.BaseActivity;
 import com.blitz.app.utilities.reactive.Observer;
 import com.blitz.app.view_models.ViewModel;
@@ -18,7 +18,7 @@ import butterknife.InjectView;
  *
  * Created by Nate on 9/29/14.
  */
-public class LeaderboardScreen extends BaseActivity implements Observer<List<ObjectModelUser>> {
+public class LeaderboardScreen extends BaseActivity implements Observer<List<RestModelUser>> {
 
     @InjectView(R.id.leaderboard_list) ListView mPlayerList;
 
@@ -34,7 +34,7 @@ public class LeaderboardScreen extends BaseActivity implements Observer<List<Obj
         return mViewModel;
     }
 
-    @Override public void onNext(List<ObjectModelUser> leaders) {
+    @Override public void onNext(List<RestModelUser> leaders) {
 
         if (mPlayerList != null) {
             mPlayerList.setAdapter(new LeaderboardListAdapter(this, leaders));

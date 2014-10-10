@@ -1,6 +1,6 @@
 package com.blitz.app.simple_models;
 
-import com.blitz.app.object_models.ObjectModelPlayer;
+import com.blitz.app.object_models.RestModelPlayer;
 
 /**
  * Created by spiff on 9/21/14.
@@ -8,17 +8,17 @@ import com.blitz.app.object_models.ObjectModelPlayer;
 public class WeeklyStat {
 
 
-    private final ObjectModelPlayer mPlayer;
+    private final RestModelPlayer mPlayer;
     private final Game mGame;
     private final float mScore;
 
-    public WeeklyStat(ObjectModelPlayer player, Game game, float score) {
+    public WeeklyStat(RestModelPlayer player, Game game, float score) {
         this.mPlayer = player;
         this.mGame = game;
         this.mScore = score;
     }
 
-    public ObjectModelPlayer getPlayer() {
+    public RestModelPlayer getPlayer() {
         return mPlayer;
     }
 

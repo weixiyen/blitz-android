@@ -15,7 +15,7 @@ import java.util.List;
 /**
  * Created by mrkcsc on 7/9/14. Copyright 2014 Blitz Studios
  */
-public class ObjectModelUser extends ObjectModel {
+public class RestModelUser extends RestModel {
 
     // region Member Variables
     // =============================================================================================
@@ -56,11 +56,11 @@ public class ObjectModelUser extends ObjectModel {
             return;
         }
 
-        RestAPICallback<RestAPIResult<ObjectModelUser>> operation =
-                new RestAPICallback<RestAPIResult<ObjectModelUser>>(activity) {
+        RestAPICallback<RestAPIResult<RestModelUser>> operation =
+                new RestAPICallback<RestAPIResult<RestModelUser>>(activity) {
 
                     @Override
-                    public void success(RestAPIResult<ObjectModelUser> jsonObject) {
+                    public void success(RestAPIResult<RestModelUser> jsonObject) {
 
                         if (callback != null) {
                             callback.onSuccess(jsonObject.getResult());
@@ -92,11 +92,11 @@ public class ObjectModelUser extends ObjectModel {
                                final CallbackUser callback, boolean logoutOnFailure) {
 
         // Rest operation.
-        RestAPICallback<RestAPIResult<ObjectModelUser>> operation =
-                new RestAPICallback<RestAPIResult<ObjectModelUser>>(activity) {
+        RestAPICallback<RestAPIResult<RestModelUser>> operation =
+                new RestAPICallback<RestAPIResult<RestModelUser>>(activity) {
 
                     @Override
-                    public void success(RestAPIResult<ObjectModelUser> jsonObject) {
+                    public void success(RestAPIResult<RestModelUser> jsonObject) {
 
                         if (callback != null) {
                             callback.onSuccess(jsonObject.getResult());
@@ -113,10 +113,10 @@ public class ObjectModelUser extends ObjectModel {
     public static void getTopPlayersWithLimit(Activity activity, final int limit,
                                               final CallbackUsers callback) {
 
-        final RestAPICallback<RestAPIResult<ObjectModelUser>> operation =
-                new RestAPICallback<RestAPIResult<ObjectModelUser>>(activity) {
+        final RestAPICallback<RestAPIResult<RestModelUser>> operation =
+                new RestAPICallback<RestAPIResult<RestModelUser>>(activity) {
                     @Override
-                    public void success(RestAPIResult<ObjectModelUser> result) {
+                    public void success(RestAPIResult<RestModelUser> result) {
                         callback.onSuccess(result.getResults());
                     }
                 };
@@ -136,11 +136,11 @@ public class ObjectModelUser extends ObjectModel {
     public static void getUsers(Activity activity, List<String> userIds,
                                 final CallbackUsers callback) {
 
-        RestAPICallback<RestAPIResult<ObjectModelUser>> operation =
-                new RestAPICallback<RestAPIResult<ObjectModelUser>>(activity) {
+        RestAPICallback<RestAPIResult<RestModelUser>> operation =
+                new RestAPICallback<RestAPIResult<RestModelUser>>(activity) {
 
                     @Override
-                    public void success(RestAPIResult<ObjectModelUser> jsonObject) {
+                    public void success(RestAPIResult<RestModelUser> jsonObject) {
 
                         if (callback != null) {
                             callback.onSuccess(jsonObject.getResults());
@@ -371,12 +371,12 @@ public class ObjectModelUser extends ObjectModel {
 
     public interface CallbackUser {
 
-        public void onSuccess(ObjectModelUser user);
+        public void onSuccess(RestModelUser user);
     }
 
     public interface CallbackUsers {
 
-        public void onSuccess(List<ObjectModelUser> users);
+        public void onSuccess(List<RestModelUser> users);
     }
 
     // endregion

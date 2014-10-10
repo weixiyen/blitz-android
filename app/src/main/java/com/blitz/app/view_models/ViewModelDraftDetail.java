@@ -3,12 +3,12 @@ package com.blitz.app.view_models;
 import android.app.Activity;
 import android.os.Bundle;
 
-import com.blitz.app.object_models.ObjectModelDraft;
-import com.blitz.app.object_models.ObjectModelGame;
-import com.blitz.app.object_models.ObjectModelItem;
-import com.blitz.app.object_models.ObjectModelPlayer;
-import com.blitz.app.object_models.ObjectModelStats;
-import com.blitz.app.object_models.ObjectModelUser;
+import com.blitz.app.object_models.RestModelDraft;
+import com.blitz.app.object_models.RestModelGame;
+import com.blitz.app.object_models.RestModelItem;
+import com.blitz.app.object_models.RestModelPlayer;
+import com.blitz.app.object_models.RestModelStats;
+import com.blitz.app.object_models.RestModelUser;
 import com.blitz.app.object_models.RestModelCallback;
 import com.blitz.app.screens.main.MatchInfoAdapter;
 import com.blitz.app.simple_models.Game;
@@ -32,14 +32,14 @@ import java.util.Map;
  */
 public class ViewModelDraftDetail extends ViewModel {
 
-    ObjectModelUser           mPlayer1;
-    ObjectModelUser           mPlayer2;
-    List<ObjectModelPlayer>   mRoster1;
-    List<ObjectModelPlayer>   mRoster2;
+    RestModelUser mPlayer1;
+    RestModelUser mPlayer2;
+    List<RestModelPlayer>   mRoster1;
+    List<RestModelPlayer>   mRoster2;
     String                    mAvatarUrl1;
     String                    mAvatarUrl2;
     List<Game>                mGames;
-    private ObjectModelDraft  mDraft;
+    private RestModelDraft mDraft;
     private Multimap<String, Stat> mPlayerStatsMap;
     private boolean           mInitialized = false;
 
@@ -63,28 +63,28 @@ public class ViewModelDraftDetail extends ViewModel {
 
         final ViewModelDraftDetailCallbacks callbacks = getCallbacks(ViewModelDraftDetailCallbacks.class);
 
-        ObjectModelDraft.fetchSyncedDraft(mActivity, draftId, new RestModelCallback<ObjectModelDraft>() {
+        RestModelDraft.fetchSyncedDraft(mActivity, draftId, new RestModelCallback<RestModelDraft>() {
             @Override
-            public void onSuccess(final ObjectModelDraft draft) {
+            public void onSuccess(final RestModelDraft draft) {
 
                 mDraft = draft;
 
                 final List<String> playerIds = new ArrayList<String>(draft.getPicks().size());
 
-                for (ObjectModelDraft.Pick pick : draft.getPicks()) {
+                for (RestModelDraft.Pick pick : draft.getPicks()) {
                     playerIds.add(pick.getPlayerId());
                 }
 
-                ObjectModelPlayer.fetchPlayers(null, playerIds,
-                        new ObjectModelPlayer.CallbackPlayers() {
+                RestModelPlayer.fetchPlayers(null, playerIds,
+                        new RestModelPlayer.CallbackPlayers() {
 
                             @Override
-                            public void onSuccess(List<ObjectModelPlayer> players) {
+                            public void onSuccess(List<RestModelPlayer> players) {
 
-                                Map<String, ObjectModelPlayer> playerMap =
-                                        new HashMap<String, ObjectModelPlayer>();
+                                Map<String, RestModelPlayer> playerMap =
+                                        new HashMap<String, RestModelPlayer>();
 
-                                for (ObjectModelPlayer player: players) {
+                                for (RestModelPlayer player : players) {
 
                                     playerMap.put(player.getId(), player);
                                 }
@@ -99,7 +99,7 @@ public class ViewModelDraftDetail extends ViewModel {
                 final int week = draft.getWeek();
                 final int year = draft.getYear();
 
-                ObjectModelGame.fetchGames(year, week, new RestAPICallback<List<Game>>(null) {
+                RestModelGame.fetchGames(year, week, new RestAPICallback<List<Game>>(null) {
                     @Override
                     public void success(List<Game> games) {
 
@@ -108,36 +108,36 @@ public class ViewModelDraftDetail extends ViewModel {
                     }
                 });
 
-                ObjectModelStats.fetchStatsForPlayers(playerIds, year, week,
+                RestModelStats.fetchStatsForPlayers(playerIds, year, week,
                         new RestAPICallback<RestAPIResult<Stat>>(null) {
 
+                            @Override
+                            public void success(RestAPIResult<Stat> stats) {
+
+                                mPlayerStatsMap = buildPlayerStatsMap(stats.getResults());
+                                onSyncComplete(callbacks);
+                            }
+                        });
+
+                RestModelUser.getUsers(null, mDraft.getUsers(), new RestModelUser.CallbackUsers() {
                     @Override
-                    public void success(RestAPIResult<Stat> stats) {
+                    public void onSuccess(List<RestModelUser> users) {
 
-                        mPlayerStatsMap = buildPlayerStatsMap(stats.getResults());
-                        onSyncComplete(callbacks);
-                    }
-                });
-
-                ObjectModelUser.getUsers(null, mDraft.getUsers(), new ObjectModelUser.CallbackUsers() {
-                    @Override
-                    public void onSuccess(List<ObjectModelUser> users) {
-
-                        for(ObjectModelUser user: users) {
-                            if(user.getId().equals(AuthHelper.instance().getUserId())) {
+                        for (RestModelUser user : users) {
+                            if (user.getId().equals(AuthHelper.instance().getUserId())) {
                                 mPlayer1 = user;
                             } else {
                                 mPlayer2 = user;
                             }
                         }
 
-                        ObjectModelItem.fetchAvatars(null,
+                        RestModelItem.fetchAvatars(null,
                                 Arrays.asList(mPlayer1.getAvatarId(), mPlayer2.getAvatarId()),
-                                new ObjectModelItem.CallbackItems() {
+                                new RestModelItem.CallbackItems() {
                                     @Override
-                                    public void onSuccess(List<ObjectModelItem> items) {
-                                        for (ObjectModelItem item: items) {
-                                            if(mPlayer1.getAvatarId().equals(item.getId())) {
+                                    public void onSuccess(List<RestModelItem> items) {
+                                        for (RestModelItem item : items) {
+                                            if (mPlayer1.getAvatarId().equals(item.getId())) {
                                                 mAvatarUrl1 = item.getDefaultImgPath();
                                             } else {
                                                 mAvatarUrl2 = item.getDefaultImgPath();
@@ -177,11 +177,11 @@ public class ViewModelDraftDetail extends ViewModel {
         }
     }
 
-    private static float getScore(List<ObjectModelPlayer> roster, Multimap<String, Stat> playerStats) {
+    private static float getScore(List<RestModelPlayer> roster, Multimap<String, Stat> playerStats) {
 
         float total = 0;
 
-        for (ObjectModelPlayer player: roster) {
+        for (RestModelPlayer player: roster) {
             for(Stat stat: playerStats.get(player.getId())) {
                 total += stat.getPoints();
             }
@@ -190,10 +190,10 @@ public class ViewModelDraftDetail extends ViewModel {
         return total;
     }
 
-    private void populateRosters(Map<String, ObjectModelPlayer> playersDict) {
+    private void populateRosters(Map<String, RestModelPlayer> playersDict) {
 
-        final List<ObjectModelPlayer> myPicks = new ArrayList<ObjectModelPlayer>();
-        final List<ObjectModelPlayer> opponentPicks = new ArrayList<ObjectModelPlayer>();
+        final List<RestModelPlayer> myPicks = new ArrayList<RestModelPlayer>();
+        final List<RestModelPlayer> opponentPicks = new ArrayList<RestModelPlayer>();
 
         for(Map.Entry<String, List<String>> entry : mDraft.getRosters().entrySet()) {
 
@@ -220,11 +220,11 @@ public class ViewModelDraftDetail extends ViewModel {
         mRoster2 = opponentPicks;
     }
 
-    private List<Game> getPlayerGames(List<ObjectModelPlayer> roster, List<Game> games) {
+    private List<Game> getPlayerGames(List<RestModelPlayer> roster, List<Game> games) {
 
         List<Game> gamesForPlayers = new ArrayList<Game>(roster.size());
 
-        for(ObjectModelPlayer player : roster) {
+        for(RestModelPlayer player : roster) {
             Game playerGame = new Game();
             for(Game game: games) {
                 if(player.getTeam().equals(game.getAwayTeamName()) ||
@@ -253,7 +253,7 @@ public class ViewModelDraftDetail extends ViewModel {
 
     public interface ViewModelDraftDetailCallbacks extends ViewModelCallbacks {
 
-        void onStuff(List<ObjectModelPlayer> p1roster, List<ObjectModelPlayer> p2Roster, List<Game> p1Games,
+        void onStuff(List<RestModelPlayer> p1roster, List<RestModelPlayer> p2Roster, List<Game> p1Games,
                      List<Game> p2Games,
                      Multimap<String, Stat> playerStats, int week);
 

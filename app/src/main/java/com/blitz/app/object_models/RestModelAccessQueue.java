@@ -8,7 +8,7 @@ import com.google.gson.JsonObject;
 /**
  * Created by mrkcsc on 8/9/14. Copyright 2014 Blitz Studios
  */
-public class ObjectModelAccessQueue extends ObjectModel {
+public class RestModelAccessQueue extends RestModel {
 
     // region Member Variables
     // =============================================================================================
