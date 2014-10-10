@@ -1,6 +1,6 @@
 package com.blitz.app.simple_models;
 
-import com.blitz.app.object_models.RestModelPlayer;
+import com.blitz.app.rest_models.RestModelPlayer;
 
 /**
  * Created by spiff on 9/21/14.

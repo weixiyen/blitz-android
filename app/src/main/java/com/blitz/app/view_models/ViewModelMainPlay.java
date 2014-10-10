@@ -4,9 +4,9 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.os.Handler;
 
-import com.blitz.app.object_models.RestModelItem;
-import com.blitz.app.object_models.RestModelQueue;
-import com.blitz.app.object_models.RestModelUser;
+import com.blitz.app.rest_models.RestModelItem;
+import com.blitz.app.rest_models.RestModelQueue;
+import com.blitz.app.rest_models.RestModelUser;
 import com.blitz.app.screens.main.MainScreenFragmentPlay;
 import com.blitz.app.utilities.app.AppDataObject;
 import com.blitz.app.utilities.authentication.AuthHelper;

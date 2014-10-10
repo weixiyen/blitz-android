@@ -1,4 +1,4 @@
-package com.blitz.app.object_models;
+package com.blitz.app.rest_models;
 
 import android.app.Activity;
 import android.widget.EditText;

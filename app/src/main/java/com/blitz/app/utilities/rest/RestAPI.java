@@ -1,11 +1,11 @@
 package com.blitz.app.utilities.rest;
 
-import com.blitz.app.object_models.RestModelDevice;
-import com.blitz.app.object_models.RestModelDraft;
-import com.blitz.app.object_models.RestModelItem;
-import com.blitz.app.object_models.RestModelPlayer;
-import com.blitz.app.object_models.RestModelStats;
-import com.blitz.app.object_models.RestModelUser;
+import com.blitz.app.rest_models.RestModelDevice;
+import com.blitz.app.rest_models.RestModelDraft;
+import com.blitz.app.rest_models.RestModelItem;
+import com.blitz.app.rest_models.RestModelPlayer;
+import com.blitz.app.rest_models.RestModelStats;
+import com.blitz.app.rest_models.RestModelUser;
 import com.blitz.app.simple_models.Game;
 import com.blitz.app.simple_models.Stat;
 import com.google.gson.JsonObject;

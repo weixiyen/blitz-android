@@ -2,7 +2,7 @@ package com.blitz.app.view_models;
 
 import android.app.Activity;
 
-import com.blitz.app.object_models.RestModelUser;
+import com.blitz.app.rest_models.RestModelUser;
 import com.blitz.app.utilities.reactive.Observer;
 
 import java.util.List;

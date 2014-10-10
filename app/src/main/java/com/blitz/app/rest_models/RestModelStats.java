@@ -1,4 +1,4 @@
-package com.blitz.app.object_models;
+package com.blitz.app.rest_models;
 
 import com.blitz.app.simple_models.Stat;
 import com.blitz.app.utilities.rest.RestAPIResult;

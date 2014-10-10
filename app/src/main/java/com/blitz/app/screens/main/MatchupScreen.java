@@ -6,7 +6,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.blitz.app.R;
-import com.blitz.app.object_models.RestModelPlayer;
+import com.blitz.app.rest_models.RestModelPlayer;
 import com.blitz.app.simple_models.Game;
 import com.blitz.app.simple_models.Stat;
 import com.blitz.app.utilities.android.BaseActivity;

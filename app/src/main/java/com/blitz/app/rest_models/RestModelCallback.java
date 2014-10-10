@@ -1,4 +1,4 @@
-package com.blitz.app.object_models;
+package com.blitz.app.rest_models;
 
 /**
  * Created by mrkcsc on 10/9/14. Copyright 2014 Blitz Studios

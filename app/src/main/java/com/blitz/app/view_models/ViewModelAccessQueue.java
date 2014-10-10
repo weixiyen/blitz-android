@@ -2,7 +2,7 @@ package com.blitz.app.view_models;
 
 import android.app.Activity;
 
-import com.blitz.app.object_models.RestModelAccessQueue;
+import com.blitz.app.rest_models.RestModelAccessQueue;
 import com.blitz.app.utilities.gcm.GcmRegistrationHelper;
 
 /**

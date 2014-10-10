@@ -7,7 +7,7 @@ import android.content.pm.PackageManager;
 import android.os.AsyncTask;
 import android.provider.Settings;
 
-import com.blitz.app.object_models.RestModelDevice;
+import com.blitz.app.rest_models.RestModelDevice;
 import com.blitz.app.utilities.app.AppConfig;
 import com.blitz.app.utilities.app.AppDataObject;
 import com.blitz.app.utilities.authentication.AuthHelper;

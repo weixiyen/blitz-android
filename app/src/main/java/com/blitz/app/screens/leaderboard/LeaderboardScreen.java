@@ -3,7 +3,7 @@ package com.blitz.app.screens.leaderboard;
 import android.widget.ListView;
 
 import com.blitz.app.R;
-import com.blitz.app.object_models.RestModelUser;
+import com.blitz.app.rest_models.RestModelUser;
 import com.blitz.app.utilities.android.BaseActivity;
 import com.blitz.app.utilities.reactive.Observer;
 import com.blitz.app.view_models.ViewModel;

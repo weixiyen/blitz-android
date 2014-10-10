@@ -2,9 +2,9 @@ package com.blitz.app.view_models;
 
 import android.app.Activity;
 
-import com.blitz.app.object_models.RestModelDraft;
-import com.blitz.app.object_models.RestModelCallback;
-import com.blitz.app.object_models.RestModelQueue;
+import com.blitz.app.rest_models.RestModelDraft;
+import com.blitz.app.rest_models.RestModelCallback;
+import com.blitz.app.rest_models.RestModelQueue;
 import com.blitz.app.utilities.comet.CometAPICallback;
 import com.blitz.app.utilities.comet.CometAPIManager;
 import com.blitz.app.screens.main.MainScreen;

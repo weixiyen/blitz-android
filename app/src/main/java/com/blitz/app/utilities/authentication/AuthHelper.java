@@ -3,9 +3,9 @@ package com.blitz.app.utilities.authentication;
 import android.content.Intent;
 
 import com.blitz.app.R;
-import com.blitz.app.object_models.RestModelDraft;
-import com.blitz.app.object_models.RestModelCallback;
-import com.blitz.app.object_models.RestModelCallbacks;
+import com.blitz.app.rest_models.RestModelDraft;
+import com.blitz.app.rest_models.RestModelCallback;
+import com.blitz.app.rest_models.RestModelCallbacks;
 import com.blitz.app.screens.access_queue.AccessQueueScreen;
 import com.blitz.app.screens.draft.DraftScreen;
 import com.blitz.app.screens.main.MainScreen;

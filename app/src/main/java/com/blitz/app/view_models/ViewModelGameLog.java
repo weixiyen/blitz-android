@@ -3,8 +3,8 @@ package com.blitz.app.view_models;
 import android.app.Activity;
 import android.util.SparseArray;
 
-import com.blitz.app.object_models.RestModelDraft;
-import com.blitz.app.object_models.RestModelCallbacks;
+import com.blitz.app.rest_models.RestModelDraft;
+import com.blitz.app.rest_models.RestModelCallbacks;
 import com.blitz.app.simple_models.HeadToHeadDraft;
 import com.blitz.app.utilities.authentication.AuthHelper;
 

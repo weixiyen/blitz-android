@@ -1,4 +1,4 @@
-package com.blitz.app.object_models;
+package com.blitz.app.rest_models;
 
 import java.util.List;
 

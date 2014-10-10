@@ -8,7 +8,7 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import com.blitz.app.R;
-import com.blitz.app.object_models.RestModelUser;
+import com.blitz.app.rest_models.RestModelUser;
 
 import java.util.List;
 

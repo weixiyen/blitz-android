@@ -4,11 +4,11 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.os.Handler;
 
-import com.blitz.app.object_models.RestModelDraft;
-import com.blitz.app.object_models.RestModelItem;
-import com.blitz.app.object_models.RestModelPlayer;
-import com.blitz.app.object_models.RestModelUser;
-import com.blitz.app.object_models.RestModelCallback;
+import com.blitz.app.rest_models.RestModelDraft;
+import com.blitz.app.rest_models.RestModelItem;
+import com.blitz.app.rest_models.RestModelPlayer;
+import com.blitz.app.rest_models.RestModelUser;
+import com.blitz.app.rest_models.RestModelCallback;
 import com.blitz.app.screens.draft.DraftScreen;
 import com.blitz.app.utilities.authentication.AuthHelper;
 import com.blitz.app.utilities.comet.CometAPICallback;
