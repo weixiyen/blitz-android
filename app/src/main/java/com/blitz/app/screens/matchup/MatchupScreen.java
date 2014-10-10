@@ -1,5 +1,6 @@
 package com.blitz.app.screens.matchup;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ListView;
@@ -30,14 +31,17 @@ public class MatchupScreen extends BaseActivity implements ViewModelMatchup.View
     // =============================================================================================
 
     // Did we enter this screen directly from finishing a draft.
-    public static final String PARAM_IS_FROM_DRAFT = "MatchupScreen.navigateToPlayScreen";
+    public static final String PARAM_IS_FROM_DRAFT = "PARAM_IS_FROM_DRAFT";
 
     // The passed in draft id.
-    public static final String PARAM_DRAFT_ID = "MatchInfoAdapter.draftId";
+    public static final String PARAM_DRAFT_ID = "PARAM_DRAFT_ID";
 
     // The draft that this matchup is
     // associated with, cannot be null.
     private String mDraftId;
+
+    // Are we transitioning from draft.
+    private boolean mIsFromDraft;
 
     private ViewModelMatchup mViewModel;
 
@@ -55,11 +59,39 @@ public class MatchupScreen extends BaseActivity implements ViewModelMatchup.View
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        // If no draft id exists.
+        if (mDraftId == null) {
+
+            // A draft id is required for this screen.
+            AuthHelper.instance().tryEnterMainApp(this);
+        }
+
         flipPlayer2Avatar();
+    }
+
+
+    /**
+     * Conditionally navigate to the main screen.
+     */
+    @Override
+    public void onBackPressed() {
+
+        if (mIsFromDraft) {
+
+            // Transition directly into main app.
+            AuthHelper.instance().tryEnterMainApp(this);
+        } else {
+
+            // Normal back behavior.
+            super.onBackPressed();
+        }
     }
 
     @Override
     public ViewModel onFetchViewModel() {
+
+        // Parse params.
+        parseIntentParameters();
 
         if (mViewModel == null) {
             mViewModel = new ViewModelMatchup(this, this, mDraftId);
@@ -72,6 +104,24 @@ public class MatchupScreen extends BaseActivity implements ViewModelMatchup.View
 
     // region Private Methods
     // =============================================================================================
+
+    /**
+     * Parse parameters into this screen.
+     */
+    private void parseIntentParameters() {
+
+        Intent intent = getIntent();
+
+        // Ensure intent is no null.
+        if (intent != null) {
+
+            // Fetch associated draft id (required).
+            mDraftId = intent.getStringExtra(MatchupScreen.PARAM_DRAFT_ID);
+
+            // Fetch is we are from draft screen.
+            mIsFromDraft = intent.getBooleanExtra(MatchupScreen.PARAM_IS_FROM_DRAFT, false);
+        }
+    }
 
     private String formatScore(float score) {
         return String.format("%.02f", score);
@@ -139,22 +189,6 @@ public class MatchupScreen extends BaseActivity implements ViewModelMatchup.View
         ((BlitzImageView)findViewById(R.id.player2_details).findViewById(R.id.player_avatar))
                 .setImageUrl(player2AvatarUrl);
     }
-
-    /**
-     * Conditionally navigate to the main screen.
-     */
-    @Override
-    public void onBackPressed() {
-
-        if (getIntent().getBooleanExtra(PARAM_IS_FROM_DRAFT, false)) {
-
-            AuthHelper.instance().tryEnterMainApp(this);
-        } else {
-
-            super.onBackPressed();
-        }
-    }
-
 
     // endregion
 }

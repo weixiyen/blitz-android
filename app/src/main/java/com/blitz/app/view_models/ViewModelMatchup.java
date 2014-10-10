@@ -1,7 +1,6 @@
 package com.blitz.app.view_models;
 
 import android.app.Activity;
-import android.os.Bundle;
 
 import com.blitz.app.rest_models.RestModelCallback;
 import com.blitz.app.rest_models.RestModelDraft;
@@ -10,7 +9,6 @@ import com.blitz.app.rest_models.RestModelItem;
 import com.blitz.app.rest_models.RestModelPlayer;
 import com.blitz.app.rest_models.RestModelStats;
 import com.blitz.app.rest_models.RestModelUser;
-import com.blitz.app.screens.matchup.MatchupScreen;
 import com.blitz.app.simple_models.Game;
 import com.blitz.app.simple_models.Stat;
 import com.blitz.app.utilities.authentication.AuthHelper;
@@ -65,21 +63,8 @@ public class ViewModelMatchup extends ViewModel {
      */
     @SuppressWarnings("unused")
     public ViewModelMatchup(Activity activity,
-                             ViewModelDraftDetailCallbacks callbacks, String draftId) {
+                            final ViewModelDraftDetailCallbacks callbacks, String draftId) {
         super(activity, callbacks);
-
-        // TODO: Initialize.
-    }
-
-    @Override
-    public void initialize() {
-
-        if(mInitialized) return;
-
-        final Bundle extras = mActivity.getIntent().getExtras();
-        final String draftId = extras.getString(MatchupScreen.PARAM_DRAFT_ID);
-
-        final ViewModelDraftDetailCallbacks callbacks = getCallbacks(ViewModelDraftDetailCallbacks.class);
 
         RestModelDraft.fetchSyncedDraft(mActivity, draftId, new RestModelCallback<RestModelDraft>() {
             @Override
@@ -167,6 +152,11 @@ public class ViewModelMatchup extends ViewModel {
                 });
             }
         });
+    }
+
+    @Override
+    public void initialize() {
+
     }
 
     private synchronized void onSyncComplete(ViewModelDraftDetailCallbacks callbacks) {
