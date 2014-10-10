@@ -204,8 +204,11 @@ public class BlitzImageView extends ImageView {
             mCacheImageUrl = styledAttributes.getBoolean
                     (R.styleable.BlitzImageView_cacheImageURL, false);
 
-            // Set with cached url if present.
-            setImageUrl(getCachedImageUrl());
+            if (mCacheImageUrl) {
+
+                // Set with cached url if present.
+                setImageUrl(getCachedImageUrl());
+            }
         }
     }
 
