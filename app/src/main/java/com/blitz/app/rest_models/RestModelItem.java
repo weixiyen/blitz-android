@@ -9,8 +9,6 @@ import com.google.gson.annotations.SerializedName;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * Created by mrkcsc on 9/9/14. Copyright 2014 Blitz Studios
@@ -43,9 +41,6 @@ public class RestModelItem extends RestModel {
     private Date mLastUpdated;
     @SuppressWarnings("unused") @SerializedName("created")
     private Date mCreated;
-
-    private static Map<String, RestModelItem> sAvatarCache
-            = new ConcurrentHashMap<String, RestModelItem>();
 
     // endregion
 
@@ -105,54 +100,6 @@ public class RestModelItem extends RestModel {
                 };
 
         mRestAPI.item_get(itemId, operation);
-    }
-
-    /**
-     * The cache must be initialized before you call this.
-     *
-     * @param avatarIds Avatar ids.
-     *
-     * @return A list of avatar urls in order corresponding to the input avatar ids.
-     */
-    private static List<RestModelItem> getAvatarUrlsFromCache(List<String> avatarIds) {
-
-        List<RestModelItem> items = new ArrayList<RestModelItem>(avatarIds.size());
-        for(String id: avatarIds) {
-            items.add(sAvatarCache.get(id));
-        }
-        return items;
-    }
-
-    public static void fetchAvatars(Activity activity, final List<String> avatarIds,
-                                       final CallbackItems callback) {
-
-        if (!sAvatarCache.isEmpty()) {
-
-            callback.onSuccess(getAvatarUrlsFromCache(avatarIds));
-        } else {
-
-            RestAPICallback<RestAPIResult<RestModelItem>> operation =
-                    new RestAPICallback<RestAPIResult<RestModelItem>>(activity) {
-
-                        @Override
-                        public void success(RestAPIResult<RestModelItem> items) {
-
-                            sAvatarCache.clear();
-
-                            for (RestModelItem item : items.getResults()) {
-                                sAvatarCache.put(item.getId(), item);
-                            }
-
-                            if (callback != null) {
-
-                                callback.onSuccess(getAvatarUrlsFromCache(avatarIds));
-                            }
-                        }
-                    };
-
-
-            mRestAPI.items_get(avatarIds, "id", null, null, operation);
-        }
     }
 
     /**
