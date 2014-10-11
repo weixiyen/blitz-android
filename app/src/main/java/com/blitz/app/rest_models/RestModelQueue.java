@@ -17,9 +17,6 @@ public class RestModelQueue extends RestModel {
     // static to preserve state.
     private static String mDraftKey;
 
-    // Preferences model used to sync.
-    private RestModelPreferences mModelPreferences;
-
     // endregion
 
     // region Public Methods
@@ -34,33 +31,32 @@ public class RestModelQueue extends RestModel {
      */
     public void queueUp(final Activity activity, final Runnable callback) {
 
-
         // First sync preferences to get the active draft key.
-        RestModelPreferences.sync(new RestAPICallback<RestModelPreferences>(activity) {
-            @Override
-            public void success(RestModelPreferences preferences) {
+        RestModelPreferences.sync(activity, new RestModelCallback<RestModelPreferences>() {
 
+            @Override
+            public void onSuccess(RestModelPreferences object) {
 
                 // Set draft key to the active queue.
-                mDraftKey =  preferences.currentActiveQueue();
+                mDraftKey = object.currentActiveQueue();
 
                 // Define operation, call on queue up when complete.
                 RestAPICallback<JsonObject> operation =
                         new RestAPICallback<JsonObject>(activity) {
 
-                    @Override
-                    public void success(JsonObject jsonObject) {
+                            @Override
+                            public void success(JsonObject jsonObject) {
 
-                        // Now in queue.
-                        if (callback != null) {
-                            callback.run();
-                        }
-                    }
-                };
+                                // Now in queue.
+                                if (callback != null) {
+                                    callback.run();
+                                }
+                            }
+                        };
 
                 // Construct POST body.
                 JsonObject body = new JsonObject();
-                           body.addProperty("draft_key", mDraftKey);
+                body.addProperty("draft_key", mDraftKey);
 
                 // Make api call.
                 mRestAPI.queue_post(body, operation);

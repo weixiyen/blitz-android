@@ -3,9 +3,9 @@ package com.blitz.app.utilities.authentication;
 import android.content.Intent;
 
 import com.blitz.app.R;
-import com.blitz.app.rest_models.RestModelDraft;
 import com.blitz.app.rest_models.RestModelCallback;
 import com.blitz.app.rest_models.RestModelCallbacks;
+import com.blitz.app.rest_models.RestModelDraft;
 import com.blitz.app.rest_models.RestModelPreferences;
 import com.blitz.app.screens.access_queue.AccessQueueScreen;
 import com.blitz.app.screens.draft.DraftScreen;
@@ -16,7 +16,6 @@ import com.blitz.app.utilities.android.BaseActivity;
 import com.blitz.app.utilities.app.AppConfig;
 import com.blitz.app.utilities.app.AppData;
 import com.blitz.app.utilities.app.AppDataObject;
-import com.blitz.app.utilities.rest.RestAPICallback;
 import com.blitz.app.utilities.sound.SoundHelper;
 
 import java.util.List;
@@ -256,11 +255,13 @@ public class AuthHelper {
 
         } else {
 
-            RestModelPreferences.sync(new RestAPICallback<RestModelPreferences>(activity) {
+            // Sync the user preferences in background since they are not
+            // critical to the application state.
+            RestModelPreferences.sync(null, new RestModelCallback<RestModelPreferences>() {
 
                 @Override
-                public void success(RestModelPreferences preferences) {
-                    mPreferences = preferences;
+                public void onSuccess(RestModelPreferences object) {
+                    mPreferences = object;
                 }
             });
 

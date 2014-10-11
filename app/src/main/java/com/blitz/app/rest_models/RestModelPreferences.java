@@ -1,5 +1,7 @@
 package com.blitz.app.rest_models;
 
+import android.app.Activity;
+
 import com.blitz.app.utilities.app.AppConfig;
 import com.blitz.app.utilities.rest.RestAPICallback;
 import com.google.gson.annotations.SerializedName;
@@ -31,6 +33,32 @@ public class RestModelPreferences extends RestModel {
 
     // endregion
 
+    // region REST Methods
+    // =============================================================================================
+
+    /**
+     * Fetch the current users preferences.
+     */
+    public static void sync(Activity activity, final RestModelCallback<RestModelPreferences> callback) {
+
+        RestAPICallback<RestModelPreferences> operation =
+                new RestAPICallback<RestModelPreferences>(activity) {
+
+                    @Override
+                    public void success(RestModelPreferences jsonObject) {
+
+                        if (callback != null) {
+                            callback.onSuccess(jsonObject);
+                        }
+                    }
+                };
+
+        // Make api call.
+        mRestAPI.preferences_get(operation);
+    }
+
+    // endregion
+
     // region Public Methods
     // =============================================================================================
 
@@ -39,32 +67,45 @@ public class RestModelPreferences extends RestModel {
      *
      * @return Active queue.
      */
+    @SuppressWarnings("unused")
     public String currentActiveQueue() {
+
         return mCurrentActiveQueue;
     }
 
+    /**
+     * Get current drafting week.
+     *
+     * @return Current drafting week.
+     */
+    @SuppressWarnings("unused")
     public int getCurrentWeek() {
+
         return mCurrentWeek;
     }
 
+    /**
+     * Get current drafting year.
+     *
+     * @return Current drafting year.
+     */
+    @SuppressWarnings("unused")
     public int getCurrentYear() {
+
         return mCurrentYear;
     }
 
     /**
-     * Sync user preferences.
+     * Get an approximation of user preferences.
+     *
+     * @return Some default values set.
      */
-    public static void sync(RestAPICallback<RestModelPreferences> callback) {
-
-        // Make api call.
-        mRestAPI.preferences_get(callback);
-    }
-
+    @SuppressWarnings("unused")
     public static RestModelPreferences defaultPreferences() {
 
         RestModelPreferences preferences = new RestModelPreferences();
 
-        if(AppConfig.isProduction()) {
+        if (AppConfig.isProduction()) {
             preferences.mCurrentYear = 2014;
             preferences.mCurrentWeek = 1;
         } else {
@@ -77,4 +118,6 @@ public class RestModelPreferences extends RestModel {
 
         return preferences;
     }
+
+    // endregion
 }
