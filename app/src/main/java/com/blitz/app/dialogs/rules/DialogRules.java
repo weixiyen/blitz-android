@@ -7,9 +7,6 @@ import com.blitz.app.R;
 import com.blitz.app.utilities.android.BaseDialogFragment;
 import com.blitz.app.utilities.reflection.ReflectionHelper;
 
-import java.util.ArrayList;
-import java.util.List;
-
 /**
  * DialogFragment for rules.
  *
@@ -19,19 +16,6 @@ public class DialogRules extends BaseDialogFragment {
 
     @Override
     protected void onViewCreated(View view) {
-
-        int[] contentResources = new int[] {
-                R.string.rules_heads_up_draft,
-                R.string.rules_scoring_offense,
-                R.string.rules_scoring_defense,
-                R.string.rules_blitz_rating
-        };
-
-        String style = getString(R.string.rules_style);
-        List<String> content = new ArrayList<String>(contentResources.length);
-        for(int resourceId: contentResources) {
-            content.add(style + getString(resourceId));
-        }
 
         ViewPager rulesPager = (ViewPager) view.findViewById(R.id.dialog_rules_pager);
 
@@ -44,6 +28,6 @@ public class DialogRules extends BaseDialogFragment {
         rulesPager.setPadding(pixelPadding, 0, pixelPadding, 0);
 
         // Set up rules view pager.
-        rulesPager.setAdapter(new DialogRulesAdapter(getChildFragmentManager(), content, this));
+        rulesPager.setAdapter(new DialogRulesAdapter(getChildFragmentManager()));
     }
 }

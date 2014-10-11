@@ -1,11 +1,8 @@
 package com.blitz.app.dialogs.rules;
 
-import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
-
-import java.util.List;
 
 /**
  * Pager adapter for rules.
@@ -14,25 +11,61 @@ import java.util.List;
  */
 public class DialogRulesAdapter extends FragmentStatePagerAdapter {
 
-    private final List<String> mContent;
-    private final DialogFragment mDialog;
+    // region Member Variables
+    // =============================================================================================
 
-    public DialogRulesAdapter(FragmentManager fm, List<String> content, DialogFragment dialog) {
+    // Number of pages in the dialog.
+    private static final int RULES_PAGES = 1;
+
+    // endregion
+
+    // region Overwritten Methods
+    // =============================================================================================
+
+    /**
+     * Default adapter constructor.
+     *
+     * @param fm Fragment manager.
+     */
+    public DialogRulesAdapter(FragmentManager fm) {
         super(fm);
-        mContent = content;
-        mDialog = dialog;
     }
 
+    // endregion
+
+    // region Overwritten Methods
+    // =============================================================================================
+
+    /**
+     * Each rules page is uniquely styled so use
+     * a unique fragment for each page.
+     *
+     * @param position Page position.
+     *
+     * @return Instantiated fragment.
+     */
     @Override
     public Fragment getItem(int position) {
 
-        DialogRulesAdapterFragment fragment = DialogRulesAdapterFragment.newInstance();
-        fragment.setContent(mContent.get(position));
-        return fragment;
+        switch (position) {
+
+            case 0:
+                return new DialogRulesPage0();
+        }
+
+        return null;
     }
 
+    /**
+     * Fixed number of rules pages.
+     *
+     * @return Read from constant.
+     */
     @Override
     public int getCount() {
-        return mContent.size();
+
+        return RULES_PAGES;
     }
+
+    // endregion
 }

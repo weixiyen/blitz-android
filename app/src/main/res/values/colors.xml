@@ -21,6 +21,7 @@
     <color name="text_color_link_pressed">#d0fdff</color>
 
     <color name="text_color_shadow">#BF000000</color>
+    <color name="text_color_shadow_faint">#40000000</color>
 
     <color name="text_color_medium_grey">#969696</color>
     <color name="text_color_light_grey">#ACACAC</color>
