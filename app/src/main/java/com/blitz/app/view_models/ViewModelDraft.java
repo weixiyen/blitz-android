@@ -859,6 +859,8 @@ public class ViewModelDraft extends ViewModel {
                 if (playerChoice.getPosition() != null && playerChoice.getTeam() != null) {
 
                     playerPositions.add(playerChoice.getPosition() + " - " + playerChoice.getTeam());
+                } else {
+                    playerPositions.add("");
                 }
             }
 
