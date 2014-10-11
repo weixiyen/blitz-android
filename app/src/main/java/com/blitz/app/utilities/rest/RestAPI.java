@@ -158,5 +158,5 @@ public interface RestAPI {
 
     @POST("/users")
     void users_post(@Body JsonObject body,
-        Callback<JsonObject> callback);
+        Callback<RestAPIResult<RestModelUser>> callback);
 }
