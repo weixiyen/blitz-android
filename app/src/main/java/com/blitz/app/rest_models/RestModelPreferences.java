@@ -1,10 +1,8 @@
 package com.blitz.app.rest_models;
 
-import android.app.Activity;
-
 import com.blitz.app.utilities.app.AppConfig;
 import com.blitz.app.utilities.rest.RestAPICallback;
-import com.google.gson.JsonObject;
+import com.google.gson.annotations.SerializedName;
 
 /**
  * Created by Miguel Gaeta on 6/26/14. Copyright 2014 Blitz Studios
@@ -16,15 +14,19 @@ public class RestModelPreferences extends RestModel {
     // =============================================================================================
 
     // Current year.
+    @SerializedName("current_year")
     private int mCurrentYear;
 
     // Current draft week.
+    @SerializedName("current_week")
     private int mCurrentWeek;
 
     // Is a queue available.
+    @SerializedName("queue_available")
     private boolean mQueueAvailable;
 
     // What queue are we in.
+    @SerializedName("current_active_queue")
     private String mCurrentActiveQueue;
 
     // endregion
@@ -41,57 +43,38 @@ public class RestModelPreferences extends RestModel {
         return mCurrentActiveQueue;
     }
 
+    public int getCurrentWeek() {
+        return mCurrentWeek;
+    }
+
+    public int getCurrentYear() {
+        return mCurrentYear;
+    }
+
     /**
      * Sync user preferences.
-     *
-     * @param activity Context for loading/error dialogs.
-     *
-     * @param syncCallback Completion callback.
      */
-    public void Sync(Activity activity, final SyncCallback syncCallback) {
-
-        // Define operation, call onSync when complete.
-        RestAPICallback<JsonObject> operation =
-                new RestAPICallback<JsonObject>(activity) {
-
-            @Override
-            public void success(JsonObject jsonObject) {
-
-                if (AppConfig.isProduction()) {
-
-                    // Assign from result.
-                    mCurrentYear        = jsonObject.get("current_year").getAsInt();
-                    mCurrentWeek        = jsonObject.get("current_week").getAsInt();
-                    mQueueAvailable     = jsonObject.get("queue_available").getAsBoolean();
-                    mCurrentActiveQueue = jsonObject.get("current_active_queue").getAsString();
-
-                } else {
-
-                    // Assign test data.
-                    mCurrentYear        = 2013;
-                    mCurrentWeek        = 5 + (int)(Math.random() * ((10 - 5) + 1));
-                    mQueueAvailable     = true;
-                    mCurrentActiveQueue = "football_heads_up_draft_free";
-                }
-
-                // Sync successful.
-                syncCallback.onSync();
-            }
-        };
+    public static void sync(RestAPICallback<RestModelPreferences> callback) {
 
         // Make api call.
-        mRestAPI.preferences_get(operation);
+        mRestAPI.preferences_get(callback);
     }
 
-    // endregion
+    public static RestModelPreferences defaultPreferences() {
 
-    // region Callbacks
-    // =============================================================================================
+        RestModelPreferences preferences = new RestModelPreferences();
 
-    public interface SyncCallback {
+        if(AppConfig.isProduction()) {
+            preferences.mCurrentYear = 2014;
+            preferences.mCurrentWeek = 1;
+        } else {
+            preferences.mCurrentYear = 2013;
+            preferences.mCurrentWeek = 5 + (int)(Math.random() * ((10 - 5) + 1));
+        }
 
-        public void onSync();
+        preferences.mQueueAvailable = true;
+        preferences.mCurrentActiveQueue = "football_heads_up_draft_free";
+
+        return preferences;
     }
-
-    // endregion
 }

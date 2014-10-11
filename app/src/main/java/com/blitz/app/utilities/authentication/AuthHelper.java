@@ -6,6 +6,7 @@ import com.blitz.app.R;
 import com.blitz.app.rest_models.RestModelDraft;
 import com.blitz.app.rest_models.RestModelCallback;
 import com.blitz.app.rest_models.RestModelCallbacks;
+import com.blitz.app.rest_models.RestModelPreferences;
 import com.blitz.app.screens.access_queue.AccessQueueScreen;
 import com.blitz.app.screens.draft.DraftScreen;
 import com.blitz.app.screens.main.MainScreen;
@@ -34,6 +35,8 @@ public class AuthHelper {
     // There can be only one current draft.
     private RestModelDraft mCurrentDraft;
 
+    private RestModelPreferences mPreferences;
+
     //==============================================================================================
     // Public Methods
     //==============================================================================================
@@ -55,6 +58,17 @@ public class AuthHelper {
         }
 
         return mInstance;
+    }
+
+    /**
+     * Fetch preferences
+     */
+    public RestModelPreferences getPreferences() {
+        if(mPreferences == null) {
+            return RestModelPreferences.defaultPreferences();
+        } else {
+            return mPreferences;
+        }
     }
 
     /**

@@ -34,18 +34,15 @@ public class RestModelQueue extends RestModel {
      */
     public void queueUp(final Activity activity, final Runnable callback) {
 
-        if (mModelPreferences == null) {
-            mModelPreferences = new RestModelPreferences();
-        }
 
         // First sync preferences to get the active draft key.
-        mModelPreferences.Sync(activity, new RestModelPreferences.SyncCallback() {
-
+        RestModelPreferences.sync(new RestAPICallback<RestModelPreferences>(activity) {
             @Override
-            public void onSync() {
+            public void success(RestModelPreferences preferences) {
+
 
                 // Set draft key to the active queue.
-                mDraftKey =  mModelPreferences.currentActiveQueue();
+                mDraftKey =  preferences.currentActiveQueue();
 
                 // Define operation, call on queue up when complete.
                 RestAPICallback<JsonObject> operation =

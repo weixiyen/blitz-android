@@ -26,6 +26,7 @@ public class ViewModelGameLog extends ViewModel {
         private final int mWins;
         private final int mLosses;
 
+
         Summary(List<HeadToHeadDraft> drafts) {
             mDrafts = drafts;
 
@@ -74,7 +75,7 @@ public class ViewModelGameLog extends ViewModel {
         super(activity, callbacks);
         mCallbacks = callbacks;
         mCache = new SparseArray<List<HeadToHeadDraft>>(17);
-        mCurrentWeek = 1;
+        mCurrentWeek = AuthHelper.instance().getPreferences().getCurrentWeek();
     }
 
     public void updateWeek(final int week) {

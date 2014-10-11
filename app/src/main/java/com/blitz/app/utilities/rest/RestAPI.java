@@ -4,6 +4,7 @@ import com.blitz.app.rest_models.RestModelDevice;
 import com.blitz.app.rest_models.RestModelDraft;
 import com.blitz.app.rest_models.RestModelItem;
 import com.blitz.app.rest_models.RestModelPlayer;
+import com.blitz.app.rest_models.RestModelPreferences;
 import com.blitz.app.rest_models.RestModelStats;
 import com.blitz.app.rest_models.RestModelUser;
 import com.blitz.app.simple_models.Game;
@@ -50,7 +51,7 @@ public interface RestAPI {
 
     @GET("/preferences")
     void preferences_get(
-        Callback<JsonObject> callback);
+        Callback<RestModelPreferences> callback);
 
     @POST("/code")
     void code_post(@Body JsonObject body,
