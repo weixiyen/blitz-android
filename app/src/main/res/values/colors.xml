@@ -5,12 +5,11 @@
     <color name="background_inner_divider">#353535</color>
     <color name="background_dialog">#BF000000</color>
     <color name="background_navigation">#40000000</color>
-    <color name="background_white">#FFFFFFFF</color>
 
     <color name="button_color_0">#32587c</color>
     <color name="button_color_0_pressed">#386692</color>
 
-    <color name="text_color_light">#FFFDFA</color>
+    <color name="text_color_light">#fbfbfb</color>
     <color name="text_color_grey">#84909b</color>
     <color name="text_color_dark">#bbbbbb</color>
     <color name="text_color_red">#FF4200</color>
@@ -25,7 +24,5 @@
 
     <color name="text_color_medium_grey">#969696</color>
     <color name="text_color_light_grey">#ACACAC</color>
-
-    <color name="inactive_control_color">#FBFBFB</color>
 
 </resources>
