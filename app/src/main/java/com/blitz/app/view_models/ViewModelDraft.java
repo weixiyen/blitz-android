@@ -628,8 +628,8 @@ public class ViewModelDraft extends ViewModel {
                         mDraftModel.getChoices().size() == mDraftModel.getPicks().size() / 2;
 
         // Are we in post pick window.
-        boolean isInPostView = roundTimeRemaining -
-                mDraftModel.getTimePerPreview() > mDraftModel.getTimePerPick();
+        boolean isInPostView = roundTimeRemaining - mDraftModel.getTimePerPreview() >=
+                mDraftModel.getTimePerPick() || roundTimeRemaining < 0;
 
         // Is the choices view hidden.
         boolean isChoicesViewHidden = !(isInPickWindow || isInPostView) ||
