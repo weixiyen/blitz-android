@@ -180,10 +180,9 @@ public class AuthHelper {
      * @param userId Id.
      * @param userName Name.
      * @param email Email.
-     * @param password Password.
      */
     @SuppressWarnings("unused")
-    public void signIn(String userId, String userName, String email, String password) {
+    public void signIn(String userId, String userName, String email) {
 
         // Set id, and username from result.
         AppDataObject.userId.set(userId);
