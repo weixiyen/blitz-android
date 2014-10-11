@@ -16,13 +16,12 @@ import com.blitz.app.utilities.reflection.ReflectionHelper;
 import butterknife.ButterKnife;
 
 /**
- * Created by mrkcsc on 8/17/14.
+ * Created by mrkcsc on 8/17/14. Copyright 2014 Blitz Studios
  */
 public abstract class BaseDialogFragment extends DialogFragment {
 
-    //==============================================================================================
-    // Overwritten Methods
-    //==============================================================================================
+    // region Overwritten Methods
+    // =============================================================================================
 
     /**
      * When view is created inflate layout and setup the window.
@@ -94,9 +93,12 @@ public abstract class BaseDialogFragment extends DialogFragment {
                 WindowManager.LayoutParams.MATCH_PARENT);
     }
 
-    //==============================================================================================
-    // Abstract Methods
-    //==============================================================================================
+    // endregion
+
+    // region Abstract Methods
+    // =============================================================================================
 
     protected abstract void onViewCreated(View view);
+
+    // endregion
 }
