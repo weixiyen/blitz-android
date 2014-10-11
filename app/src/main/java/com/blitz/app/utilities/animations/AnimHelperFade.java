@@ -14,6 +14,31 @@ public class AnimHelperFade extends AnimHelper {
     // =============================================================================================
 
     /**
+     * By default do not force transition.
+     */
+    @SuppressWarnings("unused")
+    public static void setVisibility(final View view, final int visibility) {
+
+        setVisibility(view, visibility,
+                getConfigAnimTimeStandard(view.getContext()));
+    }
+
+    /**
+     * Sets the visibility of a view but layers a
+     * fade animation into it to make it
+     * more appealing.
+     *
+     * @param view Target view.
+     * @param visibility Target visibility.
+     */
+    @SuppressWarnings("unused")
+    public static void setVisibility(final View view, final int visibility,
+                                     int duration) {
+
+        setVisibility(view, visibility, duration, false);
+    }
+
+    /**
      * Sets the visibility of a view but layers a
      * fade animation into it to make it
      * more appealing.
@@ -64,6 +89,62 @@ public class AnimHelperFade extends AnimHelper {
                 throw new RuntimeException("Anim helper, invalid visibility flag provided.");
         }
 
+        // Set the alpha animation.
+        setAlpha(view, alphaFrom, alphaTo, duration, new Runnable() {
+
+            @Override
+            public void run() {
+
+                // Set final visibility.
+                view.setVisibility(visibility);
+
+                // Restore alpha.
+                view.setAlpha(initialAlpha);
+            }
+        });
+    }
+
+    /**
+     * Set alpha of a view with animation.
+     *
+     * @param view Target view.
+     * @param alphaFrom Target alpha from.
+     * @param alphaTo Target alpha to.
+     */
+    @SuppressWarnings("unused")
+    public static void setAlpha(final View view, final float alphaFrom, final float alphaTo) {
+
+        setAlpha(view, alphaFrom, alphaTo, getConfigAnimTimeStandard(view.getContext()));
+    }
+
+    /**
+     * Set alpha of a view with animation.
+     *
+     * @param view Target view.
+     * @param alphaFrom Target alpha from.
+     * @param alphaTo Target alpha to.
+     * @param duration Transition time.
+     */
+    @SuppressWarnings("unused")
+    public static void setAlpha(final View view, final float alphaFrom, final float alphaTo,
+                                int duration) {
+
+        setAlpha(view, alphaFrom, alphaTo, duration, null);
+    }
+
+    /**
+     * Set alpha of a view with animation.
+     *
+     * @param view Target view.
+     * @param alphaFrom Target alpha from.
+     * @param alphaTo Target alpha to.
+     * @param duration Transition time.
+     * @param callback Completion callback.
+     */
+    @SuppressWarnings("unused")
+    public static void setAlpha(final View view, final float alphaFrom, final float alphaTo,
+                                int duration, final Runnable callback) {
+
         // Set the initial alpha.
         view.setAlpha(alphaFrom);
 
@@ -80,55 +161,13 @@ public class AnimHelperFade extends AnimHelper {
             public void onAnimationEnd(Animator animation) {
                 super.onAnimationEnd(animation);
 
-                // Set final visibility.
-                view.setVisibility(visibility);
-
-                // Restore alpha.
-                view.setAlpha(initialAlpha);
+                if (callback != null) {
+                    callback.run();
+                }
             }
         });
 
         alphaAnimator.start();
-    }
-
-    /**
-     * Sets the visibility of a view but layers a
-     * fade animation into it to make it
-     * more appealing.
-     *
-     * @param view Target view.
-     * @param visibility Target visibility.
-     * @param forceTransition If set it will force the animation
-     *                        even if going from same visibility state.
-     */
-    public static void setVisibility(final View view, final int visibility, boolean forceTransition) {
-
-        setVisibility(view, visibility,
-                getConfigAnimTimeStandard(view.getContext()), forceTransition);
-    }
-
-    /**
-     * Sets the visibility of a view but layers a
-     * fade animation into it to make it
-     * more appealing.
-     *
-     * @param view Target view.
-     * @param visibility Target visibility.
-     */
-    @SuppressWarnings("unused")
-    public static void setVisibility(final View view, final int visibility, int duration) {
-
-        setVisibility(view, visibility, duration, false);
-    }
-
-    /**
-     * By default do not force transition.
-     */
-    @SuppressWarnings("unused")
-    public static void setVisibility(final View view, final int visibility) {
-
-        setVisibility(view, visibility,
-                getConfigAnimTimeStandard(view.getContext()));
     }
 
     // endregion

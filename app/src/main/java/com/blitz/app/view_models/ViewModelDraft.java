@@ -63,15 +63,11 @@ public class ViewModelDraft extends ViewModel {
 
     // Choice related structures.
     private List<RestModelPlayer> mCurrentPlayerChoices;
-    private Date mCurrentPlayerChoicesShowTime;
 
     // Round time information.
     private int mRoundTimeRemaining;
     private boolean mRoundTimeRemainingHidden;
     private boolean mRoundCompleteHidden;
-
-    // Are the choices hidden.
-    private boolean mChoicesViewHidden;
 
     // Picks so far.
     private List<RestModelDraft.Pick> mCurrentPicks;
@@ -596,8 +592,7 @@ public class ViewModelDraft extends ViewModel {
     }
 
     /**
-     * Resolve the time remaining in the round
-     * and some additional choice information regarding round time.
+     * Resolve the time remaining in the round.
      */
     private void resolveRoundTimeRemaining() {
 
@@ -627,17 +622,8 @@ public class ViewModelDraft extends ViewModel {
                 mDraftModel.getChoices() != null && mDraftModel.getPicks() != null &&
                         mDraftModel.getChoices().size() == mDraftModel.getPicks().size() / 2;
 
-        // Are we in post pick window.
-        boolean isInPostView = roundTimeRemaining - mDraftModel.getTimePerPreview() >=
-                mDraftModel.getTimePerPick() || roundTimeRemaining < 0;
-
-        // Is the choices view hidden.
-        boolean isChoicesViewHidden = !(isInPickWindow || isInPostView) ||
-                mDraftModel.getChoices() == null ||
-                mDraftModel.getChoices().isEmpty();
-
         updateRoundTimeRemaining(roundTimeRemaining,
-                !isInPickWindow || isRoundComplete, isChoicesViewHidden);
+                !isInPickWindow || isRoundComplete);
     }
 
     /**
@@ -787,15 +773,13 @@ public class ViewModelDraft extends ViewModel {
 
     /**
      * Update round time remaining, whether or not that
-     * timer is hidden, and if the choices view should be hidden.
+     * timer is hidden.
      *
      * @param roundTimeRemaining Current round time remaining.
      * @param roundTimeRemainingHidden Round time remaining is hidden.
-     * @param choicesViewHidden Choices view hidden.
      */
     private void updateRoundTimeRemaining(int roundTimeRemaining,
-                                          boolean roundTimeRemainingHidden,
-                                          boolean choicesViewHidden) {
+                                          boolean roundTimeRemainingHidden) {
 
         // Update round time remaining if changed and not hidden.
         if (mRoundTimeRemaining != roundTimeRemaining && !roundTimeRemainingHidden) {
@@ -812,30 +796,6 @@ public class ViewModelDraft extends ViewModel {
 
             if (mCallbacks != null) {
                 mCallbacks.onRoundTimeRemainingHiddenChanged(mRoundTimeRemainingHidden);
-            }
-        }
-
-        // If we are still in the draft.
-        if (mDraftModel.getCurrentRound() <= mDraftModel.getRounds() &&
-                mCurrentPlayerChoicesShowTime != null && choicesViewHidden) {
-
-            int secondsSinceChoicesShownTime = (int)Math.floor((DateUtils
-                    .getTimeSinceDateInGMTAsMilliseconds(mCurrentPlayerChoicesShowTime)) / 1000);
-
-            // Keep choices showing for a bit longer
-            // to fit the post view time window.
-            if (secondsSinceChoicesShownTime < mDraftModel.getTimePerPostview()) {
-
-                choicesViewHidden = false;
-            }
-        }
-
-        // Update choices view hidden if needed.
-        if (mChoicesViewHidden != choicesViewHidden) {
-            mChoicesViewHidden = choicesViewHidden;
-
-            if (mCallbacks != null) {
-                mCallbacks.onChoicesViewHiddenChanged(mChoicesViewHidden);
             }
         }
     }
@@ -879,8 +839,6 @@ public class ViewModelDraft extends ViewModel {
 
             // Update player choices and timestamp.
             mCurrentPlayerChoices= playerChoices;
-            mCurrentPlayerChoicesShowTime
-                    = DateUtils.getDateInGMT();
 
             List<String> playerIds       = new ArrayList<String>();
             List<String> playerPhotoUrls = new ArrayList<String>();
@@ -1005,9 +963,6 @@ public class ViewModelDraft extends ViewModel {
         // Round time remaining update.
         public void onRoundTimeRemainingChanged(int roundTimeRemaining);
         public void onRoundTimeRemainingHiddenChanged(boolean roundTimeRemainingHidden);
-
-        // Should choices be displayed yet.
-        public void onChoicesViewHiddenChanged(boolean choicesViewHidden);
 
         // Is the round complete UI hidden.
         public void onRoundCompleteHiddenChanged(boolean completeHidden);

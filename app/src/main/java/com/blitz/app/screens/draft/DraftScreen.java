@@ -5,17 +5,17 @@ import android.animation.ValueAnimator;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.LinearInterpolator;
-import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.blitz.app.R;
 import com.blitz.app.screens.matchup.MatchupScreen;
 import com.blitz.app.utilities.android.BaseActivity;
-import com.blitz.app.utilities.animations.AnimHelperCrossFade;
+import com.blitz.app.utilities.animations.AnimHelper;
 import com.blitz.app.utilities.animations.AnimHelperFade;
 import com.blitz.app.utilities.animations.AnimHelperSpringsGroup;
 import com.blitz.app.utilities.animations.AnimHelperSpringsPresets;
@@ -30,7 +30,6 @@ import com.blitz.app.view_models.ViewModelDraft;
 import java.util.List;
 import java.util.Map;
 
-import butterknife.ButterKnife;
 import butterknife.InjectView;
 import butterknife.InjectViews;
 import butterknife.OnClick;
@@ -137,6 +136,9 @@ public class DraftScreen extends BaseActivity implements ViewModelDraft.ViewMode
     // Tracks if player info loaded.
     private String mPlayer1Id;
     private String mPlayer2Id;
+
+    // Are players in initialized state.
+    private boolean mPlayersInitialized;
 
     // Used for spinner animations.
     private ObjectAnimator mObjectAnimator;
@@ -443,61 +445,35 @@ public class DraftScreen extends BaseActivity implements ViewModelDraft.ViewMode
         getAnimations().enable();
     }
 
-    /**
-     * Play the player show hide animation.
-     *
-     * @param reverse Is animation reversed.
-     */
-    private void playAnimationsPlayers(final boolean reverse) {
+    private void setChoicesVisibility(int visibility, Runnable complete) {
 
-        if (!reverse) {
+        for (View player : mDraftPlayers) {
 
-            // Reset selected state of top part of player cards.
-            ButterKnife.apply(mDraftPlayerNames, new ButterKnife.Action<View>() {
+            // Show each player card.
+            AnimHelperFade.setVisibility(player, visibility);
 
-                @Override
-                public void apply(View view, int index) {
-
-                    view.setBackgroundResource
-                            (R.drawable.asset_draft_player_mask_top);
-                }
-            });
-
-            // Reset selected state of bot part of player cards.
-            ButterKnife.apply(mDraftPlayerStats, new ButterKnife.Action<View>() {
-
-                @Override
-                public void apply(View view, int index) {
-
-                    view.setBackgroundResource
-                            (R.drawable.asset_draft_player_mask_bot);
-                }
-            });
-
-            // Restore alpha.
-            ButterKnife.apply(mDraftPlayerImages, new ButterKnife.Action<ImageView>() {
-
-                @Override
-                public void apply(ImageView view, int index) {
-
-                    // Remove image.
-                    view.setImageBitmap(null);
-
-                    // Restore alpha.
-                    view.setAlpha(1.0f);
-                }
-            });
+            // Callback on a small delay.
+            new Handler().postDelayed(complete,
+                    AnimHelper.getConfigAnimTimeStandard(this) + 100);
         }
+    }
 
-        // Reset selected state of top part of player cards.
-        ButterKnife.apply(mDraftPlayers, new ButterKnife.Action<View>() {
+    private void setChoicesInitialized() {
 
-            @Override
-            public void apply(View view, int index) {
+        for (int i = 0; i < mDraftPlayers.size(); i++) {
 
-                AnimHelperFade.setVisibility(view, reverse ? View.INVISIBLE : View.VISIBLE);
-            }
-        });
+            // Set the unselected mask.
+            mDraftPlayerNames.get(i).setBackgroundResource(R.drawable.asset_draft_player_mask_top);
+
+            // Set the unselected mask.
+            mDraftPlayerStats.get(i).setBackgroundResource(R.drawable.asset_draft_player_mask_bot);
+
+            // Clear out existing images.
+            mDraftPlayerImages.get(i).setImageBitmap(null);
+
+            // Set the unselected alpha.
+            mDraftPlayerImages.get(i).setAlpha(0.0f);
+        }
     }
 
     /**
@@ -664,32 +640,71 @@ public class DraftScreen extends BaseActivity implements ViewModelDraft.ViewMode
             final List<String> playerPositions,
             final List<String> playerOpponents) {
 
-        // Load the new images before proceeding.
-        BlitzImage.from(this).loadImageUrls(playerPhotoUrls, "images/raw_player_mask.png",
-                new BlitzImage.CallbackImageUrls() {
+        // Runnable to update player choices data.
+        final Runnable updateChoicesData = new Runnable() {
 
             @Override
-            public void onSuccess(Map<String, Bitmap> images) {
+            public void run() {
+
+                // Initialize.
+                setChoicesInitialized();
 
                 for (int i = 0; i < playerIds.size(); i++) {
 
-                    // Cross fade baby.
-                    AnimHelperCrossFade.setImageBitmap
-                            (mDraftPlayerImages.get(i), images.get(playerPhotoUrls.get(i)));
+                    mDraftPlayers
+                            .get(i).setTag(playerIds.get(i));
+                    mDraftPlayerNames
+                            .get(i).setText(playerFullNames.get(i));
+                    mDraftPlayerPositions
+                            .get(i).setText(playerPositions.get(i));
+                    mDraftPlayerOpponents
+                            .get(i).setText(playerOpponents.get(i));
                 }
+
+                // Load new images asynchronously.
+                BlitzImage.from(DraftScreen.this).loadImageUrls(playerPhotoUrls,
+                        "images/raw_player_mask.png", new BlitzImage.CallbackImageUrls() {
+
+                            @Override
+                            public void onSuccess(Map<String, Bitmap> images) {
+
+                                for (int i = 0; i < playerIds.size(); i++) {
+
+                                    // Do a clean fade animation.
+                                    AnimHelperFade.setAlpha(mDraftPlayerImages.get(i), 0.0f, 1.0f);
+
+                                    // Set the player image.
+                                    mDraftPlayerImages.get(i).setImageBitmap
+                                            (images.get(playerPhotoUrls.get(i)));
+                                }
+                            }
+                        });
             }
-        });
+        };
 
-        for (int i = 0; i < playerIds.size(); i++) {
+        if (!mPlayersInitialized) {
+             mPlayersInitialized = true;
 
-            mDraftPlayers
-                    .get(i).setTag(playerIds.get(i));
-            mDraftPlayerNames
-                    .get(i).setText(playerFullNames.get(i));
-            mDraftPlayerPositions
-                    .get(i).setText(playerPositions.get(i));
-            mDraftPlayerOpponents
-                    .get(i).setText(playerOpponents.get(i));
+            // Set the data.
+            updateChoicesData.run();
+
+            // Show immediately if this is the first round.
+            setChoicesVisibility(View.VISIBLE, null);
+
+        } else {
+
+            setChoicesVisibility(View.INVISIBLE, new Runnable() {
+
+                @Override
+                public void run() {
+
+                    // Set the data.
+                    updateChoicesData.run();
+
+                    // Show after first hiding existing choices.
+                    setChoicesVisibility(View.VISIBLE, null);
+                }
+            });
         }
     }
 
@@ -770,18 +785,6 @@ public class DraftScreen extends BaseActivity implements ViewModelDraft.ViewMode
 
         // Start or stop the spinner animation.
         playSpinnerAnimation(roundTimeRemainingHidden);
-    }
-
-    /**
-     * Show or hide the choices view.
-     *
-     * @param choicesViewHidden Is choices view hidden.
-     */
-    @Override
-    public void onChoicesViewHiddenChanged(boolean choicesViewHidden) {
-
-        // Either show or hide the players.
-        playAnimationsPlayers(choicesViewHidden);
     }
 
     /**
