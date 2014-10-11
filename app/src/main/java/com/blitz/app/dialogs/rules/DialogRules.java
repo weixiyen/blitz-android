@@ -7,6 +7,8 @@ import com.blitz.app.R;
 import com.blitz.app.utilities.android.BaseDialogFragment;
 import com.blitz.app.utilities.reflection.ReflectionHelper;
 
+import butterknife.InjectView;
+
 /**
  * DialogFragment for rules.
  *
@@ -14,20 +16,36 @@ import com.blitz.app.utilities.reflection.ReflectionHelper;
  */
 public class DialogRules extends BaseDialogFragment {
 
+    // region Member Variables
+    // =============================================================================================
+
+    // Rules dialog contains a view pager.
+    @InjectView(R.id.dialog_rules_pager) ViewPager mRulesPager;
+
+    // endregion
+
+    // region Overwritten Methods
+    // =============================================================================================
+
+    /**
+     * Create a carousel-like pager to
+     * show the dialog rules cards.
+     */
     @Override
     protected void onViewCreated(View view) {
 
-        ViewPager rulesPager = (ViewPager) view.findViewById(R.id.dialog_rules_pager);
+        // Enable clipping to show side cards.
+        mRulesPager.setClipToPadding(false);
 
-        // Formatting to make the pages look like cards
-        rulesPager.setClipToPadding(false);
         int pixelPadding = ReflectionHelper.densityPixelsToPixels
-                (rulesPager.getContext(), 20);
+                (mRulesPager.getContext(), 20);
 
         // Assign and clip the padding.
-        rulesPager.setPadding(pixelPadding, 0, pixelPadding, 0);
+        mRulesPager.setPadding(pixelPadding, 0, pixelPadding, 0);
 
         // Set up rules view pager.
-        rulesPager.setAdapter(new DialogRulesAdapter(getChildFragmentManager()));
+        mRulesPager.setAdapter(new DialogRulesAdapter(getChildFragmentManager()));
     }
+
+    // endregion
 }

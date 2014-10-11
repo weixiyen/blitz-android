@@ -3,6 +3,7 @@ package com.blitz.app.screens.main;
 import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;
 import android.content.Intent;
+import android.os.Bundle;
 import android.view.View;
 import android.view.animation.LinearInterpolator;
 import android.widget.ImageView;
@@ -15,6 +16,7 @@ import com.blitz.app.screens.leaderboard.LeaderboardScreen;
 import com.blitz.app.utilities.android.BaseFragment;
 import com.blitz.app.utilities.animations.AnimHelperCrossFade;
 import com.blitz.app.utilities.app.AppConfig;
+import com.blitz.app.utilities.app.AppDataObject;
 import com.blitz.app.utilities.image.BlitzImageView;
 import com.blitz.app.utilities.rest.RestAPICallback;
 import com.blitz.app.view_models.ViewModel;
@@ -50,12 +52,32 @@ public class MainScreenFragmentPlay extends BaseFragment implements ViewModelMai
     // View model object.
     private ViewModelMainPlay mViewModelMainPlay;
 
+    // Powers animations.
     private ObjectAnimator mObjectAnimator;
 
     // endregion
 
     // region Overwritten Methods
     // =============================================================================================
+
+    /**
+     * Show rules dialog if needed.
+     *
+     * @param savedInstanceState Saved state.
+     */
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        if (!AppDataObject.hasSeenRules.get()) {
+
+            // User has no seen the rules.
+            AppDataObject.hasSeenRules.set(true);
+
+            // Manually show.
+            rulesClicked();
+        }
+    }
 
     /**
      * Start animations.
@@ -336,13 +358,15 @@ public class MainScreenFragmentPlay extends BaseFragment implements ViewModelMai
     }
 
     /**
-     * Rules clicked.
+     * Rules clicked, show a dialog that
+     * contains rule cards.
      */
     @OnClick(R.id.main_play_rules) @SuppressWarnings("unused")
     public void rulesClicked() {
 
         // Show the rules dialog fragment.
-        new DialogRules().show(getChildFragmentManager(), "DialogRules");
+        new DialogRules().show(getChildFragmentManager(),
+                DialogRules.class.toString());
     }
 
     /**
