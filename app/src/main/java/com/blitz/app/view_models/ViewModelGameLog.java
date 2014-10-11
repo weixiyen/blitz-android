@@ -34,6 +34,7 @@ public class ViewModelGameLog extends ViewModel {
             int wins = 0;
             int losses = 0;
             for(HeadToHeadDraft draft: mDrafts) {
+
                 ratingChange += draft.getPlayer1RatingChange();
                 if(draft.getPlayer1Score() > draft.getPlayer2Score()) {
                     wins += 1;
@@ -88,22 +89,31 @@ public class ViewModelGameLog extends ViewModel {
         }
 
         // Get fresh data from the server.
-        RestModelDraft.fetchDraftsForUser(mActivity, AuthHelper.instance().getUserId(), week, 2014, null,
+        RestModelDraft.fetchDraftsForUser(mActivity, AuthHelper.instance().getUserId(), week, 2014, 1000,
                 new RestModelCallbacks<RestModelDraft>() {
                     @Override
                     public void onSuccess(List<RestModelDraft> drafts) {
                         List<HeadToHeadDraft> matches = new ArrayList<HeadToHeadDraft>(drafts.size());
                         for (RestModelDraft draft : drafts) {
+                            final int p1index;
+                            final int p2index;
+                            if(AuthHelper.instance().getUserId().equals(draft.getUsers().get(0))) {
+                                p1index = 0;
+                                p2index = 1;
+                            } else {
+                                p1index = 1;
+                                p2index = 0;
+                            }
                             matches.add(new HeadToHeadDraft(
                                     draft.getId(),
-                                    draft.getTeamName(0),
-                                    draft.getTeamRoster(0),
-                                    draft.getTeamPoints(0),
-                                    draft.getTeamRatingChange(0),
-                                    draft.getTeamName(1),
-                                    draft.getTeamRoster(1),
-                                    draft.getTeamPoints(1),
-                                    draft.getTeamRatingChange(1),
+                                    draft.getTeamName(p1index),
+                                    draft.getTeamRoster(p1index),
+                                    draft.getTeamPoints(p1index),
+                                    draft.getTeamRatingChange(p1index),
+                                    draft.getTeamName(p2index),
+                                    draft.getTeamRoster(p2index),
+                                    draft.getTeamPoints(p2index),
+                                    draft.getTeamRatingChange(p2index),
                                     draft.getYear(),
                                     draft.getWeek(),
                                     draft.getStatus()
