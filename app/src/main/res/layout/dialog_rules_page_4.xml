@@ -24,7 +24,7 @@
             android:gravity="center"
             android:padding="20dp"
             android:shadowColor="@color/text_color_shadow_faint"
-            android:text="@string/rules_1_line_00"
+            android:text="@string/rules_5_line_00"
             android:textColor="@color/text_color_black"
             android:textSize="32sp"/>
 
@@ -34,10 +34,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:drawableLeft="@drawable/asset_bg_dialog_rules_bullet"
-            android:paddingBottom="20dp"
+            android:paddingBottom="30dp"
             android:paddingLeft="10dp"
             android:shadowColor="@color/text_color_shadow_faint"
-            android:text="@string/rules_1_line_01"
+            android:text="@string/rules_5_line_01"
             android:textColor="@color/text_color_black"
             android:textSize="16sp"/>
 
@@ -47,10 +47,23 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:drawableLeft="@drawable/asset_bg_dialog_rules_bullet"
-            android:paddingBottom="20dp"
+            android:paddingBottom="5dp"
             android:paddingLeft="10dp"
             android:shadowColor="@color/text_color_shadow_faint"
-            android:text="@string/rules_1_line_02"
+            android:text="@string/rules_5_line_02"
+            android:textColor="@color/text_color_black"
+            android:textSize="16sp" />
+
+        <TextView
+            style="@style/TextViewStyle"
+            fontPath="@string/app_font_light"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:drawableLeft="@drawable/asset_bg_dialog_rules_bullet"
+            android:paddingBottom="5dp"
+            android:paddingLeft="10dp"
+            android:shadowColor="@color/text_color_shadow_faint"
+            android:text="@string/rules_5_line_03"
             android:textColor="@color/text_color_black"
             android:textSize="16sp"/>
 
@@ -60,10 +73,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:drawableLeft="@drawable/asset_bg_dialog_rules_bullet"
-            android:paddingBottom="20dp"
+            android:paddingBottom="5dp"
             android:paddingLeft="10dp"
             android:shadowColor="@color/text_color_shadow_faint"
-            android:text="@string/rules_1_line_03"
+            android:text="@string/rules_5_line_04"
             android:textColor="@color/text_color_black"
             android:textSize="16sp"/>
 
@@ -73,10 +86,36 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:drawableLeft="@drawable/asset_bg_dialog_rules_bullet"
-            android:paddingBottom="20dp"
+            android:paddingBottom="5dp"
             android:paddingLeft="10dp"
             android:shadowColor="@color/text_color_shadow_faint"
-            android:text="@string/rules_1_line_04"
+            android:text="@string/rules_5_line_05"
+            android:textColor="@color/text_color_black"
+            android:textSize="16sp"/>
+
+        <TextView
+            style="@style/TextViewStyle"
+            fontPath="@string/app_font_light"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:drawableLeft="@drawable/asset_bg_dialog_rules_bullet"
+            android:paddingBottom="30dp"
+            android:paddingLeft="10dp"
+            android:shadowColor="@color/text_color_shadow_faint"
+            android:text="@string/rules_5_line_06"
+            android:textColor="@color/text_color_black"
+            android:textSize="16sp"/>
+
+        <TextView
+            style="@style/TextViewStyle"
+            fontPath="@string/app_font_light"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:drawableLeft="@drawable/asset_bg_dialog_rules_bullet"
+            android:paddingBottom="10dp"
+            android:paddingLeft="10dp"
+            android:shadowColor="@color/text_color_shadow_faint"
+            android:text="@string/rules_5_line_07"
             android:textColor="@color/text_color_black"
             android:textSize="16sp"/>
     </LinearLayout>

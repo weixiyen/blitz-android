@@ -1,0 +1,161 @@
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    tools:ignore="UselessParent,RtlSymmetry">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="400dp"
+        android:background="@drawable/asset_bg_dialog_rules"
+        android:orientation="vertical"
+        android:paddingBottom="20dp"
+        android:paddingLeft="25dp"
+        android:paddingRight="25dp"
+        android:paddingTop="10dp">
+
+        <TextView
+            style="@style/TextViewStyle"
+            fontPath="@string/app_font_helvetica_condensed_bold"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:padding="20dp"
+            android:shadowColor="@color/text_color_shadow_faint"
+            android:text="@string/rules_3_line_00"
+            android:textColor="@color/text_color_black"
+            android:textSize="32sp"/>
+
+        <TextView
+            style="@style/TextViewStyle"
+            fontPath="@string/app_font_light"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:drawableLeft="@drawable/asset_bg_dialog_rules_bullet"
+            android:paddingBottom="5dp"
+            android:paddingLeft="10dp"
+            android:shadowColor="@color/text_color_shadow_faint"
+            android:text="@string/rules_3_line_01"
+            android:textColor="@color/text_color_black"
+            android:textSize="16sp" />
+
+        <TextView
+            style="@style/TextViewStyle"
+            fontPath="@string/app_font_light"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:drawableLeft="@drawable/asset_bg_dialog_rules_bullet"
+            android:paddingBottom="5dp"
+            android:paddingLeft="10dp"
+            android:shadowColor="@color/text_color_shadow_faint"
+            android:text="@string/rules_3_line_02"
+            android:textColor="@color/text_color_black"
+            android:textSize="16sp"/>
+
+        <TextView
+            style="@style/TextViewStyle"
+            fontPath="@string/app_font_light"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:drawableLeft="@drawable/asset_bg_dialog_rules_bullet"
+            android:paddingBottom="5dp"
+            android:paddingLeft="10dp"
+            android:shadowColor="@color/text_color_shadow_faint"
+            android:text="@string/rules_3_line_03"
+            android:textColor="@color/text_color_black"
+            android:textSize="16sp"/>
+
+        <TextView
+            style="@style/TextViewStyle"
+            fontPath="@string/app_font_light"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:drawableLeft="@drawable/asset_bg_dialog_rules_bullet"
+            android:paddingBottom="5dp"
+            android:paddingLeft="10dp"
+            android:shadowColor="@color/text_color_shadow_faint"
+            android:text="@string/rules_3_line_04"
+            android:textColor="@color/text_color_black"
+            android:textSize="16sp"/>
+
+        <TextView
+            style="@style/TextViewStyle"
+            fontPath="@string/app_font_light"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:drawableLeft="@drawable/asset_bg_dialog_rules_bullet"
+            android:paddingBottom="5dp"
+            android:paddingLeft="10dp"
+            android:shadowColor="@color/text_color_shadow_faint"
+            android:text="@string/rules_3_line_05"
+            android:textColor="@color/text_color_black"
+            android:textSize="16sp"/>
+
+        <TextView
+            style="@style/TextViewStyle"
+            fontPath="@string/app_font_light"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:drawableLeft="@drawable/asset_bg_dialog_rules_bullet"
+            android:paddingBottom="5dp"
+            android:paddingLeft="10dp"
+            android:shadowColor="@color/text_color_shadow_faint"
+            android:text="@string/rules_3_line_06"
+            android:textColor="@color/text_color_black"
+            android:textSize="16sp"/>
+
+        <TextView
+            style="@style/TextViewStyle"
+            fontPath="@string/app_font_light"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:drawableLeft="@drawable/asset_bg_dialog_rules_bullet"
+            android:paddingBottom="5dp"
+            android:paddingLeft="10dp"
+            android:shadowColor="@color/text_color_shadow_faint"
+            android:text="@string/rules_3_line_07"
+            android:textColor="@color/text_color_black"
+            android:textSize="16sp"/>
+
+        <TextView
+            style="@style/TextViewStyle"
+            fontPath="@string/app_font_light"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:drawableLeft="@drawable/asset_bg_dialog_rules_bullet"
+            android:paddingBottom="5dp"
+            android:paddingLeft="10dp"
+            android:shadowColor="@color/text_color_shadow_faint"
+            android:text="@string/rules_3_line_08"
+            android:textColor="@color/text_color_black"
+            android:textSize="16sp"/>
+
+        <TextView
+            style="@style/TextViewStyle"
+            fontPath="@string/app_font_light"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:drawableLeft="@drawable/asset_bg_dialog_rules_bullet"
+            android:paddingBottom="5dp"
+            android:paddingLeft="10dp"
+            android:shadowColor="@color/text_color_shadow_faint"
+            android:text="@string/rules_3_line_09"
+            android:textColor="@color/text_color_black"
+            android:textSize="16sp"/>
+
+        <TextView
+            style="@style/TextViewStyle"
+            fontPath="@string/app_font_light"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:drawableLeft="@drawable/asset_bg_dialog_rules_bullet"
+            android:paddingBottom="5dp"
+            android:paddingLeft="10dp"
+            android:shadowColor="@color/text_color_shadow_faint"
+            android:text="@string/rules_3_line_10"
+            android:textColor="@color/text_color_black"
+            android:textSize="16sp"/>
+    </LinearLayout>
+</RelativeLayout>

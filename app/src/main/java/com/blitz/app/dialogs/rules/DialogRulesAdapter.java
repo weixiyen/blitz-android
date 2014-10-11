@@ -15,7 +15,7 @@ public class DialogRulesAdapter extends FragmentStatePagerAdapter {
     // =============================================================================================
 
     // Number of pages in the dialog.
-    private static final int RULES_PAGES = 1;
+    private static final int RULES_PAGES = 6;
 
     // endregion
 
@@ -51,6 +51,16 @@ public class DialogRulesAdapter extends FragmentStatePagerAdapter {
 
             case 0:
                 return new DialogRulesPage0();
+            case 1:
+                return new DialogRulesPage1();
+            case 2:
+                return new DialogRulesPage2();
+            case 3:
+                return new DialogRulesPage3();
+            case 4:
+                return new DialogRulesPage4();
+            case 5:
+                return new DialogRulesPage5();
         }
 
         return null;
