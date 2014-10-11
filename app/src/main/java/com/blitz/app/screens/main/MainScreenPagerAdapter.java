@@ -4,8 +4,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 
-import com.blitz.app.utilities.app.AppConfig;
-
 /**
  * Created by mrkcsc on 7/14/14. Copyright 2014 Blitz Studios
  */
@@ -27,12 +25,6 @@ public class MainScreenPagerAdapter extends FragmentStatePagerAdapter {
      */
     public MainScreenPagerAdapter(FragmentManager fm) {
         super(fm);
-
-        // Only show play screen for now.
-        if (AppConfig.isProduction()) {
-
-            PAGE_TITLES = new String[] { "Play" };
-        }
     }
 
     // endregion
@@ -40,6 +32,14 @@ public class MainScreenPagerAdapter extends FragmentStatePagerAdapter {
     // region Overwritten Methods
     // =============================================================================================
 
+    /**
+     * Return one of the primary screens
+     * depending on pager position.
+     *
+     * @param position Position.
+     *
+     * @return Initialized screen fragment.
+     */
     @Override
     public Fragment getItem(int position) {
         switch (position) {
@@ -54,11 +54,23 @@ public class MainScreenPagerAdapter extends FragmentStatePagerAdapter {
         }
     }
 
+    /**
+     * Get associated page title.
+     *
+     * @param position Position.
+     *
+     * @return Page title.
+     */
     @Override
     public CharSequence getPageTitle(int position) {
         return PAGE_TITLES[position];
     }
 
+    /**
+     * Get total pages.
+     *
+     * @return Total pages.
+     */
     @Override
     public int getCount() {
         return PAGE_TITLES.length;

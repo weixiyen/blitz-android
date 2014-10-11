@@ -105,7 +105,7 @@ public class BaseFragment extends Fragment {
      * Keep track of fragments.
      */
     @Override
-    public void onResume () {
+    public void onResume() {
         super.onResume();
 
         // Initialize view model.
@@ -121,7 +121,7 @@ public class BaseFragment extends Fragment {
      * Keep track of fragments.
      */
     @Override
-    public void onPause () {
+    public void onPause() {
         super.onPause();
 
         // Stop view model.

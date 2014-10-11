@@ -4,7 +4,7 @@
     <string name="access_code_copy">If you have an access code, please enter it now to join the future of Fantasy Football!</string>
     <string name="account">Account</string>
     <string name="add_money">Add Money</string>
-    <string name="add_money_coming_soon">The ability to add money to your account is coming soon!  Enjoy playing free games and practice your drafting skills - stay tuned for updates!</string>
+    <string name="add_money_coming_soon">Cash games coming in Week 9</string>
     <string name="already_have_account">Already have an account? Login</string>
     <string name="bet_money_copy">Bet $5 to win up to $25,000</string>
     <string name="blitz_access_code">Blitz Access Code</string>
@@ -41,7 +41,6 @@
     <string name="recent">Recent</string>
     <string name="reset">Reset</string>
     <string name="rules">Rules</string>
-    <string name="rules_coming_soon">Drafting rules coming soon, a notification will be sent when android drafting support is enabled.</string>
     <string name="round_complete">Round\nComplete</string>
     <string name="send">Send</string>
     <string name="send_reminder">Send me a reminder when Blitz is ready</string>

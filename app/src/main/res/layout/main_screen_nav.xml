@@ -25,7 +25,6 @@
             android:src="@drawable/asset_nav_active" />
 
         <ImageView
-            android:id="@+id/main_nav_play_image"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_centerHorizontal="true"
@@ -34,7 +33,6 @@
             android:src="@drawable/asset_nav_icon_play"/>
 
         <TextView
-            android:id="@+id/main_nav_play_text"
             style="@style/TextViewStyle"
             fontPath="@string/app_font_bold"
             android:layout_width="match_parent"
@@ -66,7 +64,6 @@
             android:visibility="gone"/>
 
         <ImageView
-            android:id="@+id/main_nav_recent_image"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_centerHorizontal="true"
@@ -75,7 +72,6 @@
             android:src="@drawable/asset_nav_icon_logs"/>
 
         <TextView
-            android:id="@+id/main_nav_recent_text"
             style="@style/TextViewStyle"
             fontPath="@string/app_font_bold"
             android:layout_width="wrap_content"
@@ -107,7 +103,6 @@
             android:visibility="gone"/>
 
         <ImageView
-            android:id="@+id/main_nav_settings_image"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_centerHorizontal="true"
@@ -116,7 +111,6 @@
             android:src="@drawable/asset_nav_icon_profile"/>
 
         <TextView
-            android:id="@+id/main_nav_settings_text"
             style="@style/TextViewStyle"
             fontPath="@string/app_font_bold"
             android:layout_width="wrap_content"

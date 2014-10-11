@@ -39,6 +39,7 @@
         android:textSize="14sp"/>
 
     <TextView
+        android:id="@+id/main_play_add_money_divider"
         style="@style/TextViewStyle"
         fontPath="@string/app_font_helvetica_condensed_bold"
         android:layout_width="wrap_content"

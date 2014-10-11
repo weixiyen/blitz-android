@@ -10,7 +10,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.blitz.app.R;
-import com.blitz.app.dialogs.info.DialogInfo;
 import com.blitz.app.dialogs.rules.DialogRules;
 import com.blitz.app.screens.leaderboard.LeaderboardScreen;
 import com.blitz.app.utilities.android.BaseFragment;
@@ -43,6 +42,9 @@ public class MainScreenFragmentPlay extends BaseFragment implements ViewModelMai
 
     @InjectView(R.id.main_play_cash_available) TextView mCashAvailable;
 
+    @InjectView(R.id.main_play_add_money)         View mPlayAddMoney;
+    @InjectView(R.id.main_play_add_money_divider) View mPlayAddMoneyDivider;
+
     @InjectView(R.id.main_play_stats_username)     TextView mStatsUserName;
     @InjectView(R.id.main_play_stats_rating)       TextView mStatsRating;
     @InjectView(R.id.main_play_stats_wins)         TextView mStatsWins;
@@ -66,8 +68,8 @@ public class MainScreenFragmentPlay extends BaseFragment implements ViewModelMai
      * @param savedInstanceState Saved state.
      */
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    protected void onCreateView(Bundle savedInstanceState) {
+        super.onCreateView(savedInstanceState);
 
         if (!AppDataObject.hasSeenRules.get()) {
 
@@ -76,6 +78,17 @@ public class MainScreenFragmentPlay extends BaseFragment implements ViewModelMai
 
             // Manually show.
             rulesClicked();
+        }
+
+        if (AppConfig.isProduction()) {
+
+            // Disable cash games for the time being.
+            mCashAvailable.setText(R.string.add_money_coming_soon);
+
+            mPlayAddMoney
+                    .setVisibility(View.GONE);
+            mPlayAddMoneyDivider
+                    .setVisibility(View.GONE);
         }
     }
 
@@ -167,29 +180,6 @@ public class MainScreenFragmentPlay extends BaseFragment implements ViewModelMai
 
             mObjectAnimator.end();
         }
-    }
-
-    /**
-     * Create a normal info dialog, one button, with
-     * the specified text.
-     */
-    private void createBasicInfoDialog(int dialogTextResourceId) {
-
-        // Create a new info dialog instance.
-        final DialogInfo dialogInfo = new DialogInfo(getActivity());
-
-        // Set coming soon text with standard OK button.
-        dialogInfo.setInfoText(dialogTextResourceId);
-        dialogInfo.setInfoLeftButton(R.string.ok, new Runnable() {
-
-            @Override
-            public void run() {
-                dialogInfo.hide(null);
-            }
-        });
-
-        // Show the dialog.
-        dialogInfo.show(true);
     }
 
     // endregion
@@ -300,7 +290,7 @@ public class MainScreenFragmentPlay extends BaseFragment implements ViewModelMai
     @Override
     public void onCash(int cash) {
 
-        if (mCashAvailable != null) {
+        if (mCashAvailable != null && !AppConfig.isProduction()) {
             mCashAvailable.setText("You have $" + String.format("%.2f", cash / 100.0f));
         }
     }
@@ -335,16 +325,8 @@ public class MainScreenFragmentPlay extends BaseFragment implements ViewModelMai
             return;
         }
 
-        if (AppConfig.isProduction()) {
-
-            // Drafting is coming soon.
-            createBasicInfoDialog(R.string.play_coming_soon);
-
-        } else {
-
-            // Toggle the queue.
-            mViewModelMainPlay.toggleQueue();
-        }
+        // Toggle the queue.
+        mViewModelMainPlay.toggleQueue();
     }
 
     /**
@@ -353,8 +335,6 @@ public class MainScreenFragmentPlay extends BaseFragment implements ViewModelMai
     @OnClick(R.id.main_play_add_money) @SuppressWarnings("unused")
     public void addMoneyClicked() {
 
-        // Add money coming soon.
-        createBasicInfoDialog(R.string.add_money_coming_soon);
     }
 
     /**

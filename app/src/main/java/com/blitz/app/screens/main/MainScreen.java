@@ -9,7 +9,6 @@ import com.blitz.app.dialogs.info.DialogInfo;
 import com.blitz.app.dialogs.loading.DialogLoading;
 import com.blitz.app.utilities.android.BaseActivity;
 import com.blitz.app.utilities.android.BaseDialog;
-import com.blitz.app.utilities.app.AppConfig;
 import com.blitz.app.utilities.authentication.AuthHelper;
 import com.blitz.app.utilities.viewpager.ViewPagerTransformerZoom;
 import com.blitz.app.view_models.ViewModel;
@@ -38,12 +37,6 @@ public class MainScreen extends BaseActivity implements ViewModelMain.ViewModelM
             R.id.main_nav_play_active,
             R.id.main_nav_recent_active,
             R.id.main_nav_settings_active }) List<View> mNavActiveButtons;
-
-    // Navigation bar buttons.
-    @InjectViews({
-            R.id.main_nav_button_play,
-            R.id.main_nav_button_recent,
-            R.id.main_nav_button_settings }) List<View> mNavButtons;
 
     // Info/loading dialog.
     private DialogInfo mDialogInfo;
@@ -142,13 +135,6 @@ public class MainScreen extends BaseActivity implements ViewModelMain.ViewModelM
                 selectNavItemWithTag(i);
             }
         });
-
-        if (AppConfig.isProduction()) {
-
-            // Hide everything but the play nav item.
-            mNavButtons.get(1).setVisibility(View.GONE);
-            mNavButtons.get(2).setVisibility(View.GONE);
-        }
     }
 
     /**
