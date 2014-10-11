@@ -43,7 +43,7 @@ public interface RestAPI {
 
     @POST("/auth")
     void auth_post(@Body JsonObject body,
-        Callback<JsonObject> callback);
+        Callback<RestAPIResult<RestModelUser>> callback);
 
     @DELETE("/auth")
     void auth_delete(@Body JsonObject body,

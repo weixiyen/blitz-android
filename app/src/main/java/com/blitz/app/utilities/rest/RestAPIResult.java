@@ -21,6 +21,10 @@ public class RestAPIResult<T> {
     @SerializedName("result") @SuppressWarnings("unused")
     private T mResult;
 
+    // Result can also be keyed as a user.
+    @SerializedName("user") @SuppressWarnings("unused")
+    private T mResultUser;
+
     @SerializedName("errors") @SuppressWarnings("unused")
     private JsonObject mErrors;
 
@@ -47,7 +51,7 @@ public class RestAPIResult<T> {
      */
     public T getResult() {
 
-        return mResult;
+        return mResult != null ? mResult : mResultUser;
     }
 
     /**

@@ -188,7 +188,7 @@ public class RestModelUser extends RestModel {
                             // Sign in the user.
                             AuthHelper.instance().signIn(
                                     result.get("id").getAsString(),
-                                    result.get("username").getAsString(), mEmail, mPassword);
+                                    result.get("username").getAsString(), mEmail);
 
                             // Now signed up.
                             callback.onSignUp();
@@ -218,28 +218,26 @@ public class RestModelUser extends RestModel {
     public void signIn(Activity activity, final CallbackSignIn callback) {
 
         // Rest operation.
-        RestAPICallback<JsonObject> operation =
-                new RestAPICallback<JsonObject>(activity) {
+        RestAPICallback<RestAPIResult<RestModelUser>> operation =
+                new RestAPICallback<RestAPIResult<RestModelUser>>(activity) {
 
                     @Override
-                    public void success(JsonObject jsonObject) {
+                    public void success(RestAPIResult<RestModelUser> jsonObject) {
 
-                        if (jsonObject != null) {
+                        // Fetch user object.
+                        RestModelUser user = jsonObject.getResult();
 
-                            // Fetch user object.
-                            JsonObject user = jsonObject.getAsJsonObject("user");
+                        // Sign in the user.
+                        AuthHelper.instance().signIn(user.mId, user.mUsername, user.mEmail);
 
-                            // Sign in the user.
-                            AuthHelper.instance().signIn(
-                                    user.get("id").getAsString(),
-                                    user.get("username").getAsString(), mEmail, mPassword);
-
-                            // Now signed in.
+                        // Now signed in.
+                        if (callback != null) {
                             callback.onSignIn();
                         }
                     }
                 };
 
+        // Authentication operation.
         operation.setIsAuthentication(true);
 
         // Construct POST body.
