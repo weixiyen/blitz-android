@@ -11,10 +11,7 @@
         android:layout_height="400dp"
         android:background="@drawable/asset_bg_dialog_rules"
         android:orientation="vertical"
-        android:paddingBottom="20dp"
-        android:paddingLeft="25dp"
-        android:paddingRight="25dp"
-        android:paddingTop="10dp">
+        android:paddingBottom="10dp">
 
         <TextView
             style="@style/TextViewStyle"
@@ -22,49 +19,59 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:padding="20dp"
+            android:paddingTop="20dp"
             android:shadowColor="@color/text_color_shadow_faint"
             android:text="@string/rules_4_line_00"
             android:textColor="@color/text_color_black"
-            android:textSize="32sp"/>
+            android:textSize="28sp"/>
 
-        <TextView
-            style="@style/TextViewStyle"
-            fontPath="@string/app_font_light"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:drawableLeft="@drawable/asset_bg_dialog_rules_bullet"
-            android:paddingBottom="30dp"
-            android:paddingLeft="10dp"
-            android:shadowColor="@color/text_color_shadow_faint"
-            android:text="@string/rules_4_line_01"
-            android:textColor="@color/text_color_black"
-            android:textSize="16sp"/>
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical">
 
-        <TextView
-            style="@style/TextViewStyle"
-            fontPath="@string/app_font_light"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:drawableLeft="@drawable/asset_bg_dialog_rules_bullet"
-            android:paddingBottom="30dp"
-            android:paddingLeft="10dp"
-            android:shadowColor="@color/text_color_shadow_faint"
-            android:text="@string/rules_4_line_02"
-            android:textColor="@color/text_color_black"
-            android:textSize="16sp"/>
+            <TextView
+                style="@style/TextViewStyle"
+                fontPath="@string/app_font_light"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawableLeft="@drawable/asset_bg_dialog_rules_bullet"
+                android:paddingBottom="20dp"
+                android:paddingLeft="35dp"
+                android:paddingRight="25dp"
+                android:shadowColor="@color/text_color_shadow_faint"
+                android:text="@string/rules_4_line_01"
+                android:textColor="@color/text_color_black"
+                android:textSize="16sp"/>
 
-        <TextView
-            style="@style/TextViewStyle"
-            fontPath="@string/app_font_light"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:drawableLeft="@drawable/asset_bg_dialog_rules_bullet"
-            android:paddingBottom="30dp"
-            android:paddingLeft="10dp"
-            android:shadowColor="@color/text_color_shadow_faint"
-            android:text="@string/rules_4_line_03"
-            android:textColor="@color/text_color_black"
-            android:textSize="16sp"/>
+            <TextView
+                style="@style/TextViewStyle"
+                fontPath="@string/app_font_light"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawableLeft="@drawable/asset_bg_dialog_rules_bullet"
+                android:paddingBottom="20dp"
+                android:paddingLeft="35dp"
+                android:paddingRight="25dp"
+                android:shadowColor="@color/text_color_shadow_faint"
+                android:text="@string/rules_4_line_02"
+                android:textColor="@color/text_color_black"
+                android:textSize="16sp"/>
+
+            <TextView
+                style="@style/TextViewStyle"
+                fontPath="@string/app_font_light"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawableLeft="@drawable/asset_bg_dialog_rules_bullet"
+                android:paddingLeft="35dp"
+                android:paddingRight="25dp"
+                android:shadowColor="@color/text_color_shadow_faint"
+                android:text="@string/rules_4_line_03"
+                android:textColor="@color/text_color_black"
+                android:textSize="16sp"/>
+        </LinearLayout>
     </LinearLayout>
 </RelativeLayout>
