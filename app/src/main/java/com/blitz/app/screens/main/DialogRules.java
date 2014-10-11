@@ -1,13 +1,10 @@
 package com.blitz.app.screens.main;
 
-import android.os.Bundle;
-import android.support.v4.app.DialogFragment;
 import android.support.v4.view.ViewPager;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 
 import com.blitz.app.R;
+import com.blitz.app.utilities.android.BaseDialogFragment;
 import com.blitz.app.utilities.reflection.ReflectionHelper;
 
 import java.util.ArrayList;
@@ -18,11 +15,10 @@ import java.util.List;
  *
  * Created by Nate on 10/9/14.
  */
-public class RulesDialog extends DialogFragment {
+public class DialogRules extends BaseDialogFragment {
 
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-
-        View v = inflater.inflate(R.layout.dialog_rules, container, false);
+    @Override
+    protected void onViewCreated(View view) {
 
         int[] contentResources = new int[] {
                 R.string.rules_heads_up_draft,
@@ -37,7 +33,7 @@ public class RulesDialog extends DialogFragment {
             content.add(style + getString(resourceId));
         }
 
-        ViewPager rulesPager = (ViewPager) v.findViewById(R.id.dialog_rules_pager);
+        ViewPager rulesPager = (ViewPager) view.findViewById(R.id.dialog_rules_pager);
 
         // Formatting to make the pages look like cards
         rulesPager.setClipToPadding(false);
@@ -49,7 +45,5 @@ public class RulesDialog extends DialogFragment {
 
         // Set up rules view pager.
         rulesPager.setAdapter(new RulesPagerAdapter(getChildFragmentManager(), content, this));
-
-        return v;
     }
 }

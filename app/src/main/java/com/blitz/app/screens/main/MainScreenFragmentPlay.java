@@ -341,7 +341,7 @@ public class MainScreenFragmentPlay extends BaseFragment implements ViewModelMai
     @OnClick(R.id.main_play_rules) @SuppressWarnings("unused")
     public void rulesClicked() {
 
-        RulesDialog rulesDialog = new RulesDialog();
+        DialogRules rulesDialog = new DialogRules();
         rulesDialog.setStyle(DialogFragment.STYLE_NO_FRAME, 0);
         rulesDialog.show(getChildFragmentManager(), "rules");
     }
