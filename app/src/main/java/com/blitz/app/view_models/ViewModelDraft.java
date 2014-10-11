@@ -854,8 +854,12 @@ public class ViewModelDraft extends ViewModel {
                 // Rest of player information.
                 playerPhotoUrls.add(playerChoice.getPhotoUrl());
                 playerFullNames.add(playerChoice.getFullName());
-                playerPositions.add(playerChoice.getPosition() + " - " + playerChoice.getTeam());
                 playerOpponents.add(playerChoice.getOpponent());
+
+                if (playerChoice.getPosition() != null && playerChoice.getTeam() != null) {
+
+                    playerPositions.add(playerChoice.getPosition() + " - " + playerChoice.getTeam());
+                }
             }
 
             if (mCallbacks != null) {

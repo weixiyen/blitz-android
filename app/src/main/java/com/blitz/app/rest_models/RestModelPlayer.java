@@ -33,6 +33,9 @@ public class RestModelPlayer extends RestModel {
     @SuppressWarnings("unused") @SerializedName("opponent")
     private String mOpponent;
 
+    @SuppressWarnings("unused") @SerializedName("abbr")
+    private String mTeamAbbreviation;
+
     @SuppressWarnings("unused") @SerializedName("is_home_team")
     private boolean mIsHomeTeam;
 
@@ -116,6 +119,9 @@ public class RestModelPlayer extends RestModel {
         player.mTeam       = JsonHelper.parseString(cometJson.get("team"));
         player.mFullName   = JsonHelper.parseString(cometJson.get("full_name"));
         player.mIsHomeTeam = JsonHelper.parseBool(cometJson.get("is_home_team"));
+
+        // Team abbreviation.
+        player.mTeamAbbreviation = JsonHelper.parseString(cometJson.get("abbr"));
 
         return player;
     }
@@ -211,21 +217,26 @@ public class RestModelPlayer extends RestModel {
 
         String baseUrl = "players/";
 
-        if (mFullName == null) {
+        if (mTeamAbbreviation != null) {
 
             // Url for teams.
-            return baseUrl + "def/" + mOpponent.toLowerCase() + ".jpg";
+            return baseUrl + "def/" + mTeamAbbreviation.toLowerCase() + ".jpg";
         }
 
-        // Fetch photo url components.
-        String componentName = mFullName.replace(" ", "_").replace(".", "").toLowerCase();
-        String componentPosition = mPosition.toLowerCase();
-        String componentTeam = mTeam.toLowerCase();
+        if (mFullName != null && mPosition != null && mTeam != null) {
 
-        // Construct path.
-        String path = componentName + "_" + componentPosition + "_" + componentTeam;
+            // Fetch photo url components.
+            String componentName = mFullName.replace(" ", "_").replace(".", "").toLowerCase();
+            String componentPosition = mPosition.toLowerCase();
+            String componentTeam = mTeam.toLowerCase();
 
-        return baseUrl + "off/" + path + ".jpg";
+            // Construct path.
+            String path = componentName + "_" + componentPosition + "_" + componentTeam;
+
+            return baseUrl + "off/" + path + ".jpg";
+        }
+
+        return null;
     }
 
     /**
