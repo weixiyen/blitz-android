@@ -1,6 +1,5 @@
 package com.blitz.app.screens.main;
 
-import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,8 +8,8 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.blitz.app.R;
-import com.blitz.app.utilities.android.BaseFragment;
 import com.blitz.app.simple_models.HeadToHeadDraft;
+import com.blitz.app.utilities.android.BaseFragment;
 import com.blitz.app.view_models.ViewModel;
 import com.blitz.app.view_models.ViewModelGameLog;
 
@@ -51,7 +50,9 @@ public class MainScreenFragmentRecent extends BaseFragment implements ViewModelG
     }
 
     @Override
-    public void onDrafts(List<HeadToHeadDraft> matches, ViewModelGameLog.Summary summary) {
+    public void onDrafts(List<HeadToHeadDraft> matches, ViewModelGameLog.Summary summary, int week) {
+
+        setActiveWeekIndicator(week);
 
         final MatchInfoAdapter adapter = new MatchInfoAdapter(matches, getActivity());
 
@@ -108,15 +109,31 @@ public class MainScreenFragmentRecent extends BaseFragment implements ViewModelG
             weekPicker.setOnClickListener(new WeekSettingListener(i + 1) {
                 @Override
                 public void onClick(View view) {
-                    for(int j=0; j < WEEKS_IN_SEASON; j++) {
-                        ((TextView) mScrubber.getChildAt(j)).setTextColor(Color.rgb(251, 251, 251));
-                    }
-                    ((TextView) view).setTextColor(getResources().getColor(R.color.text_color_link));
-                    ((TextView)getActivity().findViewById(R.id.main_recent_header)).setText("Week " + mWeek);
+
+                    // Immediately update the page indicator to make
+                    // the UI feel more responsive.
+                    setActiveWeekIndicator(mWeek);
+
+                    // Update the data, which is asynchronous
                     mViewModel.updateWeek(mWeek);
                 }
             });
         }
+    }
+
+    private void setActiveWeekIndicator(int week) {
+
+        for(int j=0; j < WEEKS_IN_SEASON; j++) {
+
+            TextView indicator = (TextView) mScrubber.getChildAt(j);
+            if(j + 1 == week) {
+                indicator.setTextColor(getResources().getColor(R.color.active_control_color));
+            } else {
+                indicator.setTextColor(getResources().getColor(R.color.inactive_control_color));
+            }
+        }
+
+        ((TextView)getActivity().findViewById(R.id.main_recent_header)).setText("Week " + week);
     }
 
 

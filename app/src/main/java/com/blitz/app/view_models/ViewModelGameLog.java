@@ -83,7 +83,7 @@ public class ViewModelGameLog extends ViewModel {
         // Populate the UI with existing cached data if we already have it
         if(mCache.get(week) != null) {
             List<HeadToHeadDraft> drafts = mCache.get(week);
-            mCallbacks.onDrafts(drafts, new Summary(drafts));
+            mCallbacks.onDrafts(drafts, new Summary(drafts), week);
             mCurrentWeek = week;
         }
 
@@ -111,7 +111,7 @@ public class ViewModelGameLog extends ViewModel {
                         }
                         mCache.put(week, matches);
                         mCurrentWeek = week;
-                        mCallbacks.onDrafts(matches, new Summary(matches));
+                        mCallbacks.onDrafts(matches, new Summary(matches), week);
                     }
                 });
 
@@ -125,7 +125,7 @@ public class ViewModelGameLog extends ViewModel {
 
     public interface ViewModelGameLogCallbacks extends ViewModel.ViewModelCallbacks {
 
-        public void onDrafts(List<HeadToHeadDraft> drafts, Summary summary);
+        public void onDrafts(List<HeadToHeadDraft> drafts, Summary summary, int week);
     }
 }
 

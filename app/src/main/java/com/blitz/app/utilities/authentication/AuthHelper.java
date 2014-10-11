@@ -16,6 +16,7 @@ import com.blitz.app.utilities.android.BaseActivity;
 import com.blitz.app.utilities.app.AppConfig;
 import com.blitz.app.utilities.app.AppData;
 import com.blitz.app.utilities.app.AppDataObject;
+import com.blitz.app.utilities.rest.RestAPICallback;
 import com.blitz.app.utilities.sound.SoundHelper;
 
 import java.util.List;
@@ -64,6 +65,7 @@ public class AuthHelper {
      * Fetch preferences
      */
     public RestModelPreferences getPreferences() {
+
         if(mPreferences == null) {
             return RestModelPreferences.defaultPreferences();
         } else {
@@ -253,6 +255,14 @@ public class AuthHelper {
             startActivity(activity, DraftScreen.class);
 
         } else {
+
+            RestModelPreferences.sync(new RestAPICallback<RestModelPreferences>(activity) {
+
+                @Override
+                public void success(RestModelPreferences preferences) {
+                    mPreferences = preferences;
+                }
+            });
 
             // Attempt to fetch active drafts for the user.
             RestModelDraft.fetchActiveDraftsForUser(activity, AppDataObject.userId.get(),
