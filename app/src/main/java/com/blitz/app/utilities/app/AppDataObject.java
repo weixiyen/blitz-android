@@ -36,8 +36,6 @@ public class AppDataObject {
             = AppData.string("USER_EMAIL");
     public static final AppData<String> userName
             = AppData.string("USER_NAME");
-    public static final AppData<String> userPassword
-            = AppData.string("USER_PASSWORD");
 
     // General settings.
     public static final AppData<Boolean> settingsMusicDisabled

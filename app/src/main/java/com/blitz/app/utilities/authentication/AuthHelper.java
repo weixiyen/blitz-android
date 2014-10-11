@@ -194,8 +194,6 @@ public class AuthHelper {
             AppDataObject.userEmail.set(email);
         }
 
-        AppDataObject.userPassword.set(password);
-
         // Make sure user passed the queue.
         AppDataObject.hasAccess.set(true);
     }
@@ -210,7 +208,6 @@ public class AuthHelper {
         AppData.clear(AppDataObject.userName);
 
         AppData.clear(AppDataObject.userEmail);
-        AppData.clear(AppDataObject.userPassword);
     }
 
     /**
