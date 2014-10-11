@@ -1,4 +1,4 @@
-package com.blitz.app.screens.main;
+package com.blitz.app.dialogs.rules;
 
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
@@ -12,12 +12,12 @@ import java.util.List;
  *
  * Created by Nate on 10/1/14.
  */
-public class RulesPagerAdapter extends FragmentStatePagerAdapter {
+public class DialogRulesAdapter extends FragmentStatePagerAdapter {
 
     private final List<String> mContent;
     private final DialogFragment mDialog;
 
-    public RulesPagerAdapter(FragmentManager fm, List<String> content, DialogFragment dialog) {
+    public DialogRulesAdapter(FragmentManager fm, List<String> content, DialogFragment dialog) {
         super(fm);
         mContent = content;
         mDialog = dialog;
@@ -26,7 +26,7 @@ public class RulesPagerAdapter extends FragmentStatePagerAdapter {
     @Override
     public Fragment getItem(int position) {
 
-        RulesFragment fragment = RulesFragment.newInstance(mDialog);
+        DialogRulesAdapterFragment fragment = DialogRulesAdapterFragment.newInstance(mDialog);
         fragment.setContent(mContent.get(position));
         return fragment;
     }
@@ -35,6 +35,4 @@ public class RulesPagerAdapter extends FragmentStatePagerAdapter {
     public int getCount() {
         return mContent.size();
     }
-
 }
-

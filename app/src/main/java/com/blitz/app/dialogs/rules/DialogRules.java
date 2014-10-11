@@ -1,4 +1,4 @@
-package com.blitz.app.screens.main;
+package com.blitz.app.dialogs.rules;
 
 import android.support.v4.view.ViewPager;
 import android.view.View;
@@ -44,6 +44,6 @@ public class DialogRules extends BaseDialogFragment {
         rulesPager.setPadding(pixelPadding, 0, pixelPadding, 0);
 
         // Set up rules view pager.
-        rulesPager.setAdapter(new RulesPagerAdapter(getChildFragmentManager(), content, this));
+        rulesPager.setAdapter(new DialogRulesAdapter(getChildFragmentManager(), content, this));
     }
 }

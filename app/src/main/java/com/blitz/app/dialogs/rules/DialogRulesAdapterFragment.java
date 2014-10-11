@@ -1,4 +1,4 @@
-package com.blitz.app.screens.main;
+package com.blitz.app.dialogs.rules;
 
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
@@ -16,14 +16,14 @@ import com.blitz.app.utilities.android.BaseFragment;
  *
  * Created by Nate on 10/5/14.
  */
-public class RulesFragment extends BaseFragment {
+public class DialogRulesAdapterFragment extends BaseFragment {
 
     private String mContent;
     private DialogFragment mDialog;
 
-    public static RulesFragment newInstance(DialogFragment dialog) {
+    public static DialogRulesAdapterFragment newInstance(DialogFragment dialog) {
 
-        RulesFragment fragment = new RulesFragment();
+        DialogRulesAdapterFragment fragment = new DialogRulesAdapterFragment();
         fragment.mDialog = dialog;
         return fragment;
     }
