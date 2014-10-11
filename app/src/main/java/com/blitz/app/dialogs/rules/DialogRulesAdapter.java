@@ -26,7 +26,7 @@ public class DialogRulesAdapter extends FragmentStatePagerAdapter {
     @Override
     public Fragment getItem(int position) {
 
-        DialogRulesAdapterFragment fragment = DialogRulesAdapterFragment.newInstance(mDialog);
+        DialogRulesAdapterFragment fragment = DialogRulesAdapterFragment.newInstance();
         fragment.setContent(mContent.get(position));
         return fragment;
     }

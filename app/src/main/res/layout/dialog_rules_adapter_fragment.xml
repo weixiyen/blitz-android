@@ -2,17 +2,18 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:gravity="center"
-    android:background="@color/background_transparent">
+    android:background="@color/background_transparent"
+    android:gravity="center">
 
-    <WebView android:id="@+id/content"
+    <TextView
+        android:id="@+id/dialog_rules_adapter_fragment_content"
+        style="@style/TextViewStyle"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:layout_marginTop="40dp"
-        android:layout_marginBottom="40dp"
+        android:layout_height="400dp"
         android:background="@drawable/asset_bg_dialog_rules"
-        />
-
+        android:gravity="center"
+        android:shadowColor="@color/background_transparent"
+        android:text="@string/lorum_ipsum_long"
+        android:textColor="@color/text_color_black"
+        android:textSize="16sp"/>
 </RelativeLayout>

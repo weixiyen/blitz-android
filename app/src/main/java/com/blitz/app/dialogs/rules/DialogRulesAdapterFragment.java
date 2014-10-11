@@ -1,14 +1,14 @@
 package com.blitz.app.dialogs.rules;
 
 import android.os.Bundle;
-import android.support.v4.app.DialogFragment;
+import android.support.v4.app.Fragment;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.webkit.WebView;
+import android.widget.TextView;
 
 import com.blitz.app.R;
-import com.blitz.app.utilities.android.BaseFragment;
 
 /**
  * Fragment for rules. This is the fragment for the individual rules cards, though it could probably
@@ -16,16 +16,13 @@ import com.blitz.app.utilities.android.BaseFragment;
  *
  * Created by Nate on 10/5/14.
  */
-public class DialogRulesAdapterFragment extends BaseFragment {
+public class DialogRulesAdapterFragment extends Fragment {
 
     private String mContent;
-    private DialogFragment mDialog;
 
-    public static DialogRulesAdapterFragment newInstance(DialogFragment dialog) {
+    public static DialogRulesAdapterFragment newInstance() {
 
-        DialogRulesAdapterFragment fragment = new DialogRulesAdapterFragment();
-        fragment.mDialog = dialog;
-        return fragment;
+        return new DialogRulesAdapterFragment();
     }
 
     @Override
@@ -34,8 +31,10 @@ public class DialogRulesAdapterFragment extends BaseFragment {
 
         final View view = inflater.inflate(R.layout.dialog_rules_adapter_fragment, container, false);
 
-        WebView webView = (WebView) view.findViewById(R.id.content);
-        webView.loadData(mContent, "text/html", "utf-8");
+        TextView webView = (TextView) view.findViewById(R.id.dialog_rules_adapter_fragment_content);
+
+        webView.setText(Html.fromHtml(mContent));
+
         return view;
     }
 
