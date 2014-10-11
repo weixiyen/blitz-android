@@ -1,0 +1,51 @@
+<resources>
+    <string name="rules_1_line_00">1 vs 1 Drafting</string>
+    <string name="rules_1_line_01">Each draft lasts <b>9 rounds</b> - QB, RB, RB, WR, WR, TE, K, DEF, and FLEX</string>
+    <string name="rules_1_line_02">You will be presented with <b>4 options</b> in each round.</string>
+    <string name="rules_1_line_03">You have <b>15 seconds</b> to choose a player.</string>
+    <string name="rules_1_line_04"><b>Choose fast!</b> If your opponent chooses a player first, you cannot pick that same player.</string>
+
+    <string name="rules_2_line_00">Offensive Scoring</string>
+    <string name="rules_2_line_01">1 point per 25 <b>PASS YDS</b></string>
+    <string name="rules_2_line_02">1 point per <b>REC</b></string>
+    <string name="rules_2_line_03">1 point per 10 <b>RUSH YDS</b></string>
+    <string name="rules_2_line_04">1 point per 10 <b>REC YDS</b></string>
+    <string name="rules_2_line_05">6 point per <b>TD</b></string>
+    <string name="rules_2_line_06">3 points per <b>FG MADE</b></string>
+    <string name="rules_2_line_07">1 point per <b>XP MADE</b></string>
+    <string name="rules_2_line_08">-1 points per <b>FG MISSED</b></string>
+    <string name="rules_2_line_09">-1 points per <b>XP MISSED</b></string>
+    <string name="rules_2_line_10">-2 points per <b>INT or FUM</b></string>
+
+    <string name="rules_3_line_00">Defensive Scoring</string>
+    <string name="rules_3_line_01">1 point per <b>SACK</b></string>
+    <string name="rules_3_line_02">2 point per <b>INT or FUM</b></string>
+    <string name="rules_3_line_03">6 points per <b>TD</b></string>
+    <string name="rules_3_line_04">2 points per <b>SAFETY</b></string>
+    <string name="rules_3_line_05">-4 for 35 <b>PTS ALLOWED</b></string>
+    <string name="rules_3_line_06">-1 for 28 <b>PTS ALLOWED</b></string>
+    <string name="rules_3_line_07">1 for &lt; 21 <b>PTS ALLOWED</b></string>
+    <string name="rules_3_line_08">4 for &lt; 14 <b>PTS ALLOWED</b></string>
+    <string name="rules_3_line_09">7 for &lt; 7 <b>PTS ALLOWED</b></string>
+    <string name="rules_3_line_10">10 for 0 <b>PTS ALLOWED</b></string>
+
+    <string name="rules_4_line_00">Blitz Schedule</string>
+    <string name="rules_4_line_01">Only <b>one type</b> of game is available to play at any given time.</string>
+    <string name="rules_4_line_02">For example, perhaps $1 games are available from <b>5pm to 6pm</b>, while $5 games are available from <b>6pm to 7pm</b>.</string>
+    <string name="rules_4_line_03">Make sure to <b>check the timeline</b> to see what\'s coming up!</string>
+
+    <string name="rules_5_line_00">Payouts</string>
+    <string name="rules_5_line_01">Blitz offers both <b>free</b> and <b>paid games</b>.</string>
+    <string name="rules_5_line_02">$1 games pay <b>$1.80</b></string>
+    <string name="rules_5_line_03">$5 games pay <b>$9.00</b></string>
+    <string name="rules_5_line_04">$10 games pay <b>$18.00</b></string>
+    <string name="rules_5_line_05">$25 games pay <b>$45.00</b></string>
+    <string name="rules_5_line_06">$100 games pay <b>$180.00</b></string>
+    <string name="rules_5_line_07">Payouts are calculated after all games in a given week are played.</string>
+
+    <string name="rules_6_line_00">Blitz Rating</string>
+    <string name="rules_6_line_01">Every user has a <b>Blitz Rating</b> based on performance.</string>
+    <string name="rules_6_line_02">The Blitz Rating is a <b>numerical indicator</b> of your fantasy football skill.</string>
+    <string name="rules_6_line_03">The Blitz Rating is based on <b>ELO system</b> initially developed for chess.</string>
+    <string name="rules_6_line_04">Become the <b>#1</b> Fantasy football player.</string>
+</resources>
