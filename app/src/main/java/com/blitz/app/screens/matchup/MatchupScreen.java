@@ -147,7 +147,7 @@ public class MatchupScreen extends BaseActivity implements ViewModelMatchup.View
      */
     private void indicateLeader(int playerDetails) {
         ((TextView)findViewById(playerDetails).findViewById(R.id.player_score))
-                .setTextColor(getResources().getColor(R.color.text_color_leader_blue));
+                .setTextColor(getResources().getColor(R.color.active_blue));
     }
 
     private void flipPlayer2Avatar() {

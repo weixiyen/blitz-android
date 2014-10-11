@@ -26,7 +26,7 @@
         android:gravity="center"
         android:paddingTop="50dp"
         android:text="Week 1"
-        android:textColor="@color/text_color_link"
+        android:textColor="@color/active_blue"
         android:textSize="18sp" />
 
     <View

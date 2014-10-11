@@ -17,8 +17,8 @@
     <color name="text_color_green">#00FF96</color>
     <color name="text_color_black">#37373C</color>
 
-    <color name="text_color_link">#00FDFB</color>
-    <color name="text_color_link_pressed">#d0fdff</color>
+    <color name="active_blue">#00FDFB</color>
+    <color name="active_blue_pressed">#d0fdff</color>
 
     <color name="text_color_shadow">#BF000000</color>
     <color name="text_color_shadow_faint">#40000000</color>
@@ -26,9 +26,6 @@
     <color name="text_color_medium_grey">#969696</color>
     <color name="text_color_light_grey">#ACACAC</color>
 
-    <color name="text_color_leader_blue">#00FDFB</color>
-
-    <color name="active_control_color">#00FDFB</color>
     <color name="inactive_control_color">#FBFBFB</color>
 
 </resources>

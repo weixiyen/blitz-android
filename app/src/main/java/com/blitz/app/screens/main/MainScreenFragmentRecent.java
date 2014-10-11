@@ -127,7 +127,7 @@ public class MainScreenFragmentRecent extends BaseFragment implements ViewModelG
 
             TextView indicator = (TextView) mScrubber.getChildAt(j);
             if(j + 1 == week) {
-                indicator.setTextColor(getResources().getColor(R.color.active_control_color));
+                indicator.setTextColor(getResources().getColor(R.color.active_blue));
             } else {
                 indicator.setTextColor(getResources().getColor(R.color.inactive_control_color));
             }

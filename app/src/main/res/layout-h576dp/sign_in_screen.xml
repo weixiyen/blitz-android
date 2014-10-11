@@ -91,7 +91,7 @@
             android:paddingLeft="20dp"
             android:paddingRight="20dp"
             android:text="@string/forgot_password"
-            android:textColor="@color/text_color_link"
+            android:textColor="@color/active_blue"
             android:textSize="14sp" />
 
         <Button
