@@ -3,7 +3,6 @@ package com.blitz.app.screens.main;
 import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;
 import android.content.Intent;
-import android.support.v4.app.DialogFragment;
 import android.view.View;
 import android.view.animation.LinearInterpolator;
 import android.widget.ImageView;
@@ -342,9 +341,8 @@ public class MainScreenFragmentPlay extends BaseFragment implements ViewModelMai
     @OnClick(R.id.main_play_rules) @SuppressWarnings("unused")
     public void rulesClicked() {
 
-        DialogRules rulesDialog = new DialogRules();
-        rulesDialog.setStyle(DialogFragment.STYLE_NO_FRAME, 0);
-        rulesDialog.show(getChildFragmentManager(), "rules");
+        // Show the rules dialog fragment.
+        new DialogRules().show(getChildFragmentManager(), "DialogRules");
     }
 
     /**

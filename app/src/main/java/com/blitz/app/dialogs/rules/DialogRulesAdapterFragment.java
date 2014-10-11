@@ -32,7 +32,7 @@ public class DialogRulesAdapterFragment extends BaseFragment {
     public View onCreateView(LayoutInflater inflater, final ViewGroup container,
                                 Bundle savedInstanceState) {
 
-        final View view = inflater.inflate(R.layout.rules_fragment, container, false);
+        final View view = inflater.inflate(R.layout.dialog_rules_adapter_fragment, container, false);
 
         WebView webView = (WebView) view.findViewById(R.id.content);
         webView.loadData(mContent, "text/html", "utf-8");
