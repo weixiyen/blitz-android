@@ -49,6 +49,8 @@ public class ViewModelMatchup extends ViewModel {
     private RestModelDraft mDraft;
     private Multimap<String, Stat> mPlayerStatsMap;
 
+    private String mDraftId;
+
     // endregion
 
     // region Constructors
@@ -74,20 +76,7 @@ public class ViewModelMatchup extends ViewModel {
                             final ViewModelMatchupCallbacks callbacks, String draftId) {
         super(activity, callbacks);
 
-        RestModelDraft.fetchSyncedDraft(mActivity, draftId,
-                new RestModelCallback<RestModelDraft>() {
-
-            @Override
-            public void onSuccess(final RestModelDraft draft) {
-
-                // Set the draft.
-                mDraft = draft;
-
-                // TODO: Split up.
-                setupModel();
-                setupUserInfo();
-            }
-        });
+        mDraftId = draftId;
     }
 
     // endregion
@@ -95,6 +84,20 @@ public class ViewModelMatchup extends ViewModel {
     @Override
     public void initialize() {
 
+        RestModelDraft.fetchSyncedDraft(mActivity, mDraftId,
+                new RestModelCallback<RestModelDraft>() {
+
+                    @Override
+                    public void onSuccess(final RestModelDraft draft) {
+
+                        // Set the draft.
+                        mDraft = draft;
+
+                        // TODO: Split up.
+                        setupModel();
+                        setupUserInfo();
+                    }
+                });
     }
 
     // region Setup Methods
