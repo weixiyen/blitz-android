@@ -16,17 +16,22 @@
         app:scaleType="topCrop" />
 
     <TextView
+        android:id="@+id/leaderboard_header"
         style="@style/App.NavBar"
-        android:text="Top 150"/>
+        android:text="@string/top_players"/>
 
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_alignBottom="@+id/leaderboard_header"
+        android:background="@color/background_inner_divider"/>
 
     <ListView
         android:id="@+id/leaderboard_list"
-        android:layout_marginTop="60dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:gravity="center"
-        android:background="@color/background_inner"/>
-
+        android:layout_marginTop="60dp"
+        android:background="@color/background_inner"
+        android:gravity="center"/>
 
 </RelativeLayout>
