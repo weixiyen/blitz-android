@@ -1,12 +1,11 @@
-<?xml version="1.0" encoding="utf-8"?>
-
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/leaderboard"
-    android:orientation="vertical" android:layout_width="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:ignore="HardcodedText">
+    tools:context="${packageName}.${activityClass}"
+    tools:ignore="ButtonStyle,UnusedAttribute">
 
     <com.blitz.app.utilities.image.BlitzImageViewPlus
         android:layout_width="match_parent"
@@ -17,13 +16,13 @@
         app:scaleType="topCrop" />
 
     <TextView
-        style="@style/NavigationTitle"
+        style="@style/App.NavBar"
         android:text="Top 150"/>
 
 
     <ListView
         android:id="@+id/leaderboard_list"
-        android:layout_marginTop="@dimen/navigation_bar_height"
+        android:layout_marginTop="60dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="center"

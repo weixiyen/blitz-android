@@ -22,7 +22,7 @@
 
         <TextView
             android:id="@+id/main_recent_header"
-            style="@style/NavigationTitle"
+            style="@style/App.NavBar"
             android:text="Matchup"/>
 
         <View

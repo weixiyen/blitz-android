@@ -17,11 +17,11 @@
         app:scaleType="topCrop" />
 
     <TextView
-        style="@style/NavigationTitle"
+        style="@style/App.NavBar"
         android:text="Stats"/>
 
     <TableLayout
-        android:layout_marginTop="@dimen/navigation_bar_height"
+        android:layout_marginTop="60dp"
         android:layout_width="match_parent"
         android:layout_height="@dimen/stats_breakdown_header_height"
         android:gravity="center"
@@ -77,7 +77,7 @@
 
     <ListView
         android:id="@+id/player_stats_list"
-        android:layout_marginTop="140dp"
+        android:layout_marginTop="160dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="center"
