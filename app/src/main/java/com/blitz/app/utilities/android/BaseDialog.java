@@ -1,11 +1,8 @@
 package com.blitz.app.utilities.android;
 
-import android.animation.Animator;
-import android.animation.AnimatorListenerAdapter;
 import android.app.Activity;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
-import android.os.Handler;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +10,7 @@ import android.view.WindowManager;
 import android.widget.PopupWindow;
 
 import com.blitz.app.R;
+import com.blitz.app.utilities.animations.AnimHelperFade;
 import com.blitz.app.utilities.keyboard.KeyboardUtility;
 import com.blitz.app.utilities.reflection.ReflectionHelper;
 
@@ -35,7 +33,7 @@ public class BaseDialog {
     }
 
     // Constants.
-    private static final long ANIMATION_TIME = 250;
+    private static final int ANIMATION_TIME = 250;
 
     // All dialogs should have a content view.
     private ViewGroup mDialogContent;
@@ -134,10 +132,9 @@ public class BaseDialog {
      * Show the popup.
      *
      * @param showContent Should also display it's content?
-     * @param delay Time to delay showing.
      */
     @SuppressWarnings("unused")
-    public void show(final boolean showContent, int delay) {
+    public void show(final boolean showContent) {
 
         // If window exists and not already showing.
         if (mPopupWindow != null && !mPopupWindow.isShowing()) {
@@ -145,13 +142,12 @@ public class BaseDialog {
             // Hide the keyboard.
             KeyboardUtility.hideKeyboard(mActivity);
 
-            // Run on specified delay.
-            new Handler().postDelayed(new Runnable() {
+            try {
 
-                @Override
-                public void run() {
+                mActivity.findViewById(android.R.id.content).post(new Runnable() {
 
-                    try {
+                    @Override
+                    public void run() {
 
                         // Show at top corner of the window.
                         mPopupWindow.showAtLocation(mActivity.getWindow().getDecorView(),
@@ -159,25 +155,16 @@ public class BaseDialog {
 
                         // Try to show dialog content.
                         tryShowDialogContent(showContent);
+                    }
+                });
 
-                    } catch (WindowManager.BadTokenException ignored) { }
-                }
-            }, delay);
+            } catch (WindowManager.BadTokenException ignored) {  }
 
         } else {
 
             // Try to show dialog content.
             tryShowDialogContent(showContent);
         }
-    }
-
-    /**
-     * Show the popup.
-     *
-     * @param showContent Should also display it's content?
-     */
-    public void show(boolean showContent) {
-        show(showContent, 0);
     }
 
     /**
@@ -293,15 +280,13 @@ public class BaseDialog {
         // Make sure the loading view is visible.
         mDialogContent.setVisibility(View.VISIBLE);
 
-        // Initialize the alpha.
-        mDialogContent.setAlpha(visible ? 0f : 1f);
-
-        // Define animation end callback.
-        AnimatorListenerAdapter adapter = new AnimatorListenerAdapter() {
+        // Perform the animation.
+        AnimHelperFade.setAlpha(mDialogContent,
+                visible ? 0f : 1f,
+                visible ? 1f : 0f, ANIMATION_TIME, new Runnable() {
 
             @Override
-            public void onAnimationEnd(Animator animation) {
-                super.onAnimationEnd(animation);
+            public void run() {
 
                 // Update the state flag.
                 mDialogContentState = visible ?
@@ -322,13 +307,7 @@ public class BaseDialog {
                     }
                 }
             }
-        };
-
-        // Perform the animation.
-        mDialogContent.animate()
-                .alpha(visible ? 1f : 0f)
-                .setDuration(ANIMATION_TIME)
-                .setListener(adapter);
+        });
     }
 
     /**
