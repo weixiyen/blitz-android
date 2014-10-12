@@ -20,7 +20,7 @@
 
         <com.blitz.app.utilities.textview.BlitzTextView
             android:id="@+id/main_play_stats_username"
-            style="@style/TextViewStyle"
+            style="@style/App.TextView"
             fontPath="@string/app_font_sports"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -49,7 +49,7 @@
 
             <com.blitz.app.utilities.textview.BlitzTextView
                 android:id="@+id/main_play_stats_rating"
-                style="@style/TextViewStyle"
+                style="@style/App.TextView"
                 fontPath="@string/app_font_sports"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -70,7 +70,7 @@
             android:orientation="horizontal">
 
             <TextView
-                style="@style/TextViewStyle"
+                style="@style/App.TextView"
                 fontPath="@string/app_font_sports"
                 android:layout_width="60dp"
                 android:layout_height="wrap_content"
@@ -82,7 +82,7 @@
                 android:textSize="16sp"/>
 
             <TextView
-                style="@style/TextViewStyle"
+                style="@style/App.TextView"
                 fontPath="@string/app_font_sports"
                 android:layout_width="60dp"
                 android:layout_height="wrap_content"
@@ -102,7 +102,7 @@
 
             <com.blitz.app.utilities.textview.BlitzTextView
                 android:id="@+id/main_play_stats_wins"
-                style="@style/TextViewStyle"
+                style="@style/App.TextView"
                 fontPath="@string/app_font_sports"
                 android:layout_width="60dp"
                 android:layout_height="wrap_content"
@@ -117,7 +117,7 @@
 
             <com.blitz.app.utilities.textview.BlitzTextView
                 android:id="@+id/main_play_stats_losses"
-                style="@style/TextViewStyle"
+                style="@style/App.TextView"
                 fontPath="@string/app_font_sports"
                 android:layout_width="60dp"
                 android:layout_height="wrap_content"
@@ -133,7 +133,7 @@
 
         <TextView
             android:id="@+id/main_play_leaderboard_link"
-            style="@style/TextViewStyle"
+            style="@style/App.TextView"
             fontPath="@string/app_font_sports"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

@@ -50,7 +50,7 @@
 
             <Button
                 android:id="@+id/splash_screen_sign_up"
-                style="@style/ButtonStyle"
+                style="@style/App.Button"
                 android:layout_width="145dp"
                 android:layout_height="match_parent"
                 android:layout_marginLeft="5dp"
@@ -60,7 +60,7 @@
 
             <Button
                 android:id="@+id/splash_screen_sign_in"
-                style="@style/ButtonStyle"
+                style="@style/App.Button"
                 android:layout_width="145dp"
                 android:layout_height="match_parent"
                 android:layout_marginLeft="10dp"

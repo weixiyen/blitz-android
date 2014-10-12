@@ -14,7 +14,7 @@
         android:paddingBottom="10dp">
 
         <TextView
-            style="@style/TextViewStyle"
+            style="@style/App.TextView"
             fontPath="@string/app_font_helvetica_condensed_bold"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -33,7 +33,7 @@
             android:orientation="vertical">
 
             <TextView
-                style="@style/TextViewStyle"
+                style="@style/App.TextView"
                 fontPath="@string/app_font_light"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -47,7 +47,7 @@
                 android:textSize="15sp"/>
 
             <TextView
-                style="@style/TextViewStyle"
+                style="@style/App.TextView"
                 fontPath="@string/app_font_light"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -61,7 +61,7 @@
                 android:textSize="15sp"/>
 
             <TextView
-                style="@style/TextViewStyle"
+                style="@style/App.TextView"
                 fontPath="@string/app_font_light"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -75,7 +75,7 @@
                 android:textSize="15sp"/>
 
             <TextView
-                style="@style/TextViewStyle"
+                style="@style/App.TextView"
                 fontPath="@string/app_font_light"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

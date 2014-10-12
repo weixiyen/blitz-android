@@ -59,7 +59,7 @@
 
             <com.blitz.app.utilities.textview.BlitzTextView
                 android:id="@+id/main_settings_email"
-                style="@style/TextViewStyle"
+                style="@style/App.TextView"
                 fontPath="@string/app_font_helvetica_condensed_bold"
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
@@ -78,7 +78,7 @@
                 android:visibility="gone"/>
 
             <Button
-                style="@style/ButtonStyle"
+                style="@style/App.Button"
                 fontPath="@string/app_font_helvetica_condensed_bold"
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
@@ -135,7 +135,7 @@
                 android:visibility="gone"/>
 
             <LinearLayout
-                style="@style/ButtonStyle"
+                style="@style/App.Button"
                 android:layout_width="match_parent"
                 android:layout_height="85dp"
                 android:background="@color/background_inner"
@@ -146,7 +146,7 @@
                 android:visibility="gone">
 
                 <TextView
-                    style="@style/TextViewStyle"
+                    style="@style/App.TextView"
                     fontPath="@string/app_font_helvetica_condensed_bold"
                     android:layout_width="match_parent"
                     android:layout_height="30dp"
@@ -159,7 +159,7 @@
                     android:textSize="16sp"/>
 
                 <TextView
-                    style="@style/TextViewStyle"
+                    style="@style/App.TextView"
                     fontPath="@string/app_font_helvetica_condensed_bold"
                     android:layout_width="match_parent"
                     android:layout_height="30dp"
@@ -198,7 +198,7 @@
                     android:paddingRight="25dp">
 
                     <Button
-                        style="@style/ButtonStyle"
+                        style="@style/App.Button"
                         fontPath="@string/app_font_helvetica_condensed_bold"
                         android:layout_width="match_parent"
                         android:layout_height="20dp"
@@ -211,7 +211,7 @@
                         android:textSize="12sp"/>
 
                     <Button
-                        style="@style/ButtonStyle"
+                        style="@style/App.Button"
                         fontPath="@string/app_font_helvetica_condensed_bold"
                         android:layout_width="match_parent"
                         android:layout_height="25dp"
@@ -223,7 +223,7 @@
                 </LinearLayout>
 
                 <Button
-                    style="@style/ButtonStyle"
+                    style="@style/App.Button"
                     fontPath="@string/app_font_helvetica_condensed_bold"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
@@ -257,7 +257,7 @@
                     android:paddingRight="25dp">
 
                     <Button
-                        style="@style/ButtonStyle"
+                        style="@style/App.Button"
                         fontPath="@string/app_font_helvetica_condensed_bold"
                         android:layout_width="match_parent"
                         android:layout_height="20dp"
@@ -270,7 +270,7 @@
                         android:textSize="12sp"/>
 
                     <Button
-                        style="@style/ButtonStyle"
+                        style="@style/App.Button"
                         fontPath="@string/app_font_helvetica_condensed_bold"
                         android:layout_width="match_parent"
                         android:layout_height="25dp"
@@ -282,7 +282,7 @@
                 </LinearLayout>
 
                 <Button
-                    style="@style/ButtonStyle"
+                    style="@style/App.Button"
                     fontPath="@string/app_font_helvetica_condensed_bold"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
@@ -316,7 +316,7 @@
                     android:paddingRight="25dp">
 
                     <Button
-                        style="@style/ButtonStyle"
+                        style="@style/App.Button"
                         fontPath="@string/app_font_helvetica_condensed_bold"
                         android:layout_width="match_parent"
                         android:layout_height="20dp"
@@ -329,7 +329,7 @@
                         android:textSize="12sp"/>
 
                     <Button
-                        style="@style/ButtonStyle"
+                        style="@style/App.Button"
                         fontPath="@string/app_font_helvetica_condensed_bold"
                         android:layout_width="match_parent"
                         android:layout_height="25dp"
@@ -341,7 +341,7 @@
                 </LinearLayout>
 
                 <Button
-                    style="@style/ButtonStyle"
+                    style="@style/App.Button"
                     fontPath="@string/app_font_helvetica_condensed_bold"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
@@ -364,7 +364,7 @@
 
             <Button
                 android:id="@+id/main_settings_terms_of_use"
-                style="@style/ButtonStyle"
+                style="@style/App.Button"
                 fontPath="@string/app_font_helvetica_condensed_bold"
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
@@ -384,7 +384,7 @@
 
             <Button
                 android:id="@+id/main_settings_privacy_policy"
-                style="@style/ButtonStyle"
+                style="@style/App.Button"
                 fontPath="@string/app_font_helvetica_condensed_bold"
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
@@ -404,7 +404,7 @@
 
             <Button
                 android:id="@+id/main_settings_logout"
-                style="@style/ButtonStyle"
+                style="@style/App.Button"
                 fontPath="@string/app_font_helvetica_condensed_bold"
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
@@ -424,7 +424,7 @@
 
             <Button
                 android:id="@+id/main_settings_reset"
-                style="@style/ButtonStyle"
+                style="@style/App.Button"
                 fontPath="@string/app_font_helvetica_condensed_bold"
                 android:layout_width="match_parent"
                 android:layout_height="60dp"

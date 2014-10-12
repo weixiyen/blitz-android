@@ -21,7 +21,7 @@
         android:orientation="vertical">
 
         <TextView
-            style="@style/TextViewStyle"
+            style="@style/App.TextView"
             fontPath="@string/app_font_bold"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -40,7 +40,7 @@
 
             <EditText
                 android:id="@+id/sign_in_screen_username_or_email"
-                style="@style/TextViewStyle"
+                style="@style/App.TextView"
                 fontPath="@string/app_font_regular"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
@@ -60,7 +60,7 @@
 
             <EditText
                 android:id="@+id/sign_in_screen_password"
-                style="@style/TextViewStyle"
+                style="@style/App.TextView"
                 fontPath="@string/app_font_regular"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
@@ -79,7 +79,7 @@
         </LinearLayout>
 
         <TextView
-            style="@style/TextViewStyle"
+            style="@style/App.TextView"
             fontPath="@string/app_font_light"
             android:layout_width="match_parent"
             android:layout_height="30dp"
@@ -93,7 +93,7 @@
 
         <Button
             android:id="@+id/sign_in_screen_sign_in"
-            style="@style/ButtonStyle"
+            style="@style/App.Button"
             android:layout_width="match_parent"
             android:layout_height="60dp"
             android:background="@drawable/drawable_button_big"

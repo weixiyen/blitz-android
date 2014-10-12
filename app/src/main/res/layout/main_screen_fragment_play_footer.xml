@@ -13,7 +13,7 @@
 
     <com.blitz.app.utilities.textview.BlitzTextView
         android:id="@+id/main_play_cash_available"
-        style="@style/TextViewStyle"
+        style="@style/App.TextView"
         fontPath="@string/app_font_helvetica_condensed_bold"
         android:layout_width="0dp"
         android:layout_height="match_parent"
@@ -28,7 +28,7 @@
 
     <TextView
         android:id="@+id/main_play_add_money"
-        style="@style/TextViewStyle"
+        style="@style/App.TextView"
         fontPath="@string/app_font_helvetica_condensed_bold"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
@@ -40,7 +40,7 @@
 
     <TextView
         android:id="@+id/main_play_add_money_divider"
-        style="@style/TextViewStyle"
+        style="@style/App.TextView"
         fontPath="@string/app_font_helvetica_condensed_bold"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
@@ -54,7 +54,7 @@
 
     <TextView
         android:id="@+id/main_play_rules"
-        style="@style/TextViewStyle"
+        style="@style/App.TextView"
         fontPath="@string/app_font_helvetica_condensed_bold"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"

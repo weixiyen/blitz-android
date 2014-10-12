@@ -25,7 +25,7 @@
 
             <com.blitz.app.utilities.textview.BlitzTextView
                 android:id="@+id/draft_intro_username_left"
-                style="@style/TextViewStyle"
+                style="@style/App.TextView"
                 fontPath="@string/app_font_sports"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -41,7 +41,7 @@
 
             <com.blitz.app.utilities.textview.BlitzTextView
                 android:id="@+id/draft_intro_scorecard_left"
-                style="@style/TextViewStyle"
+                style="@style/App.TextView"
                 fontPath="@string/app_font_sports"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -70,7 +70,7 @@
 
                 <com.blitz.app.utilities.textview.BlitzTextView
                     android:id="@+id/draft_intro_elo_left"
-                    style="@style/TextViewStyle"
+                    style="@style/App.TextView"
                     fontPath="@string/app_font_sports"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -97,7 +97,7 @@
 
     <me.grantland.widget.AutofitTextView
         android:id="@+id/draft_intro_container_vs"
-        style="@style/TextViewStyle"
+        style="@style/App.TextView"
         fontPath="@string/app_font_sports"
         android:layout_width="40dp"
         android:layout_height="wrap_content"
@@ -125,7 +125,7 @@
 
             <com.blitz.app.utilities.textview.BlitzTextView
                 android:id="@+id/draft_intro_username_right"
-                style="@style/TextViewStyle"
+                style="@style/App.TextView"
                 fontPath="@string/app_font_sports"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -141,7 +141,7 @@
 
             <com.blitz.app.utilities.textview.BlitzTextView
                 android:id="@+id/draft_intro_scorecard_right"
-                style="@style/TextViewStyle"
+                style="@style/App.TextView"
                 fontPath="@string/app_font_sports"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -170,7 +170,7 @@
 
                 <com.blitz.app.utilities.textview.BlitzTextView
                     android:id="@+id/draft_intro_elo_right"
-                    style="@style/TextViewStyle"
+                    style="@style/App.TextView"
                     fontPath="@string/app_font_sports"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"

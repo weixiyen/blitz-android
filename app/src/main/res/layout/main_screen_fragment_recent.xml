@@ -18,16 +18,10 @@
 
     <TextView
         android:id="@+id/main_recent_header"
-        style="@style/TextViewStyle"
-        android:layout_width="match_parent"
+        style="@style/App.NavBar"
         android:layout_height="110dp"
-        android:background="#40000000"
-        fontPath="@string/app_font_helvetica_condensed_bold"
-        android:gravity="center"
         android:paddingTop="50dp"
-        android:text="Week 1"
-        android:textColor="@color/active_blue"
-        android:textSize="18sp" />
+        android:text="Week 1" />
 
     <View
         android:layout_width="match_parent"
@@ -43,7 +37,7 @@
         android:orientation="horizontal">
 
         <TextView
-            style="@style/TextViewStyle"
+            style="@style/App.TextView"
             android:layout_width="0dp"
             android:layout_height="25dp"
             android:layout_gravity="bottom"
@@ -56,7 +50,7 @@
             android:textSize="13sp"/>
 
         <TextView
-            style="@style/TextViewStyle"
+            style="@style/App.TextView"
             android:layout_width="0dp"
             android:layout_height="25dp"
             android:layout_gravity="bottom"
@@ -69,7 +63,7 @@
             android:textSize="13sp"/>
 
         <TextView
-            style="@style/TextViewStyle"
+            style="@style/App.TextView"
             android:layout_width="0dp"
             android:layout_height="25dp"
             android:layout_gravity="bottom"
@@ -82,7 +76,7 @@
             android:textSize="13sp"/>
 
         <TextView
-            style="@style/TextViewStyle"
+            style="@style/App.TextView"
             android:layout_width="0dp"
             android:layout_height="25dp"
             android:layout_gravity="bottom"
@@ -104,7 +98,7 @@
         android:orientation="horizontal">
 
         <TextView android:id="@+id/wins"
-            style="@style/TextViewStyle"
+            style="@style/App.TextView"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="top"
@@ -117,7 +111,7 @@
             android:textSize="20sp"/>
 
         <TextView android:id="@+id/losses"
-            style="@style/TextViewStyle"
+            style="@style/App.TextView"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="top"
@@ -130,7 +124,7 @@
             android:textSize="20sp"/>
 
         <TextView android:id="@+id/earnings"
-            style="@style/TextViewStyle"
+            style="@style/App.TextView"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="top"
@@ -143,7 +137,7 @@
             android:textSize="20sp"/>
 
         <TextView android:id="@+id/rating_change"
-            style="@style/TextViewStyle"
+            style="@style/App.TextView"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="top"

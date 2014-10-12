@@ -33,7 +33,7 @@
                 android:orientation="vertical">
 
                 <TextView
-                    style="@style/TextViewStyle"
+                    style="@style/App.TextView"
                     fontPath="@string/app_font_bold"
                     android:layout_width="match_parent"
                     android:layout_height="66dp"
@@ -44,7 +44,7 @@
 
                 <TextView
                     android:id="@+id/dialog_info_text"
-                    style="@style/TextViewStyle"
+                    style="@style/App.TextView"
                     fontPath="@string/app_font_light"
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
@@ -64,7 +64,7 @@
 
                     <Button
                         android:id="@+id/dialog_info_left_button"
-                        style="@style/ButtonStyle"
+                        style="@style/App.Button"
                         fontPath="@string/app_font_regular"
                         android:layout_width="145dp"
                         android:layout_height="60dp"
@@ -76,7 +76,7 @@
 
                     <Button
                         android:id="@+id/dialog_info_right_button"
-                        style="@style/ButtonStyle"
+                        style="@style/App.Button"
                         fontPath="@string/app_font_regular"
                         android:layout_width="145dp"
                         android:layout_height="60dp"

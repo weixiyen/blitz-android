@@ -17,7 +17,7 @@
 
     <Button
         android:id="@+id/access_code_continue_with_code"
-        style="@style/ButtonStyle"
+        style="@style/App.Button"
         android:layout_width="@dimen/screen_width"
         android:layout_height="60dp"
         android:layout_alignParentBottom="true"
@@ -44,7 +44,7 @@
         android:orientation="vertical">
 
         <TextView
-            style="@style/TextViewStyle"
+            style="@style/App.TextView"
             fontPath="@string/app_font_bold"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -57,7 +57,7 @@
 
         <EditText
             android:id="@+id/access_code_code"
-            style="@style/TextViewStyle"
+            style="@style/App.TextView"
             fontPath="@string/app_font_regular"
             android:layout_width="@dimen/screen_width"
             android:layout_height="50dp"
@@ -80,7 +80,7 @@
             android:background="@drawable/asset_queue_overlay">
 
             <me.grantland.widget.AutofitTextView
-                style="@style/TextViewStyle"
+                style="@style/App.TextView"
                 fontPath="@string/app_font_light"
                 android:layout_width="@dimen/screen_width"
                 android:layout_height="match_parent"

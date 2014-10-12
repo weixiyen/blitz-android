@@ -3,20 +3,20 @@
     tools:ignore="NewApi">
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="@android:style/Theme.Holo.NoActionBar.Fullscreen">
+    <style name="App.Theme" parent="@android:style/Theme.Holo.NoActionBar.Fullscreen">
 
         <!-- Set a theme window background -->
         <item name="android:windowBackground">@null</item>
 
         <!-- View pager indicator style. -->
-        <item name="vpiCirclePageIndicatorStyle">@style/TabStyle</item>
+        <item name="vpiCirclePageIndicatorStyle">@style/App.PagerIndicatorStyle</item>
 
         <!-- Disable over-scroll effects -->
         <item name="android:overScrollMode">never</item>
     </style>
 
     <!-- View pager indicator style. -->
-    <style name="TabStyle" parent="Widget">
+    <style name="App.PagerIndicatorStyle" parent="Widget">
         <item name="android:background">@android:color/transparent</item>
         <item name="fillColor">@color/button_color_0</item>
         <item name="pageColor">@color/text_color_light</item>
@@ -25,7 +25,7 @@
     </style>
 
     <!-- Standard button style. -->
-    <style name="ButtonStyle" parent="@android:style/Widget.Button">
+    <style name="App.Button" parent="@android:style/Widget.Button">
         <item name="android:textColor">@color/text_color_light</item>
         <item name="android:textSize">18sp</item>
         <item name="fontPath">@string/app_font_regular</item>
@@ -38,7 +38,7 @@
     </style>
 
     <!-- Standard text view style. -->
-    <style name="TextViewStyle" parent="@android:style/Widget.TextView">
+    <style name="App.TextView" parent="@android:style/Widget.TextView">
         <item name="android:textColor">@color/text_color_light</item>
         <item name="android:textSize">18sp</item>
         <item name="fontPath">@string/app_font_regular</item>
@@ -47,6 +47,17 @@
         <item name="android:shadowDy">1</item>
         <item name="android:shadowRadius">2</item>
         <item name="android:contentDescription">@string/empty_string</item>
+    </style>
+
+    <!-- Standard Navigation Bar Style -->
+    <style name="App.NavBar" parent="App.TextView">
+        <item name="fontPath">@string/app_font_helvetica_condensed_bold</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">60dp</item>
+        <item name="android:background">@color/background_navigation</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textColor">@color/active_blue</item>
+        <item name="android:textSize">18sp</item>
     </style>
 
     <style name="ScoreStyle">
@@ -111,16 +122,6 @@
         <item name="android:textColor">@color/text_color_light</item>
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
-    </style>
-
-    <style name="App.NavBar" parent="TextViewStyle">
-        <item name="fontPath">@string/app_font_helvetica_condensed_bold</item>
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">60dp</item>
-        <item name="android:background">@color/background_navigation</item>
-        <item name="android:gravity">center</item>
-        <item name="android:textColor">@color/active_blue</item>
-        <item name="android:textSize">18sp</item>
     </style>
 
 </resources>

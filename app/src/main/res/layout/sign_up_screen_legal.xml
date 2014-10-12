@@ -15,7 +15,7 @@
         app:scaleType="topCrop" />
 
     <me.grantland.widget.AutofitTextView
-        style="@style/TextViewStyle"
+        style="@style/App.TextView"
         fontPath="@string/app_font_bold"
         android:layout_width="match_parent"
         android:layout_height="75dp"
@@ -45,7 +45,7 @@
 
     <Button
         android:id="@+id/sign_up_legal_accept"
-        style="@style/ButtonStyle"
+        style="@style/App.Button"
         android:layout_width="@dimen/screen_width"
         android:layout_height="60dp"
         android:layout_alignParentBottom="true"

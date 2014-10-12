@@ -18,7 +18,7 @@
 
         <com.blitz.app.utilities.textview.BlitzTextView
             android:id="@+id/draft_matchup_username_left"
-            style="@style/TextViewStyle"
+            style="@style/App.TextView"
             fontPath="@string/app_font_sports"
             android:layout_width="140dp"
             android:layout_height="38dp"
@@ -44,7 +44,7 @@
 
     <me.grantland.widget.AutofitTextView
         android:id="@+id/draft_matchup_container_vs"
-        style="@style/TextViewStyle"
+        style="@style/App.TextView"
         fontPath="@string/app_font_sports"
         android:layout_width="40dp"
         android:layout_height="148dp"
@@ -67,7 +67,7 @@
 
         <com.blitz.app.utilities.textview.BlitzTextView
             android:id="@+id/draft_matchup_username_right"
-            style="@style/TextViewStyle"
+            style="@style/App.TextView"
             fontPath="@string/app_font_sports"
             android:layout_width="140dp"
             android:layout_height="38dp"
@@ -104,7 +104,7 @@
 
     <TextView
         android:id="@+id/draft_matchup_time_remaining"
-        style="@style/TextViewStyle"
+        style="@style/App.TextView"
         fontPath="@string/app_font_sports"
         android:layout_width="75dp"
         android:layout_height="75dp"
@@ -116,7 +116,7 @@
 
     <me.grantland.widget.AutofitTextView
         android:id="@+id/draft_matchup_round_complete"
-        style="@style/TextViewStyle"
+        style="@style/App.TextView"
         fontPath="@string/app_font_sports"
         android:layout_width="75dp"
         android:layout_height="75dp"

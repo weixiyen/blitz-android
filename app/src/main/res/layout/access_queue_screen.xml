@@ -29,7 +29,7 @@
             android:orientation="vertical">
 
             <me.grantland.widget.AutofitTextView
-                style="@style/TextViewStyle"
+                style="@style/App.TextView"
                 fontPath="@string/app_font_bold"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -40,7 +40,7 @@
                 android:textSize="20sp"/>
 
             <me.grantland.widget.AutofitTextView
-                style="@style/TextViewStyle"
+                style="@style/App.TextView"
                 fontPath="@string/app_font_light"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -80,7 +80,7 @@
                     android:visibility="gone">
 
                     <me.grantland.widget.AutofitTextView
-                        style="@style/TextViewStyle"
+                        style="@style/App.TextView"
                         fontPath="@string/app_font_sports"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -91,7 +91,7 @@
                         android:textSize="16sp"/>
 
                     <me.grantland.widget.AutofitTextView
-                        style="@style/TextViewStyle"
+                        style="@style/App.TextView"
                         fontPath="@string/app_font_sports"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -116,7 +116,7 @@
 
                     <me.grantland.widget.AutofitTextView
                         android:id="@+id/access_queue_people_ahead"
-                        style="@style/TextViewStyle"
+                        style="@style/App.TextView"
                         fontPath="@string/app_font_sports"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -127,7 +127,7 @@
                         android:textSize="40sp"/>
 
                     <me.grantland.widget.AutofitTextView
-                        style="@style/TextViewStyle"
+                        style="@style/App.TextView"
                         fontPath="@string/app_font_regular"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -140,7 +140,7 @@
 
                     <me.grantland.widget.AutofitTextView
                         android:id="@+id/access_queue_people_behind"
-                        style="@style/TextViewStyle"
+                        style="@style/App.TextView"
                         fontPath="@string/app_font_sports"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -151,7 +151,7 @@
                         android:textSize="30sp"/>
 
                     <me.grantland.widget.AutofitTextView
-                        style="@style/TextViewStyle"
+                        style="@style/App.TextView"
                         fontPath="@string/app_font_regular"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -183,7 +183,7 @@
 
         <Button
             android:id="@+id/access_queue_have_code"
-            style="@style/ButtonStyle"
+            style="@style/App.Button"
             android:layout_width="match_parent"
             android:layout_height="60dp"
             android:layout_marginTop="40dp"
@@ -192,7 +192,7 @@
 
         <me.grantland.widget.AutofitTextView
             android:id="@+id/access_queue_have_account"
-            style="@style/TextViewStyle"
+            style="@style/App.TextView"
             fontPath="@string/app_font_light"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

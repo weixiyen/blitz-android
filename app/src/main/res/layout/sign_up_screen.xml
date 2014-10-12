@@ -21,7 +21,7 @@
         android:orientation="vertical">
 
         <TextView
-            style="@style/TextViewStyle"
+            style="@style/App.TextView"
             fontPath="@string/app_font_bold"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -40,7 +40,7 @@
 
             <EditText
                 android:id="@+id/sign_up_screen_email"
-                style="@style/TextViewStyle"
+                style="@style/App.TextView"
                 fontPath="@string/app_font_regular"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
@@ -59,7 +59,7 @@
 
             <EditText
                 android:id="@+id/sign_up_screen_username"
-                style="@style/TextViewStyle"
+                style="@style/App.TextView"
                 fontPath="@string/app_font_regular"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
@@ -78,7 +78,7 @@
 
             <EditText
                 android:id="@+id/sign_up_screen_password"
-                style="@style/TextViewStyle"
+                style="@style/App.TextView"
                 fontPath="@string/app_font_regular"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
@@ -98,7 +98,7 @@
 
         <Button
             android:id="@+id/sign_up_screen_sign_up"
-            style="@style/ButtonStyle"
+            style="@style/App.Button"
             android:layout_width="match_parent"
             android:layout_height="60dp"
             android:layout_marginTop="10dp"
@@ -106,7 +106,7 @@
             android:text="@string/sign_up" />
 
         <me.grantland.widget.AutofitTextView
-            style="@style/TextViewStyle"
+            style="@style/App.TextView"
             fontPath="@string/app_font_light"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

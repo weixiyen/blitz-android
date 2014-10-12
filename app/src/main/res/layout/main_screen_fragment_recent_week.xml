@@ -6,7 +6,7 @@
     tools:ignore="UnusedAttribute,SmallSp">
 
     <TextView
-        style="@style/TextViewStyle"
+        style="@style/App.TextView"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_marginLeft="0dp"
