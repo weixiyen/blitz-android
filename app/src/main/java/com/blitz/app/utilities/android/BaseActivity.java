@@ -5,11 +5,14 @@ import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.FragmentActivity;
 
 import com.blitz.app.R;
+import com.blitz.app.utilities.animations.AnimHelper;
 import com.blitz.app.utilities.app.AppConfig;
 import com.blitz.app.utilities.background.EnteredBackground;
+import com.blitz.app.utilities.blitz.BlitzDelay;
 import com.blitz.app.utilities.comet.CometAPIManager;
 import com.blitz.app.utilities.keyboard.KeyboardUtility;
 import com.blitz.app.utilities.reflection.ReflectionHelper;
@@ -44,6 +47,10 @@ public class BaseActivity extends FragmentActivity {
     // By default the keyboard should adjust
     // and resize activity window.
     private boolean mAdjustResize;
+
+    // Use to delay initialization of our view models which
+    // alleviates perceived lag during transition animations.
+    private Handler mViewModelInitializeHandler;
 
     //==============================================================================================
     // Overwritten Methods
@@ -95,10 +102,18 @@ public class BaseActivity extends FragmentActivity {
     protected void onResume() {
         super.onResume();
 
-        // Initialize view model.
-        if (getViewModel() != null) {
-            getViewModel().initialize();
-        }
+        // Initialize the view model on the screen transition delay.
+        mViewModelInitializeHandler = BlitzDelay.postDelayed(new Runnable() {
+
+            @Override
+            public void run() {
+
+                // Initialize view model.
+                if (getViewModel() != null) {
+                    getViewModel().initialize();
+                }
+            }
+        }, AnimHelper.getConfigAnimTimeStandard(this));
 
         if (mGoingBack) {
             mGoingBack = false;
@@ -123,6 +138,9 @@ public class BaseActivity extends FragmentActivity {
     @Override
     protected void onPause() {
         super.onPause();
+
+        // Remove pending initialize calls.
+        BlitzDelay.remove(mViewModelInitializeHandler);
 
         // Stop view model.
         if (getViewModel() != null) {

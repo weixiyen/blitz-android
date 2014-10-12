@@ -2,16 +2,19 @@ package com.blitz.app.utilities.android;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.blitz.app.R;
+import com.blitz.app.utilities.animations.AnimHelper;
+import com.blitz.app.utilities.blitz.BlitzDelay;
 import com.blitz.app.utilities.comet.CometAPIManager;
-import com.blitz.app.view_models.ViewModel;
 import com.blitz.app.utilities.reflection.ReflectionHelper;
 import com.blitz.app.utilities.string.StringHelper;
+import com.blitz.app.view_models.ViewModel;
 
 import butterknife.ButterKnife;
 
@@ -32,6 +35,10 @@ public class BaseFragment extends Fragment {
 
     // Layout inflater.
     private LayoutInflater mInflater;
+
+    // Use to delay initialization of our view models which
+    // alleviates perceived lag during transition animations.
+    private Handler mViewModelInitializeHandler;
 
     //==============================================================================================
     // Overwritten Methods
@@ -108,10 +115,18 @@ public class BaseFragment extends Fragment {
     public void onResume() {
         super.onResume();
 
-        // Initialize view model.
-        if (getViewModel() != null) {
-            getViewModel().initialize();
-        }
+        // Initialize the view model on the screen transition delay.
+        mViewModelInitializeHandler = BlitzDelay.postDelayed(new Runnable() {
+
+            @Override
+            public void run() {
+
+                // Initialize view model.
+                if (getViewModel() != null) {
+                    getViewModel().initialize();
+                }
+            }
+        }, AnimHelper.getConfigAnimTimeStandard(this.getActivity()));
 
         // Add a new fragment.
         CometAPIManager.configAddFragment(this);
@@ -123,6 +138,9 @@ public class BaseFragment extends Fragment {
     @Override
     public void onPause() {
         super.onPause();
+
+        // Remove pending initialize calls.
+        BlitzDelay.remove(mViewModelInitializeHandler);
 
         // Stop view model.
         if (getViewModel() != null) {
