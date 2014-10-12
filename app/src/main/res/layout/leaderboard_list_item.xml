@@ -2,50 +2,62 @@
 
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="horizontal"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:padding="10dp">
+    android:layout_height="42dp"
+    android:layout_gravity="center"
+    android:gravity="center"
+    android:orientation="horizontal">
 
-
-    <TextView android:id="@+id/list_index"
+    <TextView
+        android:id="@+id/leaderboard_index"
         style="@style/LeaderboardListItem"
-        android:textColor="@color/text_color_medium_grey"
+        android:layout_width="32dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:text="@string/number_large"
+        android:textColor="@color/text_color_grey"/>
+
+    <com.blitz.app.utilities.image.BlitzImageView
+        android:id="@+id/leaderboard_helmet"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_marginBottom="2dp"
+        android:layout_marginRight="5dp"
+        android:contentDescription="@string/empty_string" />
+
+    <TextView
+        android:id="@+id/leaderboard_user_name"
+        style="@style/LeaderboardListItem"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_weight="0.5"
-        android:text="1"/>
+        android:layout_weight="1"
+        android:singleLine="true"
+        android:text="@string/lorum_ipsum_short"
+        android:textColor="@color/text_color_light"/>
 
-    <TextView android:id="@+id/user_name"
+    <TextView
+        android:id="@+id/leaderboard_wins"
         style="@style/LeaderboardListItem"
-        android:textColor="@color/text_color_light"
-        android:layout_width="0dp"
+        android:layout_width="45dp"
         android:layout_height="wrap_content"
-        android:layout_weight="2"
-        android:text="Password Is Taco"/>
+        android:text="@string/number_large"
+        android:textColor="@color/text_color_grey"/>
 
-    <TextView android:id="@+id/wins"
+    <TextView
+        android:id="@+id/leaderboard_losses"
         style="@style/LeaderboardListItem"
-        android:textColor="@color/text_color_light_grey"
-        android:layout_width="0dp"
+        android:layout_width="40dp"
         android:layout_height="wrap_content"
-        android:layout_weight="0.5"
-        android:text="33"/>
+        android:text="@string/number_large"
+        android:textColor="@color/text_color_grey"/>
 
-    <TextView android:id="@+id/losses"
+    <TextView
+        android:id="@+id/leaderboard_rating"
         style="@style/LeaderboardListItem"
-        android:textColor="@color/text_color_medium_grey"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_weight="0.5"
-        android:text="21"/>
-
-    <TextView android:id="@+id/rating"
-        style="@style/LeaderboardListItem"
-        android:textColor="@color/active_blue"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_weight="0.5"
-        android:text="1421"/>
+        android:layout_marginRight="10dp"
+        android:text="@string/number_large"
+        android:textColor="@color/active_blue"/>
 
 </LinearLayout>

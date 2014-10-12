@@ -3,9 +3,10 @@ package com.blitz.app.view_models;
 import android.app.Activity;
 
 import com.blitz.app.rest_models.RestModelCallbacks;
+import com.blitz.app.rest_models.RestModelItem;
 import com.blitz.app.rest_models.RestModelUser;
-import com.blitz.app.utilities.reactive.Observer;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -14,26 +15,100 @@ import java.util.List;
  */
 public class ViewModelLeaderboard extends ViewModel {
 
+    // region Constructor
+    // =============================================================================================
 
-    private final Observer<List<RestModelUser>> mLeadersObserver;
-    private final Activity mActivity;
-
-    public ViewModelLeaderboard(Activity activity, Observer<List<RestModelUser>> observer) {
-        super(activity, observer);
-
-        mActivity = activity;
-        mLeadersObserver = observer;
+    /**
+     * Creating a new view model requires an activity and a callback.
+     */
+    public ViewModelLeaderboard(Activity activity, ViewModelCallbacks callbacks) {
+        super(activity, callbacks);
     }
 
+    // endregion
+
+    // region Overwritten Methods
+    // =============================================================================================
+
+    /**
+     * Do a basic fetch of the top 150 users and return
+     * the relevant data for the leaderboard.
+     */
     @Override
     public void initialize() {
 
-        RestModelUser.getTopUsersWithLimit(mActivity, 150, new RestModelCallbacks<RestModelUser>() {
-            @Override
-            public void onSuccess(List<RestModelUser> object) {
+        final int usersToFetch = 150;
 
-                mLeadersObserver.onNext(object);
-            }
-        });
+        // First grab the user objects.
+        RestModelUser.getTopUsersWithLimit(mActivity, usersToFetch,
+                new RestModelCallbacks<RestModelUser>() {
+
+                    @Override
+                    public void onSuccess(List<RestModelUser> object) {
+
+                        final List<String> userIds =
+                                new ArrayList<String>(object.size());
+                        final List<String> userNames =
+                                new ArrayList<String>(object.size());
+                        final List<Integer> userWins =
+                                new ArrayList<Integer>(object.size());
+                        final List<Integer> userLosses =
+                                new ArrayList<Integer>(object.size());
+                        final List<Integer> userRatings =
+                                new ArrayList<Integer>(object.size());
+                        final List<String> userAvatarIds =
+                                new ArrayList<String>(object.size());
+                        final List<String> userAvatarUrls =
+                                new ArrayList<String>(object.size());
+
+                        for (RestModelUser user: object) {
+
+                            // Pluck relevant data.
+                            userIds.add(user.getId());
+                            userNames.add(user.getUsername());
+                            userWins.add(user.getWins());
+                            userLosses.add(user.getLosses());
+                            userRatings.add(user.getRating());
+                            userAvatarIds.add(user.getAvatarId());
+                        }
+
+                        // Then fetch their item info (avatars).
+                        RestModelItem.fetchItems(mActivity, userAvatarIds, usersToFetch,
+                                new RestModelItem.CallbackItems() {
+
+                            @Override
+                            public void onSuccess(List<RestModelItem> items) {
+
+                                for (RestModelItem item: items) {
+
+                                    userAvatarUrls.add(item.getDefaultImgPath());
+                                }
+
+                                if (getCallbacks(ViewModelLeaderboardCallbacks.class) != null) {
+                                    getCallbacks(ViewModelLeaderboardCallbacks.class)
+                                            .onLeadersReceived(userIds, userNames, userWins,
+                                                    userLosses, userRatings, userAvatarUrls);
+                                }
+                            }
+                        });
+                    }
+                });
     }
+
+    // endregion
+
+    // region Callbacks Interface
+    // =============================================================================================
+
+    public interface ViewModelLeaderboardCallbacks extends ViewModelCallbacks {
+
+        public void onLeadersReceived(List<String>  userIds,
+                                      List<String>  userNames,
+                                      List<Integer> userWins,
+                                      List<Integer> userLosses,
+                                      List<Integer> userRating,
+                                      List<String>  userAvatarUrls);
+    }
+
+    // endregion
 }

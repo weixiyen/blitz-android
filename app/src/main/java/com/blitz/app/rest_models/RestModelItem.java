@@ -107,10 +107,11 @@ public class RestModelItem extends RestModel {
      *
      * @param activity Activity for dialogs.
      * @param items Requested items.
+     * @param limit Number of results.
      * @param callback Callback for success.
      */
     @SuppressWarnings("unused")
-    public static void fetchItems(Activity activity, List<String> items,
+    public static void fetchItems(Activity activity, List<String> items, Integer limit,
                                   final CallbackItems callback) {
 
         RestAPICallback<RestAPIResult<RestModelItem>> operation =
@@ -125,7 +126,21 @@ public class RestModelItem extends RestModel {
             }
         };
 
-        mRestAPI.items_get(items, "id", null, null, operation);
+        mRestAPI.items_get(items, "id", null, limit, operation);
+    }
+
+    /**
+     * Get a list of items.
+     *
+     * @param activity Activity for dialogs.
+     * @param items Requested items.
+     * @param callback Callback for success.
+     */
+    @SuppressWarnings("unused")
+    public static void fetchItems(Activity activity, List<String> items,
+                                  final CallbackItems callback) {
+
+        fetchItems(activity, items, null, callback);
     }
 
     /**
