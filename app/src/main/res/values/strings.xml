@@ -19,9 +19,11 @@
     <string name="game_log">Game Log</string>
     <string name="get_ready">Get Ready!</string>
     <string name="have_code">I have an Access Code</string>
+    <string name="im_ready_let_me_in">I\'m ready, let me in!</string>
     <string name="information">Information</string>
     <string name="invite_a_friend">Invite a friend to play Blitz</string>
     <string name="join">Join!</string>
+    <string name="lets_get_going">Let\'s get going!</string>
     <string name="logout">Logout</string>
     <string name="loss">loss</string>
     <string name="match_found">Match Found! Join the match!</string>
@@ -32,6 +34,7 @@
     <string name="password">Password</string>
     <string name="pipe">|</string>
     <string name="place_reserved">Your place in line has been reserved!</string>
+    <string name="players_ahead_of_you">0 players\nahead of you!</string>
     <string name="players_behind_you">Players behind you</string>
     <string name="players_in_front">Players in front of you</string>
     <string name="play">Play</string>

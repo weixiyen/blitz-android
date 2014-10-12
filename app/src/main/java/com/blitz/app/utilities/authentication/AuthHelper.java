@@ -94,23 +94,6 @@ public class AuthHelper {
     }
 
     /**
-     * Grant access to the user.  This is done after
-     * they have entered a valid access code or
-     * reached the front of the queue.
-     *
-     * @param activity Target activity.
-     */
-    @SuppressWarnings("unused")
-    public void grantAccess(BaseActivity activity) {
-
-        // User now has access.
-        AppDataObject.hasAccess.set(true);
-
-        // Transition to splash screen, clear history.
-        activity.startActivity(new Intent(activity, SplashScreen.class), true);
-    }
-
-    /**
      * User accepted legal agreements.
      */
     @SuppressWarnings("unused")
@@ -139,8 +122,8 @@ public class AuthHelper {
 
         if (targetActivity == null) {
 
-            // If user has passed the access queue.
-            if (AppDataObject.hasAccess.get()) {
+            // If user has passed the access queue, and confirmed it.
+            if (AppDataObject.hasAccess.get() && AppDataObject.hasAccessConfirmed.get()) {
 
                 // If user is signed into the app.
                 if (AppDataObject.userId.get() != null) {

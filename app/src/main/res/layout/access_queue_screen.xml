@@ -58,18 +58,55 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp">
 
-            <LinearLayout
+
+            <RelativeLayout
                 android:id="@+id/access_queue_position_info"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="160dp"
                 android:layout_marginBottom="25dp"
                 android:layout_marginTop="75dp"
-                android:orientation="vertical">
+                android:background="@drawable/asset_queue_container">
 
                 <LinearLayout
+                    android:id="@+id/access_queue_container_authorized"
                     android:layout_width="match_parent"
-                    android:layout_height="160dp"
-                    android:background="@drawable/asset_queue_container"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:paddingBottom="15dp"
+                    android:paddingLeft="150dp"
+                    android:paddingRight="30dp"
+                    android:paddingTop="15dp"
+                    android:visibility="gone">
+
+                    <me.grantland.widget.AutofitTextView
+                        style="@style/TextViewStyle"
+                        fontPath="@string/app_font_sports"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:lineSpacingMultiplier="1.2"
+                        android:text="@string/players_ahead_of_you"
+                        android:textColor="@color/text_color_light"
+                        android:textSize="16sp"/>
+
+                    <me.grantland.widget.AutofitTextView
+                        style="@style/TextViewStyle"
+                        fontPath="@string/app_font_sports"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:lineSpacingMultiplier="1.2"
+                        android:paddingTop="20dp"
+                        android:text="@string/lets_get_going"
+                        android:textColor="@color/active_blue"
+                        android:textSize="24sp"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/access_queue_container_in_line"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
                     android:gravity="center_vertical"
                     android:orientation="vertical"
                     android:paddingBottom="10dp"
@@ -125,7 +162,7 @@
                         android:textColor="@color/text_color_light"
                         android:textSize="16sp"/>
                 </LinearLayout>
-            </LinearLayout>
+            </RelativeLayout>
 
             <ImageView
                 android:id="@+id/access_queue_football_player"
@@ -145,7 +182,7 @@
         android:orientation="vertical">
 
         <Button
-            android:id="@+id/access_queue_screen_have_code"
+            android:id="@+id/access_queue_have_code"
             style="@style/ButtonStyle"
             android:layout_width="match_parent"
             android:layout_height="60dp"
@@ -154,12 +191,11 @@
             android:text="@string/have_code" />
 
         <me.grantland.widget.AutofitTextView
-            android:id="@+id/access_queue_screen_have_account"
+            android:id="@+id/access_queue_have_account"
             style="@style/TextViewStyle"
             fontPath="@string/app_font_light"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="30dp"
             android:layout_marginTop="10dp"
             android:background="@android:color/transparent"
             android:contentDescription="@string/empty_string"
@@ -169,5 +205,9 @@
             android:text="@string/already_have_account"
             android:textColor="@color/text_color_light"
             android:textSize="14sp" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="30dp" />
     </LinearLayout>
 </RelativeLayout>

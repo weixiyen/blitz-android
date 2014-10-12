@@ -14,6 +14,8 @@ public class AppDataObject {
     // Does the user have access to the main app (passed queue wall).
     public static final AppData<Boolean> hasAccess
             = AppData.bool("HAS_ACCESS");
+    public static final AppData<Boolean> hasAccessConfirmed
+            =  AppData.bool("HAS_ACCESS_CONFIRMED");
 
     // Has the user agreed to the legal terms of this app.
     public static final AppData<Boolean> hasAgreedLegal

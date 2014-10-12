@@ -10,6 +10,7 @@ import com.blitz.app.utilities.android.BaseActivity;
 import com.blitz.app.utilities.animations.AnimHelperSpringsGroup;
 import com.blitz.app.utilities.animations.AnimHelperSpringsPresets;
 import com.blitz.app.utilities.animations.AnimHelperSpringsView;
+import com.blitz.app.utilities.app.AppDataObject;
 import com.blitz.app.utilities.authentication.AuthHelper;
 import com.blitz.app.utilities.keyboard.KeyboardUtility;
 import com.blitz.app.utilities.rest.RestAPICallback;
@@ -121,8 +122,12 @@ public class AccessCodeScreen extends BaseActivity {
                 // If code is valid.
                 if (mObjectModelCode.isValidCode()) {
 
-                    // Grant access.
-                    AuthHelper.instance().grantAccess(AccessCodeScreen.this);
+                    // User has now confirmed access state.
+                    AppDataObject.hasAccessConfirmed.set(true);
+                    AppDataObject.hasAccess.set(true);
+
+                    // Enter the main app.
+                    AuthHelper.instance().tryEnterMainApp(AccessCodeScreen.this);
                 }
             }
         });

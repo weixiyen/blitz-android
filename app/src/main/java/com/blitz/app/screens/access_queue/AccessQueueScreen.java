@@ -9,9 +9,11 @@ import com.blitz.app.R;
 import com.blitz.app.screens.access_code.AccessCodeScreen;
 import com.blitz.app.screens.sign_in.SignInScreen;
 import com.blitz.app.utilities.android.BaseActivity;
+import com.blitz.app.utilities.animations.AnimHelperFade;
 import com.blitz.app.utilities.animations.AnimHelperSpringsGroup;
 import com.blitz.app.utilities.animations.AnimHelperSpringsPresets;
 import com.blitz.app.utilities.animations.AnimHelperSpringsView;
+import com.blitz.app.utilities.app.AppDataObject;
 import com.blitz.app.utilities.authentication.AuthHelper;
 import com.blitz.app.view_models.ViewModel;
 import com.blitz.app.view_models.ViewModelAccessQueue;
@@ -35,8 +37,18 @@ public class AccessQueueScreen extends BaseActivity implements ViewModelAccessQu
     @InjectView(R.id.access_queue_people_ahead) TextView mQueuePeopleAhead;
     @InjectView(R.id.access_queue_people_behind) TextView mQueuePeopleBehind;
 
+    @InjectView(R.id.access_queue_container_in_line)    View mQueueContainerInLine;
+    @InjectView(R.id.access_queue_container_authorized) View mQueueContainerAuthorized;
+
+    @InjectView(R.id.access_queue_have_account)  View mQueueHaveAccountText;
+    @InjectView(R.id.access_queue_have_code) TextView mQueueHaveCode;
+
     // Page animations.
     private AnimHelperSpringsGroup mAnimations;
+    private boolean mAnimationsComplete;
+
+    // Track local access state.
+    private Boolean mAccessGranted;
 
     // View model object.
     private ViewModelAccessQueue mViewModelAccessQueue;
@@ -68,6 +80,33 @@ public class AccessQueueScreen extends BaseActivity implements ViewModelAccessQu
         // Football player guy.
         mAnimations.createHelper(100, 20)
                 .addHelperView(AnimHelperSpringsView.from(mQueuePlayer, AnimHelperSpringsPresets.SLIDE_RIGHT));
+
+        // Setup a completion listener for animations.
+        mAnimations.setOnCompleteListener(new Runnable() {
+
+            @Override
+            public void run() {
+
+                // Now done animating.
+                mAnimationsComplete = true;
+
+                // Setup UI if access received.
+                if (mAccessGranted != null) {
+
+                    setupUI(mAccessGranted);
+                }
+            }
+        });
+
+        // Hide parts of the ui at first.
+        mQueueContainerInLine
+                .setVisibility(View.GONE);
+        mQueueContainerAuthorized
+                .setVisibility(View.GONE);
+        mQueueHaveAccountText
+                .setVisibility(View.GONE);
+        mQueueHaveCode
+                .setVisibility(View.GONE);
     }
 
     /**
@@ -108,6 +147,39 @@ public class AccessQueueScreen extends BaseActivity implements ViewModelAccessQu
 
     // endregion
 
+    // region Private Methods
+    // =============================================================================================
+
+    /**
+     * Setup the UI based on whether or not
+     * the user has access.
+     *
+     * @param accessGranted Is access granted.
+     */
+    private void setupUI(boolean accessGranted) {
+
+        if (accessGranted) {
+
+            // Update button text (hype train).
+            mQueueHaveCode.setText(R.string.im_ready_let_me_in);
+
+            // Show UI.
+            AnimHelperFade.setVisibility(mQueueHaveCode, View.VISIBLE);
+            AnimHelperFade.setVisibility(mQueueContainerAuthorized, View.VISIBLE);
+
+            // User now has access.
+            AppDataObject.hasAccess.set(true);
+        } else {
+
+            // Show UI.
+            AnimHelperFade.setVisibility(mQueueHaveCode, View.VISIBLE);
+            AnimHelperFade.setVisibility(mQueueHaveAccountText, View.VISIBLE);
+            AnimHelperFade.setVisibility(mQueueContainerInLine, View.VISIBLE);
+        }
+    }
+
+    // endregion
+
     // region View Model Callbacks
     // =============================================================================================
 
@@ -132,11 +204,15 @@ public class AccessQueueScreen extends BaseActivity implements ViewModelAccessQu
      * granted.
      */
     @Override
-    public void onAccessGranted(boolean accessGranted) {
+    public void onAccessGranted(final boolean accessGranted) {
 
-        if (accessGranted) {
+        // Store access state.
+        mAccessGranted = accessGranted;
 
-            AuthHelper.instance().grantAccess(this);
+        if (mAnimationsComplete) {
+
+            // Setup immediately.
+            setupUI(accessGranted);
         }
     }
 
@@ -148,17 +224,28 @@ public class AccessQueueScreen extends BaseActivity implements ViewModelAccessQu
     /**
      * Transition to access code screen.
      */
-    @OnClick(R.id.access_queue_screen_have_code) @SuppressWarnings("unused")
+    @OnClick(R.id.access_queue_have_code) @SuppressWarnings("unused")
     public void haveCode() {
 
-        // Transition to access code screen.
-        startActivity(new Intent(this, AccessCodeScreen.class));
+        if (mAccessGranted) {
+
+            // User has now confirmed access state.
+            AppDataObject.hasAccessConfirmed.set(true);
+
+            // Enter the main app.
+            AuthHelper.instance().tryEnterMainApp(this);
+
+        } else {
+
+            // Transition to access code screen.
+            startActivity(new Intent(this, AccessCodeScreen.class));
+        }
     }
 
     /**
      * Transition to sign in screen.
      */
-    @OnClick(R.id.access_queue_screen_have_account) @SuppressWarnings("unused")
+    @OnClick(R.id.access_queue_have_account) @SuppressWarnings("unused")
     public void haveAccount() {
 
         // Transition to sign in screen.
