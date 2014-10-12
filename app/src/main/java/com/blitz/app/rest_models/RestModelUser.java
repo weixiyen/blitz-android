@@ -8,7 +8,7 @@ import com.blitz.app.utilities.rest.RestAPIResult;
 import com.google.gson.JsonObject;
 import com.google.gson.annotations.SerializedName;
 
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -116,8 +116,8 @@ public class RestModelUser extends RestModel {
      * @param callback Callback.
      */
     @SuppressWarnings("unused")
-    public static void getTopPlayersWithLimit(Activity activity, final int limit,
-                                              final RestModelCallbacks<RestModelUser> callback) {
+    public static void getTopUsersWithLimit(Activity activity, final int limit,
+                                            final RestModelCallbacks<RestModelUser> callback) {
 
         RestAPICallback<RestAPIResult<RestModelUser>> operation =
                 new RestAPICallback<RestAPIResult<RestModelUser>>(activity) {
@@ -131,9 +131,14 @@ public class RestModelUser extends RestModel {
                     }
                 };
 
+        // Only fetch relevant fields from the users table.
+        List<String> pluck = Arrays.asList("id", "username", "wins",
+                "losses", "rating", "avatar_id");
+
+        // Sort it by rating.
         String orderBy = "{\"rating\":\"DESC\"}";
 
-        mRestAPI.users_get(null, null, null, orderBy, limit, operation);
+        mRestAPI.users_get(null, null, pluck, orderBy, limit, operation);
     }
 
     /**
@@ -160,17 +165,8 @@ public class RestModelUser extends RestModel {
                 };
 
         // Pluck a subset of the fields.
-        ArrayList<String> pluck = new ArrayList<String>();
-
-        pluck.add("id");
-        pluck.add("username");
-        pluck.add("status");
-        pluck.add("avatar_id");
-        pluck.add("rating");
-        pluck.add("wins");
-        pluck.add("losses");
-        pluck.add("ties");
-        pluck.add("cash");
+        List<String> pluck = Arrays.asList("id", "username", "status", "avatar_id",
+                "rating", "wins", "losses", "ties", "cash");
 
         mRestAPI.users_get(userIds, "id", pluck, null, null, operation);
     }

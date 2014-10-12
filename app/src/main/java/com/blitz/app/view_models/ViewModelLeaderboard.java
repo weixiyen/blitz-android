@@ -28,7 +28,7 @@ public class ViewModelLeaderboard extends ViewModel {
     @Override
     public void initialize() {
 
-        RestModelUser.getTopPlayersWithLimit(mActivity, 150, new RestModelCallbacks<RestModelUser>() {
+        RestModelUser.getTopUsersWithLimit(mActivity, 150, new RestModelCallbacks<RestModelUser>() {
             @Override
             public void onSuccess(List<RestModelUser> object) {
 
