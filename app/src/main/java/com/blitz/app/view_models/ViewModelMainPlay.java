@@ -11,6 +11,7 @@ import com.blitz.app.rest_models.RestModelUser;
 import com.blitz.app.screens.main.MainScreenFragmentPlay;
 import com.blitz.app.utilities.app.AppDataObject;
 import com.blitz.app.utilities.authentication.AuthHelper;
+import com.blitz.app.utilities.blitz.BlitzDelay;
 import com.blitz.app.utilities.comet.CometAPICallback;
 import com.blitz.app.utilities.comet.CometAPIManager;
 import com.google.gson.JsonObject;
@@ -27,7 +28,6 @@ public class ViewModelMainPlay extends ViewModel {
     private int      mSecondsAtSuspension;
     private int      mSecondsInQueue = -1;
     private Handler  mSecondsInQueueHandler;
-    private Runnable mSecondsInQueueRunnable;
 
     // Object model.
     private RestModelQueue mModelQueue = new RestModelQueue();
@@ -313,28 +313,19 @@ public class ViewModelMainPlay extends ViewModel {
         // Stop and reset.
         stopQueueTimer(true);
 
-        if (mSecondsInQueueHandler ==  null) {
-            mSecondsInQueueHandler = new Handler();
-        }
+        // Start callback on a loop.
+        mSecondsInQueueHandler = BlitzDelay.postDelayed(new Runnable() {
 
-        if (mSecondsInQueueRunnable == null) {
-            mSecondsInQueueRunnable = new Runnable() {
+            @Override
+            public void run() {
 
-                @Override
-                public void run() {
+                mSecondsInQueue++;
 
-                    mSecondsInQueue++;
-                    mSecondsInQueueHandler.postDelayed(mSecondsInQueueRunnable, 1000);
-
-                    // Queue timer has ticked.
-                    getCallbacks(ViewModelMainPlayCallbacks.class).onQueueTick(
-                            String.format("%02d:%02d", mSecondsInQueue / 100, mSecondsInQueue % 100));
-                }
-            };
-        }
-
-        // Start the timer.
-        mSecondsInQueueHandler.post(mSecondsInQueueRunnable);
+                // Queue timer has ticked.
+                getCallbacks(ViewModelMainPlayCallbacks.class).onQueueTick(
+                        String.format("%02d:%02d", mSecondsInQueue / 100, mSecondsInQueue % 100));
+            }
+        }, 1000, true, true);
     }
 
     /**
@@ -343,12 +334,8 @@ public class ViewModelMainPlay extends ViewModel {
      */
     private void stopQueueTimer(boolean resetSecondsInQueue) {
 
-        if (mSecondsInQueueHandler  != null &&
-            mSecondsInQueueRunnable != null) {
-
-            // Stop the timer.
-            mSecondsInQueueHandler.removeCallbacks(mSecondsInQueueRunnable);
-        }
+        // Stop callback loop.
+        BlitzDelay.remove(mSecondsInQueueHandler);
 
         if (resetSecondsInQueue) {
 

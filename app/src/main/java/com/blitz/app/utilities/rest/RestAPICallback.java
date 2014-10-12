@@ -5,6 +5,7 @@ import android.os.Handler;
 
 import com.blitz.app.dialogs.error.DialogError;
 import com.blitz.app.dialogs.loading.DialogLoading;
+import com.blitz.app.utilities.blitz.BlitzDelay;
 import com.blitz.app.utilities.date.DateUtils;
 
 import java.util.Date;
@@ -30,7 +31,6 @@ public abstract class RestAPICallback<T> implements Callback<T> {
 
     private static boolean mOperationThrottle;
     private static Handler mOperationThrottleHandler;
-    private static Runnable mOperationThrottleRunnable;
 
     // Operation time.
     private long mOperationTimeMilliseconds;
@@ -375,28 +375,19 @@ public abstract class RestAPICallback<T> implements Callback<T> {
         // Enable the throttle.
         mOperationThrottle = true;
 
-        // Clear any existing callbacks, and init.
-        if (mOperationThrottleHandler != null) {
-            mOperationThrottleHandler.removeCallbacks(mOperationThrottleRunnable);
-        } else {
-            mOperationThrottleHandler = new Handler();
-        }
+        // Clear any existing callbacks.
+        BlitzDelay.remove(mOperationThrottleHandler);
 
-        // Initialize the runnable callback.
-        if (mOperationThrottleRunnable == null) {
-            mOperationThrottleRunnable = new Runnable() {
+        // Init throttle callback.
+        mOperationThrottleHandler = BlitzDelay.postDelayed(new Runnable() {
 
-                @Override
-                public void run() {
+            @Override
+            public void run() {
 
-                    // No longer throttling.
-                    mOperationThrottle = false;
-                }
-            };
-        }
-
-        // Set the de-throttle callback.
-        mOperationThrottleHandler.postDelayed(mOperationThrottleRunnable, 250);
+                // No longer throttling.
+                mOperationThrottle = false;
+            }
+        }, 250);
     }
 
     // endregion

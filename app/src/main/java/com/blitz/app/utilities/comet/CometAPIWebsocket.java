@@ -4,7 +4,7 @@ import android.os.Handler;
 
 import com.blitz.app.utilities.app.AppConfig;
 import com.blitz.app.utilities.app.AppDataObject;
-import com.blitz.app.utilities.logging.LogHelper;
+import com.blitz.app.utilities.blitz.BlitzDelay;
 import com.blitz.app.utilities.ssl.SSLHelper;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
@@ -34,12 +34,10 @@ class CometAPIWebsocket {
 
     // User to ping the socket for keep-alive.
     private Handler          mWebSocketPingHandler;
-    private Runnable         mWebSocketPingRunnable;
     private final static int mWebSocketPingInterval = 60000;
 
     // Time to reconnect on failures.
     private Handler          mWebSocketReconnectHandler;
-    private Runnable         mWebSocketReconnectRunnable;
     private boolean          mWebSocketReconnectPending;
     private final static int mWebSocketReconnectInterval = 30000;
 
@@ -237,33 +235,20 @@ class CometAPIWebsocket {
      */
     private void enableWebSocketReconnect() {
 
-        if (mWebSocketReconnectHandler == null) {
-            mWebSocketReconnectHandler = new Handler();
-        }
+        mWebSocketReconnectHandler = BlitzDelay.postDelayed(new Runnable() {
 
-        if (mWebSocketReconnectRunnable == null) {
-            mWebSocketReconnectRunnable = new Runnable() {
+            @Override
+            public void run() {
 
-                @Override
-                public void run() {
+                // Re-connect if pending.
+                if (mWebSocketReconnectPending) {
+                    mWebSocketReconnectPending = false;
 
-                    // Re-connect if pending.
-                    if (mWebSocketReconnectPending) {
-                        mWebSocketReconnectPending = false;
-
-                        // Open connection.
-                        openWebSocket();
-                    }
-
-                    // Run again on an interval.
-                    mWebSocketReconnectHandler.postDelayed(this, mWebSocketReconnectInterval);
+                    // Open connection.
+                    openWebSocket();
                 }
-            };
-        }
-
-        // Attempt to re-connect web socket.
-        mWebSocketReconnectHandler.postDelayed
-                (mWebSocketReconnectRunnable, mWebSocketReconnectInterval);
+            }
+        }, mWebSocketReconnectInterval, true);
     }
 
     /**
@@ -271,13 +256,8 @@ class CometAPIWebsocket {
      */
     private void disableWebSocketReconnect() {
 
-        // If re-connect is initialized.
-        if (mWebSocketReconnectHandler  != null &&
-            mWebSocketReconnectRunnable != null) {
-
-            // Remove any pending re-connect callbacks.
-            mWebSocketReconnectHandler.removeCallbacks(mWebSocketReconnectRunnable);
-        }
+        // Remove any pending re-connect callbacks.
+        BlitzDelay.remove(mWebSocketReconnectHandler);
 
         // Disable pending re-connect.
         mWebSocketReconnectPending = false;
@@ -307,30 +287,17 @@ class CometAPIWebsocket {
      */
     private void enableWebSocketPings() {
 
-        if (mWebSocketPingHandler == null) {
-            mWebSocketPingHandler = new Handler();
-        }
+        mWebSocketPingHandler = BlitzDelay.postDelayed(new Runnable() {
 
-        if (mWebSocketPingRunnable == null) {
-            mWebSocketPingRunnable = new Runnable() {
+            @Override
+            public void run() {
 
-                @Override
-                public void run() {
-
-                    // Send a ping if connected.
-                    if (mWebSocketConnected) {
-                        mWebSocketClient.send("ping");
-                    }
-
-                    // Run again on an interval.
-                    mWebSocketPingHandler.postDelayed(this, mWebSocketPingInterval);
+                // Send a ping if connected.
+                if (mWebSocketConnected) {
+                    mWebSocketClient.send("ping");
                 }
-            };
-        }
-
-        // Kickoff ping timer.
-        mWebSocketPingHandler.postDelayed
-                (mWebSocketPingRunnable, mWebSocketPingInterval);
+            }
+        }, mWebSocketPingInterval, true);
     }
 
     /**
@@ -338,12 +305,8 @@ class CometAPIWebsocket {
      */
     private void disableWebSocketPings() {
 
-        if (mWebSocketPingHandler  != null &&
-            mWebSocketPingRunnable != null) {
-
-            // Remove callbacks which stops the ping cycle.
-            mWebSocketPingHandler.removeCallbacks(mWebSocketPingRunnable);
-        }
+        // Remove callbacks which stops the ping cycle.
+        BlitzDelay.remove(mWebSocketPingHandler);
     }
 
     //==============================================================================================

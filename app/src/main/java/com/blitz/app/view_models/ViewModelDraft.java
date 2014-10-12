@@ -12,6 +12,7 @@ import com.blitz.app.rest_models.RestModelUser;
 import com.blitz.app.rest_models.RestModelCallback;
 import com.blitz.app.screens.draft.DraftScreen;
 import com.blitz.app.utilities.authentication.AuthHelper;
+import com.blitz.app.utilities.blitz.BlitzDelay;
 import com.blitz.app.utilities.comet.CometAPICallback;
 import com.blitz.app.utilities.comet.CometAPIManager;
 import com.blitz.app.utilities.date.DateUtils;
@@ -46,8 +47,7 @@ public class ViewModelDraft extends ViewModel {
     }
 
     // Runs the main draft update loop.
-    private Handler  mGameLoopHandler;
-    private Runnable mGameLoopRunnable;
+    private Handler mGameLoopHandler;
 
     // Reference to latest draft model.
     private RestModelDraft mDraftModel;
@@ -479,26 +479,16 @@ public class ViewModelDraft extends ViewModel {
      */
     private void gameLoopStart() {
 
-        if (mGameLoopHandler == null) {
-            mGameLoopHandler = new Handler();
-        }
+        // Start the loop.
+        mGameLoopHandler = BlitzDelay.postDelayed(new Runnable() {
 
-        if (mGameLoopRunnable == null) {
-            mGameLoopRunnable = new Runnable() {
+            @Override
+            public void run() {
 
-                @Override
-                public void run() {
-
-                    // Sync state.
-                    gameLoopExecute();
-
-                    // Continue running the loop on a 100ms delay.
-                    mGameLoopHandler.postDelayed(mGameLoopRunnable, 100);
-                }
-            };
-        }
-
-        mGameLoopHandler.post(mGameLoopRunnable);
+                // Sync state.
+                gameLoopExecute();
+            }
+        }, 100, true, true);
     }
 
     /**
@@ -506,12 +496,8 @@ public class ViewModelDraft extends ViewModel {
      */
     private void gameLoopStop() {
 
-        if (mGameLoopHandler  != null &&
-            mGameLoopRunnable != null) {
-
-            // Stop the timer.
-            mGameLoopHandler.removeCallbacks(mGameLoopRunnable);
-        }
+        // Stop the loop.
+        BlitzDelay.remove(mGameLoopHandler);
     }
 
     /**

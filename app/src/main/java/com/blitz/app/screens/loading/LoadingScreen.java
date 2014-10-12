@@ -1,12 +1,12 @@
 package com.blitz.app.screens.loading;
 
 import android.os.Bundle;
-import android.os.Handler;
 
 import com.blitz.app.utilities.android.BaseActivity;
 import com.blitz.app.utilities.app.AppConfig;
 import com.blitz.app.utilities.app.AppData;
 import com.blitz.app.utilities.authentication.AuthHelper;
+import com.blitz.app.utilities.blitz.BlitzDelay;
 import com.blitz.app.utilities.gcm.GcmRegistrationHelper;
 import com.blitz.app.utilities.sound.SoundHelper;
 import com.crashlytics.android.Crashlytics;
@@ -77,7 +77,7 @@ public class LoadingScreen extends BaseActivity {
     private void setupLoadingScreenTimeout() {
 
         // Show loading screen for initial loading.
-        new Handler().postDelayed(new Runnable() {
+        BlitzDelay.postDelayed(new Runnable() {
 
             @Override
             public void run() {

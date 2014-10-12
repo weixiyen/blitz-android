@@ -3,7 +3,6 @@ package com.blitz.app.utilities.android;
 import android.content.Context;
 import android.net.http.SslError;
 import android.os.Build;
-import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.util.AttributeSet;
 import android.view.View;
@@ -14,6 +13,7 @@ import android.widget.ProgressBar;
 
 import com.blitz.app.utilities.animations.AnimHelper;
 import com.blitz.app.utilities.animations.AnimHelperFade;
+import com.blitz.app.utilities.blitz.BlitzDelay;
 
 /**
  * Created by mrkcsc on 8/20/14. Copyright 2014 Blitz Studios
@@ -127,7 +127,7 @@ public class BaseWebView extends WebView {
                 }
 
                 // Wait for page transition.
-                new Handler().postDelayed(new Runnable() {
+                BlitzDelay.postDelayed(new Runnable() {
 
                     @Override
                     public void run() {

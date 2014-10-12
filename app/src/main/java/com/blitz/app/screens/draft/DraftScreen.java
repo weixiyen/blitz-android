@@ -5,7 +5,6 @@ import android.animation.ValueAnimator;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
-import android.os.Handler;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.LinearInterpolator;
@@ -21,6 +20,7 @@ import com.blitz.app.utilities.animations.AnimHelperSpringsGroup;
 import com.blitz.app.utilities.animations.AnimHelperSpringsPresets;
 import com.blitz.app.utilities.animations.AnimHelperSpringsView;
 import com.blitz.app.utilities.authentication.AuthHelper;
+import com.blitz.app.utilities.blitz.BlitzDelay;
 import com.blitz.app.utilities.image.BlitzImage;
 import com.blitz.app.utilities.image.BlitzImageView;
 import com.blitz.app.utilities.textview.BlitzTextView;
@@ -453,8 +453,7 @@ public class DraftScreen extends BaseActivity implements ViewModelDraft.ViewMode
             AnimHelperFade.setVisibility(player, visibility);
 
             // Callback on a small delay.
-            new Handler().postDelayed(complete,
-                    AnimHelper.getConfigAnimTimeStandard(this) + 100);
+            BlitzDelay.postDelayed(complete, AnimHelper.getConfigAnimTimeStandard(this) + 100);
         }
     }
 

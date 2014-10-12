@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.os.Handler;
 
 import com.blitz.app.utilities.android.BaseDialog;
+import com.blitz.app.utilities.blitz.BlitzDelay;
 
 /**
  * Created by Miguel Gaeta on 6/29/14. Copyright 2014 Blitz Studios
@@ -16,8 +17,7 @@ public class DialogLoading extends BaseDialog {
     // Constants.
     private static final long MINIMUM_LOADING_TIME = 1000;
 
-    // Callback objects.
-    private Runnable mRunnable;
+    // Callback object.
     private Handler mHandler;
 
     // endregion
@@ -50,9 +50,7 @@ public class DialogLoading extends BaseDialog {
         super.hide(hideListener);
 
         // Remove any pending callbacks.
-        if (mHandler != null) {
-            mHandler.removeCallbacks(mRunnable);
-        }
+        BlitzDelay.remove(mHandler);
     }
 
     // endregion
@@ -68,18 +66,15 @@ public class DialogLoading extends BaseDialog {
     public void delayedShow() {
         show(false);
 
-        mRunnable = new Runnable() {
+        // Toggle loading content if displayed for long enough.
+        mHandler = BlitzDelay.postDelayed(new Runnable() {
+
             @Override
             public void run() {
 
                 show(true);
             }
-        };
-
-        mHandler = new Handler();
-
-        // Toggle loading view if displayed for long enough.
-        mHandler.postDelayed(mRunnable, MINIMUM_LOADING_TIME);
+        }, MINIMUM_LOADING_TIME);
     }
 
     // endregion

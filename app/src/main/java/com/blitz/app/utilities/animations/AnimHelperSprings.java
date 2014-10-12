@@ -2,11 +2,11 @@ package com.blitz.app.utilities.animations;
 
 import android.app.Activity;
 import android.os.Build;
-import android.os.Handler;
 import android.view.View;
 import android.view.ViewTreeObserver;
 import android.widget.FrameLayout;
 
+import com.blitz.app.utilities.blitz.BlitzDelay;
 import com.facebook.rebound.Spring;
 import com.facebook.rebound.SpringConfig;
 import com.facebook.rebound.SpringListener;
@@ -235,7 +235,7 @@ public class AnimHelperSprings extends AnimHelper {
             if (afterScreenTransition) {
 
                 // Start spring on delay.
-                new Handler().postDelayed(startAnimation, delay);
+                BlitzDelay.postDelayed(startAnimation, delay);
             } else {
                 startAnimation.run();
             }

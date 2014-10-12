@@ -16,6 +16,7 @@ import android.widget.FrameLayout;
 
 import com.blitz.app.utilities.android.BaseActivity;
 import com.blitz.app.utilities.app.AppDataObject;
+import com.blitz.app.utilities.blitz.BlitzDelay;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -50,7 +51,6 @@ public class KeyboardUtility {
     // Handler and runnable to control keyboard
     // open event (posted on a delay).
     private static Handler mKeyboardHandler;
-    private static Runnable mKeyboardRunnable;
 
     // Listener to watch for layout changes in the root view.
     private static ViewTreeObserver.OnGlobalLayoutListener mOnGlobalLayoutListener;
@@ -128,39 +128,10 @@ public class KeyboardUtility {
                 mPreviousKeyboardHeight = mCurrentKeyboardHeight;
                 mCurrentKeyboardHeight = getCurrentKeyboardHeight();
 
-                if (mKeyboardRunnable == null) {
-                    mKeyboardRunnable = new Runnable() {
-                        @Override
-                        public void run() {
-
-                            // If actual height differs from the cached height.
-                            if (mKeyboardHeight != mKeyboardHeightCached) {
-                                setKeyboardHeight(activity);
-                            }
-
-                            if (!mKeyboardOpen) {
-                                mKeyboardOpen = true;
-
-                                // Execute on show listener.
-                                if (mOnKeyboardChangedListener != null) {
-                                    mOnKeyboardChangedListener.keyboardOpened(mKeyboardHeight);
-                                }
-
-                                // Run show callbacks.
-                                runCallbacks(mOnKeyboardShowCallbacks);
-                            }
-                        }
-                    };
-                }
-
-                if (mKeyboardHandler == null) {
-                    mKeyboardHandler = new Handler();
-                }
-
                 // If the height has changed in some way.
                 if (mPreviousKeyboardHeight != mCurrentKeyboardHeight) {
 
-                    mKeyboardHandler.removeCallbacks(mKeyboardRunnable);
+                    BlitzDelay.remove(mKeyboardHandler);
 
                     if (mCurrentKeyboardHeight == 0 && mKeyboardOpen) {
                         mKeyboardOpen = false;
@@ -175,7 +146,31 @@ public class KeyboardUtility {
 
                     } else if (mCurrentKeyboardHeight > MINIMUM_KEYBOARD_HEIGHT) {
                         mKeyboardHeight = mCurrentKeyboardHeight;
-                        mKeyboardHandler.postDelayed(mKeyboardRunnable, 300);
+
+                        // Run show on a callback.
+                        mKeyboardHandler = BlitzDelay.postDelayed(new Runnable() {
+
+                            @Override
+                            public void run() {
+
+                                // If actual height differs from the cached height.
+                                if (mKeyboardHeight != mKeyboardHeightCached) {
+                                    setKeyboardHeight(activity);
+                                }
+
+                                if (!mKeyboardOpen) {
+                                     mKeyboardOpen = true;
+
+                                    // Execute on show listener.
+                                    if (mOnKeyboardChangedListener != null) {
+                                        mOnKeyboardChangedListener.keyboardOpened(mKeyboardHeight);
+                                    }
+
+                                    // Run show callbacks.
+                                    runCallbacks(mOnKeyboardShowCallbacks);
+                                }
+                            }
+                        }, 300);
                     }
 
                     if (mIsFullscreen && activity.getAdjustResize()) {
@@ -240,7 +235,7 @@ public class KeyboardUtility {
         if (imm != null) {
 
             // Small delay to make sure keyboard opens.
-            new Handler().postDelayed(new Runnable() {
+            BlitzDelay.postDelayed(new Runnable() {
 
                 @Override
                 public void run() {
