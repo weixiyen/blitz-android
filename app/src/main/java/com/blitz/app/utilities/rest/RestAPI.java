@@ -151,11 +151,6 @@ public interface RestAPI {
                    @Query("limit") Integer limit,        // Optional
         Callback<RestAPIResult<RestModelUser>> callback);
 
-    @GET("/users")
-    void users_get(@Query("limit") int limit,
-                   @Query("order_by") String orderBy,
-                   Callback<RestAPIResult<RestModelUser>> callback);
-
     @POST("/users")
     void users_post(@Body JsonObject body,
         Callback<RestAPIResult<RestModelUser>> callback);

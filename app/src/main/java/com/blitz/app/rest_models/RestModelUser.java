@@ -108,19 +108,32 @@ public class RestModelUser extends RestModel {
         mRestAPI.user_get(userId, operation);
     }
 
+    /**
+     * Fetch a list of the top ELO users.
+     *
+     * @param activity Activity for dialogs.
+     * @param limit Limit of players.
+     * @param callback Callback.
+     */
+    @SuppressWarnings("unused")
     public static void getTopPlayersWithLimit(Activity activity, final int limit,
                                               final RestModelCallbacks<RestModelUser> callback) {
 
-        final RestAPICallback<RestAPIResult<RestModelUser>> operation =
+        RestAPICallback<RestAPIResult<RestModelUser>> operation =
                 new RestAPICallback<RestAPIResult<RestModelUser>>(activity) {
+
                     @Override
                     public void success(RestAPIResult<RestModelUser> result) {
-                        callback.onSuccess(result.getResults());
+
+                        if (callback != null) {
+                            callback.onSuccess(result.getResults());
+                        }
                     }
                 };
 
-        final String orderBy = "{\"rating\":\"DESC\"}";
-        mRestAPI.users_get(limit, orderBy, operation);
+        String orderBy = "{\"rating\":\"DESC\"}";
+
+        mRestAPI.users_get(null, null, null, orderBy, limit, operation);
     }
 
     /**
