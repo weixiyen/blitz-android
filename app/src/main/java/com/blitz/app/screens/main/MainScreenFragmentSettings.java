@@ -7,7 +7,6 @@ import android.view.View;
 import android.widget.Switch;
 
 import com.blitz.app.R;
-import com.blitz.app.screens.loading.LoadingScreen;
 import com.blitz.app.screens.web.WebScreen;
 import com.blitz.app.utilities.android.BaseActivity;
 import com.blitz.app.utilities.android.BaseFragment;
@@ -161,8 +160,7 @@ public class MainScreenFragmentSettings extends BaseFragment implements
         // Sign out user.
         AuthHelper.instance().signOut();
 
-        // Bounce user back to the loading screen.
-        startActivity(new Intent(this.getActivity(), LoadingScreen.class));
+        AuthHelper.instance().tryEnterMainApp((BaseActivity)this.getActivity());
     }
 
     /**
@@ -175,7 +173,7 @@ public class MainScreenFragmentSettings extends BaseFragment implements
         AppData.clear();
 
         // Bounce user back to the loading screen.
-        startActivity(new Intent(this.getActivity(), LoadingScreen.class));
+        AuthHelper.instance().tryEnterMainApp((BaseActivity)this.getActivity());
     }
 
     // endregion

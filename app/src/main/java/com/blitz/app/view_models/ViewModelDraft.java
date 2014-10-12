@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.os.Handler;
 
+import com.blitz.app.rest_models.RestModelCallbacks;
 import com.blitz.app.rest_models.RestModelDraft;
 import com.blitz.app.rest_models.RestModelItem;
 import com.blitz.app.rest_models.RestModelPlayer;
@@ -306,7 +307,7 @@ public class ViewModelDraft extends ViewModel {
         List<String> draftUserIds = mDraftModel.getUsers();
 
         // Fetch associated user objects.
-        RestModelUser.getUsers(mActivity, draftUserIds, new RestModelUser.CallbackUsers() {
+        RestModelUser.getUsers(mActivity, draftUserIds, new RestModelCallbacks<RestModelUser>() {
 
             @Override
             public void onSuccess(final List<RestModelUser> users) {

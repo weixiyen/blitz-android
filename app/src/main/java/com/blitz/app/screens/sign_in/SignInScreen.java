@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.widget.EditText;
 
 import com.blitz.app.R;
+import com.blitz.app.rest_models.RestModelCallback;
 import com.blitz.app.rest_models.RestModelUser;
 import com.blitz.app.utilities.android.BaseActivity;
 import com.blitz.app.utilities.authentication.AuthHelper;
@@ -23,9 +24,6 @@ public class SignInScreen extends BaseActivity {
     // Mapped views.
     @InjectView(R.id.sign_in_screen_username_or_email) EditText mUsername;
     @InjectView(R.id.sign_in_screen_password)          EditText mPassword;
-
-    // Model object.
-    private RestModelUser mObjectModelUser;
 
     // endregion
 
@@ -52,22 +50,17 @@ public class SignInScreen extends BaseActivity {
             return;
         }
 
-        if (mObjectModelUser == null) {
-            mObjectModelUser = new RestModelUser();
-        }
+        RestModelUser.signIn(this,
+                mUsername.getText().toString(),
+                mPassword.getText().toString(), new RestModelCallback<RestModelUser>() {
 
-        // Set desired registration fields.
-        mObjectModelUser.setUsername(mUsername);
-        mObjectModelUser.setPassword(mPassword);
-        mObjectModelUser.signIn(this, new RestModelUser.CallbackSignIn() {
+                    @Override
+                    public void onSuccess(RestModelUser object) {
 
-            @Override
-            public void onSignIn() {
-
-                // Enter main app.
-                AuthHelper.instance().tryEnterMainApp(SignInScreen.this);
-            }
-        });
+                        // Enter main app.
+                        AuthHelper.instance().tryEnterMainApp(SignInScreen.this);
+                    }
+                });
     }
 
     // endregion

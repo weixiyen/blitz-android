@@ -3,6 +3,7 @@ package com.blitz.app.view_models;
 import android.app.Activity;
 
 import com.blitz.app.rest_models.RestModelCallback;
+import com.blitz.app.rest_models.RestModelCallbacks;
 import com.blitz.app.rest_models.RestModelDraft;
 import com.blitz.app.rest_models.RestModelGame;
 import com.blitz.app.rest_models.RestModelItem;
@@ -102,7 +103,7 @@ public class ViewModelMatchup extends ViewModel {
 
     private void setupUserInfo() {
 
-        RestModelUser.getUsers(null, mDraft.getUsers(), new RestModelUser.CallbackUsers() {
+        RestModelUser.getUsers(null, mDraft.getUsers(), new RestModelCallbacks<RestModelUser>() {
 
             @Override
             public void onSuccess(List<RestModelUser> users) {

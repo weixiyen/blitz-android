@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.widget.EditText;
 
 import com.blitz.app.R;
+import com.blitz.app.rest_models.RestModelCallback;
 import com.blitz.app.rest_models.RestModelUser;
 import com.blitz.app.utilities.android.BaseActivity;
 import com.blitz.app.utilities.authentication.AuthHelper;
@@ -24,9 +25,6 @@ public class SignUpScreen extends BaseActivity {
     @InjectView(R.id.sign_up_screen_email)    EditText mEmail;
     @InjectView(R.id.sign_up_screen_username) EditText mUsername;
     @InjectView(R.id.sign_up_screen_password) EditText mPassword;
-
-    // Model object.
-    private RestModelUser mObjectModelUser;
 
     // endregion
 
@@ -61,23 +59,18 @@ public class SignUpScreen extends BaseActivity {
             return;
         }
 
-        if (mObjectModelUser == null) {
-            mObjectModelUser = new RestModelUser();
-        }
+        RestModelUser.signUp(this,
+                mEmail.getText().toString(),
+                mUsername.getText().toString(),
+                mPassword.getText().toString(), new RestModelCallback<RestModelUser>() {
 
-        // Set desired registration fields.
-        mObjectModelUser.setEmail(mEmail);
-        mObjectModelUser.setUsername(mUsername);
-        mObjectModelUser.setPassword(mPassword);
-        mObjectModelUser.signUp(this, new RestModelUser.CallbackSignUp() {
+                    @Override
+                    public void onSuccess(RestModelUser object) {
 
-            @Override
-            public void onSignUp() {
-
-                // Enter main app.
-                AuthHelper.instance().tryEnterMainApp(SignUpScreen.this);
-            }
-        });
+                        // Enter main app.
+                        AuthHelper.instance().tryEnterMainApp(SignUpScreen.this);
+                    }
+                });
     }
 
     // endregion

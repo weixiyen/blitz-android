@@ -2,6 +2,7 @@ package com.blitz.app.view_models;
 
 import android.app.Activity;
 
+import com.blitz.app.rest_models.RestModelCallbacks;
 import com.blitz.app.rest_models.RestModelUser;
 import com.blitz.app.utilities.reactive.Observer;
 
@@ -11,7 +12,7 @@ import java.util.List;
  * View model for leaderboard page.
  * Created by Nate on 9/30/14.
  */
-public class ViewModelLeaderboard extends ViewModel implements RestModelUser.CallbackUsers {
+public class ViewModelLeaderboard extends ViewModel {
 
 
     private final Observer<List<RestModelUser>> mLeadersObserver;
@@ -27,13 +28,12 @@ public class ViewModelLeaderboard extends ViewModel implements RestModelUser.Cal
     @Override
     public void initialize() {
 
-        RestModelUser.getTopPlayersWithLimit(mActivity, 150, this);
-    }
+        RestModelUser.getTopPlayersWithLimit(mActivity, 150, new RestModelCallbacks<RestModelUser>() {
+            @Override
+            public void onSuccess(List<RestModelUser> object) {
 
-
-    @Override
-    public void onSuccess(List<RestModelUser> users) {
-
-        mLeadersObserver.onNext(users);
+                mLeadersObserver.onNext(object);
+            }
+        });
     }
 }

@@ -186,9 +186,6 @@ public class AuthHelper {
     @SuppressWarnings("unused")
     public void signOut() {
 
-        // Clear all data.
-        AppData.clear();
-
         AppData.clear(AppDataObject.userId);
         AppData.clear(AppDataObject.userName);
         AppData.clear(AppDataObject.userEmail);

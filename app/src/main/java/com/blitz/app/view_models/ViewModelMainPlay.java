@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.os.Handler;
 
+import com.blitz.app.rest_models.RestModelCallback;
 import com.blitz.app.rest_models.RestModelItem;
 import com.blitz.app.rest_models.RestModelQueue;
 import com.blitz.app.rest_models.RestModelUser;
@@ -166,7 +167,7 @@ public class ViewModelMainPlay extends ViewModel {
         final String userId = AuthHelper.instance().getUserId();
 
         // Fetch the current user.
-        RestModelUser.getUser(mActivity, userId, new RestModelUser.CallbackUser() {
+        RestModelUser.getUser(mActivity, userId, new RestModelCallback<RestModelUser>() {
 
             @Override
             public void onSuccess(RestModelUser user) {

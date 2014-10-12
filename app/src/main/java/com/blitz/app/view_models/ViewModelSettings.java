@@ -2,6 +2,7 @@ package com.blitz.app.view_models;
 
 import android.app.Activity;
 
+import com.blitz.app.rest_models.RestModelCallback;
 import com.blitz.app.rest_models.RestModelItem;
 import com.blitz.app.rest_models.RestModelUser;
 import com.blitz.app.utilities.authentication.AuthHelper;
@@ -100,7 +101,7 @@ public class ViewModelSettings extends ViewModel {
 
         // Fetch user information.
         RestModelUser.getUser(mActivity, AuthHelper.instance().getUserId(),
-                new RestModelUser.CallbackUser() {
+                new RestModelCallback<RestModelUser>() {
 
                     @Override
                     public void onSuccess(RestModelUser user) {

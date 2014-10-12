@@ -1,7 +1,6 @@
 package com.blitz.app.rest_models;
 
 import android.app.Activity;
-import android.widget.EditText;
 
 import com.blitz.app.utilities.authentication.AuthHelper;
 import com.blitz.app.utilities.rest.RestAPICallback;
@@ -35,8 +34,6 @@ public class RestModelUser extends RestModel {
     @SuppressWarnings("unused") @SerializedName("full_name") private String mFullName;
     @SuppressWarnings("unused") @SerializedName("email")     private String mEmail;
 
-    private String mPassword;
-
     // endregion
 
     // region REST Calls
@@ -51,7 +48,7 @@ public class RestModelUser extends RestModel {
      */
     @SuppressWarnings("unused")
     public static void updateAvatar(Activity activity, String avatarId,
-                                    final CallbackUser callback) {
+                                    final RestModelCallback<RestModelUser> callback) {
         if (avatarId == null) {
             return;
         }
@@ -89,7 +86,8 @@ public class RestModelUser extends RestModel {
      */
     @SuppressWarnings("unused")
     public static void getUser(Activity activity, String userId,
-                               final CallbackUser callback, boolean logoutOnFailure) {
+                               final RestModelCallback<RestModelUser> callback,
+                               boolean logoutOnFailure) {
 
         // Rest operation.
         RestAPICallback<RestAPIResult<RestModelUser>> operation =
@@ -111,7 +109,7 @@ public class RestModelUser extends RestModel {
     }
 
     public static void getTopPlayersWithLimit(Activity activity, final int limit,
-                                              final CallbackUsers callback) {
+                                              final RestModelCallbacks<RestModelUser> callback) {
 
         final RestAPICallback<RestAPIResult<RestModelUser>> operation =
                 new RestAPICallback<RestAPIResult<RestModelUser>>(activity) {
@@ -134,7 +132,7 @@ public class RestModelUser extends RestModel {
      */
     @SuppressWarnings("unused")
     public static void getUsers(Activity activity, List<String> userIds,
-                                final CallbackUsers callback) {
+                                final RestModelCallbacks<RestModelUser> callback) {
 
         RestAPICallback<RestAPIResult<RestModelUser>> operation =
                 new RestAPICallback<RestAPIResult<RestModelUser>>(activity) {
@@ -171,7 +169,8 @@ public class RestModelUser extends RestModel {
      * @param callback Callback.
      */
     @SuppressWarnings("unused")
-    public void signUp(Activity activity, final CallbackSignUp callback) {
+    public static void signUp(Activity activity, String email, String username, String password,
+                              final RestModelCallback<RestModelUser> callback) {
 
         // Rest operation.
         RestAPICallback<RestAPIResult<RestModelUser>> operation =
@@ -188,7 +187,7 @@ public class RestModelUser extends RestModel {
 
                         // Now signed up.
                         if (callback != null) {
-                            callback.onSignUp();
+                            callback.onSuccess(user);
                         }
                     }
                 };
@@ -198,9 +197,9 @@ public class RestModelUser extends RestModel {
 
         // Construct POST body.
         JsonObject body = new JsonObject();
-        body.addProperty("email", mEmail);
-        body.addProperty("username", mUsername);
-        body.addProperty("password", mPassword);
+        body.addProperty("email", email);
+        body.addProperty("username", username);
+        body.addProperty("password", password);
 
         // Make rest call for code.
         mRestAPI.users_post(body, operation);
@@ -213,7 +212,8 @@ public class RestModelUser extends RestModel {
      * @param callback Callback.
      */
     @SuppressWarnings("unused")
-    public void signIn(Activity activity, final CallbackSignIn callback) {
+    public static void signIn(Activity activity, String username, String password,
+                              final RestModelCallback<RestModelUser> callback) {
 
         // Rest operation.
         RestAPICallback<RestAPIResult<RestModelUser>> operation =
@@ -230,7 +230,7 @@ public class RestModelUser extends RestModel {
 
                         // Now signed in.
                         if (callback != null) {
-                            callback.onSignIn();
+                            callback.onSuccess(user);
                         }
                     }
                 };
@@ -240,8 +240,8 @@ public class RestModelUser extends RestModel {
 
         // Construct POST body.
         JsonObject body = new JsonObject();
-        body.addProperty("username", mUsername);
-        body.addProperty("password", mPassword);
+        body.addProperty("username", username);
+        body.addProperty("password", password);
 
         // Make auth rest call.
         mRestAPI.auth_post(body, operation);
@@ -325,54 +325,6 @@ public class RestModelUser extends RestModel {
      */
     public String getEmail() {
         return mEmail;
-    }
-
-    /**
-     * Set email.
-     *
-     * @param email Email.
-     */
-    public void setEmail(EditText email) {
-
-        mEmail = email.getText().toString();
-    }
-
-    /**
-     * Set username.
-     *
-     * @param username Username.
-     */
-    public void setUsername(EditText username) {
-
-        mUsername = username.getText().toString();
-    }
-
-    /**
-     * Set password.
-     *
-     * @param password Passowrd
-     */
-    public void setPassword(EditText password) {
-
-        mPassword = password.getText().toString();
-    }
-
-    // endregion
-
-    // region Callbacks
-    // =============================================================================================
-
-    public interface CallbackSignUp { public void onSignUp(); }
-    public interface CallbackSignIn { public void onSignIn(); }
-
-    public interface CallbackUser {
-
-        public void onSuccess(RestModelUser user);
-    }
-
-    public interface CallbackUsers {
-
-        public void onSuccess(List<RestModelUser> users);
     }
 
     // endregion
