@@ -32,6 +32,8 @@
         android:layout_height="match_parent"
         android:layout_marginTop="60dp"
         android:background="@color/background_inner"
-        android:gravity="center"/>
+        android:cacheColorHint="@color/background_transparent"
+        android:gravity="center"
+        android:listSelector="@color/background_transparent"/>
 
 </RelativeLayout>
