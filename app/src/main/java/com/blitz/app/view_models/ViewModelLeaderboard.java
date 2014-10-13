@@ -7,7 +7,9 @@ import com.blitz.app.rest_models.RestModelItem;
 import com.blitz.app.rest_models.RestModelUser;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * View model for leaderboard page.
@@ -44,7 +46,7 @@ public class ViewModelLeaderboard extends ViewModel {
                 new RestModelCallbacks<RestModelUser>() {
 
                     @Override
-                    public void onSuccess(List<RestModelUser> object) {
+                    public void onSuccess(final List<RestModelUser> object) {
 
                         final List<String> userIds =
                                 new ArrayList<String>(object.size());
@@ -69,7 +71,11 @@ public class ViewModelLeaderboard extends ViewModel {
                             userWins.add(user.getWins());
                             userLosses.add(user.getLosses());
                             userRatings.add(user.getRating());
-                            userAvatarIds.add(user.getAvatarId());
+
+                            // Add unique avatar id's.
+                            //if (!userAvatarIds.contains(user.getAvatarId())) {
+                                 userAvatarIds.add(user.getAvatarId());
+                            //}
                         }
 
                         // Then fetch their item info (avatars).
@@ -79,9 +85,22 @@ public class ViewModelLeaderboard extends ViewModel {
                             @Override
                             public void onSuccess(List<RestModelItem> items) {
 
+                                Map<String, String> itemUrls = new HashMap<String, String>();
+
+                                // For each unique item.
                                 for (RestModelItem item: items) {
 
-                                    userAvatarUrls.add(item.getDefaultImgPath());
+                                    // Convert into a map of id to image path.
+                                    if (!itemUrls.containsKey(item.getId())) {
+                                         itemUrls.put(item.getId(), item.getDefaultImgPath());
+                                    }
+                                }
+
+                                // Now or each avatar id.
+                                for (String avatarId : userAvatarIds) {
+
+                                    // Populate associated avatar url.
+                                    userAvatarUrls.add(itemUrls.get(avatarId));
                                 }
 
                                 if (getCallbacks(ViewModelLeaderboardCallbacks.class) != null) {
