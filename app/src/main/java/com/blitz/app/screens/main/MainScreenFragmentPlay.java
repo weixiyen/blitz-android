@@ -13,11 +13,12 @@ import com.blitz.app.R;
 import com.blitz.app.dialogs.rules.DialogRules;
 import com.blitz.app.screens.leaderboard.LeaderboardScreen;
 import com.blitz.app.utilities.android.BaseFragment;
+import com.blitz.app.utilities.animations.AnimHelper;
 import com.blitz.app.utilities.animations.AnimHelperCrossFade;
+import com.blitz.app.utilities.animations.AnimHelperFade;
 import com.blitz.app.utilities.app.AppConfig;
 import com.blitz.app.utilities.app.AppDataObject;
 import com.blitz.app.utilities.image.BlitzImageView;
-import com.blitz.app.utilities.logging.LogHelper;
 import com.blitz.app.utilities.rest.RestAPICallback;
 import com.blitz.app.view_models.ViewModel;
 import com.blitz.app.view_models.ViewModelMainPlay;
@@ -40,6 +41,11 @@ public class MainScreenFragmentPlay extends BaseFragment implements ViewModelMai
     @InjectView(R.id.main_play_button_text)       TextView mPlayButtonText;
     @InjectView(R.id.main_play_button_time)       TextView mPlayButtonTime;
     @InjectView(R.id.main_play_button_waiting)        View mPlayButtonWaiting;
+
+    // UI Containers.
+    @InjectView(R.id.main_play_action)  View mPlayContainerAction;
+    @InjectView(R.id.main_play_blocked) View mPlayContainerBlocked;
+    @InjectView(R.id.main_play_footer)  View mPlayContainerFooter;
 
     @InjectView(R.id.main_play_cash_available) TextView mCashAvailable;
 
@@ -101,16 +107,6 @@ public class MainScreenFragmentPlay extends BaseFragment implements ViewModelMai
         super.onPause();
 
         setupSpinningPlayButton(false);
-    }
-
-    /**
-     * Stop animations.
-     */
-    @Override
-    public void onResume() {
-        super.onResume();
-
-        setupSpinningPlayButton(true);
     }
 
     /**
@@ -196,7 +192,22 @@ public class MainScreenFragmentPlay extends BaseFragment implements ViewModelMai
     @Override
     public void onQueueAvailable(boolean queueAvailable) {
 
-        LogHelper.log("Queue available: " + queueAvailable);
+        // Animation time for showing the resulting UI is twice the usual.
+        int animationTime = AnimHelper.getConfigAnimTimeStandard(this.getActivity()) * 2;
+
+        if (queueAvailable) {
+
+            // Show the play UI.
+            AnimHelperFade.setVisibility(mPlayContainerAction, View.VISIBLE, animationTime);
+            AnimHelperFade.setVisibility(mPlayContainerFooter, View.VISIBLE, animationTime);
+
+            // Play button so shiny.
+            setupSpinningPlayButton(true);
+        } else {
+
+            // Show the blocked container.
+            AnimHelperFade.setVisibility(mPlayContainerBlocked, View.VISIBLE, animationTime);
+        }
     }
 
     /**

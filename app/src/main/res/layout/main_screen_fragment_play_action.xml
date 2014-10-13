@@ -2,7 +2,9 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:id="@+id/main_play_action"
     android:layout_height="match_parent"
+    android:visibility="invisible"
     tools:context="${packageName}.${activityClass}"
     tools:ignore="ButtonStyle,UnusedAttribute,UselessParent,SmallSp">
 
@@ -30,10 +32,10 @@
         <TextView
             android:id="@+id/main_play_button_text"
             style="@style/App.TextView"
+            fontPath="@string/app_font_sports"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_gravity="center"
-            fontPath="@string/app_font_sports"
             android:gravity="center"
             android:text="@string/play"
             android:textColor="@color/text_color_light"
@@ -42,10 +44,10 @@
         <TextView
             android:id="@+id/main_play_button_time"
             style="@style/App.TextView"
+            fontPath="@string/app_font_sports"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_gravity="center"
-            fontPath="@string/app_font_sports"
             android:gravity="center|top"
             android:paddingBottom="50dp"
             android:paddingTop="50dp"
@@ -57,10 +59,10 @@
         <TextView
             android:id="@+id/main_play_button_waiting"
             style="@style/App.TextView"
+            fontPath="@string/app_font_sports"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_gravity="center"
-            fontPath="@string/app_font_sports"
             android:gravity="center|bottom"
             android:lineSpacingMultiplier="1.25"
             android:paddingBottom="45dp"

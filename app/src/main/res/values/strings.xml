@@ -24,7 +24,7 @@
     <string name="invite_a_friend">Invite a friend to play Blitz</string>
     <string name="join">Join!</string>
     <string name="lets_get_going">Let\'s get going!</string>
-    <string name="live_drafts_blocked">Live Drafts are closed ever week from Sunday 12PM EST until Tuesday 12PM EST.  Please check back again on Tuesday 12PM EST.</string>
+    <string name="live_drafts_blocked">Live Drafts are closed every week from Sunday 12PM EST until Tuesday 12PM EST.  Please check back again on Tuesday 12PM EST.</string>
     <string name="logout">Logout</string>
     <string name="loss">loss</string>
     <string name="match_found">Match Found! Join the match!</string>
