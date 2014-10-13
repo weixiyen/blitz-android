@@ -12,6 +12,9 @@ import com.blitz.app.utilities.image.BlitzImageView;
 
 import java.util.List;
 
+import butterknife.ButterKnife;
+import butterknife.InjectView;
+
 /**
  * List adapter for players scores on the Leaderboard.
  *
@@ -66,6 +69,16 @@ public class LeaderboardListAdapter extends ArrayAdapter<String> {
     // region Overwritten Methods
     // =============================================================================================
 
+    /**
+     * Fetch and populate a leaderboard list item
+     * at a specified position.
+     *
+     * @param position Position.
+     * @param convertView Re-usable view.
+     * @param parent Parent view.
+     *
+     * @return Inflated and populated view.
+     */
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
 
@@ -74,27 +87,50 @@ public class LeaderboardListAdapter extends ArrayAdapter<String> {
         if (view == null) {
             view = LayoutInflater.from(getContext())
                     .inflate(R.layout.leaderboard_list_item, parent, false);
+
+            // Create and set associated view holder.
+            view.setTag(new LeaderboardListItemViewHolder(view));
         }
 
-        setText(view, R.id.leaderboard_index,  String.format("%03d", position + 1));
-        setText(view, R.id.leaderboard_user_name, mUserNames.get(position));
-        setText(view, R.id.leaderboard_wins, "W" + String.format("%03d", mUserWins.get(position)));
-        setText(view, R.id.leaderboard_losses, "L" + String.format("%03d", mUserLosses.get(position)));
-        setText(view, R.id.leaderboard_rating, Integer.toString(mUserRating.get(position)));
+        // Fetch view holder.
+        LeaderboardListItemViewHolder viewHolder = (LeaderboardListItemViewHolder)view.getTag();
 
-        ((BlitzImageView)view.findViewById(R.id.leaderboard_helmet))
-                .setImageUrl(mUserAvatarUrls.get(position));
+        // Set the text.
+        viewHolder.mLeaderboardIndex.setText(String.format("%03d", position + 1));
+        viewHolder.mLeaderboardUserName.setText(mUserNames.get(position));
+        viewHolder.mLeaderboardWins.setText("W" + String.format("%03d", mUserWins.get(position)));
+        viewHolder.mLeaderboardLosses.setText("L" + String.format("%03d", mUserLosses.get(position)));
+        viewHolder.mLeaderboardRating.setText(Integer.toString(mUserRating.get(position)));
+
+        // Set the image.
+        viewHolder.mLeaderboardHelmet.setImageBitmap(null);
+        viewHolder.mLeaderboardHelmet.setImageUrl(mUserAvatarUrls.get(position));
 
         return view;
     }
 
     // endregion
 
-    // region Private Methods
+    // region View Holder
     // =============================================================================================
 
-    private void setText(View v, int resourceId, String text) {
-        ((TextView) v.findViewById(resourceId)).setText(text);
+    /**
+     * Quick lookup into a views subviews.
+     */
+    static class LeaderboardListItemViewHolder {
+
+        @InjectView(R.id.leaderboard_index)        TextView mLeaderboardIndex;
+        @InjectView(R.id.leaderboard_user_name)    TextView mLeaderboardUserName;
+        @InjectView(R.id.leaderboard_wins)         TextView mLeaderboardWins;
+        @InjectView(R.id.leaderboard_losses)       TextView mLeaderboardLosses;
+        @InjectView(R.id.leaderboard_rating)       TextView mLeaderboardRating;
+        @InjectView(R.id.leaderboard_helmet) BlitzImageView mLeaderboardHelmet;
+
+        public LeaderboardListItemViewHolder(View leaderboardListItem) {
+
+            // Map the member variables.
+            ButterKnife.inject(this, leaderboardListItem);
+        }
     }
 
     // endregion
