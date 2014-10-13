@@ -1,0 +1,28 @@
+<RelativeLayout
+    android:id="@+id/main_play_blocked"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/drawable_dark_gradient"
+    android:gravity="center"
+    android:orientation="horizontal"
+    android:visibility="gone"
+    tools:context="${packageName}.${activityClass}"
+    tools:ignore="ButtonStyle,UnusedAttribute">
+
+    <TextView
+        style="@style/App.TextView"
+        fontPath="@string/app_font_helvetica_condensed_bold"
+        android:layout_width="@dimen/screen_width"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="192dp"
+        android:gravity="center"
+        android:lineSpacingMultiplier="1.25"
+        android:orientation="horizontal"
+        android:paddingBottom="30dp"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        android:text="@string/live_drafts_blocked"
+        android:textSize="18sp" />
+</RelativeLayout>
