@@ -193,7 +193,7 @@ public class MainScreenFragmentPlay extends BaseFragment implements ViewModelMai
     public void onQueueAvailable(boolean queueAvailable) {
 
         // Animation time for showing the resulting UI is twice the usual.
-        int animationTime = AnimHelper.getConfigAnimTimeStandard(this.getActivity()) * 2;
+        int animationTime = AnimHelper.getConfigAnimTimeStandard(this.getActivity()) * 3;
 
         if (queueAvailable) {
 
