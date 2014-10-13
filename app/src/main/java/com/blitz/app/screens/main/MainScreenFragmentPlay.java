@@ -17,6 +17,7 @@ import com.blitz.app.utilities.animations.AnimHelperCrossFade;
 import com.blitz.app.utilities.app.AppConfig;
 import com.blitz.app.utilities.app.AppDataObject;
 import com.blitz.app.utilities.image.BlitzImageView;
+import com.blitz.app.utilities.logging.LogHelper;
 import com.blitz.app.utilities.rest.RestAPICallback;
 import com.blitz.app.view_models.ViewModel;
 import com.blitz.app.view_models.ViewModelMainPlay;
@@ -186,6 +187,17 @@ public class MainScreenFragmentPlay extends BaseFragment implements ViewModelMai
 
     // region View Model Callbacks
     // =============================================================================================
+
+    /**
+     * Show roadblock if the queue is not available.
+     *
+     * @param queueAvailable Is queue available.
+     */
+    @Override
+    public void onQueueAvailable(boolean queueAvailable) {
+
+        LogHelper.log("Queue available: " + queueAvailable);
+    }
 
     /**
      * Setup cool button state.

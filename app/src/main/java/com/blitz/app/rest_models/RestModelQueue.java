@@ -2,6 +2,7 @@ package com.blitz.app.rest_models;
 
 import android.app.Activity;
 
+import com.blitz.app.utilities.authentication.AuthHelper;
 import com.blitz.app.utilities.rest.RestAPICallback;
 import com.google.gson.JsonObject;
 
@@ -32,17 +33,16 @@ public class RestModelQueue extends RestModel {
     public void queueUp(final Activity activity, final Runnable callback) {
 
         // First sync preferences to get the active draft key.
-        RestModelPreferences.sync(activity, new RestModelCallback<RestModelPreferences>() {
+        AuthHelper.instance().updatePreferences(activity, new RestModelCallback<RestModelPreferences>() {
 
-            @Override
-            public void onSuccess(RestModelPreferences object) {
+                    @Override
+                    public void onSuccess(RestModelPreferences object) {
 
-                // Set draft key to the active queue.
-                mDraftKey = object.currentActiveQueue();
+                        // Set draft key to the active queue.
+                        mDraftKey = object.getCurrentActiveQueue();
 
-                // Define operation, call on queue up when complete.
-                RestAPICallback<JsonObject> operation =
-                        new RestAPICallback<JsonObject>(activity) {
+                        // Define operation, call on queue up when complete.
+                        RestAPICallback<JsonObject> operation = new RestAPICallback<JsonObject>(activity) {
 
                             @Override
                             public void success(JsonObject jsonObject) {
@@ -54,14 +54,14 @@ public class RestModelQueue extends RestModel {
                             }
                         };
 
-                // Construct POST body.
-                JsonObject body = new JsonObject();
-                body.addProperty("draft_key", mDraftKey);
+                        // Construct POST body.
+                        JsonObject body = new JsonObject();
+                        body.addProperty("draft_key", mDraftKey);
 
-                // Make api call.
-                mRestAPI.queue_post(body, operation);
-            }
-        });
+                        // Make api call.
+                        mRestAPI.queue_post(body, operation);
+                    }
+                });
     }
 
     /**

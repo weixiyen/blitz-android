@@ -68,7 +68,7 @@ public class RestModelPreferences extends RestModel {
      * @return Active queue.
      */
     @SuppressWarnings("unused")
-    public String currentActiveQueue() {
+    public String getCurrentActiveQueue() {
 
         return mCurrentActiveQueue;
     }
@@ -93,6 +93,17 @@ public class RestModelPreferences extends RestModel {
     public int getCurrentYear() {
 
         return mCurrentYear;
+    }
+
+    /**
+     * Is the queue available.
+     *
+     * @return Yes or no.
+     */
+    @SuppressWarnings("unused")
+    public boolean getIsQueueAvailable() {
+
+        return mQueueAvailable;
     }
 
     /**

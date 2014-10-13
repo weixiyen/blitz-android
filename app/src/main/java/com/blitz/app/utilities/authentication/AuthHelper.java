@@ -1,5 +1,6 @@
 package com.blitz.app.utilities.authentication;
 
+import android.app.Activity;
 import android.content.Intent;
 
 import com.blitz.app.R;
@@ -70,6 +71,40 @@ public class AuthHelper {
         } else {
             return mPreferences;
         }
+    }
+
+    /**
+     * Update user preferences.
+     *
+     * @param activity Activity for loading.
+     * @param callback Callback.
+     */
+    @SuppressWarnings("unused")
+    public void updatePreferences(Activity activity,
+                                  final RestModelCallback<RestModelPreferences> callback) {
+
+        RestModelPreferences.sync(activity, new RestModelCallback<RestModelPreferences>() {
+
+            @Override
+            public void onSuccess(RestModelPreferences object) {
+
+                // Update preferences.
+                mPreferences = object;
+
+                if (callback != null) {
+                    callback.onSuccess(object);
+                }
+            }
+
+            @Override
+            public void onFailure() {
+                super.onFailure();
+
+                if (callback != null) {
+                    callback.onFailure();
+                }
+            }
+        });
     }
 
     /**
@@ -232,15 +267,8 @@ public class AuthHelper {
 
         } else {
 
-            // Sync the user preferences in background since they are not
-            // critical to the application state.
-            RestModelPreferences.sync(null, new RestModelCallback<RestModelPreferences>() {
-
-                @Override
-                public void onSuccess(RestModelPreferences object) {
-                    mPreferences = object;
-                }
-            });
+            // Sync preferences.
+            updatePreferences(null, null);
 
             // Attempt to fetch active drafts for the user.
             RestModelDraft.fetchActiveDraftsForUser(activity, AppDataObject.userId.get(),

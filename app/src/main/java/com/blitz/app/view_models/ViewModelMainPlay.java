@@ -5,6 +5,7 @@ import android.os.Handler;
 
 import com.blitz.app.rest_models.RestModelCallback;
 import com.blitz.app.rest_models.RestModelItem;
+import com.blitz.app.rest_models.RestModelPreferences;
 import com.blitz.app.rest_models.RestModelQueue;
 import com.blitz.app.rest_models.RestModelUser;
 import com.blitz.app.screens.main.MainScreenFragmentPlay;
@@ -35,11 +36,15 @@ public class ViewModelMainPlay extends ViewModel {
     // Are we in queue.
     private boolean mInQueue;
 
+    // Is the queue available.
+    private boolean mQueueAvailable;
+
     // State identifiers.
     private static final String STATE_SECONDS = "stateSeconds";
     private static final String STATE_TIME_SUSPENDED = "timeSuspected";
     private static final String STATE_IN_QUEUE = "stateInQueue";
 
+    // Current user avatar.
     private String mUserAvatarId;
 
     // endregion
@@ -125,6 +130,9 @@ public class ViewModelMainPlay extends ViewModel {
 
         // Setup comet.
         setupCometCallbacks();
+
+        // Setup preferences.
+        setupPreferences();
     }
 
     // endregion
@@ -344,6 +352,42 @@ public class ViewModelMainPlay extends ViewModel {
         }
     }
 
+    /**
+     * Setup preferences and update UI based on
+     * various draft and queue available states.
+     */
+    private void  setupPreferences() {
+
+        AuthHelper.instance().updatePreferences(mActivity,
+                new RestModelCallback<RestModelPreferences>() {
+
+                    @Override
+                    public void onSuccess(RestModelPreferences object) {
+
+                        // Get the queue availability.
+                        mQueueAvailable = object.getIsQueueAvailable();
+
+                        if (getCallbacks(ViewModelMainPlayCallbacks.class) != null) {
+                            getCallbacks(ViewModelMainPlayCallbacks.class)
+                                    .onQueueAvailable(mQueueAvailable);
+                        }
+                    }
+
+                    @Override
+                    public void onFailure() {
+                        super.onFailure();
+
+                        // Queue is not available.
+                        mQueueAvailable = false;
+
+                        if (getCallbacks(ViewModelMainPlayCallbacks.class) != null) {
+                            getCallbacks(ViewModelMainPlayCallbacks.class)
+                                    .onQueueAvailable(mQueueAvailable);
+                        }
+                    }
+                });
+    }
+
     // endregion
 
     // region Callbacks Interface
@@ -351,6 +395,7 @@ public class ViewModelMainPlay extends ViewModel {
 
     public interface ViewModelMainPlayCallbacks extends ViewModelCallbacks {
 
+        public void onQueueAvailable(boolean queueAvailable);
         public void onQueueUp(boolean animate);
         public void onQueueCancel(boolean animate);
         public void onQueueTick(String secondsInQueue);
