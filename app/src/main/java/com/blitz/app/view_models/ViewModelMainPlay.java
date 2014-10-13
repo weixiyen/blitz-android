@@ -358,7 +358,7 @@ public class ViewModelMainPlay extends ViewModel {
      */
     private void  setupPreferences() {
 
-        AuthHelper.instance().updatePreferences(mActivity, false,
+        AuthHelper.instance().getPreferences(mActivity, false,
                 new RestModelCallback<RestModelPreferences>() {
 
                     @Override

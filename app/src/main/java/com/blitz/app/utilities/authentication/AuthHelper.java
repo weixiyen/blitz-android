@@ -71,8 +71,8 @@ public class AuthHelper {
      * @param callback Callback.
      */
     @SuppressWarnings("unused")
-    public void updatePreferences(Activity activity, boolean forceSync,
-                                  final RestModelCallback<RestModelPreferences> callback) {
+    public void getPreferences(Activity activity, boolean forceSync,
+                               final RestModelCallback<RestModelPreferences> callback) {
 
         // If preferences are already synced for this session.
         if (mPreferencesSynced && !forceSync) {
@@ -271,7 +271,7 @@ public class AuthHelper {
         } else {
 
             // Sync preferences.
-            updatePreferences(null, false, null);
+            getPreferences(null, false, null);
 
             // Attempt to fetch active drafts for the user.
             RestModelDraft.fetchActiveDraftsForUser(activity, AppDataObject.userId.get(),

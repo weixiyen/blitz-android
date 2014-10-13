@@ -127,15 +127,15 @@ public class ViewModelGameLog extends ViewModel {
     @Override
     public void initialize() {
 
-        AuthHelper.instance().updatePreferences(mActivity, false,
+        AuthHelper.instance().getPreferences(mActivity, false,
                 new RestModelCallback<RestModelPreferences>() {
 
-            @Override
-            public void onSuccess(RestModelPreferences object) {
+                    @Override
+                    public void onSuccess(RestModelPreferences object) {
 
-                updateWeek(object.getCurrentWeek());
-            }
-        });
+                        updateWeek(object.getCurrentWeek());
+                    }
+                });
     }
 
     public interface ViewModelGameLogCallbacks extends ViewModel.ViewModelCallbacks {
