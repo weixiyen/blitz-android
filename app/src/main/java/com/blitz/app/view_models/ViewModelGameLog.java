@@ -2,8 +2,10 @@ package com.blitz.app.view_models;
 
 import android.util.SparseArray;
 
+import com.blitz.app.rest_models.RestModelCallback;
 import com.blitz.app.rest_models.RestModelCallbacks;
 import com.blitz.app.rest_models.RestModelDraft;
+import com.blitz.app.rest_models.RestModelPreferences;
 import com.blitz.app.simple_models.HeadToHeadDraft;
 import com.blitz.app.utilities.android.BaseActivity;
 import com.blitz.app.utilities.authentication.AuthHelper;
@@ -70,13 +72,10 @@ public class ViewModelGameLog extends ViewModel {
     private final ViewModelGameLogCallbacks mCallbacks;
     private final SparseArray<List<HeadToHeadDraft>> mCache;
 
-    private int mCurrentWeek;
-
     public ViewModelGameLog(BaseActivity activity, ViewModelGameLogCallbacks callbacks) {
         super(activity, callbacks);
         mCallbacks = callbacks;
         mCache = new SparseArray<List<HeadToHeadDraft>>(17);
-        mCurrentWeek = AuthHelper.instance().getPreferences().getCurrentWeek();
     }
 
     public void updateWeek(final int week) {
@@ -85,7 +84,6 @@ public class ViewModelGameLog extends ViewModel {
         if(mCache.get(week) != null) {
             List<HeadToHeadDraft> drafts = mCache.get(week);
             mCallbacks.onDrafts(drafts, new Summary(drafts), week);
-            mCurrentWeek = week;
         }
 
         // Get fresh data from the server.
@@ -120,7 +118,6 @@ public class ViewModelGameLog extends ViewModel {
                             ));
                         }
                         mCache.put(week, matches);
-                        mCurrentWeek = week;
                         mCallbacks.onDrafts(matches, new Summary(matches), week);
                     }
                 });
@@ -130,7 +127,15 @@ public class ViewModelGameLog extends ViewModel {
     @Override
     public void initialize() {
 
-        updateWeek(mCurrentWeek);
+        AuthHelper.instance().updatePreferences(mActivity, false,
+                new RestModelCallback<RestModelPreferences>() {
+
+            @Override
+            public void onSuccess(RestModelPreferences object) {
+
+                updateWeek(object.getCurrentWeek());
+            }
+        });
     }
 
     public interface ViewModelGameLogCallbacks extends ViewModel.ViewModelCallbacks {

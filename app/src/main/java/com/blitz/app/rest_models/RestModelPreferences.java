@@ -2,7 +2,6 @@ package com.blitz.app.rest_models;
 
 import android.app.Activity;
 
-import com.blitz.app.utilities.app.AppConfig;
 import com.blitz.app.utilities.rest.RestAPICallback;
 import com.google.gson.annotations.SerializedName;
 
@@ -104,30 +103,6 @@ public class RestModelPreferences extends RestModel {
     public boolean getIsQueueAvailable() {
 
         return mQueueAvailable;
-    }
-
-    /**
-     * Get an approximation of user preferences.
-     *
-     * @return Some default values set.
-     */
-    @SuppressWarnings("unused")
-    public static RestModelPreferences defaultPreferences() {
-
-        RestModelPreferences preferences = new RestModelPreferences();
-
-        if (AppConfig.isProduction()) {
-            preferences.mCurrentYear = 2014;
-            preferences.mCurrentWeek = 1;
-        } else {
-            preferences.mCurrentYear = 2013;
-            preferences.mCurrentWeek = 5 + (int)(Math.random() * ((10 - 5) + 1));
-        }
-
-        preferences.mQueueAvailable = true;
-        preferences.mCurrentActiveQueue = "football_heads_up_draft_free";
-
-        return preferences;
     }
 
     // endregion

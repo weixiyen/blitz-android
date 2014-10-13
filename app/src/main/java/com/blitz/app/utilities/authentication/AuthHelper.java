@@ -36,7 +36,9 @@ public class AuthHelper {
     // There can be only one current draft.
     private RestModelDraft mCurrentDraft;
 
+    // Preferences object with synced flag.
     private RestModelPreferences mPreferences;
+    private boolean mPreferencesSynced;
 
     //==============================================================================================
     // Public Methods
@@ -62,49 +64,50 @@ public class AuthHelper {
     }
 
     /**
-     * Fetch preferences
-     */
-    public RestModelPreferences getPreferences() {
-
-        if(mPreferences == null) {
-            return RestModelPreferences.defaultPreferences();
-        } else {
-            return mPreferences;
-        }
-    }
-
-    /**
      * Update user preferences.
      *
      * @param activity Activity for loading.
+     * @param forceSync Force the network sync.
      * @param callback Callback.
      */
     @SuppressWarnings("unused")
-    public void updatePreferences(Activity activity,
+    public void updatePreferences(Activity activity, boolean forceSync,
                                   final RestModelCallback<RestModelPreferences> callback) {
 
-        RestModelPreferences.sync(activity, new RestModelCallback<RestModelPreferences>() {
+        // If preferences are already synced for this session.
+        if (mPreferencesSynced && !forceSync) {
 
-            @Override
-            public void onSuccess(RestModelPreferences object) {
-
-                // Update preferences.
-                mPreferences = object;
-
-                if (callback != null) {
-                    callback.onSuccess(object);
-                }
+            // Return cached preferences.
+            if (callback != null) {
+                callback.onSuccess(mPreferences);
             }
+        } else {
 
-            @Override
-            public void onFailure() {
-                super.onFailure();
+            // Sync preferences from the network.
+            RestModelPreferences.sync(activity, new RestModelCallback<RestModelPreferences>() {
 
-                if (callback != null) {
-                    callback.onFailure();
+                @Override
+                public void onSuccess(RestModelPreferences object) {
+
+                    // Update preferences.
+                    mPreferences = object;
+                    mPreferencesSynced = true;
+
+                    if (callback != null) {
+                        callback.onSuccess(object);
+                    }
                 }
-            }
-        });
+
+                @Override
+                public void onFailure() {
+                    super.onFailure();
+
+                    if (callback != null) {
+                        callback.onFailure();
+                    }
+                }
+            });
+        }
     }
 
     /**
@@ -268,7 +271,7 @@ public class AuthHelper {
         } else {
 
             // Sync preferences.
-            updatePreferences(null, null);
+            updatePreferences(null, false, null);
 
             // Attempt to fetch active drafts for the user.
             RestModelDraft.fetchActiveDraftsForUser(activity, AppDataObject.userId.get(),
