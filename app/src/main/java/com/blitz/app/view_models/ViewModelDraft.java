@@ -1,16 +1,16 @@
 package com.blitz.app.view_models;
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.os.Handler;
 
+import com.blitz.app.rest_models.RestModelCallback;
 import com.blitz.app.rest_models.RestModelCallbacks;
 import com.blitz.app.rest_models.RestModelDraft;
 import com.blitz.app.rest_models.RestModelItem;
 import com.blitz.app.rest_models.RestModelPlayer;
 import com.blitz.app.rest_models.RestModelUser;
-import com.blitz.app.rest_models.RestModelCallback;
 import com.blitz.app.screens.draft.DraftScreen;
+import com.blitz.app.utilities.android.BaseActivity;
 import com.blitz.app.utilities.authentication.AuthHelper;
 import com.blitz.app.utilities.blitz.BlitzDelay;
 import com.blitz.app.utilities.comet.CometAPICallback;
@@ -87,7 +87,7 @@ public class ViewModelDraft extends ViewModel {
      * @param activity  Activity is used for any android context actions.
      * @param callbacks Callbacks so that the view model can communicate changes.
      */
-    public ViewModelDraft(Activity activity, ViewModelCallbacks callbacks) {
+    public ViewModelDraft(BaseActivity activity, ViewModelCallbacks callbacks) {
         super(activity, callbacks);
 
         // Set the draft model.

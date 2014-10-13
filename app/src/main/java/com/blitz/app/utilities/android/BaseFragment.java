@@ -229,4 +229,15 @@ public class BaseFragment extends Fragment {
     protected void onCreateView(Bundle savedInstanceState) {
 
     }
+
+    /**
+     * Fetch base activity.
+     *
+     * @return Base activity.
+     */
+    @SuppressWarnings("unused")
+    public BaseActivity getBaseActivity() {
+
+        return (BaseActivity)super.getActivity();
+    }
 }

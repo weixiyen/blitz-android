@@ -140,7 +140,7 @@ public class MainScreenFragmentRecent extends BaseFragment implements ViewModelG
     @Override
     public ViewModel onFetchViewModel() {
         if(mViewModel == null) {
-            mViewModel = new ViewModelGameLog(getActivity(), this);
+            mViewModel = new ViewModelGameLog(getBaseActivity(), this);
         }
         return mViewModel;
     }

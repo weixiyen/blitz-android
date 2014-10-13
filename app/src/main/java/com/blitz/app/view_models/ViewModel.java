@@ -1,7 +1,8 @@
 package com.blitz.app.view_models;
 
-import android.app.Activity;
 import android.os.Bundle;
+
+import com.blitz.app.utilities.android.BaseActivity;
 
 /**
  * Created by Miguel on 7/26/2014. Copyright 2014 Blitz Studios
@@ -12,7 +13,7 @@ public abstract class ViewModel {
     // =============================================================================================
 
     // Activity instance.
-    protected Activity mActivity;
+    protected BaseActivity mActivity;
 
     // Callbacks object.
     private ViewModelCallbacks mCallbacks;
@@ -28,11 +29,10 @@ public abstract class ViewModel {
 
     /**
      * Creating a new view model requires an activity and a callback.
-     *
-     * @param activity Activity is used for any android context actions.
+     *  @param activity Activity is used for any android context actions.
      * @param callbacks Callbacks so that the view model can communicate changes.
      */
-    public ViewModel(Activity activity, ViewModelCallbacks callbacks) {
+    public ViewModel(BaseActivity activity, ViewModelCallbacks callbacks) {
 
         mActivity  = activity;
         mCallbacks = callbacks;

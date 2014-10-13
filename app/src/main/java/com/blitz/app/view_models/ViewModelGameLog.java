@@ -1,11 +1,11 @@
 package com.blitz.app.view_models;
 
-import android.app.Activity;
 import android.util.SparseArray;
 
-import com.blitz.app.rest_models.RestModelDraft;
 import com.blitz.app.rest_models.RestModelCallbacks;
+import com.blitz.app.rest_models.RestModelDraft;
 import com.blitz.app.simple_models.HeadToHeadDraft;
+import com.blitz.app.utilities.android.BaseActivity;
 import com.blitz.app.utilities.authentication.AuthHelper;
 
 import java.util.ArrayList;
@@ -72,7 +72,7 @@ public class ViewModelGameLog extends ViewModel {
 
     private int mCurrentWeek;
 
-    public ViewModelGameLog(Activity activity, ViewModelGameLogCallbacks callbacks) {
+    public ViewModelGameLog(BaseActivity activity, ViewModelGameLogCallbacks callbacks) {
         super(activity, callbacks);
         mCallbacks = callbacks;
         mCache = new SparseArray<List<HeadToHeadDraft>>(17);

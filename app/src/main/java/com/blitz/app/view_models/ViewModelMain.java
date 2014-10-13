@@ -1,15 +1,14 @@
 package com.blitz.app.view_models;
 
-import android.app.Activity;
-
-import com.blitz.app.rest_models.RestModelDraft;
 import com.blitz.app.rest_models.RestModelCallback;
+import com.blitz.app.rest_models.RestModelDraft;
 import com.blitz.app.rest_models.RestModelQueue;
-import com.blitz.app.utilities.comet.CometAPICallback;
-import com.blitz.app.utilities.comet.CometAPIManager;
 import com.blitz.app.screens.main.MainScreen;
+import com.blitz.app.utilities.android.BaseActivity;
 import com.blitz.app.utilities.app.AppDataObject;
 import com.blitz.app.utilities.authentication.AuthHelper;
+import com.blitz.app.utilities.comet.CometAPICallback;
+import com.blitz.app.utilities.comet.CometAPIManager;
 import com.google.gson.JsonObject;
 
 /**
@@ -34,7 +33,7 @@ public class ViewModelMain extends ViewModel {
      * @param activity  Activity is used for any android context actions.
      * @param callbacks Callbacks so that the view model can communicate changes.
      */
-    public ViewModelMain(Activity activity, ViewModelCallbacks callbacks) {
+    public ViewModelMain(BaseActivity activity, ViewModelCallbacks callbacks) {
         super(activity, callbacks);
     }
 

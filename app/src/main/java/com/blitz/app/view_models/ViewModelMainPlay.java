@@ -1,6 +1,5 @@
 package com.blitz.app.view_models;
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.os.Handler;
 
@@ -9,6 +8,7 @@ import com.blitz.app.rest_models.RestModelItem;
 import com.blitz.app.rest_models.RestModelQueue;
 import com.blitz.app.rest_models.RestModelUser;
 import com.blitz.app.screens.main.MainScreenFragmentPlay;
+import com.blitz.app.utilities.android.BaseActivity;
 import com.blitz.app.utilities.app.AppDataObject;
 import com.blitz.app.utilities.authentication.AuthHelper;
 import com.blitz.app.utilities.blitz.BlitzDelay;
@@ -53,7 +53,7 @@ public class ViewModelMainPlay extends ViewModel {
      * @param activity  Activity is used for any android context actions.
      * @param callbacks Callbacks so that the view model can communicate changes.
      */
-    public ViewModelMainPlay(Activity activity, ViewModelCallbacks callbacks) {
+    public ViewModelMainPlay(BaseActivity activity, ViewModelCallbacks callbacks) {
         super(activity, callbacks);
     }
 

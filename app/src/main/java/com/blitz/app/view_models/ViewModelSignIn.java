@@ -1,7 +1,5 @@
 package com.blitz.app.view_models;
 
-import android.app.Activity;
-
 import com.blitz.app.rest_models.RestModelCallback;
 import com.blitz.app.rest_models.RestModelUser;
 import com.blitz.app.utilities.android.BaseActivity;
@@ -23,7 +21,7 @@ public class ViewModelSignIn extends ViewModel {
      * @param activity  Activity is used for any android context actions.
      * @param callbacks Callbacks so that the view model can communicate changes.
      */
-    public ViewModelSignIn(Activity activity, ViewModelCallbacks callbacks) {
+    public ViewModelSignIn(BaseActivity activity, ViewModelCallbacks callbacks) {
         super(activity, callbacks);
 
         // Lookup existing info.
@@ -68,7 +66,7 @@ public class ViewModelSignIn extends ViewModel {
                     public void onSuccess(RestModelUser object) {
 
                         // Enter main app.
-                        AuthHelper.instance().tryEnterMainApp((BaseActivity)mActivity);
+                        AuthHelper.instance().tryEnterMainApp(mActivity);
                     }
                 });
     }

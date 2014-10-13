@@ -1,10 +1,9 @@
 package com.blitz.app.view_models;
 
-import android.app.Activity;
-
 import com.blitz.app.rest_models.RestModelCallbacks;
 import com.blitz.app.rest_models.RestModelItem;
 import com.blitz.app.rest_models.RestModelUser;
+import com.blitz.app.utilities.android.BaseActivity;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -23,7 +22,7 @@ public class ViewModelLeaderboard extends ViewModel {
     /**
      * Creating a new view model requires an activity and a callback.
      */
-    public ViewModelLeaderboard(Activity activity, ViewModelCallbacks callbacks) {
+    public ViewModelLeaderboard(BaseActivity activity, ViewModelCallbacks callbacks) {
         super(activity, callbacks);
     }
 

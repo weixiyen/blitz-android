@@ -1,7 +1,5 @@
 package com.blitz.app.view_models;
 
-import android.app.Activity;
-
 import com.blitz.app.rest_models.RestModelCallback;
 import com.blitz.app.rest_models.RestModelCallbacks;
 import com.blitz.app.rest_models.RestModelDraft;
@@ -12,6 +10,7 @@ import com.blitz.app.rest_models.RestModelStats;
 import com.blitz.app.rest_models.RestModelUser;
 import com.blitz.app.simple_models.Game;
 import com.blitz.app.simple_models.Stat;
+import com.blitz.app.utilities.android.BaseActivity;
 import com.blitz.app.utilities.authentication.AuthHelper;
 import com.blitz.app.utilities.rest.RestAPICallback;
 import com.blitz.app.utilities.rest.RestAPIResult;
@@ -60,7 +59,7 @@ public class ViewModelMatchup extends ViewModel {
      * Disallow the default constructor.
      */
     @SuppressWarnings("unused")
-    private ViewModelMatchup(Activity activity, ViewModelMatchupCallbacks callbacks) {
+    private ViewModelMatchup(BaseActivity activity, ViewModelMatchupCallbacks callbacks) {
         super(activity, callbacks);
     }
 
@@ -72,7 +71,7 @@ public class ViewModelMatchup extends ViewModel {
      * @param draftId Associated draft id.
      */
     @SuppressWarnings("unused")
-    public ViewModelMatchup(Activity activity,
+    public ViewModelMatchup(BaseActivity activity,
                             final ViewModelMatchupCallbacks callbacks, String draftId) {
         super(activity, callbacks);
 

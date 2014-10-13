@@ -139,7 +139,7 @@ public class MainScreenFragmentPlay extends BaseFragment implements ViewModelMai
     public ViewModel onFetchViewModel() {
 
         if (mViewModelMainPlay == null) {
-            mViewModelMainPlay = new ViewModelMainPlay(getActivity(), this);
+            mViewModelMainPlay = new ViewModelMainPlay(getBaseActivity(), this);
         }
 
         return mViewModelMainPlay;

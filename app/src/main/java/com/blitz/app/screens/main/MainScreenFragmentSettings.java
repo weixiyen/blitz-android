@@ -93,7 +93,7 @@ public class MainScreenFragmentSettings extends BaseFragment implements
     public ViewModel onFetchViewModel() {
 
         if (mViewModelSettings == null) {
-            mViewModelSettings = new ViewModelSettings(getActivity(), this);
+            mViewModelSettings = new ViewModelSettings(getBaseActivity(), this);
         }
 
         return mViewModelSettings;

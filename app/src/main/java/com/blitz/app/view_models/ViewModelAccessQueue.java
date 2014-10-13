@@ -1,8 +1,7 @@
 package com.blitz.app.view_models;
 
-import android.app.Activity;
-
 import com.blitz.app.rest_models.RestModelAccessQueue;
+import com.blitz.app.utilities.android.BaseActivity;
 import com.blitz.app.utilities.gcm.GcmRegistrationHelper;
 
 /**
@@ -26,7 +25,7 @@ public class ViewModelAccessQueue extends ViewModel {
      * @param activity  Activity is used for any android context actions.
      * @param callbacks Callbacks so that the view model can communicate changes.
      */
-    public ViewModelAccessQueue(Activity activity, ViewModelCallbacks callbacks) {
+    public ViewModelAccessQueue(BaseActivity activity, ViewModelCallbacks callbacks) {
         super(activity, callbacks);
     }
 
