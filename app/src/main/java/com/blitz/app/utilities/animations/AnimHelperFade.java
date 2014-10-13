@@ -4,6 +4,7 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.ObjectAnimator;
 import android.view.View;
+import android.view.animation.AccelerateDecelerateInterpolator;
 
 /**
  * Created by mrkcsc on 8/21/14. Copyright 2014 Blitz Studios
@@ -153,6 +154,9 @@ public class AnimHelperFade extends AnimHelper {
 
         // Set the default duration.
         alphaAnimator.setDuration(duration);
+
+        // Set ease in and ease out interpolator.
+        alphaAnimator.setInterpolator(new AccelerateDecelerateInterpolator());
 
         // Set animation end callback.
         alphaAnimator.addListener(new AnimatorListenerAdapter() {
