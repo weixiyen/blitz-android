@@ -7,6 +7,7 @@ import com.blitz.app.R;
 import com.blitz.app.rest_models.RestModelCallback;
 import com.blitz.app.rest_models.RestModelUser;
 import com.blitz.app.utilities.android.BaseActivity;
+import com.blitz.app.utilities.app.AppDataObject;
 import com.blitz.app.utilities.authentication.AuthHelper;
 import com.blitz.app.utilities.rest.RestAPICallback;
 
@@ -36,6 +37,20 @@ public class SignInScreen extends BaseActivity {
 
         // Use a vertical slide animation.
         setCustomTransitions(CustomTransition.T_SLIDE_VERTICAL);
+
+        // If an email exists.
+        if (AppDataObject.userEmail.get() != null) {
+
+            // Pre-populate with it.
+            mUsername.setText(AppDataObject.userEmail.get());
+            mPassword.requestFocus();
+
+        } else if (AppDataObject.userName.get() != null) {
+
+            // Else pre populate with username.
+            mUsername.setText(AppDataObject.userName.get());
+            mPassword.requestFocus();
+        }
     }
 
     // endregion
