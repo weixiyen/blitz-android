@@ -1,4 +1,4 @@
-package com.blitz.app.screens.main;
+package com.blitz.app.screens.matchup;
 
 import android.app.Activity;
 import android.content.Context;
@@ -64,7 +64,7 @@ public class PlayerListAdapter extends ArrayAdapter {
 
         if (v == null) {
             v = LayoutInflater.from(mActivity)
-                    .inflate(R.layout.main_screen_draft_list_item, null);
+                    .inflate(R.layout.matchup_screen_draft_list_item, null);
         }
 
         final RestModelPlayer p1 = mPlayer1Picks.get(position);

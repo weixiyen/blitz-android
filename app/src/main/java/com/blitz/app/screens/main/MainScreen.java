@@ -106,8 +106,7 @@ public class MainScreen extends BaseActivity implements ViewModelMain.ViewModelM
     private void setViewPager() {
 
         // Create adapter.
-        MainScreenPagerAdapter adapter = new
-                MainScreenPagerAdapter(getSupportFragmentManager());
+        MainScreenViewPagerAdapter adapter = new MainScreenViewPagerAdapter(getSupportFragmentManager());
 
         // We have a small static number of pages
         // so let them all be cached and not re-created.

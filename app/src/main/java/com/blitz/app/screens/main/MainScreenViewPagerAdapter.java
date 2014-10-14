@@ -11,7 +11,7 @@ import com.blitz.app.screens.settings.SettingsScreen;
 /**
  * Created by mrkcsc on 7/14/14. Copyright 2014 Blitz Studios
  */
-public class MainScreenPagerAdapter extends FragmentStatePagerAdapter {
+public class MainScreenViewPagerAdapter extends FragmentStatePagerAdapter {
 
     // region Member Variables
     // =============================================================================================
@@ -27,7 +27,7 @@ public class MainScreenPagerAdapter extends FragmentStatePagerAdapter {
     /**
      * Initialize the adapter.
      */
-    public MainScreenPagerAdapter(FragmentManager fm) {
+    public MainScreenViewPagerAdapter(FragmentManager fm) {
         super(fm);
     }
 

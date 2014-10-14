@@ -5,8 +5,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.blitz.app.R;
-import com.blitz.app.screens.main.PlayerListAdapter;
-import com.blitz.app.screens.main.StatAdapter;
+import com.blitz.app.screens.matchup.PlayerListAdapter;
 import com.blitz.app.utilities.android.BaseActivity;
 
 import butterknife.InjectView;

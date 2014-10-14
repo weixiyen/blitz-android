@@ -1,4 +1,4 @@
-package com.blitz.app.screens.main;
+package com.blitz.app.screens.stats;
 
 import android.app.Activity;
 import android.content.Context;
@@ -11,7 +11,7 @@ import android.widget.TextView;
 import com.blitz.app.R;
 
 /**
- * Created by Nate on 9/24/14.
+ * Created by Nate on 9/24/14. Copyright 2014 Blitz Studios
  */
 public class StatAdapter extends ArrayAdapter {
 
