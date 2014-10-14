@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -15,6 +14,7 @@ import com.blitz.app.utilities.android.BaseFragment;
 import com.blitz.app.view_models.ViewModel;
 import com.blitz.app.view_models.ViewModelRecent;
 
+import java.util.Arrays;
 import java.util.List;
 
 import butterknife.InjectView;
@@ -51,16 +51,12 @@ public class RecentScreen extends BaseFragment implements ViewModelRecent.Callba
 
         setupScrubber();
 
-        ArrayAdapter<CharSequence> adapter = new ArrayAdapter<CharSequence>(this.getActivity(), R.layout.recent_screen_spinner_item, R.id.main_recent_spinner_item, getResources().getStringArray(R.array.weeks_array));
+        String[] weeks = getResources().getStringArray(R.array.weeks_array);
 
+        RecentScreenDropdownAdapter adapter1 = new RecentScreenDropdownAdapter
+                (this.getActivity(), Arrays.asList(weeks));
 
-
-
-        // Specify the layout to use when the list of choices appears
-        //adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        // Apply the adapter to the spinner
-
-        mRecentHeader.setAdapter(adapter);
+        mRecentHeader.setAdapter(adapter1);
     }
 
     @Override

@@ -21,6 +21,8 @@
         style="@style/App.NavBar"
         android:layout_height="110dp"
         android:gravity="center"
+        android:popupBackground="@color/background_transparent"
+        android:dropDownWidth="225dp"
         android:paddingTop="50dp" />
 
     <View
