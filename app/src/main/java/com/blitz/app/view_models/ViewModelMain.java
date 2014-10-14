@@ -33,7 +33,7 @@ public class ViewModelMain extends ViewModel {
      * @param activity  Activity is used for any android context actions.
      * @param callbacks Callbacks so that the view model can communicate changes.
      */
-    public ViewModelMain(BaseActivity activity, ViewModelCallbacks callbacks) {
+    public ViewModelMain(BaseActivity activity, Callbacks callbacks) {
         super(activity, callbacks);
     }
 
@@ -191,7 +191,7 @@ public class ViewModelMain extends ViewModel {
     // region Callbacks Interface
     // =============================================================================================
 
-    public interface ViewModelMainCallbacks extends ViewModelCallbacks {
+    public interface ViewModelMainCallbacks extends Callbacks {
 
         public void onConfirmDraft(ViewModelMain viewModel);
         public void onConfirmQueue(ViewModelMain viewModel);

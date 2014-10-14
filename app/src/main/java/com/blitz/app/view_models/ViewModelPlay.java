@@ -58,7 +58,7 @@ public class ViewModelPlay extends ViewModel {
      * @param activity  Activity is used for any android context actions.
      * @param callbacks Callbacks so that the view model can communicate changes.
      */
-    public ViewModelPlay(BaseActivity activity, ViewModelCallbacks callbacks) {
+    public ViewModelPlay(BaseActivity activity, Callbacks callbacks) {
         super(activity, callbacks);
     }
 
@@ -393,7 +393,7 @@ public class ViewModelPlay extends ViewModel {
     // region Callbacks Interface
     // =============================================================================================
 
-    public interface ViewModelMainPlayCallbacks extends ViewModelCallbacks {
+    public interface ViewModelMainPlayCallbacks extends Callbacks {
 
         public void onQueueAvailable(boolean queueAvailable);
         public void onQueueUp(boolean animate);

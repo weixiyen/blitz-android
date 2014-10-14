@@ -75,7 +75,7 @@ public class AppConfig {
      */
     public static boolean isGcmRegistrationIgnored() {
 
-        return false;
+        return true;
     }
 
     //==============================================================================================

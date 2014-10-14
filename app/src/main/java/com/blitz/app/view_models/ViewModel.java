@@ -16,7 +16,7 @@ public abstract class ViewModel {
     protected BaseActivity mActivity;
 
     // Callbacks object.
-    private ViewModelCallbacks mCallbacks;
+    private Callbacks mCallbacks;
 
     // endregion
 
@@ -32,7 +32,7 @@ public abstract class ViewModel {
      *  @param activity Activity is used for any android context actions.
      * @param callbacks Callbacks so that the view model can communicate changes.
      */
-    public ViewModel(BaseActivity activity, ViewModelCallbacks callbacks) {
+    public ViewModel(BaseActivity activity, Callbacks callbacks) {
 
         mActivity  = activity;
         mCallbacks = callbacks;
@@ -90,7 +90,7 @@ public abstract class ViewModel {
      *
      * @return Casted callbacks.
      */
-    protected  <T extends ViewModelCallbacks> T getCallbacks(Class<T> type) {
+    protected  <T extends Callbacks> T getCallbacks(Class<T> type) {
 
         return type.cast(mCallbacks);
     }
@@ -103,7 +103,7 @@ public abstract class ViewModel {
     /**
      * Base callback interface.
      */
-    public interface ViewModelCallbacks {
+    public interface Callbacks {
 
         /**
          * This method requests an instance of the view

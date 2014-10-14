@@ -138,7 +138,7 @@ public class ViewModelRecent extends ViewModel {
                 });
     }
 
-    public interface ViewModelGameLogCallbacks extends ViewModel.ViewModelCallbacks {
+    public interface ViewModelGameLogCallbacks extends Callbacks {
 
         public void onDrafts(List<HeadToHeadDraft> drafts, Summary summary, int week);
     }

@@ -87,7 +87,7 @@ public class ViewModelDraft extends ViewModel {
      * @param activity  Activity is used for any android context actions.
      * @param callbacks Callbacks so that the view model can communicate changes.
      */
-    public ViewModelDraft(BaseActivity activity, ViewModelCallbacks callbacks) {
+    public ViewModelDraft(BaseActivity activity, Callbacks callbacks) {
         super(activity, callbacks);
 
         // Set the draft model.
@@ -928,7 +928,7 @@ public class ViewModelDraft extends ViewModel {
     /**
      * Drafting related callbacks.
      */
-    public interface ViewModelDraftCallbacks extends ViewModelCallbacks {
+    public interface ViewModelDraftCallbacks extends Callbacks {
 
         // User information received.
         public void onUserSynced(String userId, String userName,

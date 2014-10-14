@@ -25,7 +25,7 @@ public class ViewModelAccessQueue extends ViewModel {
      * @param activity  Activity is used for any android context actions.
      * @param callbacks Callbacks so that the view model can communicate changes.
      */
-    public ViewModelAccessQueue(BaseActivity activity, ViewModelCallbacks callbacks) {
+    public ViewModelAccessQueue(BaseActivity activity, Callbacks callbacks) {
         super(activity, callbacks);
     }
 
@@ -69,7 +69,7 @@ public class ViewModelAccessQueue extends ViewModel {
     // region Callbacks Interface
     // =============================================================================================
 
-    public interface ViewModelAccessQueueCallbacks extends ViewModelCallbacks {
+    public interface ViewModelAccessQueueCallbacks extends Callbacks {
 
         public void onPeopleAhead(int peopleAhead);
         public void onPeopleBehind(int peopleBehind);

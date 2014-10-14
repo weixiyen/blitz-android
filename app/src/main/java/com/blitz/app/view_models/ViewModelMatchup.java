@@ -311,7 +311,7 @@ public class ViewModelMatchup extends ViewModel {
     /**
      * Callbacks.
      */
-    public interface ViewModelMatchupCallbacks extends ViewModelCallbacks {
+    public interface ViewModelMatchupCallbacks extends Callbacks {
 
         void onStuff(List<RestModelPlayer> p1roster, List<RestModelPlayer> p2Roster, List<Game> p1Games,
                      List<Game> p2Games,

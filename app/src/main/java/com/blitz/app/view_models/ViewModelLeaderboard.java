@@ -22,7 +22,7 @@ public class ViewModelLeaderboard extends ViewModel {
     /**
      * Creating a new view model requires an activity and a callback.
      */
-    public ViewModelLeaderboard(BaseActivity activity, ViewModelCallbacks callbacks) {
+    public ViewModelLeaderboard(BaseActivity activity, Callbacks callbacks) {
         super(activity, callbacks);
     }
 
@@ -118,7 +118,7 @@ public class ViewModelLeaderboard extends ViewModel {
     // region Callbacks Interface
     // =============================================================================================
 
-    public interface ViewModelLeaderboardCallbacks extends ViewModelCallbacks {
+    public interface ViewModelLeaderboardCallbacks extends Callbacks {
 
         public void onLeadersReceived(List<String>  userIds,
                                       List<String>  userNames,

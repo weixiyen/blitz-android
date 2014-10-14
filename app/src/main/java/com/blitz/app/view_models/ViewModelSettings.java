@@ -34,7 +34,7 @@ public class ViewModelSettings extends ViewModel {
      * @param activity  Activity is used for any android context actions.
      * @param callbacks Callbacks so that the view model can communicate changes.
      */
-    public ViewModelSettings(BaseActivity activity, ViewModelCallbacks callbacks) {
+    public ViewModelSettings(BaseActivity activity, Callbacks callbacks) {
         super(activity, callbacks);
     }
 
@@ -156,7 +156,7 @@ public class ViewModelSettings extends ViewModel {
     // region Callbacks Interface
     // =============================================================================================
 
-    public interface ViewModelSettingsCallbacks extends ViewModelCallbacks {
+    public interface ViewModelSettingsCallbacks extends Callbacks {
 
         public void onEmailChanged(String email);
         public void onAvatarsChanged(List<String> userAvatarIds,

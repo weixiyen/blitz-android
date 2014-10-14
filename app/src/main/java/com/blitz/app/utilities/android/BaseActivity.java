@@ -329,10 +329,10 @@ public class BaseActivity extends FragmentActivity {
     private ViewModel getViewModel() {
 
         // If we implement view model callbacks.
-        if (this instanceof ViewModel.ViewModelCallbacks) {
+        if (this instanceof ViewModel.Callbacks) {
 
             // That means we can fetch the view model.
-            return ((ViewModel.ViewModelCallbacks)this).onFetchViewModel();
+            return ((ViewModel.Callbacks)this).onFetchViewModel();
         }
 
         return null;
