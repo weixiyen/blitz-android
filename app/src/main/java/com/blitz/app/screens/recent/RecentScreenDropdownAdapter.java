@@ -16,6 +16,8 @@ import java.util.List;
  */
 public class RecentScreenDropdownAdapter extends ArrayAdapter<String> {
 
+    private int mSelectedPosition;
+
     // region Constructor
     // =============================================================================================
 
@@ -45,6 +47,8 @@ public class RecentScreenDropdownAdapter extends ArrayAdapter<String> {
      */
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
+
+        mSelectedPosition = position;
 
         if (convertView == null) {
             convertView = LayoutInflater.from(getContext())
@@ -85,6 +89,11 @@ public class RecentScreenDropdownAdapter extends ArrayAdapter<String> {
 
         // Set the associated dropdown text.
         dropdownItem.setText(getItem(position));
+
+        if (position == mSelectedPosition) {
+
+            dropdownItem.setText("SELECTED");
+        }
 
         return convertView;
     }

@@ -9,7 +9,7 @@
     <TextView
         android:id="@+id/recent_dropdown_item"
         style="@style/App.TextView"
-        fontPath="@string/app_font_light"
+        fontPath="@string/app_font_regular"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_gravity="center"
