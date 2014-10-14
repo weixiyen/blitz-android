@@ -1,17 +1,19 @@
-package com.blitz.app.screens.main;
+package com.blitz.app.screens.recent;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.blitz.app.R;
 import com.blitz.app.simple_models.HeadToHeadDraft;
 import com.blitz.app.utilities.android.BaseFragment;
 import com.blitz.app.view_models.ViewModel;
-import com.blitz.app.view_models.ViewModelGameLog;
+import com.blitz.app.view_models.ViewModelRecent;
 
 import java.util.List;
 
@@ -20,7 +22,7 @@ import butterknife.InjectView;
 /**
  * Created by mrkcsc on 7/14/14. Copyright 2014 Blitz Studios
  */
-public class MainScreenFragmentRecent extends BaseFragment implements ViewModelGameLog.ViewModelGameLogCallbacks {
+public class RecentScreen extends BaseFragment implements ViewModelRecent.ViewModelGameLogCallbacks {
 
     // region Member Variables
     // =============================================================================================
@@ -28,10 +30,11 @@ public class MainScreenFragmentRecent extends BaseFragment implements ViewModelG
     // Total weeks in an NFL season.
     private static final int WEEKS_IN_SEASON = 17;
 
+    @InjectView(R.id.main_recent_header) Spinner mRecentHeader;
     @InjectView(R.id.main_recent_scrubber) ViewGroup mScrubber;
     @InjectView(R.id.main_recent_list)     ListView mRecentMatches;
 
-    private ViewModelGameLog mViewModel; // lazy loaded
+    private ViewModelRecent mViewModel; // lazy loaded
 
     // endregion
 
@@ -47,14 +50,25 @@ public class MainScreenFragmentRecent extends BaseFragment implements ViewModelG
         super.onCreateView(savedInstanceState);
 
         setupScrubber();
+
+        ArrayAdapter<CharSequence> adapter = new ArrayAdapter<CharSequence>(this.getActivity(), R.layout.recent_screen_spinner_item, R.id.main_recent_spinner_item, getResources().getStringArray(R.array.weeks_array));
+
+
+
+
+        // Specify the layout to use when the list of choices appears
+        //adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        // Apply the adapter to the spinner
+
+        mRecentHeader.setAdapter(adapter);
     }
 
     @Override
-    public void onDrafts(List<HeadToHeadDraft> matches, ViewModelGameLog.Summary summary, int week) {
+    public void onDrafts(List<HeadToHeadDraft> matches, ViewModelRecent.Summary summary, int week) {
 
         setActiveWeekIndicator(week);
 
-        final MatchInfoAdapter adapter = new MatchInfoAdapter(matches, getActivity());
+        final RecentScreenMatchAdapter adapter = new RecentScreenMatchAdapter(matches, getActivity());
 
         if(mRecentMatches != null) {
             mRecentMatches.setAdapter(adapter);
@@ -100,7 +114,7 @@ public class MainScreenFragmentRecent extends BaseFragment implements ViewModelG
 
             // Inflate the week view.
             LayoutInflater.from(getActivity())
-                    .inflate(R.layout.main_screen_fragment_recent_week, mScrubber, true);
+                    .inflate(R.layout.recent_screen_week, mScrubber, true);
         }
 
         for (int i = 0; i < WEEKS_IN_SEASON; i++) {
@@ -133,14 +147,14 @@ public class MainScreenFragmentRecent extends BaseFragment implements ViewModelG
             }
         }
 
-        ((TextView)getActivity().findViewById(R.id.main_recent_header)).setText("Week " + week);
+        //((TextView)getActivity().findViewById(R.id.main_recent_header)).setText("Week " + week);
     }
 
 
     @Override
     public ViewModel onFetchViewModel() {
         if(mViewModel == null) {
-            mViewModel = new ViewModelGameLog(getBaseActivity(), this);
+            mViewModel = new ViewModelRecent(getBaseActivity(), this);
         }
         return mViewModel;
     }

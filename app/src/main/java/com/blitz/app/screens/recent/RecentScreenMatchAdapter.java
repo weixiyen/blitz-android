@@ -1,4 +1,4 @@
-package com.blitz.app.screens.main;
+package com.blitz.app.screens.recent;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -20,14 +20,14 @@ import java.util.List;
  *
  * Created by Nate on 9/7/14.
  */
-public class MatchInfoAdapter extends ArrayAdapter<HeadToHeadDraft> {
+public class RecentScreenMatchAdapter extends ArrayAdapter<HeadToHeadDraft> {
 
     private List<HeadToHeadDraft> mItems;
     private final Activity mActivity;
 
-    public MatchInfoAdapter(List<HeadToHeadDraft> items, Activity activity) {
+    public RecentScreenMatchAdapter(List<HeadToHeadDraft> items, Activity activity) {
 
-        super(activity, R.layout.main_screen_fragment_recent_list_item, items);
+        super(activity, R.layout.recent_screen_match_item, items);
         mItems = items;
         mActivity = activity;
     }
@@ -39,7 +39,7 @@ public class MatchInfoAdapter extends ArrayAdapter<HeadToHeadDraft> {
 
         if (v == null) {
             v = LayoutInflater.from(mActivity)
-                    .inflate(R.layout.main_screen_fragment_recent_list_item, null);
+                    .inflate(R.layout.recent_screen_match_item, null);
         }
 
         final HeadToHeadDraft draft = mItems.get(position);

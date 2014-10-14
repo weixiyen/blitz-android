@@ -16,12 +16,12 @@
         android:src="@drawable/asset_bg_main_dark"
         app:scaleType="topCrop" />
 
-    <TextView
+    <Spinner
         android:id="@+id/main_recent_header"
         style="@style/App.NavBar"
         android:layout_height="110dp"
-        android:paddingTop="50dp"
-        android:text="Week 1" />
+        android:gravity="center"
+        android:paddingTop="50dp" />
 
     <View
         android:layout_width="match_parent"

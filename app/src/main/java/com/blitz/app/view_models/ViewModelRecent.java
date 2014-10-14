@@ -18,7 +18,7 @@ import java.util.List;
  *
  * Created by Nate on 9/7/14.
  */
-public class ViewModelGameLog extends ViewModel {
+public class ViewModelRecent extends ViewModel {
 
     public final static class Summary {
 
@@ -72,7 +72,7 @@ public class ViewModelGameLog extends ViewModel {
     private final ViewModelGameLogCallbacks mCallbacks;
     private final SparseArray<List<HeadToHeadDraft>> mCache;
 
-    public ViewModelGameLog(BaseActivity activity, ViewModelGameLogCallbacks callbacks) {
+    public ViewModelRecent(BaseActivity activity, ViewModelGameLogCallbacks callbacks) {
         super(activity, callbacks);
         mCallbacks = callbacks;
         mCache = new SparseArray<List<HeadToHeadDraft>>(17);

@@ -63,4 +63,24 @@
     <string name="matchup_loading_message">Loading Matchup Data</string>
     <string name="leaderboard_link_text">Leaderboard</string>
     <string name="close_button_text">close</string>
+
+    <string-array name="weeks_array">
+        <item>Week 01</item>
+        <item>Week 02</item>
+        <item>Week 03</item>
+        <item>Week 04</item>
+        <item>Week 05</item>
+        <item>Week 06</item>
+        <item>Week 07</item>
+        <item>Week 08</item>
+        <item>Week 09</item>
+        <item>Week 10</item>
+        <item>Week 11</item>
+        <item>Week 12</item>
+        <item>Week 13</item>
+        <item>Week 14</item>
+        <item>Week 15</item>
+        <item>Week 16</item>
+        <item>Week 17</item>
+    </string-array>
 </resources>
