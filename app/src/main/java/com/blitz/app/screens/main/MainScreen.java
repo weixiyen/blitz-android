@@ -24,7 +24,7 @@ import butterknife.OnClick;
 /**
  * Created by mrkcsc on 7/14/14. Copyright 2014 Blitz Studios
  */
-public class MainScreen extends BaseActivity implements ViewModelMain.ViewModelMainCallbacks {
+public class MainScreen extends BaseActivity implements ViewModelMain.Callbacks {
 
     // region Member Variables
     // =============================================================================================

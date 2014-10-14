@@ -22,7 +22,7 @@ public class ViewModelLeaderboard extends ViewModel {
     /**
      * Creating a new view model requires an activity and a callback.
      */
-    public ViewModelLeaderboard(BaseActivity activity, Callbacks callbacks) {
+    public ViewModelLeaderboard(BaseActivity activity, ViewModel.Callbacks callbacks) {
         super(activity, callbacks);
     }
 
@@ -102,8 +102,8 @@ public class ViewModelLeaderboard extends ViewModel {
                                     userAvatarUrls.add(itemUrls.get(avatarId));
                                 }
 
-                                if (getCallbacks(ViewModelLeaderboardCallbacks.class) != null) {
-                                    getCallbacks(ViewModelLeaderboardCallbacks.class)
+                                if (getCallbacks(Callbacks.class) != null) {
+                                    getCallbacks(Callbacks.class)
                                             .onLeadersReceived(userIds, userNames, userWins,
                                                     userLosses, userRatings, userAvatarUrls);
                                 }
@@ -118,7 +118,7 @@ public class ViewModelLeaderboard extends ViewModel {
     // region Callbacks Interface
     // =============================================================================================
 
-    public interface ViewModelLeaderboardCallbacks extends Callbacks {
+    public interface Callbacks extends ViewModel.Callbacks {
 
         public void onLeadersReceived(List<String>  userIds,
                                       List<String>  userNames,

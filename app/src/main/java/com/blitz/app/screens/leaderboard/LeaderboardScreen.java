@@ -17,7 +17,7 @@ import butterknife.InjectView;
  *
  * Created by Nate on 9/29/14.
  */
-public class LeaderboardScreen extends BaseActivity implements ViewModelLeaderboard.ViewModelLeaderboardCallbacks {
+public class LeaderboardScreen extends BaseActivity implements ViewModelLeaderboard.Callbacks {
 
     // region Member Variables
     // =============================================================================================

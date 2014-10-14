@@ -21,7 +21,7 @@ public class ViewModelSignIn extends ViewModel {
      * @param activity  Activity is used for any android context actions.
      * @param callbacks Callbacks so that the view model can communicate changes.
      */
-    public ViewModelSignIn(BaseActivity activity, Callbacks callbacks) {
+    public ViewModelSignIn(BaseActivity activity, ViewModel.Callbacks callbacks) {
         super(activity, callbacks);
 
         // Lookup existing info.
@@ -82,7 +82,7 @@ public class ViewModelSignIn extends ViewModel {
      */
     private void checkForExistingUsernameOrEmail() {
 
-        ViewModelSignInCallbacks callbacks = getCallbacks(ViewModelSignInCallbacks.class);
+        Callbacks callbacks = getCallbacks(Callbacks.class);
 
         if (callbacks != null) {
 
@@ -107,7 +107,7 @@ public class ViewModelSignIn extends ViewModel {
     // region Callbacks Interface
     // =============================================================================================
 
-    public interface ViewModelSignInCallbacks extends Callbacks {
+    public interface Callbacks extends ViewModel.Callbacks {
 
         public void onSavedEmailOrUsernameReceived(String emailOrUsername);
     }

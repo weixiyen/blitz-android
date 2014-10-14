@@ -59,7 +59,7 @@ public class ViewModelMatchup extends ViewModel {
      * Disallow the default constructor.
      */
     @SuppressWarnings("unused")
-    private ViewModelMatchup(BaseActivity activity, ViewModelMatchupCallbacks callbacks) {
+    private ViewModelMatchup(BaseActivity activity, Callbacks callbacks) {
         super(activity, callbacks);
     }
 
@@ -71,8 +71,7 @@ public class ViewModelMatchup extends ViewModel {
      * @param draftId Associated draft id.
      */
     @SuppressWarnings("unused")
-    public ViewModelMatchup(BaseActivity activity,
-                            final ViewModelMatchupCallbacks callbacks, String draftId) {
+    public ViewModelMatchup(BaseActivity activity, final Callbacks callbacks, String draftId) {
         super(activity, callbacks);
 
         mDraftId = draftId;
@@ -204,8 +203,7 @@ public class ViewModelMatchup extends ViewModel {
 
     private synchronized void onSyncComplete() {
 
-        final ViewModelMatchupCallbacks callbacks =
-                getCallbacks(ViewModelMatchupCallbacks.class);
+        final Callbacks callbacks = getCallbacks(Callbacks.class);
 
         if (mPlayer1 != null && mPlayer2 != null &&
             mRoster1 != null && mRoster2 != null &&
@@ -311,7 +309,7 @@ public class ViewModelMatchup extends ViewModel {
     /**
      * Callbacks.
      */
-    public interface ViewModelMatchupCallbacks extends Callbacks {
+    public interface Callbacks extends ViewModel.Callbacks {
 
         void onStuff(List<RestModelPlayer> p1roster, List<RestModelPlayer> p2Roster, List<Game> p1Games,
                      List<Game> p2Games,

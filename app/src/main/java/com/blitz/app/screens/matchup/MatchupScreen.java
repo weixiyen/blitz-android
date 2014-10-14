@@ -24,7 +24,7 @@ import butterknife.InjectView;
 /**
  * Created by mrkcsc on 7/14/14. Copyright 2014 Blitz Studios
  */
-public class MatchupScreen extends BaseActivity implements ViewModelMatchup.ViewModelMatchupCallbacks {
+public class MatchupScreen extends BaseActivity implements ViewModelMatchup.Callbacks {
 
     // region Member Variables
     // =============================================================================================

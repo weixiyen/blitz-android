@@ -29,7 +29,7 @@ import butterknife.OnClick;
 /**
  * Created by mrkcsc on 7/14/14. Copyright 2014 Blitz Studios
  */
-public class PlayScreen extends BaseFragment implements ViewModelPlay.ViewModelMainPlayCallbacks {
+public class PlayScreen extends BaseFragment implements ViewModelPlay.Callbacks {
 
     // region Member Variables
     // =============================================================================================

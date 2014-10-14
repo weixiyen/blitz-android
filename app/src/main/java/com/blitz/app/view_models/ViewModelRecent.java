@@ -69,10 +69,10 @@ public class ViewModelRecent extends ViewModel {
         }
     }
 
-    private final ViewModelGameLogCallbacks mCallbacks;
+    private final Callbacks mCallbacks;
     private final SparseArray<List<HeadToHeadDraft>> mCache;
 
-    public ViewModelRecent(BaseActivity activity, ViewModelGameLogCallbacks callbacks) {
+    public ViewModelRecent(BaseActivity activity, Callbacks callbacks) {
         super(activity, callbacks);
         mCallbacks = callbacks;
         mCache = new SparseArray<List<HeadToHeadDraft>>(17);
@@ -138,7 +138,7 @@ public class ViewModelRecent extends ViewModel {
                 });
     }
 
-    public interface ViewModelGameLogCallbacks extends Callbacks {
+    public interface Callbacks extends ViewModel.Callbacks {
 
         public void onDrafts(List<HeadToHeadDraft> drafts, Summary summary, int week);
     }

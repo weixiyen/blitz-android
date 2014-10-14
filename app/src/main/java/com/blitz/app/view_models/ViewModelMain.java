@@ -33,7 +33,7 @@ public class ViewModelMain extends ViewModel {
      * @param activity  Activity is used for any android context actions.
      * @param callbacks Callbacks so that the view model can communicate changes.
      */
-    public ViewModelMain(BaseActivity activity, Callbacks callbacks) {
+    public ViewModelMain(BaseActivity activity, ViewModel.Callbacks callbacks) {
         super(activity, callbacks);
     }
 
@@ -77,8 +77,8 @@ public class ViewModelMain extends ViewModel {
             @Override
             public void run() {
 
-                if (getCallbacks(ViewModelMainCallbacks.class) != null) {
-                    getCallbacks(ViewModelMainCallbacks.class).onConfirmQueue(ViewModelMain.this);
+                if (getCallbacks(Callbacks.class) != null) {
+                    getCallbacks(Callbacks.class).onConfirmQueue(ViewModelMain.this);
                 }
             }
         });
@@ -130,7 +130,7 @@ public class ViewModelMain extends ViewModel {
         String action = message.get("action").getAsString();
 
         // Fetch callbacks.
-        final ViewModelMainCallbacks callbacks = getCallbacks(ViewModelMainCallbacks.class);
+        final Callbacks callbacks = getCallbacks(Callbacks.class);
 
         if (callbacks != null) {
 
@@ -191,7 +191,7 @@ public class ViewModelMain extends ViewModel {
     // region Callbacks Interface
     // =============================================================================================
 
-    public interface ViewModelMainCallbacks extends Callbacks {
+    public interface Callbacks extends ViewModel.Callbacks {
 
         public void onConfirmDraft(ViewModelMain viewModel);
         public void onConfirmQueue(ViewModelMain viewModel);

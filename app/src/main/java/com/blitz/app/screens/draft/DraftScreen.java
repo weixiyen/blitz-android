@@ -37,7 +37,7 @@ import butterknife.OnClick;
 /**
  * Created by mrkcsc on 7/27/14. Copyright 2014 Blitz Studios
  */
-public class DraftScreen extends BaseActivity implements ViewModelDraft.ViewModelDraftCallbacks {
+public class DraftScreen extends BaseActivity implements ViewModelDraft.Callbacks {
 
     // region Member Variables
     // =============================================================================================

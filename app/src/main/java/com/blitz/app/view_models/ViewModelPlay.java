@@ -58,7 +58,7 @@ public class ViewModelPlay extends ViewModel {
      * @param activity  Activity is used for any android context actions.
      * @param callbacks Callbacks so that the view model can communicate changes.
      */
-    public ViewModelPlay(BaseActivity activity, Callbacks callbacks) {
+    public ViewModelPlay(BaseActivity activity, ViewModel.Callbacks callbacks) {
         super(activity, callbacks);
     }
 
@@ -181,8 +181,7 @@ public class ViewModelPlay extends ViewModel {
             public void onSuccess(RestModelUser user) {
 
                 // Fetch callbacks.
-                final ViewModelMainPlayCallbacks callbacks =
-                        getCallbacks(ViewModelMainPlayCallbacks.class);
+                final Callbacks callbacks = getCallbacks(Callbacks.class);
 
                 if (callbacks != null) {
                     callbacks.onUsername(user.getUsername());
@@ -222,9 +221,8 @@ public class ViewModelPlay extends ViewModel {
                     @Override
                     public void onSuccess(RestModelItem item) {
 
-                        if (getCallbacks(ViewModelMainPlayCallbacks.class) != null) {
-                            getCallbacks(ViewModelMainPlayCallbacks.class)
-                                    .onAvatarUrl(item.getDefaultImgPath());
+                        if (getCallbacks(Callbacks.class) != null) {
+                            getCallbacks(Callbacks.class).onAvatarUrl(item.getDefaultImgPath());
                         }
                     }
                 });
@@ -248,7 +246,7 @@ public class ViewModelPlay extends ViewModel {
             mInQueue = true;
 
             // Now in the queue.
-            getCallbacks(ViewModelMainPlayCallbacks.class).onQueueUp(animate);
+            getCallbacks(Callbacks.class).onQueueUp(animate);
 
             // Start timer.
             startQueueTimer();
@@ -258,7 +256,7 @@ public class ViewModelPlay extends ViewModel {
             mInQueue = false;
 
             // Now left the queue.
-            getCallbacks(ViewModelMainPlayCallbacks.class).onQueueCancel(animate);
+            getCallbacks(Callbacks.class).onQueueCancel(animate);
 
             // Stop timer.
             stopQueueTimer(true);
@@ -330,8 +328,8 @@ public class ViewModelPlay extends ViewModel {
                 mSecondsInQueue++;
 
                 // Queue timer has ticked.
-                getCallbacks(ViewModelMainPlayCallbacks.class).onQueueTick(
-                        String.format("%02d:%02d", mSecondsInQueue / 100, mSecondsInQueue % 100));
+                getCallbacks(Callbacks.class).onQueueTick(String.format
+                        ("%02d:%02d", mSecondsInQueue / 100, mSecondsInQueue % 100));
             }
         }, 1000, true, true);
     }
@@ -367,9 +365,8 @@ public class ViewModelPlay extends ViewModel {
                         // Get the queue availability.
                         mQueueAvailable = object.getIsQueueAvailable();
 
-                        if (getCallbacks(ViewModelMainPlayCallbacks.class) != null) {
-                            getCallbacks(ViewModelMainPlayCallbacks.class)
-                                    .onQueueAvailable(mQueueAvailable);
+                        if (getCallbacks(Callbacks.class) != null) {
+                            getCallbacks(Callbacks.class).onQueueAvailable(mQueueAvailable);
                         }
                     }
 
@@ -380,9 +377,8 @@ public class ViewModelPlay extends ViewModel {
                         // Queue is not available.
                         mQueueAvailable = false;
 
-                        if (getCallbacks(ViewModelMainPlayCallbacks.class) != null) {
-                            getCallbacks(ViewModelMainPlayCallbacks.class)
-                                    .onQueueAvailable(mQueueAvailable);
+                        if (getCallbacks(Callbacks.class) != null) {
+                            getCallbacks(Callbacks.class).onQueueAvailable(mQueueAvailable);
                         }
                     }
                 });
@@ -393,7 +389,7 @@ public class ViewModelPlay extends ViewModel {
     // region Callbacks Interface
     // =============================================================================================
 
-    public interface ViewModelMainPlayCallbacks extends Callbacks {
+    public interface Callbacks extends ViewModel.Callbacks {
 
         public void onQueueAvailable(boolean queueAvailable);
         public void onQueueUp(boolean animate);

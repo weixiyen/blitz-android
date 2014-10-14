@@ -14,7 +14,7 @@ import butterknife.OnClick;
 /**
  * Created by Miguel Gaeta on 6/1/14. Copyright 2014 Blitz Studios
  */
-public class SignInScreen extends BaseActivity implements ViewModelSignIn.ViewModelSignInCallbacks {
+public class SignInScreen extends BaseActivity implements ViewModelSignIn.Callbacks {
 
     // region Member Variables
     // =============================================================================================

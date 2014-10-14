@@ -22,7 +22,7 @@ import butterknife.InjectView;
 /**
  * Created by mrkcsc on 7/14/14. Copyright 2014 Blitz Studios
  */
-public class RecentScreen extends BaseFragment implements ViewModelRecent.ViewModelGameLogCallbacks {
+public class RecentScreen extends BaseFragment implements ViewModelRecent.Callbacks {
 
     // region Member Variables
     // =============================================================================================

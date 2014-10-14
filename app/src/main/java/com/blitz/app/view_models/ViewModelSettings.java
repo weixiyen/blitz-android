@@ -34,7 +34,7 @@ public class ViewModelSettings extends ViewModel {
      * @param activity  Activity is used for any android context actions.
      * @param callbacks Callbacks so that the view model can communicate changes.
      */
-    public ViewModelSettings(BaseActivity activity, Callbacks callbacks) {
+    public ViewModelSettings(BaseActivity activity, ViewModel.Callbacks callbacks) {
         super(activity, callbacks);
     }
 
@@ -105,9 +105,8 @@ public class ViewModelSettings extends ViewModel {
                     @Override
                     public void onSuccess(RestModelUser user) {
 
-                        if (getCallbacks(ViewModelSettingsCallbacks.class) != null) {
-                            getCallbacks(ViewModelSettingsCallbacks.class)
-                                    .onEmailChanged(user.getEmail());
+                        if (getCallbacks(Callbacks.class) != null) {
+                            getCallbacks(Callbacks.class).onEmailChanged(user.getEmail());
                         }
 
                         // Fetch associated item model.
@@ -144,8 +143,8 @@ public class ViewModelSettings extends ViewModel {
                 avatarUrls.add(item.getDefaultImgPath());
             }
 
-            if (getCallbacks(ViewModelSettingsCallbacks.class) != null) {
-                getCallbacks(ViewModelSettingsCallbacks.class)
+            if (getCallbacks(Callbacks.class) != null) {
+                getCallbacks(Callbacks.class)
                         .onAvatarsChanged(avatarIds, avatarUrls, mUserAvatarIdCurrent);
             }
         }
@@ -156,7 +155,7 @@ public class ViewModelSettings extends ViewModel {
     // region Callbacks Interface
     // =============================================================================================
 
-    public interface ViewModelSettingsCallbacks extends Callbacks {
+    public interface Callbacks extends ViewModel.Callbacks {
 
         public void onEmailChanged(String email);
         public void onAvatarsChanged(List<String> userAvatarIds,

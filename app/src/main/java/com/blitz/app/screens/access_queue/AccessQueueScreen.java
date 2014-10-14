@@ -24,7 +24,7 @@ import butterknife.OnClick;
 /**
  * Created by Miguel Gaeta on 6/28/14. Copyright 2014 Blitz Studios
  */
-public class AccessQueueScreen extends BaseActivity implements ViewModelAccessQueue.ViewModelAccessQueueCallbacks {
+public class AccessQueueScreen extends BaseActivity implements ViewModelAccessQueue.Callbacks {
 
     // region Member Variables
     // =============================================================================================
