@@ -4,7 +4,9 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 
+import com.blitz.app.screens.play.PlayScreen;
 import com.blitz.app.screens.recent.RecentScreen;
+import com.blitz.app.screens.settings.SettingsScreen;
 
 /**
  * Created by mrkcsc on 7/14/14. Copyright 2014 Blitz Studios
@@ -46,11 +48,11 @@ public class MainScreenPagerAdapter extends FragmentStatePagerAdapter {
     public Fragment getItem(int position) {
         switch (position) {
             case 0:
-                return new MainScreenFragmentPlay();
+                return new PlayScreen();
             case 1:
                 return new RecentScreen();
             case 2:
-                return new MainScreenFragmentSettings();
+                return new SettingsScreen();
             default:
                 return null;
         }

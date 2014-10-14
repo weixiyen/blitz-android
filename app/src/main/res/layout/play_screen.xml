@@ -24,31 +24,31 @@
         android:orientation="vertical">
 
         <include
-            layout="@layout/main_screen_fragment_play_stats"
+            layout="@layout/play_screen_stats"
             android:layout_width="@dimen/screen_width"
             android:layout_height="0dp"
             android:layout_weight="1"/>
 
         <include
-            layout="@layout/main_screen_fragment_play_timeline"
+            layout="@layout/play_screen_timeline"
             android:layout_width="match_parent"
             android:layout_height="132dp"/>
 
         <include
-            layout="@layout/main_screen_fragment_play_action"
+            layout="@layout/play_screen_action"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"/>
     </LinearLayout>
 
     <include
-        layout="@layout/main_screen_fragment_play_footer"
+        layout="@layout/play_screen_footer"
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:layout_alignParentBottom="true"/>
 
     <include
-        layout="@layout/main_screen_fragment_play_blocked"
+        layout="@layout/play_screen_blocked"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"/>

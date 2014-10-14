@@ -8,7 +8,7 @@ import com.blitz.app.rest_models.RestModelItem;
 import com.blitz.app.rest_models.RestModelPreferences;
 import com.blitz.app.rest_models.RestModelQueue;
 import com.blitz.app.rest_models.RestModelUser;
-import com.blitz.app.screens.main.MainScreenFragmentPlay;
+import com.blitz.app.screens.play.PlayScreen;
 import com.blitz.app.utilities.android.BaseActivity;
 import com.blitz.app.utilities.app.AppDataObject;
 import com.blitz.app.utilities.authentication.AuthHelper;
@@ -20,7 +20,7 @@ import com.google.gson.JsonObject;
 /**
  * Created by Miguel on 7/26/2014. Copyright 2014 Blitz Studios
  */
-public class ViewModelMainPlay extends ViewModel {
+public class ViewModelPlay extends ViewModel {
 
     // region Member Variables
     // =============================================================================================
@@ -58,7 +58,7 @@ public class ViewModelMainPlay extends ViewModel {
      * @param activity  Activity is used for any android context actions.
      * @param callbacks Callbacks so that the view model can communicate changes.
      */
-    public ViewModelMainPlay(BaseActivity activity, ViewModelCallbacks callbacks) {
+    public ViewModelPlay(BaseActivity activity, ViewModelCallbacks callbacks) {
         super(activity, callbacks);
     }
 
@@ -281,13 +281,13 @@ public class ViewModelMainPlay extends ViewModel {
                 .subscribeToChannel(userCometChannel)
 
                         // Set callback action.
-                .addCallback(MainScreenFragmentPlay.class, new CometAPICallback<MainScreenFragmentPlay>() {
+                .addCallback(PlayScreen.class, new CometAPICallback<PlayScreen>() {
 
                     @Override
-                    public void messageReceived(MainScreenFragmentPlay receivingClass, JsonObject message) {
+                    public void messageReceived(PlayScreen receivingClass, JsonObject message) {
 
                         // Handle the action.
-                        ((ViewModelMainPlay)receivingClass.onFetchViewModel())
+                        ((ViewModelPlay)receivingClass.onFetchViewModel())
                                 .handleDraftAction(receivingClass, message);
                     }
                 }, "draftUserCallback");
@@ -299,7 +299,7 @@ public class ViewModelMainPlay extends ViewModel {
      * @param receivingClass Instance of this activity.
      * @param message Json message sent.
      */
-    private void handleDraftAction(MainScreenFragmentPlay receivingClass, JsonObject message) {
+    private void handleDraftAction(PlayScreen receivingClass, JsonObject message) {
 
         // Fetch sent action.
         String action = message.get("action").getAsString();
@@ -307,7 +307,7 @@ public class ViewModelMainPlay extends ViewModel {
         // If left the queue or entered the draft.
         if (action.equals("left_queue") || action.equals("enter_draft")) {
 
-            ((ViewModelMainPlay)receivingClass.onFetchViewModel())
+            ((ViewModelPlay)receivingClass.onFetchViewModel())
                     .showQueueContainer(false, true);
         }
     }

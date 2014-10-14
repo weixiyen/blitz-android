@@ -1,4 +1,4 @@
-package com.blitz.app.screens.main;
+package com.blitz.app.screens.play;
 
 import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;
@@ -21,7 +21,7 @@ import com.blitz.app.utilities.app.AppDataObject;
 import com.blitz.app.utilities.image.BlitzImageView;
 import com.blitz.app.utilities.rest.RestAPICallback;
 import com.blitz.app.view_models.ViewModel;
-import com.blitz.app.view_models.ViewModelMainPlay;
+import com.blitz.app.view_models.ViewModelPlay;
 
 import butterknife.InjectView;
 import butterknife.OnClick;
@@ -29,7 +29,7 @@ import butterknife.OnClick;
 /**
  * Created by mrkcsc on 7/14/14. Copyright 2014 Blitz Studios
  */
-public class MainScreenFragmentPlay extends BaseFragment implements ViewModelMainPlay.ViewModelMainPlayCallbacks {
+public class PlayScreen extends BaseFragment implements ViewModelPlay.ViewModelMainPlayCallbacks {
 
     // region Member Variables
     // =============================================================================================
@@ -59,7 +59,7 @@ public class MainScreenFragmentPlay extends BaseFragment implements ViewModelMai
     @InjectView(R.id.main_play_stats_avatar) BlitzImageView mStatsAvatar;
 
     // View model object.
-    private ViewModelMainPlay mViewModelMainPlay;
+    private ViewModelPlay mViewModelPlay;
 
     // Powers animations.
     private ObjectAnimator mObjectAnimator;
@@ -121,8 +121,8 @@ public class MainScreenFragmentPlay extends BaseFragment implements ViewModelMai
         super.setUserVisibleHint(isVisibleToUser);
 
         // Try to update helmet if needed.
-        if (mViewModelMainPlay != null && isVisibleToUser) {
-            mViewModelMainPlay.fetchUserInfo();
+        if (mViewModelPlay != null && isVisibleToUser) {
+            mViewModelPlay.fetchUserInfo();
         }
     }
 
@@ -135,11 +135,11 @@ public class MainScreenFragmentPlay extends BaseFragment implements ViewModelMai
     @Override
     public ViewModel onFetchViewModel() {
 
-        if (mViewModelMainPlay == null) {
-            mViewModelMainPlay = new ViewModelMainPlay(getBaseActivity(), this);
+        if (mViewModelPlay == null) {
+            mViewModelPlay = new ViewModelPlay(getBaseActivity(), this);
         }
 
-        return mViewModelMainPlay;
+        return mViewModelPlay;
     }
 
     // endregion
@@ -349,7 +349,7 @@ public class MainScreenFragmentPlay extends BaseFragment implements ViewModelMai
         }
 
         // Toggle the queue.
-        mViewModelMainPlay.toggleQueue();
+        mViewModelPlay.toggleQueue();
     }
 
     /**

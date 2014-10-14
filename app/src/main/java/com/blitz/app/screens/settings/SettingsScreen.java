@@ -1,4 +1,4 @@
-package com.blitz.app.screens.main;
+package com.blitz.app.screens.settings;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -28,7 +28,7 @@ import butterknife.OnClick;
 /**
  * Created by mrkcsc on 7/14/14. Copyright 2014 Blitz Studios
  */
-public class MainScreenFragmentSettings extends BaseFragment implements
+public class SettingsScreen extends BaseFragment implements
         ViewModelSettings.ViewModelSettingsCallbacks,
         BlitzCarouselAdapter.BlitzCarouselAdapterCallbacks {
 
