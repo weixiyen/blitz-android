@@ -1,8 +1,8 @@
 <RelativeLayout
+    android:id="@+id/main_recent"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/main_recent"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="${packageName}.${activityClass}"
@@ -16,14 +16,20 @@
         android:src="@drawable/asset_bg_main_dark"
         app:scaleType="topCrop" />
 
-    <Spinner
+    <RelativeLayout
         android:id="@+id/main_recent_header"
         style="@style/App.NavBar"
         android:layout_height="110dp"
-        android:gravity="center"
-        android:popupBackground="@color/background_transparent"
-        android:dropDownWidth="225dp"
-        android:paddingTop="50dp" />
+        android:paddingTop="50dp">
+
+        <Spinner
+            android:id="@+id/main_recent_dropdown"
+            style="@style/App.TextView"
+            android:layout_width="160dp"
+            android:layout_height="match_parent"
+            android:dropDownHorizontalOffset="0dp"
+            android:gravity="center" />
+    </RelativeLayout>
 
     <View
         android:layout_width="match_parent"
@@ -40,11 +46,11 @@
 
         <TextView
             style="@style/App.TextView"
+            fontPath="@string/app_font_helvetica_condensed_bold"
             android:layout_width="0dp"
             android:layout_height="25dp"
             android:layout_gravity="bottom"
             android:layout_weight="1"
-            fontPath="@string/app_font_helvetica_condensed_bold"
             android:gravity="center"
             android:text="Wins"
             android:textAllCaps="true"
@@ -53,11 +59,11 @@
 
         <TextView
             style="@style/App.TextView"
+            fontPath="@string/app_font_helvetica_condensed_bold"
             android:layout_width="0dp"
             android:layout_height="25dp"
             android:layout_gravity="bottom"
             android:layout_weight="1"
-            fontPath="@string/app_font_helvetica_condensed_bold"
             android:gravity="center"
             android:text="Losses"
             android:textAllCaps="true"
@@ -66,11 +72,11 @@
 
         <TextView
             style="@style/App.TextView"
+            fontPath="@string/app_font_helvetica_condensed_bold"
             android:layout_width="0dp"
             android:layout_height="25dp"
             android:layout_gravity="bottom"
             android:layout_weight="1"
-            fontPath="@string/app_font_helvetica_condensed_bold"
             android:gravity="center"
             android:text="Earnings"
             android:textAllCaps="true"
@@ -79,11 +85,11 @@
 
         <TextView
             style="@style/App.TextView"
+            fontPath="@string/app_font_helvetica_condensed_bold"
             android:layout_width="0dp"
             android:layout_height="25dp"
             android:layout_gravity="bottom"
             android:layout_weight="1"
-            fontPath="@string/app_font_helvetica_condensed_bold"
             android:gravity="center"
             android:text="Rating"
             android:textAllCaps="true"
@@ -101,11 +107,11 @@
 
         <TextView android:id="@+id/wins"
             style="@style/App.TextView"
+            fontPath="@string/app_font_helvetica_condensed_bold"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="top"
             android:layout_weight="1"
-            fontPath="@string/app_font_helvetica_condensed_bold"
             android:gravity="center"
             android:text="0"
             android:textAllCaps="true"
@@ -114,11 +120,11 @@
 
         <TextView android:id="@+id/losses"
             style="@style/App.TextView"
+            fontPath="@string/app_font_helvetica_condensed_bold"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="top"
             android:layout_weight="1"
-            fontPath="@string/app_font_helvetica_condensed_bold"
             android:gravity="center"
             android:text="0"
             android:textAllCaps="true"
@@ -127,11 +133,11 @@
 
         <TextView android:id="@+id/earnings"
             style="@style/App.TextView"
+            fontPath="@string/app_font_helvetica_condensed_bold"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="top"
             android:layout_weight="1"
-            fontPath="@string/app_font_helvetica_condensed_bold"
             android:gravity="center"
             android:text="+$0.00"
             android:textAllCaps="true"
@@ -140,11 +146,11 @@
 
         <TextView android:id="@+id/rating_change"
             style="@style/App.TextView"
+            fontPath="@string/app_font_helvetica_condensed_bold"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="top"
             android:layout_weight="1"
-            fontPath="@string/app_font_helvetica_condensed_bold"
             android:gravity="center"
             android:text="+0"
             android:textAllCaps="true"
@@ -162,22 +168,22 @@
         android:id="@+id/main_recent_list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:gravity="center"
         android:layout_marginBottom="35dp"
         android:layout_marginTop="206dp"
-        android:background="@color/background_inner"/>
+        android:background="@color/background_inner"
+        android:gravity="center"/>
 
     <TextView
+        fontPath="@string/app_font_helvetica_condensed_bold"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginBottom="35dp"
         android:layout_marginTop="206dp"
-        fontPath="@string/app_font_helvetica_condensed_bold"
         android:gravity="center"
-        android:visibility="gone"
         android:lineSpacingMultiplier="1.1"
         android:text="No games this week!"
-        android:textSize="32sp"/>
+        android:textSize="32sp"
+        android:visibility="gone"/>
 
     <LinearLayout
         android:id="@+id/main_recent_scrubber"

@@ -30,7 +30,7 @@ public class RecentScreen extends BaseFragment implements ViewModelRecent.Callba
     // Total weeks in an NFL season.
     private static final int WEEKS_IN_SEASON = 17;
 
-    @InjectView(R.id.main_recent_header) Spinner mRecentHeader;
+    @InjectView(R.id.main_recent_dropdown) Spinner mRecentDropdown;
     @InjectView(R.id.main_recent_scrubber) ViewGroup mScrubber;
     @InjectView(R.id.main_recent_list)     ListView mRecentMatches;
 
@@ -56,7 +56,7 @@ public class RecentScreen extends BaseFragment implements ViewModelRecent.Callba
         RecentScreenDropdownAdapter adapter1 = new RecentScreenDropdownAdapter
                 (this.getActivity(), Arrays.asList(weeks));
 
-        mRecentHeader.setAdapter(adapter1);
+        mRecentDropdown.setAdapter(adapter1);
     }
 
     @Override

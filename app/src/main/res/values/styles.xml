@@ -13,6 +13,15 @@
 
         <!-- Disable over-scroll effects -->
         <item name="android:overScrollMode">never</item>
+
+        <!-- Custom downdown style -->
+        <item name="android:dropDownListViewStyle">@style/App.DropDown</item>
+    </style>
+
+    <!-- Drop down spinner style. -->
+    <style name="App.DropDown" parent="android:Widget.ListView.DropDown">
+        <item name="android:divider">@color/background_inner_divider</item>
+        <item name="android:dividerHeight">1dp</item>
     </style>
 
     <!-- View pager indicator style. -->
