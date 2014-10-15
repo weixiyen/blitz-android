@@ -178,13 +178,6 @@
         android:textSize="32sp"
         android:visibility="gone"/>
 
-    <View
-        android:id="@+id/main_recent_footer_border_0"
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_alignTop="@+id/main_recent_scrubber"
-        android:background="@color/background_inner_divider"/>
-
     <com.blitz.app.screens.recent.RecentScreenScrubber
         android:id="@+id/main_recent_scrubber"
         android:layout_width="match_parent"
@@ -193,5 +186,12 @@
         android:background="@color/background_navigation"
         android:gravity="center"
         android:orientation="horizontal"/>
+
+    <View
+        android:id="@+id/main_recent_footer_border_0"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_alignTop="@+id/main_recent_scrubber"
+        android:background="@color/background_inner_divider"/>
 
 </RelativeLayout>
