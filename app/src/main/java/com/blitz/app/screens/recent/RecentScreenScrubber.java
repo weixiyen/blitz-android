@@ -1,6 +1,7 @@
 package com.blitz.app.screens.recent;
 
 import android.content.Context;
+import android.content.res.Resources;
 import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
@@ -10,7 +11,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.blitz.app.R;
-import com.blitz.app.utilities.logging.LogHelper;
+import com.blitz.app.utilities.animations.AnimHelperFade;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,10 +21,37 @@ import java.util.List;
  */
 public class RecentScreenScrubber extends LinearLayout {
 
+    // region Constructors
+    // =============================================================================================
+
+    // Optional parent view pager.
     private ViewPager mViewPager;
+
+    // Total scrubber dots.
     private int mScrubberSize;
+
+    // Selected scrubber index.
     private Integer mScrubberItemSelected;
+
+    // Scrubber views.
     private List<TextView> mScrubberItems;
+
+    // Position information.
+    private Integer mScrubberItemWidth;
+    private Integer mScrubberItemLeftStart;
+
+    // Scrubber item colors.
+    private Integer mScrubberColor;
+    private Integer mScrubberColorActive;
+
+    // Text view that shows active scrubber item.
+    private TextView mScrubberTextView;
+    private boolean mScrubberTextViewVisible;
+
+    // Handle to the callbacks.
+    private Callbacks mCallbacks;
+
+    // endregion
 
     // region Constructors
     // =============================================================================================
@@ -33,6 +61,7 @@ public class RecentScreenScrubber extends LinearLayout {
         super(context);
 
         setupTouchEvents();
+        setupScrubberColors();
     }
 
     @SuppressWarnings("unused")
@@ -40,6 +69,7 @@ public class RecentScreenScrubber extends LinearLayout {
         super(context, attrs);
 
         setupTouchEvents();
+        setupScrubberColors();
     }
 
     @SuppressWarnings("unused")
@@ -47,6 +77,7 @@ public class RecentScreenScrubber extends LinearLayout {
         super(context, attrs, defStyle);
 
         setupTouchEvents();
+        setupScrubberColors();
     }
 
     // endregion
@@ -107,17 +138,23 @@ public class RecentScreenScrubber extends LinearLayout {
     public void setScrubberItemSelected(int position) {
 
         // if valid position is provided.
-        if (position < mScrubberSize && position > 0) {
+        if (position < mScrubberSize && position >= 0) {
 
             // Set selected color.
-            mScrubberItems.get(position)
-                    .setTextColor(getResources().getColor(R.color.active_blue));
+            mScrubberItems.get(position).setTextColor(mScrubberColorActive);
 
             if (mScrubberItemSelected != null) {
 
                 // Reset color of old selected.
-                mScrubberItems.get(mScrubberItemSelected)
-                        .setText(getResources().getColor(R.color.text_color_light));
+                mScrubberItems.get(mScrubberItemSelected).setTextColor(mScrubberColor);
+            }
+
+            if (mScrubberTextView != null) {
+                mScrubberTextView.setText("Week " + position);
+            }
+
+            if (mCallbacks != null) {
+                mCallbacks.onScrubberItemSelected(position);
             }
 
             // Update selected index.
@@ -125,10 +162,48 @@ public class RecentScreenScrubber extends LinearLayout {
         }
     }
 
+    /**
+     * Set text view to show current scrubber item.
+     *
+     * @param scrubberTextView Text view.
+     */
+    public void setScrubberTextView(TextView scrubberTextView) {
+
+        mScrubberTextView = scrubberTextView;
+
+        if (mScrubberTextView != null) {
+            mScrubberTextView.setVisibility(GONE);
+        }
+    }
+
+    /**
+     * Set the callbacks.
+     *
+     * @param callbacks Callback object.
+     */
+    public void setCallbacks(Callbacks callbacks) {
+
+        mCallbacks = callbacks;
+    }
+
     // endregion
 
     // region Private Methods
     // =============================================================================================
+
+    /**
+     * Fetch scrubber item colors.
+     */
+    private void setupScrubberColors() {
+
+        try {
+
+            // Fetch the associated colors for the scrubber.
+            mScrubberColor       = getResources().getColor(R.color.text_color_light);
+            mScrubberColorActive = getResources().getColor(R.color.active_blue);
+
+        } catch (Resources.NotFoundException ignored) { }
+    }
 
     /**
      * Inflate scrubber items into the view.
@@ -172,8 +247,11 @@ public class RecentScreenScrubber extends LinearLayout {
                     switch (motionEvent.getAction()) {
                         case MotionEvent.ACTION_MOVE:
 
+                            // Show the text view.
+                            setScrubberTextViewVisibility(true);
+
                             // Process the scrub event.
-                            processScrubEvent(view.getLeft(), motionEvent.getX());
+                            processScrubEvent(motionEvent.getX());
 
                             // Disable view pager.
                             if (mViewPager != null) {
@@ -183,6 +261,9 @@ public class RecentScreenScrubber extends LinearLayout {
                             break;
                         case MotionEvent.ACTION_UP:
                         case MotionEvent.ACTION_CANCEL:
+
+                            // Hide the text view.
+                            setScrubberTextViewVisibility(false);
 
                             // Restore view pager.
                             if (mViewPager != null) {
@@ -197,9 +278,72 @@ public class RecentScreenScrubber extends LinearLayout {
         });
     }
 
-    private void processScrubEvent(float xPosScrubberStart, float xPosCurrent) {
+    /**
+     * Toggle the visibility of the text view.  This event
+     * may be called multiple time so guard it
+     * with a change event flag.
+     *
+     * @param visible Is visible.
+     */
+    private void setScrubberTextViewVisibility(boolean visible) {
 
-        LogHelper.log("Scrubbed: " + xPosScrubberStart + " position current: " + xPosCurrent);
+        if (mScrubberTextView != null) {
+
+            if (mScrubberTextViewVisible != visible) {
+                mScrubberTextViewVisible  = visible;
+
+                // Set visibility on change events.
+                AnimHelperFade.setVisibility(mScrubberTextView, visible ? VISIBLE : GONE);
+            }
+        }
+    }
+
+    /**
+     * Process a scrub event.
+     *
+     * @param xPosCurrent Current x position.
+     */
+    private void processScrubEvent(float xPosCurrent) {
+
+        if (mScrubberSize > 0) {
+
+            // Get individual item width.
+            if (mScrubberItemWidth == null) {
+                mScrubberItemWidth = getChildAt(0).getWidth();
+            }
+
+            // Get start of the first item.
+            if (mScrubberItemLeftStart == null) {
+                mScrubberItemLeftStart = getChildAt(0).getLeft();
+            }
+
+            // Use some maths to get the selected item, then normalize it.
+            int scrubberItemSelected = (int)((xPosCurrent - mScrubberItemLeftStart) / mScrubberItemWidth);
+
+            if (scrubberItemSelected < 0) {
+                scrubberItemSelected = 0;
+            }
+
+            if (scrubberItemSelected >= mScrubberSize) {
+                scrubberItemSelected  = mScrubberSize - 1;
+            }
+
+            // If a new item is selected.
+            if (scrubberItemSelected != mScrubberItemSelected) {
+
+                setScrubberItemSelected(scrubberItemSelected);
+            }
+        }
+    }
+
+    // endregion
+
+    // region Callbacks Interface
+    // =============================================================================================
+
+    public interface Callbacks {
+
+        public void onScrubberItemSelected(int position);
     }
 
     // endregion
