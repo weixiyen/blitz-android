@@ -29,7 +29,7 @@ import butterknife.OnClick;
  * Created by mrkcsc on 7/14/14. Copyright 2014 Blitz Studios
  */
 public class SettingsScreen extends BaseFragment implements ViewModelSettings.Callbacks,
-        BlitzCarouselAdapter.BlitzCarouselAdapterCallbacks {
+        BlitzCarouselAdapter.Callbacks {
 
     // region Member Variables
     // =============================================================================================

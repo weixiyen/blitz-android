@@ -42,7 +42,7 @@ public class BlitzCarouselAdapter extends FragmentPagerAdapter implements
     private List<String> mAvatarUrls;
 
     // Handle to the adapter callbacks.
-    private BlitzCarouselAdapterCallbacks mCallbacks;
+    private Callbacks mCallbacks;
 
     // endregion
 
@@ -80,7 +80,7 @@ public class BlitzCarouselAdapter extends FragmentPagerAdapter implements
                                            List<String> itemIds,
                                            List<String> itemUrls,
                                            String selectedItemId,
-                                           BlitzCarouselAdapterCallbacks callbacks) {
+                                           Callbacks callbacks) {
 
         // Assert valid id's and urls are provided.
         if (itemIds == null || itemUrls == null || viewPager == null
@@ -257,7 +257,7 @@ public class BlitzCarouselAdapter extends FragmentPagerAdapter implements
     // region Callbacks Interface
     // =============================================================================================
 
-    public interface BlitzCarouselAdapterCallbacks {
+    public interface Callbacks {
 
         public void onCarouselItemSelected(String itemId);
     }
