@@ -3,18 +3,17 @@ package com.blitz.app.screens.recent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.blitz.app.R;
+import com.blitz.app.screens.main.MainScreen;
 import com.blitz.app.simple_models.HeadToHeadDraft;
 import com.blitz.app.utilities.android.BaseFragment;
 import com.blitz.app.view_models.ViewModel;
 import com.blitz.app.view_models.ViewModelRecent;
 
-import java.util.Arrays;
 import java.util.List;
 
 import butterknife.InjectView;
@@ -31,7 +30,7 @@ public class RecentScreen extends BaseFragment implements ViewModelRecent.Callba
     private static final int WEEKS_IN_SEASON = 17;
 
     @InjectView(R.id.main_recent_dropdown) Spinner mRecentDropdown;
-    @InjectView(R.id.main_recent_scrubber) ViewGroup mScrubber;
+    @InjectView(R.id.main_recent_scrubber) RecentScreenScrubber mScrubber;
     @InjectView(R.id.main_recent_list)     ListView mRecentMatches;
 
     private ViewModelRecent mViewModel; // lazy loaded
@@ -49,20 +48,13 @@ public class RecentScreen extends BaseFragment implements ViewModelRecent.Callba
     protected void onCreateView(Bundle savedInstanceState) {
         super.onCreateView(savedInstanceState);
 
-        setupScrubber();
-
-        String[] weeks = getResources().getStringArray(R.array.weeks_array);
-
-        RecentScreenDropdownAdapter adapter1 = new RecentScreenDropdownAdapter
-                (this.getActivity(), Arrays.asList(weeks));
-
-        mRecentDropdown.setAdapter(adapter1);
+        mScrubber.setViewPager(((MainScreen)getActivity()).getViewPager());
     }
 
     @Override
     public void onDrafts(List<HeadToHeadDraft> matches, ViewModelRecent.Summary summary, int week) {
 
-        setActiveWeekIndicator(week);
+        //setActiveWeekIndicator(week);
 
         final RecentScreenMatchAdapter adapter = new RecentScreenMatchAdapter(matches, getActivity());
 

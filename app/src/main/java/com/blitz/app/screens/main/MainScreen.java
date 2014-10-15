@@ -96,6 +96,11 @@ public class MainScreen extends BaseActivity implements ViewModelMain.Callbacks 
 
     // endregion
 
+    public ViewPager getViewPager() {
+
+        return mPager;
+    }
+
     // region Private Methods
     // =============================================================================================
 
