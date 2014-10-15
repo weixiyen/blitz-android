@@ -217,8 +217,8 @@ public class AnimHelperSprings extends AnimHelper {
             int delay = 0;
 
             // At least transition time.
-            if (delay < getConfigAnimTimeStandard(mActivity)) {
-                delay = getConfigAnimTimeStandard(mActivity) + 100;
+            if (delay < getConfigAnimTimeStandard()) {
+                delay = getConfigAnimTimeStandard() + 100;
             }
 
             // Action that starts animation.

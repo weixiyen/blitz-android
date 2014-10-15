@@ -4,6 +4,7 @@ import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.View;
 import android.view.animation.LinearInterpolator;
 import android.widget.ImageView;
@@ -18,6 +19,7 @@ import com.blitz.app.utilities.animations.AnimHelperCrossFade;
 import com.blitz.app.utilities.animations.AnimHelperFade;
 import com.blitz.app.utilities.app.AppConfig;
 import com.blitz.app.utilities.app.AppDataObject;
+import com.blitz.app.utilities.blitz.BlitzDelay;
 import com.blitz.app.utilities.image.BlitzImageView;
 import com.blitz.app.utilities.rest.RestAPICallback;
 import com.blitz.app.view_models.ViewModel;
@@ -57,6 +59,9 @@ public class PlayScreen extends BaseFragment implements ViewModelPlay.Callbacks 
     @InjectView(R.id.main_play_stats_wins)         TextView mStatsWins;
     @InjectView(R.id.main_play_stats_losses)       TextView mStatsLosses;
     @InjectView(R.id.main_play_stats_avatar) BlitzImageView mStatsAvatar;
+
+    // Used to delay visibility code.
+    private Handler mFragmentVisibleHandler;
 
     // View model object.
     private ViewModelPlay mViewModelPlay;
@@ -117,12 +122,28 @@ public class PlayScreen extends BaseFragment implements ViewModelPlay.Callbacks 
      * @param isVisibleToUser Is fragment visible to user.
      */
     @Override
-    public void setUserVisibleHint(boolean isVisibleToUser) {
+    public void setUserVisibleHint(final boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
 
-        // Try to update helmet if needed.
-        if (mViewModelPlay != null && isVisibleToUser) {
-            mViewModelPlay.fetchUserInfo();
+        if (isVisibleToUser) {
+
+            // Fetch on a slight delay.
+            mFragmentVisibleHandler = BlitzDelay.postDelayed(new Runnable() {
+
+                @Override
+                public void run() {
+
+                    // Try to update helmet if needed.
+                    if (mViewModelPlay != null) {
+                        mViewModelPlay.fetchUserInfo();
+                    }
+                }
+            }, AnimHelper.getConfigAnimTimeStandard());
+
+        } else {
+
+            // Remove the handler.
+            BlitzDelay.remove(mFragmentVisibleHandler);
         }
     }
 
@@ -193,7 +214,7 @@ public class PlayScreen extends BaseFragment implements ViewModelPlay.Callbacks 
     public void onQueueAvailable(boolean queueAvailable) {
 
         // Animation time for showing the resulting UI is twice the usual.
-        int animationTime = AnimHelper.getConfigAnimTimeStandard(this.getActivity()) * 3;
+        int animationTime = AnimHelper.getConfigAnimTimeStandard() * 3;
 
         if (queueAvailable) {
 

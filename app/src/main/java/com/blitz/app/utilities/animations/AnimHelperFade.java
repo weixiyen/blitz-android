@@ -21,7 +21,7 @@ public class AnimHelperFade extends AnimHelper {
     public static void setVisibility(final View view, final int visibility) {
 
         setVisibility(view, visibility,
-                getConfigAnimTimeStandard(view.getContext()));
+                getConfigAnimTimeStandard());
     }
 
     /**
@@ -136,7 +136,7 @@ public class AnimHelperFade extends AnimHelper {
     @SuppressWarnings("unused")
     public static void setAlpha(final View view, final float alphaFrom, final float alphaTo) {
 
-        setAlpha(view, alphaFrom, alphaTo, getConfigAnimTimeStandard(view.getContext()));
+        setAlpha(view, alphaFrom, alphaTo, getConfigAnimTimeStandard());
     }
 
     /**

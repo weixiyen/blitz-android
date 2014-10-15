@@ -134,10 +134,10 @@ public class BaseWebView extends WebView {
 
                         // Fade in the web view.
                         AnimHelperFade.setVisibility(BaseWebView.this, VISIBLE,
-                                AnimHelper.getConfigAnimTimeStandard(getContext()) * 2);
+                                AnimHelper.getConfigAnimTimeStandard() * 2);
                     }
 
-                }, AnimHelper.getConfigAnimTimeStandard(getContext()));
+                }, AnimHelper.getConfigAnimTimeStandard());
             }
         });
     }

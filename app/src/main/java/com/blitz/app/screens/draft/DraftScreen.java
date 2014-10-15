@@ -453,7 +453,7 @@ public class DraftScreen extends BaseActivity implements ViewModelDraft.Callback
             AnimHelperFade.setVisibility(player, visibility);
 
             // Callback on a small delay.
-            BlitzDelay.postDelayed(complete, AnimHelper.getConfigAnimTimeStandard(this) + 100);
+            BlitzDelay.postDelayed(complete, AnimHelper.getConfigAnimTimeStandard() + 100);
         }
     }
 

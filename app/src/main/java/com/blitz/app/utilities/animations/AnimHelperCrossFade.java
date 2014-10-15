@@ -40,7 +40,7 @@ public class AnimHelperCrossFade extends AnimHelper {
         }
 
         // Start transition.
-        td.startTransition(getConfigAnimTimeStandard(view.getContext()));
+        td.startTransition(getConfigAnimTimeStandard());
     }
 
     /**
@@ -131,7 +131,7 @@ public class AnimHelperCrossFade extends AnimHelper {
             targetImageView.setImageDrawable(td);
 
             // Enable cross fade.
-            td.startTransition(getConfigAnimTimeStandard(targetImageView.getContext()));
+            td.startTransition(getConfigAnimTimeStandard());
         }
     }
 

@@ -126,7 +126,7 @@ public class BaseFragment extends Fragment {
                     getViewModel().initialize();
                 }
             }
-        }, AnimHelper.getConfigAnimTimeStandard(this.getActivity()));
+        }, AnimHelper.getConfigAnimTimeStandard());
 
         // Add a new fragment.
         CometAPIManager.configAddFragment(this);

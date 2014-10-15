@@ -113,7 +113,7 @@ public class BaseActivity extends FragmentActivity {
                     getViewModel().initialize();
                 }
             }
-        }, AnimHelper.getConfigAnimTimeStandard(this));
+        }, AnimHelper.getConfigAnimTimeStandard());
 
         if (mGoingBack) {
             mGoingBack = false;
