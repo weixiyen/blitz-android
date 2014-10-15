@@ -72,13 +72,38 @@ public class ViewModelRecent extends ViewModel {
     private final Callbacks mCallbacks;
     private final SparseArray<List<HeadToHeadDraft>> mCache;
 
+    private Integer mCurrentWeek;
+
     public ViewModelRecent(BaseActivity activity, Callbacks callbacks) {
         super(activity, callbacks);
         mCallbacks = callbacks;
         mCache = new SparseArray<List<HeadToHeadDraft>>(17);
     }
 
+    @Override
+    public void initialize() {
+
+        AuthHelper.instance().getPreferences(mActivity, false,
+                new RestModelCallback<RestModelPreferences>() {
+
+                    @Override
+                    public void onSuccess(RestModelPreferences object) {
+
+                        updateWeek(object.getCurrentWeek());
+                    }
+                });
+    }
+
     public void updateWeek(final int week) {
+
+        // Only update if the week changes.
+        if (mCurrentWeek != null && mCurrentWeek == week) {
+
+            return;
+        }
+
+        // Set the current week.
+        mCurrentWeek = week;
 
         // Populate the UI with existing cached data if we already have it
         if(mCache.get(week) != null) {
@@ -91,6 +116,14 @@ public class ViewModelRecent extends ViewModel {
                 new RestModelCallbacks<RestModelDraft>() {
                     @Override
                     public void onSuccess(List<RestModelDraft> drafts) {
+
+                        // If the week has since changed,
+                        // ignore these results.
+                        if (mCurrentWeek != week) {
+
+                            return;
+                        }
+
                         List<HeadToHeadDraft> matches = new ArrayList<HeadToHeadDraft>(drafts.size());
                         for (RestModelDraft draft : drafts) {
                             final int p1index;
@@ -122,20 +155,6 @@ public class ViewModelRecent extends ViewModel {
                     }
                 });
 
-    }
-
-    @Override
-    public void initialize() {
-
-        AuthHelper.instance().getPreferences(mActivity, false,
-                new RestModelCallback<RestModelPreferences>() {
-
-                    @Override
-                    public void onSuccess(RestModelPreferences object) {
-
-                        updateWeek(object.getCurrentWeek());
-                    }
-                });
     }
 
     public interface Callbacks extends ViewModel.Callbacks {

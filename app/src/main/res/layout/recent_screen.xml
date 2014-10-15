@@ -178,6 +178,19 @@
         android:textSize="32sp"
         android:visibility="gone"/>
 
+    <TextView
+        android:id="@+id/recent_scrubber_week"
+        style="@style/App.TextView"
+        android:layout_width="128dp"
+        android:layout_height="64dp"
+        android:layout_above="@+id/main_recent_scrubber"
+        android:layout_centerHorizontal="true"
+        android:gravity="center"
+        fontPath="@string/app_font_bold"
+        android:textSize="16sp"
+        android:background="@drawable/asset_bg_scrubber"
+        android:text="Week 1"/>
+
     <com.blitz.app.screens.recent.RecentScreenScrubber
         android:id="@+id/main_recent_scrubber"
         android:layout_width="match_parent"

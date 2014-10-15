@@ -18,7 +18,8 @@ import butterknife.InjectView;
 /**
  * Created by mrkcsc on 7/14/14. Copyright 2014 Blitz Studios
  */
-public class RecentScreen extends BaseFragment implements ViewModelRecent.Callbacks {
+public class RecentScreen extends BaseFragment implements ViewModelRecent.Callbacks,
+        RecentScreenScrubber.Callbacks {
 
     // region Member Variables
     // =============================================================================================
@@ -28,6 +29,7 @@ public class RecentScreen extends BaseFragment implements ViewModelRecent.Callba
 
     @InjectView(R.id.main_recent_header) TextView mRecentHeader;
     @InjectView(R.id.main_recent_scrubber) RecentScreenScrubber mScrubber;
+    @InjectView(R.id.recent_scrubber_week) TextView mScrubberWeek;
     @InjectView(R.id.main_recent_list)     ListView mRecentMatches;
 
     private ViewModelRecent mViewModel; // lazy loaded
@@ -44,17 +46,58 @@ public class RecentScreen extends BaseFragment implements ViewModelRecent.Callba
     protected void onCreateView(Bundle savedInstanceState) {
         super.onCreateView(savedInstanceState);
 
+        // Provide the view pager.
         mScrubber.setViewPager(((MainScreen)getActivity()).getViewPager());
+
+        // Weeks in season.
         mScrubber.setSize(WEEKS_IN_SEASON);
+
+        // Week display text view.
+        mScrubber.setScrubberTextView(mScrubberWeek);
+
+        // Callbacks.
+        mScrubber.setCallbacks(this);
     }
 
+    /**
+     * Fetch recent screen view model.
+     */
     @Override
     public ViewModel onFetchViewModel() {
-        if(mViewModel == null) {
+
+        if (mViewModel == null) {
             mViewModel = new ViewModelRecent(getBaseActivity(), this);
         }
+
         return mViewModel;
     }
+
+    // endregion
+
+    // region Private Methods
+    // =============================================================================================
+
+    private static String formatRatingChange(int change) {
+        String sign = "+";
+        if(change < 0) { // negative number already has a sign
+            sign = "";
+        }
+        return sign + change;
+    }
+
+    private static String formatEarnings(int cents) {
+        String sign = "+";
+        if(cents < 0) {
+            sign = "-";
+        }
+        String amount = String.format("$%.2f", Math.abs(cents / 100f));
+        return sign + amount;
+    }
+
+    // endregion
+
+    // region View Model & Scrubber Callbacks
+    // =============================================================================================
 
     @Override
     public void onDrafts(List<HeadToHeadDraft> matches, ViewModelRecent.Summary summary, int week) {
@@ -79,21 +122,20 @@ public class RecentScreen extends BaseFragment implements ViewModelRecent.Callba
         ((TextView)getActivity().findViewById(R.id.rating_change)).setText(formatRatingChange(summary.getRatingChange()));
     }
 
-    private static String formatRatingChange(int change) {
-        String sign = "+";
-        if(change < 0) { // negative number already has a sign
-            sign = "";
-        }
-        return sign + change;
-    }
+    /**
+     * When the scrubber item changes, the position
+     * is the current week selected. Pass it
+     * into the view model.
+     *
+     * @param position Week selected.
+     */
+    @Override
+    public void onScrubberItemSelected(int position) {
 
-    private static String formatEarnings(int cents) {
-        String sign = "+";
-        if(cents < 0) {
-            sign = "-";
+        // Update the week.
+        if (mViewModel != null) {
+            mViewModel.updateWeek(position);
         }
-        String amount = String.format("$%.2f", Math.abs(cents / 100f));
-        return sign + amount;
     }
 
     // endregion

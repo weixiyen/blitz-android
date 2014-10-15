@@ -138,7 +138,8 @@ public class RecentScreenScrubber extends LinearLayout {
     public void setScrubberItemSelected(int position) {
 
         // if valid position is provided.
-        if (position < mScrubberSize && position >= 0) {
+        if (position < mScrubberSize && position >= 0
+                && (mScrubberItemSelected == null || position != mScrubberItemSelected)) {
 
             // Set selected color.
             mScrubberItems.get(position).setTextColor(mScrubberColorActive);
@@ -151,10 +152,6 @@ public class RecentScreenScrubber extends LinearLayout {
 
             if (mScrubberTextView != null) {
                 mScrubberTextView.setText("Week " + position);
-            }
-
-            if (mCallbacks != null) {
-                mCallbacks.onScrubberItemSelected(position);
             }
 
             // Update selected index.
@@ -268,6 +265,11 @@ public class RecentScreenScrubber extends LinearLayout {
                             // Restore view pager.
                             if (mViewPager != null) {
                                 mViewPager.requestDisallowInterceptTouchEvent(false);
+                            }
+
+                            // Emit selection event.
+                            if (mCallbacks != null) {
+                                mCallbacks.onScrubberItemSelected(mScrubberItemSelected);
                             }
 
                             break;
