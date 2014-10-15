@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ListView;
-import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.blitz.app.R;
@@ -29,7 +28,7 @@ public class RecentScreen extends BaseFragment implements ViewModelRecent.Callba
     // Total weeks in an NFL season.
     private static final int WEEKS_IN_SEASON = 17;
 
-    @InjectView(R.id.main_recent_dropdown) Spinner mRecentDropdown;
+    @InjectView(R.id.main_recent_header) TextView mRecentHeader;
     @InjectView(R.id.main_recent_scrubber) RecentScreenScrubber mScrubber;
     @InjectView(R.id.main_recent_list)     ListView mRecentMatches;
 
