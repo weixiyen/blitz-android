@@ -1,10 +1,12 @@
 package com.blitz.app.screens.leaderboard;
 
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ListView;
 
 import com.blitz.app.R;
 import com.blitz.app.utilities.android.BaseActivity;
+import com.blitz.app.utilities.animations.AnimHelperFade;
 import com.blitz.app.view_models.ViewModel;
 import com.blitz.app.view_models.ViewModelLeaderboard;
 
@@ -41,6 +43,10 @@ public class LeaderboardScreen extends BaseActivity implements ViewModelLeaderbo
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        // Hide the player list at first.
+        mPlayerList.setVisibility(View.GONE);
+
+        // Modal style presentation.
         setCustomTransitions(CustomTransition.T_SLIDE_VERTICAL);
     }
 
@@ -84,6 +90,9 @@ public class LeaderboardScreen extends BaseActivity implements ViewModelLeaderbo
         if (mPlayerList != null) {
             mPlayerList.setAdapter(new LeaderboardListAdapter
                     (this, userIds, userNames, userWins, userLosses, userRating, userAvatarUrls));
+
+            // Fade in the player list.
+            AnimHelperFade.setVisibility(mPlayerList, View.VISIBLE);
         }
     }
 
