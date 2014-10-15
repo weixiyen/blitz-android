@@ -54,6 +54,24 @@ public class AnimHelperFade extends AnimHelper {
     public static void setVisibility(final View view, final int visibility,
                                      int duration, boolean forceTransition)  {
 
+        setVisibility(view, visibility, duration, forceTransition, false);
+    }
+
+    /**
+     * Sets the visibility of a view but layers a
+     * fade animation into it to make it
+     * more appealing.
+     *
+     * @param view Target view.
+     * @param visibility Target visibility.
+     * @param duration Transition time.
+     * @param forceTransition If set it will force the animation
+     *                        even if going from same visibility state.
+     */
+    @SuppressWarnings("unused")
+    public static void setVisibility(final View view, final int visibility,
+                                     int duration, boolean forceTransition, final boolean preserveAlpha) {
+
         // Don't animate if already set.
         if (view.getVisibility() == visibility && !forceTransition) {
 
@@ -99,8 +117,11 @@ public class AnimHelperFade extends AnimHelper {
                 // Set final visibility.
                 view.setVisibility(visibility);
 
-                // Restore alpha.
-                view.setAlpha(initialAlpha);
+                if (preserveAlpha) {
+
+                    // Restore alpha.
+                    view.setAlpha(initialAlpha);
+                }
             }
         });
     }
