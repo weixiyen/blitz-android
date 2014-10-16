@@ -221,7 +221,7 @@ public class RecentScreen extends BaseFragment implements ViewModelRecent.Callba
     public void onDrafts(List<ViewModelRecent.HeadToHeadDraft> drafts, ViewModelRecent.Summary summary, int week) {
 
         if (mRecentHeader != null) {
-            mRecentHeader.setText("Week " + week);
+            mRecentHeader.setText("Week " + (week + 1));
         }
 
         if (mRecentScrubber != null) {
