@@ -14,7 +14,6 @@ import com.blitz.app.utilities.authentication.AuthHelper;
 import com.blitz.app.utilities.blitz.BlitzDelay;
 import com.blitz.app.utilities.date.DateUtils;
 import com.blitz.app.utilities.gcm.GcmRegistrationHelper;
-import com.blitz.app.utilities.logging.LogHelper;
 import com.blitz.app.utilities.sound.SoundHelper;
 import com.crashlytics.android.Crashlytics;
 
@@ -106,9 +105,13 @@ public class LoadingScreen extends BaseActivity {
         });
     }
 
+    /**
+     * Transition into the main app activity.
+     *
+     * @param targetActivity Target activity.
+     * @param loadingTime Loading time so far.
+     */
     private void transitionIntoApp(final Class targetActivity, long loadingTime) {
-
-        LogHelper.log("Delaying for additional: " + Math.max(MINIMUM_TIME_TO_DISPLAY - loadingTime, 0));
 
         // Show loading screen for initial loading.
         BlitzDelay.postDelayed(new Runnable() {
