@@ -39,6 +39,14 @@
         android:layout_marginTop="60dp"
         android:cacheColorHint="@color/background_transparent"
         android:gravity="center"
-        android:listSelector="@color/background_transparent"/>
+        android:listSelector="@color/background_transparent"
+        android:visibility="gone"/>
+
+    <ProgressBar
+        android:id="@+id/leaderboard_spinner"
+        style="?android:attr/progressBarStyleLarge"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"/>
 
 </RelativeLayout>

@@ -3,6 +3,7 @@ package com.blitz.app.screens.leaderboard;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 
 import com.blitz.app.R;
 import com.blitz.app.utilities.android.BaseActivity;
@@ -24,7 +25,8 @@ public class LeaderboardScreen extends BaseActivity implements ViewModelLeaderbo
     // region Member Variables
     // =============================================================================================
 
-    @InjectView(R.id.leaderboard_list) ListView mPlayerList;
+    @InjectView(R.id.leaderboard_list) ListView mLeaderboardPlayerList;
+    @InjectView(R.id.leaderboard_spinner) ProgressBar mLeaderboardSpinner;
 
     // View model object.
     private ViewModelLeaderboard mViewModel;
@@ -44,7 +46,7 @@ public class LeaderboardScreen extends BaseActivity implements ViewModelLeaderbo
         super.onCreate(savedInstanceState);
 
         // Hide the player list at first.
-        mPlayerList.setVisibility(View.GONE);
+        mLeaderboardPlayerList.setVisibility(View.GONE);
 
         // Modal style presentation.
         setCustomTransitions(CustomTransition.T_SLIDE_VERTICAL);
@@ -80,20 +82,30 @@ public class LeaderboardScreen extends BaseActivity implements ViewModelLeaderbo
      * @param userAvatarUrls Avatars.
      */
     @Override
-    public void onLeadersReceived(List<String>  userIds,
-                                  List<String>  userNames,
-                                  List<Integer> userWins,
-                                  List<Integer> userLosses,
-                                  List<Integer> userRating,
-                                  List<String>  userAvatarUrls) {
+    public void onLeadersReceived(final List<String>  userIds,
+                                  final List<String>  userNames,
+                                  final List<Integer> userWins,
+                                  final List<Integer> userLosses,
+                                  final List<Integer> userRating,
+                                  final List<String>  userAvatarUrls) {
 
-        if (mPlayerList != null) {
-            mPlayerList.setAdapter(new LeaderboardListAdapter
-                    (this, userIds, userNames, userWins, userLosses, userRating, userAvatarUrls));
+        AnimHelperFade.setVisibility(mLeaderboardSpinner, View.GONE, new Runnable() {
 
-            // Fade in the player list.
-            AnimHelperFade.setVisibility(mPlayerList, View.VISIBLE);
-        }
+            @Override
+            public void run() {
+
+                if (mLeaderboardPlayerList != null) {
+                    mLeaderboardPlayerList.setAdapter(new LeaderboardListAdapter
+                            (LeaderboardScreen.this, userIds, userNames, userWins,
+                                    userLosses, userRating, userAvatarUrls));
+
+                    // Fade in the player list.
+                    AnimHelperFade.setVisibility(mLeaderboardPlayerList, View.VISIBLE);
+                }
+
+                AnimHelperFade.setVisibility(mLeaderboardPlayerList, View.VISIBLE);
+            }
+        });
     }
 
     // endregion
