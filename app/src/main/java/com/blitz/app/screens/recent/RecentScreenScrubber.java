@@ -331,7 +331,7 @@ public class RecentScreenScrubber extends LinearLayout {
             }
 
             // If a new item is selected.
-            if (scrubberItemSelected != mScrubberItemSelected) {
+            if (mScrubberItemSelected != null && mScrubberItemSelected != scrubberItemSelected) {
 
                 setScrubberItemSelected(scrubberItemSelected);
             }
