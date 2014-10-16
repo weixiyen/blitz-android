@@ -31,8 +31,9 @@ public class RecentScreen extends BaseFragment implements ViewModelRecent.Callba
     @InjectView(R.id.main_recent_scrubber) RecentScreenScrubber mScrubber;
     @InjectView(R.id.recent_scrubber_week) TextView mScrubberWeek;
     @InjectView(R.id.main_recent_list)     ListView mRecentMatches;
+    @InjectView(R.id.recent_no_games) TextView mRecentNoGames;
 
-    private ViewModelRecent mViewModel; // lazy loaded
+    private ViewModelRecent mViewModel;
 
     // endregion
 
@@ -66,7 +67,7 @@ public class RecentScreen extends BaseFragment implements ViewModelRecent.Callba
     public ViewModel onFetchViewModel() {
 
         if (mViewModel == null) {
-            mViewModel = new ViewModelRecent(getBaseActivity(), this);
+            mViewModel = new ViewModelRecent(getBaseActivity(), this, WEEKS_IN_SEASON);
         }
 
         return mViewModel;
@@ -110,16 +111,25 @@ public class RecentScreen extends BaseFragment implements ViewModelRecent.Callba
             mScrubber.setScrubberItemSelected(week);
         }
 
-        final RecentScreenMatchAdapter adapter = new RecentScreenMatchAdapter(matches, getActivity());
+        if (matches.size() > 0) {
 
-        if(mRecentMatches != null) {
-            mRecentMatches.setAdapter(adapter);
+            final RecentScreenMatchAdapter adapter = new RecentScreenMatchAdapter(matches, getActivity());
+
+            if (mRecentMatches != null) {
+                mRecentMatches.setAdapter(adapter);
+            }
+
+            ((TextView)getActivity().findViewById(R.id.wins)).setText(String.valueOf(summary.getWins()));
+            ((TextView)getActivity().findViewById(R.id.losses)).setText(String.valueOf(summary.getLosses()));
+            ((TextView)getActivity().findViewById(R.id.earnings)).setText(formatEarnings(summary.getEarningsCents()));
+            ((TextView)getActivity().findViewById(R.id.rating_change)).setText(formatRatingChange(summary.getRatingChange()));
+
+        } else {
+
+            // No games this week!
+
+            mRecentNoGames.setText("");
         }
-
-        ((TextView)getActivity().findViewById(R.id.wins)).setText(String.valueOf(summary.getWins()));
-        ((TextView)getActivity().findViewById(R.id.losses)).setText(String.valueOf(summary.getLosses()));
-        ((TextView)getActivity().findViewById(R.id.earnings)).setText(formatEarnings(summary.getEarningsCents()));
-        ((TextView)getActivity().findViewById(R.id.rating_change)).setText(formatRatingChange(summary.getRatingChange()));
     }
 
     /**

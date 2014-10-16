@@ -9,6 +9,7 @@ import com.blitz.app.rest_models.RestModelPreferences;
 import com.blitz.app.simple_models.HeadToHeadDraft;
 import com.blitz.app.utilities.android.BaseActivity;
 import com.blitz.app.utilities.authentication.AuthHelper;
+import com.blitz.app.utilities.logging.LogHelper;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,6 +20,151 @@ import java.util.List;
  * Created by Nate on 9/7/14.
  */
 public class ViewModelRecent extends ViewModel {
+
+    // region Member Variables
+    // =============================================================================================
+
+    // View model callbacks.
+    private final Callbacks mCallbacks;
+
+    // Draft cache // TODO: Refactor HeadToHeadDraft
+    private final SparseArray<List<HeadToHeadDraft>> mCache;
+
+    // Current draft week and year.
+    private static Integer mYearCurrent;
+    private static Integer mWeekCurrent;
+
+    // Current selected week.
+    private Integer mWeekSelected;
+
+    // endregion
+
+    // region Constructor
+    // =============================================================================================
+
+    /**
+     * Setup the view model.
+     *
+     * @param activity Target activity.
+     * @param callbacks Target callbacks.
+     * @param weeks Total weeks.
+     */
+    public ViewModelRecent(BaseActivity activity, Callbacks callbacks, int weeks) {
+        super(activity, callbacks);
+
+        // Set the callbacks.
+        mCallbacks = callbacks;
+
+        // Create cache of some sort. TODO: Revise
+        mCache = new SparseArray<List<HeadToHeadDraft>>(weeks);
+    }
+
+    // endregion
+
+    // region Overwritten Methods
+    // =============================================================================================
+
+    /**
+     * On start make sure we have the current week
+     * and year, else just use the last selected week.
+     */
+    @Override
+    public void initialize() {
+
+        if (mWeekCurrent == null || mYearCurrent == null || mWeekSelected == null) {
+
+            // Fetch the current draft week and year if needed.
+            AuthHelper.instance().getPreferences(mActivity, false,
+                    new RestModelCallback<RestModelPreferences>() {
+
+                        @Override
+                        public void onSuccess(RestModelPreferences object) {
+
+                            // Get the current week and year.
+                            mWeekCurrent = object.getCurrentWeek();
+                            mYearCurrent = object.getCurrentYear();
+
+                            updateWeek(mWeekCurrent);
+                        }
+                    });
+        } else {
+
+            // Used cache value.
+            updateWeek(mWeekSelected);
+        }
+    }
+
+    // endregion
+
+    public int getCurrentYear() {
+        return  0;
+    }
+
+    public void updateWeek(final int week) {
+
+        // Only update if the week changes.
+        if (mWeekSelected != null && mWeekSelected == week) {
+
+            return;
+        }
+
+        LogHelper.log("Updating: " + week);
+
+        // Set the current week.
+        mWeekSelected = week;
+
+        // Populate the UI with existing cached data if we already have it
+        if(mCache.get(week) != null) {
+            List<HeadToHeadDraft> drafts = mCache.get(week);
+            mCallbacks.onDrafts(drafts, new Summary(drafts), week);
+        }
+
+        // Get fresh data from the server.
+        RestModelDraft.fetchDraftsForUser(mActivity, AuthHelper.instance().getUserId(),
+                week, mYearCurrent, null, new RestModelCallbacks<RestModelDraft>() {
+
+                    @Override
+                    public void onSuccess(List<RestModelDraft> drafts) {
+
+                        // If the week has since changed,
+                        // ignore these results.
+                        if (mWeekSelected != week) {
+
+                            return;
+                        }
+
+                        List<HeadToHeadDraft> matches = new ArrayList<HeadToHeadDraft>(drafts.size());
+                        for (RestModelDraft draft : drafts) {
+                            final int p1index;
+                            final int p2index;
+                            if(AuthHelper.instance().getUserId().equals(draft.getUsers().get(0))) {
+                                p1index = 0;
+                                p2index = 1;
+                            } else {
+                                p1index = 1;
+                                p2index = 0;
+                            }
+                            matches.add(new HeadToHeadDraft(
+                                    draft.getId(),
+                                    draft.getTeamName(p1index),
+                                    draft.getTeamRoster(p1index),
+                                    draft.getTeamPoints(p1index),
+                                    draft.getTeamRatingChange(p1index),
+                                    draft.getTeamName(p2index),
+                                    draft.getTeamRoster(p2index),
+                                    draft.getTeamPoints(p2index),
+                                    draft.getTeamRatingChange(p2index),
+                                    draft.getYear(),
+                                    draft.getWeek(),
+                                    draft.getStatus()
+                            ));
+                        }
+                        mCache.put(week, matches);
+                        mCallbacks.onDrafts(matches, new Summary(matches), week);
+                    }
+                });
+
+    }
 
     public final static class Summary {
 
@@ -69,98 +215,15 @@ public class ViewModelRecent extends ViewModel {
         }
     }
 
-    private final Callbacks mCallbacks;
-    private final SparseArray<List<HeadToHeadDraft>> mCache;
-
-    private Integer mCurrentWeek;
-
-    public ViewModelRecent(BaseActivity activity, Callbacks callbacks) {
-        super(activity, callbacks);
-        mCallbacks = callbacks;
-        mCache = new SparseArray<List<HeadToHeadDraft>>(17);
-    }
-
-    @Override
-    public void initialize() {
-
-        AuthHelper.instance().getPreferences(mActivity, false,
-                new RestModelCallback<RestModelPreferences>() {
-
-                    @Override
-                    public void onSuccess(RestModelPreferences object) {
-
-                        updateWeek(object.getCurrentWeek());
-                    }
-                });
-    }
-
-    public void updateWeek(final int week) {
-
-        // Only update if the week changes.
-        if (mCurrentWeek != null && mCurrentWeek == week) {
-
-            return;
-        }
-
-        // Set the current week.
-        mCurrentWeek = week;
-
-        // Populate the UI with existing cached data if we already have it
-        if(mCache.get(week) != null) {
-            List<HeadToHeadDraft> drafts = mCache.get(week);
-            mCallbacks.onDrafts(drafts, new Summary(drafts), week);
-        }
-
-        // Get fresh data from the server.
-        RestModelDraft.fetchDraftsForUser(mActivity, AuthHelper.instance().getUserId(), week, 2014, 1000,
-                new RestModelCallbacks<RestModelDraft>() {
-                    @Override
-                    public void onSuccess(List<RestModelDraft> drafts) {
-
-                        // If the week has since changed,
-                        // ignore these results.
-                        if (mCurrentWeek != week) {
-
-                            return;
-                        }
-
-                        List<HeadToHeadDraft> matches = new ArrayList<HeadToHeadDraft>(drafts.size());
-                        for (RestModelDraft draft : drafts) {
-                            final int p1index;
-                            final int p2index;
-                            if(AuthHelper.instance().getUserId().equals(draft.getUsers().get(0))) {
-                                p1index = 0;
-                                p2index = 1;
-                            } else {
-                                p1index = 1;
-                                p2index = 0;
-                            }
-                            matches.add(new HeadToHeadDraft(
-                                    draft.getId(),
-                                    draft.getTeamName(p1index),
-                                    draft.getTeamRoster(p1index),
-                                    draft.getTeamPoints(p1index),
-                                    draft.getTeamRatingChange(p1index),
-                                    draft.getTeamName(p2index),
-                                    draft.getTeamRoster(p2index),
-                                    draft.getTeamPoints(p2index),
-                                    draft.getTeamRatingChange(p2index),
-                                    draft.getYear(),
-                                    draft.getWeek(),
-                                    draft.getStatus()
-                            ));
-                        }
-                        mCache.put(week, matches);
-                        mCallbacks.onDrafts(matches, new Summary(matches), week);
-                    }
-                });
-
-    }
+    // region View Model Callbacks
+    // =============================================================================================
 
     public interface Callbacks extends ViewModel.Callbacks {
 
         public void onDrafts(List<HeadToHeadDraft> drafts, Summary summary, int week);
     }
+
+    // endregion
 }
 
 
