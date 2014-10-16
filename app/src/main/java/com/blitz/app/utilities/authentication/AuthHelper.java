@@ -26,9 +26,8 @@ import java.util.List;
  */
 public class AuthHelper {
 
-    //==============================================================================================
-    // Member Variables
-    //==============================================================================================
+    // region Member Variables
+    // =============================================================================================
 
     // Instance object.
     private static AuthHelper mInstance;
@@ -40,9 +39,10 @@ public class AuthHelper {
     private RestModelPreferences mPreferences;
     private boolean mPreferencesSynced;
 
-    //==============================================================================================
-    // Public Methods
-    //==============================================================================================
+    // endregion
+
+    // region Public Methods
+    // =============================================================================================
 
     /**
      * Fetch singleton.
@@ -147,9 +147,13 @@ public class AuthHelper {
      * not signed in, or has not passed access queue.
      *
      * @param activity Target activity.
+     * @param callback By default this method automatically transitions, however
+     *                 you can provide a callback that is fired once it is ready
+     *                 to enter the main app, so the callee can do it's own
+     *                 cleanup before transitioning to the target activity.
      */
     @SuppressWarnings("unused")
-    public void tryEnterMainApp(BaseActivity activity) {
+    public void tryEnterMainApp(BaseActivity activity, EnterMainAppCallback callback) {
 
         // First check to see if there is a activity we want
         // to automatically jump to for debugging purposes.
@@ -171,7 +175,7 @@ public class AuthHelper {
 
                         // Sync state and enter
                         // appropriate screen.
-                        syncAppState(activity);
+                        syncAppState(activity, callback);
 
                     } else {
 
@@ -192,7 +196,20 @@ public class AuthHelper {
             }
         }
 
-        startActivity(activity, targetActivity);
+        startActivity(activity, targetActivity, callback);
+    }
+
+    /**
+     * Tries to enter the main application.  This may fail
+     * if the user has not yet agreed to legal policy, is
+     * not signed in, or has not passed access queue.
+     *
+     * @param activity Target activity.
+     */
+    @SuppressWarnings("unused")
+    public void tryEnterMainApp(BaseActivity activity) {
+
+        tryEnterMainApp(activity, null);
     }
 
     /**
@@ -250,9 +267,10 @@ public class AuthHelper {
         mCurrentDraft = objectModelDraft;
     }
 
-    //==============================================================================================
-    // Private Methods
-    //==============================================================================================
+    // endregion
+
+    // region Private Methods
+    // =============================================================================================
 
     /**
      * Before we can enter the main app, we must synchronize the
@@ -260,13 +278,15 @@ public class AuthHelper {
      * in any active drafts.
      *
      * @param activity Activity context.
+     * @param callback Do our own thing when we are ready to
+     *                 enter the main application.
      */
-    private void syncAppState(final BaseActivity activity) {
+    private void syncAppState(final BaseActivity activity, final EnterMainAppCallback callback) {
 
         if (mCurrentDraft != null) {
 
             // Drafting screen.
-            startActivity(activity, DraftScreen.class);
+            startActivity(activity, DraftScreen.class, callback);
 
         } else {
 
@@ -283,7 +303,7 @@ public class AuthHelper {
                             if (drafts.isEmpty()) {
 
                                 // Main screen.
-                                startActivity(activity, MainScreen.class);
+                                startActivity(activity, MainScreen.class, callback);
 
                             } else {
 
@@ -298,9 +318,11 @@ public class AuthHelper {
                                                 if (draft != null) {
                                                     setCurrentDraft(draft);
 
-                                                    startActivity(activity, DraftScreen.class);
+                                                    startActivity(activity,
+                                                            DraftScreen.class, callback);
                                                 } else {
-                                                    startActivity(activity, MainScreen.class);
+                                                    startActivity(activity,
+                                                            MainScreen.class, callback);
                                                 }
                                             }
                                         });
@@ -315,8 +337,11 @@ public class AuthHelper {
      *
      * @param activity Activity from.
      * @param targetActivity Activity to.
+     * @param callback Do our own thing when we are ready to
+     *                 enter the main application.
      */
-    private void startActivity(BaseActivity activity, Class targetActivity) {
+    private void startActivity(final BaseActivity activity, final Class targetActivity,
+                               final EnterMainAppCallback callback) {
 
         if (targetActivity != null) {
 
@@ -336,12 +361,30 @@ public class AuthHelper {
             SoundHelper.instance().setMusicDisabled
                     (AppDataObject.settingsMusicDisabled.get());
 
-            // Start target activity, clear the history.
-            activity.startActivity(new Intent(activity, targetActivity), true);
+            if (callback != null) {
+                callback.onReady(targetActivity);
 
-            // Always destroy the loading
-            // activity as we leave.
-            activity.finish();
+            } else {
+
+                // Start target activity, clear the history.
+                activity.startActivity(new Intent(activity, targetActivity), true);
+
+                // Always destroy the loading
+                // activity as we leave.
+                activity.finish();
+            }
         }
     }
+
+    // endregion
+
+    // region Callbacks
+    // =============================================================================================
+
+    public interface EnterMainAppCallback {
+
+        public abstract void onReady(Class targetActivity);
+    }
+
+    // endregion
 }
