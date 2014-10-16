@@ -11,7 +11,7 @@ import android.widget.TextView;
 
 import com.blitz.app.R;
 import com.blitz.app.screens.matchup.MatchupScreen;
-import com.blitz.app.simple_models.HeadToHeadDraft;
+import com.blitz.app.view_models.ViewModelRecent;
 
 import java.util.List;
 
@@ -20,12 +20,12 @@ import java.util.List;
  *
  * Created by Nate on 9/7/14.
  */
-public class RecentScreenMatchAdapter extends ArrayAdapter<HeadToHeadDraft> {
+public class RecentScreenMatchAdapter extends ArrayAdapter<ViewModelRecent.HeadToHeadDraft> {
 
-    private List<HeadToHeadDraft> mItems;
+    private List<ViewModelRecent.HeadToHeadDraft> mItems;
     private final Activity mActivity;
 
-    public RecentScreenMatchAdapter(List<HeadToHeadDraft> items, Activity activity) {
+    public RecentScreenMatchAdapter(List<ViewModelRecent.HeadToHeadDraft> items, Activity activity) {
 
         super(activity, R.layout.recent_screen_match_item, items);
         mItems = items;
@@ -42,7 +42,7 @@ public class RecentScreenMatchAdapter extends ArrayAdapter<HeadToHeadDraft> {
                     .inflate(R.layout.recent_screen_match_item, null);
         }
 
-        final HeadToHeadDraft draft = mItems.get(position);
+        final ViewModelRecent.HeadToHeadDraft draft = mItems.get(position);
 
         if(draft != null) {
 

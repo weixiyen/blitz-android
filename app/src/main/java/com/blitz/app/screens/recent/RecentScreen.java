@@ -7,7 +7,6 @@ import android.widget.TextView;
 
 import com.blitz.app.R;
 import com.blitz.app.screens.main.MainScreen;
-import com.blitz.app.simple_models.HeadToHeadDraft;
 import com.blitz.app.utilities.android.BaseFragment;
 import com.blitz.app.utilities.animations.AnimHelperFade;
 import com.blitz.app.view_models.ViewModel;
@@ -86,20 +85,33 @@ public class RecentScreen extends BaseFragment implements ViewModelRecent.Callba
     // region Private Methods
     // =============================================================================================
 
-    private static String formatRatingChange(int change) {
+    /**
+     * Format rating change.
+     */
+    private static String formatRatingChange (int change) {
+
         String sign = "+";
-        if(change < 0) { // negative number already has a sign
+
+        // Negative number already has a sign.
+        if (change < 0) {
             sign = "";
         }
+
         return sign + change;
     }
 
-    private static String formatEarnings(int cents) {
+    /**
+     * Format earnings.
+     */
+    private static String formatEarnings (int cents) {
         String sign = "+";
-        if(cents < 0) {
+
+        if (cents < 0) {
             sign = "-";
         }
+
         String amount = String.format("$%.2f", Math.abs(cents / 100f));
+
         return sign + amount;
     }
 
@@ -141,10 +153,10 @@ public class RecentScreen extends BaseFragment implements ViewModelRecent.Callba
     /**
      * Setup UI when user has games.
      *
-     * @param matches List of matches.
+     * @param drafts List of matches.
      * @param summary Week summary.
      */
-    private void setupGamesList(final List<HeadToHeadDraft> matches,
+    private void setupGamesList(final List<ViewModelRecent.HeadToHeadDraft> drafts,
                                 final ViewModelRecent.Summary summary) {
 
         // Either fade out the matches, or existing UI.
@@ -157,7 +169,7 @@ public class RecentScreen extends BaseFragment implements ViewModelRecent.Callba
             public void run() {
 
                 if (mRecentMatches != null) {
-                    mRecentMatches.setAdapter(new RecentScreenMatchAdapter(matches, getActivity()));
+                    mRecentMatches.setAdapter(new RecentScreenMatchAdapter(drafts, getActivity()));
                 }
 
                 // Set summary info.
@@ -182,37 +194,6 @@ public class RecentScreen extends BaseFragment implements ViewModelRecent.Callba
     // =============================================================================================
 
     /**
-     * When drafts are received, process them and
-     * setup the corresponding UI.
-     *
-     * @param matches List of matches.
-     * @param summary Week summary.
-     * @param week Current week.
-     */
-    @Override
-    public void onDrafts(List<HeadToHeadDraft> matches, ViewModelRecent.Summary summary, int week) {
-
-        if (mRecentHeader != null) {
-            mRecentHeader.setText("Week " + week);
-        }
-
-        if (mRecentScrubber != null) {
-            mRecentScrubber.setScrubberItemSelected(week);
-        }
-
-        if (matches.size() > 0) {
-
-            // We have drafts.
-            setupGamesList(matches, summary);
-
-        } else {
-
-            // No games played.
-            setupGamesListEmpty(week + 1);
-        }
-    }
-
-    /**
      * When the scrubber item changes, the position
      * is the current week selected. Pass it
      * into the view model.
@@ -225,6 +206,37 @@ public class RecentScreen extends BaseFragment implements ViewModelRecent.Callba
         // Update the week.
         if (mViewModel != null) {
             mViewModel.updateWeek(position);
+        }
+    }
+
+    /**
+     * When drafts are received, process them and
+     * setup the corresponding UI.
+     *
+     * @param drafts List of matches.
+     * @param summary Week summary.
+     * @param week Current week.
+     */
+    @Override
+    public void onDrafts(List<ViewModelRecent.HeadToHeadDraft> drafts, ViewModelRecent.Summary summary, int week) {
+
+        if (mRecentHeader != null) {
+            mRecentHeader.setText("Week " + week);
+        }
+
+        if (mRecentScrubber != null) {
+            mRecentScrubber.setScrubberItemSelected(week);
+        }
+
+        if (drafts.size() > 0) {
+
+            // We have drafts.
+            setupGamesList(drafts, summary);
+
+        } else {
+
+            // No games played.
+            setupGamesListEmpty(week + 1);
         }
     }
 
