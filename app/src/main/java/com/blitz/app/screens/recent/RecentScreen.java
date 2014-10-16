@@ -132,7 +132,7 @@ public class RecentScreen extends BaseFragment implements ViewModelRecent.Callba
             @Override
             public void run() {
 
-                if (week <= mViewModel.getCurrentWeek()) {
+                if (week <= (mViewModel.getCurrentWeek() + 1)) {
 
                     // Serious message.
                     mRecentNoGames.setText("You did not play any games during week " + week + "!");
@@ -154,10 +154,8 @@ public class RecentScreen extends BaseFragment implements ViewModelRecent.Callba
      * Setup UI when user has games.
      *
      * @param drafts List of matches.
-     * @param summary Week summary.
      */
-    private void setupGamesList(final List<ViewModelRecent.HeadToHeadDraft> drafts,
-                                final ViewModelRecent.Summary summary) {
+    private void setupGamesList(final List<ViewModelRecent.HeadToHeadDraft> drafts) {
 
         // Either fade out the matches, or existing UI.
         View targetFrom = mRecentNoGames.getVisibility() == View.GONE
@@ -171,16 +169,6 @@ public class RecentScreen extends BaseFragment implements ViewModelRecent.Callba
                 if (mRecentMatches != null) {
                     mRecentMatches.setAdapter(new RecentScreenMatchAdapter(drafts, getActivity()));
                 }
-
-                // Set summary info.
-                mRecentWeekWins
-                        .setText(String.valueOf(summary.getWins()));
-                mRecentWeekLosses
-                        .setText(String.valueOf(summary.getLosses()));
-                mRecentWeekEarnings
-                        .setText(formatEarnings(summary.getEarningsCents()));
-                mRecentWeekRatingChange
-                        .setText(formatRatingChange(summary.getRatingChange()));
 
                 // Show the drafts list.
                 AnimHelperFade.setVisibility(mRecentMatches, View.VISIBLE);
@@ -228,10 +216,20 @@ public class RecentScreen extends BaseFragment implements ViewModelRecent.Callba
             mRecentScrubber.setScrubberItemSelected(week);
         }
 
+        // Set summary info.
+        mRecentWeekWins
+                .setText(String.valueOf(summary.getWins()));
+        mRecentWeekLosses
+                .setText(String.valueOf(summary.getLosses()));
+        mRecentWeekEarnings
+                .setText(formatEarnings(summary.getEarningsCents()));
+        mRecentWeekRatingChange
+                .setText(formatRatingChange(summary.getRatingChange()));
+
         if (drafts.size() > 0) {
 
             // We have drafts.
-            setupGamesList(drafts, summary);
+            setupGamesList(drafts);
 
         } else {
 
