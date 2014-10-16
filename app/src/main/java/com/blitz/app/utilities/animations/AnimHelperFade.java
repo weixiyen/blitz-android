@@ -31,6 +31,21 @@ public class AnimHelperFade extends AnimHelper {
      *
      * @param view Target view.
      * @param visibility Target visibility.
+     * @param callback Completion callback.
+     */
+    @SuppressWarnings("unused")
+    public static void setVisibility(final View view, final int visibility, Runnable callback) {
+
+        setVisibility(view, visibility, getConfigAnimTimeStandard(), false, false, callback);
+    }
+
+    /**
+     * Sets the visibility of a view but layers a
+     * fade animation into it to make it
+     * more appealing.
+     *
+     * @param view Target view.
+     * @param visibility Target visibility.
      */
     @SuppressWarnings("unused")
     public static void setVisibility(final View view, final int visibility,
