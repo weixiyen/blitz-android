@@ -141,7 +141,7 @@ public class RecentScreen extends BaseFragment implements ViewModelRecent.Callba
 
                     // Funny message.
                     mRecentNoGames.setText("Draft week " + week + " has not yet occurred!"
-                            + "\nNo time travel allowed.");
+                            + "  No time travel allowed.");
                 }
 
                 // Show the no games UI.
