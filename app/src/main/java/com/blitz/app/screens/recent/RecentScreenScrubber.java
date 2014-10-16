@@ -151,7 +151,7 @@ public class RecentScreenScrubber extends LinearLayout {
             }
 
             if (mScrubberTextView != null) {
-                mScrubberTextView.setText("Week " + position);
+                mScrubberTextView.setText("Week " + (position + 1));
             }
 
             // Update selected index.

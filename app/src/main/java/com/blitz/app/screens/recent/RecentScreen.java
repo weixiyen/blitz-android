@@ -1,6 +1,7 @@
 package com.blitz.app.screens.recent;
 
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -8,6 +9,7 @@ import com.blitz.app.R;
 import com.blitz.app.screens.main.MainScreen;
 import com.blitz.app.simple_models.HeadToHeadDraft;
 import com.blitz.app.utilities.android.BaseFragment;
+import com.blitz.app.utilities.animations.AnimHelperFade;
 import com.blitz.app.view_models.ViewModel;
 import com.blitz.app.view_models.ViewModelRecent;
 
@@ -27,11 +29,17 @@ public class RecentScreen extends BaseFragment implements ViewModelRecent.Callba
     // Total weeks in an NFL season.
     private static final int WEEKS_IN_SEASON = 17;
 
-    @InjectView(R.id.main_recent_header) TextView mRecentHeader;
-    @InjectView(R.id.main_recent_scrubber) RecentScreenScrubber mScrubber;
-    @InjectView(R.id.recent_scrubber_week) TextView mScrubberWeek;
-    @InjectView(R.id.main_recent_list)     ListView mRecentMatches;
-    @InjectView(R.id.recent_no_games) TextView mRecentNoGames;
+    @InjectView(R.id.recent_header)             TextView mRecentHeader;
+    @InjectView(R.id.recent_scrubber_week)      TextView mRecentScrubberWeek;
+    @InjectView(R.id.recent_no_games)           TextView mRecentNoGames;
+    @InjectView(R.id.recent_drafts_list)        ListView mRecentMatches;
+    @InjectView(R.id.recent_week_wins)          TextView mRecentWeekWins;
+    @InjectView(R.id.recent_week_losses)        TextView mRecentWeekLosses;
+    @InjectView(R.id.recent_week_earnings)      TextView mRecentWeekEarnings;
+    @InjectView(R.id.recent_week_rating_change) TextView mRecentWeekRatingChange;
+
+    // Week selector.
+    @InjectView(R.id.recent_scrubber) RecentScreenScrubber mRecentScrubber;
 
     private ViewModelRecent mViewModel;
 
@@ -48,16 +56,16 @@ public class RecentScreen extends BaseFragment implements ViewModelRecent.Callba
         super.onCreateView(savedInstanceState);
 
         // Provide the view pager.
-        mScrubber.setViewPager(((MainScreen)getActivity()).getViewPager());
+        mRecentScrubber.setViewPager(((MainScreen) getActivity()).getViewPager());
 
         // Weeks in season.
-        mScrubber.setSize(WEEKS_IN_SEASON);
+        mRecentScrubber.setSize(WEEKS_IN_SEASON);
 
         // Week display text view.
-        mScrubber.setScrubberTextView(mScrubberWeek);
+        mRecentScrubber.setScrubberTextView(mRecentScrubberWeek);
 
         // Callbacks.
-        mScrubber.setCallbacks(this);
+        mRecentScrubber.setCallbacks(this);
     }
 
     /**
@@ -95,11 +103,92 @@ public class RecentScreen extends BaseFragment implements ViewModelRecent.Callba
         return sign + amount;
     }
 
+    /**
+     * Setup the UI for when the user
+     * has no games this week.
+     *
+     * @param week Current week.
+     */
+    private void setupGamesListEmpty(final int week) {
+
+        // Either fade out the matches, or existing UI.
+        View targetFrom = mRecentMatches.getVisibility() == View.GONE
+                ? mRecentNoGames : mRecentMatches;
+
+        AnimHelperFade.setVisibility(targetFrom, View.GONE, new Runnable() {
+
+            @Override
+            public void run() {
+
+                if (week <= mViewModel.getCurrentWeek()) {
+
+                    // Serious message.
+                    mRecentNoGames.setText("You did not play any games during week " + week + "!");
+
+                } else {
+
+                    // Funny message.
+                    mRecentNoGames.setText("Draft week " + week + " has not yet occurred!"
+                            + "\nNo time travel allowed.");
+                }
+
+                // Show the no games UI.
+                AnimHelperFade.setVisibility(mRecentNoGames, View.VISIBLE);
+            }
+        });
+    }
+
+    /**
+     * Setup UI when user has games.
+     *
+     * @param matches List of matches.
+     * @param summary Week summary.
+     */
+    private void setupGamesList(final List<HeadToHeadDraft> matches,
+                                final ViewModelRecent.Summary summary) {
+
+        // Either fade out the matches, or existing UI.
+        View targetFrom = mRecentNoGames.getVisibility() == View.GONE
+                ? mRecentMatches : mRecentNoGames;
+
+        AnimHelperFade.setVisibility(targetFrom, View.GONE, new Runnable() {
+
+            @Override
+            public void run() {
+
+                if (mRecentMatches != null) {
+                    mRecentMatches.setAdapter(new RecentScreenMatchAdapter(matches, getActivity()));
+                }
+
+                // Set summary info.
+                mRecentWeekWins
+                        .setText(String.valueOf(summary.getWins()));
+                mRecentWeekLosses
+                        .setText(String.valueOf(summary.getLosses()));
+                mRecentWeekEarnings
+                        .setText(formatEarnings(summary.getEarningsCents()));
+                mRecentWeekRatingChange
+                        .setText(formatRatingChange(summary.getRatingChange()));
+
+                // Show the drafts list.
+                AnimHelperFade.setVisibility(mRecentMatches, View.VISIBLE);
+            }
+        });
+    }
+
     // endregion
 
     // region View Model & Scrubber Callbacks
     // =============================================================================================
 
+    /**
+     * When drafts are received, process them and
+     * setup the corresponding UI.
+     *
+     * @param matches List of matches.
+     * @param summary Week summary.
+     * @param week Current week.
+     */
     @Override
     public void onDrafts(List<HeadToHeadDraft> matches, ViewModelRecent.Summary summary, int week) {
 
@@ -107,28 +196,19 @@ public class RecentScreen extends BaseFragment implements ViewModelRecent.Callba
             mRecentHeader.setText("Week " + week);
         }
 
-        if (mScrubber != null) {
-            mScrubber.setScrubberItemSelected(week);
+        if (mRecentScrubber != null) {
+            mRecentScrubber.setScrubberItemSelected(week);
         }
 
         if (matches.size() > 0) {
 
-            final RecentScreenMatchAdapter adapter = new RecentScreenMatchAdapter(matches, getActivity());
-
-            if (mRecentMatches != null) {
-                mRecentMatches.setAdapter(adapter);
-            }
-
-            ((TextView)getActivity().findViewById(R.id.wins)).setText(String.valueOf(summary.getWins()));
-            ((TextView)getActivity().findViewById(R.id.losses)).setText(String.valueOf(summary.getLosses()));
-            ((TextView)getActivity().findViewById(R.id.earnings)).setText(formatEarnings(summary.getEarningsCents()));
-            ((TextView)getActivity().findViewById(R.id.rating_change)).setText(formatRatingChange(summary.getRatingChange()));
+            // We have drafts.
+            setupGamesList(matches, summary);
 
         } else {
 
-            // No games this week!
-
-            mRecentNoGames.setText("");
+            // No games played.
+            setupGamesListEmpty(week + 1);
         }
     }
 

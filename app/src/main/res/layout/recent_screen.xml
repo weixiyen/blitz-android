@@ -2,7 +2,6 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/main_recent"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="${packageName}.${activityClass}"
@@ -17,7 +16,7 @@
         app:scaleType="topCrop" />
 
     <com.blitz.app.utilities.textview.BlitzTextView
-        android:id="@+id/main_recent_header"
+        android:id="@+id/recent_header"
         style="@style/App.NavBar"
         android:layout_height="110dp"
         android:paddingTop="50dp"
@@ -27,7 +26,7 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:layout_alignBottom="@+id/main_recent_header"
+        android:layout_alignBottom="@+id/recent_header"
         android:background="@color/background_inner_divider"/>
 
     <LinearLayout
@@ -98,7 +97,7 @@
         android:gravity="center"
         android:orientation="horizontal">
 
-        <TextView android:id="@+id/wins"
+        <TextView android:id="@+id/recent_week_wins"
             style="@style/App.TextView"
             fontPath="@string/app_font_helvetica_condensed_bold"
             android:layout_width="0dp"
@@ -111,7 +110,7 @@
             android:textColor="@color/text_color_light"
             android:textSize="20sp"/>
 
-        <TextView android:id="@+id/losses"
+        <TextView android:id="@+id/recent_week_losses"
             style="@style/App.TextView"
             fontPath="@string/app_font_helvetica_condensed_bold"
             android:layout_width="0dp"
@@ -124,7 +123,7 @@
             android:textColor="@color/text_color_light"
             android:textSize="20sp"/>
 
-        <TextView android:id="@+id/earnings"
+        <TextView android:id="@+id/recent_week_earnings"
             style="@style/App.TextView"
             fontPath="@string/app_font_helvetica_condensed_bold"
             android:layout_width="0dp"
@@ -137,7 +136,7 @@
             android:textColor="@color/text_color_light"
             android:textSize="20sp"/>
 
-        <TextView android:id="@+id/rating_change"
+        <TextView android:id="@+id/recent_week_rating_change"
             style="@style/App.TextView"
             fontPath="@string/app_font_helvetica_condensed_bold"
             android:layout_width="0dp"
@@ -157,42 +156,49 @@
         android:layout_marginTop="205dp"
         android:background="@color/background_inner_divider"/>
 
-    <ListView
-        android:id="@+id/main_recent_list"
+    <View
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginBottom="35dp"
         android:layout_marginTop="206dp"
-        android:background="@color/background_inner"
+        android:background="@color/background_inner"/>
+
+    <ListView
+        android:id="@+id/recent_drafts_list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="35dp"
+        android:layout_marginTop="206dp"
         android:gravity="center"/>
 
     <TextView
         android:id="@+id/recent_no_games"
         fontPath="@string/app_font_helvetica_condensed_bold"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginBottom="35dp"
-        android:layout_marginTop="206dp"
+        android:layout_width="@dimen/screen_width"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_margin="10dp"
         android:gravity="center"
         android:lineSpacingMultiplier="1.1"
-        android:textSize="32sp"
+        android:textColor="@color/text_color_dark"
+        android:textSize="28sp"
         android:visibility="gone"/>
 
     <TextView
         android:id="@+id/recent_scrubber_week"
         style="@style/App.TextView"
+        fontPath="@string/app_font_bold"
         android:layout_width="128dp"
         android:layout_height="64dp"
-        android:layout_above="@+id/main_recent_scrubber"
+        android:layout_above="@+id/recent_scrubber"
         android:layout_centerHorizontal="true"
-        android:gravity="center"
-        fontPath="@string/app_font_bold"
-        android:textSize="16sp"
         android:background="@drawable/asset_bg_scrubber"
-        android:text="Week 1"/>
+        android:gravity="center"
+        android:text="Week 1"
+        android:textSize="16sp"/>
 
     <com.blitz.app.screens.recent.RecentScreenScrubber
-        android:id="@+id/main_recent_scrubber"
+        android:id="@+id/recent_scrubber"
         android:layout_width="match_parent"
         android:layout_height="35dp"
         android:layout_alignParentBottom="true"
@@ -201,10 +207,9 @@
         android:orientation="horizontal"/>
 
     <View
-        android:id="@+id/main_recent_footer_border_0"
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:layout_alignTop="@+id/main_recent_scrubber"
+        android:layout_alignTop="@+id/recent_scrubber"
         android:background="@color/background_inner_divider"/>
 
 </RelativeLayout>

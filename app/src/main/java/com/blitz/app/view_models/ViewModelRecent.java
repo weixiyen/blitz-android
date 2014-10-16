@@ -96,8 +96,15 @@ public class ViewModelRecent extends ViewModel {
 
     // endregion
 
-    public int getCurrentYear() {
-        return  0;
+    /**
+     * Fetch current week in the season.
+     *
+     * @return Current week.
+     */
+    @SuppressWarnings("unused")
+    public int getCurrentWeek() {
+
+        return  mWeekCurrent;
     }
 
     public void updateWeek(final int week) {
@@ -108,62 +115,63 @@ public class ViewModelRecent extends ViewModel {
             return;
         }
 
-        LogHelper.log("Updating: " + week);
-
         // Set the current week.
         mWeekSelected = week;
 
         // Populate the UI with existing cached data if we already have it
-        if(mCache.get(week) != null) {
+        if (mCache.get(week) != null) {
             List<HeadToHeadDraft> drafts = mCache.get(week);
             mCallbacks.onDrafts(drafts, new Summary(drafts), week);
-        }
+        } else {
 
-        // Get fresh data from the server.
-        RestModelDraft.fetchDraftsForUser(mActivity, AuthHelper.instance().getUserId(),
-                week, mYearCurrent, null, new RestModelCallbacks<RestModelDraft>() {
+            // Get fresh data from the server.
+            RestModelDraft.fetchDraftsForUser(mActivity, AuthHelper.instance().getUserId(),
+                    week, mYearCurrent, null, new RestModelCallbacks<RestModelDraft>() {
 
-                    @Override
-                    public void onSuccess(List<RestModelDraft> drafts) {
+                        @Override
+                        public void onSuccess(List<RestModelDraft> drafts) {
 
-                        // If the week has since changed,
-                        // ignore these results.
-                        if (mWeekSelected != week) {
+                            // If the week has since changed,
+                            // ignore these results.
+                            if (mWeekSelected != week) {
 
-                            return;
-                        }
-
-                        List<HeadToHeadDraft> matches = new ArrayList<HeadToHeadDraft>(drafts.size());
-                        for (RestModelDraft draft : drafts) {
-                            final int p1index;
-                            final int p2index;
-                            if(AuthHelper.instance().getUserId().equals(draft.getUsers().get(0))) {
-                                p1index = 0;
-                                p2index = 1;
-                            } else {
-                                p1index = 1;
-                                p2index = 0;
+                                return;
                             }
-                            matches.add(new HeadToHeadDraft(
-                                    draft.getId(),
-                                    draft.getTeamName(p1index),
-                                    draft.getTeamRoster(p1index),
-                                    draft.getTeamPoints(p1index),
-                                    draft.getTeamRatingChange(p1index),
-                                    draft.getTeamName(p2index),
-                                    draft.getTeamRoster(p2index),
-                                    draft.getTeamPoints(p2index),
-                                    draft.getTeamRatingChange(p2index),
-                                    draft.getYear(),
-                                    draft.getWeek(),
-                                    draft.getStatus()
-                            ));
-                        }
-                        mCache.put(week, matches);
-                        mCallbacks.onDrafts(matches, new Summary(matches), week);
-                    }
-                });
 
+                            List<HeadToHeadDraft> matches = new ArrayList<HeadToHeadDraft>(drafts.size());
+                            for (RestModelDraft draft : drafts) {
+                                final int p1index;
+                                final int p2index;
+                                if(AuthHelper.instance().getUserId().equals(draft.getUsers().get(0))) {
+                                    p1index = 0;
+                                    p2index = 1;
+                                } else {
+                                    p1index = 1;
+                                    p2index = 0;
+                                }
+                                matches.add(new HeadToHeadDraft(
+                                        draft.getId(),
+                                        draft.getTeamName(p1index),
+                                        draft.getTeamRoster(p1index),
+                                        draft.getTeamPoints(p1index),
+                                        draft.getTeamRatingChange(p1index),
+                                        draft.getTeamName(p2index),
+                                        draft.getTeamRoster(p2index),
+                                        draft.getTeamPoints(p2index),
+                                        draft.getTeamRatingChange(p2index),
+                                        draft.getYear(),
+                                        draft.getWeek(),
+                                        draft.getStatus()
+                                ));
+                            }
+
+                            LogHelper.log("On drafts: " + week);
+
+                            mCache.put(week, matches);
+                            mCallbacks.onDrafts(matches, new Summary(matches), week);
+                        }
+                    });
+        }
     }
 
     public final static class Summary {
