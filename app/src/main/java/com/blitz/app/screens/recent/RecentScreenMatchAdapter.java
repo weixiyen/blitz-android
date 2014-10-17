@@ -39,7 +39,7 @@ public class RecentScreenMatchAdapter extends ArrayAdapter<ViewModelRecent.HeadT
 
         if (v == null) {
             v = LayoutInflater.from(mActivity)
-                    .inflate(R.layout.recent_screen_match_item, null);
+                    .inflate(R.layout.recent_screen_match_item, parent, false);
         }
 
         final ViewModelRecent.HeadToHeadDraft draft = mItems.get(position);
@@ -48,11 +48,10 @@ public class RecentScreenMatchAdapter extends ArrayAdapter<ViewModelRecent.HeadT
 
             int textColor = Color.rgb(251, 251, 251);
 
-            TextView player1Score = (TextView) v.findViewById(R.id.main_list_p1_score);
+            TextView player1Score = (TextView) v.findViewById(R.id.recent_match_p1_score);
             player1Score.setText(String.format("%.02f", draft.getPlayer1Score()));
-            player1Score.setTextColor(textColor);
 
-            TextView player2Score = (TextView) v.findViewById(R.id.main_list_p2_score);
+            TextView player2Score = (TextView) v.findViewById(R.id.recent_match_p1_score);
             player2Score.setText(String.format("%.02f", draft.getPlayer2Score()));
             player2Score.setTextColor(textColor);
 
@@ -64,9 +63,11 @@ public class RecentScreenMatchAdapter extends ArrayAdapter<ViewModelRecent.HeadT
                 player2Score.setTextColor(leaderColor);
             }
 
+            ((TextView)v.findViewById(R.id.recent_match_p1_name)).setText(draft.getPlayer1Name());
+            ((TextView)v.findViewById(R.id.recent_match_p2_name)).setText(draft.getPlayer2Name());
+
             TextView status = (TextView) v.findViewById(R.id.main_list_status);
-            status.setText(draft.getStatus() + "\n" +
-                    draft.getPlayer1Name() + " vs " + draft.getPlayer2Name());
+            status.setText(draft.getStatus());
 
             v.setOnClickListener(new View.OnClickListener() {
                 @Override
