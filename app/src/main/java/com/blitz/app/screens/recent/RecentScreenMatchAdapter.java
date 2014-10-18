@@ -23,11 +23,11 @@ import butterknife.InjectView;
  *
  * Created by Nate on 9/7/14.
  */
-public class RecentScreenMatchAdapter extends ArrayAdapter<ViewModelRecent.HeadToHeadDraft> {
+public class RecentScreenMatchAdapter extends ArrayAdapter<ViewModelRecent.SummaryDraft> {
 
-    private List<ViewModelRecent.HeadToHeadDraft> mItems;
+    private List<ViewModelRecent.SummaryDraft> mItems;
 
-    public RecentScreenMatchAdapter(List<ViewModelRecent.HeadToHeadDraft> items, Activity activity) {
+    public RecentScreenMatchAdapter(List<ViewModelRecent.SummaryDraft> items, Activity activity) {
         super(activity, R.layout.recent_screen_match_item, items);
 
         mItems = items;
@@ -49,7 +49,7 @@ public class RecentScreenMatchAdapter extends ArrayAdapter<ViewModelRecent.HeadT
         RecentScreenMatchItemViewHolder viewHolder =
                 (RecentScreenMatchItemViewHolder)convertView.getTag();
 
-        final ViewModelRecent.HeadToHeadDraft draft = mItems.get(position);
+        final ViewModelRecent.SummaryDraft draft = mItems.get(position);
 
         if (draft != null) {
 

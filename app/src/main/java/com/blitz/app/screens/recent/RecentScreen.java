@@ -74,7 +74,7 @@ public class RecentScreen extends BaseFragment implements ViewModelRecent.Callba
     public ViewModel onFetchViewModel() {
 
         if (mViewModel == null) {
-            mViewModel = new ViewModelRecent(getBaseActivity(), this, WEEKS_IN_SEASON);
+            mViewModel = new ViewModelRecent(getBaseActivity(), this);
         }
 
         return mViewModel;
@@ -155,7 +155,7 @@ public class RecentScreen extends BaseFragment implements ViewModelRecent.Callba
      *
      * @param drafts List of matches.
      */
-    private void setupGamesList(final List<ViewModelRecent.HeadToHeadDraft> drafts) {
+    private void setupGamesList(final List<ViewModelRecent.SummaryDraft> drafts) {
 
         // Either fade out the matches, or existing UI.
         View targetFrom = mRecentNoGames.getVisibility() == View.GONE
@@ -202,11 +202,11 @@ public class RecentScreen extends BaseFragment implements ViewModelRecent.Callba
      * setup the corresponding UI.
      *
      * @param drafts List of matches.
-     * @param summary Week summary.
+     * @param summaryDrafts Week summary.
      * @param week Current week.
      */
     @Override
-    public void onDrafts(List<ViewModelRecent.HeadToHeadDraft> drafts, ViewModelRecent.Summary summary, int week) {
+    public void onDrafts(List<ViewModelRecent.SummaryDraft> drafts, ViewModelRecent.SummaryDrafts summaryDrafts, int week) {
 
         if (mRecentHeader != null) {
             mRecentHeader.setText("Week " + (week + 1));
@@ -218,13 +218,13 @@ public class RecentScreen extends BaseFragment implements ViewModelRecent.Callba
 
         // Set summary info.
         mRecentWeekWins
-                .setText(String.valueOf(summary.getWins()));
+                .setText(String.valueOf(summaryDrafts.getWins()));
         mRecentWeekLosses
-                .setText(String.valueOf(summary.getLosses()));
+                .setText(String.valueOf(summaryDrafts.getLosses()));
         mRecentWeekEarnings
-                .setText(formatEarnings(summary.getEarningsCents()));
+                .setText(formatEarnings(summaryDrafts.getEarningsCents()));
         mRecentWeekRatingChange
-                .setText(formatRatingChange(summary.getRatingChange()));
+                .setText(formatRatingChange(summaryDrafts.getRatingChange()));
 
         if (drafts.size() > 0) {
 

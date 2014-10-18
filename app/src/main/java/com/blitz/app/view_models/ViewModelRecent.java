@@ -1,14 +1,11 @@
 package com.blitz.app.view_models;
 
-import android.util.SparseArray;
-
 import com.blitz.app.rest_models.RestModelCallback;
 import com.blitz.app.rest_models.RestModelCallbacks;
 import com.blitz.app.rest_models.RestModelDraft;
 import com.blitz.app.rest_models.RestModelPreferences;
 import com.blitz.app.utilities.android.BaseActivity;
 import com.blitz.app.utilities.authentication.AuthHelper;
-import com.blitz.app.utilities.logging.LogHelper;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,9 +22,6 @@ public class ViewModelRecent extends ViewModel {
 
     // View model callbacks.
     private final Callbacks mCallbacks;
-
-    // Draft cache // TODO: Refactor HeadToHeadDraft
-    private final SparseArray<List<HeadToHeadDraft>> mCache;
 
     // Current draft week and year.
     private static Integer mYearCurrent;
@@ -46,16 +40,12 @@ public class ViewModelRecent extends ViewModel {
      *
      * @param activity Target activity.
      * @param callbacks Target callbacks.
-     * @param weeks Total weeks.
      */
-    public ViewModelRecent(BaseActivity activity, Callbacks callbacks, int weeks) {
+    public ViewModelRecent(BaseActivity activity, Callbacks callbacks) {
         super(activity, callbacks);
 
         // Set the callbacks.
         mCallbacks = callbacks;
-
-        // Create cache of some sort. TODO: Revise
-        mCache = new SparseArray<List<HeadToHeadDraft>>(weeks);
     }
 
     // endregion
@@ -95,6 +85,9 @@ public class ViewModelRecent extends ViewModel {
 
     // endregion
 
+    // region Public Methods
+    // =============================================================================================
+
     /**
      * Fetch current week in the season.
      *
@@ -106,6 +99,13 @@ public class ViewModelRecent extends ViewModel {
         return  mWeekCurrent;
     }
 
+    /**
+     * Update the view model for the
+     * specified week.
+     *
+     * @param week Specified week.
+     */
+    @SuppressWarnings("unused")
     public void updateWeek(final int week) {
 
         // Only update if the week changes.
@@ -117,204 +117,219 @@ public class ViewModelRecent extends ViewModel {
         // Set the current week.
         mWeekSelected = week;
 
-        // Populate the UI with existing cached data if we already have it
-        if (mCache.get(week) != null) {
-            List<HeadToHeadDraft> drafts = mCache.get(week);
-            mCallbacks.onDrafts(drafts, new Summary(drafts), week);
-        } else {
+        RestModelDraft.fetchDraftsForUser(mActivity, AuthHelper.instance().getUserId(),
+                week, mYearCurrent, null, new RestModelCallbacks<RestModelDraft>() {
 
-            // Get fresh data from the server.
-            RestModelDraft.fetchDraftsForUser(mActivity, AuthHelper.instance().getUserId(),
-                    week, mYearCurrent, null, new RestModelCallbacks<RestModelDraft>() {
+                    @Override
+                    public void onSuccess(List<RestModelDraft> object) {
 
-                        @Override
-                        public void onSuccess(List<RestModelDraft> drafts) {
+                        processRecentDrafts(object, week);
+                    }
+                });
+    }
 
-                            // If the week has since changed,
-                            // ignore these results.
-                            if (mWeekSelected != week) {
+    // endregion
 
-                                return;
-                            }
+    // region Private Methods
+    // =============================================================================================
 
-                            List<HeadToHeadDraft> matches = new ArrayList<HeadToHeadDraft>(drafts.size());
-                            for (RestModelDraft draft : drafts) {
-                                final int p1index;
-                                final int p2index;
-                                if(AuthHelper.instance().getUserId().equals(draft.getUsers().get(0))) {
-                                    p1index = 0;
-                                    p2index = 1;
-                                } else {
-                                    p1index = 1;
-                                    p2index = 0;
-                                }
-                                matches.add(new HeadToHeadDraft(
-                                        draft.getId(),
-                                        draft.getTeamName(p1index),
-                                        draft.getTeamRoster(p1index),
-                                        draft.getTeamPoints(p1index),
-                                        draft.getTeamRatingChange(p1index),
-                                        draft.getTeamName(p2index),
-                                        draft.getTeamRoster(p2index),
-                                        draft.getTeamPoints(p2index),
-                                        draft.getTeamRatingChange(p2index),
-                                        draft.getYear(),
-                                        draft.getWeek(),
-                                        draft.getStatus()
-                                ));
-                            }
+    /**
+     * Process draft fetch results.
+     *
+     * @param drafts Drafts list.
+     * @param week Selected week.
+     */
+    private void processRecentDrafts(List<RestModelDraft> drafts, int week) {
 
-                            LogHelper.log("On drafts: " + week);
+        // If the week has since changed,
+        // ignore these results.
+        if (mWeekSelected != week) {
 
-                            mCache.put(week, matches);
-                            mCallbacks.onDrafts(matches, new Summary(matches), week);
-                        }
-                    });
+            return;
+        }
+
+        List<SummaryDraft> matches = new ArrayList<SummaryDraft>();
+
+        for (RestModelDraft draft : drafts) {
+
+            final int p1Index;
+            final int p2Index;
+
+            if (AuthHelper.instance().getUserId()
+                    .equals(draft.getUsers().get(0))) {
+
+                p1Index = 0;
+                p2Index = 1;
+            } else {
+                p1Index = 1;
+                p2Index = 0;
+            }
+
+            matches.add(new SummaryDraft(
+                    draft.getId(),
+                    draft.getTeamName(p1Index),
+                    draft.getTeamPoints(p1Index),
+                    draft.getTeamRatingChange(p1Index),
+                    draft.getTeamName(p2Index),
+                    draft.getTeamPoints(p2Index),
+                    draft.getWeek(),
+                    draft.getStatus()
+            ));
+        }
+
+        if (mCallbacks != null) {
+            mCallbacks.onDrafts(matches, new SummaryDrafts(matches), week);
         }
     }
 
-    public final static class Summary {
+    // endregion
 
-        private final List<HeadToHeadDraft> mDrafts;
+    // region Inner Classes
+    // =============================================================================================
+
+    /**
+     * Summary of drafts.
+     */
+    public final static class SummaryDrafts {
+
+        private final List<SummaryDraft> mDrafts;
+
         private final int mRatingChange;
         private final int mEarnings;
         private final int mWins;
         private final int mLosses;
 
+        private SummaryDrafts(List<SummaryDraft> drafts) {
 
-        Summary(List<HeadToHeadDraft> drafts) {
             mDrafts = drafts;
 
             int ratingChange = 0;
             int wins = 0;
             int losses = 0;
-            for(HeadToHeadDraft draft: mDrafts) {
+
+            for (SummaryDraft draft: mDrafts) {
 
                 ratingChange += draft.getPlayer1RatingChange();
-                if(draft.getPlayer1Score() > draft.getPlayer2Score()) {
+
+                if (draft.getPlayer1Score() > draft.getPlayer2Score()) {
                     wins += 1;
-                } else if(draft.getPlayer1Score() < draft.getPlayer2Score()) {
+                } else if (draft.getPlayer1Score() < draft.getPlayer2Score()) {
                     losses += 1;
                 }
             }
+
             mRatingChange = ratingChange;
             mWins = wins;
             mLosses = losses;
 
-            mEarnings = 0; // TODO calculate earnings
-
+            mEarnings = 0;
         }
 
         public int getWins() {
+
             return mWins;
         }
 
         public int getLosses() {
+
             return mLosses;
         }
 
         public int getEarningsCents() {
+
             return mEarnings;
         }
 
         public int getRatingChange() {
+
             return mRatingChange;
         }
     }
 
-    public final static class HeadToHeadDraft {
+    /**
+     * Summary of a draft.
+     */
+    public final static class SummaryDraft {
 
         private final String mPlayer1Name;
         private final float  mPlayer1Score;
         private final int    mPlayer1RatingChange;
-        private final List<String> mPlayer1Picks;
 
         private final String mPlayer2Name;
         private final float  mPlayer2Score;
-        private final int    mPlayer2RatingChange;
-        private final List<String> mPlayer2Picks;
 
-        private final int mYear;
         private final int mWeek;
         private final String mStatus;
         private final String mId;
 
-        public HeadToHeadDraft(String id, String player1Name, List<String> player1Picks, float player1Score, int player1RatingChange,
-                               String player2Name, List<String> player2Picks, float player2Score, int player2RatingChange,
-                               int year, int week, String status) {
+        private SummaryDraft(String draftId,
+                             String p1UserName, float p1Score, int p1RatingChange,
+                             String p2UserName, float p2Score, int week, String status) {
 
-            mId = id;
+            mId = draftId;
 
-            mPlayer1Name  = player1Name;
-            mPlayer1Score = player1Score;
-            mPlayer1Picks = player1Picks;
-            mPlayer1RatingChange = player1RatingChange;
+            mPlayer1Name  = p1UserName;
+            mPlayer1Score = p1Score;
+            mPlayer1RatingChange = p1RatingChange;
 
 
-            mPlayer2Name  = player2Name;
-            mPlayer2Score = player2Score;
-            mPlayer2Picks = player2Picks;
-            mPlayer2RatingChange = player2RatingChange;
+            mPlayer2Name  = p2UserName;
+            mPlayer2Score = p2Score;
 
-            mYear = year;
             mWeek = week;
-            mStatus       = status;
+            mStatus = status;
         }
 
         public String getPlayer1Name() {
+
             return mPlayer1Name;
         }
 
         public float getPlayer1Score() {
+
             return mPlayer1Score;
         }
 
         public int getPlayer1RatingChange() {
+
             return mPlayer1RatingChange;
         }
 
-        public int getPlayer2RatingChange() {
-            return mPlayer2RatingChange;
-        }
-
         public String getPlayer2Name() {
+
             return mPlayer2Name;
         }
 
         public float getPlayer2Score() {
+
             return mPlayer2Score;
         }
 
         public String getStatus() {
+
             return mStatus;
         }
 
-        public List<String> getPlayer1Picks() {
-            return mPlayer1Picks;
+        public int getWeek() {
+
+            return mWeek;
         }
-
-        public List<String> getPlayer2Picks() {
-            return mPlayer2Picks;
-        }
-
-        public int getYear() { return mYear; }
-
-        public int getWeek() { return mWeek; }
 
         public String getId() {
+
             return mId;
         }
     }
+
+    // endregion
 
     // region View Model Callbacks
     // =============================================================================================
 
     public interface Callbacks extends ViewModel.Callbacks {
 
-        public void onDrafts(List<HeadToHeadDraft> drafts, Summary summary, int week);
+        public void onDrafts(List<SummaryDraft> drafts, SummaryDrafts summaryDrafts, int week);
     }
 
     // endregion
 }
-
-
