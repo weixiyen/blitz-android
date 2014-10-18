@@ -82,18 +82,17 @@ public class LeaderboardListAdapter extends ArrayAdapter<String> {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
 
-        View view = convertView;
-
-        if (view == null) {
-            view = LayoutInflater.from(getContext())
+        if (convertView == null) {
+            convertView = LayoutInflater.from(getContext())
                     .inflate(R.layout.leaderboard_list_item, parent, false);
 
             // Create and set associated view holder.
-            view.setTag(new LeaderboardListItemViewHolder(view));
+            convertView.setTag(new LeaderboardListItemViewHolder(convertView));
         }
 
         // Fetch view holder.
-        LeaderboardListItemViewHolder viewHolder = (LeaderboardListItemViewHolder)view.getTag();
+        LeaderboardListItemViewHolder viewHolder =
+                (LeaderboardListItemViewHolder)convertView.getTag();
 
         // Set the text.
         viewHolder.mLeaderboardIndex.setText(String.format("%03d", position + 1));
@@ -106,7 +105,7 @@ public class LeaderboardListAdapter extends ArrayAdapter<String> {
         viewHolder.mLeaderboardHelmet.setImageBitmap(null);
         viewHolder.mLeaderboardHelmet.setImageUrl(mUserAvatarUrls.get(position));
 
-        return view;
+        return convertView;
     }
 
     // endregion
