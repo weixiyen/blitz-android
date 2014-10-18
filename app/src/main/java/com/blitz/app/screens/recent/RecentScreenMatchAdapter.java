@@ -2,7 +2,6 @@ package com.blitz.app.screens.recent;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,9 +10,13 @@ import android.widget.TextView;
 
 import com.blitz.app.R;
 import com.blitz.app.screens.matchup.MatchupScreen;
+import com.blitz.app.utilities.image.BlitzImageView;
 import com.blitz.app.view_models.ViewModelRecent;
 
 import java.util.List;
+
+import butterknife.ButterKnife;
+import butterknife.InjectView;
 
 /**
  * An ArrayAdapter for match infos.
@@ -23,63 +26,91 @@ import java.util.List;
 public class RecentScreenMatchAdapter extends ArrayAdapter<ViewModelRecent.HeadToHeadDraft> {
 
     private List<ViewModelRecent.HeadToHeadDraft> mItems;
-    private final Activity mActivity;
 
     public RecentScreenMatchAdapter(List<ViewModelRecent.HeadToHeadDraft> items, Activity activity) {
-
         super(activity, R.layout.recent_screen_match_item, items);
+
         mItems = items;
-        mActivity = activity;
     }
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
 
-        View v = convertView;
-
-        if (v == null) {
-            v = LayoutInflater.from(mActivity)
+        if (convertView == null) {
+            convertView = LayoutInflater.from(getContext())
                     .inflate(R.layout.recent_screen_match_item, parent, false);
+
+            // Create and set the view holder.
+            // Create and set the view holder.
+            convertView.setTag(new RecentScreenMatchItemViewHolder(convertView));
         }
+
+        // Fetch view holder.
+        RecentScreenMatchItemViewHolder viewHolder =
+                (RecentScreenMatchItemViewHolder)convertView.getTag();
 
         final ViewModelRecent.HeadToHeadDraft draft = mItems.get(position);
 
-        if(draft != null) {
+        if (draft != null) {
 
-            int textColor = Color.rgb(251, 251, 251);
+            // Set match scores.
+            viewHolder.mRecentP1Score.setText(String.format("%.02f", draft.getPlayer1Score()));
+            viewHolder.mRecentP2Score.setText(String.format("%.02f", draft.getPlayer2Score()));
 
-            TextView player1Score = (TextView) v.findViewById(R.id.recent_match_p1_score);
-            player1Score.setText(String.format("%.02f", draft.getPlayer1Score()));
+            // Set match names.
+            viewHolder.mRecentP1Name.setText(draft.getPlayer1Name());
+            viewHolder.mRecentP2Name.setText(draft.getPlayer2Name());
 
-            TextView player2Score = (TextView) v.findViewById(R.id.recent_match_p1_score);
-            player2Score.setText(String.format("%.02f", draft.getPlayer2Score()));
-            player2Score.setTextColor(textColor);
+            // Set match status.
+            viewHolder.mRecentStatus.setText(draft.getStatus());
 
+            /*
             int leaderColor = Color.rgb(0, 255, 255);
 
-            if(draft.getPlayer1Score() > draft.getPlayer2Score()) {
+            if (draft.getPlayer1Score() > draft.getPlayer2Score()) {
                 player1Score.setTextColor(leaderColor);
             } else if(draft.getPlayer2Score() > draft.getPlayer1Score()) {
                 player2Score.setTextColor(leaderColor);
             }
+            */
 
-            ((TextView)v.findViewById(R.id.recent_match_p1_name)).setText(draft.getPlayer1Name());
-            ((TextView)v.findViewById(R.id.recent_match_p2_name)).setText(draft.getPlayer2Name());
+            convertView.setOnClickListener(new View.OnClickListener() {
 
-            TextView status = (TextView) v.findViewById(R.id.main_list_status);
-            status.setText(draft.getStatus());
-
-            v.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Intent intent = new Intent(mActivity, MatchupScreen.class);
+                    Intent intent = new Intent(getContext(), MatchupScreen.class);
 
                     intent.putExtra(MatchupScreen.PARAM_DRAFT_ID, draft.getId());
-                    mActivity.startActivity(intent);
+                    getContext().startActivity(intent);
                 }
             });
         }
 
-        return v;
+        return convertView;
     }
+
+    // region View Holder
+    // =============================================================================================
+
+    /**
+     * Quick lookup into a views subviews.
+     */
+    static class RecentScreenMatchItemViewHolder {
+
+        @InjectView(R.id.recent_match_p1_avatar) BlitzImageView mRecentP1Avatar;
+        @InjectView(R.id.recent_match_p1_name)         TextView mRecentP1Name;
+        @InjectView(R.id.recent_match_p1_score)        TextView mRecentP1Score;
+        @InjectView(R.id.recent_match_p2_avatar) BlitzImageView mRecentP2Avatar;
+        @InjectView(R.id.recent_match_p2_name)         TextView mRecentP2Name;
+        @InjectView(R.id.recent_match_p2_score)        TextView mRecentP2Score;
+        @InjectView(R.id.recent_match_status)          TextView mRecentStatus;
+
+        public RecentScreenMatchItemViewHolder(View matchListItem) {
+
+            // Map the member variables.
+            ButterKnife.inject(this, matchListItem);
+        }
+    }
+
+    // endregion
 }

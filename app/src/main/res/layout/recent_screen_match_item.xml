@@ -1,7 +1,7 @@
 <LinearLayout
-    android:id="@+id/main_recent_list_item"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/main_recent_list_item"
     android:layout_width="match_parent"
     android:layout_height="60dp"
     android:layout_gravity="center"
@@ -15,9 +15,10 @@
         android:layout_height="24dp"
         android:layout_gravity="top"
         android:layout_marginLeft="10dp"
-        android:layout_marginTop="7dp"
+        android:layout_marginTop="8dp"
         android:contentDescription="@string/empty_string"
-        android:src="@drawable/asset_bg_helmet_sample" />
+        android:src="@drawable/asset_bg_helmet_sample"
+        app:clearInitialContent="true" />
 
     <LinearLayout
         android:layout_width="80dp"
@@ -49,15 +50,16 @@
             app:clearInitialContent="true"/>
     </LinearLayout>
 
-    <TextView
-        android:id="@+id/main_list_status"
+    <com.blitz.app.utilities.textview.BlitzTextView
+        android:id="@+id/recent_match_status"
         style="@style/ListItemSmall"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:gravity="center"
         android:text="@string/lorum_ipsum_word"
-        android:textAllCaps="true"/>
+        android:textAllCaps="true"
+        app:clearInitialContent="true"/>
 
     <LinearLayout
         android:layout_width="80dp"
@@ -89,15 +91,15 @@
             app:clearInitialContent="true"/>
     </LinearLayout>
 
-
     <com.blitz.app.utilities.image.BlitzImageView
         android:id="@+id/recent_match_p2_avatar"
         android:layout_width="24dp"
         android:layout_height="24dp"
         android:layout_gravity="top"
         android:layout_marginRight="10dp"
-        android:layout_marginTop="7dp"
+        android:layout_marginTop="8dp"
         android:contentDescription="@string/empty_string"
         android:scaleX="-1"
-        android:src="@drawable/asset_bg_helmet_sample" />
+        android:src="@drawable/asset_bg_helmet_sample"
+        app:clearInitialContent="true" />
 </LinearLayout>
