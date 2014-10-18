@@ -219,11 +219,17 @@ public class PlayScreen extends BaseFragment implements ViewModelPlay.Callbacks 
         if (queueAvailable) {
 
             // Show the play UI.
-            AnimHelperFade.setVisibility(mPlayContainerAction, View.VISIBLE, animationTime);
             AnimHelperFade.setVisibility(mPlayContainerFooter, View.VISIBLE, animationTime);
+            AnimHelperFade.setVisibility(mPlayContainerAction, View.VISIBLE, animationTime,
+                    false, false, new Runnable() {
 
-            // Play button so shiny.
-            setupSpinningPlayButton(true);
+                        @Override
+                        public void run() {
+
+                            // Play button so shiny.
+                            setupSpinningPlayButton(true);
+                        }
+                    });
         } else {
 
             // Show the blocked container.
