@@ -27,7 +27,7 @@
         android:gravity="left|center_vertical"
         android:orientation="vertical">
 
-        <com.blitz.app.utilities.textview.BlitzTextView
+        <TextView
             android:id="@+id/recent_match_p1_name"
             style="@style/App.TextView"
             fontPath="@string/app_font_helvetica_condensed_bold"
@@ -35,10 +35,9 @@
             android:layout_height="wrap_content"
             android:singleLine="true"
             android:text="@string/lorum_ipsum_word"
-            android:textSize="14sp"
-            app:clearInitialContent="true"/>
+            android:textSize="14sp"/>
 
-        <com.blitz.app.utilities.textview.BlitzTextView
+        <TextView
             android:id="@+id/recent_match_p1_score"
             style="@style/App.TextView"
             fontPath="@string/app_font_helvetica_condensed_bold"
@@ -46,8 +45,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="-6dp"
             android:text="@string/number_large"
-            android:textSize="22sp"
-            app:clearInitialContent="true"/>
+            android:textSize="22sp"/>
     </LinearLayout>
 
     <com.blitz.app.utilities.textview.BlitzTextView
@@ -68,7 +66,7 @@
         android:gravity="right|center_vertical"
         android:orientation="vertical">
 
-        <com.blitz.app.utilities.textview.BlitzTextView
+        <TextView
             android:id="@+id/recent_match_p2_name"
             style="@style/App.TextView"
             fontPath="@string/app_font_helvetica_condensed_bold"
@@ -76,10 +74,9 @@
             android:layout_height="wrap_content"
             android:singleLine="true"
             android:text="@string/lorum_ipsum_word"
-            android:textSize="14sp"
-            app:clearInitialContent="true"/>
+            android:textSize="14sp"/>
 
-        <com.blitz.app.utilities.textview.BlitzTextView
+        <TextView
             android:id="@+id/recent_match_p2_score"
             style="@style/App.TextView"
             fontPath="@string/app_font_helvetica_condensed_bold"
@@ -87,8 +84,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="-6dp"
             android:text="@string/number_large"
-            android:textSize="22sp"
-            app:clearInitialContent="true"/>
+            android:textSize="22sp"/>
     </LinearLayout>
 
     <com.blitz.app.utilities.image.BlitzImageView
