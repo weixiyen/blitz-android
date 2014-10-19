@@ -102,7 +102,7 @@ public class RecentScreen extends BaseFragment implements ViewModelRecent.Callba
             @Override
             public void run() {
 
-                if (week <= (mViewModel.getCurrentWeek() + 1)) {
+                if (week <= mViewModel.getCurrentWeek()) {
 
                     // Serious message.
                     mRecentNoGames.setText("You did not play any games during week " + week + "!");
@@ -163,7 +163,7 @@ public class RecentScreen extends BaseFragment implements ViewModelRecent.Callba
 
         // Update the week.
         if (mViewModel != null) {
-            mViewModel.updateWeek(position);
+            mViewModel.updateWeek(position + 1);
         }
     }
 
@@ -179,7 +179,7 @@ public class RecentScreen extends BaseFragment implements ViewModelRecent.Callba
     public void onDrafts(List<ViewModelRecent.SummaryDraft> drafts, ViewModelRecent.SummaryDrafts summaryDrafts, int week) {
 
         if (mRecentHeader != null) {
-            mRecentHeader.setText("Week " + (week + 1));
+            mRecentHeader.setText("Week " + week);
         }
 
         if (mRecentScrubber != null) {
@@ -204,7 +204,7 @@ public class RecentScreen extends BaseFragment implements ViewModelRecent.Callba
         } else {
 
             // No games played.
-            setupGamesListEmpty(week + 1);
+            setupGamesListEmpty(week);
         }
     }
 
