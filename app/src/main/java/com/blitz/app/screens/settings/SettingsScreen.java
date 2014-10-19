@@ -35,23 +35,23 @@ public class SettingsScreen extends BaseFragment implements ViewModelSettings.Ca
     // =============================================================================================
 
     // Toggle switches.
-    @InjectView(R.id.main_screen_fragment_settings_toggle_music)
+    @InjectView(R.id.settings_toggle_music)
     Switch mSettingsToggleMusic;
-    @InjectView(R.id.main_screen_fragment_settings_toggle_sound)
+    @InjectView(R.id.settings_toggle_sound)
     Switch mSettingsToggleSound;
 
     // Reset button.
-    @InjectView(R.id.main_settings_reset)
+    @InjectView(R.id.settings_reset)
     View mSettingsReset;
-    @InjectView(R.id.main_settings_reset_border)
+    @InjectView(R.id.settings_reset_border)
     View mSettingsResetBorder;
 
     // Settings email button.
-    @InjectView(R.id.main_settings_email)
+    @InjectView(R.id.settings_email)
     BlitzTextView mSettingsEmail;
 
     // Helmet view pager.
-    @InjectView(R.id.main_settings_carousel)
+    @InjectView(R.id.settings_carousel)
     ViewPager mCarouselViewPager;
 
     // View model.
@@ -106,7 +106,7 @@ public class SettingsScreen extends BaseFragment implements ViewModelSettings.Ca
     /**
      * Toggle music setting.
      */
-    @OnClick(R.id.main_screen_fragment_settings_toggle_music) @SuppressWarnings("unused")
+    @OnClick(R.id.settings_toggle_music) @SuppressWarnings("unused")
     public void toggleMusic() {
 
         // Update the music disabled flag.
@@ -119,7 +119,7 @@ public class SettingsScreen extends BaseFragment implements ViewModelSettings.Ca
     /**
      * Show terms of use.
      */
-    @OnClick(R.id.main_settings_terms_of_use) @SuppressWarnings("unused")
+    @OnClick(R.id.settings_terms_of_use) @SuppressWarnings("unused")
     public void termsOfUseClicked() {
 
         Intent intent = new Intent(this.getActivity(), WebScreen.class);
@@ -136,7 +136,7 @@ public class SettingsScreen extends BaseFragment implements ViewModelSettings.Ca
     /**
      * Show privacy policy.
      */
-    @OnClick(R.id.main_settings_privacy_policy) @SuppressWarnings("unused")
+    @OnClick(R.id.settings_privacy_policy) @SuppressWarnings("unused")
     public void privacyPolicyClicked() {
 
         Intent intent = new Intent(this.getActivity(), WebScreen.class);
@@ -150,10 +150,28 @@ public class SettingsScreen extends BaseFragment implements ViewModelSettings.Ca
         startActivity(intent);
     }
 
+    @OnClick(R.id.settings_support) @SuppressWarnings("unused")
+    public void supportClicked() {
+
+        // Create a send action.
+        Intent intent = new Intent(Intent.ACTION_SEND);
+
+        // Set it to email type.
+        intent.setType("message/rfc822");
+        intent.putExtra(Intent.EXTRA_EMAIL, new String[] { "support@blitzstudios.net" });
+
+        try {
+
+            // Attempt to open an email activity.
+            startActivity(Intent.createChooser(intent, "Contact support"));
+
+        } catch (Exception ignored) { }
+    }
+
     /**
      * Log out user when clicked.
      */
-    @OnClick(R.id.main_settings_logout) @SuppressWarnings("unused")
+    @OnClick(R.id.settings_logout) @SuppressWarnings("unused")
     public void logoutClicked() {
 
         // Sign out user.
@@ -165,7 +183,7 @@ public class SettingsScreen extends BaseFragment implements ViewModelSettings.Ca
     /**
      * Reset all app data when clicked.
      */
-    @OnClick(R.id.main_settings_reset) @SuppressWarnings("unused")
+    @OnClick(R.id.settings_reset) @SuppressWarnings("unused")
     public void resetClicked() {
 
         // Clear app data.

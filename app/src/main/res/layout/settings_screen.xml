@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="${packageName}.${activityClass}"
-    tools:ignore="ButtonStyle,UnusedAttribute">
+    tools:ignore="ButtonStyle,UnusedAttribute,RelativeOverlap">
 
     <com.blitz.app.utilities.image.BlitzImageViewPlus
         android:layout_width="match_parent"
@@ -15,7 +15,7 @@
         app:scaleType="topCrop" />
 
     <TextView
-        android:id="@+id/main_settings_header"
+        android:id="@+id/settings_header"
         style="@style/App.NavBar"
         android:layout_height="110dp"
         android:paddingTop="50dp"
@@ -24,7 +24,7 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:layout_alignBottom="@+id/main_settings_header"
+        android:layout_alignBottom="@+id/settings_header"
         android:background="@color/background_inner_divider"/>
 
     <ScrollView
@@ -40,7 +40,7 @@
             android:orientation="vertical">
 
             <android.support.v4.view.ViewPager
-                android:id="@+id/main_settings_carousel"
+                android:id="@+id/settings_carousel"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/helmet_size"
                 android:background="@color/background_inner_dark"
@@ -58,7 +58,7 @@
                 android:background="@color/background_inner_divider"/>
 
             <com.blitz.app.utilities.textview.BlitzTextView
-                android:id="@+id/main_settings_email"
+                android:id="@+id/settings_email"
                 style="@style/App.TextView"
                 fontPath="@string/app_font_helvetica_condensed_bold"
                 android:layout_width="match_parent"
@@ -98,7 +98,7 @@
                 android:background="@color/background_inner_divider"/>
 
             <Switch
-                android:id="@+id/main_screen_fragment_settings_toggle_sound"
+                android:id="@+id/settings_toggle_sound"
                 fontPath="@string/app_font_helvetica_condensed_bold"
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
@@ -116,7 +116,7 @@
                 android:background="@color/background_inner_divider"/>
 
             <Switch
-                android:id="@+id/main_screen_fragment_settings_toggle_music"
+                android:id="@+id/settings_toggle_music"
                 fontPath="@string/app_font_helvetica_condensed_bold"
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
@@ -363,7 +363,7 @@
                 android:background="@color/background_inner_divider"/>
 
             <Button
-                android:id="@+id/main_settings_terms_of_use"
+                android:id="@+id/settings_terms_of_use"
                 style="@style/App.Button"
                 fontPath="@string/app_font_helvetica_condensed_bold"
                 android:layout_width="match_parent"
@@ -383,7 +383,7 @@
                 android:background="@color/background_inner_divider"/>
 
             <Button
-                android:id="@+id/main_settings_privacy_policy"
+                android:id="@+id/settings_privacy_policy"
                 style="@style/App.Button"
                 fontPath="@string/app_font_helvetica_condensed_bold"
                 android:layout_width="match_parent"
@@ -402,8 +402,49 @@
                 android:layout_height="1dp"
                 android:background="@color/background_inner_divider"/>
 
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:background="@color/background_transparent">
+
+                <TextView
+                    android:id="@+id/settings_support"
+                    style="@style/App.TextView"
+                    fontPath="@string/app_font_helvetica_condensed_bold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:textColor="@color/text_color_light_grey"
+                    android:layout_gravity="center_horizontal"
+                    android:gravity="center"
+                    android:paddingLeft="25dp"
+                    android:paddingRight="25dp"
+                    android:text="@string/contact_us"
+                    android:textSize="16sp"/>
+
+                <com.blitz.app.utilities.textview.BlitzTextView
+                    android:id="@+id/settings_version"
+                    style="@style/App.TextView"
+                    fontPath="@string/app_font_helvetica_condensed_bold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:textColor="@color/text_color_light_grey"
+                    android:layout_gravity="center_horizontal"
+                    android:gravity="center"
+                    android:paddingLeft="25dp"
+                    android:layout_alignParentRight="true"
+                    android:paddingRight="25dp"
+                    android:alpha=".75"
+                    android:text="@string/version"
+                    android:textSize="12sp"/>
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/background_inner_divider"/>
+
             <Button
-                android:id="@+id/main_settings_logout"
+                android:id="@+id/settings_logout"
                 style="@style/App.Button"
                 fontPath="@string/app_font_helvetica_condensed_bold"
                 android:layout_width="match_parent"
@@ -417,13 +458,13 @@
                 android:textSize="16sp"/>
 
             <View
-                android:id="@+id/main_settings_reset_border"
+                android:id="@+id/settings_reset_border"
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:background="@color/background_inner_divider"/>
 
             <Button
-                android:id="@+id/main_settings_reset"
+                android:id="@+id/settings_reset"
                 style="@style/App.Button"
                 fontPath="@string/app_font_helvetica_condensed_bold"
                 android:layout_width="match_parent"
@@ -435,11 +476,6 @@
                 android:text="@string/reset"
                 android:textColor="@color/text_color_light_grey"
                 android:textSize="16sp"/>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="@color/background_inner_divider"/>
         </LinearLayout>
     </ScrollView>
 </RelativeLayout>
