@@ -243,7 +243,9 @@ public final class RestModelDraft extends RestModel {
      */
     @SuppressWarnings("unused")
     public int getTeamRatingChange(int team) {
+
         String key = mUsers.get(team);
+
         final int change;
         if(mRatingChange.containsKey(key)) {
             change = mRatingChange.get(key);
@@ -426,7 +428,19 @@ public final class RestModelDraft extends RestModel {
      */
     @SuppressWarnings("unused")
     public Map<String, List<String>> getRosters() {
+
         return mRosters;
+    }
+
+    /**
+     * Fetch user info dictionary.
+     *
+     * @return User info dictionary.
+     */
+    @SuppressWarnings("unused")
+    public Map<String, RestModelUser> getUserInfo() {
+
+        return mUserInfo;
     }
 
     /**
