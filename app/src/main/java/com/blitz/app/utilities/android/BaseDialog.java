@@ -6,7 +6,6 @@ import android.graphics.drawable.ColorDrawable;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
 import android.widget.PopupWindow;
 
 import com.blitz.app.R;
@@ -149,16 +148,19 @@ public class BaseDialog {
                     @Override
                     public void run() {
 
-                        // Show at top corner of the window.
-                        mPopupWindow.showAtLocation(mActivity.getWindow().getDecorView(),
-                                Gravity.NO_GRAVITY, 0, 0);
+                        if (!mActivity.isFinishing()) {
 
-                        // Try to show dialog content.
-                        tryShowDialogContent(showContent);
+                            // Show at top corner of the window.
+                            mPopupWindow.showAtLocation(mActivity.getWindow().getDecorView(),
+                                    Gravity.NO_GRAVITY, 0, 0);
+
+                            // Try to show dialog content.
+                            tryShowDialogContent(showContent);
+                        }
                     }
                 });
 
-            } catch (WindowManager.BadTokenException ignored) {  }
+            } catch (Exception ignored) {  }
 
         } else {
 
