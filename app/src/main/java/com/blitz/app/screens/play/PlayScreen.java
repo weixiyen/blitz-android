@@ -105,13 +105,27 @@ public class PlayScreen extends BaseFragment implements ViewModelPlay.Callbacks 
     }
 
     /**
-     * Start animations.
+     * Stop animations.
      */
     @Override
     public void onPause() {
         super.onPause();
 
         setupSpinningPlayButton(false);
+    }
+
+    /**
+     * Resume animations.
+     */
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        // If the play container is visible, resume animations.
+        if (mPlayContainerAction.getVisibility() == View.VISIBLE) {
+
+            setupSpinningPlayButton(true);
+        }
     }
 
     /**
