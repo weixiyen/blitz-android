@@ -54,12 +54,16 @@ public class RecentScreenMatchAdapter extends ArrayAdapter<ViewModelRecent.Summa
         if (draft != null) {
 
             // Set match scores.
-            viewHolder.mRecentP1Score.setText(String.format("%.02f", draft.getPlayer1Score()));
-            viewHolder.mRecentP2Score.setText(String.format("%.02f", draft.getPlayer2Score()));
+            viewHolder.mRecentP1Score.setText(String.format("%.02f", draft.getP1Score()));
+            viewHolder.mRecentP2Score.setText(String.format("%.02f", draft.getP2Score()));
 
             // Set match names.
-            viewHolder.mRecentP1Name.setText(draft.getPlayer1Name());
-            viewHolder.mRecentP2Name.setText(draft.getPlayer2Name());
+            viewHolder.mRecentP1Name.setText(draft.getP1Name());
+            viewHolder.mRecentP2Name.setText(draft.getP2Name());
+
+            // Set match avatars.
+            viewHolder.mRecentP1Avatar.setImageUrl(draft.getP1AvatarUrl());
+            viewHolder.mRecentP2Avatar.setImageUrl(draft.getP2AvatarUrl());
 
             // Set match status.
             viewHolder.mRecentStatus.setText(draft.getStatus());
@@ -67,9 +71,9 @@ public class RecentScreenMatchAdapter extends ArrayAdapter<ViewModelRecent.Summa
             /*
             int leaderColor = Color.rgb(0, 255, 255);
 
-            if (draft.getPlayer1Score() > draft.getPlayer2Score()) {
+            if (draft.getP1Score() > draft.getP2Score()) {
                 player1Score.setTextColor(leaderColor);
-            } else if(draft.getPlayer2Score() > draft.getPlayer1Score()) {
+            } else if(draft.getP2Score() > draft.getP1Score()) {
                 player2Score.setTextColor(leaderColor);
             }
             */

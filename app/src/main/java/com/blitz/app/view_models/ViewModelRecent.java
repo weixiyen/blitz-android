@@ -3,12 +3,16 @@ package com.blitz.app.view_models;
 import com.blitz.app.rest_models.RestModelCallback;
 import com.blitz.app.rest_models.RestModelCallbacks;
 import com.blitz.app.rest_models.RestModelDraft;
+import com.blitz.app.rest_models.RestModelItem;
 import com.blitz.app.rest_models.RestModelPreferences;
+import com.blitz.app.rest_models.RestModelUser;
 import com.blitz.app.utilities.android.BaseActivity;
 import com.blitz.app.utilities.authentication.AuthHelper;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * A view model for game logs.
@@ -141,14 +145,11 @@ public class ViewModelRecent extends ViewModel {
      */
     private void processRecentDrafts(List<RestModelDraft> drafts, int week) {
 
-        // If the week has since changed,
-        // ignore these results.
-        if (mWeekSelected != week) {
-
-            return;
-        }
-
+        // Initialize list of matches.
         List<SummaryDraft> matches = new ArrayList<SummaryDraft>();
+
+        // Initialize list of associated avatar ids.
+        List<String> userAvatarIds = new ArrayList<String>();
 
         for (RestModelDraft draft : drafts) {
 
@@ -165,21 +166,65 @@ public class ViewModelRecent extends ViewModel {
                 p2Index = 0;
             }
 
-            matches.add(new SummaryDraft(
-                    draft.getId(),
-                    draft.getTeamName(p1Index),
-                    draft.getTeamPoints(p1Index),
-                    draft.getTeamRatingChange(p1Index),
-                    draft.getTeamName(p2Index),
-                    draft.getTeamPoints(p2Index),
-                    draft.getWeek(),
-                    draft.getStatus()
-            ));
+            // Insert each avatar id into collection.
+            for (RestModelUser user : draft.getUserInfo().values()) {
+
+                userAvatarIds.add(user.getAvatarId());
+            }
+
+            // Insert a new draft summary.
+            matches.add(new SummaryDraft(draft, p1Index, p2Index));
         }
 
-        if (mCallbacks != null) {
-            mCallbacks.onDrafts(matches, new SummaryDrafts(matches), week);
-        }
+        // Fetch additional avatar information.
+        processUserItems(matches, userAvatarIds, week);
+    }
+
+    /**
+     * Process avatars.
+     *
+     * @param matches Drafts.
+     * @param userAvatarIds Associated avatar ids.
+     * @param week Selected week.
+     */
+    private void processUserItems(final List<SummaryDraft> matches,
+                                  final List<String> userAvatarIds, final int week) {
+
+        RestModelItem.fetchItems(mActivity, userAvatarIds, userAvatarIds.size(),
+                new RestModelItem.CallbackItems() {
+
+                    @Override
+                    public void onSuccess(List<RestModelItem> items) {
+
+                        // If the week has since changed,
+                        // ignore these results.
+                        if (mWeekSelected != week) {
+
+                            return;
+                        }
+
+                        Map<String, String> itemUrls = new HashMap<String, String>();
+
+                        // For each unique item.
+                        for (RestModelItem item : items) {
+
+                            // Convert into a map of id to image path.
+                            if (!itemUrls.containsKey(item.getId())) {
+                                itemUrls.put(item.getId(), item.getDefaultImgPath());
+                            }
+                        }
+
+                        // Populate avatar urls.
+                        for (SummaryDraft draft : matches) {
+
+                            draft.setAvatarUrls(itemUrls);
+                        }
+
+                        if (mCallbacks != null) {
+                            mCallbacks.onDrafts(matches, new SummaryDrafts(matches), week);
+                        }
+                    }
+                });
     }
 
     // endregion
@@ -209,11 +254,11 @@ public class ViewModelRecent extends ViewModel {
 
             for (SummaryDraft draft: mDrafts) {
 
-                ratingChange += draft.getPlayer1RatingChange();
+                ratingChange += draft.getRatingChange();
 
-                if (draft.getPlayer1Score() > draft.getPlayer2Score()) {
+                if (draft.getP1Score() > draft.getP2Score()) {
                     wins += 1;
-                } else if (draft.getPlayer1Score() < draft.getPlayer2Score()) {
+                } else if (draft.getP1Score() < draft.getP2Score()) {
                     losses += 1;
                 }
             }
@@ -235,14 +280,29 @@ public class ViewModelRecent extends ViewModel {
             return mLosses;
         }
 
-        public int getEarningsCents() {
+        public String getEarningsCents() {
 
-            return mEarnings;
+            String sign = "+";
+
+            if (mEarnings < 0) {
+                sign = "-";
+            }
+
+            String amount = String.format("$%.2f", Math.abs(mEarnings / 100f));
+
+            return sign + amount;
         }
 
-        public int getRatingChange() {
+        public String getRatingChange() {
 
-            return mRatingChange;
+            String sign = "+";
+
+            // Negative number already has a sign.
+            if (mRatingChange < 0) {
+                sign = "";
+            }
+
+            return sign + mRatingChange;
         }
     }
 
@@ -251,73 +311,96 @@ public class ViewModelRecent extends ViewModel {
      */
     public final static class SummaryDraft {
 
-        private final String mPlayer1Name;
-        private final float  mPlayer1Score;
-        private final int    mPlayer1RatingChange;
+        // Draft object.
+        private final RestModelDraft mDraft;
 
-        private final String mPlayer2Name;
-        private final float  mPlayer2Score;
+        // Index of associated players.
+        private final int mP1Index, mP2Index;
 
-        private final int mWeek;
-        private final String mStatus;
-        private final String mId;
+        // Avatar urls.
+        private String mP1AvatarUrl, mP2AvatarUrl;
 
-        private SummaryDraft(String draftId,
-                             String p1UserName, float p1Score, int p1RatingChange,
-                             String p2UserName, float p2Score, int week, String status) {
+        /**
+         * Private constructor.
+         *
+         * @param draft Draft object.
+         * @param p1Index Index of first player.
+         * @param p2Index Index of second player.
+         */
+        private SummaryDraft(RestModelDraft draft, int p1Index, int p2Index) {
 
-            mId = draftId;
+            mDraft = draft;
 
-            mPlayer1Name  = p1UserName;
-            mPlayer1Score = p1Score;
-            mPlayer1RatingChange = p1RatingChange;
-
-
-            mPlayer2Name  = p2UserName;
-            mPlayer2Score = p2Score;
-
-            mWeek = week;
-            mStatus = status;
+            mP1Index = p1Index;
+            mP2Index = p2Index;
         }
 
-        public String getPlayer1Name() {
+        /**
+         * Set the avatar urls using a map of avatar id,
+         * mapped to associated url.
+         *
+         * @param itemUrls Item urls map.
+         */
+        private void setAvatarUrls(Map<String, String> itemUrls) {
 
-            return mPlayer1Name;
+            String p1UserId = mDraft.getUsers().get(mP1Index);
+            String p2UserId = mDraft.getUsers().get(mP2Index);
+
+            RestModelUser p1User = mDraft.getUserInfo().get(p1UserId);
+            RestModelUser p2User = mDraft.getUserInfo().get(p2UserId);
+
+            mP1AvatarUrl = itemUrls.get(p1User.getAvatarId());
+            mP2AvatarUrl = itemUrls.get(p2User.getAvatarId());
         }
 
-        public float getPlayer1Score() {
+        public String getP1AvatarUrl() {
 
-            return mPlayer1Score;
+            return mP1AvatarUrl;
         }
 
-        public int getPlayer1RatingChange() {
+        public String getP2AvatarUrl() {
 
-            return mPlayer1RatingChange;
+            return mP2AvatarUrl;
         }
 
-        public String getPlayer2Name() {
+        public String getP1Name() {
 
-            return mPlayer2Name;
+            return mDraft.getTeamName(mP1Index);
         }
 
-        public float getPlayer2Score() {
+        public String getP2Name() {
 
-            return mPlayer2Score;
+            return mDraft.getTeamName(mP2Index);
+        }
+
+        public float getP1Score() {
+
+            return mDraft.getTeamPoints(mP1Index);
+        }
+
+        public float getP2Score() {
+
+            return mDraft.getTeamPoints(mP2Index);
+        }
+
+        public int getRatingChange() {
+
+            return mDraft.getTeamRatingChange(mP1Index);
         }
 
         public String getStatus() {
 
-            return mStatus;
+            return mDraft.getStatus().replace('_', ' ');
         }
 
         public int getWeek() {
 
-            return mWeek;
+            return mDraft.getWeek();
         }
 
         public String getId() {
 
-            return mId;
+            return mDraft.getId();
         }
     }
 

@@ -86,36 +86,6 @@ public class RecentScreen extends BaseFragment implements ViewModelRecent.Callba
     // =============================================================================================
 
     /**
-     * Format rating change.
-     */
-    private static String formatRatingChange (int change) {
-
-        String sign = "+";
-
-        // Negative number already has a sign.
-        if (change < 0) {
-            sign = "";
-        }
-
-        return sign + change;
-    }
-
-    /**
-     * Format earnings.
-     */
-    private static String formatEarnings (int cents) {
-        String sign = "+";
-
-        if (cents < 0) {
-            sign = "-";
-        }
-
-        String amount = String.format("$%.2f", Math.abs(cents / 100f));
-
-        return sign + amount;
-    }
-
-    /**
      * Setup the UI for when the user
      * has no games this week.
      *
@@ -222,9 +192,9 @@ public class RecentScreen extends BaseFragment implements ViewModelRecent.Callba
         mRecentWeekLosses
                 .setText(String.valueOf(summaryDrafts.getLosses()));
         mRecentWeekEarnings
-                .setText(formatEarnings(summaryDrafts.getEarningsCents()));
+                .setText(summaryDrafts.getEarningsCents());
         mRecentWeekRatingChange
-                .setText(formatRatingChange(summaryDrafts.getRatingChange()));
+                .setText(summaryDrafts.getRatingChange());
 
         if (drafts.size() > 0) {
 
