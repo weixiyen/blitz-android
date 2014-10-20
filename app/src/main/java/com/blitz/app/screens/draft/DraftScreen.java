@@ -445,6 +445,12 @@ public class DraftScreen extends BaseActivity implements ViewModelDraft.Callback
         getAnimations().enable();
     }
 
+    /**
+     * Set visibility of the choices.
+     *
+     * @param visibility Visibility.
+     * @param complete Complete handler.
+     */
     private void setChoicesVisibility(int visibility, Runnable complete) {
 
         for (View player : mDraftPlayers) {
@@ -457,6 +463,9 @@ public class DraftScreen extends BaseActivity implements ViewModelDraft.Callback
         }
     }
 
+    /**
+     * Initialize the UI state of the choices.
+     */
     private void setChoicesInitialized() {
 
         for (int i = 0; i < mDraftPlayers.size(); i++) {
@@ -744,9 +753,6 @@ public class DraftScreen extends BaseActivity implements ViewModelDraft.Callback
                     mDraftPlayerStats.get(i).setBackgroundResource(pickedByUser ?
                             R.drawable.asset_draft_player_mask_bot_s1 :
                             R.drawable.asset_draft_player_mask_bot_s2);
-
-                    // Fade out the image.
-                    mDraftPlayerImages.get(i).setAlpha(0.5f);
                 }
             }
         }
