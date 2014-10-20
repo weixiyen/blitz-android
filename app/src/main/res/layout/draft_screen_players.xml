@@ -3,9 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="@dimen/screen_width"
-    android:layout_height="wrap_content"
+    android:layout_height="390dp"
     android:layout_gravity="center"
-    android:alpha=".90"
     android:gravity="center"
     android:orientation="horizontal"
     tools:context="${packageName}.${activityClass}"
@@ -14,12 +13,15 @@
     <RelativeLayout
         android:id="@+id/draft_player_tl"
         android:layout_width="145dp"
-        android:layout_height="145dp"
+        android:layout_height="190dp"
         android:layout_alignParentLeft="true"
         android:layout_marginLeft="10dp"
-        android:background="@drawable/asset_draft_player_bg"
-        android:orientation="vertical"
         android:visibility="invisible">
+
+        <View
+            android:layout_width="145dp"
+            android:layout_height="145dp"
+            android:background="@drawable/asset_draft_player_bg"/>
 
         <com.blitz.app.utilities.image.BlitzImageView
             android:id="@+id/draft_player_image_tl"
@@ -34,6 +36,7 @@
             fontPath="@string/app_font_helvetica_condensed_bold"
             android:layout_width="match_parent"
             android:layout_height="25dp"
+            android:layout_above="@+id/draft_player_stats_tl"
             android:background="@drawable/asset_draft_player_mask_top"
             android:gravity="center"
             android:paddingLeft="10dp"
@@ -87,12 +90,15 @@
     <RelativeLayout
         android:id="@+id/draft_player_tr"
         android:layout_width="145dp"
-        android:layout_height="145dp"
+        android:layout_height="190dp"
         android:layout_alignParentRight="true"
         android:layout_marginRight="10dp"
-        android:background="@drawable/asset_draft_player_bg"
-        android:orientation="vertical"
         android:visibility="invisible">
+
+        <View
+            android:layout_width="145dp"
+            android:layout_height="145dp"
+            android:background="@drawable/asset_draft_player_bg"/>
 
         <com.blitz.app.utilities.image.BlitzImageView
             android:id="@+id/draft_player_image_tr"
@@ -107,6 +113,7 @@
             fontPath="@string/app_font_helvetica_condensed_bold"
             android:layout_width="match_parent"
             android:layout_height="25dp"
+            android:layout_above="@+id/draft_player_stats_tr"
             android:background="@drawable/asset_draft_player_mask_top"
             android:gravity="center"
             android:paddingLeft="10dp"
@@ -160,14 +167,17 @@
     <RelativeLayout
         android:id="@+id/draft_player_bl"
         android:layout_width="145dp"
-        android:layout_height="145dp"
+        android:layout_height="190dp"
         android:layout_alignParentLeft="true"
         android:layout_below="@+id/draft_player_tl"
         android:layout_marginLeft="10dp"
         android:layout_marginTop="10dp"
-        android:background="@drawable/asset_draft_player_bg"
-        android:orientation="vertical"
         android:visibility="invisible">
+
+        <View
+            android:layout_width="145dp"
+            android:layout_height="145dp"
+            android:background="@drawable/asset_draft_player_bg"/>
 
         <com.blitz.app.utilities.image.BlitzImageView
             android:id="@+id/draft_player_image_bl"
@@ -182,6 +192,7 @@
             fontPath="@string/app_font_helvetica_condensed_bold"
             android:layout_width="match_parent"
             android:layout_height="25dp"
+            android:layout_above="@+id/draft_player_stats_bl"
             android:background="@drawable/asset_draft_player_mask_top"
             android:gravity="center"
             android:paddingLeft="10dp"
@@ -235,14 +246,17 @@
     <RelativeLayout
         android:id="@+id/draft_player_br"
         android:layout_width="145dp"
-        android:layout_height="145dp"
+        android:layout_height="190dp"
         android:layout_alignParentRight="true"
         android:layout_below="@+id/draft_player_tr"
         android:layout_marginRight="10dp"
         android:layout_marginTop="10dp"
-        android:background="@drawable/asset_draft_player_bg"
-        android:orientation="vertical"
         android:visibility="invisible">
+
+        <View
+            android:layout_width="145dp"
+            android:layout_height="145dp"
+            android:background="@drawable/asset_draft_player_bg"/>
 
         <com.blitz.app.utilities.image.BlitzImageView
             android:id="@+id/draft_player_image_br"
@@ -257,6 +271,7 @@
             fontPath="@string/app_font_helvetica_condensed_bold"
             android:layout_width="match_parent"
             android:layout_height="25dp"
+            android:layout_above="@+id/draft_player_stats_br"
             android:background="@drawable/asset_draft_player_mask_top"
             android:gravity="center"
             android:paddingLeft="10dp"

@@ -61,16 +61,11 @@ public class DraftScreen extends BaseActivity implements ViewModelDraft.Callback
 
     // Matchup containers.
     @InjectView(R.id.draft_matchup_header)             TextView mDraftMatchupHeader;
-    @InjectView(R.id.draft_matchup_player_left)            View mDraftMatchupPlayerLeft;
-    @InjectView(R.id.draft_matchup_player_right)           View mDraftMatchupPlayerRight;
-    @InjectView(R.id.draft_matchup_helmet_left)  BlitzImageView mDraftMatchupHelmetLeft;
-    @InjectView(R.id.draft_matchup_helmet_right) BlitzImageView mDraftMatchupHelmetRight;
     @InjectView(R.id.draft_matchup_username_left)      TextView mDraftMatchupUsernameLeft;
     @InjectView(R.id.draft_matchup_username_right)     TextView mDraftMatchupUsernameRight;
     @InjectView(R.id.draft_matchup_spinner)                View mDraftMatchupSpinner;
     @InjectView(R.id.draft_matchup_time_remaining)     TextView mDraftMatchupTimeRemaining;
     @InjectView(R.id.draft_matchup_round_complete)         View mDraftMatchupRoundComplete;
-    @InjectView(R.id.draft_matchup_container_vs)       TextView mDraftMatchupContainerVs;
 
     @InjectViews({
             R.id.draft_player_tl,
@@ -423,20 +418,18 @@ public class DraftScreen extends BaseActivity implements ViewModelDraft.Callback
 
         // Containers smash.
         getAnimations().createHelper(20, 5)
-                .addHelperView(AnimHelperSpringsView.from(mDraftMatchupPlayerLeft,  AnimHelperSpringsPresets.SLIDE_RIGHT))
-                .addHelperView(AnimHelperSpringsView.from(mDraftMatchupPlayerRight, AnimHelperSpringsPresets.SLIDE_LEFT));
+                .addHelperView(AnimHelperSpringsView.from(mDraftMatchupUsernameLeft,  AnimHelperSpringsPresets.SLIDE_RIGHT))
+                .addHelperView(AnimHelperSpringsView.from(mDraftMatchupUsernameRight, AnimHelperSpringsPresets.SLIDE_LEFT));
 
         getAnimations().setOnCompleteListener(new Runnable() {
 
             @Override
             public void run() {
 
-                // Fade in the vs label.
-                AnimHelperFade.setVisibility(mDraftMatchupContainerVs, View.VISIBLE);
-
                 // Now in the draft state.
                 mDraftStateCurrent = ViewModelDraft.DraftState.DRAFT_DRAFTING;
 
+                // Done animating.
                 setAnimationsRunning(false);
             }
         });
@@ -571,10 +564,7 @@ public class DraftScreen extends BaseActivity implements ViewModelDraft.Callback
                              Integer.toString(ties) + "-" +
                              Integer.toString(losses));
 
-            mDraftMatchupHelmetLeft
-                    .setImageUrl(itemAvatarUrl);
-            mDraftMatchupUsernameLeft
-                    .setText(userName);
+            mDraftMatchupUsernameLeft.setText(userName);
 
         } else {
 
@@ -592,10 +582,7 @@ public class DraftScreen extends BaseActivity implements ViewModelDraft.Callback
                              Integer.toString(ties) + "-" +
                              Integer.toString(losses));
 
-            mDraftMatchupHelmetRight
-                    .setImageUrl(itemAvatarUrl);
-            mDraftMatchupUsernameRight
-                    .setText(userName);
+            mDraftMatchupUsernameRight.setText(userName);
         }
 
         syncDraftUIState();

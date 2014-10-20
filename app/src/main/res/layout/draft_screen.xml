@@ -31,7 +31,6 @@
             android:layout_height="75dp"
             android:alpha=".75"
             android:gravity="center"
-            android:paddingTop="20dp"
             android:singleLine="true"
             android:text="@string/get_ready"
             android:textAllCaps="true"
@@ -70,7 +69,6 @@
             fontPath="@string/app_font_sports"
             android:layout_width="match_parent"
             android:layout_height="75dp"
-            android:layout_marginTop="20dp"
             android:alpha=".75"
             android:gravity="center"
             android:singleLine="true"
@@ -81,7 +79,7 @@
         <include
             layout="@layout/draft_screen_matchup"
             android:layout_width="match_parent"
-            android:layout_height="148dp"/>
+            android:layout_height="wrap_content"/>
 
         <include
             layout="@layout/draft_screen_players"

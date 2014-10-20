@@ -1,129 +1,92 @@
-<RelativeLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="50dp"
     android:layout_gravity="center"
+    android:layout_marginTop="10dp"
     android:gravity="center"
     android:orientation="horizontal"
     tools:context="${packageName}.${activityClass}"
     tools:ignore="ButtonStyle,UnusedAttribute">
 
-    <RelativeLayout
-        android:id="@+id/draft_matchup_player_left"
-        android:layout_width="140dp"
-        android:layout_height="wrap_content"
-        android:layout_toLeftOf="@+id/draft_matchup_container_vs">
-
-        <com.blitz.app.utilities.textview.BlitzTextView
-            android:id="@+id/draft_matchup_username_left"
-            style="@style/App.TextView"
-            fontPath="@string/app_font_sports"
-            android:layout_width="140dp"
-            android:layout_height="38dp"
-            android:layout_marginTop="110dp"
-            android:background="@drawable/asset_draft_container_namecard"
-            android:gravity="center"
-            android:singleLine="true"
-            android:text="@string/lorum_ipsum_tiny"
-            android:textAllCaps="true"
-            android:textColor="@color/text_color_green"
-            android:textSize="16sp"
-            app:clearInitialContent="true"/>
-
-        <com.blitz.app.utilities.image.BlitzImageView
-            android:id="@+id/draft_matchup_helmet_left"
-            android:layout_width="120dp"
-            android:layout_height="120dp"
-            android:layout_marginLeft="10dp"
-            android:contentDescription="@string/empty_string"
-            android:src="@drawable/asset_bg_helmet_sample"
-            app:clearInitialContent="true" />
-    </RelativeLayout>
-
-    <me.grantland.widget.AutofitTextView
-        android:id="@+id/draft_matchup_container_vs"
+    <com.blitz.app.utilities.textview.BlitzTextView
+        android:id="@+id/draft_matchup_username_left"
         style="@style/App.TextView"
         fontPath="@string/app_font_sports"
-        android:layout_width="40dp"
-        android:layout_height="148dp"
-        android:paddingBottom="8dp"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
-        android:gravity="center|bottom"
+        android:layout_width="130dp"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="7dp"
+        android:layout_marginRight="5dp"
+        android:layout_marginTop="7dp"
+        android:background="@drawable/drawable_draft_bg_left"
+        android:gravity="center"
         android:singleLine="true"
-        android:text="@string/vs"
+        android:text="@string/lorum_ipsum_tiny"
         android:textAllCaps="true"
-        android:textColor="#c1c5cb"
-        android:textSize="24sp"
-        android:visibility="invisible"/>
+        android:textColor="@color/text_color_green"
+        android:textSize="16sp"
+        app:clearInitialContent="true"/>
 
     <RelativeLayout
-        android:id="@+id/draft_matchup_player_right"
-        android:layout_width="140dp"
-        android:layout_height="wrap_content"
-        android:layout_toRightOf="@+id/draft_matchup_container_vs">
+        android:layout_width="0dp"
+        android:layout_height="50dp"
+        android:layout_weight="1">
 
-        <com.blitz.app.utilities.textview.BlitzTextView
-            android:id="@+id/draft_matchup_username_right"
+        <ImageView
+            android:id="@+id/draft_matchup_spinner"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_centerHorizontal="true"
+            android:contentDescription="@string/empty_string"
+            android:scaleType="fitCenter"
+            android:src="@drawable/asset_draft_round_time_spinner"
+            android:visibility="gone" />
+
+        <TextView
+            android:id="@+id/draft_matchup_time_remaining"
             style="@style/App.TextView"
             fontPath="@string/app_font_sports"
-            android:layout_width="140dp"
-            android:layout_height="38dp"
-            android:layout_marginTop="110dp"
-            android:background="@drawable/asset_draft_container_namecard"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_centerHorizontal="true"
             android:gravity="center"
-            android:singleLine="true"
-            android:text="@string/lorum_ipsum_tiny"
-            android:textAllCaps="true"
-            android:textColor="@color/text_color_red"
-            android:textSize="16sp"
-            app:clearInitialContent="true"/>
+            android:text="@string/number_small"
+            android:textSize="20sp"
+            android:visibility="gone"/>
 
-        <com.blitz.app.utilities.image.BlitzImageView
-            android:id="@+id/draft_matchup_helmet_right"
-            android:layout_width="120dp"
-            android:layout_height="120dp"
-            android:layout_marginLeft="10dp"
-            android:contentDescription="@string/empty_string"
-            android:scaleX="-1"
-            android:src="@drawable/asset_bg_helmet_sample"
-            app:clearInitialContent="true" />
+        <me.grantland.widget.AutofitTextView
+            android:id="@+id/draft_matchup_round_complete"
+            style="@style/App.TextView"
+            fontPath="@string/app_font_sports"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_centerHorizontal="true"
+            android:gravity="center"
+            android:lines="2"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"
+            android:text="@string/round_complete"
+            android:textAllCaps="true"
+            android:visibility="gone"/>
     </RelativeLayout>
 
-    <ImageView
-        android:id="@+id/draft_matchup_spinner"
-        android:layout_width="75dp"
-        android:layout_height="75dp"
-        android:layout_centerHorizontal="true"
-        android:contentDescription="@string/empty_string"
-        android:scaleType="center"
-        android:visibility="gone"
-        android:src="@drawable/asset_draft_round_time_spinner" />
-
-    <TextView
-        android:id="@+id/draft_matchup_time_remaining"
+    <com.blitz.app.utilities.textview.BlitzTextView
+        android:id="@+id/draft_matchup_username_right"
         style="@style/App.TextView"
         fontPath="@string/app_font_sports"
-        android:layout_width="75dp"
-        android:layout_height="75dp"
-        android:layout_centerHorizontal="true"
+        android:layout_width="130dp"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="7dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="7dp"
+        android:background="@drawable/drawable_draft_bg_right"
         android:gravity="center"
-        android:visibility="gone"
-        android:text="@string/number_small"
-        android:textSize="36sp"/>
-
-    <me.grantland.widget.AutofitTextView
-        android:id="@+id/draft_matchup_round_complete"
-        style="@style/App.TextView"
-        fontPath="@string/app_font_sports"
-        android:layout_width="75dp"
-        android:layout_height="75dp"
-        android:layout_centerHorizontal="true"
-        android:gravity="center"
-        android:lines="2"
-        android:text="@string/round_complete"
+        android:singleLine="true"
+        android:text="@string/lorum_ipsum_tiny"
         android:textAllCaps="true"
-        android:visibility="gone"/>
-</RelativeLayout>
+        android:textColor="@color/text_color_red"
+        android:textSize="16sp"
+        app:clearInitialContent="true"/>
+</LinearLayout>
