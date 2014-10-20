@@ -146,8 +146,6 @@ public class ViewModelPlay extends ViewModel {
      */
     public void toggleQueue() {
 
-        showQueueContainer(!mInQueue, true);
-
         if (mInQueue) {
 
             // Leave the queue.
@@ -158,6 +156,8 @@ public class ViewModelPlay extends ViewModel {
             // Enter the queue.
             mModelQueue.queueUp(mActivity, null);
         }
+
+        showQueueContainer(!mInQueue, true);
     }
 
     /**
