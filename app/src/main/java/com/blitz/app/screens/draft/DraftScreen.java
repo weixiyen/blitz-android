@@ -464,10 +464,7 @@ public class DraftScreen extends BaseActivity implements ViewModelDraft.Callback
         for (int i = 0; i < mDraftPlayers.size(); i++) {
 
             // Set the unselected mask.
-            mDraftPlayerNames.get(i).setBackgroundResource(R.drawable.asset_draft_player_mask_top);
-
-            // Set the unselected mask.
-            mDraftPlayerStats.get(i).setBackgroundResource(R.drawable.asset_draft_player_mask_bot);
+            mDraftPlayerStats.get(i).setBackgroundResource(R.drawable.drawable_draft_card);
 
             // Clear out existing images.
             mDraftPlayerImages.get(i).setImageBitmap(null);
@@ -733,13 +730,9 @@ public class DraftScreen extends BaseActivity implements ViewModelDraft.Callback
                     boolean pickedByUser = userIds.get(j).equals
                             (AuthHelper.instance().getUserId());
 
-                    mDraftPlayerNames.get(i).setBackgroundResource(pickedByUser ?
-                            R.drawable.asset_draft_player_mask_top_s1 :
-                            R.drawable.asset_draft_player_mask_top_s2);
-
                     mDraftPlayerStats.get(i).setBackgroundResource(pickedByUser ?
-                            R.drawable.asset_draft_player_mask_bot_s1 :
-                            R.drawable.asset_draft_player_mask_bot_s2);
+                            R.drawable.drawable_draft_card_p1 :
+                            R.drawable.drawable_draft_card_p2);
                 }
             }
         }
