@@ -13,18 +13,20 @@ import com.blitz.app.utilities.animations.AnimHelperFade;
 import com.blitz.app.utilities.keyboard.KeyboardUtility;
 import com.blitz.app.utilities.reflection.ReflectionHelper;
 
+import java.util.concurrent.ConcurrentHashMap;
+
 import butterknife.ButterKnife;
 
 /**
  * Created by Miguel Gaeta on 6/29/14.
  *
  * TODO: Split animation related code into BaseDialogAnimations
+ * TODO: Power this with an implementation for accessing the underlying popup (PopWindow/DialogFragment)
  */
 public class BaseDialog {
 
-    //==============================================================================================
-    // Member Variables
-    //==============================================================================================
+    // region Member Variables
+    // =============================================================================================
 
     // State of dialog content.
     private enum DialogContentState {
@@ -38,9 +40,6 @@ public class BaseDialog {
     private ViewGroup mDialogContent;
     private DialogContentState mDialogContentState;
 
-    // Dialog is represented by a popup window.
-    private PopupWindow mPopupWindow;
-
     // Parent activity.
     protected Activity mActivity;
 
@@ -48,9 +47,25 @@ public class BaseDialog {
     private boolean mHidePending;
     private HideListener mHideListener;
 
-    //==============================================================================================
-    // Constructors
-    //==============================================================================================
+    // Popup windows are very volatile in nature and cannot exist
+    // outside of the context of the activity they are created in.
+    // As such we do not hold a direct reference to the associated
+    // popup window.  Instead it is stored inside a concurrent hash
+    // map keyed by a system identifier (this variable).  The base
+    // activity controls the lifecycle of the popups, ensuring they
+    // cannot exist outside of their valid lifecycle.  This class
+    // therefore ensures to not hold onto references of the popup
+    // window and ensures it exists via null checks.
+    private int mPopupWindowKey;
+
+    // List of all active popup windows.
+    private static final ConcurrentHashMap<Integer, PopupWindow> mPopupWindows
+            = new ConcurrentHashMap<Integer, PopupWindow>();
+
+    // endregion
+
+    // region Constructors
+    // =============================================================================================
 
     /**
      * Do not allow empty constructor.
@@ -78,30 +93,50 @@ public class BaseDialog {
         mActivity = activity;
 
         // Create full size popup window.
-        mPopupWindow = new PopupWindow(layoutOfPopup,
+        PopupWindow popupWindow = new PopupWindow(layoutOfPopup,
                 ViewGroup.LayoutParams.MATCH_PARENT,
                 ViewGroup.LayoutParams.MATCH_PARENT);
 
-        // When the popup is dismissed, reset any butter-knife injections.
-        mPopupWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
+        // Set the key for this window.
+        mPopupWindowKey = System.identityHashCode(popupWindow);
 
-            @Override
-            public void onDismiss() {
-
-                // Probably not needed, but good practice.
-                ButterKnife.reset(this);
-            }
-        });
+        // Insert into static list of popup windows.
+        mPopupWindows.put(mPopupWindowKey, popupWindow);
 
         // Inject butter knife into the content view.
-        ButterKnife.inject(this, mPopupWindow.getContentView());
+        ButterKnife.inject(this, popupWindow.getContentView());
+
+        // Default dismiss listener, with no custom
+        // callback provided by default.
+        setOnDismissListener(null);
 
         setupDialogContent();
     }
 
-    //==============================================================================================
-    // Public Methods
-    //==============================================================================================
+    // endregion
+
+    // region Public Methods
+    // =============================================================================================
+
+    /**
+     * Force dismiss all popup windows.  This ensures
+     * that there can be no leaks or crashes when
+     * activities are paused.
+     */
+    @SuppressWarnings("unused")
+    public static void dismissAllPopups() {
+
+        // Iterate over all popup windows.
+        for (PopupWindow popupWindow : mPopupWindows.values()) {
+
+            if (popupWindow != null) {
+                popupWindow.dismiss();
+            }
+        }
+
+        // Remove all windows.
+        mPopupWindows.clear();
+    }
 
     /**
      * Set a dismiss listener.
@@ -112,19 +147,27 @@ public class BaseDialog {
     public void setOnDismissListener(final Runnable onDismissListener) {
 
         // Assign the dismiss listener.
-        mPopupWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
+        if (getPopupWindow() != null) {
+            getPopupWindow().setOnDismissListener(new PopupWindow.OnDismissListener() {
 
-            @Override
-            public void onDismiss() {
+                @Override
+                public void onDismiss() {
 
-                // Reset injections.
-                ButterKnife.reset(this);
+                    if (getPopupWindow() != null) {
 
-                if (onDismissListener != null) {
-                    onDismissListener.run();
+                        // Remove from the global list of popups.
+                        mPopupWindows.remove(System.identityHashCode(getPopupWindow()));
+
+                        // Reset injections.
+                        ButterKnife.reset(this);
+
+                        if (onDismissListener != null) {
+                            onDismissListener.run();
+                        }
+                    }
                 }
-            }
-        });
+            });
+        }
     }
 
     /**
@@ -136,7 +179,7 @@ public class BaseDialog {
     public void show(final boolean showContent) {
 
         // If window exists and not already showing.
-        if (mPopupWindow != null && !mPopupWindow.isShowing()) {
+        if (getPopupWindow() != null && !getPopupWindow().isShowing()) {
 
             // Hide the keyboard.
             KeyboardUtility.hideKeyboard(mActivity);
@@ -148,11 +191,11 @@ public class BaseDialog {
                     @Override
                     public void run() {
 
-                        if (!mActivity.isFinishing() && !mActivity.isDestroyed()) {
+                        if (getPopupWindow() != null) {
 
                             // Show at top corner of the window.
-                            mPopupWindow.showAtLocation(mActivity.getWindow().getDecorView(),
-                                    Gravity.NO_GRAVITY, 0, 0);
+                            getPopupWindow().showAtLocation(mActivity.getWindow()
+                                    .getDecorView(), Gravity.NO_GRAVITY, 0, 0);
 
                             // Try to show dialog content.
                             tryShowDialogContent(showContent);
@@ -192,8 +235,8 @@ public class BaseDialog {
                 try {
 
                     // Hide immediately.
-                    if (mPopupWindow.isShowing()) {
-                        mPopupWindow.dismiss();
+                    if (getPopupWindow() != null && getPopupWindow().isShowing()) {
+                        getPopupWindow().dismiss();
                     }
 
                 } catch (IllegalArgumentException ignored) { }
@@ -232,9 +275,11 @@ public class BaseDialog {
     @SuppressWarnings("unused")
     public void setTouchable(boolean touchable) {
 
-        mPopupWindow.setOutsideTouchable(touchable);
-        mPopupWindow.setTouchable(touchable);
-        mPopupWindow.setFocusable(touchable);
+        if (getPopupWindow() != null) {
+            getPopupWindow().setOutsideTouchable(touchable);
+            getPopupWindow().setTouchable(touchable);
+            getPopupWindow().setFocusable(touchable);
+        }
     }
 
     /**
@@ -247,13 +292,16 @@ public class BaseDialog {
     public void setDismissible(boolean dismissible) {
 
         // Provide a drawable if dismissible.
-        mPopupWindow.setBackgroundDrawable
-                (dismissible ? new ColorDrawable(Color.TRANSPARENT) : null);
+        if (getPopupWindow() != null) {
+            getPopupWindow().setBackgroundDrawable
+                    (dismissible ? new ColorDrawable(Color.TRANSPARENT) : null);
+        }
     }
 
-    //==============================================================================================
-    // Private Methods
-    //==============================================================================================
+    // endregion
+
+    // region Private Methods
+    // =============================================================================================
 
     /**
      * Try to show the dialog content.
@@ -318,8 +366,14 @@ public class BaseDialog {
      */
     private void setupDialogContent() {
 
+        if (getPopupWindow() == null) {
+
+            return;
+        }
+
         // Fetch the content window.  This is required of all dialogs.
-        mDialogContent = ButterKnife.findById(mPopupWindow.getContentView(), R.id.dialog_content);
+        mDialogContent = ButterKnife.findById(getPopupWindow().getContentView(),
+                R.id.dialog_content);
 
         if (mDialogContent == null) {
 
@@ -335,7 +389,8 @@ public class BaseDialog {
 
                 // Only hide if dismissible, this is done by
                 // providing a background drawable to popup.
-                if (mPopupWindow.getBackground() != null) {
+                if (getPopupWindow() != null &&
+                    getPopupWindow().getBackground() != null) {
 
                     hide(null);
                 }
@@ -346,9 +401,25 @@ public class BaseDialog {
         mDialogContentState = DialogContentState.HIDDEN;
     }
 
-    //==============================================================================================
-    // Interfaces
-    //==============================================================================================
+    /**
+     * Fetch instance of popup window.
+     *
+     * @return Popup window or null if it does not exist.
+     */
+    private PopupWindow getPopupWindow() {
+
+        if (mPopupWindows.containsKey(mPopupWindowKey)) {
+
+            return mPopupWindows.get(mPopupWindowKey);
+        }
+
+        return null;
+    }
+
+    // endregion
+
+    // region Interfaces
+    // =============================================================================================
 
     /**
      * Listener for hide event.  Sometimes we cannot hide
@@ -359,4 +430,6 @@ public class BaseDialog {
         // Hide executed.
         void didHide();
     }
+
+    // endregion
 }

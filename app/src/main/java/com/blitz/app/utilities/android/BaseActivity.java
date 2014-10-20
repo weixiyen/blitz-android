@@ -142,6 +142,9 @@ public class BaseActivity extends FragmentActivity {
         // Remove pending initialize calls.
         BlitzDelay.remove(mViewModelInitializeHandler);
 
+        // Remove any popups that may exist.
+        BaseDialog.dismissAllPopups();
+
         // Stop view model.
         if (getViewModel() != null) {
             getViewModel().stop();
