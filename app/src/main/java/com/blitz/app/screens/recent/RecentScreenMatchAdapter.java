@@ -11,7 +11,6 @@ import android.widget.TextView;
 import com.blitz.app.R;
 import com.blitz.app.screens.matchup.MatchupScreen;
 import com.blitz.app.utilities.image.BlitzImageView;
-import com.blitz.app.utilities.logging.LogHelper;
 import com.blitz.app.view_models.ViewModelRecent;
 
 import java.util.List;
@@ -130,8 +129,6 @@ public class RecentScreenMatchAdapter extends ArrayAdapter<ViewModelRecent.Summa
         // Set match status.
         viewHolder.mRecentStatus.setText(draft.getStatus());
         viewHolder.mRecentStatus.setTextColor(colorLight);
-
-        LogHelper.log("status " + draft.getStatus());
 
         // Fetch the leading score.
         TextView leadingScore = draft.getP1Score() >= draft.getP2Score() ?
