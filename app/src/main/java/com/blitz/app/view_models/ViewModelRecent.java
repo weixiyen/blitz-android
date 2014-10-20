@@ -145,6 +145,12 @@ public class ViewModelRecent extends ViewModel {
      */
     private void processRecentDrafts(List<RestModelDraft> drafts, int week) {
 
+        // A valid user id is needed to proceed.
+        if (AuthHelper.instance().getUserId() == null) {
+
+            return;
+        }
+
         // Initialize list of matches.
         List<SummaryDraft> matches = new ArrayList<SummaryDraft>();
 
