@@ -146,6 +146,8 @@ public class ViewModelPlay extends ViewModel {
      */
     public void toggleQueue() {
 
+        showQueueContainer(!mInQueue, true);
+
         if (mInQueue) {
 
             // Leave the queue.
@@ -154,14 +156,7 @@ public class ViewModelPlay extends ViewModel {
         } else {
 
             // Enter the queue.
-            mModelQueue.queueUp(mActivity, new Runnable() {
-
-                @Override
-                public void run() {
-
-                    showQueueContainer(true, true);
-                }
-            });
+            mModelQueue.queueUp(mActivity, null);
         }
     }
 
@@ -239,6 +234,12 @@ public class ViewModelPlay extends ViewModel {
 
         if (showQueueContainer == null) {
             showQueueContainer = mSecondsInQueue != -1;
+        }
+
+        // Only fire if state changes.
+        if (showQueueContainer == mInQueue) {
+
+            return;
         }
 
         if (showQueueContainer) {
@@ -354,7 +355,7 @@ public class ViewModelPlay extends ViewModel {
      * Setup preferences and update UI based on
      * various draft and queue available states.
      */
-    private void  setupPreferences() {
+    private void setupPreferences() {
 
         AuthHelper.instance().getPreferences(mActivity, false,
                 new RestModelCallback<RestModelPreferences>() {
