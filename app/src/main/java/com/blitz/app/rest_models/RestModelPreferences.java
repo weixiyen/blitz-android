@@ -2,6 +2,7 @@ package com.blitz.app.rest_models;
 
 import android.app.Activity;
 
+import com.blitz.app.utilities.app.AppConfig;
 import com.blitz.app.utilities.rest.RestAPICallback;
 import com.google.gson.annotations.SerializedName;
 
@@ -45,6 +46,15 @@ public class RestModelPreferences extends RestModel {
 
                     @Override
                     public void success(RestModelPreferences jsonObject) {
+
+                        if (AppConfig.isDraftSimulationEnabled()) {
+
+                            // Drafts always on.
+                            jsonObject.mQueueAvailable = true;
+
+                            // Testing queue.
+                            jsonObject.mCurrentActiveQueue = "football_heads_up_draft_free";
+                        }
 
                         if (callback != null) {
                             callback.onSuccess(jsonObject);

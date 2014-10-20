@@ -78,6 +78,16 @@ public class AppConfig {
         return false;
     }
 
+    /**
+     * Should we force a draft simulation state.
+     *
+     * @return Should simulate drafts.
+     */
+    public static boolean isDraftSimulationEnabled() {
+
+        return false;
+    }
+
     //==============================================================================================
     // Public Methods
     //==============================================================================================
