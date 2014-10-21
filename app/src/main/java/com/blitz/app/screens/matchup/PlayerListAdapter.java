@@ -67,32 +67,37 @@ public class PlayerListAdapter extends ArrayAdapter {
                     .inflate(R.layout.matchup_screen_draft_list_item, null);
         }
 
-        final RestModelPlayer p1 = mPlayer1Picks.get(position);
-        RestModelPlayer p2 = mPlayer2Picks.get(position);
+        // TODO: Handle this guard better, it was crashing on player 2 picks out of bounds.
+        // TODO: That should never happen as far as I can tell.
+        if (mPlayer1Picks.size() < position && mPlayer2Picks.size() < position) {
 
-        ((TextView) v.findViewById(R.id.player1_name)).setText(p1.getFullName());
-        ((TextView) v.findViewById(R.id.player1_position_team)).setText(getPositionTeam(p1));
-        ((TextView) v.findViewById(R.id.player2_name)).setText(p2.getFullName());
-        ((TextView) v.findViewById(R.id.player2_position_team)).setText(getPositionTeam(p2));
+            final RestModelPlayer p1 = mPlayer1Picks.get(position);
+            final RestModelPlayer p2 = mPlayer2Picks.get(position);
 
-        final String s1 = getScore(p1, mPlayerStats);
-        final String s2 = getScore(p2, mPlayerStats);
+            ((TextView) v.findViewById(R.id.player1_name)).setText(p1.getFullName());
+            ((TextView) v.findViewById(R.id.player1_position_team)).setText(getPositionTeam(p1));
+            ((TextView) v.findViewById(R.id.player2_name)).setText(p2.getFullName());
+            ((TextView) v.findViewById(R.id.player2_position_team)).setText(getPositionTeam(p2));
 
-        ((TextView) v.findViewById(R.id.player1_score)).setText(s1);
-        ((TextView) v.findViewById(R.id.player2_score)).setText(s2);
+            final String s1 = getScore(p1, mPlayerStats);
+            final String s2 = getScore(p2, mPlayerStats);
 
-        setStatsNavigation(v.findViewById(R.id.player1_details), p1, s1);
-        setStatsNavigation(v.findViewById(R.id.player2_details), p2, s2);
+            ((TextView) v.findViewById(R.id.player1_score)).setText(s1);
+            ((TextView) v.findViewById(R.id.player2_score)).setText(s2);
 
-        setStatsNavigation(v.findViewById(R.id.player1_score), p1, s1);
-        setStatsNavigation(v.findViewById(R.id.player2_score), p2, s2);
+            setStatsNavigation(v.findViewById(R.id.player1_details), p1, s1);
+            setStatsNavigation(v.findViewById(R.id.player2_details), p2, s2);
 
-        if(mPlayer1Games != null && mPlayer2Games != null) {
+            setStatsNavigation(v.findViewById(R.id.player1_score), p1, s1);
+            setStatsNavigation(v.findViewById(R.id.player2_score), p2, s2);
 
-            Game g1 = mPlayer1Games.get(position);
-            Game g2 = mPlayer2Games.get(position);
-            ((TextView) v.findViewById(R.id.player1_game_result)).setText(getGameResult(g1, p1));
-            ((TextView) v.findViewById(R.id.player2_game_result)).setText(getGameResult(g2, p2));
+            if (mPlayer1Games != null && mPlayer2Games != null) {
+
+                Game g1 = mPlayer1Games.get(position);
+                Game g2 = mPlayer2Games.get(position);
+                ((TextView) v.findViewById(R.id.player1_game_result)).setText(getGameResult(g1, p1));
+                ((TextView) v.findViewById(R.id.player2_game_result)).setText(getGameResult(g2, p2));
+            }
         }
 
         return v;
