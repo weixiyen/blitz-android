@@ -841,7 +841,12 @@ public class ViewModelDraft extends ViewModel {
                 // Rest of player information.
                 playerPhotoUrls.add(playerChoice.getPhotoUrl());
                 playerFullNames.add(playerChoice.getFullName());
-                playerOpponents.add(playerChoice.getOpponent());
+
+                // Create opponent prefix.
+                String opponentPrefix = playerChoice.getIsHomeTeam() ? "@ " : "vs ";
+
+                // Add opponent string.
+                playerOpponents.add(opponentPrefix + playerChoice.getOpponent().toUpperCase());
 
                 if (playerChoice.getPosition() != null && playerChoice.getTeam() != null) {
 
