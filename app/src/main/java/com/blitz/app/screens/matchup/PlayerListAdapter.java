@@ -14,6 +14,7 @@ import com.blitz.app.rest_models.RestModelPlayer;
 import com.blitz.app.screens.stats.StatsBreakdownScreen;
 import com.blitz.app.simple_models.Game;
 import com.blitz.app.simple_models.Stat;
+import com.blitz.app.utilities.logging.LogHelper;
 import com.google.common.collect.Multimap;
 
 import java.util.Collection;
@@ -67,9 +68,11 @@ public class PlayerListAdapter extends ArrayAdapter {
                     .inflate(R.layout.matchup_screen_draft_list_item, null);
         }
 
+        LogHelper.log("P1 picks: " + mPlayer1Picks.size() + " " + mPlayer2Picks.size() + " " +  position);
+
         // TODO: Handle this guard better, it was crashing on player 2 picks out of bounds.
         // TODO: That should never happen as far as I can tell.
-        if (mPlayer1Picks.size() < position && mPlayer2Picks.size() < position) {
+        if (mPlayer1Picks.size() > position && mPlayer2Picks.size() > position) {
 
             final RestModelPlayer p1 = mPlayer1Picks.get(position);
             final RestModelPlayer p2 = mPlayer2Picks.get(position);
