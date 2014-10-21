@@ -183,7 +183,7 @@ public class RecentScreen extends BaseFragment implements ViewModelRecent.Callba
         }
 
         if (mRecentScrubber != null) {
-            mRecentScrubber.setScrubberItemSelected(week);
+            mRecentScrubber.setScrubberItemSelected(week - 1);
         }
 
         // Set summary info.
