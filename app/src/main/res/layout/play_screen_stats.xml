@@ -90,7 +90,7 @@
                 android:singleLine="true"
                 android:text="@string/loss"
                 android:textAllCaps="true"
-                android:textColor="@color/text_color_grey"
+                android:textColor="@color/text_color_dark"
                 android:textSize="16sp"/>
         </LinearLayout>
 
@@ -125,7 +125,7 @@
                 android:singleLine="true"
                 android:text="@string/number_small"
                 android:textAllCaps="true"
-                android:textColor="@color/text_color_grey"
+                android:textColor="@color/text_color_dark"
                 android:textSize="24sp"
                 app:cacheText="true"
                 app:clearInitialContent="true"/>
