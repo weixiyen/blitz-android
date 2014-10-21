@@ -22,8 +22,8 @@ android {
         applicationId 'com.blitz.app'
         minSdkVersion 15
         targetSdkVersion 20
-        versionCode 9
-        versionName '1.2.4'
+        versionCode 10
+        versionName '1.2.5'
     }
     buildTypes {
         release {
