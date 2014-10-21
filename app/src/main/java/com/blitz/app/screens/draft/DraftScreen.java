@@ -23,7 +23,6 @@ import com.blitz.app.utilities.authentication.AuthHelper;
 import com.blitz.app.utilities.blitz.BlitzDelay;
 import com.blitz.app.utilities.image.BlitzImage;
 import com.blitz.app.utilities.image.BlitzImageView;
-import com.blitz.app.utilities.textview.BlitzTextView;
 import com.blitz.app.view_models.ViewModel;
 import com.blitz.app.view_models.ViewModelDraft;
 
@@ -86,21 +85,21 @@ public class DraftScreen extends BaseActivity implements ViewModelDraft.Callback
             R.id.draft_player_name_tr,
             R.id.draft_player_name_bl,
             R.id.draft_player_name_br
-    }) List<BlitzTextView> mDraftPlayerNames;
+    }) List<TextView> mDraftPlayerNames;
 
     @InjectViews({
             R.id.draft_player_info_tl,
             R.id.draft_player_info_tr,
             R.id.draft_player_info_bl,
             R.id.draft_player_info_br
-    }) List<BlitzTextView> mDraftPlayerPositions;
+    }) List<TextView> mDraftPlayerPositions;
 
     @InjectViews({
             R.id.draft_player_opponent_tl,
             R.id.draft_player_opponent_tr,
             R.id.draft_player_opponent_bl,
             R.id.draft_player_opponent_br
-    }) List<BlitzTextView> mDraftPlayerOpponents;
+    }) List<TextView> mDraftPlayerOpponents;
 
     @InjectViews({
             R.id.draft_player_stats_tl,

@@ -1,6 +1,5 @@
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="@dimen/screen_width"
     android:layout_height="390dp"
@@ -8,7 +7,7 @@
     android:gravity="center"
     android:orientation="horizontal"
     tools:context="${packageName}.${activityClass}"
-    tools:ignore="ButtonStyle,UnusedAttribute">
+    tools:ignore="ButtonStyle,UnusedAttribute,RelativeOverlap,RtlSymmetry">
 
     <RelativeLayout
         android:id="@+id/draft_player_tl"
@@ -32,66 +31,54 @@
             android:contentDescription="@string/empty_string"
             android:scaleType="centerCrop"/>
 
-        <LinearLayout
+        <RelativeLayout
             android:id="@+id/draft_player_stats_tl"
             android:layout_width="match_parent"
             android:layout_height="41dp"
             android:layout_alignParentBottom="true"
             android:layout_margin="2dp"
             android:background="@drawable/drawable_draft_card"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:paddingBottom="2dp">
 
-            <com.blitz.app.utilities.textview.BlitzTextView
+            <TextView
                 android:id="@+id/draft_player_name_tl"
                 fontPath="@string/app_font_helvetica_condensed_bold"
-                android:layout_width="match_parent"
-                android:layout_height="20dp"
-                android:gravity="center"
-                android:paddingLeft="10dp"
-                android:paddingRight="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
                 android:singleLine="true"
-                android:text="@string/lorum_ipsum_tiny"
                 android:textAllCaps="true"
                 android:textColor="@color/text_color_black"
-                android:textSize="13sp"
-                app:clearInitialContent="true"/>
+                android:textSize="12sp"/>
 
-            <LinearLayout
+            <TextView
+                android:id="@+id/draft_player_info_tl"
+                fontPath="@string/app_font_helvetica_condensed_bold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentLeft="true"
+                android:paddingLeft="12dp"
+                android:singleLine="true"
+                android:textAllCaps="true"
+                android:textColor="@color/text_color_medium_grey"
+                android:textSize="12sp"/>
+
+            <TextView
+                android:id="@+id/draft_player_opponent_tl"
+                fontPath="@string/app_font_helvetica_condensed_bold"
                 android:layout_width="match_parent"
-                android:layout_height="21dp"
-                android:orientation="horizontal"
-                android:paddingLeft="10dp"
-                android:paddingRight="10dp">
-
-                <com.blitz.app.utilities.textview.BlitzTextView
-                    android:id="@+id/draft_player_info_tl"
-                    fontPath="@string/app_font_helvetica_condensed_bold"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_weight=".5"
-                    android:gravity="center|left"
-                    android:singleLine="true"
-                    android:text="@string/lorum_ipsum_word"
-                    android:textAllCaps="true"
-                    android:textColor="@color/text_color_grey"
-                    android:textSize="12sp"
-                    app:clearInitialContent="true"/>
-
-                <com.blitz.app.utilities.textview.BlitzTextView
-                    android:id="@+id/draft_player_opponent_tl"
-                    fontPath="@string/app_font_helvetica_condensed_bold"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_weight=".5"
-                    android:gravity="center|right"
-                    android:singleLine="true"
-                    android:text="@string/lorum_ipsum_word"
-                    android:textAllCaps="true"
-                    android:textColor="@color/text_color_grey"
-                    android:textSize="12sp"
-                    app:clearInitialContent="true"/>
-            </LinearLayout>
-        </LinearLayout>
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentRight="true"
+                android:gravity="center|right"
+                android:paddingRight="12dp"
+                android:singleLine="true"
+                android:textAllCaps="true"
+                android:textColor="@color/text_color_black"
+                android:textSize="16sp"/>
+        </RelativeLayout>
     </RelativeLayout>
 
     <RelativeLayout
@@ -116,66 +103,54 @@
             android:contentDescription="@string/empty_string"
             android:scaleType="centerCrop"/>
 
-        <LinearLayout
+        <RelativeLayout
             android:id="@+id/draft_player_stats_tr"
             android:layout_width="match_parent"
             android:layout_height="41dp"
             android:layout_alignParentBottom="true"
             android:layout_margin="2dp"
             android:background="@drawable/drawable_draft_card"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:paddingBottom="2dp">
 
             <com.blitz.app.utilities.textview.BlitzTextView
                 android:id="@+id/draft_player_name_tr"
                 fontPath="@string/app_font_helvetica_condensed_bold"
-                android:layout_width="match_parent"
-                android:layout_height="20dp"
-                android:gravity="center"
-                android:paddingLeft="10dp"
-                android:paddingRight="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
                 android:singleLine="true"
-                android:text="@string/lorum_ipsum_tiny"
                 android:textAllCaps="true"
                 android:textColor="@color/text_color_black"
-                android:textSize="13sp"
-                app:clearInitialContent="true"/>
+                android:textSize="12sp"/>
 
-            <LinearLayout
+            <com.blitz.app.utilities.textview.BlitzTextView
+                android:id="@+id/draft_player_info_tr"
+                fontPath="@string/app_font_helvetica_condensed_bold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentLeft="true"
+                android:paddingLeft="12dp"
+                android:singleLine="true"
+                android:textAllCaps="true"
+                android:textColor="@color/text_color_medium_grey"
+                android:textSize="12sp"/>
+
+            <com.blitz.app.utilities.textview.BlitzTextView
+                android:id="@+id/draft_player_opponent_tr"
+                fontPath="@string/app_font_helvetica_condensed_bold"
                 android:layout_width="match_parent"
-                android:layout_height="21dp"
-                android:orientation="horizontal"
-                android:paddingLeft="10dp"
-                android:paddingRight="10dp">
-
-                <com.blitz.app.utilities.textview.BlitzTextView
-                    android:id="@+id/draft_player_info_tr"
-                    fontPath="@string/app_font_helvetica_condensed_bold"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_weight=".5"
-                    android:gravity="center|left"
-                    android:singleLine="true"
-                    android:text="@string/lorum_ipsum_word"
-                    android:textAllCaps="true"
-                    android:textColor="@color/text_color_grey"
-                    android:textSize="12sp"
-                    app:clearInitialContent="true"/>
-
-                <com.blitz.app.utilities.textview.BlitzTextView
-                    android:id="@+id/draft_player_opponent_tr"
-                    fontPath="@string/app_font_helvetica_condensed_bold"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_weight=".5"
-                    android:gravity="center|right"
-                    android:singleLine="true"
-                    android:text="@string/lorum_ipsum_word"
-                    android:textAllCaps="true"
-                    android:textColor="@color/text_color_grey"
-                    android:textSize="12sp"
-                    app:clearInitialContent="true"/>
-            </LinearLayout>
-        </LinearLayout>
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentRight="true"
+                android:gravity="center|right"
+                android:paddingRight="12dp"
+                android:singleLine="true"
+                android:textAllCaps="true"
+                android:textColor="@color/text_color_black"
+                android:textSize="16sp"/>
+        </RelativeLayout>
     </RelativeLayout>
 
     <RelativeLayout
@@ -202,66 +177,54 @@
             android:contentDescription="@string/empty_string"
             android:scaleType="centerCrop"/>
 
-        <LinearLayout
+        <RelativeLayout
             android:id="@+id/draft_player_stats_bl"
             android:layout_width="match_parent"
             android:layout_height="41dp"
             android:layout_alignParentBottom="true"
             android:layout_margin="2dp"
             android:background="@drawable/drawable_draft_card"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:paddingBottom="2dp">
 
             <com.blitz.app.utilities.textview.BlitzTextView
                 android:id="@+id/draft_player_name_bl"
                 fontPath="@string/app_font_helvetica_condensed_bold"
-                android:layout_width="match_parent"
-                android:layout_height="20dp"
-                android:gravity="center"
-                android:paddingLeft="10dp"
-                android:paddingRight="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
                 android:singleLine="true"
-                android:text="@string/lorum_ipsum_tiny"
                 android:textAllCaps="true"
                 android:textColor="@color/text_color_black"
-                android:textSize="13sp"
-                app:clearInitialContent="true"/>
+                android:textSize="12sp"/>
 
-            <LinearLayout
+            <com.blitz.app.utilities.textview.BlitzTextView
+                android:id="@+id/draft_player_info_bl"
+                fontPath="@string/app_font_helvetica_condensed_bold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentLeft="true"
+                android:paddingLeft="12dp"
+                android:singleLine="true"
+                android:textAllCaps="true"
+                android:textColor="@color/text_color_medium_grey"
+                android:textSize="12sp"/>
+
+            <com.blitz.app.utilities.textview.BlitzTextView
+                android:id="@+id/draft_player_opponent_bl"
+                fontPath="@string/app_font_helvetica_condensed_bold"
                 android:layout_width="match_parent"
-                android:layout_height="21dp"
-                android:orientation="horizontal"
-                android:paddingLeft="10dp"
-                android:paddingRight="10dp">
-
-                <com.blitz.app.utilities.textview.BlitzTextView
-                    android:id="@+id/draft_player_info_bl"
-                    fontPath="@string/app_font_helvetica_condensed_bold"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_weight=".5"
-                    android:gravity="center|left"
-                    android:singleLine="true"
-                    android:text="@string/lorum_ipsum_word"
-                    android:textAllCaps="true"
-                    android:textColor="@color/text_color_grey"
-                    android:textSize="12sp"
-                    app:clearInitialContent="true"/>
-
-                <com.blitz.app.utilities.textview.BlitzTextView
-                    android:id="@+id/draft_player_opponent_bl"
-                    fontPath="@string/app_font_helvetica_condensed_bold"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_weight=".5"
-                    android:gravity="center|right"
-                    android:singleLine="true"
-                    android:text="@string/lorum_ipsum_word"
-                    android:textAllCaps="true"
-                    android:textColor="@color/text_color_grey"
-                    android:textSize="12sp"
-                    app:clearInitialContent="true"/>
-            </LinearLayout>
-        </LinearLayout>
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentRight="true"
+                android:gravity="center|right"
+                android:paddingRight="12dp"
+                android:singleLine="true"
+                android:textAllCaps="true"
+                android:textColor="@color/text_color_black"
+                android:textSize="16sp"/>
+        </RelativeLayout>
     </RelativeLayout>
 
     <RelativeLayout
@@ -288,65 +251,53 @@
             android:contentDescription="@string/empty_string"
             android:scaleType="centerCrop"/>
 
-        <LinearLayout
+        <RelativeLayout
             android:id="@+id/draft_player_stats_br"
             android:layout_width="match_parent"
             android:layout_height="41dp"
             android:layout_alignParentBottom="true"
             android:layout_margin="2dp"
             android:background="@drawable/drawable_draft_card"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:paddingBottom="2dp">
 
             <com.blitz.app.utilities.textview.BlitzTextView
                 android:id="@+id/draft_player_name_br"
                 fontPath="@string/app_font_helvetica_condensed_bold"
-                android:layout_width="match_parent"
-                android:layout_height="20dp"
-                android:gravity="center"
-                android:paddingLeft="10dp"
-                android:paddingRight="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
                 android:singleLine="true"
-                android:text="@string/lorum_ipsum_tiny"
                 android:textAllCaps="true"
                 android:textColor="@color/text_color_black"
-                android:textSize="13sp"
-                app:clearInitialContent="true"/>
+                android:textSize="12sp"/>
 
-            <LinearLayout
+            <com.blitz.app.utilities.textview.BlitzTextView
+                android:id="@+id/draft_player_info_br"
+                fontPath="@string/app_font_helvetica_condensed_bold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentLeft="true"
+                android:paddingLeft="12dp"
+                android:singleLine="true"
+                android:textAllCaps="true"
+                android:textColor="@color/text_color_medium_grey"
+                android:textSize="12sp"/>
+
+            <com.blitz.app.utilities.textview.BlitzTextView
+                android:id="@+id/draft_player_opponent_br"
+                fontPath="@string/app_font_helvetica_condensed_bold"
                 android:layout_width="match_parent"
-                android:layout_height="21dp"
-                android:orientation="horizontal"
-                android:paddingLeft="10dp"
-                android:paddingRight="10dp">
-
-                <com.blitz.app.utilities.textview.BlitzTextView
-                    android:id="@+id/draft_player_info_br"
-                    fontPath="@string/app_font_helvetica_condensed_bold"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_weight=".5"
-                    android:gravity="center|left"
-                    android:singleLine="true"
-                    android:text="@string/lorum_ipsum_word"
-                    android:textAllCaps="true"
-                    android:textColor="@color/text_color_grey"
-                    android:textSize="12sp"
-                    app:clearInitialContent="true"/>
-
-                <com.blitz.app.utilities.textview.BlitzTextView
-                    android:id="@+id/draft_player_opponent_br"
-                    fontPath="@string/app_font_helvetica_condensed_bold"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_weight=".5"
-                    android:gravity="center|right"
-                    android:singleLine="true"
-                    android:text="@string/lorum_ipsum_word"
-                    android:textAllCaps="true"
-                    android:textColor="@color/text_color_grey"
-                    android:textSize="12sp"
-                    app:clearInitialContent="true"/>
-            </LinearLayout>
-        </LinearLayout>
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentRight="true"
+                android:gravity="center|right"
+                android:paddingRight="12dp"
+                android:singleLine="true"
+                android:textAllCaps="true"
+                android:textColor="@color/text_color_black"
+                android:textSize="16sp"/>
+        </RelativeLayout>
     </RelativeLayout>
 </RelativeLayout>
