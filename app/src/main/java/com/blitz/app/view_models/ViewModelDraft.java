@@ -830,6 +830,7 @@ public class ViewModelDraft extends ViewModel {
             List<String> playerIds       = new ArrayList<String>();
             List<String> playerPhotoUrls = new ArrayList<String>();
             List<String> playerFullNames = new ArrayList<String>();
+            List<String> playerTeams     = new ArrayList<String>();
             List<String> playerPositions = new ArrayList<String>();
             List<String> playerOpponents = new ArrayList<String>();
 
@@ -848,17 +849,20 @@ public class ViewModelDraft extends ViewModel {
                 // Add opponent string.
                 playerOpponents.add(opponentPrefix + playerChoice.getOpponent().toUpperCase());
 
+                // TODO: Revise to better handle team/vs player case.
                 if (playerChoice.getPosition() != null && playerChoice.getTeam() != null) {
 
-                    playerPositions.add(playerChoice.getPosition() + " - " + playerChoice.getTeam());
+                    playerTeams.add(playerChoice.getTeam());
+                    playerPositions.add(playerChoice.getPosition());
                 } else {
+                    playerTeams.add("");
                     playerPositions.add("");
                 }
             }
 
             if (mCallbacks != null) {
                 mCallbacks.onPlayerChoicesChanged(playerIds, playerPhotoUrls,
-                        playerFullNames, playerPositions, playerOpponents);
+                        playerFullNames, playerTeams, playerPositions, playerOpponents);
             }
         }
     }
@@ -950,6 +954,7 @@ public class ViewModelDraft extends ViewModel {
                 List<String> playerIds,
                 List<String> playerPhotoUrls,
                 List<String> playerFullNames,
+                List<String> playerTeams,
                 List<String> playerPositions,
                 List<String> playerOpponents);
 

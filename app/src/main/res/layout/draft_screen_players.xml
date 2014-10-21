@@ -41,7 +41,7 @@
             android:orientation="vertical"
             android:paddingBottom="2dp">
 
-            <TextView
+            <com.blitz.app.utilities.textview.BlitzTextView
                 android:id="@+id/draft_player_name_tl"
                 fontPath="@string/app_font_helvetica_condensed_bold"
                 android:layout_width="wrap_content"

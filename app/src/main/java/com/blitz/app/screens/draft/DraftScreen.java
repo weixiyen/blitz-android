@@ -23,6 +23,7 @@ import com.blitz.app.utilities.authentication.AuthHelper;
 import com.blitz.app.utilities.blitz.BlitzDelay;
 import com.blitz.app.utilities.image.BlitzImage;
 import com.blitz.app.utilities.image.BlitzImageView;
+import com.blitz.app.utilities.textview.BlitzTextView;
 import com.blitz.app.view_models.ViewModel;
 import com.blitz.app.view_models.ViewModelDraft;
 
@@ -85,7 +86,7 @@ public class DraftScreen extends BaseActivity implements ViewModelDraft.Callback
             R.id.draft_player_name_tr,
             R.id.draft_player_name_bl,
             R.id.draft_player_name_br
-    }) List<TextView> mDraftPlayerNames;
+    }) List<BlitzTextView> mDraftPlayerNames;
 
     @InjectViews({
             R.id.draft_player_info_tl,
@@ -449,10 +450,10 @@ public class DraftScreen extends BaseActivity implements ViewModelDraft.Callback
 
             // Show each player card.
             AnimHelperFade.setVisibility(player, visibility);
-
-            // Callback on a small delay.
-            BlitzDelay.postDelayed(complete, AnimHelper.getConfigAnimTimeStandard() + 100);
         }
+
+        // Callback on a small delay.
+        BlitzDelay.postDelayed(complete, AnimHelper.getConfigAnimTimeStandard() + 100);
     }
 
     /**
@@ -503,6 +504,68 @@ public class DraftScreen extends BaseActivity implements ViewModelDraft.Callback
 
             mObjectAnimator.start();
         }
+    }
+
+    private void setPlayerImages(
+            final List<String> playerIds,
+            final List<String> playerPositions,
+            final List<String> playerPhotoUrls) {
+
+        // Load new images asynchronously.
+        BlitzImage.from(DraftScreen.this).loadImageUrls(playerPhotoUrls,
+                "images/raw_player_mask.png", new BlitzImage.CallbackImageUrls() {
+
+                    @Override
+                    public void onSuccess(Map<String, Bitmap> images) {
+
+                        for (int i = 0; i < playerIds.size(); i++) {
+
+                            // Do a clean fade animation.
+                            AnimHelperFade.setAlpha(mDraftPlayerImages.get(i), 0.0f, 1.0f);
+
+                            // Fetch the bitmap we attempted to load.
+                            Bitmap playerBitmap = images.get(playerPhotoUrls.get(i));
+
+                            if (playerBitmap != null) {
+
+                                // Set the player image.
+                                mDraftPlayerImages.get(i).setImageBitmap
+                                        (images.get(playerPhotoUrls.get(i)));
+                            } else {
+
+                                String playerPosition = playerPositions.get(i);
+
+                                if (playerPosition != null) {
+
+                                    if (playerPosition.equals("K")) {
+                                        mDraftPlayerImages.get(i).setImageResource
+                                                (R.drawable.asset_draft_placeholder_k);
+                                    }
+
+                                    if (playerPosition.equals("qb")) {
+                                        mDraftPlayerImages.get(i).setImageResource
+                                                (R.drawable.asset_draft_placeholder_qb);
+                                    }
+
+                                    if (playerPosition.equals("RB")) {
+                                        mDraftPlayerImages.get(i).setImageResource
+                                                (R.drawable.asset_draft_placeholder_rb);
+                                    }
+
+                                    if (playerPosition.equals("TE")) {
+                                        mDraftPlayerImages.get(i).setImageResource
+                                                (R.drawable.asset_draft_placeholder_te);
+                                    }
+
+                                    if (playerPosition.equals("WR")) {
+                                        mDraftPlayerImages.get(i).setImageResource
+                                                (R.drawable.asset_draft_placeholder_wr);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                });
     }
 
     // endregion
@@ -628,6 +691,7 @@ public class DraftScreen extends BaseActivity implements ViewModelDraft.Callback
             final List<String> playerIds,
             final List<String> playerPhotoUrls,
             final List<String> playerFullNames,
+            final List<String> playerTeams,
             final List<String> playerPositions,
             final List<String> playerOpponents) {
 
@@ -642,34 +706,26 @@ public class DraftScreen extends BaseActivity implements ViewModelDraft.Callback
 
                 for (int i = 0; i < playerIds.size(); i++) {
 
-                    mDraftPlayers
-                            .get(i).setTag(playerIds.get(i));
-                    mDraftPlayerNames
-                            .get(i).setText(playerFullNames.get(i));
-                    mDraftPlayerPositions
-                            .get(i).setText(playerPositions.get(i));
-                    mDraftPlayerOpponents
-                            .get(i).setText(playerOpponents.get(i));
+                    mDraftPlayers.get(i).setTag(playerIds.get(i));
+
+                    // Set name and size to fit.
+                    mDraftPlayerNames.get(i).setText(playerFullNames.get(i));
+                    mDraftPlayerNames.get(i).setSizeToFit();
+
+                    if (!playerPositions.get(i).isEmpty() &&
+                            !playerTeams.get(i).isEmpty()) {
+
+                        mDraftPlayerPositions.get(i).setText(
+                                playerPositions.get(i) + " - " + playerTeams.get(i));
+                    } else {
+                        mDraftPlayerPositions.get(i).setText("");
+                    }
+
+                    mDraftPlayerOpponents.get(i).setText(playerOpponents.get(i));
                 }
 
-                // Load new images asynchronously.
-                BlitzImage.from(DraftScreen.this).loadImageUrls(playerPhotoUrls,
-                        "images/raw_player_mask.png", new BlitzImage.CallbackImageUrls() {
-
-                            @Override
-                            public void onSuccess(Map<String, Bitmap> images) {
-
-                                for (int i = 0; i < playerIds.size(); i++) {
-
-                                    // Do a clean fade animation.
-                                    AnimHelperFade.setAlpha(mDraftPlayerImages.get(i), 0.0f, 1.0f);
-
-                                    // Set the player image.
-                                    mDraftPlayerImages.get(i).setImageBitmap
-                                            (images.get(playerPhotoUrls.get(i)));
-                                }
-                            }
-                        });
+                // Load and set player images.
+                setPlayerImages(playerIds, playerPositions, playerPhotoUrls);
             }
         };
 
