@@ -110,6 +110,7 @@ public class RecentScreenMatchAdapter extends ArrayAdapter<ViewModelRecent.Summa
         int colorLight  = view.getResources().getColor(R.color.text_color_light);
         int colorOrange = view.getResources().getColor(R.color.text_color_orange);
         int colorGreen  = view.getResources().getColor(R.color.text_color_green);
+        int colorRed    = view.getResources().getColor(R.color.text_color_red);
 
         // Set match scores.
         viewHolder.mRecentP1Score.setText(String.format("%.02f", draft.getP1Score()));
@@ -136,14 +137,22 @@ public class RecentScreenMatchAdapter extends ArrayAdapter<ViewModelRecent.Summa
 
         int targetColor = colorLight;
 
-        if (draft.getStatus().equals("final")) {
+        // Fetch the draft status string.
+        String draftStatus = draft.getStatus().toLowerCase();
+
+        if (draftStatus.equals("final")) {
 
             targetColor = colorGreen;
         }
 
-        if (draft.getStatus().equals("in progress")) {
+        if (draftStatus.equals("in progress")) {
 
             targetColor = colorOrange;
+        }
+
+        if (draftStatus.equals("new")) {
+
+            targetColor = colorRed;
         }
 
         // Set status and leading score color.
