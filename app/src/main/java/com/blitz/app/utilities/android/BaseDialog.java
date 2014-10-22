@@ -191,7 +191,8 @@ public class BaseDialog {
                     @Override
                     public void run() {
 
-                        if (getPopupWindow() != null) {
+                        if (getPopupWindow() != null &&
+                                (mActivity.isDestroyed() || mActivity.isFinishing())) {
 
                             // Show at top corner of the window.
                             getPopupWindow().showAtLocation(mActivity.getWindow()
