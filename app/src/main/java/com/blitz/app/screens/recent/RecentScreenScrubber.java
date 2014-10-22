@@ -241,39 +241,46 @@ public class RecentScreenScrubber extends LinearLayout {
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {
 
-                    switch (motionEvent.getAction()) {
-                        case MotionEvent.ACTION_MOVE:
+                if (motionEvent != null) {
 
-                            // Show the text view.
-                            setScrubberTextViewVisibility(true);
+                    try {
 
-                            // Process the scrub event.
-                            processScrubEvent(motionEvent.getX());
+                        switch (motionEvent.getAction()) {
 
-                            // Disable view pager.
-                            if (mViewPager != null) {
-                                mViewPager.requestDisallowInterceptTouchEvent(true);
-                            }
+                            case MotionEvent.ACTION_MOVE:
 
-                            break;
-                        case MotionEvent.ACTION_UP:
-                        case MotionEvent.ACTION_CANCEL:
+                                // Show the text view.
+                                setScrubberTextViewVisibility(true);
 
-                            // Hide the text view.
-                            setScrubberTextViewVisibility(false);
+                                // Process the scrub event.
+                                processScrubEvent(motionEvent.getX());
 
-                            // Restore view pager.
-                            if (mViewPager != null) {
-                                mViewPager.requestDisallowInterceptTouchEvent(false);
-                            }
+                                // Disable view pager.
+                                if (mViewPager != null) {
+                                    mViewPager.requestDisallowInterceptTouchEvent(true);
+                                }
 
-                            // Emit selection event.
-                            if (mCallbacks != null) {
-                                mCallbacks.onScrubberItemSelected(mScrubberItemSelected);
-                            }
+                                break;
+                            case MotionEvent.ACTION_UP:
+                            case MotionEvent.ACTION_CANCEL:
 
-                            break;
-                    }
+                                // Hide the text view.
+                                setScrubberTextViewVisibility(false);
+
+                                // Restore view pager.
+                                if (mViewPager != null) {
+                                    mViewPager.requestDisallowInterceptTouchEvent(false);
+                                }
+
+                                // Emit selection event.
+                                if (mCallbacks != null) {
+                                    mCallbacks.onScrubberItemSelected(mScrubberItemSelected);
+                                }
+
+                                break;
+                        }
+                    } catch (Exception ignored) { }
+                }
 
                 return true;
             }
