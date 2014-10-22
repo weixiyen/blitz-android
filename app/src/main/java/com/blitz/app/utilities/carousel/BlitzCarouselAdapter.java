@@ -3,18 +3,18 @@ package com.blitz.app.utilities.carousel;
 import android.content.Context;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 
 import com.blitz.app.R;
 import com.blitz.app.utilities.reflection.ReflectionHelper;
+import com.blitz.app.utilities.viewpager.BlitzViewPagerAdapter;
 
 import java.util.List;
 
 /**
  * Created by mrkcsc on 8/17/14. Copyright 2014 Blitz Studios
  */
-public class BlitzCarouselAdapter extends FragmentPagerAdapter implements
+public class BlitzCarouselAdapter extends BlitzViewPagerAdapter implements
         ViewPager.OnPageChangeListener {
 
     // region Member Variables
@@ -32,8 +32,6 @@ public class BlitzCarouselAdapter extends FragmentPagerAdapter implements
     final static float DIFF_SCALE = MAX_SCALE - MIN_SCALE;
 
     private Context mContext;
-    private ViewPager mViewPager;
-    private FragmentManager mFragmentManager;
 
     private int mPageCount;
     private int mFirstPage;
@@ -56,9 +54,6 @@ public class BlitzCarouselAdapter extends FragmentPagerAdapter implements
      */
     private BlitzCarouselAdapter(FragmentManager fragmentManager) {
         super(fragmentManager);
-
-        // Save the fragment manager.
-        mFragmentManager = fragmentManager;
     }
 
     // endregion
@@ -93,7 +88,6 @@ public class BlitzCarouselAdapter extends FragmentPagerAdapter implements
                 (fragmentManager);
 
         // Assign member variables.
-        adapter.mViewPager = viewPager;
         adapter.mContext = viewPager.getContext();
 
         // Set the callbacks.
@@ -232,24 +226,8 @@ public class BlitzCarouselAdapter extends FragmentPagerAdapter implements
      */
     private BlitzCarouselScalingView getRootView(int position) {
 
-        // Fetch fragment at current position.
-        Fragment fragmentAtPosition = mFragmentManager
-                .findFragmentByTag(getFragmentTag(position));
-
-        return (BlitzCarouselScalingView)fragmentAtPosition.getView()
-                .findViewById(R.id.blitz_carousel_helmet);
-    }
-
-    /**
-     * Get fragment tag at a specified position.
-     *
-     * @param position View pager position.
-     *
-     * @return Fragment tag.
-     */
-    private String getFragmentTag(int position) {
-
-        return "android:switcher:" + mViewPager.getId() + ":" + position;
+        return (BlitzCarouselScalingView)getRegisteredFragment(position)
+                .getView().findViewById(R.id.blitz_carousel_helmet);
     }
 
     // endregion
