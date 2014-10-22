@@ -3,6 +3,7 @@ package com.blitz.app.utilities.android;
 import android.app.Activity;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.os.Build;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
@@ -191,8 +192,16 @@ public class BaseDialog {
                     @Override
                     public void run() {
 
-                        if (getPopupWindow() != null &&
-                                (mActivity.isDestroyed() || mActivity.isFinishing())) {
+                        // If we are jellybean or higher, check if activity is destroyed.
+                        if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
+
+                            if (mActivity.isDestroyed()) {
+
+                                return;
+                            }
+                        }
+
+                        if (getPopupWindow() != null || mActivity.isFinishing()) {
 
                             // Show at top corner of the window.
                             getPopupWindow().showAtLocation(mActivity.getWindow()
