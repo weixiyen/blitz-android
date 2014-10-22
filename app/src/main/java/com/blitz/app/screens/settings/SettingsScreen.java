@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.widget.Switch;
+import android.widget.TextView;
 
 import com.blitz.app.R;
 import com.blitz.app.screens.web.WebScreen;
@@ -16,7 +17,6 @@ import com.blitz.app.utilities.app.AppDataObject;
 import com.blitz.app.utilities.authentication.AuthHelper;
 import com.blitz.app.utilities.carousel.BlitzCarouselAdapter;
 import com.blitz.app.utilities.sound.SoundHelper;
-import com.blitz.app.utilities.textview.BlitzTextView;
 import com.blitz.app.view_models.ViewModel;
 import com.blitz.app.view_models.ViewModelSettings;
 
@@ -35,24 +35,19 @@ public class SettingsScreen extends BaseFragment implements ViewModelSettings.Ca
     // =============================================================================================
 
     // Toggle switches.
-    @InjectView(R.id.settings_toggle_music)
-    Switch mSettingsToggleMusic;
-    @InjectView(R.id.settings_toggle_sound)
-    Switch mSettingsToggleSound;
+    @InjectView(R.id.settings_toggle_music) Switch mSettingsToggleMusic;
+    @InjectView(R.id.settings_toggle_sound) Switch mSettingsToggleSound;
 
     // Reset button.
-    @InjectView(R.id.settings_reset)
-    View mSettingsReset;
-    @InjectView(R.id.settings_reset_border)
-    View mSettingsResetBorder;
+    @InjectView(R.id.settings_reset)        View mSettingsReset;
+    @InjectView(R.id.settings_reset_border) View mSettingsResetBorder;
 
     // Settings email button.
-    @InjectView(R.id.settings_email)
-    BlitzTextView mSettingsEmail;
+    @InjectView(R.id.settings_email)   TextView mSettingsEmail;
+    @InjectView(R.id.settings_version) TextView mSettingsVersion;
 
     // Helmet view pager.
-    @InjectView(R.id.settings_carousel)
-    ViewPager mCarouselViewPager;
+    @InjectView(R.id.settings_carousel) ViewPager mCarouselViewPager;
 
     // View model.
     private ViewModelSettings mViewModelSettings;
@@ -204,7 +199,7 @@ public class SettingsScreen extends BaseFragment implements ViewModelSettings.Ca
      * @param email Email address.
      */
     @Override
-    public void onEmailChanged(String email) {
+    public void onEmail(String email) {
 
         if (mSettingsEmail != null) {
             mSettingsEmail.setText(email);
@@ -220,12 +215,25 @@ public class SettingsScreen extends BaseFragment implements ViewModelSettings.Ca
      * @param userAvatarId Current user avatar id.
      */
     @Override
-    public void onAvatarsChanged(List<String> userAvatarIds,
-                                 List<String> userAvatarUrls, String userAvatarId) {
+    public void onAvatars(List<String> userAvatarIds,
+                          List<String> userAvatarUrls, String userAvatarId) {
 
         // Create the avatar carousel.
         BlitzCarouselAdapter.createWithViewPager(mCarouselViewPager, getChildFragmentManager(),
                 userAvatarIds, userAvatarUrls, userAvatarId, this);
+    }
+
+    /**
+     * Set the version.
+     *
+     * @param version Version.
+     */
+    @Override
+    public void onVersion(String version) {
+
+        if (mSettingsVersion != null) {
+            mSettingsVersion.setText(version);
+        }
     }
 
     /**

@@ -368,13 +368,13 @@
                 fontPath="@string/app_font_helvetica_condensed_bold"
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
-                android:textColor="@color/text_color_light_grey"
                 android:layout_gravity="center_horizontal"
                 android:background="@color/background_transparent"
                 android:gravity="center|left"
                 android:paddingLeft="25dp"
                 android:paddingRight="25dp"
                 android:text="@string/terms_of_use"
+                android:textColor="@color/text_color_light_grey"
                 android:textSize="16sp"/>
 
             <View
@@ -388,13 +388,13 @@
                 fontPath="@string/app_font_helvetica_condensed_bold"
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
-                android:textColor="@color/text_color_light_grey"
                 android:layout_gravity="center_horizontal"
                 android:background="@color/background_transparent"
                 android:gravity="center|left"
                 android:paddingLeft="25dp"
                 android:paddingRight="25dp"
                 android:text="@string/privacy_policy"
+                android:textColor="@color/text_color_light_grey"
                 android:textSize="16sp"/>
 
             <View
@@ -413,12 +413,12 @@
                     fontPath="@string/app_font_helvetica_condensed_bold"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:textColor="@color/text_color_light_grey"
                     android:layout_gravity="center_horizontal"
                     android:gravity="center"
                     android:paddingLeft="25dp"
                     android:paddingRight="25dp"
                     android:text="@string/contact_us"
+                    android:textColor="@color/text_color_light_grey"
                     android:textSize="16sp"/>
 
                 <com.blitz.app.utilities.textview.BlitzTextView
@@ -427,15 +427,16 @@
                     fontPath="@string/app_font_helvetica_condensed_bold"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:textColor="@color/text_color_light_grey"
+                    android:layout_alignParentRight="true"
                     android:layout_gravity="center_horizontal"
+                    android:alpha=".75"
                     android:gravity="center"
                     android:paddingLeft="25dp"
-                    android:layout_alignParentRight="true"
                     android:paddingRight="25dp"
-                    android:alpha=".75"
                     android:text="@string/version"
-                    android:textSize="12sp"/>
+                    android:textColor="@color/text_color_light_grey"
+                    android:textSize="12sp"
+                    app:clearInitialContent="true"/>
             </RelativeLayout>
 
             <View
@@ -452,9 +453,9 @@
                 android:background="@color/background_transparent"
                 android:gravity="center|left"
                 android:paddingLeft="25dp"
-                android:textColor="@color/text_color_light_grey"
                 android:paddingRight="25dp"
                 android:text="@string/logout"
+                android:textColor="@color/text_color_light_grey"
                 android:textSize="16sp"/>
 
             <View

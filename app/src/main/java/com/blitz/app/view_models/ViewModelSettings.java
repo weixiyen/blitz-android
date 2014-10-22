@@ -1,5 +1,8 @@
 package com.blitz.app.view_models;
 
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+
 import com.blitz.app.rest_models.RestModelCallback;
 import com.blitz.app.rest_models.RestModelItem;
 import com.blitz.app.rest_models.RestModelUser;
@@ -51,6 +54,7 @@ public class ViewModelSettings extends ViewModel {
 
         fetchUserInfo();
         fetchUserAvatars();
+        fetchVersionNumber();
     }
 
     // endregion
@@ -106,7 +110,7 @@ public class ViewModelSettings extends ViewModel {
                     public void onSuccess(RestModelUser user) {
 
                         if (getCallbacks(Callbacks.class) != null) {
-                            getCallbacks(Callbacks.class).onEmailChanged(user.getEmail());
+                            getCallbacks(Callbacks.class).onEmail(user.getEmail());
                         }
 
                         // Fetch associated item model.
@@ -123,6 +127,24 @@ public class ViewModelSettings extends ViewModel {
                                 });
                     }
                 }, true);
+    }
+
+    /**
+     * Fetch the current application version.
+     */
+    private void fetchVersionNumber() {
+
+        try {
+
+            // Fetch the package info.
+            PackageInfo packageInfo = mActivity.getPackageManager()
+                    .getPackageInfo(mActivity.getPackageName(), 0);
+
+            if (getCallbacks(Callbacks.class) != null) {
+                getCallbacks(Callbacks.class).onVersion(packageInfo.versionName);
+            }
+
+        } catch (PackageManager.NameNotFoundException ignored) { }
     }
 
     /**
@@ -145,7 +167,7 @@ public class ViewModelSettings extends ViewModel {
 
             if (getCallbacks(Callbacks.class) != null) {
                 getCallbacks(Callbacks.class)
-                        .onAvatarsChanged(avatarIds, avatarUrls, mUserAvatarIdCurrent);
+                        .onAvatars(avatarIds, avatarUrls, mUserAvatarIdCurrent);
             }
         }
     }
@@ -157,9 +179,10 @@ public class ViewModelSettings extends ViewModel {
 
     public interface Callbacks extends ViewModel.Callbacks {
 
-        public void onEmailChanged(String email);
-        public void onAvatarsChanged(List<String> userAvatarIds,
-                                     List<String> userAvatarUrls, String userAvatarId);
+        public void onEmail(String email);
+        public void onAvatars(List<String> userAvatarIds,
+                              List<String> userAvatarUrls, String userAvatarId);
+        public void onVersion(String version);
     }
 
     // endregion
