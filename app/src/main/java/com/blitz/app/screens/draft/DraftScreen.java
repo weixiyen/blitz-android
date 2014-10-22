@@ -619,9 +619,9 @@ public class DraftScreen extends BaseActivity implements ViewModelDraft.Callback
             mDraftIntroEloLeft
                     .setText(Integer.toString(rating));
             mDraftIntroScorecardLeft
-                    .setText(Integer.toString(wins) + "-" +
-                             Integer.toString(ties) + "-" +
-                             Integer.toString(losses));
+                    .setText(Integer.toString(wins)   + "-" +
+                             Integer.toString(losses) + "-" +
+                             Integer.toString(ties));
 
             mDraftMatchupUsernameLeft.setText(userName);
 
@@ -637,9 +637,9 @@ public class DraftScreen extends BaseActivity implements ViewModelDraft.Callback
             mDraftIntroEloRight
                     .setText(Integer.toString(rating));
             mDraftIntroScorecardRight
-                    .setText(Integer.toString(wins) + "-" +
-                             Integer.toString(ties) + "-" +
-                             Integer.toString(losses));
+                    .setText(Integer.toString(wins)   + "-" +
+                             Integer.toString(losses) + "-" +
+                             Integer.toString(ties) );
 
             mDraftMatchupUsernameRight.setText(userName);
         }
