@@ -10,7 +10,6 @@ import com.blitz.app.dialogs.loading.DialogLoading;
 import com.blitz.app.utilities.android.BaseActivity;
 import com.blitz.app.utilities.android.BaseDialog;
 import com.blitz.app.utilities.authentication.AuthHelper;
-import com.blitz.app.utilities.viewpager.ViewPagerTransformerZoom;
 import com.blitz.app.view_models.ViewModel;
 import com.blitz.app.view_models.ViewModelMain;
 
@@ -110,33 +109,15 @@ public class MainScreen extends BaseActivity implements ViewModelMain.Callbacks 
      */
     private void setViewPager() {
 
-        // Create adapter.
-        MainScreenViewPagerAdapter adapter = new MainScreenViewPagerAdapter(getSupportFragmentManager());
-
-        // We have a small static number of pages
-        // so let them all be cached and not re-created.
-        mPager.setOffscreenPageLimit(adapter.getCount() - 1);
-
-        // Create adapter for the view pager.
-        mPager.setAdapter(adapter);
-
-        // Add a custom page transition effect.
-        mPager.setPageTransformer(true, new ViewPagerTransformerZoom());
-
-        // Setup the page change listener.
-        mPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+        // Create a view pager.
+        MainScreenViewPagerAdapter.createWithViewPager(mPager, getSupportFragmentManager(),
+                new MainScreenViewPagerAdapter.Callbacks() {
 
             @Override
-            public void onPageScrolled(int i, float v, int i2) { }
-
-            @Override
-            public void onPageScrollStateChanged(int i) { }
-
-            @Override
-            public void onPageSelected(int i) {
+            public void onPageSelected(int position) {
 
                 // Enable nav item.
-                selectNavItemWithTag(i);
+                selectNavItemWithTag(position);
             }
         });
     }
