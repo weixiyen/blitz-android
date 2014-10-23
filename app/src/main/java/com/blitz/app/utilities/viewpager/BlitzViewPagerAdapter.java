@@ -4,6 +4,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.util.SparseArray;
+import android.view.View;
 import android.view.ViewGroup;
 
 /**
@@ -14,8 +15,9 @@ public abstract class BlitzViewPagerAdapter extends FragmentStatePagerAdapter {
     // region Member Variables
     // =============================================================================================
 
-    // Array of registered fragments.
-    SparseArray<Fragment> registeredFragments = new SparseArray<Fragment>();
+    // Array of registered fragments / root views.
+    SparseArray<Fragment> mRegisteredFragments = new SparseArray<Fragment>();
+    SparseArray<View>     mRegisteredRootViews = new SparseArray<View>();
 
     // endregion
 
@@ -41,7 +43,7 @@ public abstract class BlitzViewPagerAdapter extends FragmentStatePagerAdapter {
         Fragment fragment = (Fragment)super.instantiateItem(container, position);
 
         // Save handler to the fragment.
-        registeredFragments.put(position, fragment);
+        mRegisteredFragments.put(position, fragment);
 
         return fragment;
     }
@@ -52,7 +54,10 @@ public abstract class BlitzViewPagerAdapter extends FragmentStatePagerAdapter {
      */
     @Override
     public void destroyItem(ViewGroup container, int position, Object object) {
-        registeredFragments.remove(position);
+
+        // Remove root views and fragments.
+        mRegisteredFragments.remove(position);
+        mRegisteredRootViews.remove(position);
 
         // Ensure handle to fragment is destroyed.
         super.destroyItem(container, position, object);
@@ -73,7 +78,29 @@ public abstract class BlitzViewPagerAdapter extends FragmentStatePagerAdapter {
      */
     @SuppressWarnings("unused")
     protected Fragment getRegisteredFragment(int position) {
-        return registeredFragments.get(position);
+        return mRegisteredFragments.get(position);
+    }
+
+    /**
+     * Fetch root view at position.
+     *
+     * @param position View pager position.
+     *
+     * @return Root view at position.
+     */
+    @SuppressWarnings("unused")
+    protected View getRegisteredRootView(int position, int rootViewId) {
+
+        Fragment fragment = getRegisteredFragment(position);
+
+        // If fragment registered and no root view loaded.
+        if (fragment != null && mRegisteredRootViews.get(position) == null) {
+
+            // Load the root view into the array.
+            mRegisteredRootViews.put(position, fragment.getView().findViewById(rootViewId));
+        }
+
+        return mRegisteredRootViews.get(position);
     }
 
     // endregion

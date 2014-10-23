@@ -176,10 +176,10 @@ public class BlitzCarouselAdapter extends BlitzViewPagerAdapter implements
 
         if (positionOffset >= 0f && positionOffset <= 1f) {
 
-            BlitzCarouselScalingView rootViewCurrent
-                    = getRootView(position);
-            BlitzCarouselScalingView rootViewNext
-                    = getRootView(position + 1);
+            BlitzCarouselScalingView rootViewCurrent = (BlitzCarouselScalingView)
+                    getRegisteredRootView(position, R.id.blitz_carousel_helmet);
+            BlitzCarouselScalingView rootViewNext = (BlitzCarouselScalingView)
+                    getRegisteredRootView(position + 1, R.id.blitz_carousel_helmet);
 
             rootViewCurrent.setScale
                     (MAX_SCALE - DIFF_SCALE * positionOffset);
@@ -211,24 +211,6 @@ public class BlitzCarouselAdapter extends BlitzViewPagerAdapter implements
      */
     @Override
     public void onPageScrollStateChanged(int state) { }
-
-    // endregion
-
-    // region Private Methods
-    // =============================================================================================
-
-    /**
-     * Fetch root view at position.
-     *
-     * @param position View pager position.
-     *
-     * @return Root view at position.
-     */
-    private BlitzCarouselScalingView getRootView(int position) {
-
-        return (BlitzCarouselScalingView)getRegisteredFragment(position)
-                .getView().findViewById(R.id.blitz_carousel_helmet);
-    }
 
     // endregion
 
