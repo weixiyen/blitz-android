@@ -1,6 +1,5 @@
 package com.blitz.app.screens.main;
 
-import android.content.Context;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
@@ -25,10 +24,6 @@ public class MainScreenViewPagerAdapter extends FragmentStatePagerAdapter
 
     // Handle to the adapter callbacks.
     private Callbacks mCallbacks;
-
-    private Context mContext;
-    private ViewPager mViewPager;
-    private FragmentManager mFragmentManager;
 
     // endregion
 
@@ -107,10 +102,6 @@ public class MainScreenViewPagerAdapter extends FragmentStatePagerAdapter
                                            Callbacks callbacks) {
 
         MainScreenViewPagerAdapter adapter = new MainScreenViewPagerAdapter(fragmentManager);
-
-        // Assign member variables.
-        adapter.mViewPager = viewPager;
-        adapter.mContext = viewPager.getContext();
 
         // Set the callbacks.
         adapter.mCallbacks = callbacks;
