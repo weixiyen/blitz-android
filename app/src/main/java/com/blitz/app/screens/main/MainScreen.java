@@ -7,12 +7,17 @@ import android.view.View;
 import com.blitz.app.R;
 import com.blitz.app.dialogs.info.DialogInfo;
 import com.blitz.app.dialogs.loading.DialogLoading;
+import com.blitz.app.screens.leagues.LeaguesScreen;
+import com.blitz.app.screens.play.PlayScreen;
+import com.blitz.app.screens.recent.RecentScreen;
+import com.blitz.app.screens.settings.SettingsScreen;
 import com.blitz.app.utilities.android.BaseActivity;
 import com.blitz.app.utilities.android.BaseDialog;
 import com.blitz.app.utilities.authentication.AuthHelper;
 import com.blitz.app.view_models.ViewModel;
 import com.blitz.app.view_models.ViewModelMain;
 
+import java.util.Arrays;
 import java.util.List;
 
 import butterknife.ButterKnife;
@@ -35,6 +40,7 @@ public class MainScreen extends BaseActivity implements ViewModelMain.Callbacks 
     @InjectViews({
             R.id.main_nav_play_active,
             R.id.main_nav_recent_active,
+            R.id.main_nav_leagues_active,
             R.id.main_nav_settings_active }) List<View> mNavActiveButtons;
 
     // Info/loading dialog.
@@ -93,6 +99,16 @@ public class MainScreen extends BaseActivity implements ViewModelMain.Callbacks 
         return mViewModelMain;
     }
 
+    // endregion
+
+    // region Public Methods
+    // =============================================================================================
+
+    /**
+     * Fetch the view pager.
+     *
+     * @return View pager.
+     */
     public ViewPager getViewPager() {
 
         return mPager;
@@ -107,7 +123,15 @@ public class MainScreen extends BaseActivity implements ViewModelMain.Callbacks 
      * Create and setup the viewpager and associated
      * elements.
      */
+    @SuppressWarnings("unchecked")
     private void setViewPager() {
+
+        // Create array of classes.
+        List<String> mainScreens = Arrays.asList(
+                PlayScreen.class.getName(),
+                RecentScreen.class.getName(),
+                LeaguesScreen.class.getName(),
+                SettingsScreen.class.getName());
 
         // Create a view pager.
         MainScreenViewPagerAdapter.createWithViewPager(mPager, getSupportFragmentManager(),
@@ -119,7 +143,7 @@ public class MainScreen extends BaseActivity implements ViewModelMain.Callbacks 
                 // Enable nav item.
                 selectNavItemWithTag(position);
             }
-        });
+        }, mainScreens);
     }
 
     /**

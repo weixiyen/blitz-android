@@ -1,14 +1,14 @@
 package com.blitz.app.screens.main;
 
+import android.content.Context;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 
-import com.blitz.app.screens.play.PlayScreen;
-import com.blitz.app.screens.recent.RecentScreen;
-import com.blitz.app.screens.settings.SettingsScreen;
 import com.blitz.app.utilities.viewpager.ViewPagerTransformerZoom;
+
+import java.util.List;
 
 /**
  * Created by mrkcsc on 7/14/14. Copyright 2014 Blitz Studios
@@ -20,10 +20,13 @@ public class MainScreenViewPagerAdapter extends FragmentStatePagerAdapter
     // =============================================================================================
 
     // Title of each page.
-    private static String[] PAGE_TITLES = new String[] { "Play", "Recent", "Settings" };
+    private List<String> mScreens;
 
     // Handle to the adapter callbacks.
     private Callbacks mCallbacks;
+
+    // Holds the context.
+    private Context mContext;
 
     // endregion
 
@@ -52,28 +55,9 @@ public class MainScreenViewPagerAdapter extends FragmentStatePagerAdapter
      */
     @Override
     public Fragment getItem(int position) {
-        switch (position) {
-            case 0:
-                return new PlayScreen();
-            case 1:
-                return new RecentScreen();
-            case 2:
-                return new SettingsScreen();
-            default:
-                return null;
-        }
-    }
 
-    /**
-     * Get associated page title.
-     *
-     * @param position Position.
-     *
-     * @return Page title.
-     */
-    @Override
-    public CharSequence getPageTitle(int position) {
-        return PAGE_TITLES[position];
+        // Return new instance of the associated screen.
+        return Fragment.instantiate(mContext, mScreens.get(position));
     }
 
     /**
@@ -83,7 +67,8 @@ public class MainScreenViewPagerAdapter extends FragmentStatePagerAdapter
      */
     @Override
     public int getCount() {
-        return PAGE_TITLES.length;
+
+        return mScreens.size();
     }
 
     // endregion
@@ -99,12 +84,18 @@ public class MainScreenViewPagerAdapter extends FragmentStatePagerAdapter
      * @param callbacks Callbacks.
      */
     public static void createWithViewPager(ViewPager viewPager, FragmentManager fragmentManager,
-                                           Callbacks callbacks) {
+                                           Callbacks callbacks, List<String> screens) {
 
         MainScreenViewPagerAdapter adapter = new MainScreenViewPagerAdapter(fragmentManager);
 
         // Set the callbacks.
         adapter.mCallbacks = callbacks;
+
+        // Set screens.
+        adapter.mScreens = screens;
+
+        // Set the context.
+        adapter.mContext = viewPager.getContext();
 
         // Assign the adapter.
         viewPager.setAdapter(adapter);

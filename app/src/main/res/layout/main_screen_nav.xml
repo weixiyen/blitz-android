@@ -85,6 +85,45 @@
     </RelativeLayout>
 
     <RelativeLayout
+        android:id="@+id/main_nav_button_leagues"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:tag="0">
+
+        <ImageView
+            android:id="@+id/main_nav_leagues_active"
+            android:layout_width="100dp"
+            android:layout_height="50dp"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:contentDescription="@string/empty_string"
+            android:src="@drawable/asset_nav_active"
+            android:visibility="gone" />
+
+        <ImageView
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="-8dp"
+            android:contentDescription="@string/empty_string"
+            android:src="@drawable/asset_nav_icon_league"/>
+
+        <TextView
+            style="@style/App.TextView"
+            fontPath="@string/app_font_bold"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_centerHorizontal="true"
+            android:gravity="center|bottom"
+            android:text="@string/leagues"
+            android:textAllCaps="true"
+            android:textColor="@color/text_color_light"
+            android:textSize="12sp"/>
+    </RelativeLayout>
+
+    <RelativeLayout
         android:id="@+id/main_nav_button_settings"
         android:layout_width="0dp"
         android:layout_height="match_parent"
