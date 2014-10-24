@@ -2,6 +2,7 @@ package com.blitz.app.utilities.android;
 
 import android.app.Application;
 
+import com.amplitude.api.Amplitude;
 import com.blitz.app.R;
 import com.blitz.app.utilities.app.AppConfig;
 import com.blitz.app.utilities.app.AppData;
@@ -48,13 +49,31 @@ public class BaseApplication extends Application implements EnteredBackgroundInt
                 R.attr.fontPath);
     }
 
+    /**
+     * Reports when the application has
+     * entered the background.
+     */
     @Override
     public void onEnterBackground() {
+
+        // Pause the track dj.
         SoundHelper.instance().pauseMusic();
+
+        // Stop the session.
+        Amplitude.endSession();
     }
 
+    /**
+     * Reports when the application
+     * has exited the background.
+     */
     @Override
     public void onExitBackground() {
+
+        // Play the loud noises.
         SoundHelper.instance().resumeMusic();
+
+        // Start user session.
+        Amplitude.startSession();
     }
 }
