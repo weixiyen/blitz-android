@@ -4,9 +4,12 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 /**
- * Created by mrkcsc on 7/14/14.
+ * Created by mrkcsc on 7/14/14. Copyright 2014 Blitz Studios
  */
 public class EnteredBackground {
+
+    // region Member Variables
+    // =============================================================================================
 
     // Singleton instance.
     private static EnteredBackground instance = null;
@@ -21,17 +24,19 @@ public class EnteredBackground {
     // Track background state.
     private boolean mIsInBackground = true;
 
-    private EnteredBackgroundInterface mEnteredBackgroundInterface;
+    // Callbacks.
+    private Callbacks mCallbacks;
 
-    //==============================================================================================
-    // Public Methods
-    //==============================================================================================
+    // endregion
+
+    // region Public Methods
+    // =============================================================================================
 
     /**
      * Initialization method.
      */
-    public static void init(EnteredBackgroundInterface enteredBackgroundInterface) {
-        instance().mEnteredBackgroundInterface = enteredBackgroundInterface;
+    public static void init(Callbacks callbacks) {
+        instance().mCallbacks = callbacks;
     }
 
     /**
@@ -50,12 +55,13 @@ public class EnteredBackground {
                 instance().mIsInBackground = true;
 
                 // Now entered the background.
-                instance().mEnteredBackgroundInterface.onEnterBackground();
+                instance().mCallbacks.onEnterBackground();
             }
         };
 
         // Schedule timer to tick off and detect going into the background.
-        instance().mActivityTransitionTimer.schedule(instance().mActivityTransitionTimerTask, MAX_TRANSITION_TIME);
+        instance().mActivityTransitionTimer.schedule(instance()
+                .mActivityTransitionTimerTask, MAX_TRANSITION_TIME);
     }
 
     /**
@@ -69,7 +75,7 @@ public class EnteredBackground {
             instance().mIsInBackground = false;
 
             // Now exited the background.
-            instance().mEnteredBackgroundInterface.onExitBackground();
+            instance().mCallbacks.onExitBackground();
         }
     }
 
@@ -84,9 +90,10 @@ public class EnteredBackground {
         return instance().mIsInBackground;
     }
 
-    //==============================================================================================
-    // Private Methods
-    //==============================================================================================
+    // endregion
+
+    // region Private Methods
+    // =============================================================================================
 
     /**
      * Fetch singleton instance.
@@ -122,4 +129,20 @@ public class EnteredBackground {
             mActivityTransitionTimer = null;
         }
     }
+
+    // endregion
+
+    // region Callbacks
+    // =============================================================================================
+
+    public interface Callbacks {
+
+        // Entered the background.
+        public void onEnterBackground();
+
+        // Exited the background.
+        public void onExitBackground();
+    }
+
+    // endregion
 }

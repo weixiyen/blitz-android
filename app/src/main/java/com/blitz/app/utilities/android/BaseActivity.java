@@ -27,9 +27,8 @@ import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
  */
 public class BaseActivity extends FragmentActivity {
 
-    //==============================================================================================
-    // Member Variables
-    //==============================================================================================
+    // region Member Variables
+    // =============================================================================================
 
     // Custom transition type.
     public enum CustomTransition {
@@ -52,9 +51,10 @@ public class BaseActivity extends FragmentActivity {
     // alleviates perceived lag during transition animations.
     private Handler mViewModelInitializeHandler;
 
-    //==============================================================================================
-    // Overwritten Methods
-    //==============================================================================================
+    // endregion
+
+    // region Overwritten Methods
+    // =============================================================================================
 
     /**
      * Run custom transitions if needed.
@@ -215,9 +215,10 @@ public class BaseActivity extends FragmentActivity {
         }
     }
 
-    //==============================================================================================
-    // Public Methods
-    //==============================================================================================
+    // endregion
+
+    // region Public Methods
+    // =============================================================================================
 
     /**
      * Convenience method for starting an activity
@@ -288,9 +289,10 @@ public class BaseActivity extends FragmentActivity {
         return mAdjustResize;
     }
 
-    //==============================================================================================
-    // Private Methods
-    //==============================================================================================
+    // endregion
+
+    // region Private Methods
+    // =============================================================================================
 
     /**
      * Run custom transitions between switching activities.
@@ -340,4 +342,6 @@ public class BaseActivity extends FragmentActivity {
 
         return null;
     }
+
+    // endregion
 }

@@ -7,7 +7,6 @@ import com.blitz.app.R;
 import com.blitz.app.utilities.app.AppConfig;
 import com.blitz.app.utilities.app.AppData;
 import com.blitz.app.utilities.background.EnteredBackground;
-import com.blitz.app.utilities.background.EnteredBackgroundInterface;
 import com.blitz.app.utilities.keyboard.KeyboardUtility;
 import com.blitz.app.utilities.sound.SoundHelper;
 
@@ -16,11 +15,10 @@ import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
 /**
  * Created by Miguel Gaeta on 6/1/14. Copyright 2014 Blitz Studios
  */
-public class BaseApplication extends Application implements EnteredBackgroundInterface {
+public class BaseApplication extends Application implements EnteredBackground.Callbacks {
 
-    //==============================================================================================
-    // Overwritten Methods
-    //==============================================================================================
+    // region Overwritten Methods
+    // =============================================================================================
 
     /**
      * Initialize custom font on application start.
@@ -76,4 +74,6 @@ public class BaseApplication extends Application implements EnteredBackgroundInt
         // Start user session.
         Amplitude.startSession();
     }
+
+    // endregion
 }
