@@ -19,9 +19,8 @@ import java.util.HashMap;
  */
 public abstract class AppData<T> {
 
-    //==============================================================================================
-    // Constructors
-    //==============================================================================================
+    // region Member Variables
+    // =============================================================================================
 
     // Application context.
     private static Context mContext;
@@ -32,9 +31,10 @@ public abstract class AppData<T> {
 
     private final Class mClass;
 
-    //==============================================================================================
-    // Constructors
-    //==============================================================================================
+    // endregion
+
+    // region Constructor
+    // =============================================================================================
 
     /**
      * Cannot be instantiated. Use factory methods instead.
@@ -45,9 +45,10 @@ public abstract class AppData<T> {
         mClass = classObject;
     }
 
-    //==============================================================================================
-    // Public Methods
-    //==============================================================================================
+    // endregion
+
+    // region Public Methods
+    // =============================================================================================
 
     /**
      * Initialize with an application context
@@ -55,87 +56,10 @@ public abstract class AppData<T> {
      *
      * @param context Application context.
      */
+    @SuppressWarnings("unused")
     public static void init(Context context) {
 
         mContext = context;
-    }
-
-    /**
-     * Convenience method to get shared preferences
-     */
-    final SharedPreferences getSharedPreferences() {
-
-        return PreferenceManager.getDefaultSharedPreferences(mContext);
-    }
-
-    /**
-     * Factory method to return a string data object
-     */
-    public static AppData<String> string(String key) {
-
-        return new AppData<String>(key, String.class) {
-
-            @Override
-            public String get() {
-
-                return getSharedPreferences().getString(this.mKey, null);
-            }
-        };
-    }
-
-    /**
-     * Factory method to return a boolean data object
-     */
-    public static AppData<Boolean> bool(String key) {
-
-        return new AppData<Boolean>(key, Boolean.class) {
-
-            @Override
-            public Boolean get() {
-
-                return getSharedPreferences().getBoolean(this.mKey, false);
-            }
-        };
-    }
-
-    /**
-     * Factory method to return an integer data object
-     */
-    public static AppData<Integer> integer(String key) {
-
-        return new AppData<Integer>(key, Integer.class) {
-
-            @Override
-            public Integer get() {
-
-                return getSharedPreferences().getInt(this.mKey, 0);
-            }
-        };
-    }
-
-    /**
-     * Factory method to return a "dictionary" data object
-     */
-    public static AppData<HashMap<String, String>> dictionary(String key) {
-
-        return new AppData<HashMap<String, String>>(key, HashMap.class) {
-
-            @Override
-            public HashMap<String, String> get() {
-
-                // Fetch raw JSON string.
-                String jsonDictionary = getSharedPreferences().getString(this.mKey, null);
-
-                // Convert to dictionary.
-                HashMap<String, String> dictionary =
-                        new Gson().fromJson(jsonDictionary,
-                                new TypeToken<HashMap<String, String>>() {
-                                }.getType());
-
-                // Convert to dictionary and return.
-                return (dictionary != null ? dictionary : new HashMap<String, String>());
-            }
-        };
     }
 
     /**
@@ -171,6 +95,7 @@ public abstract class AppData<T> {
      *
      * @return Supported value.
      */
+    @SuppressWarnings("unused")
     public abstract T get();
 
     /**
@@ -209,9 +134,93 @@ public abstract class AppData<T> {
         editor.apply();
     }
 
-    //==============================================================================================
-    // Private Methods
-    //==============================================================================================
+    // endregion
+
+    // region Package Methods
+    // =============================================================================================
+
+    /**
+     * Convenience method to get shared preferences
+     */
+    final SharedPreferences getSharedPreferences() {
+
+        return PreferenceManager.getDefaultSharedPreferences(mContext);
+    }
+
+    /**
+     * Factory method to return a string data object
+     */
+    static AppData<String> string(String key) {
+
+        return new AppData<String>(key, String.class) {
+
+            @Override
+            public String get() {
+
+                return getSharedPreferences().getString(this.mKey, null);
+            }
+        };
+    }
+
+    /**
+     * Factory method to return a boolean data object
+     */
+    static AppData<Boolean> bool(String key) {
+
+        return new AppData<Boolean>(key, Boolean.class) {
+
+            @Override
+            public Boolean get() {
+
+                return getSharedPreferences().getBoolean(this.mKey, false);
+            }
+        };
+    }
+
+    /**
+     * Factory method to return an integer data object
+     */
+    static AppData<Integer> integer(String key) {
+
+        return new AppData<Integer>(key, Integer.class) {
+
+            @Override
+            public Integer get() {
+
+                return getSharedPreferences().getInt(this.mKey, 0);
+            }
+        };
+    }
+
+    /**
+     * Factory method to return a "dictionary" data object
+     */
+    static AppData<HashMap<String, String>> dictionary(String key) {
+
+        return new AppData<HashMap<String, String>>(key, HashMap.class) {
+
+            @Override
+            public HashMap<String, String> get() {
+
+                // Fetch raw JSON string.
+                String jsonDictionary = getSharedPreferences().getString(this.mKey, null);
+
+                // Convert to dictionary.
+                HashMap<String, String> dictionary =
+                        new Gson().fromJson(jsonDictionary,
+                                new TypeToken<HashMap<String, String>>() {
+                                }.getType());
+
+                // Convert to dictionary and return.
+                return (dictionary != null ? dictionary : new HashMap<String, String>());
+            }
+        };
+    }
+
+    // endregion
+
+    // region Private Methods
+    // =============================================================================================
 
     /**
      * Fetch android preferences editor.
@@ -228,4 +237,5 @@ public abstract class AppData<T> {
         return sharedPreferences.edit();
     }
 
+    // endregion
 }

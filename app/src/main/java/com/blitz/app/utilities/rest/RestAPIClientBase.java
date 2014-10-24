@@ -19,15 +19,19 @@ import retrofit.converter.GsonConverter;
  */
 public class RestAPIClientBase {
 
+    // region Member Variables
+    // =============================================================================================
+
     // Endpoint URL for the REST API.
     private static final String API_URL = AppConfig.getApiUrl();
 
     // Adapter for REST client.
     private RestAdapter mRestAdapter;
 
-    //==============================================================================================
-    // Public Methods
-    //==============================================================================================
+    // endregion
+
+    // region Protected Methods
+    // =============================================================================================
 
     /**
      * Fetch rest adapter for subsequent calls.
@@ -72,9 +76,10 @@ public class RestAPIClientBase {
         return builder;
     }
 
-    //==============================================================================================
-    // Private Methods
-    //==============================================================================================
+    // endregion
+
+    // region Private Methods
+    // =============================================================================================
 
     /**
      * Fetch an http client that ignores, SSL
@@ -136,4 +141,6 @@ public class RestAPIClientBase {
             okHttpClient.setSslSocketFactory(sslSocketFactory);
         }
     }
+
+    // endregion
 }

@@ -22,9 +22,8 @@ import java.io.IOException;
  */
 public class GcmRegistrationHelper {
 
-    //==============================================================================================
-    // Member Variables
-    //==============================================================================================
+    // region Member Variables
+    // =============================================================================================
 
     // Request tag for asking user to obtain google play services.
     private static final int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;
@@ -32,9 +31,10 @@ public class GcmRegistrationHelper {
     // This is the project number obtained from the API Console.
     private static final String SENDER_ID = "294665201786";
 
-    //==============================================================================================
-    // Public Methods
-    //==============================================================================================
+    // endregion
+
+    // region Public Methods
+    // =============================================================================================
 
     /**
      * Attempt to register device for GCM messages. Will
@@ -101,9 +101,10 @@ public class GcmRegistrationHelper {
         return deviceId;
     }
 
-    //==============================================================================================
-    // Private Methods
-    //==============================================================================================
+    // endregion
+
+    // region Private Methods
+    // =============================================================================================
 
     /**
      * Registers the application with GCM servers asynchronously.
@@ -262,4 +263,6 @@ public class GcmRegistrationHelper {
         AppDataObject.gcmRegistrationId.set(registrationId);
         AppDataObject.gcmAppVersion.set(getAppVersion(context));
     }
+
+    // endregion
 }

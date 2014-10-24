@@ -11,9 +11,8 @@ import com.facebook.rebound.SpringUtil;
  */
 public class AnimHelperSpringsView {
 
-    //==============================================================================================
-    // Member Variables
-    //==============================================================================================
+    // region Member Variables
+    // =============================================================================================
 
     private static final int OFF_SCREEN_PADDING = 60;
 
@@ -56,9 +55,10 @@ public class AnimHelperSpringsView {
         public Integer mViewLeft;
     }
 
-    //==============================================================================================
-    // Constructors
-    //==============================================================================================
+    // endregion
+
+    // region Constructors
+    // =============================================================================================
 
     /**
      * Unused private constructor.
@@ -78,9 +78,10 @@ public class AnimHelperSpringsView {
         mView = view;
     }
 
-    //==============================================================================================
-    // Public Methods
-    //==============================================================================================
+    // endregion
+
+    // region Public Methods
+    // =============================================================================================
 
     /**
      * Static initializer of a new animation
@@ -111,9 +112,10 @@ public class AnimHelperSpringsView {
         return new AnimHelperSpringsView(view).withPreset(presets);
     }
 
-    //==============================================================================================
-    // Private Methods
-    //==============================================================================================
+    // endregion
+
+    // region Private Methods
+    // =============================================================================================
 
     /**
      * Sets an animation preset for this helper.
@@ -188,9 +190,10 @@ public class AnimHelperSpringsView {
         animateWithSpring(null);
     }
 
-    //==============================================================================================
-    // Protected Methods
-    //==============================================================================================
+    // endregion
+
+    // region Protected Methods
+    // =============================================================================================
 
     /**
      * Setup the various coordinates of the view
@@ -291,4 +294,6 @@ public class AnimHelperSpringsView {
             mView.setScaleY(scale);
         }
     }
+
+    // endregion
 }

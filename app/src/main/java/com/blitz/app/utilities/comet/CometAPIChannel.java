@@ -17,9 +17,8 @@ import java.util.Map;
  */
 public class CometAPIChannel {
 
-    //==============================================================================================
-    // Member Variables
-    //==============================================================================================
+    // region Member Variables
+    // =============================================================================================
 
     // Channel name.
     private String mName;
@@ -32,9 +31,10 @@ public class CometAPIChannel {
     private HashMap<String, Pair<CometAPICallback, Class>> mCallbacks;
     private HashMap<String, ArrayList<JsonObject>> mCallbacksQueuedMessages;
 
-    //==============================================================================================
-    // Constructors
-    //==============================================================================================
+    // endregion
+
+    // region Constructors
+    // =============================================================================================
 
     /**
      * Private empty constructor.
@@ -55,7 +55,7 @@ public class CometAPIChannel {
      * @param name Channel name.
      * @param cursor Channel cursor.
      */
-     CometAPIChannel(String name, int cursor) {
+    CometAPIChannel(String name, int cursor) {
         this();
 
         // Set channel name.
@@ -65,9 +65,10 @@ public class CometAPIChannel {
         mCursor = cursor;
     }
 
-    //==============================================================================================
-    // Public Methods
-    //==============================================================================================
+    // endregion
+
+    // region Public Methods
+    // =============================================================================================
 
     /**
      * Add a callback to the channel that is executed when
@@ -152,9 +153,10 @@ public class CometAPIChannel {
         mCallbacksQueuedMessages.clear();
     }
 
-    //==============================================================================================
-    // Private Methods
-    //==============================================================================================
+    // endregion
+
+    // region Private Methods
+    // =============================================================================================
 
     /**
      * Add a message to the queue.  Each message is
@@ -218,9 +220,10 @@ public class CometAPIChannel {
         });
     }
 
-    //==============================================================================================
-    // Package Only Methods
-    //==============================================================================================
+    // endregion
+
+    // region Package Methods
+    // =============================================================================================
 
     /**
      * Get a json string of this channel to
@@ -323,4 +326,6 @@ public class CometAPIChannel {
             }
         }
     }
+
+    // endregion
 }

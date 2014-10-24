@@ -7,9 +7,8 @@ import java.util.HashMap;
  */
 public class AppDataObject {
 
-    //==============================================================================================
-    // App Data Objects - Define Here
-    //==============================================================================================
+    // region App Data Objects - Define Here
+    // =============================================================================================
 
     // Does the user have access to the main app (passed queue wall).
     public static final AppData<Boolean> hasAccess
@@ -60,4 +59,6 @@ public class AppDataObject {
             = AppData.dictionary("CACHED_IMAGE_URLS");
     public static final AppData<HashMap<String, String>> cachedText
             = AppData.dictionary("CACHED_TEXT");
+
+    // endregion
 }

@@ -10,13 +10,12 @@ import javax.net.ssl.TrustManager;
 import javax.net.ssl.X509TrustManager;
 
 /**
- * Created by mrkcsc on 7/18/14.
+ * Created by mrkcsc on 7/18/14. Copyright 2014 Blitz Studios
  */
 public class SSLHelper {
 
-    //==============================================================================================
-    // Public Methods
-    //==============================================================================================
+    // region Public Methods
+    // =============================================================================================
 
     /**
      * Creates a socket factory that does not
@@ -68,4 +67,6 @@ public class SSLHelper {
         // Error.
         return null;
     }
+
+    // endregion
 }

@@ -19,9 +19,8 @@ import java.util.ArrayList;
  */
 public class AnimHelperSprings extends AnimHelper {
 
-    //==============================================================================================
-    // Member Variables
-    //==============================================================================================
+    // region Member Variables
+    // =============================================================================================
 
     // Parent activity.
     private Activity mActivity;
@@ -46,9 +45,10 @@ public class AnimHelperSprings extends AnimHelper {
     // Callback for when complete.
     private ArrayList<Runnable> mOnCompleteListeners;
 
-    //==============================================================================================
-    // Constructor
-    //==============================================================================================
+    // endregion
+
+    // region Constructors
+    // =============================================================================================
 
     /**
      * Unused private constructor.
@@ -77,9 +77,10 @@ public class AnimHelperSprings extends AnimHelper {
         initialize();
     }
 
-    //==============================================================================================
-    // Public Methods
-    //==============================================================================================
+    // endregion
+
+    // region Public Methods
+    // =============================================================================================
 
     /**
      * Create a new instance of animation helper from
@@ -91,6 +92,7 @@ public class AnimHelperSprings extends AnimHelper {
      *
      * @return New instance.
      */
+    @SuppressWarnings("unused")
     public static AnimHelperSprings from(Activity activity, int tension, int friction) {
 
         return new AnimHelperSprings(activity, tension, friction);
@@ -138,6 +140,7 @@ public class AnimHelperSprings extends AnimHelper {
      * Disable the animation helper, also
      * resets the animation state.
      */
+    @SuppressWarnings("unused")
     public void disable() {
 
         // Clear listeners and reset.
@@ -151,6 +154,7 @@ public class AnimHelperSprings extends AnimHelper {
      * until activity has rendered all views
      * before starting.
      */
+    @SuppressWarnings("unused")
     public void enable() {
 
         if (mInitialized) {
@@ -211,6 +215,7 @@ public class AnimHelperSprings extends AnimHelper {
     /**
      * Start spring animation.
      */
+    @SuppressWarnings("unused")
     public void start(boolean afterScreenTransition) {
         if (mInitialized) {
 
@@ -250,6 +255,7 @@ public class AnimHelperSprings extends AnimHelper {
      * By default start animations after
      * the screen transition.
      */
+    @SuppressWarnings("unused")
     public void start() {
         start(true);
     }
@@ -269,9 +275,10 @@ public class AnimHelperSprings extends AnimHelper {
         mOnCompleteListeners.add(onCompleteListener);
     }
 
-    //==============================================================================================
-    // Private Methods
-    //==============================================================================================
+    // endregion
+
+    // region Private Methods
+    // =============================================================================================
 
     /**
      * Configure this helper.
@@ -383,4 +390,6 @@ public class AnimHelperSprings extends AnimHelper {
             helperView.setCoordinates(mWindowWidth, mWindowHeight);
         }
     }
+
+    // endregion
 }

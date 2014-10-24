@@ -16,14 +16,16 @@ import butterknife.OnClick;
 
 public class SplashScreen extends BaseActivity {
 
-    @InjectView(R.id.splash_screen_pager) ViewPager mPager;
-    @InjectView(R.id.splash_screen_indicator)
+    // region Member Variables
+    // =============================================================================================
 
-    CirclePageIndicator mPagerIndicator;
+    @InjectView(R.id.splash_screen_pager)               ViewPager mPager;
+    @InjectView(R.id.splash_screen_indicator) CirclePageIndicator mPagerIndicator;
 
-    //==============================================================================================
-    // Overwritten Methods
-    //==============================================================================================
+    // endregion
+
+    // region Overwritten Methods
+    // =============================================================================================
 
     /**
      * Setup the activity.
@@ -55,9 +57,10 @@ public class SplashScreen extends BaseActivity {
         }
     }
 
-    //==============================================================================================
-    // Private Methods
-    //==============================================================================================
+    // endregion
+
+    // region Private Methods
+    // =============================================================================================
 
     /**
      * Start next activity in the flow.
@@ -86,9 +89,10 @@ public class SplashScreen extends BaseActivity {
         mPager.setPageTransformer(true, new ViewPagerTransformerDepth());
     }
 
-    //==============================================================================================
-    // Click Methods
-    //==============================================================================================
+    // endregion
+
+    // region Click Methods
+    // =============================================================================================
 
     @OnClick(R.id.splash_screen_sign_in) @SuppressWarnings("unused")
     public void sign_in() {
@@ -101,4 +105,6 @@ public class SplashScreen extends BaseActivity {
 
         transitionNextScreen(SignUpScreen.class);
     }
+
+    // endregion
 }

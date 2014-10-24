@@ -26,9 +26,8 @@ import java.util.HashMap;
  */
 public class KeyboardUtility {
 
-    //==============================================================================================
-    // Member Variables
-    //==============================================================================================
+    // region Member Variables
+    // =============================================================================================
 
     // Minimum height of the keyboard.
     private static final int MINIMUM_KEYBOARD_HEIGHT = 300;
@@ -62,9 +61,10 @@ public class KeyboardUtility {
     private static ArrayList<Runnable> mOnKeyboardShowCallbacks = new ArrayList<Runnable>();
     private static ArrayList<Runnable> mOnKeyboardHideCallbacks = new ArrayList<Runnable>();
 
-    //==============================================================================================
-    // Public Methods
-    //==============================================================================================
+    // endregion
+
+    // region Public Methods
+    // =============================================================================================
 
     /**
      * Initialize the keyboard utility.
@@ -205,9 +205,10 @@ public class KeyboardUtility {
         return mKeyboardOpen;
     }
 
-    //==============================================================================================
-    // Show Keyboard
-    //==============================================================================================
+    // endregion
+
+    // region Show Keyboard
+    // =============================================================================================
 
     @SuppressWarnings("unused")
     static public void showKeyboard(Activity activity) {
@@ -247,9 +248,10 @@ public class KeyboardUtility {
         mOnKeyboardShowCallbacks.add(onShowCallback);
     }
 
-    //==============================================================================================
-    // Hide Keyboard
-    //==============================================================================================
+    // endregion
+
+    // region Hide Keyboard
+    // =============================================================================================
 
     @SuppressWarnings("unused")
     static public void hideKeyboard(Activity activity) {
@@ -295,9 +297,10 @@ public class KeyboardUtility {
         }
     }
 
-    //==============================================================================================
-    // Private Methods
-    //==============================================================================================
+    // endregion
+
+    // region Private Methods
+    // =============================================================================================
 
     /**
      * Run callbacks and clear list.
@@ -403,15 +406,19 @@ public class KeyboardUtility {
         mKeyboardHeightCached = mKeyboardHeight;
     }
 
-    //==============================================================================================
-    // Interfaces
-    //==============================================================================================
+    // endregion
+
+    // region Interface
+    // =============================================================================================
 
     /**
      * Expose an interface for keyboard events.
      */
     public interface OnKeyboardChangedListener {
+
         public abstract void keyboardOpened(int keyboardHeight);
         public abstract void keyboardClosed();
     }
+
+    // endregion
 }

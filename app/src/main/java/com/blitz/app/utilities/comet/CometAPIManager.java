@@ -13,9 +13,8 @@ import java.util.HashMap;
  */
 public class CometAPIManager implements CometAPIWebsocket.OnMessageCallback {
 
-    //==============================================================================================
-    // Member Variables
-    //==============================================================================================
+    // region Member Variables
+    // =============================================================================================
 
     // Instance object.
     private static CometAPIManager mInstance;
@@ -30,9 +29,10 @@ public class CometAPIManager implements CometAPIWebsocket.OnMessageCallback {
     // Active channels user is subscribed to.
     private HashMap<String, CometAPIChannel> mActiveChannels;
 
-    //==============================================================================================
-    // Public Methods - Config
-    //==============================================================================================
+    // endregion
+
+    // region Public Methods - Config
+    // =============================================================================================
 
     /**
      * Initializes the manager.
@@ -106,9 +106,10 @@ public class CometAPIManager implements CometAPIWebsocket.OnMessageCallback {
         }
     }
 
-    //==============================================================================================
-    // Public Methods
-    //==============================================================================================
+    // endregion
+
+    // region Public Methods
+    // =============================================================================================
 
     /**
      * Given a channel name, subscribe to that
@@ -160,9 +161,10 @@ public class CometAPIManager implements CometAPIWebsocket.OnMessageCallback {
         }
     }
 
-    //==============================================================================================
-    // Private Methods
-    //==============================================================================================
+    // endregion
+
+    // region Private Methods
+    // =============================================================================================
 
     /**
      * When a message is received via the websocket.
@@ -234,4 +236,6 @@ public class CometAPIManager implements CometAPIWebsocket.OnMessageCallback {
 
         return mInstance;
     }
+
+    // endregion
 }

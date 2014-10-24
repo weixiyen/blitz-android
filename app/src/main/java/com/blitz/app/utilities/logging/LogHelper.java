@@ -3,20 +3,20 @@ package com.blitz.app.utilities.logging;
 import android.util.Log;
 
 /**
- * Created by mrkcsc on 7/20/14.
+ * Created by mrkcsc on 7/20/14. Copyright 2014 Blitz Studios
  */
 public class LogHelper {
 
-    //==============================================================================================
-    // Member Variables
-    //==============================================================================================
+    // region Member Variables
+    // =============================================================================================
 
     // Logging tag.
     private static final String TAG = "Blitz";
 
-    //==============================================================================================
-    // Public Methods
-    //==============================================================================================
+    // endregion
+
+    // region Public Methods
+    // =============================================================================================
 
     /**
      * Simple logging shorthand.
@@ -26,4 +26,6 @@ public class LogHelper {
     public static void log(String log) {
         Log.e(TAG, log);
     }
+
+    // endregion
 }

@@ -25,9 +25,8 @@ import javax.net.ssl.SSLSocketFactory;
  */
 class CometAPIWebsocket {
 
-    //==============================================================================================
-    // Member Variables
-    //==============================================================================================
+    // region Member Variables
+    // =============================================================================================
 
     // Connection status.
     private boolean mWebSocketConnected;
@@ -51,9 +50,10 @@ class CometAPIWebsocket {
     // Interface for receiving messages.
     private OnMessageCallback mOnMessageCallback;
 
-    //==============================================================================================
-    // Constructor
-    //==============================================================================================
+    // endregion
+
+    // region Constructor
+    // =============================================================================================
 
     /**
      * Empty constructor disallowed.
@@ -76,9 +76,10 @@ class CometAPIWebsocket {
         mOnMessageCallback = callback;
     }
 
-    //==============================================================================================
-    // Public Methods
-    //==============================================================================================
+    // endregion
+
+    // region Public Methods
+    // =============================================================================================
 
     /**
      * Open the web socket asynchronously.
@@ -153,14 +154,15 @@ class CometAPIWebsocket {
         }
     }
 
-    //==============================================================================================
-    // Private Methods
-    //==============================================================================================
+    // endregion
+
+    // region Private Methods
+    // =============================================================================================
 
     /**
      * Create an instance of the WebSocket client.
      */
-    public void createWebSocketClient() {
+    private void createWebSocketClient() {
 
         // Fetch URI from provided URL.
         URI webSocketURI = createWebSocketURI(AppConfig.getWebsocketUrl()
@@ -321,9 +323,10 @@ class CometAPIWebsocket {
         BlitzDelay.remove(mWebSocketPingHandler);
     }
 
-    //==============================================================================================
-    // Interface
-    //==============================================================================================
+    // endregion
+
+    // region Interface
+    // =============================================================================================
 
     /**
      * Callback for when a websocket
@@ -333,4 +336,6 @@ class CometAPIWebsocket {
 
         public void onMessage(JsonObject jsonObject);
     }
+
+    // endregion
 }

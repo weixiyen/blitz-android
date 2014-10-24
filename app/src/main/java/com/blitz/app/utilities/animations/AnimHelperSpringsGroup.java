@@ -9,9 +9,8 @@ import java.util.ArrayList;
  */
 public class AnimHelperSpringsGroup {
 
-    //==============================================================================================
-    // Constructors
-    //==============================================================================================
+    // region Member Variables
+    // =============================================================================================
 
     // Associated activity.
     private Activity mActivity;
@@ -22,11 +21,13 @@ public class AnimHelperSpringsGroup {
     // Runs on animations complete.
     private Runnable mOnCompleteListener;
 
+    // Completion count.
     private int mAnimCompleteCount;
 
-    //==============================================================================================
-    // Constructors
-    //==============================================================================================
+    // endregion
+
+    // region Constructors
+    // =============================================================================================
 
     /**
      * Private constructor.
@@ -50,9 +51,10 @@ public class AnimHelperSpringsGroup {
         mAnimHelperSpringsGroup = new ArrayList<AnimHelperSprings>();
     }
 
-    //==============================================================================================
-    // Public Methods
-    //==============================================================================================
+    // endregion
+
+    // region Public Methods
+    // =============================================================================================
 
     /**
      * Static instantiate.
@@ -61,6 +63,7 @@ public class AnimHelperSpringsGroup {
      *
      * @return Instance of a helper group.
      */
+    @SuppressWarnings("unused")
     public static AnimHelperSpringsGroup from(Activity activity) {
 
         return new AnimHelperSpringsGroup(activity);
@@ -74,6 +77,7 @@ public class AnimHelperSpringsGroup {
      *
      * @return The instantiated helper.
      */
+    @SuppressWarnings("unused")
     public AnimHelperSprings createHelper(int tension, int friction) {
 
         // Create a new animation helper.
@@ -107,6 +111,7 @@ public class AnimHelperSpringsGroup {
     /**
      * Disable the animation helper group.
      */
+    @SuppressWarnings("unused")
     public void disable() {
 
         // Disable each animation helper.
@@ -120,6 +125,7 @@ public class AnimHelperSpringsGroup {
      * Disables and removes all helpers, as
      * well as any associated callbacks.
      */
+    @SuppressWarnings("unused")
     public void removeHelpers() {
 
         // Disable existing helpers.
@@ -137,6 +143,7 @@ public class AnimHelperSpringsGroup {
      *
      * @param start If specified, also start it.
      */
+    @SuppressWarnings("unused")
     public void enable(boolean start) {
 
         // Enable each animation helper.
@@ -158,6 +165,7 @@ public class AnimHelperSpringsGroup {
     /**
      * By default enable and start.
      */
+    @SuppressWarnings("unused")
     public void enable() {
         enable(true);
     }
@@ -165,6 +173,7 @@ public class AnimHelperSpringsGroup {
     /**
      * Start the animations.
      */
+    @SuppressWarnings("unused")
     public void start() {
 
         // Reset the count.
@@ -188,4 +197,6 @@ public class AnimHelperSpringsGroup {
 
         mOnCompleteListener = onCompleteListener;
     }
+
+    // endregion
 }

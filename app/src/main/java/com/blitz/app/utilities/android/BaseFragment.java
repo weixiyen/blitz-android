@@ -23,9 +23,8 @@ import butterknife.ButterKnife;
  */
 public class BaseFragment extends Fragment {
 
-    //==============================================================================================
-    // Member Variables
-    //==============================================================================================
+    // region Member Variables
+    // =============================================================================================
 
     // Content view of the fragment.
     private View mContentView;
@@ -40,9 +39,10 @@ public class BaseFragment extends Fragment {
     // alleviates perceived lag during transition animations.
     private Handler mViewModelInitializeHandler;
 
-    //==============================================================================================
-    // Overwritten Methods
-    //==============================================================================================
+    // endregion
+
+    // region Overwritten Methods
+    // =============================================================================================
 
     /**
      * Saves some parameters in order to expose the activity
@@ -166,9 +166,10 @@ public class BaseFragment extends Fragment {
         }
     }
 
-    //==============================================================================================
-    // Private Methods
-    //==============================================================================================
+    // endregion
+
+    // region Private Methods
+    // =============================================================================================
 
     /**
      * Attempts to fetch the associated instance
@@ -202,9 +203,10 @@ public class BaseFragment extends Fragment {
         ButterKnife.inject(this, mContentView);
     }
 
-    //==============================================================================================
-    // Protected Methods
-    //==============================================================================================
+    // endregion
+
+    // region Protected Methods
+    // =============================================================================================
 
     /**
      * @see android.app.Fragment#startActivity(android.content.Intent)
@@ -240,4 +242,6 @@ public class BaseFragment extends Fragment {
 
         return (BaseActivity)super.getActivity();
     }
+
+    // endregion
 }
