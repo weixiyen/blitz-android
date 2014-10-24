@@ -76,7 +76,7 @@ dependencies {
     compile 'com.facebook.rebound:rebound:0.3.3'
 
     // Used for push notifications.
-    compile "com.google.android.gms:play-services:5.0.89"
+    compile "com.google.android.gms:play-services:6.1.11"
 
     // Google Guava collections
     compile 'com.google.guava:guava:18.0'
