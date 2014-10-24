@@ -288,6 +288,7 @@ public class MainScreen extends BaseActivity implements ViewModelMain.Callbacks 
      */
     @OnClick({R.id.main_nav_button_play,
               R.id.main_nav_button_recent,
+              R.id.main_nav_button_leagues,
               R.id.main_nav_button_settings})
     @SuppressWarnings("unused")
     public void navClicked(View button) {

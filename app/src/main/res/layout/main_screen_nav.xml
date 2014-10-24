@@ -22,6 +22,7 @@
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
             android:contentDescription="@string/empty_string"
+            android:scaleType="center"
             android:src="@drawable/asset_nav_active" />
 
         <ImageView
@@ -60,6 +61,7 @@
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
             android:contentDescription="@string/empty_string"
+            android:scaleType="center"
             android:src="@drawable/asset_nav_active"
             android:visibility="gone"/>
 
@@ -90,7 +92,7 @@
         android:layout_height="match_parent"
         android:layout_weight="1"
         android:orientation="vertical"
-        android:tag="0">
+        android:tag="2">
 
         <ImageView
             android:id="@+id/main_nav_leagues_active"
@@ -99,6 +101,7 @@
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
             android:contentDescription="@string/empty_string"
+            android:scaleType="center"
             android:src="@drawable/asset_nav_active"
             android:visibility="gone" />
 
@@ -129,7 +132,7 @@
         android:layout_height="match_parent"
         android:layout_weight="1"
         android:orientation="vertical"
-        android:tag="2">
+        android:tag="3">
 
         <ImageView
             android:id="@+id/main_nav_settings_active"
@@ -138,6 +141,7 @@
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
             android:contentDescription="@string/empty_string"
+            android:scaleType="center"
             android:src="@drawable/asset_nav_active"
             android:visibility="gone"/>
 
