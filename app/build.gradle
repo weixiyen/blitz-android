@@ -16,14 +16,14 @@ buildscript {
 }
 
 android {
-    compileSdkVersion 20
+    compileSdkVersion 21
     buildToolsVersion '20.0.0'
     defaultConfig {
         applicationId 'com.blitz.app'
         minSdkVersion 15
-        targetSdkVersion 20
-        versionCode 10
-        versionName '1.2.5'
+        targetSdkVersion 21
+        versionCode 11
+        versionName '1.2.6'
     }
     buildTypes {
         release {
