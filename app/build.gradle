@@ -38,7 +38,7 @@ android {
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
 
-    // Support annotations (mainly unsed for @NonNull).
+    // Support annotations (mainly unused for @NonNull).
     compile 'com.android.support:support-annotations:20.0.0'
 
     // Android XML view injections.
@@ -61,7 +61,7 @@ dependencies {
     compile 'com.squareup.picasso:picasso:2.3.4'
 
     // Library for dots under view pager.
-    compile 'com.viewpagerindicator:library:2.4.1@aar'
+    compile 'fr.baloomba:viewpagerindicator:2.4.2'
 
     // Library for custom fonts.
     compile 'uk.co.chrisjenx:calligraphy:1.2.0'

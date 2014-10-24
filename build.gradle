@@ -12,12 +12,6 @@ buildscript {
 allprojects {
     repositories {
 
-        // Temporarily source from custom repo for
-        // view pager indicator maven: http://bit.ly/SgVI7
-        maven {
-            url "http://dl.bintray.com/populov/maven"
-        }
-
         mavenCentral()
     }
 }
