@@ -41,6 +41,9 @@ dependencies {
     // Support annotations (mainly unused for @NonNull).
     compile 'com.android.support:support-annotations:20.0.0'
 
+    // Used for push notifications.
+    compile "com.google.android.gms:play-services:6.1.11"
+
     // Android XML view injections.
     compile 'com.jakewharton:butterknife:5.1.2'
 
@@ -48,10 +51,13 @@ dependencies {
     compile 'com.squareup.okhttp:okhttp-urlconnection:2.0.0'
     compile 'com.squareup.okhttp:okhttp:2.0.0'
 
-    // library for tracking crashes.
+    // Library for tracking crashes.
     compile 'com.crashlytics.android:crashlytics:1.1.13'
 
-    // Google json parsing library.
+    // Library for tracking flow.
+    compile 'com.amplitude:android-sdk:1.4.1'
+
+    // Library for parsing json.
     compile 'com.google.code.gson:gson:2.3'
 
     // Library for making REST calls.
@@ -71,9 +77,6 @@ dependencies {
 
     // Library for spring style animations.
     compile 'com.facebook.rebound:rebound:0.3.6'
-
-    // Used for push notifications.
-    compile "com.google.android.gms:play-services:6.1.11"
 
     // Google Guava collections
     compile 'com.google.guava:guava:18.0'

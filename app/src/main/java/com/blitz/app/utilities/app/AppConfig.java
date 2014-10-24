@@ -15,9 +15,8 @@ import com.blitz.app.R;
 @SuppressWarnings("unused")
 public class AppConfig {
 
-    //==============================================================================================
-    // Member Variables
-    //==============================================================================================
+    // region Member Variables
+    // =============================================================================================
 
     // Base url, set on initialization.
     private static String mBaseURL;
@@ -26,9 +25,13 @@ public class AppConfig {
     // Production flag.
     private static Boolean mIsProduction;
 
-    //==============================================================================================
-    // Configuration Methods (Modify with care)
-    //==============================================================================================
+    // API key for amplitude.
+    private static String mAmplitudeAPIKey;
+
+    // endregion
+
+    // region Configuration Methods (Modify with care)
+    // =============================================================================================
 
     /**
      * Should we jump to an arbitrary activity on start.
@@ -88,9 +91,10 @@ public class AppConfig {
         return false;
     }
 
-    //==============================================================================================
-    // Public Methods
-    //==============================================================================================
+    // endregion
+
+    // region Public Methods
+    // =============================================================================================
 
     /**
      * Get production flag, this value is read
@@ -156,6 +160,16 @@ public class AppConfig {
     }
 
     /**
+     * Fet the api key for amplitude.
+     *
+     * @return API key.
+     */
+    public static String getAmplitudeAPIKey() {
+
+        return mAmplitudeAPIKey;
+    }
+
+    /**
      * Initialize the application config.  Most of its internal
      * configuration is based on the environment string
      * which we read from the manifest.
@@ -197,10 +211,16 @@ public class AppConfig {
 
                     break;
             }
+
+            // Set the api key.
+            mAmplitudeAPIKey = bundle.getString("com.amplitude.ApiKey");
+
         } catch (Exception e) {
 
             // Cannot proceed without configuration set.
             throw new RuntimeException("Unable to ready configuration values.");
         }
     }
+
+    // endregion
 }

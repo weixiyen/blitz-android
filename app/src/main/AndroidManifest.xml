@@ -50,7 +50,12 @@
         <!-- Configuration key for crashlytics. -->
         <meta-data
             android:name="com.crashlytics.ApiKey"
-            android:value="d4cb78aaf6b799872810782b255420b38fbe554b"/>
+            android:value="d4cb78aaf6b799872810782b255420b38fbe554b" />
+
+        <!-- Api key for amplitude. -->
+        <meta-data
+            android:name="com.amplitude.ApiKey"
+            android:value="07ccb2ce509a56ca1fd6321a5ea6f5a3" />
 
         <!-- Main loading screen -->
         <activity android:name=".screens.loading.LoadingScreen">

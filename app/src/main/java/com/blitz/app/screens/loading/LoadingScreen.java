@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ProgressBar;
 
+import com.amplitude.api.Amplitude;
 import com.blitz.app.R;
 import com.blitz.app.utilities.android.BaseActivity;
 import com.blitz.app.utilities.animations.AnimHelperFade;
@@ -51,6 +52,9 @@ public class LoadingScreen extends BaseActivity {
 
             // Enable crash logging.
             Crashlytics.start(this);
+
+            // Initialize amplitude with API key.
+            Amplitude.initialize(this, AppConfig.getAmplitudeAPIKey());
         }
 
         // Disable custom transitions.
