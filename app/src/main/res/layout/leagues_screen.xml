@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="${packageName}.${activityClass}"
-    tools:ignore="ButtonStyle,UnusedAttribute,HardcodedText">
+    tools:ignore="ButtonStyle,UnusedAttribute,RelativeOverlap">
 
     <com.blitz.app.utilities.image.BlitzImageViewPlus
         android:layout_width="match_parent"
@@ -18,9 +18,21 @@
     <TextView
         android:id="@+id/recent_header"
         style="@style/App.NavBar"
-        android:layout_height="110dp"
-        android:paddingTop="50dp"
-        android:text="@string/leagues" />
+        android:layout_width="wrap_content"
+        android:layout_height="60dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="50dp"
+        android:text="@string/create_or_join_a_league" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="60dp"
+        android:layout_alignTop="@+id/recent_header"
+        android:layout_marginLeft="8dp"
+        android:layout_toRightOf="@+id/recent_header"
+        android:contentDescription="@string/empty_string"
+        android:paddingTop="4dp"
+        android:src="@drawable/asset_bg_dropdown_caret" />
 
     <View
         android:layout_width="match_parent"
