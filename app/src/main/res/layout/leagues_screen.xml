@@ -45,8 +45,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="110dp"
+        android:cacheColorHint="@color/background_transparent"
         android:divider="@null"
-        android:dividerHeight="0dp">
+        android:dividerHeight="0dp"
+        android:listSelector="@color/background_transparent">
     </ListView>
 
     <View
