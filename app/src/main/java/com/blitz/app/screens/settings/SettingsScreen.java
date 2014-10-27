@@ -40,7 +40,6 @@ public class SettingsScreen extends BaseFragment implements ViewModelSettings.Ca
 
     // Reset button.
     @InjectView(R.id.settings_reset)        View mSettingsReset;
-    @InjectView(R.id.settings_reset_border) View mSettingsResetBorder;
 
     // Settings email button.
     @InjectView(R.id.settings_email)   TextView mSettingsEmail;
@@ -74,7 +73,6 @@ public class SettingsScreen extends BaseFragment implements ViewModelSettings.Ca
 
             // Hide if not on production.
             mSettingsReset      .setVisibility(View.GONE);
-            mSettingsResetBorder.setVisibility(View.GONE);
         }
     }
 
