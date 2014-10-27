@@ -159,9 +159,6 @@ public class AuthHelper {
         // to automatically jump to for debugging purposes.
         Class targetActivity = AppConfig.getJumpToActivity();
 
-        // Stop all music.
-        SoundHelper.instance().stopMusic();
-
         if (targetActivity == null) {
 
             // If user has passed the access queue, and confirmed it.
