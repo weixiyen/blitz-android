@@ -29,6 +29,9 @@ public class SoundHelper {
     // Is music disabled.
     private boolean mMusicDisabled;
 
+    // Track resource that is playing.
+    private Integer mResourceStarted;
+
     // endregion
 
     // region Public Methods
@@ -84,40 +87,49 @@ public class SoundHelper {
      */
     public void startMusic(int resourceId, Integer resourceIdLoop) {
 
-        // Initialize all players.
-        initializePlayers();
+        if (mResourceStarted == null || mResourceStarted != resourceId) {
+            mResourceStarted = resourceId;
 
-        // Create a player for the first resource.
-        MediaPlayer mediaPlayer = createPlayer(resourceId, false);
+            // Initialize all players.
+            initializePlayers();
 
-        // Wait for it to be prepared before playing.
-        mediaPlayer.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+            // Create a player for the first resource.
+            MediaPlayer mediaPlayer = createPlayer(resourceId, false);
 
-            @Override
-            public void onPrepared(MediaPlayer mediaPlayer) {
-
-                if (!mMusicDisabled && !AppConfig.isSoundDisabled()) {
-
-                    // Start playing music.
-                    mediaPlayer.start();
-                }
-            }
-        });
-
-        if (resourceIdLoop != null) {
-
-            // Create a new looping player from the second track.
-            final MediaPlayer mediaPlayerLoop = createPlayer(resourceIdLoop, true);
-
-            // Play it when the first track finishes.
-            mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+            // Wait for it to be prepared before playing.
+            mediaPlayer.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
 
                 @Override
-                public void onCompletion(MediaPlayer mediaPlayer) {
+                public void onPrepared(MediaPlayer mediaPlayer) {
 
-                    mediaPlayerLoop.start();
+                    if (!mMusicDisabled && !AppConfig.isSoundDisabled()) {
+
+                        // Start playing music.
+                        mediaPlayer.start();
+                    }
                 }
             });
+
+            if (resourceIdLoop != null) {
+
+                // Create a new looping player from the second track.
+                final MediaPlayer mediaPlayerLoop = createPlayer(resourceIdLoop, true);
+
+                // Play it when the first track finishes.
+                mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+
+                    @Override
+                    public void onCompletion(MediaPlayer mediaPlayer) {
+
+                        mediaPlayerLoop.start();
+                    }
+                });
+            }
+        } else {
+
+            // Otherwise continue playing
+            // the already loaded resource.
+            resumeMusic();
         }
     }
 
@@ -126,11 +138,12 @@ public class SoundHelper {
      */
     @SuppressWarnings("unused")
     public void stopMusic() {
-        if (!mMusicDisabled) {
 
-            // Re-initialize.
-            initializePlayers();
-        }
+        // Re-initialize.
+        initializePlayers();
+
+        // No resource started.
+        mResourceStarted = null;
     }
 
     /**
