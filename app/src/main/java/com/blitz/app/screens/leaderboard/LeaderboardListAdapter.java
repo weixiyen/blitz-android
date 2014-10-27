@@ -84,7 +84,7 @@ public class LeaderboardListAdapter extends ArrayAdapter<String> {
 
         if (convertView == null) {
             convertView = LayoutInflater.from(getContext())
-                    .inflate(R.layout.leaderboard_list_item, parent, false);
+                    .inflate(R.layout.leaderboard_screen_list_item, parent, false);
 
             // Create and set associated view holder.
             convertView.setTag(new LeaderboardListItemViewHolder(convertView));
