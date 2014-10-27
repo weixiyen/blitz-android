@@ -18,21 +18,15 @@
     <com.blitz.app.utilities.textview.BlitzTextView
         android:id="@+id/recent_header"
         style="@style/App.NavBar"
-        android:layout_height="110dp"
-        android:paddingTop="50dp"
+        android:layout_height="@dimen/navbar_height_padding_included"
+        android:paddingTop="@dimen/navbar_height_padding"
         android:text="@string/lorum_ipsum_tiny"
         app:clearInitialContent="true" />
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_alignBottom="@+id/recent_header"
-        android:background="@color/background_inner_divider"/>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="45dp"
-        android:layout_marginTop="110dp"
+        android:layout_marginTop="@dimen/navbar_height_padding_included"
         android:background="@color/background_inner_dark"
         android:orientation="horizontal">
 

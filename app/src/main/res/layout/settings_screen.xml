@@ -17,20 +17,14 @@
     <TextView
         android:id="@+id/settings_header"
         style="@style/App.NavBar"
-        android:layout_height="110dp"
-        android:paddingTop="50dp"
+        android:layout_height="@dimen/navbar_height_padding_included"
+        android:paddingTop="@dimen/navbar_height_padding"
         android:text="@string/my_account" />
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_alignBottom="@+id/settings_header"
-        android:background="@color/background_inner_divider"/>
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="110dp"
+        android:layout_marginTop="@dimen/navbar_height_padding_included"
         android:background="@color/background_inner">
 
         <LinearLayout

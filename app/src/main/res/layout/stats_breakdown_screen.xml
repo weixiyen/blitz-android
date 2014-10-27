@@ -1,10 +1,8 @@
-<?xml version="1.0" encoding="utf-8"?>
-
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/player_week_stats"
-    android:orientation="vertical" android:layout_width="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:ignore="HardcodedText">
 
@@ -21,16 +19,16 @@
         android:text="Stats"/>
 
     <TableLayout
-        android:layout_marginTop="60dp"
         android:layout_width="match_parent"
         android:layout_height="@dimen/stats_breakdown_header_height"
+        android:layout_marginTop="@dimen/navbar_height"
+        android:background="@color/background_inner"
         android:gravity="center"
-        android:padding="10sp"
-        android:background="@color/background_inner">
+        android:padding="10sp">
 
-        <TableRow android:layout_height="60sp"
+        <TableRow android:layout_width="fill_parent"
 
-        android:layout_width="fill_parent">
+        android:layout_height="60sp">
 
         <TextView android:id="@+id/first_name"
             style="@style/StatInfoLabel"
@@ -51,12 +49,12 @@
 
         </TableRow>
 
-        <TableRow android:layout_height="60sp"
-            android:layout_width="fill_parent">
+        <TableRow android:layout_width="fill_parent"
+            android:layout_height="60sp">
 
             <TextView android:id="@+id/last_name"
-                android:layout_weight="1"
                 style="@style/StatInfo"
+                android:layout_weight="1"
                 android:text="Football"/>
 
             <TextView android:id="@+id/week"
@@ -77,11 +75,9 @@
 
     <ListView
         android:id="@+id/player_stats_list"
-        android:layout_marginTop="160dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:gravity="center"
-        android:background="@color/background_inner"/>
-
-
+        android:layout_marginTop="160dp"
+        android:background="@color/background_inner"
+        android:gravity="center"/>
 </RelativeLayout>

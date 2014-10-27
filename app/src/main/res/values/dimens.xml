@@ -2,6 +2,10 @@
     <integer name="config_screen_translation_time">350</integer>
     <integer name="access_code_length">8</integer>
 
+    <dimen name="navbar_height">60dp</dimen>
+    <dimen name="navbar_height_padding">50dp</dimen>
+    <dimen name="navbar_height_padding_included">110dp</dimen>
+
     <dimen name="screen_width">320dp</dimen>
     <dimen name="helmet_size">140dp</dimen>
     <dimen name="stats_breakdown_header_height">100dp</dimen>

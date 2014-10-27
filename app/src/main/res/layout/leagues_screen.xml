@@ -15,36 +15,40 @@
         android:src="@drawable/asset_bg_main_dark"
         app:scaleType="topCrop" />
 
-    <TextView
-        android:id="@+id/recent_header"
+    <RelativeLayout
         style="@style/App.NavBar"
-        android:layout_width="wrap_content"
-        android:layout_height="60dp"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="50dp"
-        android:text="@string/create_or_join_a_league" />
-
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="60dp"
-        android:layout_alignTop="@+id/recent_header"
-        android:layout_marginLeft="8dp"
-        android:layout_toRightOf="@+id/recent_header"
-        android:contentDescription="@string/empty_string"
-        android:paddingTop="4dp"
-        android:src="@drawable/asset_bg_dropdown_caret" />
-
-    <View
         android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_alignBottom="@+id/recent_header"
-        android:background="@color/background_inner_divider"/>
+        android:layout_height="@dimen/navbar_height_padding_included"
+        android:orientation="horizontal"
+        android:paddingTop="@dimen/navbar_height_padding">
+
+        <TextView
+            android:id="@+id/recent_header"
+            fontPath="@string/app_font_helvetica_condensed_bold"
+            android:layout_width="wrap_content"
+            android:layout_height="60dp"
+            android:layout_centerHorizontal="true"
+            android:gravity="center"
+            android:text="@string/create_or_join_a_league"
+            android:textColor="@color/active_blue"
+            android:textSize="18sp" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="60dp"
+            android:layout_alignTop="@+id/recent_header"
+            android:layout_marginLeft="8dp"
+            android:layout_toRightOf="@+id/recent_header"
+            android:contentDescription="@string/empty_string"
+            android:paddingTop="4dp"
+            android:src="@drawable/asset_bg_dropdown_caret" />
+    </RelativeLayout>
 
     <ListView
         android:id="@+id/leagues_screen_list"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="110dp"
+        android:layout_marginTop="@dimen/navbar_height_padding_included"
         android:cacheColorHint="@color/background_transparent"
         android:divider="@null"
         android:dividerHeight="0dp"

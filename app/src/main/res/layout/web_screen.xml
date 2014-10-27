@@ -17,26 +17,13 @@
 
     <TextView
         android:id="@+id/web_header"
-        style="@style/App.TextView"
-        fontPath="@string/app_font_helvetica_condensed_bold"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:background="#40000000"
-        android:gravity="center"
-        android:text="@string/my_account"
-        android:textColor="@color/active_blue"
-        android:textSize="18sp" />
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_alignBottom="@+id/web_header"
-        android:background="@color/background_inner_divider"/>
+        style="@style/App.NavBar"
+        android:text="@string/my_account" />
 
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="@dimen/navbar_height"
         android:background="@color/background_inner">
 
         <com.blitz.app.utilities.android.BaseWebView
