@@ -32,9 +32,6 @@ public class BaseFragment extends Fragment {
     // Parent container.
     private ViewGroup mContainer;
 
-    // Layout inflater.
-    private LayoutInflater mInflater;
-
     // Use to delay initialization of our view models which
     // alleviates perceived lag during transition animations.
     private Handler mViewModelInitializeHandler;
@@ -60,7 +57,6 @@ public class BaseFragment extends Fragment {
 
         // Save container.
         mContainer = container;
-        mInflater = inflater;
 
         // Fetch the class name string in the format of resource view.
         String underscoredClassName = StringHelper.camelCaseToLowerCaseUnderscores
@@ -197,7 +193,8 @@ public class BaseFragment extends Fragment {
     private void setContentView(int layoutResId) {
 
         // Inflate and store the content view.
-        mContentView = mInflater.inflate(layoutResId, mContainer, false);
+        mContentView = getActivity().getLayoutInflater()
+                .inflate(layoutResId, mContainer, false);
 
         // Inject butter-knife views.
         ButterKnife.inject(this, mContentView);
