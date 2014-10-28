@@ -1,5 +1,6 @@
 package com.blitz.app.utilities.date;
 
+import java.text.Format;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -64,6 +65,25 @@ public class DateUtils {
     }
 
     /**
+     * Create a new date with specified offset in milliseconds.
+     *
+     * @param targetDate Target date.
+     * @param offset Offset in milliseconds.
+     *
+     * @return New date with offset applied.
+     */
+    @SuppressWarnings("unused")
+    public static Date getDateWithOffsetInMilliseconds(Date targetDate, Long offset) {
+
+        if (targetDate == null) {
+
+            return null;
+        }
+
+        return new Date(targetDate.getTime() + offset);
+    }
+
+    /**
      * Fetch date with GMT time zone in milliseconds.
      *
      * @return Milliseconds.
@@ -108,6 +128,22 @@ public class DateUtils {
 
         // Fetch milliseconds elapsed.
         return Math.abs(getDateInGMTMilliseconds() - date.getTime());
+    }
+
+    /**
+     * Fetch date object as json readable string.
+     *
+     * @param date GMT date.
+     *
+     * @return Json string.
+     */
+    @SuppressWarnings("unused")
+    public static String getDateAsString(Date date) {
+
+        // Format accepted by Blitz database.
+        Format formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss Z");
+
+        return formatter.format(date);
     }
 
     // endregion
