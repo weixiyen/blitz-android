@@ -86,15 +86,15 @@
     <orderEntry type="library" exported="" name="java-web-socket-7c3b223" level="project" />
     <orderEntry type="library" exported="" name="crashlytics-1.1.13" level="project" />
     <orderEntry type="library" exported="" name="picasso-2.3.4" level="project" />
+    <orderEntry type="library" exported="" name="support-v4-21.0.0" level="project" />
     <orderEntry type="library" exported="" name="viewpagerindicator-2.4.2" level="project" />
     <orderEntry type="library" exported="" name="okio-1.0.0" level="project" />
     <orderEntry type="library" exported="" name="android-sdk-1.4.1" level="project" />
     <orderEntry type="library" exported="" name="play-services-6.1.11" level="project" />
-    <orderEntry type="library" exported="" name="support-v4-20.0.0" level="project" />
     <orderEntry type="library" exported="" name="guava-18.0" level="project" />
+    <orderEntry type="library" exported="" name="support-annotations-21.0.0" level="project" />
     <orderEntry type="library" exported="" name="retrofit-1.6.1" level="project" />
     <orderEntry type="library" exported="" name="calligraphy-1.2.0" level="project" />
-    <orderEntry type="library" exported="" name="support-annotations-20.0.0" level="project" />
     <orderEntry type="library" exported="" name="okhttp-2.0.0" level="project" />
     <orderEntry type="library" exported="" name="rebound-0.3.6" level="project" />
     <orderEntry type="library" exported="" name="gson-2.3" level="project" />
