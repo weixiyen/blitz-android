@@ -19,7 +19,7 @@ import butterknife.OnClick;
 public class SignUpScreen extends BaseActivity {
 
     // region Member Variables
-    // =============================================================================================
+    // ============================================================================================================
 
     // Mapped views.
     @InjectView(R.id.sign_up_screen_email)    EditText mEmail;
@@ -29,7 +29,7 @@ public class SignUpScreen extends BaseActivity {
     // endregion
 
     // region Overwritten Methods
-    // =============================================================================================
+    // ============================================================================================================
 
     /**
      * Setup view on creation.
@@ -47,7 +47,7 @@ public class SignUpScreen extends BaseActivity {
     // endregion
 
     // region Click Methods
-    // =============================================================================================
+    // ============================================================================================================
 
     /**
      * Register the user.

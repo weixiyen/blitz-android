@@ -8,7 +8,7 @@ import java.util.HashMap;
 public class AppDataObject {
 
     // region App Data Objects - Define Here
-    // =============================================================================================
+    // ============================================================================================================
 
     // Does the user have access to the main app (passed queue wall).
     public static final AppData<Boolean> hasAccess

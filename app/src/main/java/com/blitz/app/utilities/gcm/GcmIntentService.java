@@ -24,14 +24,14 @@ import com.google.android.gms.gcm.GoogleCloudMessaging;
 public class GcmIntentService extends IntentService {
 
     // region Member Variables
-    // ==============================================================================================
+    // =============================================================================================================
 
     public static final int NOTIFICATION_ID = 1;
 
     // endregion
 
     // region Constructors
-    // ==============================================================================================
+    // =============================================================================================================
 
     /**
      * Default constructor,  The string passed to the
@@ -45,7 +45,7 @@ public class GcmIntentService extends IntentService {
     // endregion
 
     // region Overwritten Methods
-    // ==============================================================================================
+    // =============================================================================================================
 
     /**
      * Todo: Revise and make this method more robust.
@@ -88,7 +88,7 @@ public class GcmIntentService extends IntentService {
     // endregion
 
     // region Private Methods
-    // ==============================================================================================
+    // =============================================================================================================
 
     /**
      * TODO: Supply the intent as a parameter (make this part of a reusable library).

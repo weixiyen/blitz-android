@@ -24,7 +24,7 @@ import butterknife.ButterKnife;
 public class BaseFragment extends Fragment {
 
     // region Member Variables
-    // =============================================================================================
+    // ============================================================================================================
 
     // Content view of the fragment.
     private View mContentView;
@@ -39,7 +39,7 @@ public class BaseFragment extends Fragment {
     // endregion
 
     // region Overwritten Methods
-    // =============================================================================================
+    // ============================================================================================================
 
     /**
      * Saves some parameters in order to expose the activity
@@ -165,7 +165,7 @@ public class BaseFragment extends Fragment {
     // endregion
 
     // region Private Methods
-    // =============================================================================================
+    // ============================================================================================================
 
     /**
      * Attempts to fetch the associated instance
@@ -203,7 +203,7 @@ public class BaseFragment extends Fragment {
     // endregion
 
     // region Protected Methods
-    // =============================================================================================
+    // ============================================================================================================
 
     /**
      * @see android.app.Fragment#startActivity(android.content.Intent)

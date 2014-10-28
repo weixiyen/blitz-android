@@ -17,7 +17,7 @@ public class MainScreenViewPagerAdapter extends FragmentStatePagerAdapter
         implements ViewPager.OnPageChangeListener {
 
     // region Member Variables
-    // =============================================================================================
+    // ============================================================================================================
 
     // Title of each page.
     private List<String> mScreens;
@@ -31,7 +31,7 @@ public class MainScreenViewPagerAdapter extends FragmentStatePagerAdapter
     // endregion
 
     // region Constructor
-    // =============================================================================================
+    // ============================================================================================================
 
     /**
      * Initialize the adapter.
@@ -43,7 +43,7 @@ public class MainScreenViewPagerAdapter extends FragmentStatePagerAdapter
     // endregion
 
     // region Overwritten Methods
-    // =============================================================================================
+    // ============================================================================================================
 
     /**
      * Return one of the primary screens
@@ -74,7 +74,7 @@ public class MainScreenViewPagerAdapter extends FragmentStatePagerAdapter
     // endregion
 
     // region Public Methods
-    // =============================================================================================
+    // ============================================================================================================
 
     /**
      * Create this adapter with a view pager (convenience method).
@@ -114,7 +114,7 @@ public class MainScreenViewPagerAdapter extends FragmentStatePagerAdapter
     // endregion
 
     // region Page Change Methods
-    // =============================================================================================
+    // ============================================================================================================
 
     /**
      * This method will be invoked when the current page is scrolled, either as part
@@ -153,7 +153,7 @@ public class MainScreenViewPagerAdapter extends FragmentStatePagerAdapter
     // endregion
 
     // region Callbacks Interface
-    // =============================================================================================
+    // ============================================================================================================
 
     public interface Callbacks {
 

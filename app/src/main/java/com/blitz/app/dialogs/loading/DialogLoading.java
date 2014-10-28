@@ -12,7 +12,7 @@ import com.blitz.app.utilities.blitz.BlitzDelay;
 public class DialogLoading extends BaseDialog {
 
     // region Member Variables
-    // =============================================================================================
+    // ============================================================================================================
 
     // Constants.
     private static final long MINIMUM_LOADING_TIME = 1000;
@@ -23,7 +23,7 @@ public class DialogLoading extends BaseDialog {
     // endregion
 
     // region Constructor
-    // =============================================================================================
+    // ============================================================================================================
 
     /**
      * Setup state when constructed.
@@ -39,7 +39,7 @@ public class DialogLoading extends BaseDialog {
     // endregion
 
     // region Overwritten Methods
-    // =============================================================================================
+    // ============================================================================================================
 
     /**
      * Perform some additional hide
@@ -56,7 +56,7 @@ public class DialogLoading extends BaseDialog {
     // endregion
 
     // region Public Methods
-    // =============================================================================================
+    // ============================================================================================================
 
     /**
      * When this dialog is shown, at first it just blocks

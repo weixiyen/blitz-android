@@ -17,7 +17,7 @@ import me.grantland.widget.AutofitTextView;
 public class BlitzTextView extends AutofitTextView {
 
     // region Member Variables
-    // =============================================================================================
+    // ============================================================================================================
 
     // Should text changed be ignored.
     private boolean mIgnoreTextChanges;
@@ -28,7 +28,7 @@ public class BlitzTextView extends AutofitTextView {
     // endregion
 
     // region Constructors
-    // =============================================================================================
+    // ============================================================================================================
 
     @SuppressWarnings("unused")
     public BlitzTextView(Context context) {
@@ -70,7 +70,7 @@ public class BlitzTextView extends AutofitTextView {
     // endregion
 
     // region Overwritten Methods
-    // =============================================================================================
+    // ============================================================================================================
 
     @Override
     protected void onTextChanged(java.lang.CharSequence text, int start, int lengthBefore, int lengthAfter) {
@@ -93,7 +93,7 @@ public class BlitzTextView extends AutofitTextView {
     // endregion
 
     // region Private Methods
-    // =============================================================================================
+    // ============================================================================================================
 
     /**
      * Set text to the current cache value, if present.

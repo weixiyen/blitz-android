@@ -32,7 +32,7 @@ public class SettingsScreen extends BaseFragment implements ViewModelSettings.Ca
         BlitzCarouselAdapter.Callbacks {
 
     // region Member Variables
-    // =============================================================================================
+    // ============================================================================================================
 
     // Toggle switches.
     @InjectView(R.id.settings_toggle_music) Switch mSettingsToggleMusic;
@@ -54,7 +54,7 @@ public class SettingsScreen extends BaseFragment implements ViewModelSettings.Ca
     // endregion
 
     // region Overwritten Methods
-    // =============================================================================================
+    // ============================================================================================================
 
     /**
      * Setup main navigational interface.
@@ -94,7 +94,7 @@ public class SettingsScreen extends BaseFragment implements ViewModelSettings.Ca
     // endregion
 
     // region Click Methods
-    // =============================================================================================
+    // ============================================================================================================
 
     /**
      * Toggle music setting.
@@ -189,7 +189,7 @@ public class SettingsScreen extends BaseFragment implements ViewModelSettings.Ca
     // endregion
 
     // region View Model & Carousel Callbacks
-    // =============================================================================================
+    // ============================================================================================================
 
     /**
      * Current email address received.

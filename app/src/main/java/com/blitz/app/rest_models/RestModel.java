@@ -9,7 +9,7 @@ import com.blitz.app.utilities.rest.RestAPIClient;
 public class RestModel {
 
     // region Member Variables
-    // =============================================================================================
+    // ============================================================================================================
 
     // Object models have a final static instance of the rest API.
     protected static final RestAPI mRestAPI = RestAPIClient.getAPI();

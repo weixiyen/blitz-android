@@ -18,7 +18,7 @@ public class BlitzCarouselAdapter extends BlitzViewPagerAdapter implements
         ViewPager.OnPageChangeListener {
 
     // region Member Variables
-    // =============================================================================================
+    // ============================================================================================================
 
     // Makes view pager infinite for
     // all practical purposes.
@@ -45,7 +45,7 @@ public class BlitzCarouselAdapter extends BlitzViewPagerAdapter implements
     // endregion
 
     // region Constructors
-    // =============================================================================================
+    // ============================================================================================================
 
     /**
      * Create a new carousel adapter.
@@ -59,7 +59,7 @@ public class BlitzCarouselAdapter extends BlitzViewPagerAdapter implements
     // endregion
 
     // region Public Methods
-    // =============================================================================================
+    // ============================================================================================================
 
     /**
      * Create adapter and configure it carousel style.
@@ -129,7 +129,7 @@ public class BlitzCarouselAdapter extends BlitzViewPagerAdapter implements
     // endregion
 
     // region Overwritten Methods
-    // =============================================================================================
+    // ============================================================================================================
 
     /**
      * Fetch item at specified position.
@@ -215,7 +215,7 @@ public class BlitzCarouselAdapter extends BlitzViewPagerAdapter implements
     // endregion
 
     // region Callbacks Interface
-    // =============================================================================================
+    // ============================================================================================================
 
     public interface Callbacks {
 

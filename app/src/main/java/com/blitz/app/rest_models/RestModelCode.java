@@ -11,7 +11,7 @@ import com.google.gson.JsonObject;
 public class RestModelCode extends RestModel {
 
     // region Member Variables
-    // =============================================================================================
+    // ============================================================================================================
 
     // User provided code.
     private String mValue;
@@ -22,7 +22,7 @@ public class RestModelCode extends RestModel {
     // endregion
 
     // region Public Methods
-    // =============================================================================================
+    // ============================================================================================================
 
     /**
      * Set code value.
@@ -83,7 +83,7 @@ public class RestModelCode extends RestModel {
     // endregion
 
     // region Callbacks
-    // =============================================================================================
+    // ============================================================================================================
 
     public interface RedeemCodeCallback {
 

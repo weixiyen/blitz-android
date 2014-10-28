@@ -26,7 +26,7 @@ import butterknife.InjectView;
 public class LoadingScreen extends BaseActivity {
 
     // region Member Variables
-    // =============================================================================================
+    // ============================================================================================================
 
     // Splash screen timer
     private static final int MINIMUM_TIME_TO_DISPLAY = 1500;
@@ -37,7 +37,7 @@ public class LoadingScreen extends BaseActivity {
     // endregion
 
     // region Overwritten Methods
-    // =============================================================================================
+    // ============================================================================================================
 
     /**
      * Setup and jump to associated activity.
@@ -84,7 +84,7 @@ public class LoadingScreen extends BaseActivity {
     // endregion
 
     // region Private Methods
-    // =============================================================================================
+    // ============================================================================================================
 
     /**
      * Try to enter the main application but also enforce

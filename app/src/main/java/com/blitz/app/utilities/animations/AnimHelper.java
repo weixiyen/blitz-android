@@ -6,7 +6,7 @@ package com.blitz.app.utilities.animations;
 public class AnimHelper {
 
     // region Protected Methods
-    // =============================================================================================
+    // ============================================================================================================
 
     /**
      * Fetch the standard animation time, used

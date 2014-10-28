@@ -18,7 +18,7 @@ import java.util.List;
 public class ViewModelSettings extends ViewModel {
 
     // region Member Variables
-    // =============================================================================================
+    // ============================================================================================================
 
     // List of the avatars this user owns.
     private List<RestModelItem> mUserAvatars;
@@ -29,7 +29,7 @@ public class ViewModelSettings extends ViewModel {
     // endregion
 
     // region Constructor
-    // =============================================================================================
+    // ============================================================================================================
 
     /**
      * Creating a new view model requires an activity and a callback.
@@ -44,7 +44,7 @@ public class ViewModelSettings extends ViewModel {
     // endregion
 
     // region Overwritten Methods
-    // =============================================================================================
+    // ============================================================================================================
 
     /**
      * Fetch info and setup the view model.
@@ -61,7 +61,7 @@ public class ViewModelSettings extends ViewModel {
 
 
     // region Public Methods
-    // =============================================================================================
+    // ============================================================================================================
 
     /**
      * Update the user avatar.
@@ -75,7 +75,7 @@ public class ViewModelSettings extends ViewModel {
     // endregion
 
     // region Private Methods
-    // =============================================================================================
+    // ============================================================================================================
 
     /**
      * Fetch avatars owned by the user.
@@ -175,7 +175,7 @@ public class ViewModelSettings extends ViewModel {
     // endregion
 
     // region Callbacks Interface
-    // =============================================================================================
+    // ============================================================================================================
 
     public interface Callbacks extends ViewModel.Callbacks {
 

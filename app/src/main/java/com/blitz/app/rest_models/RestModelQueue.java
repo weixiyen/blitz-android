@@ -12,7 +12,7 @@ import com.google.gson.JsonObject;
 public class RestModelQueue extends RestModel {
 
     // region Member Variables
-    // =============================================================================================
+    // ============================================================================================================
 
     // Current active draft key,
     // static to preserve state.
@@ -21,7 +21,7 @@ public class RestModelQueue extends RestModel {
     // endregion
 
     // region Public Methods
-    // =============================================================================================
+    // ============================================================================================================
 
     /**
      * Add user to draft queue.  Requires a draft

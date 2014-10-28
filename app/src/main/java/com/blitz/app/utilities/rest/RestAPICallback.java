@@ -20,7 +20,7 @@ import retrofit.client.Response;
 public abstract class RestAPICallback<T> implements Callback<T> {
 
     // region Member Variables
-    // =============================================================================================
+    // ============================================================================================================
 
     // Parent activity.
     private Activity mActivity;
@@ -46,14 +46,14 @@ public abstract class RestAPICallback<T> implements Callback<T> {
     // endregion
 
     // region Abstract Methods
-    // =============================================================================================
+    // ============================================================================================================
 
     public abstract void success(T jsonObject);
 
     // endregion
 
     // region Constructors
-    // =============================================================================================
+    // ============================================================================================================
 
     /**
      * Private constructor disallowed.  Encourages
@@ -90,7 +90,7 @@ public abstract class RestAPICallback<T> implements Callback<T> {
     // endregion
 
     // region Overwritten Methods
-    // =============================================================================================
+    // ============================================================================================================
 
     /**
      * Successful REST call is made.  Prefer to NOT
@@ -140,7 +140,7 @@ public abstract class RestAPICallback<T> implements Callback<T> {
     // endregion
 
     // region Public Methods
-    // =============================================================================================
+    // ============================================================================================================
 
     /**
      * Should this operation be throttled.
@@ -232,7 +232,7 @@ public abstract class RestAPICallback<T> implements Callback<T> {
     // endregion
 
     // region Protected Methods
-    // =============================================================================================
+    // ============================================================================================================
 
     /**
      * Fetch how long it took to
@@ -301,7 +301,7 @@ public abstract class RestAPICallback<T> implements Callback<T> {
     // endregion
 
     // region Private Methods
-    // =============================================================================================
+    // ============================================================================================================
 
     /**
      * Finish helper method that handles

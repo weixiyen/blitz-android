@@ -16,7 +16,7 @@ import com.blitz.app.R;
 public class AppConfig {
 
     // region Member Variables
-    // =============================================================================================
+    // ============================================================================================================
 
     // Base url, set on initialization.
     private static String mBaseURL;
@@ -31,7 +31,7 @@ public class AppConfig {
     // endregion
 
     // region Configuration Methods (Modify with care)
-    // =============================================================================================
+    // ============================================================================================================
 
     /**
      * Should we jump to an arbitrary activity on start.
@@ -94,7 +94,7 @@ public class AppConfig {
     // endregion
 
     // region Public Methods
-    // =============================================================================================
+    // ============================================================================================================
 
     /**
      * Get production flag, this value is read

@@ -13,7 +13,7 @@ import android.view.ViewGroup;
 public abstract class BlitzViewPagerAdapter extends FragmentStatePagerAdapter {
 
     // region Member Variables
-    // =============================================================================================
+    // ============================================================================================================
 
     // Array of registered fragments / root views.
     SparseArray<Fragment> mRegisteredFragments = new SparseArray<Fragment>();
@@ -22,7 +22,7 @@ public abstract class BlitzViewPagerAdapter extends FragmentStatePagerAdapter {
     // endregion
 
     // region Constructor
-    // =============================================================================================
+    // ============================================================================================================
 
     @SuppressWarnings("unused")
     public BlitzViewPagerAdapter(FragmentManager fm) {
@@ -32,7 +32,7 @@ public abstract class BlitzViewPagerAdapter extends FragmentStatePagerAdapter {
     // endregion
 
     // region Overwritten Methods
-    // =============================================================================================
+    // ============================================================================================================
 
     /**
      * When a fragment is instantiated, save
@@ -66,7 +66,7 @@ public abstract class BlitzViewPagerAdapter extends FragmentStatePagerAdapter {
     // endregion
 
     // region Protected Methods
-    // =============================================================================================
+    // ============================================================================================================
 
     /**
      * Fetch currently registered fragment

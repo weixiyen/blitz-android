@@ -17,7 +17,7 @@ import butterknife.InjectView;
 public class DialogRules extends BaseDialogFragment {
 
     // region Member Variables
-    // =============================================================================================
+    // ============================================================================================================
 
     // Rules dialog contains a view pager.
     @InjectView(R.id.dialog_rules_pager) ViewPager mRulesPager;
@@ -25,7 +25,7 @@ public class DialogRules extends BaseDialogFragment {
     // endregion
 
     // region Overwritten Methods
-    // =============================================================================================
+    // ============================================================================================================
 
     /**
      * Create a carousel-like pager to

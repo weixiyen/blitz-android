@@ -23,7 +23,7 @@ import butterknife.InjectView;
 public class LeaderboardScreen extends BaseActivity implements ViewModelLeaderboard.Callbacks {
 
     // region Member Variables
-    // =============================================================================================
+    // ============================================================================================================
 
     @InjectView(R.id.leaderboard_list) ListView mLeaderboardPlayerList;
     @InjectView(R.id.leaderboard_spinner) ProgressBar mLeaderboardSpinner;
@@ -34,7 +34,7 @@ public class LeaderboardScreen extends BaseActivity implements ViewModelLeaderbo
     // endregion
 
     // region Overwritten Methods
-    // =============================================================================================
+    // ============================================================================================================
 
     /**
      * Run custom transitions if needed.
@@ -68,7 +68,7 @@ public class LeaderboardScreen extends BaseActivity implements ViewModelLeaderbo
     // endregion
 
     // region View Model Callbacks
-    // =============================================================================================
+    // ============================================================================================================
 
     /**
      * Simple pass though to list view adapter

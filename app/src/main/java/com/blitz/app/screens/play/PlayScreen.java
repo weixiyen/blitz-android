@@ -34,7 +34,7 @@ import butterknife.OnClick;
 public class PlayScreen extends BaseFragment implements ViewModelPlay.Callbacks {
 
     // region Member Variables
-    // =============================================================================================
+    // ============================================================================================================
 
     // Play button related views.
     @InjectView(R.id.main_play_button)                View mPlayButton;
@@ -72,7 +72,7 @@ public class PlayScreen extends BaseFragment implements ViewModelPlay.Callbacks 
     // endregion
 
     // region Overwritten Methods
-    // =============================================================================================
+    // ============================================================================================================
 
     /**
      * Show rules dialog if needed.
@@ -180,7 +180,7 @@ public class PlayScreen extends BaseFragment implements ViewModelPlay.Callbacks 
     // endregion
 
     // region Private Methods
-    // =============================================================================================
+    // ============================================================================================================
 
     /**
      * Animate the play button.
@@ -217,7 +217,7 @@ public class PlayScreen extends BaseFragment implements ViewModelPlay.Callbacks 
     // endregion
 
     // region View Model Callbacks
-    // =============================================================================================
+    // ============================================================================================================
 
     /**
      * Show roadblock if the queue is not available.
@@ -377,7 +377,7 @@ public class PlayScreen extends BaseFragment implements ViewModelPlay.Callbacks 
     // endregion
 
     // region Click Methods
-    // =============================================================================================
+    // ============================================================================================================
 
     /**
      * Join (or leave) the draft queue!

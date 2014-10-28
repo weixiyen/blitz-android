@@ -16,7 +16,7 @@ import java.util.List;
 public class RestModelPlayer extends RestModel {
 
     // region Member Variables
-    // =============================================================================================
+    // ============================================================================================================
 
     @SuppressWarnings("unused") @SerializedName("id")
     private String mId;
@@ -42,7 +42,7 @@ public class RestModelPlayer extends RestModel {
     // endregion
 
     // region REST Methods
-    // =============================================================================================
+    // ============================================================================================================
 
     @SuppressWarnings("unused")
     public static void fetchPlayers(Activity activity,
@@ -129,7 +129,7 @@ public class RestModelPlayer extends RestModel {
     // endregion
 
     // region Public Methods
-    // =============================================================================================
+    // ============================================================================================================
 
     /**
      * Fetch player id.
@@ -253,7 +253,7 @@ public class RestModelPlayer extends RestModel {
     // endregion
 
     // region Callbacks
-    // =============================================================================================
+    // ============================================================================================================
 
     public interface CallbackPlayer {
 

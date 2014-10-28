@@ -17,7 +17,7 @@ import java.util.Map;
 public class ViewModelLeaderboard extends ViewModel {
 
     // region Constructor
-    // =============================================================================================
+    // ============================================================================================================
 
     /**
      * Creating a new view model requires an activity and a callback.
@@ -29,7 +29,7 @@ public class ViewModelLeaderboard extends ViewModel {
     // endregion
 
     // region Overwritten Methods
-    // =============================================================================================
+    // ============================================================================================================
 
     /**
      * Do a basic fetch of the top 150 users and return
@@ -116,7 +116,7 @@ public class ViewModelLeaderboard extends ViewModel {
     // endregion
 
     // region Callbacks Interface
-    // =============================================================================================
+    // ============================================================================================================
 
     public interface Callbacks extends ViewModel.Callbacks {
 

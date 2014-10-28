@@ -15,7 +15,7 @@ import java.util.Date;
 public class RestModelDevice extends RestModel {
 
     // region Member Variables
-    // =============================================================================================
+    // ============================================================================================================
 
     @SuppressWarnings("unused") @SerializedName("id")
     private String mId;
@@ -39,7 +39,7 @@ public class RestModelDevice extends RestModel {
     // endregion
 
     // region Public Methods
-    // =============================================================================================
+    // ============================================================================================================
 
     /**
      * Fetch the id of the device model.  This is NOT
@@ -55,7 +55,7 @@ public class RestModelDevice extends RestModel {
     // endregion
 
     // region REST Methods
-    // =============================================================================================
+    // ============================================================================================================
 
     /**
      * Get specified device given a device id.  The model
@@ -196,7 +196,7 @@ public class RestModelDevice extends RestModel {
     // endregion
 
     // region Callbacks
-    // =============================================================================================
+    // ============================================================================================================
 
     /**
      * Single device returned.

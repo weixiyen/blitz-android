@@ -23,7 +23,7 @@ import butterknife.InjectView;
 public class LeaderboardListAdapter extends ArrayAdapter<String> {
 
     // region Member Variables
-    // =============================================================================================
+    // ============================================================================================================
 
     private List<String>  mUserNames;
     private List<Integer> mUserWins;
@@ -34,7 +34,7 @@ public class LeaderboardListAdapter extends ArrayAdapter<String> {
     // endregion
 
     // region Constructor
-    // =============================================================================================
+    // ============================================================================================================
 
     /**
      * Create adapter.
@@ -67,7 +67,7 @@ public class LeaderboardListAdapter extends ArrayAdapter<String> {
     // endregion
 
     // region Overwritten Methods
-    // =============================================================================================
+    // ============================================================================================================
 
     /**
      * Fetch and populate a leaderboard list item
@@ -111,7 +111,7 @@ public class LeaderboardListAdapter extends ArrayAdapter<String> {
     // endregion
 
     // region View Holder
-    // =============================================================================================
+    // ============================================================================================================
 
     /**
      * Quick lookup into a views subviews.

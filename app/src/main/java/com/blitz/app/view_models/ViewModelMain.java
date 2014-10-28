@@ -17,7 +17,7 @@ import com.google.gson.JsonObject;
 public class ViewModelMain extends ViewModel {
 
     // region Member Variables
-    // =============================================================================================
+    // ============================================================================================================
 
     // Queue model.
     private RestModelQueue mModelQueue;
@@ -25,7 +25,7 @@ public class ViewModelMain extends ViewModel {
     // endregion
 
     // region Constructor
-    // =============================================================================================
+    // ============================================================================================================
 
     /**
      * Creating a new view model requires an activity and a callback.
@@ -40,7 +40,7 @@ public class ViewModelMain extends ViewModel {
     // endregion
 
     // region Overwritten Methods
-    // =============================================================================================
+    // ============================================================================================================
 
     /**
      * Setup comet.
@@ -55,7 +55,7 @@ public class ViewModelMain extends ViewModel {
     // endregion
 
     // region Public Methods
-    // =============================================================================================
+    // ============================================================================================================
 
     /**
      * Leave the draft queue.
@@ -87,7 +87,7 @@ public class ViewModelMain extends ViewModel {
     // endregion
 
     // region Private Methods
-    // =============================================================================================
+    // ============================================================================================================
 
     /**
      * Setup callbacks for the draft
@@ -189,7 +189,7 @@ public class ViewModelMain extends ViewModel {
     // endregion
 
     // region Callbacks Interface
-    // =============================================================================================
+    // ============================================================================================================
 
     public interface Callbacks extends ViewModel.Callbacks {
 

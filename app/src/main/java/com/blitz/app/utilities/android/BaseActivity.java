@@ -28,7 +28,7 @@ import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 public class BaseActivity extends FragmentActivity {
 
     // region Member Variables
-    // =============================================================================================
+    // ============================================================================================================
 
     // Custom transition type.
     public enum CustomTransition {
@@ -54,7 +54,7 @@ public class BaseActivity extends FragmentActivity {
     // endregion
 
     // region Overwritten Methods
-    // =============================================================================================
+    // ============================================================================================================
 
     /**
      * Run custom transitions if needed.
@@ -218,7 +218,7 @@ public class BaseActivity extends FragmentActivity {
     // endregion
 
     // region Public Methods
-    // =============================================================================================
+    // ============================================================================================================
 
     /**
      * Convenience method for starting an activity
@@ -292,7 +292,7 @@ public class BaseActivity extends FragmentActivity {
     // endregion
 
     // region Private Methods
-    // =============================================================================================
+    // ============================================================================================================
 
     /**
      * Run custom transitions between switching activities.

@@ -27,7 +27,7 @@ import butterknife.OnClick;
 public class AccessQueueScreen extends BaseActivity implements ViewModelAccessQueue.Callbacks {
 
     // region Member Variables
-    // =============================================================================================
+    // ============================================================================================================
 
     @InjectView(R.id.access_queue_promo_text)      View mQueuePromoText;
     @InjectView(R.id.access_queue_calls_to_action) View mQueueButtons;
@@ -56,7 +56,7 @@ public class AccessQueueScreen extends BaseActivity implements ViewModelAccessQu
     // endregion
 
     // region Overwritten Methods
-    // =============================================================================================
+    // ============================================================================================================
 
     /**
      * Setup spring animations.
@@ -148,7 +148,7 @@ public class AccessQueueScreen extends BaseActivity implements ViewModelAccessQu
     // endregion
 
     // region Private Methods
-    // =============================================================================================
+    // ============================================================================================================
 
     /**
      * Setup the UI based on whether or not
@@ -181,7 +181,7 @@ public class AccessQueueScreen extends BaseActivity implements ViewModelAccessQu
     // endregion
 
     // region View Model Callbacks
-    // =============================================================================================
+    // ============================================================================================================
 
     /**
      * Update people in front of you.
@@ -219,7 +219,7 @@ public class AccessQueueScreen extends BaseActivity implements ViewModelAccessQu
     // endregion
 
     // region Click Methods
-    // =============================================================================================
+    // ============================================================================================================
 
     /**
      * Transition to access code screen.

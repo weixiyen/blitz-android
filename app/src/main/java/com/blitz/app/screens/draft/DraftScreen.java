@@ -40,7 +40,7 @@ import butterknife.OnClick;
 public class DraftScreen extends BaseActivity implements ViewModelDraft.Callbacks {
 
     // region Member Variables
-    // =============================================================================================
+    // ============================================================================================================
 
     // Draft intro containers.
     @InjectView(R.id.draft_intro)                 View mDraftIntroContainer;
@@ -141,7 +141,7 @@ public class DraftScreen extends BaseActivity implements ViewModelDraft.Callback
     // endregion
 
     // region Overwritten Methods
-    // =============================================================================================
+    // ============================================================================================================
 
     /**
      * Initialize the UI state.
@@ -201,7 +201,7 @@ public class DraftScreen extends BaseActivity implements ViewModelDraft.Callback
     // endregion
 
     // region Private Methods
-    // =============================================================================================
+    // ============================================================================================================
 
     /**
      * Attempt to set the draft UI state based
@@ -318,7 +318,7 @@ public class DraftScreen extends BaseActivity implements ViewModelDraft.Callback
     // endregion
 
     // region Animation Methods
-    // =============================================================================================
+    // ============================================================================================================
 
     /**
      * Show the intro UI.
@@ -571,7 +571,7 @@ public class DraftScreen extends BaseActivity implements ViewModelDraft.Callback
     // endregion
 
     // region Click Methods
-    // =============================================================================================
+    // ============================================================================================================
 
     @OnClick({
             R.id.draft_player_tl,
@@ -591,7 +591,7 @@ public class DraftScreen extends BaseActivity implements ViewModelDraft.Callback
     // endregion
 
     // region View Model Callbacks
-    // =============================================================================================
+    // ============================================================================================================
 
     /**
      * Received when a users information is received.

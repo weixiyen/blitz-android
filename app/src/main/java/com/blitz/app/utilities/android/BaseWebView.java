@@ -21,7 +21,7 @@ import com.blitz.app.utilities.blitz.BlitzDelay;
 public class BaseWebView extends WebView {
 
     // region Member Variables
-    // =============================================================================================
+    // ============================================================================================================
 
     // Progress bar for loading.
     private ProgressBar mLoadingView;
@@ -29,7 +29,7 @@ public class BaseWebView extends WebView {
     // endregion
 
     // region Constructors
-    // =============================================================================================
+    // ============================================================================================================
 
     /**
      * Configure custom web view.
@@ -64,7 +64,7 @@ public class BaseWebView extends WebView {
     // endregion
 
     // region Public Methods
-    // =============================================================================================
+    // ============================================================================================================
 
     /**
      * Set the loading view.
@@ -79,7 +79,7 @@ public class BaseWebView extends WebView {
     // endregion
 
     // region Private Methods
-    // =============================================================================================
+    // ============================================================================================================
 
     /**
      * Configure the web view.

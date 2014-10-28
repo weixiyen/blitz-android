@@ -23,7 +23,7 @@ public class RecentScreen extends BaseFragment implements ViewModelRecent.Callba
         RecentScreenScrubber.Callbacks {
 
     // region Member Variables
-    // =============================================================================================
+    // ============================================================================================================
 
     // Total weeks in an NFL season.
     private static final int WEEKS_IN_SEASON = 17;
@@ -45,7 +45,7 @@ public class RecentScreen extends BaseFragment implements ViewModelRecent.Callba
     // endregion
 
     // region Overwritten Methods
-    // =============================================================================================
+    // ============================================================================================================
 
     /**
      * Setup the recent matches UI.
@@ -83,7 +83,7 @@ public class RecentScreen extends BaseFragment implements ViewModelRecent.Callba
     // endregion
 
     // region Private Methods
-    // =============================================================================================
+    // ============================================================================================================
 
     /**
      * Setup the UI for when the user
@@ -149,7 +149,7 @@ public class RecentScreen extends BaseFragment implements ViewModelRecent.Callba
     // endregion
 
     // region View Model & Scrubber Callbacks
-    // =============================================================================================
+    // ============================================================================================================
 
     /**
      * When the scrubber item changes, the position

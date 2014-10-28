@@ -22,7 +22,7 @@ import java.util.List;
 public class RecentScreenScrubber extends LinearLayout {
 
     // region Constructors
-    // =============================================================================================
+    // ============================================================================================================
 
     // Optional parent view pager.
     private ViewPager mViewPager;
@@ -54,7 +54,7 @@ public class RecentScreenScrubber extends LinearLayout {
     // endregion
 
     // region Constructors
-    // =============================================================================================
+    // ============================================================================================================
 
     @SuppressWarnings("unused")
     public RecentScreenScrubber(Context context) {
@@ -83,7 +83,7 @@ public class RecentScreenScrubber extends LinearLayout {
     // endregion
 
     // region Overwritten Methods
-    // =============================================================================================
+    // ============================================================================================================
 
     /**
      * Tell the scrubber that we want to intercept
@@ -102,7 +102,7 @@ public class RecentScreenScrubber extends LinearLayout {
     // endregion
 
     // region Public Methods
-    // =============================================================================================
+    // ============================================================================================================
 
     /**
      * Provide a view pager if this scrubber
@@ -186,7 +186,7 @@ public class RecentScreenScrubber extends LinearLayout {
     // endregion
 
     // region Private Methods
-    // =============================================================================================
+    // ============================================================================================================
 
     /**
      * Fetch scrubber item colors.
@@ -348,7 +348,7 @@ public class RecentScreenScrubber extends LinearLayout {
     // endregion
 
     // region Callbacks Interface
-    // =============================================================================================
+    // ============================================================================================================
 
     public interface Callbacks {
 

@@ -22,7 +22,7 @@ import java.util.Map;
 public class ViewModelRecent extends ViewModel {
 
     // region Member Variables
-    // =============================================================================================
+    // ============================================================================================================
 
     // View model callbacks.
     private final Callbacks mCallbacks;
@@ -37,7 +37,7 @@ public class ViewModelRecent extends ViewModel {
     // endregion
 
     // region Constructor
-    // =============================================================================================
+    // ============================================================================================================
 
     /**
      * Setup the view model.
@@ -55,7 +55,7 @@ public class ViewModelRecent extends ViewModel {
     // endregion
 
     // region Overwritten Methods
-    // =============================================================================================
+    // ============================================================================================================
 
     /**
      * On start make sure we have the current week
@@ -90,7 +90,7 @@ public class ViewModelRecent extends ViewModel {
     // endregion
 
     // region Public Methods
-    // =============================================================================================
+    // ============================================================================================================
 
     /**
      * Fetch current week in the season.
@@ -135,7 +135,7 @@ public class ViewModelRecent extends ViewModel {
     // endregion
 
     // region Private Methods
-    // =============================================================================================
+    // ============================================================================================================
 
     /**
      * Process draft fetch results.
@@ -236,7 +236,7 @@ public class ViewModelRecent extends ViewModel {
     // endregion
 
     // region Inner Classes
-    // =============================================================================================
+    // ============================================================================================================
 
     /**
      * Summary of drafts.
@@ -413,7 +413,7 @@ public class ViewModelRecent extends ViewModel {
     // endregion
 
     // region View Model Callbacks
-    // =============================================================================================
+    // ============================================================================================================
 
     public interface Callbacks extends ViewModel.Callbacks {
 

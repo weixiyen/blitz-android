@@ -13,7 +13,7 @@ import com.blitz.app.R;
 public class LeaguesScreenAdapterCreate extends BaseAdapter {
 
     // region Member Variables
-    // =============================================================================================
+    // ============================================================================================================
 
     public static final int CREATE_JOIN_HEADER       = 0;
     public static final int RECRUITING_LEAGUE_HEADER = 1;
@@ -115,7 +115,7 @@ public class LeaguesScreenAdapterCreate extends BaseAdapter {
     }
 
     // region Private Methods
-    // =============================================================================================
+    // ============================================================================================================
 
     /**
      * Configure the header for create league

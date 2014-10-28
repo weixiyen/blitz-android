@@ -10,7 +10,7 @@ import java.util.concurrent.ConcurrentHashMap;
 public class BlitzDelay {
 
     // region Member Variables
-    // =============================================================================================
+    // ============================================================================================================
 
     // Store handlers so the user has the option to cancel them.
     private static ConcurrentHashMap<Handler, Runnable> mHandlerMap =
@@ -19,7 +19,7 @@ public class BlitzDelay {
     // endregion
 
     // region Public Methods
-    // =============================================================================================
+    // ============================================================================================================
 
     /**
      * Runs a callback on a delay.

@@ -12,7 +12,7 @@ import retrofit.client.Response;
 public class RestAPIClient extends RestAPIClientBase {
 
     // region Member Variables
-    // =============================================================================================
+    // ============================================================================================================
 
     // Singleton instance for API and client.
     private static RestAPI       mInstanceApi = null;
@@ -21,7 +21,7 @@ public class RestAPIClient extends RestAPIClientBase {
     // endregion
 
     // region Protected Methods
-    // =============================================================================================
+    // ============================================================================================================
 
     /**
      * Add cookies to the request.
@@ -58,7 +58,7 @@ public class RestAPIClient extends RestAPIClientBase {
     // endregion
 
     // region Public Methods
-    // =============================================================================================
+    // ============================================================================================================
 
     /**
      * Given a response, try to find and

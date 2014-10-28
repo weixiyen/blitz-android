@@ -26,14 +26,14 @@ import butterknife.InjectView;
 public class RecentScreenMatchAdapter extends ArrayAdapter<ViewModelRecent.SummaryDraft> {
 
     // region Member Variables.
-    // =============================================================================================
+    // ============================================================================================================
 
     private List<ViewModelRecent.SummaryDraft> mItems;
 
     // endregion
 
     // region Constructor
-    // =============================================================================================
+    // ============================================================================================================
 
     /**
      * Initialize the adapter.
@@ -50,7 +50,7 @@ public class RecentScreenMatchAdapter extends ArrayAdapter<ViewModelRecent.Summa
     // endregion
 
     // region Overwritten Methods
-    // =============================================================================================
+    // ============================================================================================================
 
     /**
      * Fetch view.
@@ -84,7 +84,7 @@ public class RecentScreenMatchAdapter extends ArrayAdapter<ViewModelRecent.Summa
     // endregion
 
     // region Private Methods
-    // =============================================================================================
+    // ============================================================================================================
 
     /**
      * Configure view.
@@ -178,7 +178,7 @@ public class RecentScreenMatchAdapter extends ArrayAdapter<ViewModelRecent.Summa
     // endregion
 
     // region View Holder
-    // =============================================================================================
+    // ============================================================================================================
 
     /**
      * Quick lookup into a views subviews.

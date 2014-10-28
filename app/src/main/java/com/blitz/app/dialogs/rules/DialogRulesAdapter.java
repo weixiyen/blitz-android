@@ -12,7 +12,7 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 public class DialogRulesAdapter extends FragmentStatePagerAdapter {
 
     // region Member Variables
-    // =============================================================================================
+    // ============================================================================================================
 
     // Number of pages in the dialog.
     private static final int RULES_PAGES = 6;
@@ -20,7 +20,7 @@ public class DialogRulesAdapter extends FragmentStatePagerAdapter {
     // endregion
 
     // region Overwritten Methods
-    // =============================================================================================
+    // ============================================================================================================
 
     /**
      * Default adapter constructor.
@@ -34,7 +34,7 @@ public class DialogRulesAdapter extends FragmentStatePagerAdapter {
     // endregion
 
     // region Overwritten Methods
-    // =============================================================================================
+    // ============================================================================================================
 
     /**
      * Each rules page is uniquely styled so use

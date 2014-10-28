@@ -18,7 +18,7 @@ import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
 public class BaseApplication extends Application implements EnteredBackground.Callbacks {
 
     // region Overwritten Methods
-    // =============================================================================================
+    // ============================================================================================================
 
     /**
      * Initialize custom font on application start.

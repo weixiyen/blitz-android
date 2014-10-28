@@ -17,7 +17,7 @@ import java.util.List;
 public class RestModelUser extends RestModel {
 
     // region Member Variables
-    // =============================================================================================
+    // ============================================================================================================
 
     @SuppressWarnings("unused") @SerializedName("banned") private Boolean mBanned;
 
@@ -37,7 +37,7 @@ public class RestModelUser extends RestModel {
     // endregion
 
     // region REST Calls
-    // =============================================================================================
+    // ============================================================================================================
 
     /**
      * Update the users avatar.
@@ -259,7 +259,7 @@ public class RestModelUser extends RestModel {
     // endregion
 
     // region Public Methods
-    // =============================================================================================
+    // ============================================================================================================
 
     /**
      * Fetch id of this user.

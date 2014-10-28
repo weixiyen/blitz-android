@@ -17,7 +17,7 @@ import butterknife.OnClick;
 public class SplashScreen extends BaseActivity {
 
     // region Member Variables
-    // =============================================================================================
+    // ============================================================================================================
 
     @InjectView(R.id.splash_screen_pager)               ViewPager mPager;
     @InjectView(R.id.splash_screen_indicator) CirclePageIndicator mPagerIndicator;
@@ -25,7 +25,7 @@ public class SplashScreen extends BaseActivity {
     // endregion
 
     // region Overwritten Methods
-    // =============================================================================================
+    // ============================================================================================================
 
     /**
      * Setup the activity.
@@ -60,7 +60,7 @@ public class SplashScreen extends BaseActivity {
     // endregion
 
     // region Private Methods
-    // =============================================================================================
+    // ============================================================================================================
 
     /**
      * Start next activity in the flow.
@@ -92,7 +92,7 @@ public class SplashScreen extends BaseActivity {
     // endregion
 
     // region Click Methods
-    // =============================================================================================
+    // ============================================================================================================
 
     @OnClick(R.id.splash_screen_sign_in) @SuppressWarnings("unused")
     public void sign_in() {

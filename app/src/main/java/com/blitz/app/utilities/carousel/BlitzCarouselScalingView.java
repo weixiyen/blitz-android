@@ -15,7 +15,7 @@ import android.widget.LinearLayout;
 public class BlitzCarouselScalingView extends LinearLayout {
 
     // region Member Variables
-    // =============================================================================================
+    // ============================================================================================================
 
     // Initialize the scale to maximum scale.
     private float mScale = BlitzCarouselAdapter.MAX_SCALE;
@@ -23,7 +23,7 @@ public class BlitzCarouselScalingView extends LinearLayout {
     // endregion
 
     // region Constructors
-    // =============================================================================================
+    // ============================================================================================================
 
     @SuppressWarnings("unused")
     public BlitzCarouselScalingView(Context context) {
@@ -43,7 +43,7 @@ public class BlitzCarouselScalingView extends LinearLayout {
     // endregion
 
     // region Protected Methods
-    // =============================================================================================
+    // ============================================================================================================
 
     /**
      * Scales the canvas before drawing it.
@@ -65,7 +65,7 @@ public class BlitzCarouselScalingView extends LinearLayout {
     // endregion
 
     // region Public Methods
-    // =============================================================================================
+    // ============================================================================================================
 
     /**
      * Set the scale.

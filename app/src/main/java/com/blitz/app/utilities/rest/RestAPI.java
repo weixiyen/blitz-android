@@ -29,7 +29,7 @@ import retrofit.http.Query;
 public interface RestAPI {
 
     // region Public REST API Methods
-    // =============================================================================================
+    // ============================================================================================================
 
     @GET("/access_queue/{device_id}")
     void access_queue_get(@Path("device_id") String deviceId,

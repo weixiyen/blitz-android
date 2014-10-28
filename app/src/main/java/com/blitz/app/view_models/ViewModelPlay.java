@@ -23,7 +23,7 @@ import com.google.gson.JsonObject;
 public class ViewModelPlay extends ViewModel {
 
     // region Member Variables
-    // =============================================================================================
+    // ============================================================================================================
 
     // Queue timer variables.
     private int      mSecondsAtSuspension;
@@ -50,7 +50,7 @@ public class ViewModelPlay extends ViewModel {
     // endregion
 
     // region Constructor
-    // =============================================================================================
+    // ============================================================================================================
 
     /**
      * Creating a new view model requires an activity and a callback.
@@ -65,7 +65,7 @@ public class ViewModelPlay extends ViewModel {
     // endregion
 
     // region Overwritten Methods
-    // =============================================================================================
+    // ============================================================================================================
 
     /**
      * Restore model variables and re-initialize
@@ -138,7 +138,7 @@ public class ViewModelPlay extends ViewModel {
     // endregion
 
     // region Public Methods
-    // =============================================================================================
+    // ============================================================================================================
 
     /**
      * Toggle the draft queue state (either join
@@ -202,7 +202,7 @@ public class ViewModelPlay extends ViewModel {
     // endregion
 
     // region Private Methods
-    // =============================================================================================
+    // ============================================================================================================
 
     /**
      * Attempt to update the user helmet.
@@ -388,7 +388,7 @@ public class ViewModelPlay extends ViewModel {
     // endregion
 
     // region Callbacks Interface
-    // =============================================================================================
+    // ============================================================================================================
 
     public interface Callbacks extends ViewModel.Callbacks {
 

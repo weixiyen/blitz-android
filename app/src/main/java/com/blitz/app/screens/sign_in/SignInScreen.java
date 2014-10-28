@@ -17,7 +17,7 @@ import butterknife.OnClick;
 public class SignInScreen extends BaseActivity implements ViewModelSignIn.Callbacks {
 
     // region Member Variables
-    // =============================================================================================
+    // ============================================================================================================
 
     // Mapped views.
     @InjectView(R.id.sign_in_screen_username_or_email) EditText mUsername;
@@ -28,7 +28,7 @@ public class SignInScreen extends BaseActivity implements ViewModelSignIn.Callba
     // endregion
 
     // region Overwritten Methods
-    // =============================================================================================
+    // ============================================================================================================
 
     /**
      * Slide up style transition.
@@ -62,7 +62,7 @@ public class SignInScreen extends BaseActivity implements ViewModelSignIn.Callba
     // endregion
 
     // region Click Methods
-    // =============================================================================================
+    // ============================================================================================================
 
     /**
      * Sign the user in when they click the button.  Error

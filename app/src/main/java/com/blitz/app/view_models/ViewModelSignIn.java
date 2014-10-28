@@ -13,7 +13,7 @@ import com.blitz.app.utilities.rest.RestAPICallback;
 public class ViewModelSignIn extends ViewModel {
 
     // region Constructor
-    // =============================================================================================
+    // ============================================================================================================
 
     /**
      * Creating a new view model requires an activity and a callback.
@@ -31,7 +31,7 @@ public class ViewModelSignIn extends ViewModel {
     // endregion
 
     // region Overwritten Methods
-    // =============================================================================================
+    // ============================================================================================================
 
     /**
      * Initialize the view model.
@@ -44,7 +44,7 @@ public class ViewModelSignIn extends ViewModel {
     // endregion
 
     // region Public Methods
-    // =============================================================================================
+    // ============================================================================================================
 
     /**
      * Sign in the user.
@@ -74,7 +74,7 @@ public class ViewModelSignIn extends ViewModel {
     // endregion
 
     // region Private Methods
-    // =============================================================================================
+    // ============================================================================================================
 
     /**
      * Emit existing email or username saved in app data
@@ -105,7 +105,7 @@ public class ViewModelSignIn extends ViewModel {
     // endregion
 
     // region Callbacks Interface
-    // =============================================================================================
+    // ============================================================================================================
 
     public interface Callbacks extends ViewModel.Callbacks {
 

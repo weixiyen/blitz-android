@@ -11,7 +11,7 @@ import com.google.gson.JsonObject;
 public class RestModelAccessQueue extends RestModel {
 
     // region Member Variables
-    // =============================================================================================
+    // ============================================================================================================
 
     private String mDeviceId;
 
@@ -23,7 +23,7 @@ public class RestModelAccessQueue extends RestModel {
     // endregion
 
     // region Public Methods
-    // =============================================================================================
+    // ============================================================================================================
 
     /**
      * Set the device id.

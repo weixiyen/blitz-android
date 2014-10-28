@@ -20,7 +20,7 @@ import java.util.ArrayList;
 public class AnimHelperSprings extends AnimHelper {
 
     // region Member Variables
-    // =============================================================================================
+    // ============================================================================================================
 
     // Parent activity.
     private Activity mActivity;
@@ -48,7 +48,7 @@ public class AnimHelperSprings extends AnimHelper {
     // endregion
 
     // region Constructors
-    // =============================================================================================
+    // ============================================================================================================
 
     /**
      * Unused private constructor.
@@ -80,7 +80,7 @@ public class AnimHelperSprings extends AnimHelper {
     // endregion
 
     // region Public Methods
-    // =============================================================================================
+    // ============================================================================================================
 
     /**
      * Create a new instance of animation helper from
@@ -278,7 +278,7 @@ public class AnimHelperSprings extends AnimHelper {
     // endregion
 
     // region Private Methods
-    // =============================================================================================
+    // ============================================================================================================
 
     /**
      * Configure this helper.

@@ -16,7 +16,7 @@ import com.blitz.app.utilities.image.BlitzImageView;
 public class BlitzCarouselAdapterFragment extends Fragment {
 
     // region Member Variables
-    // =============================================================================================
+    // ============================================================================================================
 
     // Bundle parameters
     public static final String PARAM_CAROUSEL_ITEM_ID  = "PARAM_CAROUSEL_ITEM_ID";
@@ -26,7 +26,7 @@ public class BlitzCarouselAdapterFragment extends Fragment {
     // endregion
 
     // region Public Methods
-    // =============================================================================================
+    // ============================================================================================================
 
     /**
      * Create a new instance of the fragment.
@@ -55,7 +55,7 @@ public class BlitzCarouselAdapterFragment extends Fragment {
     // endregion
 
     // region Overwritten Methods
-    // =============================================================================================
+    // ============================================================================================================
 
     /**
      * When view is created, inflate associated view

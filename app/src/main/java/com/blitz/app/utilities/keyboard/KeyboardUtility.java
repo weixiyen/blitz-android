@@ -27,7 +27,7 @@ import java.util.HashMap;
 public class KeyboardUtility {
 
     // region Member Variables
-    // =============================================================================================
+    // ============================================================================================================
 
     // Minimum height of the keyboard.
     private static final int MINIMUM_KEYBOARD_HEIGHT = 300;
@@ -64,7 +64,7 @@ public class KeyboardUtility {
     // endregion
 
     // region Public Methods
-    // =============================================================================================
+    // ============================================================================================================
 
     /**
      * Initialize the keyboard utility.
@@ -208,7 +208,7 @@ public class KeyboardUtility {
     // endregion
 
     // region Show Keyboard
-    // =============================================================================================
+    // ============================================================================================================
 
     @SuppressWarnings("unused")
     static public void showKeyboard(Activity activity) {
@@ -251,7 +251,7 @@ public class KeyboardUtility {
     // endregion
 
     // region Hide Keyboard
-    // =============================================================================================
+    // ============================================================================================================
 
     @SuppressWarnings("unused")
     static public void hideKeyboard(Activity activity) {
@@ -300,7 +300,7 @@ public class KeyboardUtility {
     // endregion
 
     // region Private Methods
-    // =============================================================================================
+    // ============================================================================================================
 
     /**
      * Run callbacks and clear list.
@@ -409,7 +409,7 @@ public class KeyboardUtility {
     // endregion
 
     // region Interface
-    // =============================================================================================
+    // ============================================================================================================
 
     /**
      * Expose an interface for keyboard events.

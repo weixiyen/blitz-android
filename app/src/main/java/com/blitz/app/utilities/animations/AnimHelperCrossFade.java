@@ -19,7 +19,7 @@ import java.util.Map;
 public class AnimHelperCrossFade extends AnimHelper {
 
     // region Public Methods
-    // =============================================================================================
+    // ============================================================================================================
 
     /**
      * Cross fade background resource.
@@ -102,7 +102,7 @@ public class AnimHelperCrossFade extends AnimHelper {
     // endregion
 
     // region Private Methods
-    // =============================================================================================
+    // ============================================================================================================
 
     /**
      * Creates and sets a cross fade transition drawable

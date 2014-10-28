@@ -18,7 +18,7 @@ import java.util.Map;
 public class BlitzImageView extends ImageView {
 
     // region Member Variables
-    // =============================================================================================
+    // ============================================================================================================
 
     // Should cache the image url.
     private boolean mCacheImageUrl;
@@ -29,7 +29,7 @@ public class BlitzImageView extends ImageView {
     // endregion
 
     // region Constructors
-    // =============================================================================================
+    // ============================================================================================================
 
     @SuppressWarnings("unused")
     public BlitzImageView(Context context) {
@@ -71,7 +71,7 @@ public class BlitzImageView extends ImageView {
     // endregion
 
     // region Public Methods
-    // =============================================================================================
+    // ============================================================================================================
 
     /**
      * Add another way to set an image - specifically
@@ -151,7 +151,7 @@ public class BlitzImageView extends ImageView {
     // endregion
 
     // region Private Methods
-    // =============================================================================================
+    // ============================================================================================================
 
     /**
      * Fetch a cached image url.

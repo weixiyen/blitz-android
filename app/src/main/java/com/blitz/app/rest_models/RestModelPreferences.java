@@ -13,7 +13,7 @@ import com.google.gson.annotations.SerializedName;
 public class RestModelPreferences extends RestModel {
 
     // region Member Variables
-    // =============================================================================================
+    // ============================================================================================================
 
     // Current year.
     @SerializedName("current_year")
@@ -34,7 +34,7 @@ public class RestModelPreferences extends RestModel {
     // endregion
 
     // region REST Methods
-    // =============================================================================================
+    // ============================================================================================================
 
     /**
      * Fetch the current users preferences.
@@ -69,7 +69,7 @@ public class RestModelPreferences extends RestModel {
     // endregion
 
     // region Public Methods
-    // =============================================================================================
+    // ============================================================================================================
 
     /**
      * Fetch active queue (time based).

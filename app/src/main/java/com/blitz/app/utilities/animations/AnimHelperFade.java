@@ -12,7 +12,7 @@ import android.view.animation.AccelerateDecelerateInterpolator;
 public class AnimHelperFade extends AnimHelper {
 
     // region Public Methods
-    // =============================================================================================
+    // ============================================================================================================
 
     /**
      * By default do not force transition.

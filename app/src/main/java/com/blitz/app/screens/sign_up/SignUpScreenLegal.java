@@ -18,7 +18,7 @@ import butterknife.OnClick;
 public class SignUpScreenLegal extends BaseActivity {
 
     // region Member Variables
-    // =============================================================================================
+    // ============================================================================================================
 
     @InjectView(R.id.sign_up_terms_web) BaseWebView mWebView;
     @InjectView(R.id.sign_up_legal_progress) ProgressBar mProgressBar;
@@ -26,7 +26,7 @@ public class SignUpScreenLegal extends BaseActivity {
     // endregion
 
     // region Overwritten Methods
-    // =============================================================================================
+    // ============================================================================================================
 
     /**
      * Setup the web view.
@@ -45,7 +45,7 @@ public class SignUpScreenLegal extends BaseActivity {
     // endregion
 
     // region Click Methods
-    // =============================================================================================
+    // ============================================================================================================
 
     /**
      * User accepts legal agreement.

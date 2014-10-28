@@ -10,14 +10,14 @@ import com.blitz.app.utilities.gcm.GcmRegistrationHelper;
 public class ViewModelAccessQueue extends ViewModel {
 
     // region Member Variables
-    // =============================================================================================
+    // ============================================================================================================
 
     private RestModelAccessQueue mModelAccessQueue;
 
     // endregion
 
     // region Constructor
-    // =============================================================================================
+    // ============================================================================================================
 
     /**
      * Creating a new view model requires an activity and a callback.
@@ -32,7 +32,7 @@ public class ViewModelAccessQueue extends ViewModel {
     // endregion
 
     // region Overwritten Methods
-    // =============================================================================================
+    // ============================================================================================================
 
     /**
      * Initialize and sync the access queue numbers.
@@ -66,7 +66,7 @@ public class ViewModelAccessQueue extends ViewModel {
     // endregion
 
     // region Callbacks Interface
-    // =============================================================================================
+    // ============================================================================================================
 
     public interface Callbacks extends ViewModel.Callbacks {
 

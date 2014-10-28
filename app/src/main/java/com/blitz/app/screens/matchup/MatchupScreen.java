@@ -27,7 +27,7 @@ import butterknife.InjectView;
 public class MatchupScreen extends BaseActivity implements ViewModelMatchup.Callbacks {
 
     // region Member Variables
-    // =============================================================================================
+    // ============================================================================================================
 
     // Did we enter this screen directly from finishing a draft.
     public static final String PARAM_IS_FROM_DRAFT = "PARAM_IS_FROM_DRAFT";
@@ -49,7 +49,7 @@ public class MatchupScreen extends BaseActivity implements ViewModelMatchup.Call
     // endregion
 
     // region Overwritten Methods
-    // =============================================================================================
+    // ============================================================================================================
 
     /**
      * Setup the recent matches UI.
@@ -108,7 +108,7 @@ public class MatchupScreen extends BaseActivity implements ViewModelMatchup.Call
     // endregion
 
     // region Private Methods
-    // =============================================================================================
+    // ============================================================================================================
 
     /**
      * Parse parameters into this screen.
@@ -156,7 +156,7 @@ public class MatchupScreen extends BaseActivity implements ViewModelMatchup.Call
     // endregion
 
     // region Public Methods
-    // =============================================================================================
+    // ============================================================================================================
 
     @Override
     public void onStuff(List<RestModelPlayer> p1roster, List<RestModelPlayer> p2Roster,

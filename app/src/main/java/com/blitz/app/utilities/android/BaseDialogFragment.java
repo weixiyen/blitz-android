@@ -21,7 +21,7 @@ import butterknife.ButterKnife;
 public abstract class BaseDialogFragment extends DialogFragment {
 
     // region Overwritten Methods
-    // =============================================================================================
+    // ============================================================================================================
 
     /**
      * When view is created inflate layout and setup the window.
@@ -96,7 +96,7 @@ public abstract class BaseDialogFragment extends DialogFragment {
     // endregion
 
     // region Abstract Methods
-    // =============================================================================================
+    // ============================================================================================================
 
     protected abstract void onViewCreated(View view);
 

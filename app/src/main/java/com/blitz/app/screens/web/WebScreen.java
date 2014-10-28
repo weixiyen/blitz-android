@@ -17,7 +17,7 @@ import butterknife.InjectView;
 public class WebScreen extends BaseActivity {
 
     // region Member Variables
-    // =============================================================================================
+    // ============================================================================================================
 
     // Url for this view set based on this.
     public static final String PARAM_URL = "PARAM_URL";
@@ -35,7 +35,7 @@ public class WebScreen extends BaseActivity {
     // endregion
 
     // region Overwritten Methods
-    // =============================================================================================
+    // ============================================================================================================
 
     /**
      * Setup creation.
@@ -52,7 +52,7 @@ public class WebScreen extends BaseActivity {
     // endregion
 
     // region Private Methods
-    // =============================================================================================
+    // ============================================================================================================
 
     /**
      * Parse various intent parameters

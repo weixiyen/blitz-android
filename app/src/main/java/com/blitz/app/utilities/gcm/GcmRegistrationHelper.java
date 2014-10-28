@@ -23,7 +23,7 @@ import java.io.IOException;
 public class GcmRegistrationHelper {
 
     // region Member Variables
-    // =============================================================================================
+    // ============================================================================================================
 
     // Request tag for asking user to obtain google play services.
     private static final int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;
@@ -34,7 +34,7 @@ public class GcmRegistrationHelper {
     // endregion
 
     // region Public Methods
-    // =============================================================================================
+    // ============================================================================================================
 
     /**
      * Attempt to register device for GCM messages. Will
@@ -104,7 +104,7 @@ public class GcmRegistrationHelper {
     // endregion
 
     // region Private Methods
-    // =============================================================================================
+    // ============================================================================================================
 
     /**
      * Registers the application with GCM servers asynchronously.

@@ -20,7 +20,7 @@ import retrofit.converter.GsonConverter;
 public class RestAPIClientBase {
 
     // region Member Variables
-    // =============================================================================================
+    // ============================================================================================================
 
     // Endpoint URL for the REST API.
     private static final String API_URL = AppConfig.getApiUrl();
@@ -31,7 +31,7 @@ public class RestAPIClientBase {
     // endregion
 
     // region Protected Methods
-    // =============================================================================================
+    // ============================================================================================================
 
     /**
      * Fetch rest adapter for subsequent calls.
@@ -79,7 +79,7 @@ public class RestAPIClientBase {
     // endregion
 
     // region Private Methods
-    // =============================================================================================
+    // ============================================================================================================
 
     /**
      * Fetch an http client that ignores, SSL

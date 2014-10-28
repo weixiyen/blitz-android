@@ -18,7 +18,7 @@ import butterknife.InjectView;
 public class DialogInfo extends BaseDialog {
 
     // region Member Variables
-    // =============================================================================================
+    // ============================================================================================================
 
     @InjectView(R.id.dialog_info_text)       TextView mInfoText;
     @InjectView(R.id.dialog_info_left_button)  Button mInfoLButton;
@@ -30,7 +30,7 @@ public class DialogInfo extends BaseDialog {
     // endregion
 
     // region Constructor
-    // =============================================================================================
+    // ============================================================================================================
 
     public DialogInfo(Activity activity) {
         super(activity);
@@ -57,7 +57,7 @@ public class DialogInfo extends BaseDialog {
     // endregion
 
     // region Public Methods
-    // =============================================================================================
+    // ============================================================================================================
 
     /**
      * Set info text of dialog.
@@ -124,7 +124,7 @@ public class DialogInfo extends BaseDialog {
     // endregion
 
     // region Private Methods
-    // =============================================================================================
+    // ============================================================================================================
 
     /**
      * Based on current visibility status, set buttons to either

@@ -33,7 +33,7 @@ import java.util.Map;
 public class ViewModelDraft extends ViewModel {
 
     // region Member Variables
-    // =============================================================================================
+    // ============================================================================================================
 
     // Suspended flag.
     private static final String STATE_DRAFT_SUSPENDED = "stateDraftSuspended";
@@ -79,7 +79,7 @@ public class ViewModelDraft extends ViewModel {
     // endregion
 
     // region Constructor
-    // =============================================================================================
+    // ============================================================================================================
 
     /**
      * Creating a new view model requires an activity and a callback.
@@ -100,7 +100,7 @@ public class ViewModelDraft extends ViewModel {
     // endregion
 
     // region Overwritten Methods
-    // =============================================================================================
+    // ============================================================================================================
 
     /**
      * Start the view model.
@@ -208,7 +208,7 @@ public class ViewModelDraft extends ViewModel {
     // endregion
 
     // region Public Methods
-    // =============================================================================================
+    // ============================================================================================================
 
     /**
      * Pick a player.
@@ -246,7 +246,7 @@ public class ViewModelDraft extends ViewModel {
     // endregion
 
     // region Private Methods
-    // =============================================================================================
+    // ============================================================================================================
 
     /**
      * If the draft gets suspended and we return,
@@ -518,7 +518,7 @@ public class ViewModelDraft extends ViewModel {
     // endregion
 
     // region Resolve Methods
-    // =============================================================================================
+    // ============================================================================================================
 
     /**
      * Resolve the state of the draft.
@@ -716,7 +716,7 @@ public class ViewModelDraft extends ViewModel {
     // endregion
 
     // region Update Methods
-    // =============================================================================================
+    // ============================================================================================================
 
     /**
      * Update the state variable if it changes.
@@ -932,7 +932,7 @@ public class ViewModelDraft extends ViewModel {
     // endregion
 
     // region Callbacks Interface
-    // =============================================================================================
+    // ============================================================================================================
 
     /**
      * Drafting related callbacks.

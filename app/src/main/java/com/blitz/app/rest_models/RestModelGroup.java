@@ -13,7 +13,7 @@ import java.util.Map;
 public class RestModelGroup extends RestModel {
 
     // region Member Variables
-    // =============================================================================================
+    // ============================================================================================================
 
     @SuppressWarnings("unused") @SerializedName("id")             private String mId;
     @SuppressWarnings("unused") @SerializedName("chat_id")        private String mChatId;
@@ -33,7 +33,7 @@ public class RestModelGroup extends RestModel {
     // endregion
 
     // region REST Methods
-    // =============================================================================================
+    // ============================================================================================================
 
     @SuppressWarnings("unused")
     public static void createGroupWithName(Activity activity, String groupName,
