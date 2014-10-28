@@ -2,6 +2,7 @@ package com.blitz.app.utilities.rest;
 
 import com.blitz.app.rest_models.RestModelDevice;
 import com.blitz.app.rest_models.RestModelDraft;
+import com.blitz.app.rest_models.RestModelGroup;
 import com.blitz.app.rest_models.RestModelItem;
 import com.blitz.app.rest_models.RestModelPlayer;
 import com.blitz.app.rest_models.RestModelPreferences;
@@ -85,6 +86,28 @@ public interface RestAPI {
     @PATCH("/draft/{draft_id}")
     void draft_patch(@Path("draft_id") String draftId, @Body JsonObject body,
         Callback<RestAPIResult<RestModelDraft>> callback);
+
+    @GET("/group/{group_id}")
+    void group_get(@Path("group_id") String groupId,
+        Callback<RestAPIResult<RestModelGroup>> callback);
+
+    @PATCH("/group/{group_id}")
+    void group_patch(@Path("group_id") String groupId, @Body JsonObject body,
+        Callback<RestAPIResult<RestModelGroup>> callback);
+
+    @GET("/groups")
+    void groups_get(@Query("index") String index,             // Required
+                    @Query("keys[]") List<String> keys,       // Optional
+                    @Query("pluck[]") List<String> pluck,     // Optional
+                    @Query("between[]") List<String> between, // Optional
+                    @Query("filter") String filter,           // Optional
+                    @Query("order_by") String orderBy,        // Optional
+                    @Query("limit") Integer limit,            // Optional
+        Callback<RestAPIResult<RestModelGroup>> callback);
+
+    @POST("/groups")
+    void groups_post(@Body JsonObject body,
+        Callback<RestAPIResult<RestModelGroup>> callback);
 
     @GET("/nfl_games?index=year_week_index")
     void games_get(@Query("key") String key,
