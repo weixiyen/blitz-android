@@ -22,23 +22,24 @@
         android:orientation="horizontal"
         android:paddingTop="@dimen/navbar_height_padding">
 
-        <TextView
-            android:id="@+id/recent_header"
+        <com.blitz.app.utilities.textview.BlitzTextView
+            android:id="@+id/leagues_header"
             fontPath="@string/app_font_helvetica_condensed_bold"
             android:layout_width="wrap_content"
             android:layout_height="60dp"
             android:layout_centerHorizontal="true"
             android:gravity="center"
-            android:text="@string/create_or_join_a_league"
+            android:text="@string/lorum_ipsum_tiny"
             android:textColor="@color/active_blue"
-            android:textSize="18sp" />
+            android:textSize="18sp"
+            app:clearInitialContent="true"/>
 
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="60dp"
-            android:layout_alignTop="@+id/recent_header"
+            android:layout_alignTop="@+id/leagues_header"
             android:layout_marginLeft="8dp"
-            android:layout_toRightOf="@+id/recent_header"
+            android:layout_toRightOf="@+id/leagues_header"
             android:contentDescription="@string/empty_string"
             android:paddingTop="4dp"
             android:src="@drawable/asset_bg_dropdown_caret"
