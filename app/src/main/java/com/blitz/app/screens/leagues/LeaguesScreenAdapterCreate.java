@@ -7,6 +7,9 @@ import android.widget.BaseAdapter;
 
 import com.blitz.app.R;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by mrkcsc on 10/26/14. Copyright 2014 Blitz Studios
  */
@@ -15,18 +18,35 @@ public class LeaguesScreenAdapterCreate extends BaseAdapter {
     // region Member Variables
     // ============================================================================================================
 
-    public static final int CREATE_JOIN_HEADER       = 0;
-    public static final int RECRUITING_LEAGUE_HEADER = 1;
-    public static final int RECRUITING_LEAGUE        = 2;
+    public static final int CREATE_JOIN_HEADER        = 0;
+    public static final int RECRUITING_LEAGUE_HEADER  = 1;
+    public static final int RECRUITING_LEAGUE         = 2;
+    public static final int RECRUITING_LEAGUE_LOADING = 3;
+
+    // List of recruiting leagues.
+    private List<String> recruitingLeagueIds = new ArrayList<String>();
 
     // endregion
 
+    // region Overwritten Methods
+    // ============================================================================================================
+
+    /**
+     * Fetch total number of items.
+     *
+     * @return Total items.
+     */
     @Override
     public int getCount() {
 
-        return 10;
+        // Top two sections are static, rest is either a loading view
+        // or the actual leagues that are recruiting.
+        return recruitingLeagueIds.size() > 0 ? 2 + recruitingLeagueIds.size() : 3;
     }
 
+    /**
+     * No need for this method.
+     */
     @Override
     public Object getItem(int position) {
 
@@ -70,6 +90,11 @@ public class LeaguesScreenAdapterCreate extends BaseAdapter {
                 // Configure item of header for recruiting leagues.
                 return configureRecruitingLeagueHeader(view, parent);
 
+            case RECRUITING_LEAGUE_LOADING:
+
+                // Configure the loading view item.
+                return configureRecruitingLeagueLoading(view, parent);
+
             case RECRUITING_LEAGUE:
 
                 // Configure item that represents a recruiting league.
@@ -98,6 +123,12 @@ public class LeaguesScreenAdapterCreate extends BaseAdapter {
             case 1:
                 return RECRUITING_LEAGUE_HEADER;
 
+            case 2:
+
+                // Show loading section if no leagues.
+                return recruitingLeagueIds.size() > 0
+                        ? RECRUITING_LEAGUE : RECRUITING_LEAGUE_LOADING;
+
             default:
                 return RECRUITING_LEAGUE;
         }
@@ -111,8 +142,10 @@ public class LeaguesScreenAdapterCreate extends BaseAdapter {
     @Override
     public int getViewTypeCount() {
 
-        return 3;
+        return 4;
     }
+
+    // endregion
 
     // region Private Methods
     // ============================================================================================================
@@ -149,6 +182,24 @@ public class LeaguesScreenAdapterCreate extends BaseAdapter {
         if (convertView == null) {
             convertView = LayoutInflater.from(parent.getContext())
                     .inflate(R.layout.leagues_screen_recruiting, parent, false);
+        }
+
+        return convertView;
+    }
+
+    /**
+     * Configure item for loading view.
+     *
+     * @param convertView Recycled view.
+     * @param parent Parent.
+     *
+     * @return Configured loading view.
+     */
+    private View configureRecruitingLeagueLoading(View convertView, ViewGroup parent) {
+
+        if (convertView == null) {
+            convertView = LayoutInflater.from(parent.getContext())
+                    .inflate(R.layout.leagues_screen_loading, parent, false);
         }
 
         return convertView;

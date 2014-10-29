@@ -18,6 +18,7 @@ public class ViewModelLeagues extends ViewModel {
 
     // Do not show more than six leagues.
     private static final int MAX_LEAGUES_TO_SHOW = 6;
+    private static final int MAX_RECRUITING_LEAGUES_TO_SHOW = 100;
 
     private List<RestModelGroup> mUserLeagues;
 
@@ -95,7 +96,16 @@ public class ViewModelLeagues extends ViewModel {
                     .getString(R.string.create_or_join_a_league));
         }
 
-        // TODO: Implement the rest.
+        // Fetch groups that are recruiting, no blocked UI.
+        RestModelGroup.getGroupsRecruitingWithLimit(null, MAX_RECRUITING_LEAGUES_TO_SHOW,
+                new RestModelCallbacks<RestModelGroup>() {
+
+            @Override
+            public void onSuccess(List<RestModelGroup> object) {
+
+                // TODO: Implement the rest.
+            }
+        });
     }
 
     // endregion

@@ -25,6 +25,10 @@ public class LeaguesScreen extends BaseFragment implements ViewModelLeagues.Call
     // Associated view model.
     private ViewModelLeagues mViewModel;
 
+    // Initialize the adapters this screen will use.
+    private LeaguesScreenAdapterCreate mAdapterCreate = new LeaguesScreenAdapterCreate();
+    private LeaguesScreenAdapterView mAdapterView = new LeaguesScreenAdapterView();
+
     // endregion
 
     // region Overwritten Methods
@@ -43,7 +47,7 @@ public class LeaguesScreen extends BaseFragment implements ViewModelLeagues.Call
         super.onCreateView(savedInstanceState);
 
         // TODO: Use real data.
-        mLeaguesScreenList.setAdapter(new LeaguesScreenAdapterCreate());
+        mLeaguesScreenList.setAdapter(mAdapterCreate);
     }
 
     /**
