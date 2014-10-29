@@ -2,6 +2,7 @@ package com.blitz.app.screens.leagues;
 
 import android.os.Bundle;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.blitz.app.R;
 import com.blitz.app.utilities.android.BaseFragment;
@@ -16,9 +17,10 @@ import butterknife.InjectView;
 public class LeaguesScreen extends BaseFragment implements ViewModelLeagues.Callbacks {
 
     // region Member Variables
-    // =============================================================================================
+    // ============================================================================================================
 
-    @InjectView(R.id.leagues_screen_list) ListView leaguesScreenList;
+    @InjectView(R.id.leagues_header) TextView mLeaguesHeader;
+    @InjectView(R.id.leagues_screen_list) ListView mLeaguesScreenList;
 
     // Associated view model.
     private ViewModelLeagues mViewModel;
@@ -26,7 +28,7 @@ public class LeaguesScreen extends BaseFragment implements ViewModelLeagues.Call
     // endregion
 
     // region Overwritten Methods
-    // =============================================================================================
+    // ============================================================================================================
 
     /**
      * A simpler version of on create view.  Can be used
@@ -41,7 +43,7 @@ public class LeaguesScreen extends BaseFragment implements ViewModelLeagues.Call
         super.onCreateView(savedInstanceState);
 
         // TODO: Use real data.
-        leaguesScreenList.setAdapter(new LeaguesScreenAdapterCreate());
+        mLeaguesScreenList.setAdapter(new LeaguesScreenAdapterCreate());
     }
 
     /**
@@ -58,6 +60,25 @@ public class LeaguesScreen extends BaseFragment implements ViewModelLeagues.Call
         }
 
         return mViewModel;
+    }
+
+    // endregion
+
+    // region View Model Callbacks
+    // ============================================================================================================
+
+    /**
+     * Set the league name, or set the default create/join
+     * text if no league name is provided.
+     *
+     * @param leagueName League name.
+     */
+    @Override
+    public void onLeagueName(String leagueName) {
+
+        if (mLeaguesHeader != null) {
+            mLeaguesHeader.setText(leagueName);
+        }
     }
 
     // endregion
