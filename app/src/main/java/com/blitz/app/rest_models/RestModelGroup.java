@@ -144,7 +144,7 @@ public class RestModelGroup extends RestModel {
                                                     final RestModelCallbacks<RestModelGroup> callback) {
 
         Date dateNow = DateUtils.getDateInGMT();
-        Date dateNowOneWeekEarlier =  DateUtils.getDateWithOffsetInMilliseconds(dateNow, 604800000L);
+        Date dateNowOneWeekEarlier =  DateUtils.getDateWithOffsetInMilliseconds(dateNow, 604800000L * -2);
 
         String dateNowJson = DateUtils.getDateAsString(dateNow);
         String dateNowOneWeekEarlierJson = DateUtils.getDateAsString(dateNowOneWeekEarlier);

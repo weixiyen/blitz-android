@@ -9,6 +9,8 @@ import com.blitz.app.utilities.android.BaseFragment;
 import com.blitz.app.view_models.ViewModel;
 import com.blitz.app.view_models.ViewModelLeagues;
 
+import java.util.List;
+
 import butterknife.InjectView;
 
 /**
@@ -82,6 +84,29 @@ public class LeaguesScreen extends BaseFragment implements ViewModelLeagues.Call
 
         if (mLeaguesHeader != null) {
             mLeaguesHeader.setText(leagueName);
+        }
+    }
+
+    /**
+     * On recruiting leagues data received.
+     *
+     * @param leagueIds League ids.
+     * @param leagueNames League names.
+     * @param leagueRatings League ratings.
+     * @param leagueMemberCounts League member counts.
+     */
+    @Override
+    public void onRecruitingLeagues(List<String> leagueIds,
+                                    List<String> leagueNames,
+                                    List<Integer> leagueRatings,
+                                    List<Integer> leagueMemberCounts) {
+
+        if (mLeaguesScreenList != null) {
+            mLeaguesScreenList.setAdapter(mAdapterCreate);
+
+            // Set recruiting leagues.
+            mAdapterCreate.setRecruitingLeagues
+                    (leagueIds, leagueNames, leagueRatings, leagueMemberCounts);
         }
     }
 

@@ -6,6 +6,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 
 import com.blitz.app.R;
+import com.blitz.app.utilities.logging.LogHelper;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,7 +25,10 @@ public class LeaguesScreenAdapterCreate extends BaseAdapter {
     public static final int RECRUITING_LEAGUE_LOADING = 3;
 
     // List of recruiting leagues.
-    private List<String> recruitingLeagueIds = new ArrayList<String>();
+    private List<String>  mRecruitingLeagueIds = new ArrayList<String>();
+    private List<String>  mRecruitingleagueNames = new ArrayList<String>();
+    private List<Integer> mRecruitingleagueRatings = new ArrayList<Integer>();
+    private List<Integer> mRecruitingleagueMemberCounts = new ArrayList<Integer>();
 
     // endregion
 
@@ -39,9 +43,11 @@ public class LeaguesScreenAdapterCreate extends BaseAdapter {
     @Override
     public int getCount() {
 
+        LogHelper.log("Size: " + mRecruitingLeagueIds.size());
+
         // Top two sections are static, rest is either a loading view
         // or the actual leagues that are recruiting.
-        return recruitingLeagueIds.size() > 0 ? 2 + recruitingLeagueIds.size() : 3;
+        return mRecruitingLeagueIds.size() > 0 ? 2 + mRecruitingLeagueIds.size() : 3;
     }
 
     /**
@@ -126,7 +132,7 @@ public class LeaguesScreenAdapterCreate extends BaseAdapter {
             case 2:
 
                 // Show loading section if no leagues.
-                return recruitingLeagueIds.size() > 0
+                return mRecruitingLeagueIds.size() > 0
                         ? RECRUITING_LEAGUE : RECRUITING_LEAGUE_LOADING;
 
             default:
@@ -143,6 +149,34 @@ public class LeaguesScreenAdapterCreate extends BaseAdapter {
     public int getViewTypeCount() {
 
         return 4;
+    }
+
+    // endregion
+
+    // region Public Methods
+    // ============================================================================================================
+
+    /**
+     * Set the recruiting leagues.
+     *
+     * @param leagueIds League ids.
+     * @param leagueNames League names.
+     * @param leagueRatings League ratings.
+     * @param leagueMemberCounts League member counts.
+     */
+    @SuppressWarnings("unused")
+    public void setRecruitingLeagues(List<String> leagueIds,
+                                     List<String> leagueNames,
+                                     List<Integer> leagueRatings,
+                                     List<Integer> leagueMemberCounts) {
+
+        mRecruitingLeagueIds = leagueIds;
+        mRecruitingleagueNames = leagueNames;
+        mRecruitingleagueRatings = leagueRatings;
+        mRecruitingleagueMemberCounts = leagueMemberCounts;
+
+        // Reload table.
+        notifyDataSetChanged();
     }
 
     // endregion

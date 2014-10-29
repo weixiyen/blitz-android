@@ -6,6 +6,7 @@ import com.blitz.app.rest_models.RestModelGroup;
 import com.blitz.app.utilities.android.BaseActivity;
 import com.blitz.app.utilities.authentication.AuthHelper;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -21,6 +22,8 @@ public class ViewModelLeagues extends ViewModel {
     private static final int MAX_RECRUITING_LEAGUES_TO_SHOW = 100;
 
     private List<RestModelGroup> mUserLeagues;
+
+    private Integer mSelectedUserLeague;
 
     // endregion
 
@@ -103,7 +106,36 @@ public class ViewModelLeagues extends ViewModel {
             @Override
             public void onSuccess(List<RestModelGroup> object) {
 
-                // TODO: Implement the rest.
+                if (mSelectedUserLeague != null) {
+
+                    return;
+                }
+
+                // Fetch the current user id.
+                String userId = AuthHelper.instance().getUserId();
+
+                List<String>  leagueIds          = new ArrayList<String>();
+                List<String>  leagueNames        = new ArrayList<String>();
+                List<Integer> leagueRatings      = new ArrayList<Integer>();
+                List<Integer> leagueMemberCounts = new ArrayList<Integer>();
+
+                for (RestModelGroup league : object) {
+
+                    // Only show leagues user is not already joined.
+                    if (!league.getMembers().contains(userId)) {
+
+                        leagueIds.add(league.getId());
+                        leagueNames.add(league.getName());
+                        leagueRatings.add(league.getRating());
+                        leagueMemberCounts.add(league.getMembers().size());
+                    }
+                }
+
+                // Emit recruiting leagues info.
+                if (getCallbacks(Callbacks.class) != null) {
+                    getCallbacks(Callbacks.class).onRecruitingLeagues
+                            (leagueIds, leagueNames, leagueRatings, leagueMemberCounts);
+                }
             }
         });
     }
@@ -116,6 +148,10 @@ public class ViewModelLeagues extends ViewModel {
     public interface Callbacks extends ViewModel.Callbacks {
 
         public void onLeagueName(String leagueName);
+        public void onRecruitingLeagues(List<String> leagueIds,
+                                        List<String> leagueNames,
+                                        List<Integer> leagueRatings,
+                                        List<Integer> leagueMemberCounts);
     }
 
     // endregion
