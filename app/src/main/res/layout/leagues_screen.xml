@@ -41,7 +41,8 @@
             android:layout_toRightOf="@+id/recent_header"
             android:contentDescription="@string/empty_string"
             android:paddingTop="4dp"
-            android:src="@drawable/asset_bg_dropdown_caret" />
+            android:src="@drawable/asset_bg_dropdown_caret"
+            android:visibility="gone" />
     </RelativeLayout>
 
     <ListView
