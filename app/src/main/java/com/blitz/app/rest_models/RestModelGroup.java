@@ -33,9 +33,8 @@ public class RestModelGroup extends RestModel {
 
     @SuppressWarnings("unused") @SerializedName("recruiting") private Boolean mRecruiting;
 
-    @SuppressWarnings("unused") @SerializedName("members") private List<RestModelUser> mMembers;
+    @SuppressWarnings("unused") @SerializedName("members") private List<String> mMembers;
 
-    @SuppressWarnings("unused") @SerializedName("user_info") private Map<String, RestModelUser> mUserInfo;
     @SuppressWarnings("unused") @SerializedName("role_map")  private Map<String, String> mRoleMap;
 
     // endregion
@@ -301,7 +300,7 @@ public class RestModelGroup extends RestModel {
     // endregion
 
     // region Public Methods
-    // =============================================================================================
+    // ============================================================================================================
 
     /**
      * Is the current user an officer.
@@ -317,7 +316,7 @@ public class RestModelGroup extends RestModel {
     // endregion
 
     // region Private Methods
-    // =============================================================================================
+    // ============================================================================================================
 
     /**
      * Fetch group role for a given user id.
