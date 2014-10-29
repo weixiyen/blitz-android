@@ -303,6 +303,94 @@ public class RestModelGroup extends RestModel {
     // ============================================================================================================
 
     /**
+     * Get id.
+     *
+     * @return Id.
+     */
+    @SuppressWarnings("unused")
+    public String getId() {
+
+        return mId;
+    }
+
+    /**
+     * Get chat id.
+     *
+     * @return Chat id.
+     */
+    @SuppressWarnings("unused")
+    public String getChatId() {
+
+        return mChatId;
+    }
+
+    /**
+     * Get group name.
+     *
+     * @return Group name.
+     */
+    @SuppressWarnings("unused")
+    public String getName() {
+
+        return mName;
+    }
+
+    /**
+     * Group name lowercase.
+     *
+     * @return Group name lowercase.
+     */
+    @SuppressWarnings("unused")
+    public String getNameLowercase() {
+
+        return mNameLowercase;
+    }
+
+    /**
+     * Get group rank.
+     *
+     * @return Group rank.
+     */
+    @SuppressWarnings("unused")
+    public int getRank() {
+
+        return mRank;
+    }
+
+    /**
+     * Get group rating.
+     *
+     * @return Group rating.
+     */
+    @SuppressWarnings("unused")
+    public int getRating() {
+
+        return mRating;
+    }
+
+    /**
+     * Group member ids.
+     *
+     * @return Member ids.
+     */
+    @SuppressWarnings("unused")
+    public List<String> getMembers() {
+
+        return mMembers;
+    }
+
+    /**
+     * Is this group recruiting.
+     *
+     * @return Is recruiting.
+     */
+    @SuppressWarnings("unused")
+    public boolean isRecruiting() {
+
+        return mRecruiting;
+    }
+
+    /**
      * Is the current user an officer.
      *
      * @return Is officer.
