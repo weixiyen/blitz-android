@@ -1,12 +1,17 @@
-<TextView
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    style="@style/App.TextView"
-    fontPath="@string/app_font_helvetica_condensed_bold"
     android:layout_width="match_parent"
     android:layout_height="60dp"
-    android:layout_marginTop="305dp"
-    android:background="@drawable/drawable_bg_inner_dark"
-    android:gravity="center"
-    android:text="@string/leagues_openly_recruiting"
-    android:textColor="@color/text_color_dark"
-    android:textSize="16sp" />
+    android:background="@drawable/drawable_bg_inner_dark">
+
+    <TextView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        style="@style/App.TextView"
+        fontPath="@string/app_font_helvetica_condensed_bold"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:text="@string/leagues_openly_recruiting"
+        android:textColor="@color/text_color_dark"
+        android:textSize="16sp" />
+</RelativeLayout>
