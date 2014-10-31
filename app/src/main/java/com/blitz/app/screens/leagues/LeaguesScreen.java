@@ -12,6 +12,7 @@ import com.blitz.app.utilities.scrubber.BlitzScrubber;
 import com.blitz.app.view_models.ViewModel;
 import com.blitz.app.view_models.ViewModelLeagues;
 
+import java.util.Arrays;
 import java.util.List;
 
 import butterknife.InjectView;
@@ -62,12 +63,13 @@ public class LeaguesScreen extends BaseFragment implements ViewModelLeagues.Call
         // Provide the view pager.
         mLeaguesScrubber.setViewPager(((MainScreen) getActivity()).getViewPager());
 
+        // Week display text view.
+        mLeaguesScrubber.setScrubberTextView(mLeaguesScrubberItem,
+                Arrays.asList("Create or Join a League"));
+
         // Weeks in season.
         mLeaguesScrubber.setSize(1);
         mLeaguesScrubber.setScrubberItemSelected(0);
-
-        // Week display text view.
-        mLeaguesScrubber.setScrubberTextView(mLeaguesScrubberItem);
 
         // Callbacks.
         mLeaguesScrubber.setCallbacks(this);

@@ -184,15 +184,17 @@
     <com.blitz.app.utilities.textview.BlitzTextView
         android:id="@+id/recent_scrubber_week"
         style="@style/App.TextView"
-        fontPath="@string/app_font_bold"
-        android:layout_width="128dp"
+        fontPath="@string/app_font_helvetica_condensed_bold"
+        android:layout_width="wrap_content"
         android:layout_height="64dp"
         android:layout_above="@+id/recent_scrubber"
         android:layout_centerHorizontal="true"
         android:background="@drawable/asset_bg_scrubber"
         android:gravity="center"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
         android:text="@string/lorum_ipsum_tiny"
-        android:textSize="16sp"
+        android:textSize="14sp"
         app:clearInitialContent="true"/>
 
     <com.blitz.app.utilities.scrubber.BlitzScrubber

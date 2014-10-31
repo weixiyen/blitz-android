@@ -62,7 +62,7 @@ public class RecentScreen extends BaseFragment implements ViewModelRecent.Callba
         mRecentScrubber.setSize(WEEKS_IN_SEASON);
 
         // Week display text view.
-        mRecentScrubber.setScrubberTextView(mRecentScrubberWeek);
+        mRecentScrubber.setScrubberTextView(mRecentScrubberWeek, null);
 
         // Callbacks.
         mRecentScrubber.setCallbacks(this);

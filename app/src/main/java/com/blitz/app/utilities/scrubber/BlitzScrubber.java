@@ -47,6 +47,7 @@ public class BlitzScrubber extends LinearLayout {
     // Text view that shows active scrubber item.
     private TextView mScrubberTextView;
     private boolean mScrubberTextViewVisible;
+    private List<String> mSelectedTextLabels;
 
     // Handle to the callbacks.
     private Callbacks mCallbacks;
@@ -151,7 +152,18 @@ public class BlitzScrubber extends LinearLayout {
             }
 
             if (mScrubberTextView != null) {
-                mScrubberTextView.setText("Week " + (position + 1));
+
+                // Default label.
+                String label = "Week " + (position + 1);
+
+                if (mSelectedTextLabels != null && mSelectedTextLabels.size() > position) {
+
+                    // Set user provided label.
+                    label = mSelectedTextLabels.get(position);
+                }
+
+                // Set the text view.
+                mScrubberTextView.setText(label);
             }
 
             // Update selected index.
@@ -164,8 +176,9 @@ public class BlitzScrubber extends LinearLayout {
      *
      * @param scrubberTextView Text view.
      */
-    public void setScrubberTextView(TextView scrubberTextView) {
+    public void setScrubberTextView(TextView scrubberTextView, List<String> selectedTextLabels) {
 
+        mSelectedTextLabels = selectedTextLabels;
         mScrubberTextView = scrubberTextView;
 
         if (mScrubberTextView != null) {
