@@ -1,4 +1,4 @@
-package com.blitz.app.screens.recent;
+package com.blitz.app.utilities.scrubber;
 
 import android.content.Context;
 import android.content.res.Resources;
@@ -19,7 +19,7 @@ import java.util.List;
 /**
  * Created by mrkcsc on 10/14/14. Copyright 2014 Blitz Studios
  */
-public class RecentScreenScrubber extends LinearLayout {
+public class BlitzScrubber extends LinearLayout {
 
     // region Constructors
     // ============================================================================================================
@@ -57,7 +57,7 @@ public class RecentScreenScrubber extends LinearLayout {
     // ============================================================================================================
 
     @SuppressWarnings("unused")
-    public RecentScreenScrubber(Context context) {
+    public BlitzScrubber(Context context) {
         super(context);
 
         setupTouchEvents();
@@ -65,7 +65,7 @@ public class RecentScreenScrubber extends LinearLayout {
     }
 
     @SuppressWarnings("unused")
-    public RecentScreenScrubber(Context context, AttributeSet attrs) {
+    public BlitzScrubber(Context context, AttributeSet attrs) {
         super(context, attrs);
 
         setupTouchEvents();
@@ -73,7 +73,7 @@ public class RecentScreenScrubber extends LinearLayout {
     }
 
     @SuppressWarnings("unused")
-    public RecentScreenScrubber(Context context, AttributeSet attrs, int defStyle) {
+    public BlitzScrubber(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
 
         setupTouchEvents();
@@ -218,7 +218,7 @@ public class RecentScreenScrubber extends LinearLayout {
 
             // Inflate scrubber item.
             LayoutInflater.from(getContext())
-                    .inflate(R.layout.recent_screen_week, this, true);
+                    .inflate(R.layout.blitz_scrubber_item, this, true);
         }
 
         // Loop again to get inflated children.

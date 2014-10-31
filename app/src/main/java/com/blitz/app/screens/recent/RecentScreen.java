@@ -9,6 +9,7 @@ import com.blitz.app.R;
 import com.blitz.app.screens.main.MainScreen;
 import com.blitz.app.utilities.android.BaseFragment;
 import com.blitz.app.utilities.animations.AnimHelperFade;
+import com.blitz.app.utilities.scrubber.BlitzScrubber;
 import com.blitz.app.view_models.ViewModel;
 import com.blitz.app.view_models.ViewModelRecent;
 
@@ -20,7 +21,7 @@ import butterknife.InjectView;
  * Created by mrkcsc on 7/14/14. Copyright 2014 Blitz Studios
  */
 public class RecentScreen extends BaseFragment implements ViewModelRecent.Callbacks,
-        RecentScreenScrubber.Callbacks {
+        BlitzScrubber.Callbacks {
 
     // region Member Variables
     // ============================================================================================================
@@ -38,7 +39,7 @@ public class RecentScreen extends BaseFragment implements ViewModelRecent.Callba
     @InjectView(R.id.recent_week_rating_change) TextView mRecentWeekRatingChange;
 
     // Week selector.
-    @InjectView(R.id.recent_scrubber) RecentScreenScrubber mRecentScrubber;
+    @InjectView(R.id.recent_scrubber) BlitzScrubber mRecentScrubber;
 
     private ViewModelRecent mViewModel;
 

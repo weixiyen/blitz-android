@@ -194,19 +194,13 @@
         android:text="Week 1"
         android:textSize="16sp"/>
 
-    <com.blitz.app.screens.recent.RecentScreenScrubber
+    <com.blitz.app.utilities.scrubber.BlitzScrubber
         android:id="@+id/recent_scrubber"
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:layout_alignParentBottom="true"
-        android:background="@color/background_navigation"
+        android:background="@drawable/drawable_bg_scrubber"
         android:gravity="center"
         android:orientation="horizontal"/>
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_alignTop="@+id/recent_scrubber"
-        android:background="@color/background_inner_divider"/>
 
 </RelativeLayout>
