@@ -27,6 +27,7 @@
         android:orientation="horizontal">
 
         <Button
+            android:id="@+id/leagues_league_create"
             style="@style/App.Button"
             fontPath="@string/app_font_helvetica_condensed_bold"
             android:layout_width="0dp"
@@ -41,6 +42,7 @@
             android:textSize="16sp"/>
 
         <Button
+            android:id="@+id/leagues_league_join"
             style="@style/App.Button"
             fontPath="@string/app_font_helvetica_condensed_bold"
             android:layout_width="0dp"

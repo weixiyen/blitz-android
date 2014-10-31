@@ -6,6 +6,7 @@ import android.widget.TextView;
 
 import com.blitz.app.R;
 import com.blitz.app.utilities.android.BaseFragment;
+import com.blitz.app.utilities.logging.LogHelper;
 import com.blitz.app.view_models.ViewModel;
 import com.blitz.app.view_models.ViewModelLeagues;
 
@@ -16,7 +17,8 @@ import butterknife.InjectView;
 /**
  * Created by mrkcsc on 10/24/14. Copyright 2014 Blitz Studios
  */
-public class LeaguesScreen extends BaseFragment implements ViewModelLeagues.Callbacks {
+public class LeaguesScreen extends BaseFragment implements ViewModelLeagues.Callbacks,
+        LeaguesScreenAdapterCreate.Callbacks {
 
     // region Member Variables
     // ============================================================================================================
@@ -28,7 +30,7 @@ public class LeaguesScreen extends BaseFragment implements ViewModelLeagues.Call
     private ViewModelLeagues mViewModel;
 
     // Initialize the adapters this screen will use.
-    private LeaguesScreenAdapterCreate mAdapterCreate = new LeaguesScreenAdapterCreate();
+    private LeaguesScreenAdapterCreate mAdapterCreate = new LeaguesScreenAdapterCreate(this);
     private LeaguesScreenAdapterView mAdapterView = new LeaguesScreenAdapterView();
 
     // endregion
@@ -48,7 +50,7 @@ public class LeaguesScreen extends BaseFragment implements ViewModelLeagues.Call
     protected void onCreateView(Bundle savedInstanceState) {
         super.onCreateView(savedInstanceState);
 
-        // TODO: Use real data.
+        // Set the initial adapter.
         mLeaguesScreenList.setAdapter(mAdapterCreate);
     }
 
@@ -108,6 +110,29 @@ public class LeaguesScreen extends BaseFragment implements ViewModelLeagues.Call
             mAdapterCreate.setRecruitingLeagues
                     (leagueIds, leagueNames, leagueRatings, leagueMemberCounts);
         }
+    }
+
+    // endregion
+
+    // region Adapter Callbacks
+    // ============================================================================================================
+
+    @Override
+    public void onJoinLeagueClicked(String leagueId) {
+
+        LogHelper.log("Join league: " + leagueId);
+    }
+
+    @Override
+    public void onJoinLeagueManualClicked() {
+
+        LogHelper.log("Join league, manual input.");
+    }
+
+    @Override
+    public void onCreateLeagueClicked() {
+
+        LogHelper.log("Create league.");
     }
 
     // endregion

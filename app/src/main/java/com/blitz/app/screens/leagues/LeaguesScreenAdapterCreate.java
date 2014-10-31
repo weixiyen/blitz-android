@@ -4,12 +4,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.TextView;
 
 import com.blitz.app.R;
-import com.blitz.app.utilities.logging.LogHelper;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import butterknife.ButterKnife;
+import butterknife.InjectView;
 
 /**
  * Created by mrkcsc on 10/26/14. Copyright 2014 Blitz Studios
@@ -26,9 +29,27 @@ public class LeaguesScreenAdapterCreate extends BaseAdapter {
 
     // List of recruiting leagues.
     private List<String>  mRecruitingLeagueIds = new ArrayList<String>();
-    private List<String>  mRecruitingleagueNames = new ArrayList<String>();
-    private List<Integer> mRecruitingleagueRatings = new ArrayList<Integer>();
-    private List<Integer> mRecruitingleagueMemberCounts = new ArrayList<Integer>();
+    private List<String>  mRecruitingLeagueNames = new ArrayList<String>();
+    private List<Integer> mRecruitingLeagueRatings = new ArrayList<Integer>();
+    private List<Integer> mRecruitingLeagueMemberCounts = new ArrayList<Integer>();
+
+    private Callbacks mCallbacks;
+
+    // endregion
+
+    // region Constructor
+    // ============================================================================================================
+
+    /**
+     * Set callbacks.
+     *
+     * @param callbacks Callbacks.
+     */
+    public LeaguesScreenAdapterCreate(Callbacks callbacks) {
+
+        // Set callbacks.
+        mCallbacks = callbacks;
+    }
 
     // endregion
 
@@ -42,8 +63,6 @@ public class LeaguesScreenAdapterCreate extends BaseAdapter {
      */
     @Override
     public int getCount() {
-
-        LogHelper.log("Size: " + mRecruitingLeagueIds.size());
 
         // Top two sections are static, rest is either a loading view
         // or the actual leagues that are recruiting.
@@ -104,7 +123,7 @@ public class LeaguesScreenAdapterCreate extends BaseAdapter {
             case RECRUITING_LEAGUE:
 
                 // Configure item that represents a recruiting league.
-                return configureRecruitingLeague(position, view, parent);
+                return configureRecruitingLeague(position - 2, view, parent);
         }
 
         return view;
@@ -171,9 +190,9 @@ public class LeaguesScreenAdapterCreate extends BaseAdapter {
                                      List<Integer> leagueMemberCounts) {
 
         mRecruitingLeagueIds = leagueIds;
-        mRecruitingleagueNames = leagueNames;
-        mRecruitingleagueRatings = leagueRatings;
-        mRecruitingleagueMemberCounts = leagueMemberCounts;
+        mRecruitingLeagueNames = leagueNames;
+        mRecruitingLeagueRatings = leagueRatings;
+        mRecruitingLeagueMemberCounts = leagueMemberCounts;
 
         // Reload table.
         notifyDataSetChanged();
@@ -199,6 +218,32 @@ public class LeaguesScreenAdapterCreate extends BaseAdapter {
             convertView = LayoutInflater.from(parent.getContext())
                     .inflate(R.layout.leagues_screen_create_join, parent, false);
         }
+
+        // Wire the create button.
+        convertView.findViewById(R.id.leagues_league_create)
+                .setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View view) {
+
+                if (mCallbacks != null) {
+                    mCallbacks.onCreateLeagueClicked();
+                }
+            }
+        });
+
+        // Wire the join button.
+        convertView.findViewById(R.id.leagues_league_join)
+                .setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View view) {
+
+                if (mCallbacks != null) {
+                    mCallbacks.onJoinLeagueManualClicked();
+                }
+            }
+        });
 
         return convertView;
     }
@@ -239,32 +284,80 @@ public class LeaguesScreenAdapterCreate extends BaseAdapter {
         return convertView;
     }
 
-    private View configureRecruitingLeague(int position, View convertView, ViewGroup parent) {
+    /**
+     * Configure a recruiting league view.
+     *
+     * @param position Position index, offset it by the static headers.
+     * @param convertView Recycled view.
+     * @param parent Parent.
+     *
+     * @return Configured recruiting league.
+     */
+    private View configureRecruitingLeague(final int position, View convertView, ViewGroup parent) {
 
         if (convertView == null) {
             convertView = LayoutInflater.from(parent.getContext())
                     .inflate(R.layout.leagues_screen_league, parent, false);
 
             // Create and set associated view holder.
-            //view.setTag(new LeaderboardListItemViewHolder(convertView));
+            convertView.setTag(new ViewHolder(convertView));
         }
 
         // Fetch view holder.
-        //LeaderboardListItemViewHolder viewHolder =
-        //        (LeaderboardListItemViewHolder)convertView.getTag();
+        ViewHolder viewHolder = (ViewHolder)convertView.getTag();
+
+        int memberCount = mRecruitingLeagueMemberCounts.get(position);
 
         // Set the text.
-        //viewHolder.mLeaderboardIndex.setText(String.format("%03d", position + 1));
-        //viewHolder.mLeaderboardUserName.setText(mUserNames.get(position));
-        //viewHolder.mLeaderboardWins.setText("W" + String.format("%03d", mUserWins.get(position)));
-        //viewHolder.mLeaderboardLosses.setText("L" + String.format("%03d", mUserLosses.get(position)));
-        //viewHolder.mLeaderboardRating.setText(Integer.toString(mUserRating.get(position)));
+        viewHolder.mLeagueName.setText(mRecruitingLeagueNames.get(position));
+        viewHolder.mLeagueRating.setText(mRecruitingLeagueRatings.get(position) + " Rating");
+        viewHolder.mLeagueMemberCount.setText(memberCount + (memberCount > 1 ? "Members" : "Member"));
 
-        // Set the image.
-        //viewHolder.mLeaderboardHelmet.setImageBitmap(null);
-        //viewHolder.mLeaderboardHelmet.setImageUrl(mUserAvatarUrls.get(position));
+        // Set join listener.
+        viewHolder.mLeagueJoin.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View view) {
+
+                if (mCallbacks != null) {
+                    mCallbacks.onJoinLeagueClicked(mRecruitingLeagueIds.get(position));
+                }
+            }
+        });
 
         return convertView;
+    }
+
+    // endregion
+
+    // region Inner Classes
+    // ============================================================================================================
+
+    static class ViewHolder {
+
+        @InjectView(R.id.leagues_league_name)         TextView mLeagueName;
+        @InjectView(R.id.leagues_league_rating)       TextView mLeagueRating;
+        @InjectView(R.id.leagues_league_member_count) TextView mLeagueMemberCount;
+        @InjectView(R.id.leagues_league_join)         TextView mLeagueJoin;
+
+        private ViewHolder(View view) {
+
+            // Map member variables.
+            ButterKnife.inject(this, view);
+        }
+    }
+
+    // endregion
+
+    // region Callbacks Interface
+    // ============================================================================================================
+
+    public interface Callbacks {
+
+        public void onJoinLeagueClicked(String leagueId);
+        public void onJoinLeagueManualClicked();
+
+        public void onCreateLeagueClicked();
     }
 
     // endregion

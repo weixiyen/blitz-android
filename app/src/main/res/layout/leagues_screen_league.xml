@@ -50,6 +50,7 @@
     </LinearLayout>
 
     <TextView
+        android:id="@+id/leagues_league_join"
         style="@style/App.TextView"
         fontPath="@string/app_font_helvetica_condensed_bold"
         android:layout_width="75dp"
