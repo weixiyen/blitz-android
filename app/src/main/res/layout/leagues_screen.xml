@@ -50,6 +50,7 @@
         android:id="@+id/leagues_screen_list"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="40dp"
         android:layout_marginTop="@dimen/navbar_height_padding_included"
         android:cacheColorHint="@color/background_transparent"
         android:divider="@null"
@@ -61,5 +62,29 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/leagues_screen_list"
+        android:layout_marginBottom="40dp"
+        android:layout_marginTop="-40dp"
         android:background="@color/background_inner"/>
+
+    <TextView
+        android:id="@+id/leagues_scrubber_item"
+        style="@style/App.TextView"
+        fontPath="@string/app_font_bold"
+        android:layout_width="128dp"
+        android:layout_height="64dp"
+        android:layout_above="@+id/leagues_scrubber"
+        android:layout_centerHorizontal="true"
+        android:background="@drawable/asset_bg_scrubber"
+        android:gravity="center"
+        android:text="@string/lorum_ipsum_tiny"
+        android:textSize="16sp"/>
+
+    <com.blitz.app.utilities.scrubber.BlitzScrubber
+        android:id="@+id/leagues_scrubber"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/drawable_bg_scrubber"
+        android:gravity="center"
+        android:orientation="horizontal"/>
 </RelativeLayout>

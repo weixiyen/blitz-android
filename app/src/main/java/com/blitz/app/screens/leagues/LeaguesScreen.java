@@ -5,8 +5,10 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.blitz.app.R;
+import com.blitz.app.screens.main.MainScreen;
 import com.blitz.app.utilities.android.BaseFragment;
 import com.blitz.app.utilities.logging.LogHelper;
+import com.blitz.app.utilities.scrubber.BlitzScrubber;
 import com.blitz.app.view_models.ViewModel;
 import com.blitz.app.view_models.ViewModelLeagues;
 
@@ -18,7 +20,7 @@ import butterknife.InjectView;
  * Created by mrkcsc on 10/24/14. Copyright 2014 Blitz Studios
  */
 public class LeaguesScreen extends BaseFragment implements ViewModelLeagues.Callbacks,
-        LeaguesScreenAdapterCreate.Callbacks {
+        LeaguesScreenAdapterCreate.Callbacks, BlitzScrubber.Callbacks {
 
     // region Member Variables
     // ============================================================================================================
@@ -32,6 +34,10 @@ public class LeaguesScreen extends BaseFragment implements ViewModelLeagues.Call
     // Initialize the adapters this screen will use.
     private LeaguesScreenAdapterCreate mAdapterCreate = new LeaguesScreenAdapterCreate(this);
     private LeaguesScreenAdapterView mAdapterView = new LeaguesScreenAdapterView();
+
+    // League selector.
+    @InjectView(R.id.leagues_scrubber) BlitzScrubber mLeaguesScrubber;
+    @InjectView(R.id.leagues_scrubber_item) TextView mLeaguesScrubberItem;
 
     // endregion
 
@@ -52,6 +58,19 @@ public class LeaguesScreen extends BaseFragment implements ViewModelLeagues.Call
 
         // Set the initial adapter.
         mLeaguesScreenList.setAdapter(mAdapterCreate);
+
+        // Provide the view pager.
+        mLeaguesScrubber.setViewPager(((MainScreen) getActivity()).getViewPager());
+
+        // Weeks in season.
+        mLeaguesScrubber.setSize(1);
+        mLeaguesScrubber.setScrubberItemSelected(0);
+
+        // Week display text view.
+        mLeaguesScrubber.setScrubberTextView(mLeaguesScrubberItem);
+
+        // Callbacks.
+        mLeaguesScrubber.setCallbacks(this);
     }
 
     /**
@@ -133,6 +152,17 @@ public class LeaguesScreen extends BaseFragment implements ViewModelLeagues.Call
     public void onCreateLeagueClicked() {
 
         LogHelper.log("Create league.");
+    }
+
+    // endregion
+
+    // region Scrubber Callbacks
+    // ============================================================================================================
+
+    @Override
+    public void onScrubberItemSelected(int position) {
+
+        LogHelper.log("Scrub me: " + position);
     }
 
     // endregion
