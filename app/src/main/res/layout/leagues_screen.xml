@@ -66,7 +66,7 @@
         android:layout_marginTop="-40dp"
         android:background="@color/background_inner"/>
 
-    <TextView
+    <com.blitz.app.utilities.textview.BlitzTextView
         android:id="@+id/leagues_scrubber_item"
         style="@style/App.TextView"
         fontPath="@string/app_font_bold"
@@ -77,7 +77,8 @@
         android:background="@drawable/asset_bg_scrubber"
         android:gravity="center"
         android:text="@string/lorum_ipsum_tiny"
-        android:textSize="16sp"/>
+        android:textSize="16sp"
+        app:clearInitialContent="true"/>
 
     <com.blitz.app.utilities.scrubber.BlitzScrubber
         android:id="@+id/leagues_scrubber"
