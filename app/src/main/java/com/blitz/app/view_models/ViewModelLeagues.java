@@ -5,7 +5,6 @@ import com.blitz.app.rest_models.RestModelCallbacks;
 import com.blitz.app.rest_models.RestModelGroup;
 import com.blitz.app.utilities.android.BaseActivity;
 import com.blitz.app.utilities.authentication.AuthHelper;
-import com.blitz.app.utilities.logging.LogHelper;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,9 +21,11 @@ public class ViewModelLeagues extends ViewModel {
     private static final int MAX_LEAGUES_TO_SHOW = 6;
     private static final int MAX_RECRUITING_LEAGUES_TO_SHOW = 100;
 
+    // List of leagues this user belongs to.
     private List<RestModelGroup> mUserLeagues;
 
-    private Integer mSelectedUserLeague;
+    // Track selected league.
+    private String mSelectedLeagueId;
 
     // endregion
 
@@ -54,7 +55,6 @@ public class ViewModelLeagues extends ViewModel {
 
         // Fetch league information.
         fetchUserLeaguesData();
-
     }
 
     // endregion
@@ -74,18 +74,34 @@ public class ViewModelLeagues extends ViewModel {
             @Override
             public void onSuccess(List<RestModelGroup> object) {
 
-                // Filter down leagues if necessary.
-                mUserLeagues = object.subList(0, object.size() > MAX_LEAGUES_TO_SHOW ?
-                                MAX_LEAGUES_TO_SHOW : object.size());
+                if (object == null) {
 
-                LogHelper.log("LEaguesL: " + mUserLeagues.size());
-
-                if (mUserLeagues.size() > 0) {
+                    // Empty user leagues array.
+                    mUserLeagues = new ArrayList<RestModelGroup>();
 
                 } else {
 
-                    // No leagues, just show create.
-                    //fetchCreateJoinLeagueData();
+                    // Filter down leagues if necessary.
+                    mUserLeagues = object.subList(0, object.size() > MAX_LEAGUES_TO_SHOW ?
+                            MAX_LEAGUES_TO_SHOW : object.size());
+                }
+
+                List<String> leagueIds = new ArrayList<String>();
+                List<String> leagueNames = new ArrayList<String>();
+
+                for (RestModelGroup league : mUserLeagues) {
+
+                    leagueIds.add(league.getId());
+                    leagueNames.add(league.getName());
+                }
+
+                // Last is create.
+                leagueIds.add(null);
+                leagueNames.add(mActivity.getResources()
+                        .getString(R.string.create_or_join_a_league));
+
+                if (getCallbacks(Callbacks.class) != null) {
+                    getCallbacks(Callbacks.class).onUserLeagues(leagueIds, leagueNames);
                 }
             }
         });
@@ -94,7 +110,6 @@ public class ViewModelLeagues extends ViewModel {
     /**
      * TODO: Implement.
      */
-    @SuppressWarnings("unused")
     private void fetchUserLeagueData() {
 
     }
@@ -105,11 +120,6 @@ public class ViewModelLeagues extends ViewModel {
      */
     private void fetchCreateJoinLeagueData() {
 
-        if (getCallbacks(Callbacks.class) != null) {
-            getCallbacks(Callbacks.class).onLeagueName(mActivity.getResources()
-                    .getString(R.string.create_or_join_a_league));
-        }
-
         // Fetch groups that are recruiting, no blocked UI.
         RestModelGroup.getGroupsRecruitingWithLimit(null, MAX_RECRUITING_LEAGUES_TO_SHOW,
                 new RestModelCallbacks<RestModelGroup>() {
@@ -117,7 +127,8 @@ public class ViewModelLeagues extends ViewModel {
             @Override
             public void onSuccess(List<RestModelGroup> object) {
 
-                if (mSelectedUserLeague != null) {
+                // Make sure we still want result.
+                if (mSelectedLeagueId != null) {
 
                     return;
                 }
@@ -153,12 +164,40 @@ public class ViewModelLeagues extends ViewModel {
 
     // endregion
 
+    // region Public Methods
+    // ============================================================================================================
+
+    /**
+     * Fetch either detailed information for
+     * a specific view, or the information
+     * for the create/join league view.
+     *
+     * @param selectedLeagueId Selected league id (can be null).
+     */
+    public void setSelectedLeagueId(String selectedLeagueId) {
+
+        // Update selected league id.
+        mSelectedLeagueId = selectedLeagueId;
+
+        if (mSelectedLeagueId == null) {
+
+            // Fetch create/join info.
+            fetchCreateJoinLeagueData();
+        } else {
+
+            // Fetch individual league.
+            fetchUserLeagueData();
+        }
+    }
+
+    // endregion
+
     // region Callbacks Interface
     // ============================================================================================================
 
     public interface Callbacks extends ViewModel.Callbacks {
 
-        public void onLeagueName(String leagueName);
+        public void onUserLeagues(List<String> leagueIds, List<String> leagueNames);
         public void onRecruitingLeagues(List<String> leagueIds,
                                         List<String> leagueNames,
                                         List<Integer> leagueRatings,

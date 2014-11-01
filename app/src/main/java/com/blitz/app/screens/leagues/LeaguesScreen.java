@@ -12,7 +12,6 @@ import com.blitz.app.utilities.scrubber.BlitzScrubber;
 import com.blitz.app.view_models.ViewModel;
 import com.blitz.app.view_models.ViewModelLeagues;
 
-import java.util.Arrays;
 import java.util.List;
 
 import butterknife.InjectView;
@@ -31,6 +30,14 @@ public class LeaguesScreen extends BaseFragment implements ViewModelLeagues.Call
 
     // Associated view model.
     private ViewModelLeagues mViewModel;
+
+    // Tracks selected league.
+    private int mSelectedLeague;
+
+    // User leagues, directly maps to
+    // scrubber indices.
+    private List<String> mUserLeagueIds;
+    private List<String> mUserLeagueNames;
 
     // Initialize the adapters this screen will use.
     private LeaguesScreenAdapterCreate mAdapterCreate = new LeaguesScreenAdapterCreate(this);
@@ -57,19 +64,8 @@ public class LeaguesScreen extends BaseFragment implements ViewModelLeagues.Call
     protected void onCreateView(Bundle savedInstanceState) {
         super.onCreateView(savedInstanceState);
 
-        // Set the initial adapter.
-        mLeaguesScreenList.setAdapter(mAdapterCreate);
-
         // Provide the view pager.
         mLeaguesScrubber.setViewPager(((MainScreen) getActivity()).getViewPager());
-
-        // Week display text view.
-        mLeaguesScrubber.setScrubberTextView(mLeaguesScrubberItem,
-                Arrays.asList("Create or Join a League"));
-
-        // Weeks in season.
-        mLeaguesScrubber.setSize(1);
-        mLeaguesScrubber.setScrubberItemSelected(0);
 
         // Callbacks.
         mLeaguesScrubber.setCallbacks(this);
@@ -93,21 +89,70 @@ public class LeaguesScreen extends BaseFragment implements ViewModelLeagues.Call
 
     // endregion
 
+    // region Private Methods
+    // ============================================================================================================
+
+    /**
+     * Set the selected league and update associated UI.
+     *
+     * @param selectedLeague Selected league.
+     */
+    private void setSelectedLeague(int selectedLeague) {
+
+        // Update selected league index.
+        mSelectedLeague = selectedLeague;
+
+        // Set the header.
+        if (mLeaguesHeader != null) {
+            mLeaguesHeader.setText(mUserLeagueNames.get(mSelectedLeague));
+        }
+
+        // Ensure the correct item is selected.
+        mLeaguesScrubber.setScrubberItemSelected(mSelectedLeague);
+
+        String selectedLeagueId = mUserLeagueIds.get(mSelectedLeague);
+
+        // Trigger a view model update for associated id.
+        mViewModel.setSelectedLeagueId(mUserLeagueIds.get(mSelectedLeague));
+
+        if (selectedLeagueId == null) {
+
+            // Set the initial adapter for create/join.
+            mLeaguesScreenList.setAdapter(mAdapterCreate);
+        } else {
+
+            // Set the initial adapter for user league.
+            mLeaguesScreenList.setAdapter(mAdapterView);
+        }
+    }
+
+    // endregion
+
     // region View Model Callbacks
     // ============================================================================================================
 
     /**
-     * Set the league name, or set the default create/join
-     * text if no league name is provided.
+     * Received all available user leagues.
      *
-     * @param leagueName League name.
+     * @param leagueIds League ids. The last is null (represents
+     *                  the create/join screen).
+     * @param leagueNames League names.
      */
     @Override
-    public void onLeagueName(String leagueName) {
+    public void onUserLeagues(List<String> leagueIds, List<String> leagueNames) {
 
-        if (mLeaguesHeader != null) {
-            mLeaguesHeader.setText(leagueName);
-        }
+        // Store the results.
+        mUserLeagueNames = leagueNames;
+        mUserLeagueIds = leagueIds;
+
+        // Set the scrubber text view and names.
+        mLeaguesScrubber.setScrubberTextView(mLeaguesScrubberItem, mUserLeagueNames);
+
+        // Set the size of the scrubber.
+        mLeaguesScrubber.setSize(mUserLeagueIds.size());
+
+        // Initialize selected league.
+        setSelectedLeague(mSelectedLeague);
     }
 
     /**
@@ -125,9 +170,9 @@ public class LeaguesScreen extends BaseFragment implements ViewModelLeagues.Call
                                     List<Integer> leagueMemberCounts) {
 
         if (mLeaguesScreenList != null) {
-            mLeaguesScreenList.setAdapter(mAdapterCreate);
 
             // Set recruiting leagues.
+            mAdapterCreate.setAssociatedListView(mLeaguesScreenList);
             mAdapterCreate.setRecruitingLeagues
                     (leagueIds, leagueNames, leagueRatings, leagueMemberCounts);
         }
@@ -161,10 +206,17 @@ public class LeaguesScreen extends BaseFragment implements ViewModelLeagues.Call
     // region Scrubber Callbacks
     // ============================================================================================================
 
+    /**
+     * Update selected league UI when
+     * the scrubber position changes.
+     *
+     * @param position Current position.
+     */
     @Override
     public void onScrubberItemSelected(int position) {
 
-        LogHelper.log("Scrub me: " + position);
+        // Update selected league.
+        setSelectedLeague(position);
     }
 
     // endregion

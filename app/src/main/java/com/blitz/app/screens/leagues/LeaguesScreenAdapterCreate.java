@@ -4,9 +4,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.blitz.app.R;
+import com.blitz.app.utilities.animations.AnimHelperFade;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,6 +36,8 @@ public class LeaguesScreenAdapterCreate extends BaseAdapter {
     private List<Integer> mRecruitingLeagueMemberCounts = new ArrayList<Integer>();
 
     private Callbacks mCallbacks;
+
+    private ListView mAssociatedListView;
 
     // endregion
 
@@ -176,6 +180,17 @@ public class LeaguesScreenAdapterCreate extends BaseAdapter {
     // ============================================================================================================
 
     /**
+     * Set associated list view.
+     *
+     * @param listView Associated list view.
+     */
+    @SuppressWarnings("unused")
+    public void setAssociatedListView(ListView listView) {
+
+        mAssociatedListView = listView;
+    }
+
+    /**
      * Set the recruiting leagues.
      *
      * @param leagueIds League ids.
@@ -184,18 +199,46 @@ public class LeaguesScreenAdapterCreate extends BaseAdapter {
      * @param leagueMemberCounts League member counts.
      */
     @SuppressWarnings("unused")
-    public void setRecruitingLeagues(List<String> leagueIds,
-                                     List<String> leagueNames,
-                                     List<Integer> leagueRatings,
-                                     List<Integer> leagueMemberCounts) {
+    public void setRecruitingLeagues(final List<String> leagueIds,
+                                     final List<String> leagueNames,
+                                     final List<Integer> leagueRatings,
+                                     final List<Integer> leagueMemberCounts) {
+        View loadingView = null;
 
-        mRecruitingLeagueIds = leagueIds;
-        mRecruitingLeagueNames = leagueNames;
-        mRecruitingLeagueRatings = leagueRatings;
-        mRecruitingLeagueMemberCounts = leagueMemberCounts;
+        // Ensure loading view exists.
+        if (getItemViewType(RECRUITING_LEAGUE_LOADING - 1) == RECRUITING_LEAGUE_LOADING) {
 
-        // Reload table.
-        notifyDataSetChanged();
+            // Fetch it.
+            loadingView = mAssociatedListView.getChildAt(RECRUITING_LEAGUE_LOADING - 1);
+        }
+
+        // Update functionality.
+        Runnable updateAdapter = new Runnable() {
+
+            @Override
+            public void run() {
+
+                mRecruitingLeagueIds = leagueIds;
+                mRecruitingLeagueNames = leagueNames;
+                mRecruitingLeagueRatings = leagueRatings;
+                mRecruitingLeagueMemberCounts = leagueMemberCounts;
+
+                // Reload table.
+                notifyDataSetChanged();
+            }
+        };
+
+        // If no loading view.
+        if (loadingView == null) {
+
+            // Update immediately.
+            updateAdapter.run();
+        } else {
+
+            // First fade the loading spinner before updating.
+            AnimHelperFade.setVisibility(loadingView.findViewById(R.id.leagues_loading),
+                    View.INVISIBLE, updateAdapter);
+        }
     }
 
     // endregion
@@ -280,6 +323,9 @@ public class LeaguesScreenAdapterCreate extends BaseAdapter {
             convertView = LayoutInflater.from(parent.getContext())
                     .inflate(R.layout.leagues_screen_loading, parent, false);
         }
+
+        // Ensure visibility.
+        convertView.setVisibility(View.VISIBLE);
 
         return convertView;
     }
