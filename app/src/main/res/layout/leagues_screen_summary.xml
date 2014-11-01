@@ -16,33 +16,36 @@
 
         <TextView
             style="@style/App.TextView"
+            fontPath="@string/app_font_helvetica_condensed_bold"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
-            android:textSize="14sp"
             android:text="@string/rank"
-            android:textColor="@color/text_color_dark"/>
+            android:textColor="@color/text_color_dark"
+            android:textSize="16sp"/>
 
         <TextView
             style="@style/App.TextView"
+            fontPath="@string/app_font_helvetica_condensed_bold"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
             android:text="@string/rating"
-            android:textSize="14sp"
-            android:textColor="@color/text_color_dark"/>
+            android:textColor="@color/text_color_dark"
+            android:textSize="16sp"/>
 
         <TextView
             style="@style/App.TextView"
+            fontPath="@string/app_font_helvetica_condensed_bold"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:textSize="14sp"
             android:gravity="center"
             android:text="@string/members"
-            android:textColor="@color/text_color_dark"/>
+            android:textColor="@color/text_color_dark"
+            android:textSize="16sp"/>
     </LinearLayout>
 
     <LinearLayout
@@ -54,31 +57,34 @@
         <TextView
             android:id="@+id/leagues_summary_rank"
             style="@style/App.TextView"
+            fontPath="@string/app_font_helvetica_condensed_bold"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
-            android:textSize="20sp"
-            android:text="@string/number_large"/>
+            android:text="@string/number_large"
+            android:textSize="24sp"/>
 
         <TextView
             android:id="@+id/leagues_summary_rating"
             style="@style/App.TextView"
+            fontPath="@string/app_font_helvetica_condensed_bold"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
-            android:textSize="20sp"
-            android:text="@string/number_large"/>
+            android:text="@string/number_large"
+            android:textSize="24sp"/>
 
         <TextView
             android:id="@+id/leagues_summary_members"
             style="@style/App.TextView"
+            fontPath="@string/app_font_helvetica_condensed_bold"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
-            android:textSize="20sp"
-            android:text="@string/number_large"/>
+            android:text="@string/number_large"
+            android:textSize="24sp"/>
     </LinearLayout>
 </LinearLayout>

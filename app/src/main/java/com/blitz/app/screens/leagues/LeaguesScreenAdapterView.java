@@ -69,17 +69,17 @@ public class LeaguesScreenAdapterView extends BaseAdapter {
             case LEAGUE_STATS_HEADER:
 
                 // Configure item with calls to action.
-                return configureLeagueLoading(view, parent);
-
-            case LEAGUE_MEMBER:
-
-                // Configure item of header for recruiting leagues.
-                return configureLeagueLoading(view, parent);
+                return configureStatsHeader(view, parent);
 
             case LEAGUE_LOADING:
 
                 // Configure the loading view item.
                 return configureLeagueLoading(view, parent);
+
+            case LEAGUE_MEMBER:
+
+                // Configure item of header for recruiting leagues.
+                return configureLeagueMember(view, parent, position - 1);
         }
 
         return view;
@@ -202,6 +202,26 @@ public class LeaguesScreenAdapterView extends BaseAdapter {
 
     // region Private Members
     // ============================================================================================================
+
+    private View configureStatsHeader(View convertView, ViewGroup parent) {
+
+        if (convertView == null) {
+            convertView = LayoutInflater.from(parent.getContext())
+                    .inflate(R.layout.leagues_screen_summary, parent, false);
+        }
+
+        return convertView;
+    }
+
+    private View configureLeagueMember(View convertView, ViewGroup parent, int position) {
+
+        if (convertView == null) {
+            convertView = LayoutInflater.from(parent.getContext())
+                    .inflate(R.layout.leagues_screen_member, parent, false);
+        }
+
+        return convertView;
+    }
 
     /**
      * Configure item for loading view.
