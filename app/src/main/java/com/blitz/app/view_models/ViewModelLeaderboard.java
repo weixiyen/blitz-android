@@ -41,7 +41,7 @@ public class ViewModelLeaderboard extends ViewModel {
         final int usersToFetch = 150;
 
         // First grab the user objects.
-        RestModelUser.getTopUsersWithLimit(mActivity, usersToFetch,
+        RestModelUser.getTopUsersWithLimit(null, usersToFetch,
                 new RestModelCallbacks<RestModelUser>() {
 
                     @Override

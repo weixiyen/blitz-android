@@ -32,6 +32,9 @@
         android:layout_height="match_parent"
         android:layout_marginTop="@dimen/navbar_height"
         android:cacheColorHint="@color/background_transparent"
+        android:divider="@null"
+        android:dividerHeight="0dp"
+        android:footerDividersEnabled="false"
         android:gravity="center"
         android:listSelector="@color/background_transparent"
         android:visibility="gone"/>
