@@ -46,25 +46,30 @@
             android:visibility="gone" />
     </RelativeLayout>
 
-    <ListView
-        android:id="@+id/leagues_screen_list"
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="40dp"
         android:layout_marginTop="@dimen/navbar_height_padding_included"
-        android:cacheColorHint="@color/background_transparent"
-        android:divider="@null"
-        android:dividerHeight="0dp"
-        android:listSelector="@color/background_transparent">
-    </ListView>
+        android:orientation="vertical">
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/leagues_screen_list"
-        android:layout_marginBottom="40dp"
-        android:layout_marginTop="-40dp"
-        android:background="@color/background_inner"/>
+        <ListView
+            android:id="@+id/leagues_screen_list"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:cacheColorHint="@color/background_transparent"
+            android:divider="@null"
+            android:dividerHeight="0dp"
+            android:footerDividersEnabled="false"
+            android:listSelector="@color/background_transparent">
+        </ListView>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/leagues_screen_list"
+            android:background="@color/background_inner"/>
+    </RelativeLayout>
 
     <com.blitz.app.utilities.textview.BlitzTextView
         android:id="@+id/leagues_scrubber_item"
