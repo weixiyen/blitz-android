@@ -110,12 +110,10 @@ public class LeaguesScreen extends BaseFragment implements ViewModelLeagues.Call
         // Ensure the correct item is selected.
         mLeaguesScrubber.setScrubberItemSelected(mSelectedLeague);
 
-        String selectedLeagueId = mUserLeagueIds.get(mSelectedLeague);
-
         // Trigger a view model update for associated id.
         mViewModel.setSelectedLeagueId(mUserLeagueIds.get(mSelectedLeague));
 
-        if (selectedLeagueId == null) {
+        if (mUserLeagueIds.get(mSelectedLeague) == null) {
 
             // Set the initial adapter for create/join.
             mLeaguesScreenList.setAdapter(mAdapterCreate);
@@ -198,7 +196,13 @@ public class LeaguesScreen extends BaseFragment implements ViewModelLeagues.Call
                              List<Integer> memberLosses,
                              List<Integer> memberRating) {
 
-        LogHelper.log("Rank: " + leagueRank + " rating: " + leagueRating + " members: " + leagueMembers + " id count: " + memberUserIds.size());
+        if (mLeaguesScreenList != null) {
+
+            // Set league info.
+            mAdapterView.setAssociatedListView(mLeaguesScreenList);
+            mAdapterView.setLeagueInfo(leagueRank, leagueRating, leagueMembers,
+                    memberUserIds, memberUserNames, memberWins, memberLosses, memberRating);
+        }
     }
 
     // endregion

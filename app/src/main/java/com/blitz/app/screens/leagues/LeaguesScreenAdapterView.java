@@ -4,8 +4,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ListView;
 
 import com.blitz.app.R;
+import com.blitz.app.utilities.animations.AnimHelperFade;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,15 +24,18 @@ public class LeaguesScreenAdapterView extends BaseAdapter {
     public static final int LEAGUE_MEMBER       = 1;
     public static final int LEAGUE_LOADING      = 2;
 
-    private int leagueRank;
-    private int leagueRating;
-    private int leagueMembers;
+    private int mLeagueRank;
+    private int mLeagueRating;
+    private int mLeagueMembers;
 
-    private List<String>  memberUserIds   = new ArrayList<String>();
-    private List<String>  memberUserNames = new ArrayList<String>();
-    private List<Integer> memberWins      = new ArrayList<Integer>();
-    private List<Integer> memberLosses    = new ArrayList<Integer>();
-    private List<Integer> memberRatin     = new ArrayList<Integer>();
+    private List<String>  mMemberUserIds   = new ArrayList<String>();
+    private List<String>  mMemberUserNames = new ArrayList<String>();
+    private List<Integer> mMemberWins      = new ArrayList<Integer>();
+    private List<Integer> mMemberLosses    = new ArrayList<Integer>();
+    private List<Integer> mMemberRatin     = new ArrayList<Integer>();
+
+    // List view paired to this adapter.
+    private ListView mAssociatedListView;
 
     // endregion
 
@@ -41,7 +46,7 @@ public class LeaguesScreenAdapterView extends BaseAdapter {
     public int getCount() {
 
         // Either show stats + members, or just the loading section.
-        return memberUserIds.size() > 0 ? 1 + memberUserIds.size() : 1;
+        return mMemberUserIds.size() > 0 ? 1 + mMemberUserIds.size() : 1;
     }
 
     @Override
@@ -99,7 +104,7 @@ public class LeaguesScreenAdapterView extends BaseAdapter {
             default:
 
                 // Show loading section if no league members.
-                return memberUserIds.size() > 0 ? LEAGUE_MEMBER : LEAGUE_LOADING;
+                return mMemberUserIds.size() > 0 ? LEAGUE_MEMBER : LEAGUE_LOADING;
         }
     }
 
@@ -112,6 +117,85 @@ public class LeaguesScreenAdapterView extends BaseAdapter {
     public int getViewTypeCount() {
 
         return 3;
+    }
+
+    // endregion
+
+    // region Public Methods
+    // ============================================================================================================
+
+    /**
+     * Set associated list view.
+     *
+     * @param listView Associated list view.
+     */
+    @SuppressWarnings("unused")
+    public void setAssociatedListView(ListView listView) {
+
+        mAssociatedListView = listView;
+    }
+
+    /**
+     * Set league information.
+     *
+     * @param leagueRank Rank.
+     * @param leagueRating Rating.
+     * @param leagueMembers Members.
+     * @param memberUserIds User ids.
+     * @param memberUserNames User names.
+     * @param memberWins User wins.
+     * @param memberLosses User losses.
+     * @param memberRating User rating.
+     */
+    @SuppressWarnings("unused")
+    public void setLeagueInfo(final int leagueRank, final int leagueRating, final int leagueMembers,
+                              final List<String>  memberUserIds,
+                              final List<String>  memberUserNames,
+                              final List<Integer> memberWins,
+                              final List<Integer> memberLosses,
+                              final List<Integer> memberRating) {
+
+        View loadingView = null;
+
+        // Ensure loading view exists.
+        if (getItemViewType(LEAGUE_LOADING - 1) == LEAGUE_LOADING) {
+
+            // Fetch it.
+            loadingView = mAssociatedListView.getChildAt(LEAGUE_LOADING - 1);
+        }
+
+        // Update functionality.
+        Runnable updateAdapter = new Runnable() {
+
+            @Override
+            public void run() {
+
+                mLeagueRank    = leagueRank;
+                mLeagueRating  = leagueRating;
+                mLeagueMembers = leagueMembers;
+
+                mMemberUserIds   = memberUserIds;
+                mMemberUserNames = memberUserNames;
+                mMemberWins      = memberWins;
+                mMemberLosses    = memberLosses;
+                mMemberRatin     = memberRating;
+
+                // Reload table.
+                notifyDataSetChanged();
+            }
+        };
+
+        // If no loading view.
+        if (loadingView == null) {
+
+            // Update immediately.
+            updateAdapter.run();
+        } else {
+
+            // First fade the loading spinner before updating.
+            AnimHelperFade.setVisibility(loadingView.findViewById(R.id.leagues_loading),
+                    View.INVISIBLE, updateAdapter);
+        }
     }
 
     // endregion
