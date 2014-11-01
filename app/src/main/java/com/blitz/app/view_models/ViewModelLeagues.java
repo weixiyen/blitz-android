@@ -122,7 +122,8 @@ public class ViewModelLeagues extends ViewModel {
             public void onSuccess(RestModelGroup object) {
 
                 // Make sure we still want result.
-                if (!mSelectedLeagueId.equals(object.getId())) {
+                if (mSelectedLeagueId == null ||
+                   !mSelectedLeagueId.equals(object.getId())) {
 
                     return;
                 }
