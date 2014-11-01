@@ -33,8 +33,9 @@ public class RestModelGroup extends RestModel {
 
     @SuppressWarnings("unused") @SerializedName("recruiting") private Boolean mRecruiting;
 
-    @SuppressWarnings("unused") @SerializedName("members") private List<String> mMembers;
+    @SuppressWarnings("unused") @SerializedName("members") private List<String> mMemberIds;
 
+    @SuppressWarnings("unused") @SerializedName("user_info") private Map<String, RestModelUser> mMembers;
     @SuppressWarnings("unused") @SerializedName("role_map")  private Map<String, String> mRoleMap;
 
     // endregion
@@ -374,7 +375,18 @@ public class RestModelGroup extends RestModel {
      * @return Member ids.
      */
     @SuppressWarnings("unused")
-    public List<String> getMembers() {
+    public List<String> getMemberIds() {
+
+        return mMemberIds;
+    }
+
+    /**
+     * Get group members.
+     *
+     * @return Group members.
+     */
+    @SuppressWarnings("unused")
+    public Map<String, RestModelUser> getMembers() {
 
         return mMembers;
     }

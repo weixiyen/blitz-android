@@ -5,6 +5,7 @@ import com.blitz.app.rest_models.RestModelCallbacks;
 import com.blitz.app.rest_models.RestModelGroup;
 import com.blitz.app.utilities.android.BaseActivity;
 import com.blitz.app.utilities.authentication.AuthHelper;
+import com.blitz.app.utilities.logging.LogHelper;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -53,7 +54,7 @@ public class ViewModelLeagues extends ViewModel {
 
         // Fetch league information.
         fetchUserLeaguesData();
-        fetchCreateJoinLeagueData();
+
     }
 
     // endregion
@@ -76,6 +77,16 @@ public class ViewModelLeagues extends ViewModel {
                 // Filter down leagues if necessary.
                 mUserLeagues = object.subList(0, object.size() > MAX_LEAGUES_TO_SHOW ?
                                 MAX_LEAGUES_TO_SHOW : object.size());
+
+                LogHelper.log("LEaguesL: " + mUserLeagues.size());
+
+                if (mUserLeagues.size() > 0) {
+
+                } else {
+
+                    // No leagues, just show create.
+                    //fetchCreateJoinLeagueData();
+                }
             }
         });
     }
@@ -122,12 +133,12 @@ public class ViewModelLeagues extends ViewModel {
                 for (RestModelGroup league : object) {
 
                     // Only show leagues user is not already joined.
-                    if (!league.getMembers().contains(userId)) {
+                    if (!league.getMemberIds().contains(userId)) {
 
                         leagueIds.add(league.getId());
                         leagueNames.add(league.getName());
                         leagueRatings.add(league.getRating());
-                        leagueMemberCounts.add(league.getMembers().size());
+                        leagueMemberCounts.add(league.getMemberIds().size());
                     }
                 }
 
