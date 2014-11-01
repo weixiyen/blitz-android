@@ -5,12 +5,16 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.blitz.app.R;
 import com.blitz.app.utilities.animations.AnimHelperFade;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import butterknife.ButterKnife;
+import butterknife.InjectView;
 
 /**
  * Created by mrkcsc on 10/26/14. Copyright 2014 Blitz Studios
@@ -32,7 +36,7 @@ public class LeaguesScreenAdapterView extends BaseAdapter {
     private List<String>  mMemberUserNames = new ArrayList<String>();
     private List<Integer> mMemberWins      = new ArrayList<Integer>();
     private List<Integer> mMemberLosses    = new ArrayList<Integer>();
-    private List<Integer> mMemberRatin     = new ArrayList<Integer>();
+    private List<Integer> mMemberRating    = new ArrayList<Integer>();
 
     // List view paired to this adapter.
     private ListView mAssociatedListView;
@@ -178,7 +182,7 @@ public class LeaguesScreenAdapterView extends BaseAdapter {
                 mMemberUserNames = memberUserNames;
                 mMemberWins      = memberWins;
                 mMemberLosses    = memberLosses;
-                mMemberRatin     = memberRating;
+                mMemberRating = memberRating;
 
                 // Reload table.
                 notifyDataSetChanged();
@@ -203,22 +207,61 @@ public class LeaguesScreenAdapterView extends BaseAdapter {
     // region Private Members
     // ============================================================================================================
 
+    /**
+     * Configure the stats header.
+     *
+     * @param convertView Recycled view.
+     * @param parent Parent.
+     *
+     * @return Configured item.
+     */
     private View configureStatsHeader(View convertView, ViewGroup parent) {
 
         if (convertView == null) {
             convertView = LayoutInflater.from(parent.getContext())
                     .inflate(R.layout.leagues_screen_summary, parent, false);
+
+            // Set the view holder.
+            convertView.setTag(new ViewHolderHeader(convertView));
         }
+
+        // Fetch view holder.
+        ViewHolderHeader viewHolder = (ViewHolderHeader)convertView.getTag();
+
+        viewHolder.mLeagueRank.setText(Integer.toString(mLeagueRank));
+        viewHolder.mLeagueMembers.setText(Integer.toString(mLeagueMembers));
+        viewHolder.mLeagueRating.setText(Integer.toString(mLeagueRating));
 
         return convertView;
     }
 
+    /**
+     * Configure a league member item.
+     *
+     * @param convertView Recycled view.
+     * @param parent Parent.
+     * @param position Position.
+     *
+     * @return Configured item.
+     */
     private View configureLeagueMember(View convertView, ViewGroup parent, int position) {
 
         if (convertView == null) {
             convertView = LayoutInflater.from(parent.getContext())
                     .inflate(R.layout.leagues_screen_member, parent, false);
+
+            // Set the view holder.
+            convertView.setTag(new ViewHolderMember(convertView));
         }
+
+        // Fetch view holder.
+        ViewHolderMember viewHolder = (ViewHolderMember)convertView.getTag();
+
+        viewHolder.mLeagueMemberRank.setText(Integer.toString(position + 1));
+        viewHolder.mLeagueMemberUserName.setText(mMemberUserNames.get(position));
+        viewHolder.mLeagueMemberWins.setText("W" + String.format("%03d", mMemberWins.get(position)));
+        viewHolder.mLeagueMemberLosses.setText("L" + String.format("%03d", mMemberLosses.get(position)));
+        viewHolder.mLeagueMemberRating.setText(Integer.toString(mMemberRating.get(position)));
 
         return convertView;
     }
@@ -242,6 +285,39 @@ public class LeaguesScreenAdapterView extends BaseAdapter {
         convertView.setVisibility(View.VISIBLE);
 
         return convertView;
+    }
+
+    // endregion
+
+    // region Inner Classes
+    // ============================================================================================================
+
+    static class ViewHolderHeader {
+
+        @InjectView(R.id.leagues_summary_rank)    TextView mLeagueRank;
+        @InjectView(R.id.leagues_summary_members) TextView mLeagueMembers;
+        @InjectView(R.id.leagues_summary_rating)  TextView mLeagueRating;
+
+        private ViewHolderHeader(View view) {
+
+            // Map member variables.
+            ButterKnife.inject(this, view);
+        }
+    }
+
+    static class ViewHolderMember {
+
+        @InjectView(R.id.leagues_member_rank)      TextView mLeagueMemberRank;
+        @InjectView(R.id.leagues_member_user_name) TextView mLeagueMemberUserName;
+        @InjectView(R.id.leagues_member_wins)      TextView mLeagueMemberWins;
+        @InjectView(R.id.leagues_member_losses)    TextView mLeagueMemberLosses;
+        @InjectView(R.id.leagues_member_rating)    TextView mLeagueMemberRating;
+
+        private ViewHolderMember(View view) {
+
+            // Map member variables.
+            ButterKnife.inject(this, view);
+        }
     }
 
     // endregion

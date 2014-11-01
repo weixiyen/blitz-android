@@ -95,7 +95,7 @@ public class LeaderboardListAdapter extends ArrayAdapter<String> {
                 (LeaderboardListItemViewHolder)convertView.getTag();
 
         // Set the text.
-        viewHolder.mLeaderboardIndex.setText(String.format("%03d", position + 1));
+        viewHolder.mLeaderboardIndex.setText(Integer.toString(position + 1));
         viewHolder.mLeaderboardUserName.setText(mUserNames.get(position));
         viewHolder.mLeaderboardWins.setText("W" + String.format("%03d", mUserWins.get(position)));
         viewHolder.mLeaderboardLosses.setText("L" + String.format("%03d", mUserLosses.get(position)));
