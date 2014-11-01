@@ -1,12 +1,16 @@
 package com.blitz.app.view_models;
 
 import com.blitz.app.R;
+import com.blitz.app.rest_models.RestModelCallback;
 import com.blitz.app.rest_models.RestModelCallbacks;
 import com.blitz.app.rest_models.RestModelGroup;
+import com.blitz.app.rest_models.RestModelUser;
 import com.blitz.app.utilities.android.BaseActivity;
 import com.blitz.app.utilities.authentication.AuthHelper;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 /**
@@ -112,6 +116,57 @@ public class ViewModelLeagues extends ViewModel {
      */
     private void fetchUserLeagueData() {
 
+        RestModelGroup.getGroupWithId(null, mSelectedLeagueId, new RestModelCallback<RestModelGroup>() {
+
+            @Override
+            public void onSuccess(RestModelGroup object) {
+
+                // Make sure we still want result.
+                if (!mSelectedLeagueId.equals(object.getId())) {
+
+                    return;
+                }
+
+                // Fetch associated user objects.
+                List<RestModelUser> users = new ArrayList<RestModelUser>(object.getMembers().values());
+
+                // Sort the by rating.
+                Collections.sort(users, new Comparator<RestModelUser>() {
+
+                    @Override
+                    public int compare(RestModelUser restModelUser1, RestModelUser restModelUser2) {
+                        int user1Rating = restModelUser1.getRating();
+                        int user2Rating = restModelUser2.getRating();
+
+                        return user1Rating < user2Rating ?  1 :
+                               user1Rating > user2Rating ? -1 : 0;
+                    }
+                });
+
+                // Member information arrays.
+                List<String>  memberUserIds   = new ArrayList<String>();
+                List<String>  memberUserNames = new ArrayList<String>();
+                List<Integer> memberWins      = new ArrayList<Integer>();
+                List<Integer> memberLosses    = new ArrayList<Integer>();
+                List<Integer> memberRating    = new ArrayList<Integer>();
+
+                for (RestModelUser user : users) {
+
+                    // Populate the arrays.
+                    memberUserIds.add(user.getId());
+                    memberUserNames.add(user.getUsername());
+                    memberWins.add(user.getWins());
+                    memberLosses.add(user.getLosses());
+                    memberRating.add(user.getRating());
+                }
+
+                if (getCallbacks(Callbacks.class) != null) {
+                    getCallbacks(Callbacks.class).onUserLeague(
+                            object.getRank(), object.getRating(), object.getMemberIds().size(),
+                            memberUserIds, memberUserNames, memberWins, memberLosses, memberRating);
+                }
+            }
+        });
     }
 
     /**
@@ -198,10 +253,18 @@ public class ViewModelLeagues extends ViewModel {
     public interface Callbacks extends ViewModel.Callbacks {
 
         public void onUserLeagues(List<String> leagueIds, List<String> leagueNames);
+
         public void onRecruitingLeagues(List<String> leagueIds,
                                         List<String> leagueNames,
                                         List<Integer> leagueRatings,
                                         List<Integer> leagueMemberCounts);
+
+        public void onUserLeague(int leagueRank, int leagueRating, int leagueMembers,
+                                 List<String>  memberUserIds,
+                                 List<String>  memberUserNames,
+                                 List<Integer> memberWins,
+                                 List<Integer> memberLosses,
+                                 List<Integer> memberRating);
     }
 
     // endregion

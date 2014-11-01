@@ -178,6 +178,29 @@ public class LeaguesScreen extends BaseFragment implements ViewModelLeagues.Call
         }
     }
 
+    /**
+     * User league details received.
+     *
+     * @param leagueRank Rank.
+     * @param leagueRating Rating.
+     * @param leagueMembers Members.
+     * @param memberUserIds User ids.
+     * @param memberUserNames User names.
+     * @param memberWins Wins.
+     * @param memberLosses Losses.
+     * @param memberRating Rating.
+     */
+    @Override
+    public void onUserLeague(int leagueRank, int leagueRating, int leagueMembers,
+                             List<String>  memberUserIds,
+                             List<String>  memberUserNames,
+                             List<Integer> memberWins,
+                             List<Integer> memberLosses,
+                             List<Integer> memberRating) {
+
+        LogHelper.log("Rank: " + leagueRank + " rating: " + leagueRating + " members: " + leagueMembers + " id count: " + memberUserIds.size());
+    }
+
     // endregion
 
     // region Adapter Callbacks
