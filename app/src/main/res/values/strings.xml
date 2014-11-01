@@ -36,6 +36,7 @@
     <string name="logout">Logout</string>
     <string name="loss">loss</string>
     <string name="match_found">Match Found! Join the match!</string>
+    <string name="members">Members</string>
     <string name="music_and_sounds">Music &amp; Sounds</string>
     <string name="my_account">My Account</string>
     <string name="ok">OK</string>
@@ -50,6 +51,8 @@
     <string name="play_coming_soon">Drafting is currently disabled on Android (early access program in place) - when drafting has been approved, you will receive a notification.  Thank you for downloading Blitz and stay tuned!</string>
     <string name="privacy_policy">Privacy Policy</string>
     <string name="push_notifications">Push Notifications</string>
+    <string name="rank">Rank</string>
+    <string name="rating">Rating</string>
     <string name="recent">Recent</string>
     <string name="reset">Reset</string>
     <string name="rules">Rules</string>
