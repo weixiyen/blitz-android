@@ -227,6 +227,9 @@ public class BlitzScrubber extends LinearLayout {
         // Remove older items.
         mScrubberItems.clear();
 
+        // And views.
+        removeAllViews();
+
         for (int i = 0; i < mScrubberSize; i++) {
 
             // Inflate scrubber item.
