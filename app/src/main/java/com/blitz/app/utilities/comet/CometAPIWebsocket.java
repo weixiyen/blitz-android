@@ -15,7 +15,6 @@ import org.java_websocket.handshake.ServerHandshake;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.nio.channels.NotYetConnectedException;
 import java.util.ArrayList;
 
 import javax.net.ssl.SSLSocketFactory;
@@ -139,7 +138,7 @@ class CometAPIWebsocket {
                 // Send message to the web socket.
                 mWebSocketClient.send(jsonMessage);
 
-            } catch (NotYetConnectedException exception) {
+            } catch (Exception exception) {
 
                 // Add to pending if not connected.
                 mPendingWebSocketMessages.add(jsonMessage);
