@@ -205,6 +205,16 @@ public class KeyboardUtility {
         return mKeyboardOpen;
     }
 
+    /**
+     * Fetch window height.
+     *
+     * @return Window height.
+     */
+    @SuppressWarnings("unused")
+    static public int getWindowHeight() {
+        return mWindowHeight;
+    }
+
     // endregion
 
     // region Show Keyboard
