@@ -153,7 +153,7 @@ public class AuthHelper {
      *                 cleanup before transitioning to the target activity.
      */
     @SuppressWarnings("unused")
-    public void tryEnterMainApp(BaseActivity activity, EnterMainAppCallback callback) {
+    public void tryEnterMainApp(Activity activity, EnterMainAppCallback callback) {
 
         // First check to see if there is a activity we want
         // to automatically jump to for debugging purposes.
@@ -204,7 +204,7 @@ public class AuthHelper {
      * @param activity Target activity.
      */
     @SuppressWarnings("unused")
-    public void tryEnterMainApp(BaseActivity activity) {
+    public void tryEnterMainApp(Activity activity) {
 
         tryEnterMainApp(activity, null);
     }
@@ -278,7 +278,7 @@ public class AuthHelper {
      * @param callback Do our own thing when we are ready to
      *                 enter the main application.
      */
-    private void syncAppState(final BaseActivity activity, final EnterMainAppCallback callback) {
+    private void syncAppState(final Activity activity, final EnterMainAppCallback callback) {
 
         if (mCurrentDraft != null) {
 
@@ -315,11 +315,9 @@ public class AuthHelper {
                                                 if (draft != null) {
                                                     setCurrentDraft(draft);
 
-                                                    startActivity(activity,
-                                                            DraftScreen.class, callback);
+                                                    startActivity(activity, DraftScreen.class, callback);
                                                 } else {
-                                                    startActivity(activity,
-                                                            MainScreen.class, callback);
+                                                    startActivity(activity, MainScreen.class, callback);
                                                 }
                                             }
                                         });
@@ -337,7 +335,7 @@ public class AuthHelper {
      * @param callback Do our own thing when we are ready to
      *                 enter the main application.
      */
-    private void startActivity(final BaseActivity activity, final Class targetActivity,
+    private void startActivity(final Activity activity, final Class targetActivity,
                                final EnterMainAppCallback callback) {
 
         if (targetActivity != null) {
@@ -363,8 +361,18 @@ public class AuthHelper {
 
             } else {
 
-                // Start target activity, clear the history.
-                activity.startActivity(new Intent(activity, targetActivity), true);
+                Intent intent = new Intent(activity, targetActivity);
+
+                // Base activity supports history clearing.
+                if (activity instanceof BaseActivity) {
+
+                    // Start target activity, clear the history.
+                    ((BaseActivity) activity).startActivity(intent, true);
+                } else {
+
+                    // Just start activity.
+                    activity.startActivity(intent);
+                }
 
                 // Always destroy the loading
                 // activity as we leave.

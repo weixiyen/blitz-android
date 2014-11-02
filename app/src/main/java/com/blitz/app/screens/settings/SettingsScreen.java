@@ -170,7 +170,7 @@ public class SettingsScreen extends BaseFragment implements ViewModelSettings.Ca
         // Sign out user.
         AuthHelper.instance().signOut();
 
-        AuthHelper.instance().tryEnterMainApp((BaseActivity)this.getActivity());
+        AuthHelper.instance().tryEnterMainApp(this.getActivity());
     }
 
     /**
@@ -183,7 +183,7 @@ public class SettingsScreen extends BaseFragment implements ViewModelSettings.Ca
         AppData.clear();
 
         // Bounce user back to the loading screen.
-        AuthHelper.instance().tryEnterMainApp((BaseActivity)this.getActivity());
+        AuthHelper.instance().tryEnterMainApp(this.getActivity());
     }
 
     // endregion

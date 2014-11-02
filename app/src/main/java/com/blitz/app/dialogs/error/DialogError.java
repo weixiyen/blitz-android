@@ -6,7 +6,6 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.blitz.app.R;
-import com.blitz.app.utilities.android.BaseActivity;
 import com.blitz.app.utilities.android.BaseDialogFragment;
 import com.blitz.app.utilities.authentication.AuthHelper;
 
@@ -71,7 +70,7 @@ public class DialogError extends BaseDialogFragment {
             public void run() {
 
                 // Bounce user back to the loading screen.
-                AuthHelper.instance().tryEnterMainApp((BaseActivity) activity);
+                AuthHelper.instance().tryEnterMainApp(activity);
             }
         });
 
