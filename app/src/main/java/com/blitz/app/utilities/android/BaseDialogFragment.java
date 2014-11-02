@@ -12,6 +12,7 @@ import android.view.Window;
 import android.view.WindowManager;
 
 import com.blitz.app.R;
+import com.blitz.app.utilities.keyboard.KeyboardUtility;
 import com.blitz.app.utilities.reflection.ReflectionHelper;
 
 import butterknife.ButterKnife;
@@ -61,6 +62,28 @@ public abstract class BaseDialogFragment extends DialogFragment {
 
         // Configure and return the view.
         return configureDialogView(inflater, container);
+    }
+
+    /**
+     * Setup keyboard events.
+     */
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        // Respond to keyboard changes.
+        configureKeyboardChanges(getView(), false);
+    }
+
+    /**
+     * Remove keyboard events.
+     */
+    @Override
+    public void onPause() {
+        super.onPause();
+
+        // Remove keyboard changes.
+        configureKeyboardChanges(getView(), true);
     }
 
     /**
@@ -171,6 +194,49 @@ public abstract class BaseDialogFragment extends DialogFragment {
         onViewCreated(view);
 
         return view;
+    }
+
+    /**
+     * Configure to respond to keyboard changes.
+     *
+     * @param view Dialog root view.
+     */
+    private void configureKeyboardChanges(final View view, boolean remove) {
+
+        if (remove) {
+
+            // Detach the change listener.
+            KeyboardUtility.setKeyboardChangedListener(null);
+
+        } else {
+
+            // Fetch layout parameters of the dialog view.
+            final ViewGroup.LayoutParams lp = view.getLayoutParams();
+
+            // Track keyboard changes.
+            KeyboardUtility.setKeyboardChangedListener(new KeyboardUtility.OnKeyboardChangedListener() {
+
+                @Override
+                public void keyboardOpened(int keyboardHeight) {
+
+                    // Set the height to not include keyboard height.
+                    lp.height = KeyboardUtility.getWindowHeight() - KeyboardUtility.getKeyboardHeight();
+
+                    // Re-render layout.
+                    view.requestLayout();
+                }
+
+                @Override
+                public void keyboardClosed() {
+
+                    // Set full window height.
+                    lp.height = KeyboardUtility.getWindowHeight();
+
+                    // Re-render layout.
+                    view.requestLayout();
+                }
+            });
+        }
     }
 
     // endregion
