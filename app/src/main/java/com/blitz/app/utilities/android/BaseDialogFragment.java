@@ -93,6 +93,9 @@ public abstract class BaseDialogFragment extends DialogFragment {
         window.setFlags(
                 WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
+
+        // Set the animations.
+        window.getAttributes().windowAnimations = R.style.App_DialogAnimation;
     }
 
     /**

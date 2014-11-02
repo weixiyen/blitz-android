@@ -1,6 +1,4 @@
-<resources xmlns:tools="http://schemas.android.com/tools"
-
-    tools:ignore="NewApi">
+<resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="NewApi">
 
     <!-- Base application theme. -->
     <style name="App.Theme" parent="@android:style/Theme.Holo.NoActionBar.Fullscreen">
@@ -67,6 +65,12 @@
         <item name="android:gravity">center</item>
         <item name="android:textColor">@color/active_blue</item>
         <item name="android:textSize">18sp</item>
+    </style>
+
+    <!-- Animation style for dialogs. -->
+    <style name="App.DialogAnimation" parent="">
+        <item name="android:windowEnterAnimation">@anim/anim_fade_in</item>
+        <item name="android:windowExitAnimation">@anim/anim_fade_out</item>
     </style>
 
     <style name="ScoreStyle">
