@@ -8,7 +8,6 @@ import com.blitz.app.R;
 import com.blitz.app.dialogs.input.DialogInput;
 import com.blitz.app.screens.main.MainScreen;
 import com.blitz.app.utilities.android.BaseFragment;
-import com.blitz.app.utilities.logging.LogHelper;
 import com.blitz.app.utilities.scrubber.BlitzScrubber;
 import com.blitz.app.view_models.ViewModel;
 import com.blitz.app.view_models.ViewModelLeagues;
@@ -138,8 +137,6 @@ public class LeaguesScreen extends BaseFragment implements ViewModelLeagues.Call
     @Override
     public void onLeagueCreated() {
 
-        LogHelper.log("League created.");
-
         if (mDialogInput != null) {
             mDialogInput.dismiss();
         }
@@ -150,8 +147,6 @@ public class LeaguesScreen extends BaseFragment implements ViewModelLeagues.Call
      */
     @Override
     public void onLeagueJoined() {
-
-        LogHelper.log("League joined.");
 
         if (mDialogInput != null) {
             mDialogInput.dismiss();
@@ -239,12 +234,22 @@ public class LeaguesScreen extends BaseFragment implements ViewModelLeagues.Call
     // region Misc Callbacks
     // ============================================================================================================
 
+    /**
+     * Attempt to join the specified league.
+     *
+     * @param leagueId League to join.
+     */
     @Override
     public void onJoinLeagueClicked(String leagueId) {
 
-        LogHelper.log("Join league: " + leagueId);
+        // Try to join the associated league.
+        mViewModel.joinLeagueWithId(leagueId);
     }
 
+    /**
+     * Create a dialog to allow the user to
+     * input a league name they want.
+     */
     @Override
     public void onJoinLeagueManualClicked() {
 
@@ -279,6 +284,10 @@ public class LeaguesScreen extends BaseFragment implements ViewModelLeagues.Call
         mDialogInput.show(getChildFragmentManager());
     }
 
+    /**
+     * Create a dialog to allow user
+     * to input the league name they want.
+     */
     @Override
     public void onCreateLeagueClicked() {
 
