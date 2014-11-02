@@ -4,6 +4,7 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
+import android.support.v4.app.FragmentManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -64,6 +65,22 @@ public abstract class BaseDialogFragment extends DialogFragment {
 
         // Reset butter-knife.
         ButterKnife.reset(this);
+    }
+
+    // endregion
+
+    // region Public Methods
+    // ============================================================================================================
+
+    /**
+     * Convenience method for show that does not need a tag.
+     *
+     * @param fragmentManager Fragment manager.
+     */
+    public void show(FragmentManager fragmentManager) {
+
+        // Call using unique hash code based on class instance.
+        show(fragmentManager, Integer.toString(System.identityHashCode(this)));
     }
 
     // endregion
