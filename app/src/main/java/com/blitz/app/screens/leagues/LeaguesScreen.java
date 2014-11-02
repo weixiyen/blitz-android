@@ -133,6 +133,32 @@ public class LeaguesScreen extends BaseFragment implements ViewModelLeagues.Call
     // ============================================================================================================
 
     /**
+     * Hide dialog when league created.
+     */
+    @Override
+    public void onLeagueCreated() {
+
+        LogHelper.log("League created.");
+
+        if (mDialogInput != null) {
+            mDialogInput.dismiss();
+        }
+    }
+
+    /**
+     * Hide dialog when league joined.
+     */
+    @Override
+    public void onLeagueJoined() {
+
+        LogHelper.log("League joined.");
+
+        if (mDialogInput != null) {
+            mDialogInput.dismiss();
+        }
+    }
+
+    /**
      * Received all available user leagues.
      *
      * @param leagueIds League ids. The last is null (represents
@@ -222,7 +248,35 @@ public class LeaguesScreen extends BaseFragment implements ViewModelLeagues.Call
     @Override
     public void onJoinLeagueManualClicked() {
 
-        LogHelper.log("Join league, manual input.");
+        if (mDialogInput != null) {
+            mDialogInput.dismiss();
+        }
+
+        // Create and configure the input dialog.
+        mDialogInput = DialogInput.create(new DialogInput.Callbacks() {
+
+              @Override
+              public void onDialogButtonLeftPressed(DialogInput dialogInput) {
+
+                  // Hide the dialog.
+                  dialogInput.dismiss();
+              }
+
+              @Override
+              public void onDialogButtonRightPressed(DialogInput dialogInput) {
+
+                  // Try to join the league.
+                  mViewModel.joinLeagueWithName(dialogInput.getInputtedText());
+              }
+          },
+                R.string.join_a_league,
+                R.string.join_a_league_description,
+                R.string.enter_league_name,
+                R.string.cancel,
+                R.string.join);
+
+        // Show the input dialog.
+        mDialogInput.show(getChildFragmentManager());
     }
 
     @Override
@@ -244,7 +298,9 @@ public class LeaguesScreen extends BaseFragment implements ViewModelLeagues.Call
 
             @Override
             public void onDialogButtonRightPressed(DialogInput dialogInput) {
-                LogHelper.log("Right pressed: " + dialogInput);
+
+                // Try to create the league.
+                mViewModel.createLeagueWithName(dialogInput.getInputtedText());
             }
         },
                 R.string.create_league,

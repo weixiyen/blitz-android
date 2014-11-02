@@ -31,6 +31,7 @@
     <string name="invite_a_friend">Invite a friend to play Blitz</string>
     <string name="join">Join!</string>
     <string name="join_a_league">Join a League</string>
+    <string name="join_a_league_description">What is the name of the league you are joining?</string>
     <string name="leaderboard">Leaderboard</string>
     <string name="leagues">Leagues</string>
     <string name="leagues_description">Join or create a BLITZ league and see how you stack up vs your league mates.  Compete against other leagues to become the best!</string>

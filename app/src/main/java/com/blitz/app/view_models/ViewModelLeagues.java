@@ -7,6 +7,7 @@ import com.blitz.app.rest_models.RestModelGroup;
 import com.blitz.app.rest_models.RestModelUser;
 import com.blitz.app.utilities.android.BaseActivity;
 import com.blitz.app.utilities.authentication.AuthHelper;
+import com.blitz.app.utilities.logging.LogHelper;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -246,12 +247,76 @@ public class ViewModelLeagues extends ViewModel {
         }
     }
 
+    @SuppressWarnings("unused")
+    public void createLeagueWithName(String leagueName) {
+
+        // Create a group with user inputted name.
+        RestModelGroup.createGroupWithName(mActivity, leagueName,
+                new RestModelCallback<RestModelGroup>() {
+
+            @Override
+            public void onSuccess(RestModelGroup object) {
+
+                if (getCallbacks(Callbacks.class) != null) {
+                    getCallbacks(Callbacks.class).onLeagueCreated();
+                }
+
+                // Re-initialize model.
+                initialize();
+            }
+        });
+    }
+
+    @SuppressWarnings("unused")
+    public void joinLeagueWithName(String leagueName) {
+
+        LogHelper.log("Join league: " + leagueName);
+
+        RestModelGroup.getGroupWithName(mActivity, leagueName,
+                new RestModelCallback<RestModelGroup>() {
+
+            @Override
+            public void onSuccess(RestModelGroup object) {
+
+                LogHelper.log("Joined.");
+
+                if (object != null) {
+
+                    RestModelGroup.joinGroupWithId(mActivity, object.getId(),
+                            new RestModelCallback<RestModelGroup>() {
+
+                        @Override
+                        public void onSuccess(RestModelGroup object) {
+
+                            LogHelper.log("Super joined.");
+
+                            if (getCallbacks(Callbacks.class) != null) {
+                                getCallbacks(Callbacks.class).onLeagueJoined();
+                            }
+
+                            // Re-initialize model.
+                            initialize();
+                        }
+                    });
+                } else {
+
+                    if (getCallbacks(Callbacks.class) != null) {
+                        getCallbacks(Callbacks.class).onLeagueJoined();
+                    }
+                }
+            }
+        });
+    }
+
     // endregion
 
     // region Callbacks Interface
     // ============================================================================================================
 
     public interface Callbacks extends ViewModel.Callbacks {
+
+        public void onLeagueCreated();
+        public void onLeagueJoined();
 
         public void onUserLeagues(List<String> leagueIds, List<String> leagueNames);
 
