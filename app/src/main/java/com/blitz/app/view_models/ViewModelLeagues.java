@@ -163,10 +163,12 @@ public class ViewModelLeagues extends ViewModel {
 
                 if (getCallbacks(Callbacks.class) != null) {
                     getCallbacks(Callbacks.class).onUserLeague(
+                            object.getId(),
                             object.getRank(),
                             object.getRating(),
                             object.getMemberIds().size(),
                             object.isCurrentUserOfficer(),
+                            object.isRecruiting(),
                             memberUserIds, memberUserNames, memberWins, memberLosses, memberRating);
                 }
             }
@@ -383,7 +385,9 @@ public class ViewModelLeagues extends ViewModel {
                                         List<Integer> leagueRatings,
                                         List<Integer> leagueMemberCounts);
 
-        public void onUserLeague(int leagueRank, int leagueRating, int leagueMembers, boolean isOfficer,
+        public void onUserLeague(String leagueId, int leagueRank, int leagueRating, int leagueMembers,
+                                 boolean isOfficer,
+                                 boolean isRecruiting,
                                  List<String>  memberUserIds,
                                  List<String>  memberUserNames,
                                  List<Integer> memberWins,

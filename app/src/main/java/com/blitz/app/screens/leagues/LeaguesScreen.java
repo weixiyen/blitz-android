@@ -20,7 +20,7 @@ import butterknife.InjectView;
  * Created by mrkcsc on 10/24/14. Copyright 2014 Blitz Studios
  */
 public class LeaguesScreen extends BaseFragment implements ViewModelLeagues.Callbacks,
-        LeaguesScreenAdapterCreate.Callbacks, BlitzScrubber.Callbacks {
+        LeaguesScreenAdapterCreate.Callbacks, LeaguesScreenAdapterView.Callbacks, BlitzScrubber.Callbacks {
 
     // region Member Variables
     // ============================================================================================================
@@ -44,7 +44,7 @@ public class LeaguesScreen extends BaseFragment implements ViewModelLeagues.Call
 
     // Initialize the adapters this screen will use.
     private LeaguesScreenAdapterCreate mAdapterCreate = new LeaguesScreenAdapterCreate(this);
-    private LeaguesScreenAdapterView mAdapterView = new LeaguesScreenAdapterView();
+    private LeaguesScreenAdapterView mAdapterView = new LeaguesScreenAdapterView(this);
 
     // Input dialog.
     private DialogInput mDialogInput;
@@ -213,7 +213,8 @@ public class LeaguesScreen extends BaseFragment implements ViewModelLeagues.Call
      * @param memberRating Rating.
      */
     @Override
-    public void onUserLeague(int leagueRank, int leagueRating, int leagueMembers, boolean isOfficer,
+    public void onUserLeague(String leagueId, int leagueRank, int leagueRating, int leagueMembers,
+                             boolean isOfficer, boolean isRecruiting,
                              List<String>  memberUserIds,
                              List<String>  memberUserNames,
                              List<Integer> memberWins,
@@ -224,7 +225,7 @@ public class LeaguesScreen extends BaseFragment implements ViewModelLeagues.Call
 
             // Set league info.
             mAdapterView.setAssociatedListView(mLeaguesScreenList);
-            mAdapterView.setLeagueInfo(leagueRank, leagueRating, leagueMembers, isOfficer,
+            mAdapterView.setLeagueInfo(leagueId, leagueRank, leagueRating, leagueMembers, isOfficer, isRecruiting,
                     memberUserIds, memberUserNames, memberWins, memberLosses, memberRating);
         }
     }
@@ -333,6 +334,19 @@ public class LeaguesScreen extends BaseFragment implements ViewModelLeagues.Call
 
         // Update selected league.
         setSelectedLeague(position);
+    }
+
+    /**
+     * Recruiting status changes for a league.
+     *
+     * @param leagueId Associated league.
+     * @param recruiting Recruiting status.
+     */
+    @Override
+    public void onRecruiting(String leagueId, boolean recruiting) {
+
+        // Toggle recruiting status for the selected league.
+        mViewModel.toggleRecruiting(leagueId, recruiting);
     }
 
     // endregion

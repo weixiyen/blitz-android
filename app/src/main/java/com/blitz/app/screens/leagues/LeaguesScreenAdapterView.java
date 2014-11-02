@@ -4,7 +4,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.CompoundButton;
 import android.widget.ListView;
+import android.widget.Switch;
 import android.widget.TextView;
 
 import com.blitz.app.R;
@@ -36,11 +38,14 @@ public class LeaguesScreenAdapterView extends BaseAdapter {
             LEAGUE_MEMBER,
             LEAGUE_LOADING);
 
+    private String mLeagueId;
+
     private int mLeagueRank;
     private int mLeagueRating;
     private int mLeagueMembers;
 
     private boolean mIsOfficer;
+    private boolean mIsRecruiting;
 
     private List<String>  mMemberUserIds   = new ArrayList<String>();
     private List<String>  mMemberUserNames = new ArrayList<String>();
@@ -50,6 +55,25 @@ public class LeaguesScreenAdapterView extends BaseAdapter {
 
     // List view paired to this adapter.
     private ListView mAssociatedListView;
+
+    // Callbacks object.
+    private Callbacks mCallbacks;
+
+    // endregion
+
+    // region Constructor
+    // ============================================================================================================
+
+    /**
+     * Set callbacks.
+     *
+     * @param callbacks Callbacks.
+     */
+    public LeaguesScreenAdapterView(Callbacks callbacks) {
+
+        // Set callbacks.
+        mCallbacks = callbacks;
+    }
 
     // endregion
 
@@ -200,8 +224,9 @@ public class LeaguesScreenAdapterView extends BaseAdapter {
      * @param memberRating User rating.
      */
     @SuppressWarnings("unused")
-    public void setLeagueInfo(final int leagueRank, final int leagueRating,
-                              final int leagueMembers, final boolean isOfficer,
+    public void setLeagueInfo(final String leagueId, final int leagueRank,
+                              final int leagueRating, final int leagueMembers,
+                              final boolean isOfficer, final boolean isRecruiting,
                               final List<String>  memberUserIds,
                               final List<String>  memberUserNames,
                               final List<Integer> memberWins,
@@ -223,10 +248,12 @@ public class LeaguesScreenAdapterView extends BaseAdapter {
             @Override
             public void run() {
 
+                mLeagueId      = leagueId;
                 mLeagueRank    = leagueRank;
                 mLeagueRating  = leagueRating;
                 mLeagueMembers = leagueMembers;
                 mIsOfficer     = isOfficer;
+                mIsRecruiting  = isRecruiting;
 
                 mMemberUserIds   = memberUserIds;
                 mMemberUserNames = memberUserNames;
@@ -299,6 +326,22 @@ public class LeaguesScreenAdapterView extends BaseAdapter {
             convertView = LayoutInflater.from(parent.getContext())
                     .inflate(R.layout.leagues_screen_recruitment_toggle, parent, false);
         }
+
+        // Find the recruiting toggle view.
+        Switch recruitingToggle = ((Switch)convertView.findViewById(R.id.leagues_recruitment_toggle));
+
+        // Track state changes of the recruitment toggle.
+        recruitingToggle.setChecked(mIsRecruiting);
+        recruitingToggle.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean checked) {
+
+                if (mCallbacks != null) {
+                    mCallbacks.onRecruiting(mLeagueId, checked);
+                }
+            }
+        });
 
         return convertView;
     }
@@ -386,6 +429,16 @@ public class LeaguesScreenAdapterView extends BaseAdapter {
             // Map member variables.
             ButterKnife.inject(this, view);
         }
+    }
+
+    // endregion
+
+    // region Callbacks Interface
+    // ============================================================================================================
+
+    public interface Callbacks {
+
+        public void onRecruiting(String leagueId, boolean recruiting);
     }
 
     // endregion

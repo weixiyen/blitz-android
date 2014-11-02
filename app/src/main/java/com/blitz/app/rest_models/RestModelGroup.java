@@ -281,7 +281,7 @@ public class RestModelGroup extends RestModel {
         JsonObject jsonRecruiting  = new JsonObject();
 
         jsonRecruiting.addProperty("recruiting", recruiting);
-        jsonReplace.add("append", jsonRecruiting);
+        jsonReplace.add("replace", jsonRecruiting);
 
         // Make api call.
         mRestAPI.group_patch(groupId, jsonReplace,
