@@ -2,6 +2,7 @@ package com.blitz.app.utilities.rest;
 
 import android.app.Activity;
 import android.os.Handler;
+import android.support.v4.app.FragmentActivity;
 
 import com.blitz.app.dialogs.error.DialogError;
 import com.blitz.app.dialogs.loading.DialogLoading;
@@ -23,7 +24,7 @@ public abstract class RestAPICallback<T> implements Callback<T> {
     // ============================================================================================================
 
     // Parent activity.
-    private Activity mActivity;
+    private FragmentActivity mActivity;
 
     // Loading dialog.
     private DialogLoading mDialogLoading;
@@ -73,7 +74,7 @@ public abstract class RestAPICallback<T> implements Callback<T> {
     public RestAPICallback(Activity activity) {
 
         // Set the activity.
-        mActivity = activity;
+        mActivity = (FragmentActivity)activity;
 
         // Set the start time.
         mOperationTimeStart = DateUtils.getDateInGMT();
@@ -193,13 +194,13 @@ public abstract class RestAPICallback<T> implements Callback<T> {
 
             if (mLogoutOnFailure) {
 
-                dialogError.showUnauthorized();
-            }
+                // Not authorized bro.
+                dialogError.showUnauthorized(mActivity.getSupportFragmentManager(), mActivity);
 
-            if (networkError) {
+            } else  if (networkError) {
 
                 // Network error dialog.
-                dialogError.showNetworkError();
+                dialogError.showNetworkError(mActivity.getSupportFragmentManager());
 
             } else if (response != null) {
 
@@ -211,20 +212,20 @@ public abstract class RestAPICallback<T> implements Callback<T> {
                     case 401:
 
                         // Show unauthorized.
-                        dialogError.showUnauthorized();
+                        dialogError.showUnauthorized(mActivity.getSupportFragmentManager(), mActivity);
 
                         break;
                     default:
 
                         // Show generic error.
-                        getErrorDialog().show(true);
+                        getErrorDialog().show(mActivity.getSupportFragmentManager());
 
                         break;
                 }
             } else {
 
                 // Show generic error.
-                getErrorDialog().show(true);
+                getErrorDialog().show(mActivity.getSupportFragmentManager());
             }
         }
     }
@@ -277,7 +278,7 @@ public abstract class RestAPICallback<T> implements Callback<T> {
     protected DialogError getErrorDialog() {
 
         if (mDialogError == null && mActivity != null) {
-            mDialogError = new DialogError(mActivity);
+            mDialogError = new DialogError();
         }
 
         return mDialogError;

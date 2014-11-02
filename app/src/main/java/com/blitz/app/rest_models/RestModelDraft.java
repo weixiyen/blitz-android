@@ -1,6 +1,7 @@
 package com.blitz.app.rest_models;
 
 import android.app.Activity;
+import android.support.v4.app.FragmentActivity;
 
 import com.blitz.app.utilities.authentication.AuthHelper;
 import com.blitz.app.utilities.date.DateUtils;
@@ -647,7 +648,8 @@ public final class RestModelDraft extends RestModel {
 
                 // Show unauthorized message.
                 if (getErrorDialog() != null) {
-                    getErrorDialog().showUnauthorized();
+                    getErrorDialog().showUnauthorized
+                            (((FragmentActivity)activity).getSupportFragmentManager(), activity);
                 }
             }
         };

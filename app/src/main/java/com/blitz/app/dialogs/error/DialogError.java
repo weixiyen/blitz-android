@@ -1,12 +1,13 @@
 package com.blitz.app.dialogs.error;
 
 import android.app.Activity;
-import android.content.Intent;
+import android.support.v4.app.FragmentManager;
+import android.view.View;
 import android.widget.TextView;
 
 import com.blitz.app.R;
-import com.blitz.app.screens.loading.LoadingScreen;
-import com.blitz.app.utilities.android.BaseDialog;
+import com.blitz.app.utilities.android.BaseActivity;
+import com.blitz.app.utilities.android.BaseDialogFragment;
 import com.blitz.app.utilities.authentication.AuthHelper;
 
 import butterknife.InjectView;
@@ -15,32 +16,25 @@ import butterknife.OnClick;
 /**
  * Created by mrkcsc on 7/6/14. Copyright 2014 Blitz Studios
  */
-public class DialogError extends BaseDialog {
+public class DialogError extends BaseDialogFragment {
 
     // region Member Variables
     // ============================================================================================================
 
     @InjectView(R.id.dialog_error_message) TextView mDialogErrorMessage;
 
+    private Integer mDialogErrorMessageResource;
+
     // endregion
 
-    // region Constructors
-    // ============================================================================================================
+    @Override
+    protected void onViewCreated(View view) {
 
-    /**
-     * Default constructor.  Sets up a dialog
-     * using project defaults.
-     *
-     * @param activity Associated activity.
-     */
-    public DialogError(Activity activity) {
-        super(activity);
-
-        setTouchable(true);
-        setDismissible(true);
+        // Set the error message.
+        if (mDialogErrorMessage != null && mDialogErrorMessageResource != null) {
+            mDialogErrorMessage.setText(mDialogErrorMessageResource);
+        }
     }
-
-    // endregion
 
     // region Public Methods
     // ============================================================================================================
@@ -49,11 +43,12 @@ public class DialogError extends BaseDialog {
      * Show an error dialog for a user
      * who cannot connect to the network.
      */
-    public void showNetworkError() {
-        super.show(true);
+    public void showNetworkError(FragmentManager fragmentManager) {
 
-        // Set error text.
-        setText(R.string.error_network);
+        // Set network error message.
+        mDialogErrorMessageResource = R.string.error_network;
+
+        show(fragmentManager);
     }
 
     /**
@@ -61,36 +56,26 @@ public class DialogError extends BaseDialog {
      * who is not authorized.  Also log
      * that user out.
      */
-    public void showUnauthorized() {
-        super.show(true);
+    public void showUnauthorized(FragmentManager fragmentManager, final Activity activity) {
 
         // Provide unauthorized message.
-        setText(R.string.error_unauthorized);
+        mDialogErrorMessageResource = R.string.error_unauthorized;
 
         // Sign out user.
         AuthHelper.instance().signOut();
 
-        // Set a dismiss listener.
-        setOnDismissListener(new Runnable() {
+        // Set dismiss action.
+        setOnDismissAction(new Runnable() {
 
             @Override
             public void run() {
 
                 // Bounce user back to the loading screen.
-                mActivity.startActivity(new Intent(mActivity, LoadingScreen.class));
+                AuthHelper.instance().tryEnterMainApp((BaseActivity) activity);
             }
         });
-    }
 
-    /**
-     * Set text of the error dialog.
-     *
-     * @param textResId Resource id for text.
-     */
-    public void setText(int textResId) {
-
-        // Set the text.
-        mDialogErrorMessage.setText(textResId);
+        show(fragmentManager);
     }
 
     // endregion
@@ -104,7 +89,8 @@ public class DialogError extends BaseDialog {
     @OnClick(R.id.dialog_error_ok) @SuppressWarnings("unused")
     public void dismissDialog() {
 
-        hide(null);
+        // Dismiss the dialog.
+        dismiss();
     }
 
     // endregion
