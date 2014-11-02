@@ -355,7 +355,7 @@ public class RestModelGroup extends RestModel {
     @SuppressWarnings("unused")
     public int getRank() {
 
-        return mRank;
+        return mRank != null ? mRank : 0;
     }
 
     /**
