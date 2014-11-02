@@ -231,6 +231,7 @@ public class ViewModelLeagues extends ViewModel {
      *
      * @param selectedLeagueId Selected league id (can be null).
      */
+    @SuppressWarnings("unused")
     public void setSelectedLeagueId(String selectedLeagueId) {
 
         // Update selected league id.
@@ -247,8 +248,19 @@ public class ViewModelLeagues extends ViewModel {
         }
     }
 
+    /**
+     * Create league with the specified name.
+     *
+     * @param leagueName League name.
+     */
     @SuppressWarnings("unused")
     public void createLeagueWithName(String leagueName) {
+
+        // User can't create more than the max.
+        if (mUserLeagues.size() >= MAX_LEAGUES_TO_SHOW) {
+
+            return;
+        }
 
         // Create a group with user inputted name.
         RestModelGroup.createGroupWithName(mActivity, leagueName,
@@ -267,10 +279,49 @@ public class ViewModelLeagues extends ViewModel {
         });
     }
 
+    /**
+     * Join league with specified id.
+     *
+     * @param leagueId Specified league id.
+     */
+    @SuppressWarnings("unused")
+    public void joinLeagueWithId(String leagueId) {
+
+        // User can't join more than the max.
+        if (mUserLeagues.size() >= MAX_LEAGUES_TO_SHOW) {
+
+            return;
+        }
+
+        // Try to join group with the provided league id.
+        RestModelGroup.joinGroupWithId(mActivity, leagueId, new RestModelCallback<RestModelGroup>() {
+
+            @Override
+            public void onSuccess(RestModelGroup object) {
+
+                if (getCallbacks(Callbacks.class) != null) {
+                    getCallbacks(Callbacks.class).onLeagueJoined();
+                }
+
+                // Re-initialize model.
+                initialize();
+            }
+        });
+    }
+
+    /**
+     * Try to join league with specified name.
+     *
+     * @param leagueName League name.
+     */
     @SuppressWarnings("unused")
     public void joinLeagueWithName(String leagueName) {
 
-        LogHelper.log("Join league: " + leagueName);
+        // User can't join more than the max.
+        if (mUserLeagues.size() >= MAX_LEAGUES_TO_SHOW) {
+
+            return;
+        }
 
         RestModelGroup.getGroupWithName(mActivity, leagueName,
                 new RestModelCallback<RestModelGroup>() {
@@ -282,22 +333,9 @@ public class ViewModelLeagues extends ViewModel {
 
                 if (object != null) {
 
-                    RestModelGroup.joinGroupWithId(mActivity, object.getId(),
-                            new RestModelCallback<RestModelGroup>() {
+                    // Join with result id.
+                    joinLeagueWithId(object.getId());
 
-                        @Override
-                        public void onSuccess(RestModelGroup object) {
-
-                            LogHelper.log("Super joined.");
-
-                            if (getCallbacks(Callbacks.class) != null) {
-                                getCallbacks(Callbacks.class).onLeagueJoined();
-                            }
-
-                            // Re-initialize model.
-                            initialize();
-                        }
-                    });
                 } else {
 
                     if (getCallbacks(Callbacks.class) != null) {
