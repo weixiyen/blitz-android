@@ -1,0 +1,96 @@
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="${packageName}.${activityClass}"
+    tools:ignore="ButtonStyle,UnusedAttribute">
+
+    <FrameLayout
+        android:id="@+id/dialog_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/background_dialog"
+        tools:ignore="UselessParent">
+
+        <RelativeLayout
+            android:layout_width="@dimen/screen_width"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:background="@drawable/asset_bg_dialog">
+
+            <ImageView
+                android:layout_width="@dimen/screen_width"
+                android:layout_height="300dp"
+                android:contentDescription="@string/empty_string"
+                android:src="@drawable/asset_bg_dialog_glow" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:minHeight="300dp"
+                android:orientation="vertical">
+
+                <TextView
+                    style="@style/App.TextView"
+                    fontPath="@string/app_font_bold"
+                    android:layout_width="match_parent"
+                    android:layout_height="66dp"
+                    android:gravity="center"
+                    android:text="@string/information"
+                    android:textColor="@color/text_color_light"
+                    android:textSize="20sp"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_margin="20dp"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/dialog_info_text"
+                        style="@style/App.TextView"
+                        fontPath="@string/app_font_light"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="20dp"
+                        android:gravity="left|center"
+                        android:text="@string/lorum_ipsum_short"
+                        android:textColor="@color/text_color_light"
+                        android:textSize="12sp" />
+
+                    <EditText
+                        android:id="@+id/access_code_code"
+                        style="@style/App.TextView"
+                        fontPath="@string/app_font_regular"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:background="#1AFFFFFF"
+                        android:gravity="center_vertical"
+                        android:hint="@string/lorum_ipsum_tiny"
+                        android:inputType="text"
+                        android:maxLength="@integer/access_code_length"
+                        android:padding="12dp"
+                        android:textColor="@color/text_color_light"
+                        android:textColorHint="@color/text_color_light"
+                        android:textSize="12sp" />
+                </LinearLayout>
+
+                <Button
+                    android:id="@+id/dialog_error_ok"
+                    style="@style/App.Button"
+                    fontPath="@string/app_font_regular"
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:background="@drawable/drawable_button_dialog"
+                    android:contentDescription="@string/empty_string"
+                    android:text="@string/ok"
+                    android:textColor="@color/text_color_light"
+                    android:textSize="14sp" />
+            </LinearLayout>
+        </RelativeLayout>
+    </FrameLayout>
+</LinearLayout>
