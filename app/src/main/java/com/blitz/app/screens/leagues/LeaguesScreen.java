@@ -5,6 +5,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.blitz.app.R;
+import com.blitz.app.dialogs.input.DialogInput;
 import com.blitz.app.screens.main.MainScreen;
 import com.blitz.app.utilities.android.BaseFragment;
 import com.blitz.app.utilities.logging.LogHelper;
@@ -28,6 +29,9 @@ public class LeaguesScreen extends BaseFragment implements ViewModelLeagues.Call
     @InjectView(R.id.leagues_header) TextView mLeaguesHeader;
     @InjectView(R.id.leagues_screen_list) ListView mLeaguesScreenList;
 
+    @InjectView(R.id.leagues_scrubber) BlitzScrubber mLeaguesScrubber;
+    @InjectView(R.id.leagues_scrubber_item) TextView mLeaguesScrubberItem;
+
     // Associated view model.
     private ViewModelLeagues mViewModel;
 
@@ -43,9 +47,8 @@ public class LeaguesScreen extends BaseFragment implements ViewModelLeagues.Call
     private LeaguesScreenAdapterCreate mAdapterCreate = new LeaguesScreenAdapterCreate(this);
     private LeaguesScreenAdapterView mAdapterView = new LeaguesScreenAdapterView();
 
-    // League selector.
-    @InjectView(R.id.leagues_scrubber) BlitzScrubber mLeaguesScrubber;
-    @InjectView(R.id.leagues_scrubber_item) TextView mLeaguesScrubberItem;
+    // Input dialog.
+    private DialogInput mDialogInput;
 
     // endregion
 
@@ -207,7 +210,7 @@ public class LeaguesScreen extends BaseFragment implements ViewModelLeagues.Call
 
     // endregion
 
-    // region Adapter Callbacks
+    // region Misc Callbacks
     // ============================================================================================================
 
     @Override
@@ -225,13 +228,34 @@ public class LeaguesScreen extends BaseFragment implements ViewModelLeagues.Call
     @Override
     public void onCreateLeagueClicked() {
 
-        LogHelper.log("Create league.");
+        if (mDialogInput != null) {
+            mDialogInput.dismiss();
+        }
+
+        // Create and configure the input dialog.
+        mDialogInput = DialogInput.create(new DialogInput.Callbacks() {
+
+            @Override
+            public void onDialogButtonLeftPressed(DialogInput dialogInput) {
+
+                // Hide the dialog.
+                dialogInput.dismiss();
+            }
+
+            @Override
+            public void onDialogButtonRightPressed(DialogInput dialogInput) {
+                LogHelper.log("Right pressed: " + dialogInput);
+            }
+        },
+                R.string.create_league,
+                R.string.create_league_description,
+                R.string.enter_league_name,
+                R.string.cancel,
+                R.string.create);
+
+        // Show the input dialog.
+        mDialogInput.show(getChildFragmentManager());
     }
-
-    // endregion
-
-    // region Scrubber Callbacks
-    // ============================================================================================================
 
     /**
      * Update selected league UI when

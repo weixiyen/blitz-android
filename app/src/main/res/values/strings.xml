@@ -12,10 +12,13 @@
     <string name="change_password">Change Password</string>
     <string name="contact_us">Contact Us</string>
     <string name="continue_string">Continue</string>
+    <string name="create">Create</string>
     <string name="create_or_join_a_league">Create or Join a League</string>
     <string name="create_league">Create League</string>
+    <string name="create_league_description">What is your desired league name?</string>
     <string name="desired_username">Desired Username</string>
     <string name="enter_access_code">Enter Access Code</string>
+    <string name="enter_league_name">Enter League name</string>
     <string name="email">Email</string>
     <string name="error">Error</string>
     <string name="featured">Featured</string>
@@ -28,11 +31,13 @@
     <string name="invite_a_friend">Invite a friend to play Blitz</string>
     <string name="join">Join!</string>
     <string name="join_a_league">Join a League</string>
+    <string name="leaderboard">Leaderboard</string>
     <string name="leagues">Leagues</string>
     <string name="leagues_description">Join or create a BLITZ league and see how you stack up vs your league mates.  Compete against other leagues to become the best!</string>
     <string name="leagues_openly_recruiting">Leagues Openly Recruiting!</string>
     <string name="lets_get_going">Let\'s get going!</string>
     <string name="live_drafts_blocked">Live Drafts are closed every week from Sunday 12PM EST until Tuesday 12PM EST.  Please check back again on Tuesday 12PM EST.</string>
+    <string name="loading_matchup_data">Loading Matchup Data</string>
     <string name="logout">Logout</string>
     <string name="loss">loss</string>
     <string name="match_found">Match Found! Join the match!</string>
@@ -71,9 +76,6 @@
     <string name="vs">vs</string>
     <string name="wins">wins</string>
     <string name="you_have_cash">You have $0.00</string>
-    <string name="matchup_loading_message">Loading Matchup Data</string>
-    <string name="leaderboard_link_text">Leaderboard</string>
-    <string name="close_button_text">close</string>
 
     <string-array name="weeks_array">
         <item>Week 01</item>

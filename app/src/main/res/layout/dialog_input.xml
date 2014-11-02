@@ -76,7 +76,6 @@
                         android:gravity="center_vertical"
                         android:hint="@string/lorum_ipsum_tiny"
                         android:inputType="text"
-                        android:maxLength="@integer/access_code_length"
                         android:padding="12dp"
                         android:textColor="@color/text_color_light"
                         android:textColorHint="@color/text_color_light"
