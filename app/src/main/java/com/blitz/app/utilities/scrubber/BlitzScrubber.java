@@ -139,17 +139,16 @@ public class BlitzScrubber extends LinearLayout {
     public void setScrubberItemSelected(int position) {
 
         // if valid position is provided.
-        if (position < mScrubberSize && position >= 0
-                && (mScrubberItemSelected == null || position != mScrubberItemSelected)) {
-
-            // Set selected color.
-            mScrubberItems.get(position).setTextColor(mScrubberColorActive);
+        if (position < mScrubberSize && position >= 0) {
 
             if (mScrubberItemSelected != null) {
 
                 // Reset color of old selected.
                 mScrubberItems.get(mScrubberItemSelected).setTextColor(mScrubberColor);
             }
+
+            // Set selected color.
+            mScrubberItems.get(position).setTextColor(mScrubberColorActive);
 
             if (mScrubberTextView != null) {
 
@@ -166,8 +165,12 @@ public class BlitzScrubber extends LinearLayout {
                 mScrubberTextView.setText(label);
             }
 
-            // Update selected index.
-            mScrubberItemSelected = position;
+            // If selected index has changed.
+            if (mScrubberItemSelected == null || position != mScrubberItemSelected) {
+
+                // Update selected index.
+                mScrubberItemSelected = position;
+            }
         }
     }
 
