@@ -3,6 +3,6 @@
     android:id="@+id/dialog_rules_pager"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/background_transparent"
+    android:background="@color/background_dialog"
     android:gravity="center"
     android:overScrollMode="never" />

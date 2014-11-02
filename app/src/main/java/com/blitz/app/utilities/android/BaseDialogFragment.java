@@ -24,6 +24,19 @@ public abstract class BaseDialogFragment extends DialogFragment {
     // ============================================================================================================
 
     /**
+     * Set a transparent theme.
+     *
+     * @param savedInstanceState Saved state.
+     */
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        // Set the style to force a transparent dialog.
+        setStyle(DialogFragment.STYLE_NO_TITLE, android.R.style.Theme_Translucent);
+    }
+
+    /**
      * When view is created inflate layout and setup the window.
      *
      * @param inflater Inflater object.
@@ -35,29 +48,11 @@ public abstract class BaseDialogFragment extends DialogFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        // Use reflection to fetch the associated view resource id and set content view.
-        int layoutResourceId = ReflectionHelper.getResourceId(this.getClass(), R.layout.class);
+        // Configure fragment.
+        configureDialogFragment();
 
-        // Now inflate the associated view.
-        View view = inflater.inflate(layoutResourceId, container);
-
-        // Fetch dialog window.
-        Window window = getDialog().getWindow();
-
-        // No title mode (or status bar).
-        window.requestFeature(Window.FEATURE_NO_TITLE);
-        window.setFlags(
-                WindowManager.LayoutParams.FLAG_FULLSCREEN,
-                WindowManager.LayoutParams.FLAG_FULLSCREEN);
-
-
-        // Initialize butter-knife.
-        ButterKnife.inject(this, view);
-
-        // Call on view created.
-        onViewCreated(view);
-
-        return view;
+        // Configure and return the view.
+        return configureDialogView(inflater, container);
     }
 
     /**
@@ -71,15 +66,16 @@ public abstract class BaseDialogFragment extends DialogFragment {
         ButterKnife.reset(this);
     }
 
+    // endregion
+
+    // region Private Methods
+    // ============================================================================================================
+
     /**
-     * When activity is created, make this dialog
-     * transparent as possible and full screen.
-     *
-     * @param savedInstanceState Saved state.
+     * Configure the native dialog fragment to
+     * be full screen with no background.
      */
-    @Override
-    public void onActivityCreated(Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
+    private void configureDialogFragment() {
 
         // Fetch dialog window.
         Window window = getDialog().getWindow();
@@ -91,6 +87,37 @@ public abstract class BaseDialogFragment extends DialogFragment {
         window.setLayout(
                 WindowManager.LayoutParams.MATCH_PARENT,
                 WindowManager.LayoutParams.MATCH_PARENT);
+
+        // No title mode (or status bar).
+        window.requestFeature(Window.FEATURE_NO_TITLE);
+        window.setFlags(
+                WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN);
+    }
+
+    /**
+     * Inflate, and configure the view.
+     *
+     * @param inflater Inflater object.
+     * @param container Parent container.
+     *
+     * @return Configured view.
+     */
+    private View configureDialogView(LayoutInflater inflater, ViewGroup container) {
+
+        // Use reflection to fetch the associated view resource id and set content view.
+        int layoutResourceId = ReflectionHelper.getResourceId(this.getClass(), R.layout.class);
+
+        // Now inflate the associated view.
+        View view = inflater.inflate(layoutResourceId, container);
+
+        // Initialize butter-knife.
+        ButterKnife.inject(this, view);
+
+        // Call on view created.
+        onViewCreated(view);
+
+        return view;
     }
 
     // endregion
