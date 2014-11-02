@@ -21,6 +21,13 @@ import butterknife.ButterKnife;
  */
 public abstract class BaseDialogFragment extends DialogFragment {
 
+    // region Member Variables
+    // ============================================================================================================
+
+    private Runnable mOnDismissAction;
+
+    // endregion
+
     // region Overwritten Methods
     // ============================================================================================================
 
@@ -67,6 +74,19 @@ public abstract class BaseDialogFragment extends DialogFragment {
         ButterKnife.reset(this);
     }
 
+    /**
+     * Perform custom action on dismiss.
+     */
+    @Override
+    public void dismiss() {
+        super.dismiss();
+
+        // Run custom dismiss action.
+        if (mOnDismissAction != null) {
+            mOnDismissAction.run();
+        }
+    }
+
     // endregion
 
     // region Public Methods
@@ -77,10 +97,23 @@ public abstract class BaseDialogFragment extends DialogFragment {
      *
      * @param fragmentManager Fragment manager.
      */
+    @SuppressWarnings("unused")
     public void show(FragmentManager fragmentManager) {
 
         // Call using unique hash code based on class instance.
         show(fragmentManager, Integer.toString(System.identityHashCode(this)));
+    }
+
+    /**
+     * Set a dismiss action.
+     *
+     * @param onDismissAction Dismiss action.
+     */
+    @SuppressWarnings("unused")
+    public void setOnDismissAction(Runnable onDismissAction) {
+
+        // Set on dismiss action.
+        mOnDismissAction = onDismissAction;
     }
 
     // endregion
