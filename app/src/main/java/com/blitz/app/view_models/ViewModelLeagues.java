@@ -7,7 +7,6 @@ import com.blitz.app.rest_models.RestModelGroup;
 import com.blitz.app.rest_models.RestModelUser;
 import com.blitz.app.utilities.android.BaseActivity;
 import com.blitz.app.utilities.authentication.AuthHelper;
-import com.blitz.app.utilities.logging.LogHelper;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -164,7 +163,10 @@ public class ViewModelLeagues extends ViewModel {
 
                 if (getCallbacks(Callbacks.class) != null) {
                     getCallbacks(Callbacks.class).onUserLeague(
-                            object.getRank(), object.getRating(), object.getMemberIds().size(),
+                            object.getRank(),
+                            object.getRating(),
+                            object.getMemberIds().size(),
+                            object.isCurrentUserOfficer(),
                             memberUserIds, memberUserNames, memberWins, memberLosses, memberRating);
                 }
             }
@@ -329,8 +331,6 @@ public class ViewModelLeagues extends ViewModel {
             @Override
             public void onSuccess(RestModelGroup object) {
 
-                LogHelper.log("Joined.");
-
                 if (object != null) {
 
                     // Join with result id.
@@ -342,6 +342,26 @@ public class ViewModelLeagues extends ViewModel {
                         getCallbacks(Callbacks.class).onLeagueJoined();
                     }
                 }
+            }
+        });
+    }
+
+    /**
+     * Silently toggle the recruiting status for a league.
+     *
+     * @param leagueId Specified league id.
+     * @param recruiting Recruiting is enabled.
+     */
+    @SuppressWarnings("unused")
+    public void toggleRecruiting(String leagueId, boolean recruiting) {
+
+        // Toggle the recruiting status.
+        RestModelGroup.updateRecruitingStatusForGroup(mActivity, leagueId, recruiting,
+                new RestModelCallback<RestModelGroup>() {
+
+            @Override
+            public void onSuccess(RestModelGroup object) {
+
             }
         });
     }
@@ -363,7 +383,7 @@ public class ViewModelLeagues extends ViewModel {
                                         List<Integer> leagueRatings,
                                         List<Integer> leagueMemberCounts);
 
-        public void onUserLeague(int leagueRank, int leagueRating, int leagueMembers,
+        public void onUserLeague(int leagueRank, int leagueRating, int leagueMembers, boolean isOfficer,
                                  List<String>  memberUserIds,
                                  List<String>  memberUserNames,
                                  List<Integer> memberWins,

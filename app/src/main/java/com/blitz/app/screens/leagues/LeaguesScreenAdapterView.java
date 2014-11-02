@@ -11,6 +11,7 @@ import com.blitz.app.R;
 import com.blitz.app.utilities.animations.AnimHelperFade;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import butterknife.ButterKnife;
@@ -24,13 +25,22 @@ public class LeaguesScreenAdapterView extends BaseAdapter {
     // region Member Variables
     // ============================================================================================================
 
-    public static final int LEAGUE_STATS_HEADER = 0;
-    public static final int LEAGUE_MEMBER       = 1;
-    public static final int LEAGUE_LOADING      = 2;
+    private static final int LEAGUE_STATS_HEADER      = 0;
+    private static final int LEAGUE_RECRUITING_TOGGLE = 1;
+    private static final int LEAGUE_MEMBER            = 2;
+    private static final int LEAGUE_LOADING           = 3;
+
+    private static List<Integer> mViewTypes =  Arrays.asList(
+            LEAGUE_STATS_HEADER,
+            LEAGUE_RECRUITING_TOGGLE,
+            LEAGUE_MEMBER,
+            LEAGUE_LOADING);
 
     private int mLeagueRank;
     private int mLeagueRating;
     private int mLeagueMembers;
+
+    private boolean mIsOfficer;
 
     private List<String>  mMemberUserIds   = new ArrayList<String>();
     private List<String>  mMemberUserNames = new ArrayList<String>();
@@ -46,25 +56,47 @@ public class LeaguesScreenAdapterView extends BaseAdapter {
     // region Overwritten Methods
     // ============================================================================================================
 
+    /**
+     * Total count of items.
+     *
+     * @return Item count.
+     */
     @Override
     public int getCount() {
 
+        int nonMemberCells = mIsOfficer ? 2 : 1;
+
         // Either show stats + members, or just the loading section.
-        return mMemberUserIds.size() > 0 ? 1 + mMemberUserIds.size() : 1;
+        return mMemberUserIds.size() > 0 ? nonMemberCells + mMemberUserIds.size() : 1;
     }
 
+    /**
+     * Unused.
+     */
     @Override
     public Object getItem(int position) {
 
         return null;
     }
 
+    /**
+     * Position as id.
+     */
     @Override
     public long getItemId(int position) {
 
         return position;
     }
 
+    /**
+     * Return and configured appropriate view for type.
+     *
+     * @param position Item position.
+     * @param view View.
+     * @param parent Parent.
+     *
+     * @return Inflated and configured view.
+     */
     @Override
     public View getView(int position, View view, ViewGroup parent) {
 
@@ -75,6 +107,11 @@ public class LeaguesScreenAdapterView extends BaseAdapter {
                 // Configure item with calls to action.
                 return configureStatsHeader(view, parent);
 
+            case LEAGUE_RECRUITING_TOGGLE:
+
+                // Configure toggle section.
+                return configureRecruitingToggle(view, parent);
+
             case LEAGUE_LOADING:
 
                 // Configure the loading view item.
@@ -82,8 +119,10 @@ public class LeaguesScreenAdapterView extends BaseAdapter {
 
             case LEAGUE_MEMBER:
 
+                int offset = mIsOfficer ? 2 : 1;
+
                 // Configure item of header for recruiting leagues.
-                return configureLeagueMember(view, parent, position - 1);
+                return configureLeagueMember(view, parent, position - offset);
         }
 
         return view;
@@ -100,15 +139,24 @@ public class LeaguesScreenAdapterView extends BaseAdapter {
     @Override
     public int getItemViewType(int position) {
 
-        switch (position) {
+        if (mMemberUserIds.size() > 0) {
 
-            case 0:
-                return LEAGUE_STATS_HEADER;
+            switch (position) {
 
-            default:
+                case 0:
+                    return LEAGUE_STATS_HEADER;
+                case 1:
+                    return mIsOfficer ? LEAGUE_RECRUITING_TOGGLE : LEAGUE_MEMBER;
+                default:
+                    return LEAGUE_MEMBER;
+            }
+        } else {
 
-                // Show loading section if no league members.
-                return mMemberUserIds.size() > 0 ? LEAGUE_MEMBER : LEAGUE_LOADING;
+            switch (position) {
+
+                default:
+                    return LEAGUE_LOADING;
+            }
         }
     }
 
@@ -120,7 +168,7 @@ public class LeaguesScreenAdapterView extends BaseAdapter {
     @Override
     public int getViewTypeCount() {
 
-        return 3;
+        return mViewTypes.size();
     }
 
     // endregion
@@ -152,7 +200,8 @@ public class LeaguesScreenAdapterView extends BaseAdapter {
      * @param memberRating User rating.
      */
     @SuppressWarnings("unused")
-    public void setLeagueInfo(final int leagueRank, final int leagueRating, final int leagueMembers,
+    public void setLeagueInfo(final int leagueRank, final int leagueRating,
+                              final int leagueMembers, final boolean isOfficer,
                               final List<String>  memberUserIds,
                               final List<String>  memberUserNames,
                               final List<Integer> memberWins,
@@ -177,6 +226,7 @@ public class LeaguesScreenAdapterView extends BaseAdapter {
                 mLeagueRank    = leagueRank;
                 mLeagueRating  = leagueRating;
                 mLeagueMembers = leagueMembers;
+                mIsOfficer     = isOfficer;
 
                 mMemberUserIds   = memberUserIds;
                 mMemberUserNames = memberUserNames;
@@ -231,6 +281,24 @@ public class LeaguesScreenAdapterView extends BaseAdapter {
         viewHolder.mLeagueRank.setText(Integer.toString(mLeagueRank));
         viewHolder.mLeagueMembers.setText(Integer.toString(mLeagueMembers));
         viewHolder.mLeagueRating.setText(Integer.toString(mLeagueRating));
+
+        return convertView;
+    }
+
+    /**
+     * Configure the view that toggles open recruitment.
+     *
+     * @param convertView Recycled view.
+     * @param parent Parent.
+     *
+     * @return Configured view.
+     */
+    private View configureRecruitingToggle(View convertView, ViewGroup parent) {
+
+        if (convertView == null) {
+            convertView = LayoutInflater.from(parent.getContext())
+                    .inflate(R.layout.leagues_screen_recruitment_toggle, parent, false);
+        }
 
         return convertView;
     }

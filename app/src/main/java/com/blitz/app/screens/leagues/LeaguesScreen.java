@@ -213,7 +213,7 @@ public class LeaguesScreen extends BaseFragment implements ViewModelLeagues.Call
      * @param memberRating Rating.
      */
     @Override
-    public void onUserLeague(int leagueRank, int leagueRating, int leagueMembers,
+    public void onUserLeague(int leagueRank, int leagueRating, int leagueMembers, boolean isOfficer,
                              List<String>  memberUserIds,
                              List<String>  memberUserNames,
                              List<Integer> memberWins,
@@ -224,7 +224,7 @@ public class LeaguesScreen extends BaseFragment implements ViewModelLeagues.Call
 
             // Set league info.
             mAdapterView.setAssociatedListView(mLeaguesScreenList);
-            mAdapterView.setLeagueInfo(leagueRank, leagueRating, leagueMembers,
+            mAdapterView.setLeagueInfo(leagueRank, leagueRating, leagueMembers, isOfficer,
                     memberUserIds, memberUserNames, memberWins, memberLosses, memberRating);
         }
     }
