@@ -20,8 +20,17 @@ public class DialogError extends BaseDialogFragment {
     // region Member Variables
     // ============================================================================================================
 
+    // Associated error message view.
     @InjectView(R.id.dialog_error_message) TextView mDialogErrorMessage;
 
+    // Error type.
+    public static enum Type {
+        Generic,
+        Network,
+        Unauthorized
+    }
+
+    // Specific error message resource.
     private Integer mDialogErrorMessageResource;
 
     // endregion
@@ -39,26 +48,39 @@ public class DialogError extends BaseDialogFragment {
     // ============================================================================================================
 
     /**
-     * Show an error dialog for a user
-     * who cannot connect to the network.
+     * Show method for the error dialog.
+     *
+     * @param fragmentManager Fragment manager.
+     * @param activity Activity.
+     * @param type Error type.
      */
-    public void showNetworkError(FragmentManager fragmentManager) {
+    @SuppressWarnings("unused")
+    public void show(FragmentManager fragmentManager, final Activity activity, Type type) {
 
-        // Set network error message.
-        mDialogErrorMessageResource = R.string.error_network;
+        // Fetch the error message.
+        mDialogErrorMessageResource = getErrorMessage(type);
+
+        if (type == Type.Unauthorized) {
+
+            // Log out the user.
+            signOutUser(activity);
+        }
 
         show(fragmentManager);
     }
 
-    /**
-     * Show an error dialog for a user
-     * who is not authorized.  Also log
-     * that user out.
-     */
-    public void showUnauthorized(FragmentManager fragmentManager, final Activity activity) {
+    // endregion
 
-        // Provide unauthorized message.
-        mDialogErrorMessageResource = R.string.error_unauthorized;
+    // region Private Methods
+    // ============================================================================================================
+
+    /**
+     * Sign out the user and re-flow the
+     * UI when this dialog is dismissed.
+     *
+     * @param activity Activity.
+     */
+    private void signOutUser(final Activity activity) {
 
         // Sign out user.
         AuthHelper.instance().signOut();
@@ -72,12 +94,37 @@ public class DialogError extends BaseDialogFragment {
                 // Remove after being run.
                 removeOnDismissAction(this);
 
-                // Bounce user back to the loading screen.
-                AuthHelper.instance().tryEnterMainApp(activity);
+                if (activity != null) {
+
+                    // Bounce user back to the loading screen.
+                    AuthHelper.instance().tryEnterMainApp(activity);
+                }
             }
         });
+    }
 
-        show(fragmentManager);
+    /**
+     * Get error message for associated type.
+     *
+     * @param type Error type.
+     *
+     * @return Error message.
+     */
+    private int getErrorMessage(Type type) {
+
+        switch (type) {
+            case Generic:
+                return R.string.error_generic;
+
+            case Network:
+                return R.string.error_network;
+
+            case Unauthorized:
+                return R.string.error_unauthorized;
+
+            default:
+                return -1;
+        }
     }
 
     // endregion

@@ -195,12 +195,14 @@ public abstract class RestAPICallback<T> implements Callback<T> {
             if (mLogoutOnFailure) {
 
                 // Not authorized bro.
-                dialogError.showUnauthorized(mActivity.getSupportFragmentManager(), mActivity);
+                dialogError.show(mActivity.getSupportFragmentManager(),
+                        mActivity, DialogError.Type.Unauthorized);
 
             } else  if (networkError) {
 
                 // Network error dialog.
-                dialogError.showNetworkError(mActivity.getSupportFragmentManager());
+                dialogError.show(mActivity.getSupportFragmentManager(),
+                        null, DialogError.Type.Network);
 
             } else if (response != null) {
 
@@ -212,20 +214,23 @@ public abstract class RestAPICallback<T> implements Callback<T> {
                     case 401:
 
                         // Show unauthorized.
-                        dialogError.showUnauthorized(mActivity.getSupportFragmentManager(), mActivity);
+                        dialogError.show(mActivity.getSupportFragmentManager(),
+                                mActivity, DialogError.Type.Unauthorized);
 
                         break;
                     default:
 
                         // Show generic error.
-                        getErrorDialog().show(mActivity.getSupportFragmentManager());
+                        dialogError.show(mActivity.getSupportFragmentManager(),
+                                null, DialogError.Type.Generic);
 
                         break;
                 }
             } else {
 
                 // Show generic error.
-                getErrorDialog().show(mActivity.getSupportFragmentManager());
+                dialogError.show(mActivity.getSupportFragmentManager(),
+                        null, DialogError.Type.Generic);
             }
         }
     }
