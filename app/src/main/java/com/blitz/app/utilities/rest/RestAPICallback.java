@@ -4,7 +4,7 @@ import android.app.Activity;
 import android.os.Handler;
 import android.support.v4.app.FragmentActivity;
 
-import com.blitz.app.dialogs.error.DialogError;
+import com.blitz.app.dialogs.error.DialogErrorSingleton;
 import com.blitz.app.dialogs.loading.DialogLoading;
 import com.blitz.app.utilities.blitz.BlitzDelay;
 import com.blitz.app.utilities.date.DateUtils;
@@ -28,7 +28,6 @@ public abstract class RestAPICallback<T> implements Callback<T> {
 
     // Loading dialog.
     private DialogLoading mDialogLoading;
-    private DialogError mDialogError;
 
     private static boolean mOperationThrottle;
     private static Handler mOperationThrottleHandler;
@@ -187,22 +186,17 @@ public abstract class RestAPICallback<T> implements Callback<T> {
     @SuppressWarnings("unused")
     public void failure(Response response, boolean networkError) {
 
-        // Fetch the error dialog.
-        DialogError dialogError = getErrorDialog();
-
-        if (dialogError != null) {
+        if (mActivity != null) {
 
             if (mLogoutOnFailure) {
 
                 // Not authorized bro.
-                dialogError.show(mActivity.getSupportFragmentManager(),
-                        mActivity, DialogError.Type.Unauthorized);
+                DialogErrorSingleton.showUnauthorized(mActivity.getSupportFragmentManager(), mActivity);
 
             } else  if (networkError) {
 
                 // Network error dialog.
-                dialogError.show(mActivity.getSupportFragmentManager(),
-                        null, DialogError.Type.Network);
+                DialogErrorSingleton.showNetwork(mActivity.getSupportFragmentManager());
 
             } else if (response != null) {
 
@@ -213,24 +207,21 @@ public abstract class RestAPICallback<T> implements Callback<T> {
 
                     case 401:
 
-                        // Show unauthorized.
-                        dialogError.show(mActivity.getSupportFragmentManager(),
-                                mActivity, DialogError.Type.Unauthorized);
+                        // Not authorized bro.
+                        DialogErrorSingleton.showUnauthorized(mActivity.getSupportFragmentManager(), mActivity);
 
                         break;
                     default:
 
                         // Show generic error.
-                        dialogError.show(mActivity.getSupportFragmentManager(),
-                                null, DialogError.Type.Generic);
+                        DialogErrorSingleton.showGeneric(mActivity.getSupportFragmentManager());
 
                         break;
                 }
             } else {
 
                 // Show generic error.
-                dialogError.show(mActivity.getSupportFragmentManager(),
-                        null, DialogError.Type.Generic);
+                DialogErrorSingleton.showGeneric(mActivity.getSupportFragmentManager());
             }
         }
     }
@@ -272,21 +263,6 @@ public abstract class RestAPICallback<T> implements Callback<T> {
     protected Date getOperationTimeEnd() {
 
         return mOperationTimeEnd;
-    }
-
-    /**
-     * Lazy load the error dialog.
-     *
-     * @return Error dialog.
-     */
-    @SuppressWarnings("unused")
-    protected DialogError getErrorDialog() {
-
-        if (mDialogError == null && mActivity != null) {
-            mDialogError = new DialogError();
-        }
-
-        return mDialogError;
     }
 
     /**
