@@ -25,136 +25,130 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="45dp"
+        android:layout_height="105dp"
         android:layout_marginTop="@dimen/navbar_height_padding_included"
-        android:background="@color/background_inner_dark"
-        android:orientation="horizontal">
+        android:background="@drawable/drawable_bg_inner_dark"
+        android:orientation="vertical"
+        android:paddingBottom="20dp"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
+        android:paddingTop="20dp">
 
-        <TextView
-            style="@style/App.TextView"
-            fontPath="@string/app_font_helvetica_condensed_bold"
-            android:layout_width="0dp"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="25dp"
-            android:layout_gravity="bottom"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:text="Wins"
-            android:textAllCaps="true"
-            android:textColor="@color/text_color_dark"
-            android:textSize="13sp"/>
+            android:orientation="horizontal">
 
-        <TextView
-            style="@style/App.TextView"
-            fontPath="@string/app_font_helvetica_condensed_bold"
-            android:layout_width="0dp"
-            android:layout_height="25dp"
-            android:layout_gravity="bottom"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:text="Losses"
-            android:textAllCaps="true"
-            android:textColor="@color/text_color_dark"
-            android:textSize="13sp"/>
+            <TextView
+                style="@style/App.TextView"
+                fontPath="@string/app_font_helvetica_condensed_bold"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="@string/wins"
+                android:textAllCaps="true"
+                android:textColor="@color/text_color_dark"
+                android:textSize="16sp"/>
 
-        <TextView
-            style="@style/App.TextView"
-            fontPath="@string/app_font_helvetica_condensed_bold"
-            android:layout_width="0dp"
-            android:layout_height="25dp"
-            android:layout_gravity="bottom"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:text="Earnings"
-            android:textAllCaps="true"
-            android:textColor="@color/text_color_dark"
-            android:textSize="13sp"/>
+            <TextView
+                style="@style/App.TextView"
+                fontPath="@string/app_font_helvetica_condensed_bold"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="@string/losses"
+                android:textAllCaps="true"
+                android:textColor="@color/text_color_dark"
+                android:textSize="16sp"/>
 
-        <TextView
-            style="@style/App.TextView"
-            fontPath="@string/app_font_helvetica_condensed_bold"
-            android:layout_width="0dp"
-            android:layout_height="25dp"
-            android:layout_gravity="bottom"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:text="Rating"
-            android:textAllCaps="true"
-            android:textColor="@color/text_color_dark"
-            android:textSize="13sp"/>
+            <TextView
+                style="@style/App.TextView"
+                fontPath="@string/app_font_helvetica_condensed_bold"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="@string/earnings"
+                android:textAllCaps="true"
+                android:textColor="@color/text_color_dark"
+                android:textSize="16sp"/>
+
+            <TextView
+                style="@style/App.TextView"
+                fontPath="@string/app_font_helvetica_condensed_bold"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="@string/rating"
+                android:textAllCaps="true"
+                android:textColor="@color/text_color_dark"
+                android:textSize="16sp"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="35dp"
+            android:layout_marginTop="5dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/recent_week_wins"
+                style="@style/App.TextView"
+                fontPath="@string/app_font_helvetica_condensed_bold"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="@string/number_small"
+                android:textAllCaps="true"
+                android:textSize="24sp"/>
+
+            <TextView
+                android:id="@+id/recent_week_losses"
+                style="@style/App.TextView"
+                fontPath="@string/app_font_helvetica_condensed_bold"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="@string/number_small"
+                android:textAllCaps="true"
+                android:textSize="24sp"/>
+
+            <TextView
+                android:id="@+id/recent_week_earnings"
+                style="@style/App.TextView"
+                fontPath="@string/app_font_helvetica_condensed_bold"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="@string/number_large"
+                android:textAllCaps="true"
+                android:textSize="24sp"/>
+
+            <TextView
+                android:id="@+id/recent_week_rating_change"
+                style="@style/App.TextView"
+                fontPath="@string/app_font_helvetica_condensed_bold"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="@string/number_small"
+                android:textAllCaps="true"
+                android:textSize="24sp"/>
+        </LinearLayout>
     </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_marginTop="155dp"
-        android:background="@color/background_inner_dark"
-        android:gravity="center"
-        android:orientation="horizontal">
-
-        <TextView android:id="@+id/recent_week_wins"
-            style="@style/App.TextView"
-            fontPath="@string/app_font_helvetica_condensed_bold"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="top"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:text="0"
-            android:textAllCaps="true"
-            android:textColor="@color/text_color_light"
-            android:textSize="20sp"/>
-
-        <TextView android:id="@+id/recent_week_losses"
-            style="@style/App.TextView"
-            fontPath="@string/app_font_helvetica_condensed_bold"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="top"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:text="0"
-            android:textAllCaps="true"
-            android:textColor="@color/text_color_light"
-            android:textSize="20sp"/>
-
-        <TextView android:id="@+id/recent_week_earnings"
-            style="@style/App.TextView"
-            fontPath="@string/app_font_helvetica_condensed_bold"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="top"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:text="+$0.00"
-            android:textAllCaps="true"
-            android:textColor="@color/text_color_light"
-            android:textSize="20sp"/>
-
-        <TextView android:id="@+id/recent_week_rating_change"
-            style="@style/App.TextView"
-            fontPath="@string/app_font_helvetica_condensed_bold"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="top"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:text="+0"
-            android:textAllCaps="true"
-            android:textColor="@color/text_color_light"
-            android:textSize="20sp"/>
-    </LinearLayout>
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_marginTop="205dp"
-        android:background="@color/background_inner_divider"/>
 
     <View
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginBottom="40dp"
-        android:layout_marginTop="206dp"
+        android:layout_marginTop="215dp"
         android:background="@color/background_inner"/>
 
     <ListView
@@ -162,7 +156,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginBottom="40dp"
-        android:layout_marginTop="206dp"
+        android:layout_marginTop="215dp"
         android:gravity="center"/>
 
     <TextView
@@ -174,7 +168,7 @@
         android:layout_marginBottom="40dp"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
-        android:layout_marginTop="206dp"
+        android:layout_marginTop="215dp"
         android:gravity="center"
         android:lineSpacingMultiplier="1.1"
         android:textColor="@color/text_color_dark"

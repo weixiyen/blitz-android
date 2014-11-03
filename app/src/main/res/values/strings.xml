@@ -17,6 +17,7 @@
     <string name="create_league">Create League</string>
     <string name="create_league_description">What is your desired league name?</string>
     <string name="desired_username">Desired Username</string>
+    <string name="earnings">earnings</string>
     <string name="enter_access_code">Enter Access Code</string>
     <string name="enter_league_name">Enter League name</string>
     <string name="email">Email</string>
@@ -41,6 +42,7 @@
     <string name="loading_matchup_data">Loading Matchup Data</string>
     <string name="logout">Logout</string>
     <string name="loss">loss</string>
+    <string name="losses">losses</string>
     <string name="match_found">Match Found! Join the match!</string>
     <string name="members">Members</string>
     <string name="music_and_sounds">Music &amp; Sounds</string>
