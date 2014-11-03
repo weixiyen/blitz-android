@@ -8,7 +8,6 @@ import android.widget.TextView;
 import com.blitz.app.R;
 import com.blitz.app.screens.main.MainScreen;
 import com.blitz.app.utilities.android.BaseFragment;
-import com.blitz.app.utilities.animations.AnimHelperFade;
 import com.blitz.app.utilities.scrubber.BlitzScrubber;
 import com.blitz.app.view_models.ViewModel;
 import com.blitz.app.view_models.ViewModelRecent;
@@ -87,64 +86,40 @@ public class RecentScreen extends BaseFragment implements ViewModelRecent.Callba
     // ============================================================================================================
 
     /**
-     * Setup the UI for when the user
-     * has no games this week.
-     *
-     * @param week Current week.
-     */
-    private void setupGamesListEmpty(final int week) {
-
-        // Either fade out the matches, or existing UI.
-        View targetFrom = mRecentMatches.getVisibility() == View.GONE
-                ? mRecentNoGames : mRecentMatches;
-
-        AnimHelperFade.setVisibility(targetFrom, View.GONE, new Runnable() {
-
-            @Override
-            public void run() {
-
-                if (week <= mViewModel.getCurrentWeek()) {
-
-                    // Serious message.
-                    mRecentNoGames.setText("You did not play any games during week " + week + "!");
-
-                } else {
-
-                    // Funny message.
-                    mRecentNoGames.setText("Draft week " + week + " has not yet occurred!"
-                            + "  No time travel allowed.");
-                }
-
-                // Show the no games UI.
-                AnimHelperFade.setVisibility(mRecentNoGames, View.VISIBLE);
-            }
-        });
-    }
-
-    /**
-     * Setup UI when user has games.
+     * Setup UI when user has games. Will also show some
+     * basic UI for when the user does not have any
+     * games this week.
      *
      * @param drafts List of matches.
      */
-    private void setupGamesList(final List<ViewModelRecent.SummaryDraft> drafts) {
+    private void setupGamesList(final List<ViewModelRecent.SummaryDraft> drafts, int week) {
 
-        // Either fade out the matches, or existing UI.
-        View targetFrom = mRecentNoGames.getVisibility() == View.GONE
-                ? mRecentMatches : mRecentNoGames;
+        if (mRecentMatches != null) {
+            mRecentMatches.setAdapter(new RecentScreenMatchAdapter(drafts, getActivity()));
+        }
 
-        AnimHelperFade.setVisibility(targetFrom, View.GONE, new Runnable() {
+        if (drafts.size() > 0) {
 
-            @Override
-            public void run() {
+            // No need to show the no games UI.
+            mRecentNoGames.setVisibility(View.GONE);
 
-                if (mRecentMatches != null) {
-                    mRecentMatches.setAdapter(new RecentScreenMatchAdapter(drafts, getActivity()));
-                }
+        } else {
 
-                // Show the drafts list.
-                AnimHelperFade.setVisibility(mRecentMatches, View.VISIBLE);
+            if (week <= mViewModel.getCurrentWeek()) {
+
+                // Serious message.
+                mRecentNoGames.setText("You did not play any games during week " + week + "!");
+
+            } else {
+
+                // Funny message.
+                mRecentNoGames.setText("Draft week " + week + " has not yet occurred!"
+                        + "  No time travel allowed.");
             }
-        });
+
+            // Show the no games UI.
+            mRecentNoGames.setVisibility(View.VISIBLE);
+        }
     }
 
     // endregion
@@ -197,16 +172,8 @@ public class RecentScreen extends BaseFragment implements ViewModelRecent.Callba
         mRecentWeekRatingChange
                 .setText(summaryDrafts.getRatingChange());
 
-        if (drafts.size() > 0) {
-
-            // We have drafts.
-            setupGamesList(drafts);
-
-        } else {
-
-            // No games played.
-            setupGamesListEmpty(week);
-        }
+        // Update drafts adapter.
+        setupGamesList(drafts, week);
     }
 
     // endregion

@@ -148,36 +148,40 @@
         </LinearLayout>
     </LinearLayout>
 
-    <View
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:layout_marginBottom="40dp"
         android:layout_marginTop="215dp"
-        android:background="@color/background_inner"/>
+        android:orientation="vertical">
 
-    <ListView
-        android:id="@+id/recent_drafts_list"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginBottom="40dp"
-        android:layout_marginTop="215dp"
-        android:gravity="center"/>
+        <ListView
+            android:id="@+id/recent_drafts_list"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:divider="@null"
+            android:dividerHeight="0dp"
+            android:footerDividersEnabled="false"
+            android:gravity="center"/>
 
-    <TextView
-        android:id="@+id/recent_no_games"
-        fontPath="@string/app_font_helvetica_condensed_bold"
-        android:layout_width="@dimen/screen_width"
-        android:layout_height="match_parent"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="40dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:layout_marginTop="215dp"
-        android:gravity="center"
-        android:lineSpacingMultiplier="1.1"
-        android:textColor="@color/text_color_dark"
-        android:textSize="28sp"
-        android:visibility="gone"/>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/recent_drafts_list"
+            android:background="@color/background_inner"/>
+
+        <TextView
+            android:id="@+id/recent_no_games"
+            fontPath="@string/app_font_helvetica_condensed_bold"
+            android:layout_width="@dimen/screen_width"
+            android:layout_height="match_parent"
+            android:layout_centerHorizontal="true"
+            android:gravity="center"
+            android:lineSpacingMultiplier="1.1"
+            android:textColor="@color/text_color_dark"
+            android:textSize="28sp"
+            android:visibility="gone"/>
+    </RelativeLayout>
 
     <com.blitz.app.utilities.textview.BlitzTextView
         android:id="@+id/recent_scrubber_week"
@@ -203,5 +207,4 @@
         android:background="@drawable/drawable_bg_scrubber"
         android:gravity="center"
         android:orientation="horizontal"/>
-
 </RelativeLayout>
