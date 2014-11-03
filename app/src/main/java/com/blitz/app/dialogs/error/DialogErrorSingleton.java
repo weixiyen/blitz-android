@@ -39,7 +39,7 @@ public class DialogErrorSingleton {
 
                     // Initialize the internal error dialog.
                     mInstance.mDialogError = new DialogError();
-                    mInstance.mDialogError.setOnDismissAction(new Runnable() {
+                    mInstance.mDialogError.addOnDismissAction(new Runnable() {
 
                         @Override
                         public void run() {

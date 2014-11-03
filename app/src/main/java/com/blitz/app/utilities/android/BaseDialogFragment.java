@@ -15,6 +15,9 @@ import com.blitz.app.R;
 import com.blitz.app.utilities.keyboard.KeyboardUtility;
 import com.blitz.app.utilities.reflection.ReflectionHelper;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import butterknife.ButterKnife;
 
 /**
@@ -25,7 +28,8 @@ public abstract class BaseDialogFragment extends DialogFragment {
     // region Member Variables
     // ============================================================================================================
 
-    private Runnable mOnDismissAction;
+    // Initialize list of dismiss actions.
+    private List<Runnable> mOnDismissActions = new ArrayList<Runnable>();
 
     // endregion
 
@@ -104,9 +108,12 @@ public abstract class BaseDialogFragment extends DialogFragment {
     public void dismiss() {
         super.dismiss();
 
-        // Run custom dismiss action.
-        if (mOnDismissAction != null) {
-            mOnDismissAction.run();
+        for (Runnable onDismissAction : mOnDismissActions) {
+
+            // Run custom dismiss action.
+            if (onDismissAction != null) {
+                onDismissAction.run();
+            }
         }
     }
 
@@ -133,10 +140,22 @@ public abstract class BaseDialogFragment extends DialogFragment {
      * @param onDismissAction Dismiss action.
      */
     @SuppressWarnings("unused")
-    public void setOnDismissAction(Runnable onDismissAction) {
+    public void addOnDismissAction(Runnable onDismissAction) {
 
-        // Set on dismiss action.
-        mOnDismissAction = onDismissAction;
+        // Add on dismiss action.
+        mOnDismissActions.add(onDismissAction);
+    }
+
+    /**
+     * Remove a selected dismiss action.
+     *
+     * @param onDismissAction Dismiss action.
+     */
+    @SuppressWarnings("unused")
+    public void removeOnDismissAction(Runnable onDismissAction) {
+
+        // Remove associated action.
+        mOnDismissActions.remove(onDismissAction);
     }
 
     // endregion

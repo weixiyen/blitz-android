@@ -64,10 +64,13 @@ public class DialogError extends BaseDialogFragment {
         AuthHelper.instance().signOut();
 
         // Set dismiss action.
-        setOnDismissAction(new Runnable() {
+        addOnDismissAction(new Runnable() {
 
             @Override
             public void run() {
+
+                // Remove after being run.
+                removeOnDismissAction(this);
 
                 // Bounce user back to the loading screen.
                 AuthHelper.instance().tryEnterMainApp(activity);
