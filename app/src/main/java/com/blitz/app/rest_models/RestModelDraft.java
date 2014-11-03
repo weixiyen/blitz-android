@@ -1,7 +1,6 @@
 package com.blitz.app.rest_models;
 
 import android.app.Activity;
-import android.support.v4.app.FragmentActivity;
 
 import com.blitz.app.utilities.authentication.AuthHelper;
 import com.blitz.app.utilities.date.DateUtils;
@@ -642,17 +641,10 @@ public final class RestModelDraft extends RestModel {
 
                 callback.onSuccess(jsonObject.getResults());
             }
-
-            @Override
-            public void failure(Response response, boolean networkError) {
-
-                // Show unauthorized message.
-                if (getErrorDialog() != null) {
-                    getErrorDialog().showUnauthorized
-                            (((FragmentActivity)activity).getSupportFragmentManager(), activity);
-                }
-            }
         };
+
+        // Logout on failure.
+        operation.setLogoutOnFailure(true);
 
         // Filter by currently drafting.
         String filter = "{\"status\": \"drafting\", \"model\": \"heads_up_draft\"}";
