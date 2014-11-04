@@ -1,7 +1,11 @@
 package com.blitz.app.dialogs.error;
 
 import android.app.Activity;
+import android.os.Handler;
 import android.support.v4.app.FragmentActivity;
+
+import com.blitz.app.utilities.animations.AnimHelper;
+import com.blitz.app.utilities.blitz.BlitzDelay;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,6 +31,9 @@ public class DialogErrorSingleton {
     // Activity reference.
     private Activity mActivity;
     private String mActivityClass;
+
+    // Handler for delayed show.
+    private Handler mShowDialogHandler;
 
     // endregion
 
@@ -66,6 +73,9 @@ public class DialogErrorSingleton {
 
         // Clear the activity.
         instance().mActivity = null;
+
+        // Remove any pending show handler.
+        BlitzDelay.remove(instance().mShowDialogHandler);
     }
 
     // endregion
@@ -128,31 +138,39 @@ public class DialogErrorSingleton {
      */
     private void tryShowDialog() {
 
-        if (mQueuedDialogErrors.size() > 0 && !mDialogErrorShowing) {
+        // Remove pending handler.
+        BlitzDelay.remove(mShowDialogHandler);
 
-            int lastQueueIndex = mQueuedDialogErrors.size() - 1;
+        // Try to show on a short delay (cleaner UI).
+        mShowDialogHandler = BlitzDelay.postDelayed(() -> {
 
-            // Fetch the last dialog type in the queue.
-            DialogError.Type type = mQueuedDialogErrors.get(lastQueueIndex);
+            if (mQueuedDialogErrors.size() > 0 && !mDialogErrorShowing) {
 
-            if (mActivity != null) {
+                int lastQueueIndex = mQueuedDialogErrors.size() - 1;
 
-                // Show the actual dialog.
-                mDialogError.show(((FragmentActivity)mActivity).getSupportFragmentManager(), mActivity, type);
-                mDialogErrorShowing = true;
+                // Fetch the last dialog type in the queue.
+                DialogError.Type type = mQueuedDialogErrors.get(lastQueueIndex);
 
-                if (type == DialogError.Type.Unauthorized) {
+                if (mActivity != null) {
 
-                    // Remove all.
-                    mQueuedDialogErrors.clear();
+                    // Show the actual dialog.
+                    mDialogError.show(((FragmentActivity)mActivity).getSupportFragmentManager(), mActivity, type);
+                    mDialogErrorShowing = true;
 
-                } else {
+                    if (type == DialogError.Type.Unauthorized) {
 
-                    // Pop from end of the queue.
-                    mQueuedDialogErrors.remove(lastQueueIndex);
+                        // Remove all.
+                        mQueuedDialogErrors.clear();
+
+                    } else {
+
+                        // Pop from end of the queue.
+                        mQueuedDialogErrors.remove(lastQueueIndex);
+                    }
                 }
             }
-        }
+
+        }, AnimHelper.getConfigAnimTimeStandard());
     }
 
     /**
@@ -163,22 +181,18 @@ public class DialogErrorSingleton {
 
         // Initialize list of error dialogs to show.
         if (mQueuedDialogErrors == null) {
-            mQueuedDialogErrors = new ArrayList<DialogError.Type>();
+            mQueuedDialogErrors = new ArrayList<>();
         }
 
         // Initialize the internal error dialog.
         mDialogError = new DialogError();
-        mDialogError.addOnDismissAction(new Runnable() {
+        mDialogError.addOnDismissAction(() -> {
 
-            @Override
-            public void run() {
+            // No longer showing a dialog.
+            mDialogErrorShowing = false;
 
-                // No longer showing a dialog.
-                mDialogErrorShowing = false;
-
-                // Show next in line.
-                tryShowDialog();
-            }
+            // Show next in line.
+            tryShowDialog();
         });
     }
 
