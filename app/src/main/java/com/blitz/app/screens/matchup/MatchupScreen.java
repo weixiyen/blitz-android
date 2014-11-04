@@ -15,9 +15,9 @@ import com.blitz.app.utilities.authentication.AuthHelper;
 import com.blitz.app.utilities.image.BlitzImageView;
 import com.blitz.app.view_models.ViewModel;
 import com.blitz.app.view_models.ViewModelMatchup;
-import com.google.common.collect.Multimap;
 
 import java.util.List;
+import java.util.Map;
 
 import butterknife.InjectView;
 
@@ -161,7 +161,7 @@ public class MatchupScreen extends BaseActivity implements ViewModelMatchup.Call
     @Override
     public void onStuff(List<RestModelPlayer> p1roster, List<RestModelPlayer> p2Roster,
                         List<Game> p1games, List<Game> p2games,
-                        Multimap<String, Stat> playerStats, int week) {
+                        Map<String, List<Stat>> playerStats, int week) {
         mPlayerList.setAdapter(new PlayerListAdapter(this, p1roster, p2Roster, p1games, p2games,
                 playerStats, week, this));
     }

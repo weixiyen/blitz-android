@@ -14,11 +14,10 @@ import com.blitz.app.rest_models.RestModelPlayer;
 import com.blitz.app.screens.stats.StatsBreakdownScreen;
 import com.blitz.app.simple_models.Game;
 import com.blitz.app.simple_models.Stat;
-import com.blitz.app.utilities.logging.LogHelper;
-import com.google.common.collect.Multimap;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Player list adapter for binding player info to the draft detail UI's ListView.
@@ -35,14 +34,14 @@ public class PlayerListAdapter extends ArrayAdapter {
     private final List<RestModelPlayer> mPlayer2Picks;
     private final List<Game>   mPlayer1Games;
     private final List<Game>   mPlayer2Games;
-    private final Multimap<String, Stat> mPlayerStats;
+    private final Map<String, List<Stat>> mPlayerStats;
     private final int mWeek;
 
     private final Activity mActivity;
 
     public PlayerListAdapter(Context context, List<RestModelPlayer> player1picks, List<RestModelPlayer> player2picks,
                              List<Game> player1games, List<Game> player2games,
-                             Multimap<String, Stat> playerStats,
+                             Map<String, List<Stat>> playerStats,
                              int week,
                              Activity activity) {
 
@@ -67,8 +66,6 @@ public class PlayerListAdapter extends ArrayAdapter {
             v = LayoutInflater.from(mActivity)
                     .inflate(R.layout.matchup_screen_draft_list_item, null);
         }
-
-        LogHelper.log("P1 picks: " + mPlayer1Picks.size() + " " + mPlayer2Picks.size() + " " +  position);
 
         // TODO: Handle this guard better, it was crashing on player 2 picks out of bounds.
         // TODO: That should never happen as far as I can tell.
@@ -170,16 +167,21 @@ public class PlayerListAdapter extends ArrayAdapter {
         return prefix + ", " + playerScore + "-" + opponentScore + suffix;
     }
 
-    private static float getPlayerScore(String playerId, Multimap<String, Stat> stats) {
+    private static float getPlayerScore(String playerId, Map<String, List<Stat>> stats) {
 
         float scoreTotal = 0f;
-        for(Stat stat: stats.get(playerId)) {
-            scoreTotal += stat.getPoints();
+
+        if (stats.containsKey(playerId)) {
+
+            for (Stat stat: stats.get(playerId)) {
+                scoreTotal += stat.getPoints();
+            }
         }
+
         return scoreTotal;
     }
 
-    private static String getScore(RestModelPlayer player, Multimap<String, Stat> stats) {
+    private static String getScore(RestModelPlayer player, Map<String, List<Stat>> stats) {
         float score = getPlayerScore(player.getId(), stats);
         return String.format("%.02f", score);
     }

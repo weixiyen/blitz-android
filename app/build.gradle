@@ -78,7 +78,4 @@ dependencies {
 
     // Library for spring style animations.
     compile 'com.facebook.rebound:rebound:0.3.6'
-
-    // Google Guava collections
-    compile 'com.google.guava:guava:18.0'
 }

@@ -14,8 +14,6 @@ import com.blitz.app.utilities.android.BaseActivity;
 import com.blitz.app.utilities.authentication.AuthHelper;
 import com.blitz.app.utilities.rest.RestAPICallback;
 import com.blitz.app.utilities.rest.RestAPIResult;
-import com.google.common.collect.ArrayListMultimap;
-import com.google.common.collect.Multimap;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -46,7 +44,7 @@ public class ViewModelMatchup extends ViewModel {
 
     List<Game>                mGames;
     private RestModelDraft mDraft;
-    private Multimap<String, Stat> mPlayerStatsMap;
+    private Map<String, List<Stat>> mPlayerStatsMap;
 
     private String mDraftId;
 
@@ -227,13 +225,16 @@ public class ViewModelMatchup extends ViewModel {
         }
     }
 
-    private static float getScore(List<RestModelPlayer> roster, Multimap<String, Stat> playerStats) {
+    private static float getScore(List<RestModelPlayer> roster, Map<String, List<Stat>> playerStats) {
 
         float total = 0;
 
         for (RestModelPlayer player: roster) {
-            for(Stat stat: playerStats.get(player.getId())) {
-                total += stat.getPoints();
+            if (playerStats.containsKey(player.getId())) {
+
+                for (Stat stat: playerStats.get(player.getId())) {
+                    total += stat.getPoints();
+                }
             }
         }
 
@@ -289,12 +290,23 @@ public class ViewModelMatchup extends ViewModel {
         return gamesForPlayers;
     }
 
-    private Multimap<String, Stat> buildPlayerStatsMap(List<Stat> stats) {
+    private Map<String, List<Stat>> buildPlayerStatsMap(List<Stat> stats) {
 
-        Multimap<String, Stat> map = ArrayListMultimap.create();
-        for(Stat stat: stats) {
-            if(stat.isSupported()) {
-                map.put(stat.getPlayerId(), stat);
+        Map<String, List<Stat>> map = new HashMap<String, List<Stat>>();
+
+        for (Stat stat: stats) {
+            if (stat.isSupported()) {
+                List<Stat> playerStats;
+
+                if (map.containsKey(stat.getPlayerId())) {
+                    playerStats = map.get(stat.getPlayerId());
+                } else {
+                    playerStats = new ArrayList<Stat>();
+                }
+
+                playerStats.add(stat);
+
+                map.put(stat.getPlayerId(), playerStats);
             }
         }
 
@@ -313,7 +325,7 @@ public class ViewModelMatchup extends ViewModel {
 
         void onStuff(List<RestModelPlayer> p1roster, List<RestModelPlayer> p2Roster, List<Game> p1Games,
                      List<Game> p2Games,
-                     Multimap<String, Stat> playerStats, int week);
+                     Map<String, List<Stat>> playerStats, int week);
 
         void onMatchup(String player1Name, float player1score, String player2Name, float player2Score);
 
