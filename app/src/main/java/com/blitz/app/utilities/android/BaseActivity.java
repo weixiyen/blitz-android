@@ -9,6 +9,7 @@ import android.os.Handler;
 import android.support.v4.app.FragmentActivity;
 
 import com.blitz.app.R;
+import com.blitz.app.dialogs.error.DialogErrorSingleton;
 import com.blitz.app.utilities.animations.AnimHelper;
 import com.blitz.app.utilities.app.AppConfig;
 import com.blitz.app.utilities.background.EnteredBackground;
@@ -128,6 +129,9 @@ public class BaseActivity extends FragmentActivity {
         EnteredBackground.stopActivityTransitionTimer();
 
         // Add current activity.
+        DialogErrorSingleton.configAddActivity(this);
+
+        // Add current activity.
         CometAPIManager.configAddActivity(this);
     }
 
@@ -142,9 +146,6 @@ public class BaseActivity extends FragmentActivity {
         // Remove pending initialize calls.
         BlitzDelay.remove(mViewModelInitializeHandler);
 
-        // Remove any popups that may exist.
-        BaseDialog.dismissAllPopups();
-
         // Stop view model.
         if (getViewModel() != null) {
             getViewModel().stop();
@@ -158,6 +159,12 @@ public class BaseActivity extends FragmentActivity {
 
         // Start timer to detect entering the background.
         EnteredBackground.startActivityTransitionTimer();
+
+        // Remove any popups that may exist.
+        DialogErrorSingleton.configRemoveActivity();
+
+        // TODO: Deprecate.
+        BaseDialog.dismissAllPopups();
 
         // Clear our current activity.
         CometAPIManager.configRemoveActivity(this);

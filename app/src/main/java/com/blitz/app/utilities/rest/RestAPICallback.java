@@ -2,7 +2,6 @@ package com.blitz.app.utilities.rest;
 
 import android.app.Activity;
 import android.os.Handler;
-import android.support.v4.app.FragmentActivity;
 
 import com.blitz.app.dialogs.error.DialogErrorSingleton;
 import com.blitz.app.dialogs.loading.DialogLoading;
@@ -24,7 +23,7 @@ public abstract class RestAPICallback<T> implements Callback<T> {
     // ============================================================================================================
 
     // Parent activity.
-    private FragmentActivity mActivity;
+    private Activity mActivity;
 
     // Loading dialog.
     private DialogLoading mDialogLoading;
@@ -73,7 +72,7 @@ public abstract class RestAPICallback<T> implements Callback<T> {
     public RestAPICallback(Activity activity) {
 
         // Set the activity.
-        mActivity = (FragmentActivity)activity;
+        mActivity = activity;
 
         // Set the start time.
         mOperationTimeStart = DateUtils.getDateInGMT();
@@ -191,12 +190,12 @@ public abstract class RestAPICallback<T> implements Callback<T> {
             if (mLogoutOnFailure) {
 
                 // Not authorized bro.
-                DialogErrorSingleton.showUnauthorized(mActivity.getSupportFragmentManager(), mActivity);
+                DialogErrorSingleton.showUnauthorized();
 
             } else  if (networkError) {
 
                 // Network error dialog.
-                DialogErrorSingleton.showNetwork(mActivity.getSupportFragmentManager());
+                DialogErrorSingleton.showNetwork();
 
             } else if (response != null) {
 
@@ -208,20 +207,20 @@ public abstract class RestAPICallback<T> implements Callback<T> {
                     case 401:
 
                         // Not authorized bro.
-                        DialogErrorSingleton.showUnauthorized(mActivity.getSupportFragmentManager(), mActivity);
+                        DialogErrorSingleton.showUnauthorized();
 
                         break;
                     default:
 
                         // Show generic error.
-                        DialogErrorSingleton.showGeneric(mActivity.getSupportFragmentManager());
+                        DialogErrorSingleton.showGeneric();
 
                         break;
                 }
             } else {
 
                 // Show generic error.
-                DialogErrorSingleton.showGeneric(mActivity.getSupportFragmentManager());
+                DialogErrorSingleton.showGeneric();
             }
         }
     }

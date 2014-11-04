@@ -108,7 +108,7 @@ public abstract class BaseDialogFragment extends DialogFragment {
     public void dismiss() {
         super.dismiss();
 
-        for (Runnable onDismissAction : mOnDismissActions) {
+        for (Runnable onDismissAction : new ArrayList<Runnable>(mOnDismissActions)) {
 
             // Run custom dismiss action.
             if (onDismissAction != null) {

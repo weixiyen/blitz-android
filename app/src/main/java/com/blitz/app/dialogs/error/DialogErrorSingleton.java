@@ -1,16 +1,13 @@
 package com.blitz.app.dialogs.error;
 
 import android.app.Activity;
-import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentActivity;
 
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by Miguel on 11/2/2014. Copyright 2014 Blitz Studios
- *
- * TODO: Pair FM/Activity with the queue.
- * TODO: Make FM/Activity weak.
  */
 public class DialogErrorSingleton {
 
@@ -27,11 +24,49 @@ public class DialogErrorSingleton {
     // List of dialog errors queued up.
     private List<DialogError.Type> mQueuedDialogErrors;
 
-    // Most recent instance of fragment manager.
-    private FragmentManager mFragmentManager;
-
-    // Most recent instance of activity.
+    // Activity reference.
     private Activity mActivity;
+    private String mActivityClass;
+
+    // endregion
+
+    // region Config Methods
+    // ============================================================================================================
+
+    /**
+     * Add current activity, and check the queue.
+     *
+     * @param activity Target activity.
+     */
+    public static void configAddActivity(Activity activity) {
+
+        // If this is new activity.
+        if (instance().mActivityClass != null &&
+           !instance().mActivityClass.equals(activity.getLocalClassName())) {
+
+            // Safe to clear out the showing flag.
+            instance().mDialogErrorShowing = false;
+        }
+
+        // Set the activity.
+        instance().mActivity = activity;
+        instance().mActivityClass = activity.getLocalClassName();
+
+        // Re-initialize the singleton.
+        instance().initializeDialogSingleton();
+
+        // Try showing dialog.
+        instance().tryShowDialog();
+    }
+
+    /**
+     * Remove current activity.
+     */
+    public static void configRemoveActivity() {
+
+        // Clear the activity.
+        instance().mActivity = null;
+    }
 
     // endregion
 
@@ -42,30 +77,30 @@ public class DialogErrorSingleton {
      * Show generic error dialog.
      */
     @SuppressWarnings("unused")
-    public static void showGeneric(FragmentManager fragmentManager) {
+    public static void showGeneric() {
 
         // Add generic type to queue.
-        instance().addDialogToQueue(fragmentManager, null, DialogError.Type.Generic);
+        instance().addDialogToQueue(DialogError.Type.Generic);
     }
 
     /**
      * Show network error dialog.
      */
     @SuppressWarnings("unused")
-    public static void showNetwork(FragmentManager fragmentManager) {
+    public static void showNetwork() {
 
         // Add network dialog to queue.
-        instance().addDialogToQueue(fragmentManager, null, DialogError.Type.Network);
+        instance().addDialogToQueue(DialogError.Type.Network);
     }
 
     /**
      * Show unauthorized error dialog.
      */
     @SuppressWarnings("unused")
-    public static void showUnauthorized(FragmentManager fragmentManager, Activity activity) {
+    public static void showUnauthorized() {
 
         // Add unauthorized dialog to queue.
-        instance().addDialogToQueue(fragmentManager, activity, DialogError.Type.Unauthorized);
+        instance().addDialogToQueue(DialogError.Type.Unauthorized);
     }
 
     // endregion
@@ -76,20 +111,12 @@ public class DialogErrorSingleton {
     /**
      * Add a dialog to the queue.
      *
-     * @param fragmentManager Associated fragment manager.
-     * @param activity Associated activity.
      * @param type Error type.
      */
-    private void addDialogToQueue(FragmentManager fragmentManager, Activity activity, DialogError.Type type) {
-
-        // Set fragment manager.
-        mFragmentManager = fragmentManager;
-
-        // Set activity.
-        mActivity = activity;
+    private void addDialogToQueue(DialogError.Type type) {
 
         // Add to queue.
-        mQueuedDialogErrors.add(type);
+        mQueuedDialogErrors.add(0, type);
 
         // Show if needed.
         tryShowDialog();
@@ -103,22 +130,27 @@ public class DialogErrorSingleton {
 
         if (mQueuedDialogErrors.size() > 0 && !mDialogErrorShowing) {
 
+            int lastQueueIndex = mQueuedDialogErrors.size() - 1;
+
             // Fetch the last dialog type in the queue.
-            DialogError.Type type = mQueuedDialogErrors.get(mQueuedDialogErrors.size() - 1);
+            DialogError.Type type = mQueuedDialogErrors.get(lastQueueIndex);
 
-            // Show the actual dialog.
-            mDialogError.show(mFragmentManager, mActivity, type);
-            mDialogErrorShowing = true;
+            if (mActivity != null) {
 
-            if (type == DialogError.Type.Unauthorized) {
+                // Show the actual dialog.
+                mDialogError.show(((FragmentActivity)mActivity).getSupportFragmentManager(), mActivity, type);
+                mDialogErrorShowing = true;
 
-                // Remove all.
-                mQueuedDialogErrors.clear();
+                if (type == DialogError.Type.Unauthorized) {
 
-            } else {
+                    // Remove all.
+                    mQueuedDialogErrors.clear();
 
-                // Pop from end of the queue.
-                mQueuedDialogErrors.remove(mQueuedDialogErrors.size() - 1);
+                } else {
+
+                    // Pop from end of the queue.
+                    mQueuedDialogErrors.remove(lastQueueIndex);
+                }
             }
         }
     }
@@ -130,7 +162,9 @@ public class DialogErrorSingleton {
     private void initializeDialogSingleton() {
 
         // Initialize list of error dialogs to show.
-        mQueuedDialogErrors = new ArrayList<DialogError.Type>();
+        if (mQueuedDialogErrors == null) {
+            mQueuedDialogErrors = new ArrayList<DialogError.Type>();
+        }
 
         // Initialize the internal error dialog.
         mDialogError = new DialogError();
