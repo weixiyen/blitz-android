@@ -1,5 +1,6 @@
 apply plugin: 'com.android.application'
 apply plugin: 'crashlytics'
+apply plugin: 'retrolambda'
 
 // Crashlytics/Fabric.io plugin.
 buildscript {
@@ -9,6 +10,17 @@ buildscript {
 
     dependencies {
         classpath 'com.crashlytics.tools.gradle:crashlytics-gradle:1.12.0'
+    }
+}
+
+// Retro-lambda plugin.
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+
+    dependencies {
+        classpath 'me.tatarka:gradle-retrolambda:2.4.1'
     }
 }
 
