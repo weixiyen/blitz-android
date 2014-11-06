@@ -40,7 +40,7 @@
 
         <!-- Environment (affects AppConfig values) -->
         <meta-data android:name="com.blitz.app.config.environment"
-            android:resource="@string/environment_production"/>
+            android:resource="@string/environment_qa"/>
 
         <!-- Required for applications which use Google Play Services. -->
         <meta-data
@@ -99,6 +99,9 @@
             android:windowSoftInputMode="stateHidden" />
 
         <activity android:name=".screens.leaderboard.LeaderboardScreen"
+            android:windowSoftInputMode="stateHidden" />
+
+        <activity android:name=".screens.payments.DepositScreen"
             android:windowSoftInputMode="stateHidden" />
 
         <!--

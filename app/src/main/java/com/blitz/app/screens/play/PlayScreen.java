@@ -14,6 +14,7 @@ import com.blitz.app.R;
 import com.blitz.app.dialogs.rules.DialogRules;
 import com.blitz.app.rest_models.RestModel;
 import com.blitz.app.screens.leaderboard.LeaderboardScreen;
+import com.blitz.app.screens.payments.DepositScreen;
 import com.blitz.app.utilities.android.BaseFragment;
 import com.blitz.app.utilities.animations.AnimHelper;
 import com.blitz.app.utilities.animations.AnimHelperCrossFade;
@@ -399,6 +400,9 @@ public class PlayScreen extends BaseFragment implements ViewModelPlay.Callbacks 
     @OnClick(R.id.main_play_add_money) @SuppressWarnings("unused")
     public void addMoneyClicked() {
 
+        // Navigate to deposit screen
+        Intent intent = new Intent(getActivity(), DepositScreen.class);
+        startActivity(intent);
     }
 
     /**
