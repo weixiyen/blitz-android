@@ -12,7 +12,6 @@ import com.blitz.app.simple_models.Game;
 import com.blitz.app.simple_models.Stat;
 import com.blitz.app.utilities.android.BaseActivity;
 import com.blitz.app.utilities.authentication.AuthHelper;
-import com.blitz.app.utilities.logging.LogHelper;
 import com.blitz.app.utilities.rest.RestAPICallback;
 import com.blitz.app.utilities.rest.RestAPIResult;
 
@@ -159,8 +158,6 @@ public class ViewModelMatchup extends ViewModel {
 
                     for (RestModelPlayer player : players) {
 
-                        LogHelper.log("Player: " + player.getId() + " name: " + player.getFullName());
-
                         playerMap.put(player.getId(), player);
                     }
 
@@ -290,8 +287,6 @@ public class ViewModelMatchup extends ViewModel {
         Map<String, List<Stat>> map = new HashMap<>();
 
         for (Stat stat: stats) {
-
-            LogHelper.log("Player id for stat: " + stat.getPlayerId());
 
             if (stat.isSupported()) {
                 List<Stat> playerStats;
