@@ -14,7 +14,7 @@ public class BlitzDelay {
 
     // Store handlers so the user has the option to cancel them.
     private static ConcurrentHashMap<Handler, Runnable> mHandlerMap =
-            new ConcurrentHashMap<Handler, Runnable>();
+            new ConcurrentHashMap<>();
 
     // endregion
 
