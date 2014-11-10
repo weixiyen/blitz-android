@@ -122,20 +122,16 @@ public class ViewModelMatchup extends ViewModel {
 
                 // Fetch associated items.
                 RestModelItem.fetchItems(null, playerAvatarIds,
-                        new RestModelItem.CallbackItems() {
+                        items -> {
+                            for (RestModelItem item : items) {
 
-                            @Override
-                            public void onSuccess(List<RestModelItem> items) {
-                                for (RestModelItem item : items) {
-
-                                    if (mPlayer1.getAvatarId().equals(item.getId())) {
-                                        mPlayer1AvatarUrl = item.getDefaultImgPath();
-                                    } else {
-                                        mPlayer2AvatarUrl = item.getDefaultImgPath();
-                                    }
-
-                                    onSyncComplete();
+                                if (mPlayer1.getAvatarId().equals(item.getId())) {
+                                    mPlayer1AvatarUrl = item.getDefaultImgPath();
+                                } else {
+                                    mPlayer2AvatarUrl = item.getDefaultImgPath();
                                 }
+
+                                onSyncComplete();
                             }
                         });
             }
@@ -149,29 +145,24 @@ public class ViewModelMatchup extends ViewModel {
 
     private void setupModel() {
 
-        final List<String> playerIds = new ArrayList<String>();
+        final List<String> playerIds = new ArrayList<>();
 
         for (RestModelDraft.Pick pick : mDraft.getPicks()) {
             playerIds.add(pick.getPlayerId());
         }
 
         RestModelPlayer.fetchPlayers(null, playerIds,
-                new RestModelPlayer.CallbackPlayers() {
+                players -> {
 
-                    @Override
-                    public void onSuccess(List<RestModelPlayer> players) {
+                    Map<String, RestModelPlayer> playerMap = new HashMap<>();
 
-                        Map<String, RestModelPlayer> playerMap =
-                                new HashMap<String, RestModelPlayer>();
+                    for (RestModelPlayer player : players) {
 
-                        for (RestModelPlayer player : players) {
-
-                            playerMap.put(player.getId(), player);
-                        }
-
-                        populateRosters(playerMap);
-                        onSyncComplete();
+                        playerMap.put(player.getId(), player);
                     }
+
+                    populateRosters(playerMap);
+                    onSyncComplete();
                 });
 
 
@@ -192,6 +183,7 @@ public class ViewModelMatchup extends ViewModel {
 
                     @Override
                     public void success(RestAPIResult<Stat> stats) {
+
 
                         mPlayerStatsMap = buildPlayerStatsMap(stats.getResults());
                         onSyncComplete();
@@ -243,8 +235,8 @@ public class ViewModelMatchup extends ViewModel {
 
     private void populateRosters(Map<String, RestModelPlayer> playersDict) {
 
-        final List<RestModelPlayer> myPicks = new ArrayList<RestModelPlayer>();
-        final List<RestModelPlayer> opponentPicks = new ArrayList<RestModelPlayer>();
+        final List<RestModelPlayer> myPicks = new ArrayList<>();
+        final List<RestModelPlayer> opponentPicks = new ArrayList<>();
 
         for(Map.Entry<String, List<String>> entry : mDraft.getRosters().entrySet()) {
 
@@ -273,7 +265,7 @@ public class ViewModelMatchup extends ViewModel {
 
     private List<Game> getPlayerGames(List<RestModelPlayer> roster, List<Game> games) {
 
-        List<Game> gamesForPlayers = new ArrayList<Game>(roster.size());
+        List<Game> gamesForPlayers = new ArrayList<>(roster.size());
 
         for(RestModelPlayer player : roster) {
             Game playerGame = new Game();
@@ -292,16 +284,17 @@ public class ViewModelMatchup extends ViewModel {
 
     private Map<String, List<Stat>> buildPlayerStatsMap(List<Stat> stats) {
 
-        Map<String, List<Stat>> map = new HashMap<String, List<Stat>>();
+        Map<String, List<Stat>> map = new HashMap<>();
 
         for (Stat stat: stats) {
+
             if (stat.isSupported()) {
                 List<Stat> playerStats;
 
                 if (map.containsKey(stat.getPlayerId())) {
                     playerStats = map.get(stat.getPlayerId());
                 } else {
-                    playerStats = new ArrayList<Stat>();
+                    playerStats = new ArrayList<>();
                 }
 
                 playerStats.add(stat);

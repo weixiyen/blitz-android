@@ -64,7 +64,7 @@ public class PlayerListAdapter extends ArrayAdapter {
 
         if (v == null) {
             v = LayoutInflater.from(mActivity)
-                    .inflate(R.layout.matchup_screen_draft_list_item, null);
+                    .inflate(R.layout.matchup_screen_draft_list_item, parent, false);
         }
 
         // TODO: Handle this guard better, it was crashing on player 2 picks out of bounds.
@@ -111,10 +111,11 @@ public class PlayerListAdapter extends ArrayAdapter {
      * @param formattedScore the pre-calculated score total for the player
      */
     private void setStatsNavigation(View v, final RestModelPlayer player, final String formattedScore) {
-        v.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+        v.setOnClickListener(view -> {
+
+            if (mPlayerStats.containsKey(player.getId())) {
                 Intent intent = new Intent(mActivity, StatsBreakdownScreen.class);
+
                 Collection<Stat> stats = mPlayerStats.get(player.getId());
                 String[] statNames = new String[stats.size()];
                 float[] statValues = new float[stats.size()];
