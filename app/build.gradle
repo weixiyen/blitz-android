@@ -9,7 +9,7 @@ buildscript {
     }
 
     dependencies {
-        classpath 'com.crashlytics.tools.gradle:crashlytics-gradle:1.12.0'
+        classpath 'com.crashlytics.tools.gradle:crashlytics-gradle:1.14.3'
     }
 }
 
@@ -41,8 +41,9 @@ android {
     }
     buildTypes {
         release {
-            runProguard false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+
+            // Proguard minimization.
+            minifyEnabled false
         }
     }
 }
