@@ -104,16 +104,13 @@ public class BaseActivity extends FragmentActivity {
         super.onResume();
 
         // Initialize the view model on the screen transition delay.
-        mViewModelInitializeHandler = BlitzDelay.postDelayed(new Runnable() {
+        mViewModelInitializeHandler = BlitzDelay.postDelayed(() -> {
 
-            @Override
-            public void run() {
-
-                // Initialize view model.
-                if (getViewModel() != null) {
-                    getViewModel().initialize();
-                }
+            // Initialize view model.
+            if (getViewModel() != null) {
+                getViewModel().initialize();
             }
+
         }, AnimHelper.getConfigAnimTimeStandard());
 
         if (mGoingBack) {
