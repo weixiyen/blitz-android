@@ -8,6 +8,7 @@ import com.blitz.app.R;
 import com.blitz.app.dialogs.input.DialogInput;
 import com.blitz.app.screens.main.MainScreen;
 import com.blitz.app.utilities.android.BaseFragment;
+import com.blitz.app.utilities.dropdown.BlitzDropdown;
 import com.blitz.app.utilities.scrubber.BlitzScrubber;
 import com.blitz.app.view_models.ViewModel;
 import com.blitz.app.view_models.ViewModelLeagues;
@@ -25,8 +26,8 @@ public class LeaguesScreen extends BaseFragment implements ViewModelLeagues.Call
     // region Member Variables
     // ============================================================================================================
 
-    @InjectView(R.id.blitz_dropdown_header) TextView mLeaguesDropdownHeader;
-    @InjectView(R.id.blitz_dropdown_list) ListView mLeaguesDropdownList;
+    @InjectView(R.id.blitz_dropdown_header) TextView mBlitzDropdownHeader;
+    @InjectView(R.id.blitz_dropdown_list) ListView mBlitzDropdownList;
 
     @InjectView(R.id.leagues_screen_list) ListView mLeaguesScreenList;
 
@@ -39,10 +40,8 @@ public class LeaguesScreen extends BaseFragment implements ViewModelLeagues.Call
     // Tracks selected league.
     private int mSelectedLeague;
 
-    // User leagues, directly maps to
-    // scrubber indices.
+    // User leagues, directly maps to scrubber indices.
     private List<String> mUserLeagueIds;
-    private List<String> mUserLeagueNames;
 
     // Initialize the adapters this screen will use.
     private LeaguesScreenAdapterCreate mAdapterCreate = new LeaguesScreenAdapterCreate(this);
@@ -50,6 +49,9 @@ public class LeaguesScreen extends BaseFragment implements ViewModelLeagues.Call
 
     // Input dialog.
     private DialogInput mDialogInput;
+
+    // Dropdown widget.
+    private BlitzDropdown mBlitzDropdown;
 
     // endregion
 
@@ -104,11 +106,6 @@ public class LeaguesScreen extends BaseFragment implements ViewModelLeagues.Call
         // Update selected league index.
         mSelectedLeague = selectedLeague;
 
-        // Set the header.
-        if (mLeaguesDropdownHeader != null) {
-            mLeaguesDropdownHeader.setText(mUserLeagueNames.get(mSelectedLeague));
-        }
-
         // Ensure the correct item is selected.
         mBlitzScrubber.setScrubberItemSelected(mSelectedLeague);
 
@@ -124,6 +121,9 @@ public class LeaguesScreen extends BaseFragment implements ViewModelLeagues.Call
             // Set the initial adapter for user league.
             mLeaguesScreenList.setAdapter(mAdapterView);
         }
+
+        // Update the selected league.
+        mBlitzDropdown.setSelected(selectedLeague);
     }
 
     // endregion
@@ -163,13 +163,16 @@ public class LeaguesScreen extends BaseFragment implements ViewModelLeagues.Call
     @Override
     public void onUserLeagues(List<String> leagueIds, List<String> leagueNames) {
 
-        // Store the results.
-        mUserLeagueNames = leagueNames;
         mUserLeagueIds = leagueIds;
 
         // Set the scrubber text view, names, and size.
-        mBlitzScrubber.setScrubberTextView(mBlitzScrubberSelected, mUserLeagueNames);
+        mBlitzScrubber.setScrubberTextView(mBlitzScrubberSelected, leagueNames);
         mBlitzScrubber.setSize(mUserLeagueIds.size());
+
+        // Configure the dropdown.
+        mBlitzDropdown = new BlitzDropdown(getActivity(), leagueIds, leagueNames);
+        mBlitzDropdown.setListView(mBlitzDropdownList);
+        mBlitzDropdown.setHeaderView(mBlitzDropdownHeader);
 
         // Initialize selected league.
         setSelectedLeague(mSelectedLeague);

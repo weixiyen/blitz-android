@@ -30,6 +30,5 @@
         android:layout_toRightOf="@+id/blitz_dropdown_header"
         android:contentDescription="@string/empty_string"
         android:paddingTop="4dp"
-        android:src="@drawable/asset_bg_dropdown_caret"
-        android:visibility="gone" />
+        android:src="@drawable/asset_bg_dropdown_caret" />
 </RelativeLayout>
