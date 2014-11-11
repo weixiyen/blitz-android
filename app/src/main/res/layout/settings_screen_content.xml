@@ -66,6 +66,7 @@
 
 
     <Button
+        android:id="@+id/transaction_history"
         style="@style/App.Button"
         fontPath="@string/app_font_helvetica_condensed_bold"
         android:layout_width="match_parent"
