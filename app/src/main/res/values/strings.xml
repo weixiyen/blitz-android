@@ -81,6 +81,9 @@
     <string name="vs">vs</string>
     <string name="wins">wins</string>
     <string name="you_have_cash">You have $0.00</string>
+    <string name="transactions">Transactions</string>
+    <string name="account_balance">Account Balance</string>
+    <string name="transaction_history">Transaction History</string>
 
     <string-array name="weeks_array">
         <item>Week 01</item>

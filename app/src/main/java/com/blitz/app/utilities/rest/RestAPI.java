@@ -6,6 +6,7 @@ import com.blitz.app.rest_models.RestModelGroup;
 import com.blitz.app.rest_models.RestModelItem;
 import com.blitz.app.rest_models.RestModelPlayer;
 import com.blitz.app.rest_models.RestModelPreferences;
+import com.blitz.app.rest_models.RestModelTransaction;
 import com.blitz.app.rest_models.RestModelUser;
 import com.blitz.app.simple_models.Game;
 import com.blitz.app.simple_models.Stat;
@@ -151,6 +152,13 @@ public interface RestAPI {
                    @Query("pluck[]") List<String> pluck, // Optional
                    @Query("limit") Integer limit,        // Optional
         Callback<RestAPIResult<Stat>> callback);
+
+    @GET("/transactions")
+    void transactions_get(@Query("keys[]") List<String> userIds,
+                          @Query("index") String index,
+                          @Query("order_by") String orderBy,
+                          @Query("limit") int limit,
+                          Callback<RestAPIResult<RestModelTransaction>> transaction);
 
     @GET("/user/{user_id}")
     void user_get(@Path("user_id") String userId,

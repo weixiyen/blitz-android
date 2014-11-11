@@ -1,0 +1,49 @@
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="${packageName}.${activityClass}"
+    tools:ignore="ButtonStyle,UnusedAttribute">
+
+    <com.blitz.app.utilities.image.BlitzImageViewPlus
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:contentDescription="@string/empty_string"
+        android:scaleX="-1"
+        android:src="@drawable/asset_bg_main_dark"
+        app:scaleType="topCrop" />
+
+    <TextView
+        android:id="@+id/leaderboard_header"
+        style="@style/App.NavBar"
+        android:text="@string/transactions"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="@dimen/navbar_height"
+        android:background="@color/background_inner" />
+
+    <ListView
+        android:id="@+id/leaderboard_list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="@dimen/navbar_height"
+        android:cacheColorHint="@color/background_transparent"
+        android:divider="@null"
+        android:dividerHeight="0dp"
+        android:footerDividersEnabled="false"
+        android:gravity="center"
+        android:listSelector="@color/background_transparent"
+        android:visibility="gone"/>
+
+    <ProgressBar
+        android:id="@+id/leaderboard_spinner"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"/>
+
+</RelativeLayout>
