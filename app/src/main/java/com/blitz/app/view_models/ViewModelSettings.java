@@ -111,6 +111,7 @@ public class ViewModelSettings extends ViewModel {
 
                         if (getCallbacks(Callbacks.class) != null) {
                             getCallbacks(Callbacks.class).onEmail(user.getEmail());
+                            getCallbacks(Callbacks.class).onCash(user.getCash());
                         }
 
                         // Fetch associated item model.
@@ -180,6 +181,7 @@ public class ViewModelSettings extends ViewModel {
     public interface Callbacks extends ViewModel.Callbacks {
 
         public void onEmail(String email);
+        public void onCash(int balance);
         public void onAvatars(List<String> userAvatarIds,
                               List<String> userAvatarUrls, String userAvatarId);
         public void onVersion(String version);
