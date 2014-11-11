@@ -50,6 +50,7 @@
         android:visibility="gone"/>
 
     <Button
+        android:id="@+id/cash_balance"
         style="@style/App.Button"
         fontPath="@string/app_font_helvetica_condensed_bold"
         android:layout_width="match_parent"

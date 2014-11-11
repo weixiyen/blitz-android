@@ -43,6 +43,7 @@ public class SettingsScreen extends BaseFragment implements ViewModelSettings.Ca
 
     // Settings email button.
     @InjectView(R.id.settings_email)   TextView mSettingsEmail;
+    @InjectView(R.id.cash_balance)  TextView mCashBalance;
     @InjectView(R.id.settings_version) TextView mSettingsVersion;
 
     // Helmet view pager.
@@ -201,6 +202,15 @@ public class SettingsScreen extends BaseFragment implements ViewModelSettings.Ca
 
         if (mSettingsEmail != null) {
             mSettingsEmail.setText(email);
+        }
+    }
+
+    /**
+     * User's cash balance
+     */
+    public void onCash(int balance) {
+        if(mCashBalance != null) {
+            mCashBalance.setText(String.format("Account Balance: $%.2f", balance / 100.0f));
         }
     }
 
