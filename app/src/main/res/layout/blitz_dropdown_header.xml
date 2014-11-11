@@ -1,0 +1,35 @@
+<RelativeLayout
+    style="@style/App.NavBar"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/navbar_height_padding_included"
+    android:orientation="horizontal"
+    android:paddingTop="@dimen/navbar_height_padding"
+    tools:ignore="ButtonStyle,UnusedAttribute,RelativeOverlap">
+
+    <TextView
+        android:id="@+id/blitz_dropdown_header"
+        fontPath="@string/app_font_helvetica_condensed_bold"
+        android:layout_width="wrap_content"
+        android:layout_height="60dp"
+        android:layout_centerHorizontal="true"
+        android:ellipsize="end"
+        android:gravity="center"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:singleLine="true"
+        android:textColor="@color/active_blue"
+        android:textSize="18sp"/>
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="60dp"
+        android:layout_alignTop="@+id/blitz_dropdown_header"
+        android:layout_marginLeft="8dp"
+        android:layout_toRightOf="@+id/blitz_dropdown_header"
+        android:contentDescription="@string/empty_string"
+        android:paddingTop="4dp"
+        android:src="@drawable/asset_bg_dropdown_caret"
+        android:visibility="gone" />
+</RelativeLayout>

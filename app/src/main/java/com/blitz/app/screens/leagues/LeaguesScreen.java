@@ -25,7 +25,7 @@ public class LeaguesScreen extends BaseFragment implements ViewModelLeagues.Call
     // region Member Variables
     // ============================================================================================================
 
-    @InjectView(R.id.leagues_header) TextView mLeaguesHeader;
+    @InjectView(R.id.blitz_dropdown_header) TextView mLeaguesHeader;
     @InjectView(R.id.leagues_screen_list) ListView mLeaguesScreenList;
 
     @InjectView(R.id.leagues_scrubber) BlitzScrubber mLeaguesScrubber;
