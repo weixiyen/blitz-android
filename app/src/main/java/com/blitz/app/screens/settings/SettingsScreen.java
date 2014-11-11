@@ -8,6 +8,7 @@ import android.widget.Switch;
 import android.widget.TextView;
 
 import com.blitz.app.R;
+import com.blitz.app.screens.payments.TransactionListViewScreen;
 import com.blitz.app.screens.web.WebScreen;
 import com.blitz.app.utilities.android.BaseActivity;
 import com.blitz.app.utilities.android.BaseFragment;
@@ -97,6 +98,15 @@ public class SettingsScreen extends BaseFragment implements ViewModelSettings.Ca
     // region Click Methods
     // ============================================================================================================
 
+    /**
+     * Navigate to transaction history
+     */
+    @OnClick(R.id.transaction_history) @SuppressWarnings("unused")
+    public void transactionHistoryClicked() {
+
+        Intent intent = new Intent(getActivity(), TransactionListViewScreen.class);
+        startActivity(intent);
+    }
     /**
      * Toggle music setting.
      */

@@ -103,6 +103,9 @@
         <activity android:name=".screens.payments.DepositScreen"
             android:windowSoftInputMode="stateHidden" />
 
+        <activity android:name=".screens.payments.TransactionListViewScreen"
+            android:windowSoftInputMode="stateHidden" />
+
         <!--
           WakefulBroadcastReceiver that will receive intents from GCM
           services and hand them to the custom IntentService.

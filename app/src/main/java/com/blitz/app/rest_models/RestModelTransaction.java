@@ -27,5 +27,13 @@ public class RestModelTransaction extends RestModel {
         mRestAPI.transactions_get(Arrays.asList(userId), "user_id", "{\"created\": \"DESC\"}", 150, callback);
     }
 
+    public int getAmount() {
+        return mAmount;
+    }
+
+    public String getType() {
+        return mType;
+    }
+
 
 }

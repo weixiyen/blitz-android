@@ -7,50 +7,16 @@
     android:orientation="horizontal">
 
     <TextView
-        android:id="@+id/leaderboard_index"
+        android:id="@+id/transaction_description"
         style="@style/LeaderboardListItem"
-        android:layout_width="32dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="10dp"
-        android:text="@string/number_large"
-        android:textColor="@color/text_color_dark"/>
-
-    <com.blitz.app.utilities.image.BlitzImageView
-        android:id="@+id/leaderboard_helmet"
-        android:layout_width="24dp"
-        android:layout_height="24dp"
-        android:layout_marginBottom="2dp"
-        android:layout_marginRight="5dp"
-        android:contentDescription="@string/empty_string" />
-
-    <TextView
-        android:id="@+id/leaderboard_user_name"
-        style="@style/LeaderboardListItem"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:singleLine="true"
-        android:text="@string/lorum_ipsum_short"
-        android:textColor="@color/text_color_light"/>
-
-    <TextView
-        android:id="@+id/leaderboard_wins"
-        style="@style/LeaderboardListItem"
-        android:layout_width="45dp"
-        android:layout_height="wrap_content"
-        android:text="@string/number_large"
+        android:text="@string/deposit"
         android:textColor="@color/text_color_dark"/>
 
     <TextView
-        android:id="@+id/leaderboard_losses"
-        style="@style/LeaderboardListItem"
-        android:layout_width="40dp"
-        android:layout_height="wrap_content"
-        android:text="@string/number_large"
-        android:textColor="@color/text_color_dark"/>
-
-    <TextView
-        android:id="@+id/leaderboard_rating"
+        android:id="@+id/transaction_amount"
         style="@style/LeaderboardListItem"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

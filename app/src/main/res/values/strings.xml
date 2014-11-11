@@ -84,6 +84,7 @@
     <string name="transactions">Transactions</string>
     <string name="account_balance">Account Balance</string>
     <string name="transaction_history">Transaction History</string>
+    <string name="deposit">Deposit</string>
 
     <string-array name="weeks_array">
         <item>Week 01</item>
