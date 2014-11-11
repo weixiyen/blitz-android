@@ -1,0 +1,12 @@
+<ListView
+    android:id="@+id/blitz_dropdown_list"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="40dp"
+    android:layout_marginTop="@dimen/navbar_height_padding_included"
+    android:cacheColorHint="@color/background_transparent"
+    android:divider="@null"
+    android:dividerHeight="0dp"
+    android:footerDividersEnabled="false"
+    android:listSelector="@color/background_transparent" />

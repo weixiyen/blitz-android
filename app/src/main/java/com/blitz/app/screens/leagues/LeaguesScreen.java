@@ -25,7 +25,9 @@ public class LeaguesScreen extends BaseFragment implements ViewModelLeagues.Call
     // region Member Variables
     // ============================================================================================================
 
-    @InjectView(R.id.blitz_dropdown_header) TextView mLeaguesHeader;
+    @InjectView(R.id.blitz_dropdown_header) TextView mLeaguesDropdownHeader;
+    @InjectView(R.id.blitz_dropdown_list)   ListView mLeaguesDropdownList;
+
     @InjectView(R.id.leagues_screen_list) ListView mLeaguesScreenList;
 
     @InjectView(R.id.leagues_scrubber) BlitzScrubber mLeaguesScrubber;
@@ -105,8 +107,8 @@ public class LeaguesScreen extends BaseFragment implements ViewModelLeagues.Call
         mSelectedLeague = selectedLeague;
 
         // Set the header.
-        if (mLeaguesHeader != null) {
-            mLeaguesHeader.setText(mUserLeagueNames.get(mSelectedLeague));
+        if (mLeaguesDropdownHeader != null) {
+            mLeaguesDropdownHeader.setText(mUserLeagueNames.get(mSelectedLeague));
         }
 
         // Ensure the correct item is selected.

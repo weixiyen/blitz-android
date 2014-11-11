@@ -15,8 +15,6 @@
         android:src="@drawable/asset_bg_main_dark"
         app:scaleType="topCrop" />
 
-    <include layout="@layout/blitz_dropdown_header"/>
-
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -66,4 +64,8 @@
         android:background="@drawable/drawable_bg_scrubber"
         android:gravity="center"
         android:orientation="horizontal"/>
+
+    <include layout="@layout/blitz_dropdown_header"/>
+    <include layout="@layout/blitz_dropdown_list"/>
+
 </RelativeLayout>
