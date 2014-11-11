@@ -26,12 +26,12 @@ public class LeaguesScreen extends BaseFragment implements ViewModelLeagues.Call
     // ============================================================================================================
 
     @InjectView(R.id.blitz_dropdown_header) TextView mLeaguesDropdownHeader;
-    @InjectView(R.id.blitz_dropdown_list)   ListView mLeaguesDropdownList;
+    @InjectView(R.id.blitz_dropdown_list) ListView mLeaguesDropdownList;
 
     @InjectView(R.id.leagues_screen_list) ListView mLeaguesScreenList;
 
-    @InjectView(R.id.leagues_scrubber) BlitzScrubber mLeaguesScrubber;
-    @InjectView(R.id.leagues_scrubber_item) TextView mLeaguesScrubberItem;
+    @InjectView(R.id.blitz_scrubber) BlitzScrubber mBlitzScrubber;
+    @InjectView(R.id.blitz_scrubber_selected) TextView mBlitzScrubberSelected;
 
     // Associated view model.
     private ViewModelLeagues mViewModel;
@@ -68,11 +68,9 @@ public class LeaguesScreen extends BaseFragment implements ViewModelLeagues.Call
     protected void onCreateView(Bundle savedInstanceState) {
         super.onCreateView(savedInstanceState);
 
-        // Provide the view pager.
-        mLeaguesScrubber.setViewPager(((MainScreen) getActivity()).getViewPager());
-
-        // Callbacks.
-        mLeaguesScrubber.setCallbacks(this);
+        // Provide the view pager and callbacks.
+        mBlitzScrubber.setViewPager(((MainScreen) getActivity()).getViewPager());
+        mBlitzScrubber.setCallbacks(this);
     }
 
     /**
@@ -112,7 +110,7 @@ public class LeaguesScreen extends BaseFragment implements ViewModelLeagues.Call
         }
 
         // Ensure the correct item is selected.
-        mLeaguesScrubber.setScrubberItemSelected(mSelectedLeague);
+        mBlitzScrubber.setScrubberItemSelected(mSelectedLeague);
 
         // Trigger a view model update for associated id.
         mViewModel.setSelectedLeagueId(mUserLeagueIds.get(mSelectedLeague));
@@ -169,11 +167,9 @@ public class LeaguesScreen extends BaseFragment implements ViewModelLeagues.Call
         mUserLeagueNames = leagueNames;
         mUserLeagueIds = leagueIds;
 
-        // Set the scrubber text view and names.
-        mLeaguesScrubber.setScrubberTextView(mLeaguesScrubberItem, mUserLeagueNames);
-
-        // Set the size of the scrubber.
-        mLeaguesScrubber.setSize(mUserLeagueIds.size());
+        // Set the scrubber text view, names, and size.
+        mBlitzScrubber.setScrubberTextView(mBlitzScrubberSelected, mUserLeagueNames);
+        mBlitzScrubber.setSize(mUserLeagueIds.size());
 
         // Initialize selected league.
         setSelectedLeague(mSelectedLeague);

@@ -40,32 +40,9 @@
             android:background="@color/background_inner"/>
     </RelativeLayout>
 
-    <com.blitz.app.utilities.textview.BlitzTextView
-        android:id="@+id/leagues_scrubber_item"
-        style="@style/App.TextView"
-        fontPath="@string/app_font_helvetica_condensed_bold"
-        android:layout_width="wrap_content"
-        android:layout_height="64dp"
-        android:layout_above="@+id/leagues_scrubber"
-        android:layout_centerHorizontal="true"
-        android:background="@drawable/asset_bg_scrubber"
-        android:gravity="center"
-        android:paddingLeft="20dp"
-        android:paddingRight="20dp"
-        android:text="@string/lorum_ipsum_tiny"
-        android:textSize="14sp"
-        app:clearInitialContent="true"/>
+    <include layout="@layout/blitz_scrubber" />
 
-    <com.blitz.app.utilities.scrubber.BlitzScrubber
-        android:id="@+id/leagues_scrubber"
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:layout_alignParentBottom="true"
-        android:background="@drawable/drawable_bg_scrubber"
-        android:gravity="center"
-        android:orientation="horizontal"/>
-
-    <include layout="@layout/blitz_dropdown_header"/>
-    <include layout="@layout/blitz_dropdown_list"/>
+    <include layout="@layout/blitz_dropdown_header" />
+    <include layout="@layout/blitz_dropdown_list" />
 
 </RelativeLayout>
