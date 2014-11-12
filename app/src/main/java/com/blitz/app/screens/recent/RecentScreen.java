@@ -29,7 +29,6 @@ public class RecentScreen extends BaseFragment implements ViewModelRecent.Callba
     private static final int WEEKS_IN_SEASON = 17;
 
     @InjectView(R.id.recent_header)             TextView mRecentHeader;
-    @InjectView(R.id.recent_scrubber_week)      TextView mRecentScrubberWeek;
     @InjectView(R.id.recent_no_games)           TextView mRecentNoGames;
     @InjectView(R.id.recent_drafts_list)        ListView mRecentMatches;
     @InjectView(R.id.recent_week_wins)          TextView mRecentWeekWins;
@@ -38,7 +37,8 @@ public class RecentScreen extends BaseFragment implements ViewModelRecent.Callba
     @InjectView(R.id.recent_week_rating_change) TextView mRecentWeekRatingChange;
 
     // Week selector.
-    @InjectView(R.id.recent_scrubber) BlitzScrubber mRecentScrubber;
+    @InjectView(R.id.blitz_scrubber) BlitzScrubber mBlitzScrubber;
+    @InjectView(R.id.blitz_scrubber_selected) TextView mBlitzScrubberSelected;
 
     private ViewModelRecent mViewModel;
 
@@ -55,16 +55,16 @@ public class RecentScreen extends BaseFragment implements ViewModelRecent.Callba
         super.onCreateView(savedInstanceState);
 
         // Provide the view pager.
-        mRecentScrubber.setViewPager(((MainScreen) getActivity()).getViewPager());
+        mBlitzScrubber.setViewPager(((MainScreen) getActivity()).getViewPager());
 
         // Weeks in season.
-        mRecentScrubber.setSize(WEEKS_IN_SEASON);
+        mBlitzScrubber.setSize(WEEKS_IN_SEASON);
 
         // Week display text view.
-        mRecentScrubber.setScrubberTextView(mRecentScrubberWeek, null);
+        mBlitzScrubber.setScrubberTextView(mBlitzScrubberSelected, null);
 
         // Callbacks.
-        mRecentScrubber.setCallbacks(this);
+        mBlitzScrubber.setCallbacks(this);
     }
 
     /**
@@ -158,8 +158,8 @@ public class RecentScreen extends BaseFragment implements ViewModelRecent.Callba
             mRecentHeader.setText("Week " + week);
         }
 
-        if (mRecentScrubber != null) {
-            mRecentScrubber.setScrubberItemSelected(week - 1);
+        if (mBlitzScrubber != null) {
+            mBlitzScrubber.setScrubberItemSelected(week - 1);
         }
 
         // Set summary info.

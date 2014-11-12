@@ -1,0 +1,11 @@
+<TextView
+    style="@style/App.TextView"
+    fontPath="@string/app_font_helvetica_condensed_bold"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/drawable_bg_dropdown"
+    android:gravity="center"
+    android:padding="10dp"
+    android:text="@string/lorum_ipsum_tiny"
+    android:textSize="14sp"/>
