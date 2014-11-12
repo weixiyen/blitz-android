@@ -6,6 +6,6 @@
     android:layout_height="wrap_content"
     android:background="@drawable/drawable_bg_dropdown"
     android:gravity="center"
-    android:padding="10dp"
+    android:padding="15dp"
     android:text="@string/lorum_ipsum_tiny"
-    android:textSize="14sp"/>
+    android:textSize="15sp"/>

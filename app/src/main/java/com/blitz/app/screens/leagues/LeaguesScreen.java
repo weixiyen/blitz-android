@@ -1,6 +1,7 @@
 package com.blitz.app.screens.leagues;
 
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -26,6 +27,7 @@ public class LeaguesScreen extends BaseFragment implements ViewModelLeagues.Call
     // region Member Variables
     // ============================================================================================================
 
+    @InjectView(R.id.blitz_dropdown_container) View mBlitzDropdownContainer;
     @InjectView(R.id.blitz_dropdown_header) TextView mBlitzDropdownHeader;
     @InjectView(R.id.blitz_dropdown_list) ListView mBlitzDropdownList;
 
@@ -173,6 +175,7 @@ public class LeaguesScreen extends BaseFragment implements ViewModelLeagues.Call
         mBlitzDropdown = new BlitzDropdown(getActivity(), leagueIds, leagueNames);
         mBlitzDropdown.setListView(mBlitzDropdownList);
         mBlitzDropdown.setHeaderView(mBlitzDropdownHeader);
+        mBlitzDropdown.setContainerView(mBlitzDropdownContainer);
 
         // Initialize selected league.
         setSelectedLeague(mSelectedLeague);

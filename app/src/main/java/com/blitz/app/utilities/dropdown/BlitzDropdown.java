@@ -20,6 +20,7 @@ public class BlitzDropdown extends ArrayAdapter<String> {
 
     private TextView mHeaderView;
     private ListView mListView;
+    private View mContainerView;
 
     private List<String> mDropdownIds;
     private List<String> mDropdownNames;
@@ -106,14 +107,25 @@ public class BlitzDropdown extends ArrayAdapter<String> {
     @SuppressWarnings("unused")
     public void setHeaderView(TextView headerView) {
 
-        if (headerView == null) {
+        // Set the headerView.
+        mHeaderView = headerView;
+    }
+
+    /**
+     * Set the container view.
+     *
+     * @param containerView Container view.
+     */
+    @SuppressWarnings("unused")
+    public void setContainerView(View containerView) {
+
+        if (containerView == null) {
 
             return;
         }
 
-        // Set the headerView.
-        mHeaderView = headerView;
-        mHeaderView.setOnClickListener(view -> {
+        mContainerView = containerView;
+        mContainerView.setOnClickListener(view -> {
 
             if (mListView != null) {
 
