@@ -15,14 +15,6 @@
         android:src="@drawable/asset_bg_main_dark"
         app:scaleType="topCrop" />
 
-    <com.blitz.app.utilities.textview.BlitzTextView
-        android:id="@+id/recent_header"
-        style="@style/App.NavBar"
-        android:layout_height="@dimen/navbar_height_padding_included"
-        android:paddingTop="@dimen/navbar_height_padding"
-        android:text="@string/lorum_ipsum_tiny"
-        app:clearInitialContent="true" />
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="105dp"
@@ -184,5 +176,8 @@
     </RelativeLayout>
 
     <include layout="@layout/blitz_scrubber" />
+
+    <include layout="@layout/blitz_dropdown_header" />
+    <include layout="@layout/blitz_dropdown_list" />
 
 </RelativeLayout>

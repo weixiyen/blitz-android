@@ -167,6 +167,7 @@ public class BlitzDropdown extends ArrayAdapter<String> {
         mContainerView.setOnClickListener(view -> {
 
             if (mListView != null) {
+                mListView.setSelection(mSelectedPosition);
 
                 // Toggle the visibility of the list view.
                 AnimHelperFade.setVisibility(mListView, mListView.getVisibility()
