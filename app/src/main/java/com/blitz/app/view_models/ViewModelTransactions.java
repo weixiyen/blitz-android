@@ -1,10 +1,9 @@
 package com.blitz.app.view_models;
 
 import com.blitz.app.rest_models.RestModelTransaction;
+import com.blitz.app.rest_models.RestResults;
 import com.blitz.app.utilities.android.BaseActivity;
 import com.blitz.app.utilities.authentication.AuthHelper;
-import com.blitz.app.utilities.rest.RestAPICallback;
-import com.blitz.app.utilities.rest.RestAPIResult;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,18 +29,18 @@ public class ViewModelTransactions extends ViewModel {
     @Override
     public void initialize() {
 
-        RestModelTransaction.listTransactionsForUserId(AuthHelper.instance().getUserId(), 150,
-                new RestAPICallback<RestAPIResult<RestModelTransaction>>(mActivity) {
+        RestModelTransaction.listTransactionsForUserId(mActivity, AuthHelper.instance().getUserId(), 150,
+                new RestResults<RestModelTransaction>() {
 
                     @Override
-                    public void success(RestAPIResult<RestModelTransaction> jsonObject) {
+                    public void onSuccess(List<RestModelTransaction> results) {
 
-                        int size = jsonObject.getResults().size();
+                        int size = results.size();
 
-                        List<Integer> amounts = new ArrayList<Integer>(size);
-                        List<String> descriptions = new ArrayList<String>(size);
+                        List<Integer> amounts = new ArrayList<>(size);
+                        List<String> descriptions = new ArrayList<>(size);
 
-                        for(RestModelTransaction transaction : jsonObject.getResults()) {
+                        for(RestModelTransaction transaction : results) {
                             amounts.add(transaction.getAmount());
                             descriptions.add(transaction.getType());
                         }

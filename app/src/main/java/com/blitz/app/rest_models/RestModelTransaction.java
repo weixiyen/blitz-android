@@ -1,8 +1,15 @@
 package com.blitz.app.rest_models;
 
+import android.app.Activity;
+import android.support.annotation.NonNull;
+
 import com.google.gson.annotations.SerializedName;
 
 import java.util.Arrays;
+
+import retrofit.Callback;
+import retrofit.RetrofitError;
+import retrofit.client.Response;
 
 /**
  * Transactions Deposits/Withdrawals
@@ -21,8 +28,12 @@ public class RestModelTransaction extends RestModel {
     @SerializedName("error_message")
     private String mErrorMessage;
 
-    public static void listTransactionsForUserId(String userId, int limit, RestAPICallback<RestAPIResult<RestModelTransaction>> callback) {
-        mRestAPI.transactions_get(Arrays.asList(userId), "user_id", "{\"created\": \"DESC\"}", 150, callback);
+    public static void listTransactionsForUserId(Activity activity, String userId, int limit,
+                                                 @NonNull RestResults<RestModelTransaction> callback) {
+
+        mRestAPI.transactions_get(Arrays.asList(userId), "user_id", "{\"created\": \"DESC\"}", 150,
+                new RestAPICallback<>(activity, result -> callback.onSuccess(result.getResults()), null));
+
     }
 
     public int getAmount() {
