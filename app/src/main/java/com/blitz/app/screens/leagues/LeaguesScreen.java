@@ -22,14 +22,14 @@ import butterknife.InjectView;
  * Created by mrkcsc on 10/24/14. Copyright 2014 Blitz Studios
  */
 public class LeaguesScreen extends BaseFragment implements ViewModelLeagues.Callbacks,
-        LeaguesScreenAdapterCreate.Callbacks, LeaguesScreenAdapterView.Callbacks, BlitzScrubber.Callbacks {
+        LeaguesScreenAdapterCreate.Callbacks, LeaguesScreenAdapterView.Callbacks {
 
     // region Member Variables
     // ============================================================================================================
 
-    @InjectView(R.id.blitz_dropdown_container) View mBlitzDropdownContainer;
+    @InjectView(R.id.blitz_dropdown_container)  View mBlitzDropdownContainer;
     @InjectView(R.id.blitz_dropdown_header) TextView mBlitzDropdownHeader;
-    @InjectView(R.id.blitz_dropdown_list) ListView mBlitzDropdownList;
+    @InjectView(R.id.blitz_dropdown_list)   ListView mBlitzDropdownList;
 
     @InjectView(R.id.leagues_screen_list) ListView mLeaguesScreenList;
 
@@ -74,7 +74,7 @@ public class LeaguesScreen extends BaseFragment implements ViewModelLeagues.Call
 
         // Provide the view pager and callbacks.
         mBlitzScrubber.setViewPager(((MainScreen) getActivity()).getViewPager());
-        mBlitzScrubber.setCallbacks(this);
+        mBlitzScrubber.setCallbacks(this::setSelectedLeague);
     }
 
     /**
@@ -172,10 +172,11 @@ public class LeaguesScreen extends BaseFragment implements ViewModelLeagues.Call
         mBlitzScrubber.setSize(mUserLeagueIds.size());
 
         // Configure the dropdown.
-        mBlitzDropdown = new BlitzDropdown(getActivity(), leagueIds, leagueNames);
+        mBlitzDropdown = new BlitzDropdown(getActivity(), leagueNames);
         mBlitzDropdown.setListView(mBlitzDropdownList);
         mBlitzDropdown.setHeaderView(mBlitzDropdownHeader);
         mBlitzDropdown.setContainerView(mBlitzDropdownContainer);
+        mBlitzDropdown.setCallbacks(this::setSelectedLeague);
 
         // Initialize selected league.
         setSelectedLeague(mSelectedLeague);
@@ -325,19 +326,6 @@ public class LeaguesScreen extends BaseFragment implements ViewModelLeagues.Call
 
         // Show the input dialog.
         mDialogInput.show(getChildFragmentManager());
-    }
-
-    /**
-     * Update selected league UI when
-     * the scrubber position changes.
-     *
-     * @param position Current position.
-     */
-    @Override
-    public void onScrubberItemSelected(int position) {
-
-        // Update selected league.
-        setSelectedLeague(position);
     }
 
     /**
