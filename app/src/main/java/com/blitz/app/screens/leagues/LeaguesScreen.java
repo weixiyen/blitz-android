@@ -30,6 +30,7 @@ public class LeaguesScreen extends BaseFragment implements ViewModelLeagues.Call
     @InjectView(R.id.blitz_dropdown_container)  View mBlitzDropdownContainer;
     @InjectView(R.id.blitz_dropdown_header) TextView mBlitzDropdownHeader;
     @InjectView(R.id.blitz_dropdown_list)   ListView mBlitzDropdownList;
+    @InjectView(R.id.blitz_dropdown_list_wrap)  View mBlitzDropdownListWrap;
 
     @InjectView(R.id.leagues_screen_list) ListView mLeaguesScreenList;
 
@@ -173,7 +174,7 @@ public class LeaguesScreen extends BaseFragment implements ViewModelLeagues.Call
 
         // Configure the dropdown.
         mBlitzDropdown = new BlitzDropdown(getActivity(), leagueNames);
-        mBlitzDropdown.setListView(mBlitzDropdownList);
+        mBlitzDropdown.setListView(mBlitzDropdownListWrap, mBlitzDropdownList);
         mBlitzDropdown.setHeaderView(mBlitzDropdownHeader);
         mBlitzDropdown.setContainerView(mBlitzDropdownContainer);
         mBlitzDropdown.setCallbacks(this::setSelectedLeague);

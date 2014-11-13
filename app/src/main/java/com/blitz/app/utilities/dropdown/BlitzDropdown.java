@@ -24,6 +24,7 @@ public class BlitzDropdown extends ArrayAdapter<String> {
     // Associated views.
     private TextView mHeaderView;
     private ListView mListView;
+    private View mListViewWrap;
     private View mContainerView;
 
     // Selected position.
@@ -125,7 +126,7 @@ public class BlitzDropdown extends ArrayAdapter<String> {
      * @param listView List view.
      */
     @SuppressWarnings("unused")
-    public void setListView(ListView listView) {
+    public void setListView(View listViewWrap, ListView listView) {
 
         if (listView == null) {
 
@@ -134,8 +135,10 @@ public class BlitzDropdown extends ArrayAdapter<String> {
 
         // Set the list view.
         mListView = listView;
-        mListView.setVisibility(View.GONE);
         mListView.setAdapter(this);
+
+        mListViewWrap = listViewWrap;
+        mListViewWrap.setVisibility(View.GONE);
     }
 
     /**
@@ -170,7 +173,7 @@ public class BlitzDropdown extends ArrayAdapter<String> {
                 mListView.setSelection(mSelectedPosition);
 
                 // Toggle the visibility of the list view.
-                AnimHelperFade.setVisibility(mListView, mListView.getVisibility()
+                AnimHelperFade.setVisibility(mListViewWrap, mListViewWrap.getVisibility()
                         == View.VISIBLE ? View.GONE : View.VISIBLE);
             }
         });
