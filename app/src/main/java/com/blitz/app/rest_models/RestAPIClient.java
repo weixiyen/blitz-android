@@ -1,4 +1,4 @@
-package com.blitz.app.utilities.rest;
+package com.blitz.app.rest_models;
 
 import com.blitz.app.utilities.app.AppDataObject;
 
@@ -9,7 +9,7 @@ import retrofit.client.Response;
 /**
  * Created by Miguel Gaeta on 6/26/14. Copyright 2014 Blitz Studios
  */
-public class RestAPIClient extends RestAPIClientBase {
+class RestAPIClient extends RestAPIClientBase {
 
     // region Member Variables
     // ============================================================================================================

@@ -1,17 +1,19 @@
 package com.blitz.app.rest_models;
 
+import java.util.List;
+
 /**
  * Created by mrkcsc on 10/9/14. Copyright 2014 Blitz Studios
  */
-public abstract class RestModelCallback<T extends RestModel> {
+public abstract class RestCallbacks<T extends RestModel> {
 
     /**
-     * Emit response object on success
+     * Emit response object list on success
      * where object is a subclass of RestModel.
      *
-     * @param object Object result.
+     * @param object List of object result.
      */
-    public abstract void onSuccess(T object);
+    public abstract void onSuccess(List<T> object);
 
     @SuppressWarnings("unused")
     public void onFailure() {

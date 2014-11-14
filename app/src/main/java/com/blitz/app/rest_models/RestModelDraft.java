@@ -5,8 +5,6 @@ import android.support.annotation.NonNull;
 
 import com.blitz.app.utilities.authentication.AuthHelper;
 import com.blitz.app.utilities.date.DateUtils;
-import com.blitz.app.utilities.rest.RestAPICallback;
-import com.blitz.app.utilities.rest.RestAPIResult;
 import com.google.gson.JsonObject;
 import com.google.gson.annotations.SerializedName;
 
@@ -541,7 +539,7 @@ public final class RestModelDraft extends RestModel {
      */
     @SuppressWarnings("unused")
     public static void pickPlayer(Activity activity, String draftId, String playerId,
-                                  @NonNull RestModelCallback<RestModelDraft> callback) {
+                                  @NonNull RestCallback<RestModelDraft> callback) {
 
         if (draftId == null || playerId == null) {
 
@@ -571,7 +569,7 @@ public final class RestModelDraft extends RestModel {
      */
     @SuppressWarnings("unused")
     public static void fetchSyncedDraft(Activity activity, String draftId,
-                                        @NonNull RestModelCallback<RestModelDraft> callback) {
+                                        @NonNull RestCallback<RestModelDraft> callback) {
 
         if (draftId == null) {
             return;
@@ -604,7 +602,7 @@ public final class RestModelDraft extends RestModel {
      */
     @SuppressWarnings("unused")
     public static void fetchActiveDraftsForUser(Activity activity, String userId,
-            @NonNull RestModelCallbacks<RestModelDraft> callback) {
+            @NonNull RestCallbacks<RestModelDraft> callback) {
 
         RestAPICallback<RestAPIResult<RestModelDraft>> operation = new RestAPICallback<>(activity,
                 result -> callback.onSuccess(result.getResults()), null);
@@ -637,7 +635,7 @@ public final class RestModelDraft extends RestModel {
                                           Integer week,
                                           Integer year,
                                           Integer limit,
-                                          @NonNull RestModelCallbacks<RestModelDraft> callback) {
+                                          @NonNull RestCallbacks<RestModelDraft> callback) {
 
         // Create filter for current time frame.
         String filter = "{\"week\": " + week + ", \"year\": " +

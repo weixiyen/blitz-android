@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.support.annotation.NonNull;
 
 import com.blitz.app.utilities.json.JsonHelper;
-import com.blitz.app.utilities.rest.RestAPICallback;
 import com.google.gson.JsonObject;
 import com.google.gson.annotations.SerializedName;
 

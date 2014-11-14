@@ -1,4 +1,4 @@
-package com.blitz.app.utilities.rest;
+package com.blitz.app.rest_models;
 
 import android.app.Activity;
 import android.os.Handler;
@@ -14,7 +14,7 @@ import retrofit.client.Response;
 /**
  * Created by Miguel Gaeta on 6/29/14. Copyright 2014 Blitz Studios
  */
-public class RestAPICallback<T> implements Callback<T> {
+class RestAPICallback<T> implements Callback<T> {
 
     // region Member Variables
     // ============================================================================================================

@@ -1,4 +1,4 @@
-package com.blitz.app.utilities.rest;
+package com.blitz.app.rest_models;
 
 import com.google.gson.JsonObject;
 import com.google.gson.annotations.SerializedName;
@@ -8,7 +8,7 @@ import java.util.List;
 /**
  * Created by Nate on 9/18/14. Copyright 2014 Blitz Studios
  */
-public class RestAPIResult<T> {
+class RestAPIResult<T> {
 
     // region Member Variables
     // ============================================================================================================

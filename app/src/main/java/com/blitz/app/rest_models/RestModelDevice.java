@@ -3,7 +3,6 @@ package com.blitz.app.rest_models;
 import android.app.Activity;
 import android.support.annotation.NonNull;
 
-import com.blitz.app.utilities.rest.RestAPICallback;
 import com.google.gson.JsonObject;
 import com.google.gson.annotations.SerializedName;
 

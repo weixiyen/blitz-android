@@ -1,6 +1,6 @@
 package com.blitz.app.view_models;
 
-import com.blitz.app.rest_models.RestModelCallbacks;
+import com.blitz.app.rest_models.RestCallbacks;
 import com.blitz.app.rest_models.RestModelItem;
 import com.blitz.app.rest_models.RestModelUser;
 import com.blitz.app.utilities.android.BaseActivity;
@@ -42,7 +42,7 @@ public class ViewModelLeaderboard extends ViewModel {
 
         // First grab the user objects.
         RestModelUser.getTopUsersWithLimit(null, usersToFetch,
-                new RestModelCallbacks<RestModelUser>() {
+                new RestCallbacks<RestModelUser>() {
 
                     @Override
                     public void onSuccess(final List<RestModelUser> object) {

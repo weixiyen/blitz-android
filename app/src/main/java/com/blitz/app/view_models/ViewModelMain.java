@@ -1,6 +1,6 @@
 package com.blitz.app.view_models;
 
-import com.blitz.app.rest_models.RestModelCallback;
+import com.blitz.app.rest_models.RestCallback;
 import com.blitz.app.rest_models.RestModelDraft;
 import com.blitz.app.rest_models.RestModelQueue;
 import com.blitz.app.screens.main.MainScreen;
@@ -149,7 +149,7 @@ public class ViewModelMain extends ViewModel {
 
                 // Fetch the associated draft object.
                 RestModelDraft.fetchSyncedDraft(mActivity, draftId,
-                        new RestModelCallback<RestModelDraft>() {
+                        new RestCallback<RestModelDraft>() {
 
                             @Override
                             public void onSuccess(RestModelDraft draft) {

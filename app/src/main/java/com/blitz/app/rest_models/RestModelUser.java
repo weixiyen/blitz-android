@@ -4,8 +4,6 @@ import android.app.Activity;
 import android.support.annotation.NonNull;
 
 import com.blitz.app.utilities.authentication.AuthHelper;
-import com.blitz.app.utilities.rest.RestAPICallback;
-import com.blitz.app.utilities.rest.RestAPIResult;
 import com.google.gson.JsonObject;
 import com.google.gson.annotations.SerializedName;
 
@@ -49,7 +47,7 @@ public class RestModelUser extends RestModel {
      */
     @SuppressWarnings("unused")
     public static void updateAvatar(Activity activity, String avatarId,
-                                    @NonNull RestModelCallback<RestModelUser> callback) {
+                                    @NonNull RestCallback<RestModelUser> callback) {
         if (avatarId == null) {
             return;
         }
@@ -76,7 +74,7 @@ public class RestModelUser extends RestModel {
      */
     @SuppressWarnings("unused")
     public static void getUser(Activity activity, String userId,
-                               @NonNull RestModelCallback<RestModelUser> callback,
+                               @NonNull RestCallback<RestModelUser> callback,
                                boolean logoutOnFailure) {
 
         // Rest operation.
@@ -98,7 +96,7 @@ public class RestModelUser extends RestModel {
      */
     @SuppressWarnings("unused")
     public static void getTopUsersWithLimit(Activity activity, final int limit,
-                                            @NonNull RestModelCallbacks<RestModelUser> callback) {
+                                            @NonNull RestCallbacks<RestModelUser> callback) {
 
         // Only fetch relevant fields from the users table.
         List<String> pluck = Arrays.asList("id", "username", "wins",
@@ -120,7 +118,7 @@ public class RestModelUser extends RestModel {
      */
     @SuppressWarnings("unused")
     public static void getUsers(Activity activity, List<String> userIds,
-                                @NonNull RestModelCallbacks<RestModelUser> callback) {
+                                @NonNull RestCallbacks<RestModelUser> callback) {
 
         // Pluck a subset of the fields.
         List<String> pluck = Arrays.asList("id", "username", "status", "avatar_id",
@@ -138,7 +136,7 @@ public class RestModelUser extends RestModel {
      */
     @SuppressWarnings("unused")
     public static void signUp(Activity activity, String email, String username, String password,
-                              @NonNull RestModelCallback<RestModelUser> callback) {
+                              @NonNull RestCallback<RestModelUser> callback) {
 
         // Rest operation.
         RestAPICallback<RestAPIResult<RestModelUser>> operation = new RestAPICallback<>(activity, result -> {
@@ -175,7 +173,7 @@ public class RestModelUser extends RestModel {
      */
     @SuppressWarnings("unused")
     public static void signIn(Activity activity, String username, String password,
-                              @NonNull RestModelCallback<RestModelUser> callback) {
+                              @NonNull RestCallback<RestModelUser> callback) {
 
         // Rest operation.
         RestAPICallback<RestAPIResult<RestModelUser>> operation = new RestAPICallback<>(activity, result -> {

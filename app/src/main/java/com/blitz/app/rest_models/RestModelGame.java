@@ -1,18 +1,14 @@
 package com.blitz.app.rest_models;
 
+import android.app.Activity;
+import android.support.annotation.NonNull;
 import android.util.Pair;
 
-import com.blitz.app.simple_models.Game;
-import com.blitz.app.utilities.rest.RestAPICallback;
-import com.blitz.app.utilities.rest.RestAPIResult;
+import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
-
-import retrofit.Callback;
-import retrofit.RetrofitError;
-import retrofit.client.Response;
 
 /**
  * Created by Nate on 9/21/14. Copyright 2014 Blitz Studios
@@ -21,35 +17,90 @@ import retrofit.client.Response;
  */
 public class RestModelGame extends RestModel {
 
-    private static Map<Pair<Integer, Integer>, List<Game>> mCache =
+    // region Member Variables
+    // ============================================================================================================
+
+    @SuppressWarnings("unused") @SerializedName("home_team")  private String mHomeTeam;
+    @SuppressWarnings("unused") @SerializedName("away_team")  private String mAwayTeam;
+    @SuppressWarnings("unused") @SerializedName("status")     private String mStatus;
+    @SuppressWarnings("unused") @SerializedName("score_home") private int mScoreHome;
+    @SuppressWarnings("unused") @SerializedName("score_away") private int mScoreAway;
+
+    private static Map<Pair<Integer, Integer>, List<RestModelGame>> mCache =
             new ConcurrentHashMap<>();
 
-    public static void fetchGames(int year, int week,
-                                final RestAPICallback<List<Game>> callback) {
+    private enum GameStatus {
+        STATUS_PREGAME,
+        STATUS_IN_PROGRESS,
+        STATUS_FINAL
+    }
+
+    // endregion
+
+    // region REST Methods
+    // ============================================================================================================
+
+    /**
+     * Fetch games for a given time.
+     */
+    @SuppressWarnings("unused")
+    public static void fetchGames(Activity activity, int year, int week,
+                                  @NonNull RestCallbacks<RestModelGame> callback) {
 
         final Pair<Integer, Integer> cacheKey = Pair.create(year, week);
-        if(mCache.containsKey(cacheKey)) {
-            callback.success(mCache.get(cacheKey), null);
+
+        if (mCache.containsKey(cacheKey)) {
+            callback.onSuccess(mCache.get(cacheKey));
 
         } else {
 
-            Callback<RestAPIResult<Game>> apiCallback = new Callback<RestAPIResult<Game>>() {
+            mRestAPI.games_get(String.valueOf(year) + "_" + week, new RestAPICallback<>(activity, result -> {
 
-                @Override
-                public void success(RestAPIResult restAPIResult, Response response) {
+                // Insert into cache.
+                mCache.put(cacheKey, result.getResults());
 
-                    mCache.put(cacheKey, restAPIResult.getResults());
-                    callback.success(restAPIResult.getResults(), null);
-                }
+                // Invoke success callback.
+                callback.onSuccess(result.getResults());
 
-                @Override
-                public void failure(RetrofitError error) {
-
-                    error.printStackTrace(); // TODO: this should be handled by the RestAPICallback
-                }
-            };
-
-            mRestAPI.games_get(String.valueOf(year) + "_" + week, apiCallback);
+            }, null));
         }
     }
+
+    // endregion
+
+    // region Public Methods
+    // ============================================================================================================
+
+    @SuppressWarnings("unused")
+    public String getHomeTeamName() {
+        return mHomeTeam;
+    }
+
+    @SuppressWarnings("unused")
+    public String getAwayTeamName() {
+        return mAwayTeam;
+    }
+
+    @SuppressWarnings("unused")
+    public int getHomeTeamScore() {
+        return mScoreHome;
+    }
+
+    @SuppressWarnings("unused")
+    public int getAwayTeamScore() {
+        return mScoreAway;
+    }
+
+    @SuppressWarnings("unused")
+    public GameStatus getStatus() {
+        if (mStatus.equals(GameStatus.STATUS_FINAL.name())) {
+            return GameStatus.STATUS_FINAL;
+        } else if (mStatus.equals(GameStatus.STATUS_IN_PROGRESS.name())) {
+            return GameStatus.STATUS_IN_PROGRESS;
+        } else {
+            return GameStatus.STATUS_PREGAME;
+        }
+    }
+
+    // endregion
 }

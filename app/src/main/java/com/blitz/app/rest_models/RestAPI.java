@@ -1,14 +1,5 @@
-package com.blitz.app.utilities.rest;
+package com.blitz.app.rest_models;
 
-import com.blitz.app.rest_models.RestModelDevice;
-import com.blitz.app.rest_models.RestModelDraft;
-import com.blitz.app.rest_models.RestModelGroup;
-import com.blitz.app.rest_models.RestModelItem;
-import com.blitz.app.rest_models.RestModelPlayer;
-import com.blitz.app.rest_models.RestModelPreferences;
-import com.blitz.app.rest_models.RestModelUser;
-import com.blitz.app.simple_models.Game;
-import com.blitz.app.simple_models.Stat;
 import com.google.gson.JsonObject;
 
 import java.util.List;
@@ -27,7 +18,7 @@ import retrofit.http.Query;
  * Created by Miguel Gaeta on 6/26/14. Copyright 2014 Blitz Studios
  */
 @SuppressWarnings("UnusedDeclaration")
-public interface RestAPI {
+interface RestAPI {
 
     // region Public REST API Methods
     // ============================================================================================================
@@ -111,7 +102,7 @@ public interface RestAPI {
 
     @GET("/nfl_games?index=year_week_index")
     void games_get(@Query("key") String key,
-        Callback<RestAPIResult<Game>> callback);
+        Callback<RestAPIResult<RestModelGame>> callback);
 
     @GET("/nfl_player/{player_id}")
     void nfl_player_get(@Path("player_id") String playerId,
@@ -150,7 +141,7 @@ public interface RestAPI {
                    @Query("index") String index,         // Required
                    @Query("pluck[]") List<String> pluck, // Optional
                    @Query("limit") Integer limit,        // Optional
-        Callback<RestAPIResult<Stat>> callback);
+        Callback<RestAPIResult<RestModelStats>> callback);
 
     @GET("/user/{user_id}")
     void user_get(@Path("user_id") String userId,

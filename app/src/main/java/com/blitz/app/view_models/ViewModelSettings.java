@@ -3,7 +3,7 @@ package com.blitz.app.view_models;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 
-import com.blitz.app.rest_models.RestModelCallback;
+import com.blitz.app.rest_models.RestCallback;
 import com.blitz.app.rest_models.RestModelItem;
 import com.blitz.app.rest_models.RestModelUser;
 import com.blitz.app.utilities.android.BaseActivity;
@@ -69,7 +69,7 @@ public class ViewModelSettings extends ViewModel {
     public void updateUserAvatar(String itemAvatarId) {
 
         // Silently update the users avatar.
-        RestModelUser.updateAvatar(null, itemAvatarId, new RestModelCallback<RestModelUser>() {
+        RestModelUser.updateAvatar(null, itemAvatarId, new RestCallback<RestModelUser>() {
 
             @Override
             public void onSuccess(RestModelUser object) {
@@ -110,7 +110,7 @@ public class ViewModelSettings extends ViewModel {
 
         // Fetch user information.
         RestModelUser.getUser(mActivity, AuthHelper.instance().getUserId(),
-                new RestModelCallback<RestModelUser>() {
+                new RestCallback<RestModelUser>() {
 
                     @Override
                     public void onSuccess(RestModelUser user) {

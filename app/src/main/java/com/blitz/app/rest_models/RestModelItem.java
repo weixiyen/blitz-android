@@ -2,7 +2,6 @@ package com.blitz.app.rest_models;
 
 import android.app.Activity;
 
-import com.blitz.app.utilities.rest.RestAPICallback;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.ArrayList;

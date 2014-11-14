@@ -4,8 +4,8 @@ import android.app.Activity;
 import android.content.Intent;
 
 import com.blitz.app.R;
-import com.blitz.app.rest_models.RestModelCallback;
-import com.blitz.app.rest_models.RestModelCallbacks;
+import com.blitz.app.rest_models.RestCallback;
+import com.blitz.app.rest_models.RestCallbacks;
 import com.blitz.app.rest_models.RestModelDraft;
 import com.blitz.app.rest_models.RestModelPreferences;
 import com.blitz.app.screens.access_queue.AccessQueueScreen;
@@ -72,7 +72,7 @@ public class AuthHelper {
      */
     @SuppressWarnings("unused")
     public void getPreferences(Activity activity, boolean forceSync,
-                               final RestModelCallback<RestModelPreferences> callback) {
+                               final RestCallback<RestModelPreferences> callback) {
 
         // If preferences are already synced for this session.
         if (mPreferencesSynced && !forceSync) {
@@ -84,7 +84,7 @@ public class AuthHelper {
         } else {
 
             // Sync preferences from the network.
-            RestModelPreferences.sync(activity, new RestModelCallback<RestModelPreferences>() {
+            RestModelPreferences.sync(activity, new RestCallback<RestModelPreferences>() {
 
                 @Override
                 public void onSuccess(RestModelPreferences object) {
@@ -292,7 +292,7 @@ public class AuthHelper {
 
             // Attempt to fetch active drafts for the user.
             RestModelDraft.fetchActiveDraftsForUser(activity, AppDataObject.userId.get(),
-                    new RestModelCallbacks<RestModelDraft>() {
+                    new RestCallbacks<RestModelDraft>() {
 
                         @Override
                         public void onSuccess(List<RestModelDraft> drafts) {
@@ -307,7 +307,7 @@ public class AuthHelper {
                                 String draftId = drafts.get(drafts.size() - 1).getId();
 
                                 RestModelDraft.fetchSyncedDraft(activity, draftId,
-                                        new RestModelCallback<RestModelDraft>() {
+                                        new RestCallback<RestModelDraft>() {
 
                                             @Override
                                             public void onSuccess(RestModelDraft draft) {

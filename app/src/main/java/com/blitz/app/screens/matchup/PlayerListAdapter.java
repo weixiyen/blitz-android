@@ -10,10 +10,10 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import com.blitz.app.R;
+import com.blitz.app.rest_models.RestModelGame;
 import com.blitz.app.rest_models.RestModelPlayer;
+import com.blitz.app.rest_models.RestModelStats;
 import com.blitz.app.screens.stats.StatsBreakdownScreen;
-import com.blitz.app.simple_models.Game;
-import com.blitz.app.simple_models.Stat;
 
 import java.util.Collection;
 import java.util.List;
@@ -32,16 +32,16 @@ public class PlayerListAdapter extends ArrayAdapter {
 
     private final List<RestModelPlayer> mPlayer1Picks;
     private final List<RestModelPlayer> mPlayer2Picks;
-    private final List<Game>   mPlayer1Games;
-    private final List<Game>   mPlayer2Games;
-    private final Map<String, List<Stat>> mPlayerStats;
+    private final List<RestModelGame>   mPlayer1Games;
+    private final List<RestModelGame>   mPlayer2Games;
+    private final Map<String, List<RestModelStats>> mPlayerStats;
     private final int mWeek;
 
     private final Activity mActivity;
 
     public PlayerListAdapter(Context context, List<RestModelPlayer> player1picks, List<RestModelPlayer> player2picks,
-                             List<Game> player1games, List<Game> player2games,
-                             Map<String, List<Stat>> playerStats,
+                             List<RestModelGame> player1games, List<RestModelGame> player2games,
+                             Map<String, List<RestModelStats>> playerStats,
                              int week,
                              Activity activity) {
 
@@ -93,8 +93,8 @@ public class PlayerListAdapter extends ArrayAdapter {
 
             if (mPlayer1Games != null && mPlayer2Games != null) {
 
-                Game g1 = mPlayer1Games.get(position);
-                Game g2 = mPlayer2Games.get(position);
+                RestModelGame g1 = mPlayer1Games.get(position);
+                RestModelGame g2 = mPlayer2Games.get(position);
                 ((TextView) v.findViewById(R.id.player1_game_result)).setText(getGameResult(g1, p1));
                 ((TextView) v.findViewById(R.id.player2_game_result)).setText(getGameResult(g2, p2));
             }
@@ -116,13 +116,13 @@ public class PlayerListAdapter extends ArrayAdapter {
             if (mPlayerStats.containsKey(player.getId())) {
                 Intent intent = new Intent(mActivity, StatsBreakdownScreen.class);
 
-                Collection<Stat> stats = mPlayerStats.get(player.getId());
+                Collection<RestModelStats> stats = mPlayerStats.get(player.getId());
                 String[] statNames = new String[stats.size()];
                 float[] statValues = new float[stats.size()];
                 float[] statPoints = new float[stats.size()];
 
                 int i = -1;
-                for (Stat stat : stats) {
+                for (RestModelStats stat : stats) {
                     i += 1;
                     statNames[i] = stat.getStatName();
                     statValues[i] = stat.getValue();
@@ -140,7 +140,7 @@ public class PlayerListAdapter extends ArrayAdapter {
         });
     }
 
-    private static String getGameResult(Game game, RestModelPlayer player) {
+    private static String getGameResult(RestModelGame game, RestModelPlayer player) {
 
         final int playerScore;
         final int opponentScore;
@@ -168,13 +168,13 @@ public class PlayerListAdapter extends ArrayAdapter {
         return prefix + ", " + playerScore + "-" + opponentScore + suffix;
     }
 
-    private static float getPlayerScore(String playerId, Map<String, List<Stat>> stats) {
+    private static float getPlayerScore(String playerId, Map<String, List<RestModelStats>> stats) {
 
         float scoreTotal = 0f;
 
         if (stats.containsKey(playerId)) {
 
-            for (Stat stat: stats.get(playerId)) {
+            for (RestModelStats stat: stats.get(playerId)) {
                 scoreTotal += stat.getPoints();
             }
         }
@@ -182,7 +182,7 @@ public class PlayerListAdapter extends ArrayAdapter {
         return scoreTotal;
     }
 
-    private static String getScore(RestModelPlayer player, Map<String, List<Stat>> stats) {
+    private static String getScore(RestModelPlayer player, Map<String, List<RestModelStats>> stats) {
         float score = getPlayerScore(player.getId(), stats);
         return String.format("%.02f", score);
     }

@@ -5,7 +5,6 @@ import android.support.annotation.NonNull;
 
 import com.blitz.app.utilities.authentication.AuthHelper;
 import com.blitz.app.utilities.date.DateUtils;
-import com.blitz.app.utilities.rest.RestAPICallback;
 import com.google.gson.JsonObject;
 import com.google.gson.annotations.SerializedName;
 
@@ -52,7 +51,7 @@ public class RestModelGroup extends RestModel {
      */
     @SuppressWarnings("unused")
     public static void getGroupWithId(Activity activity, String groupId,
-                                      @NonNull RestModelCallback<RestModelGroup> callback) {
+                                      @NonNull RestCallback<RestModelGroup> callback) {
 
         mRestAPI.group_get(groupId, new RestAPICallback<>(activity,
                 result -> callback.onSuccess(result.getResult()), null));
@@ -67,7 +66,7 @@ public class RestModelGroup extends RestModel {
      */
     @SuppressWarnings("unused")
     public static void getGroupWithName(Activity activity, String groupName,
-                                        @NonNull RestModelCallback<RestModelGroup> callback) {
+                                        @NonNull RestCallback<RestModelGroup> callback) {
 
         if (groupName == null) {
 
@@ -100,7 +99,7 @@ public class RestModelGroup extends RestModel {
      */
     @SuppressWarnings("unused")
     public static void getGroupsForUserId(Activity activity, String userId,
-                                          @NonNull RestModelCallbacks<RestModelGroup> callback) {
+                                          @NonNull RestCallbacks<RestModelGroup> callback) {
 
         // Fetch by user id.
         List<String> keys = Arrays.asList(userId);
@@ -118,7 +117,7 @@ public class RestModelGroup extends RestModel {
      */
     @SuppressWarnings("unused")
     public static void getGroupsRecruitingWithLimit(Activity activity, Integer limit,
-                                                    @NonNull RestModelCallbacks<RestModelGroup> callback) {
+                                                    @NonNull RestCallbacks<RestModelGroup> callback) {
 
         Date dateNow = DateUtils.getDateInGMT();
         Date dateNowOneWeekEarlier =  DateUtils.getDateWithOffsetInMilliseconds(dateNow, 604800000L * -2);
@@ -149,7 +148,7 @@ public class RestModelGroup extends RestModel {
      */
     @SuppressWarnings("unused")
     public static void getTopGroupsWithLimit(Activity activity, Integer limit,
-                                             @NonNull RestModelCallbacks<RestModelGroup> callback) {
+                                             @NonNull RestCallbacks<RestModelGroup> callback) {
 
         // Pluck fields we need.
         List<String> pluck = Arrays.asList("name", "rating", "rank");
@@ -171,7 +170,7 @@ public class RestModelGroup extends RestModel {
      */
     @SuppressWarnings("unused")
     public static void createGroupWithName(Activity activity, String groupName,
-                                           @NonNull RestModelCallback<RestModelGroup> callback) {
+                                           @NonNull RestCallback<RestModelGroup> callback) {
 
         // Construct POST body.
         JsonObject body = new JsonObject();
@@ -191,7 +190,7 @@ public class RestModelGroup extends RestModel {
      */
     @SuppressWarnings("unused")
     public static void joinGroupWithId(Activity activity, String groupId,
-                                       @NonNull RestModelCallback<RestModelGroup> callback) {
+                                       @NonNull RestCallback<RestModelGroup> callback) {
 
         // Create object holding values to replace.
         JsonObject jsonAppend   = new JsonObject();
@@ -215,7 +214,7 @@ public class RestModelGroup extends RestModel {
      */
     @SuppressWarnings("unused")
     public static void updateRecruitingStatusForGroup(Activity activity, String groupId, Boolean recruiting,
-                                                      @NonNull RestModelCallback<RestModelGroup> callback) {
+                                                      @NonNull RestCallback<RestModelGroup> callback) {
 
         // Create object holding values to replace.
         JsonObject jsonReplace     = new JsonObject();

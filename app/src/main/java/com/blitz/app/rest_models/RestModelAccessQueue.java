@@ -3,8 +3,6 @@ package com.blitz.app.rest_models;
 import android.app.Activity;
 import android.support.annotation.NonNull;
 
-import com.blitz.app.utilities.rest.RestAPICallback;
-
 /**
  * Created by mrkcsc on 8/9/14. Copyright 2014 Blitz Studios
  */

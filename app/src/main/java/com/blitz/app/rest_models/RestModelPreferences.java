@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.support.annotation.NonNull;
 
 import com.blitz.app.utilities.app.AppConfig;
-import com.blitz.app.utilities.rest.RestAPICallback;
 import com.google.gson.annotations.SerializedName;
 
 /**
@@ -41,7 +40,7 @@ public class RestModelPreferences extends RestModel {
      * Fetch the current users preferences.
      */
     @SuppressWarnings("unused")
-    public static void sync(Activity activity, @NonNull RestModelCallback<RestModelPreferences> callback) {
+    public static void sync(Activity activity, @NonNull RestCallback<RestModelPreferences> callback) {
 
         // Make api call.
         mRestAPI.preferences_get(new RestAPICallback<>(activity, result -> {

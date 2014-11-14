@@ -7,9 +7,9 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.blitz.app.R;
+import com.blitz.app.rest_models.RestModelGame;
 import com.blitz.app.rest_models.RestModelPlayer;
-import com.blitz.app.simple_models.Game;
-import com.blitz.app.simple_models.Stat;
+import com.blitz.app.rest_models.RestModelStats;
 import com.blitz.app.utilities.android.BaseActivity;
 import com.blitz.app.utilities.authentication.AuthHelper;
 import com.blitz.app.utilities.image.BlitzImageView;
@@ -160,8 +160,8 @@ public class MatchupScreen extends BaseActivity implements ViewModelMatchup.Call
 
     @Override
     public void onStuff(List<RestModelPlayer> p1roster, List<RestModelPlayer> p2Roster,
-                        List<Game> p1games, List<Game> p2games,
-                        Map<String, List<Stat>> playerStats, int week) {
+                        List<RestModelGame> p1games, List<RestModelGame> p2games,
+                        Map<String, List<RestModelStats>> playerStats, int week) {
         mPlayerList.setAdapter(new PlayerListAdapter(this, p1roster, p2Roster, p1games, p2games,
                 playerStats, week, this));
     }

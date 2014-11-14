@@ -3,7 +3,7 @@ package com.blitz.app.view_models;
 import android.os.Bundle;
 import android.os.Handler;
 
-import com.blitz.app.rest_models.RestModelCallback;
+import com.blitz.app.rest_models.RestCallback;
 import com.blitz.app.rest_models.RestModelItem;
 import com.blitz.app.rest_models.RestModelPreferences;
 import com.blitz.app.rest_models.RestModelQueue;
@@ -169,7 +169,7 @@ public class ViewModelPlay extends ViewModel {
         final String userId = AuthHelper.instance().getUserId();
 
         // Fetch the current user.
-        RestModelUser.getUser(mActivity, userId, new RestModelCallback<RestModelUser>() {
+        RestModelUser.getUser(mActivity, userId, new RestCallback<RestModelUser>() {
 
             @Override
             public void onSuccess(RestModelUser user) {
@@ -342,7 +342,7 @@ public class ViewModelPlay extends ViewModel {
     private void setupPreferences() {
 
         AuthHelper.instance().getPreferences(mActivity, false,
-                new RestModelCallback<RestModelPreferences>() {
+                new RestCallback<RestModelPreferences>() {
 
                     @Override
                     public void onSuccess(RestModelPreferences object) {

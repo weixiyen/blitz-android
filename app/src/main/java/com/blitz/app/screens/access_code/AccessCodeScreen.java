@@ -5,6 +5,7 @@ import android.view.View;
 import android.widget.EditText;
 
 import com.blitz.app.R;
+import com.blitz.app.rest_models.RestModel;
 import com.blitz.app.rest_models.RestModelCode;
 import com.blitz.app.utilities.android.BaseActivity;
 import com.blitz.app.utilities.animations.AnimHelperSpringsGroup;
@@ -13,7 +14,6 @@ import com.blitz.app.utilities.animations.AnimHelperSpringsView;
 import com.blitz.app.utilities.app.AppDataObject;
 import com.blitz.app.utilities.authentication.AuthHelper;
 import com.blitz.app.utilities.keyboard.KeyboardUtility;
-import com.blitz.app.utilities.rest.RestAPICallback;
 
 import butterknife.InjectView;
 import butterknife.OnClick;
@@ -102,7 +102,7 @@ public class AccessCodeScreen extends BaseActivity {
     @OnClick(R.id.access_code_continue_with_code) @SuppressWarnings("unused")
     public void continueWithCode() {
 
-        if (RestAPICallback.shouldThrottle()) {
+        if (RestModel.shouldThrottle()) {
             return;
         }
 
