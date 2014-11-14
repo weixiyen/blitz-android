@@ -88,7 +88,7 @@ public class RestModelPlayer extends RestModel {
      * @return Player object.
      */
     @SuppressWarnings("unused")
-    public static RestModelPlayer fetchPlayerFromCometJson(JsonObject cometJson) {
+    public static RestModelPlayer fetchPlayer(JsonObject cometJson) {
 
         RestModelPlayer player = new RestModelPlayer();
 

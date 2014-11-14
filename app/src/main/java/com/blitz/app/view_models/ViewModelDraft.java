@@ -436,7 +436,7 @@ public class ViewModelDraft extends ViewModel {
 
                 // Add to draft model.
                 mDraftModel.addChoice(RestModelPlayer
-                        .fetchPlayerFromCometJson(choiceJsonObject));
+                        .fetchPlayer(choiceJsonObject));
             }
 
             // Add to choices.
