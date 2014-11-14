@@ -1,4 +1,5 @@
 <RelativeLayout
+    android:id="@+id/blitz_dropdown_container"
     style="@style/App.NavBar"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
@@ -15,6 +16,7 @@
         android:layout_height="60dp"
         android:layout_centerHorizontal="true"
         android:ellipsize="end"
+        android:layout_marginLeft="24dp"
         android:gravity="center"
         android:paddingLeft="10dp"
         android:paddingRight="10dp"

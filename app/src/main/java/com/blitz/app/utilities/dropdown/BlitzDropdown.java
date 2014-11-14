@@ -18,21 +18,37 @@ import java.util.List;
  */
 public class BlitzDropdown extends ArrayAdapter<String> {
 
+    // region Member Variables
+    // ============================================================================================================
+
+    // Associated views.
     private TextView mHeaderView;
     private ListView mListView;
+    private View mContainerView;
 
-    private List<String> mDropdownIds;
-    private List<String> mDropdownNames;
-
+    // Selected position.
     private int mSelectedPosition;
 
-    public BlitzDropdown(Context context, List<String> dropdownIds, List<String> dropdownNames) {
-        super(context, 0, dropdownIds);
+    // Handle to the callbacks.
+    private Callbacks mCallbacks;
 
-        mDropdownIds = dropdownIds;
-        mDropdownNames = dropdownNames;
+    // endregion
+
+    // region Constructor
+    // ============================================================================================================
+
+    public BlitzDropdown(Context context, List<String> dropdownNames) {
+        super(context, 0, dropdownNames);
     }
 
+    // endregion
+
+    // region Overwritten Methods
+    // ============================================================================================================
+
+    /**
+     * Inflate and configure the dropdown view.
+     */
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
 
@@ -44,9 +60,19 @@ public class BlitzDropdown extends ArrayAdapter<String> {
         TextView view = ((TextView)convertView);
 
         // Configure view properties.
-        view.setText(mDropdownNames.get(position));
-        view.setTag(mDropdownIds.get(position));
+        view.setText(getItem(position));
+        view.setTag(position);
         view.setTextColor(getContext().getResources().getColor(R.color.text_color_light));
+        view.setOnClickListener(clickedView -> {
+
+            if (mContainerView != null) {
+                mContainerView.performClick();
+            }
+
+            if (mCallbacks != null) {
+                mCallbacks.onDropdownItemSelected((int)clickedView.getTag());
+            }
+        });
 
         if (mSelectedPosition == position) {
 
@@ -57,8 +83,22 @@ public class BlitzDropdown extends ArrayAdapter<String> {
         return convertView;
     }
 
+    // endregion
+
     // region Public Methods
     // ============================================================================================================
+
+    /**
+     * Set the dropdown callbacks.
+     *
+     * @param callbacks Callbacks
+     */
+    @SuppressWarnings("unused")
+    public void setCallbacks(Callbacks callbacks) {
+
+        // Set the callbacks.
+        mCallbacks = callbacks;
+    }
 
     /**
      * Update selected position.
@@ -72,7 +112,7 @@ public class BlitzDropdown extends ArrayAdapter<String> {
         mSelectedPosition = selectedPosition;
 
         if (mHeaderView != null) {
-            mHeaderView.setText(mDropdownNames.get(mSelectedPosition));
+            mHeaderView.setText(getItem(mSelectedPosition));
         }
 
         // Update the list.
@@ -106,22 +146,44 @@ public class BlitzDropdown extends ArrayAdapter<String> {
     @SuppressWarnings("unused")
     public void setHeaderView(TextView headerView) {
 
-        if (headerView == null) {
+        // Set the headerView.
+        mHeaderView = headerView;
+    }
+
+    /**
+     * Set the container view.
+     *
+     * @param containerView Container view.
+     */
+    @SuppressWarnings("unused")
+    public void setContainerView(View containerView) {
+
+        if (containerView == null) {
 
             return;
         }
 
-        // Set the headerView.
-        mHeaderView = headerView;
-        mHeaderView.setOnClickListener(view -> {
+        mContainerView = containerView;
+        mContainerView.setOnClickListener(view -> {
 
             if (mListView != null) {
+                mListView.setSelection(mSelectedPosition);
 
                 // Toggle the visibility of the list view.
                 AnimHelperFade.setVisibility(mListView, mListView.getVisibility()
                         == View.VISIBLE ? View.GONE : View.VISIBLE);
             }
         });
+    }
+
+    // endregion
+
+    // region Callbacks Interface
+    // ============================================================================================================
+
+    public interface Callbacks {
+
+        public void onDropdownItemSelected(int position);
     }
 
     // endregion

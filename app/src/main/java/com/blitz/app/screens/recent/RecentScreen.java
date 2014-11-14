@@ -8,10 +8,12 @@ import android.widget.TextView;
 import com.blitz.app.R;
 import com.blitz.app.screens.main.MainScreen;
 import com.blitz.app.utilities.android.BaseFragment;
+import com.blitz.app.utilities.dropdown.BlitzDropdown;
 import com.blitz.app.utilities.scrubber.BlitzScrubber;
 import com.blitz.app.view_models.ViewModel;
 import com.blitz.app.view_models.ViewModelRecent;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.InjectView;
@@ -19,8 +21,7 @@ import butterknife.InjectView;
 /**
  * Created by mrkcsc on 7/14/14. Copyright 2014 Blitz Studios
  */
-public class RecentScreen extends BaseFragment implements ViewModelRecent.Callbacks,
-        BlitzScrubber.Callbacks {
+public class RecentScreen extends BaseFragment implements ViewModelRecent.Callbacks {
 
     // region Member Variables
     // ============================================================================================================
@@ -28,7 +29,10 @@ public class RecentScreen extends BaseFragment implements ViewModelRecent.Callba
     // Total weeks in an NFL season.
     private static final int WEEKS_IN_SEASON = 17;
 
-    @InjectView(R.id.recent_header)             TextView mRecentHeader;
+    @InjectView(R.id.blitz_dropdown_container)  View mBlitzDropdownContainer;
+    @InjectView(R.id.blitz_dropdown_header) TextView mBlitzDropdownHeader;
+    @InjectView(R.id.blitz_dropdown_list)   ListView mBlitzDropdownList;
+
     @InjectView(R.id.recent_no_games)           TextView mRecentNoGames;
     @InjectView(R.id.recent_drafts_list)        ListView mRecentMatches;
     @InjectView(R.id.recent_week_wins)          TextView mRecentWeekWins;
@@ -40,7 +44,11 @@ public class RecentScreen extends BaseFragment implements ViewModelRecent.Callba
     @InjectView(R.id.blitz_scrubber) BlitzScrubber mBlitzScrubber;
     @InjectView(R.id.blitz_scrubber_selected) TextView mBlitzScrubberSelected;
 
+    // Associated view model.
     private ViewModelRecent mViewModel;
+
+    // Dropdown widget.
+    private BlitzDropdown mBlitzDropdown;
 
     // endregion
 
@@ -54,17 +62,25 @@ public class RecentScreen extends BaseFragment implements ViewModelRecent.Callba
     protected void onCreateView(Bundle savedInstanceState) {
         super.onCreateView(savedInstanceState);
 
+        List<String> headers = new ArrayList<>();
+
+        for (int i = 0; i < WEEKS_IN_SEASON; i++) {
+
+            headers.add("Week " + (i + 1));
+        }
+
         // Provide the view pager.
         mBlitzScrubber.setViewPager(((MainScreen) getActivity()).getViewPager());
-
-        // Weeks in season.
         mBlitzScrubber.setSize(WEEKS_IN_SEASON);
-
-        // Week display text view.
         mBlitzScrubber.setScrubberTextView(mBlitzScrubberSelected, null);
+        mBlitzScrubber.setCallbacks(position -> mViewModel.updateWeek(position + 1));
 
-        // Callbacks.
-        mBlitzScrubber.setCallbacks(this);
+        // Configure the dropdown.
+        mBlitzDropdown = new BlitzDropdown(getActivity(), headers);
+        mBlitzDropdown.setListView(mBlitzDropdownList);
+        mBlitzDropdown.setHeaderView(mBlitzDropdownHeader);
+        mBlitzDropdown.setContainerView(mBlitzDropdownContainer);
+        mBlitzDropdown.setCallbacks(position -> mViewModel.updateWeek(position + 1));
     }
 
     /**
@@ -128,22 +144,6 @@ public class RecentScreen extends BaseFragment implements ViewModelRecent.Callba
     // ============================================================================================================
 
     /**
-     * When the scrubber item changes, the position
-     * is the current week selected. Pass it
-     * into the view model.
-     *
-     * @param position Week selected.
-     */
-    @Override
-    public void onScrubberItemSelected(int position) {
-
-        // Update the week.
-        if (mViewModel != null) {
-            mViewModel.updateWeek(position + 1);
-        }
-    }
-
-    /**
      * When drafts are received, process them and
      * setup the corresponding UI.
      *
@@ -154,8 +154,8 @@ public class RecentScreen extends BaseFragment implements ViewModelRecent.Callba
     @Override
     public void onDrafts(List<ViewModelRecent.SummaryDraft> drafts, ViewModelRecent.SummaryDrafts summaryDrafts, int week) {
 
-        if (mRecentHeader != null) {
-            mRecentHeader.setText("Week " + week);
+        if (mBlitzDropdown != null) {
+            mBlitzDropdown.setSelected(week - 1);
         }
 
         if (mBlitzScrubber != null) {
