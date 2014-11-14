@@ -415,7 +415,7 @@ public final class RestModelDraft extends RestModel {
     public Map<String, RestModelPlayer> getPlayerDataMap() {
 
         if (mPlayerDataMap == null) {
-            mPlayerDataMap = new HashMap<String, RestModelPlayer>();
+            mPlayerDataMap = new HashMap<>();
         }
 
         return mPlayerDataMap;
@@ -490,7 +490,7 @@ public final class RestModelDraft extends RestModel {
     public void addChoice(RestModelPlayer choice) {
 
         if (mPlayerDataMap == null) {
-            mPlayerDataMap = new HashMap<String, RestModelPlayer>();
+            mPlayerDataMap = new HashMap<>();
         }
 
         // Add to player data map.
@@ -506,7 +506,7 @@ public final class RestModelDraft extends RestModel {
     public void addChoices(List<String> choices) {
 
         if (mChoices == null) {
-            mChoices = new ArrayList<List<String>>();
+            mChoices = new ArrayList<>();
         }
 
         mChoices.add(choices);
@@ -521,7 +521,7 @@ public final class RestModelDraft extends RestModel {
     public void addPick(Pick pick) {
 
         if (mPicks == null) {
-            mPicks = new ArrayList<Pick>();
+            mPicks = new ArrayList<>();
         }
 
         mPicks.add(pick);
@@ -709,7 +709,7 @@ public final class RestModelDraft extends RestModel {
      */
     private static ArrayList<String> getKeys(String userId) {
 
-        ArrayList<String> keys = new ArrayList<String>();
+        ArrayList<String> keys = new ArrayList<>();
 
         keys.add(userId);
 
@@ -724,7 +724,7 @@ public final class RestModelDraft extends RestModel {
      */
     private static ArrayList<String> getPluck() {
 
-        ArrayList<String> pluck = new ArrayList<String>();
+        ArrayList<String> pluck = new ArrayList<>();
 
         pluck.add("id");
         pluck.add("type");
@@ -743,19 +743,15 @@ public final class RestModelDraft extends RestModel {
     }
 
     /**
-     * Are we drafting.
-     */
-    private boolean isDrafting() {
-        return mStatus != null && mStatus.equals("drafting");
-    }
-
-    /**
      * Some sort of magic that makes for a better
      * real time experience in terms of latency.
      */
     private void setServerTimeOffset(Date clientTimeBeforeRequest, Date clientTimeAfterRequest) {
 
-        if (isDrafting() && mLastServerTime != null) {
+        // Use either the started or last received server time.
+        Date serverTime = mLastServerTime != null ? mLastServerTime : mStarted;
+
+        if (serverTime != null) {
 
             // Half half of the request time in milliseconds.
             long halfOfRequestTime = (clientTimeAfterRequest.getTime() -
@@ -765,7 +761,7 @@ public final class RestModelDraft extends RestModel {
             long timeAtMidpointOfRequest = clientTimeBeforeRequest.getTime() +
                     halfOfRequestTime;
 
-            mServerTimeOffset = Math.abs(mLastServerTime.getTime() - timeAtMidpointOfRequest);
+            mServerTimeOffset = Math.abs(serverTime.getTime() - timeAtMidpointOfRequest);
 
         } else {
 
@@ -783,8 +779,8 @@ public final class RestModelDraft extends RestModel {
      */
     private int getSecondsSince(Date date) {
 
-        return (int) Math.floor((DateUtils.getTimeSinceDateInGMTAsMilliseconds(date)
-                - mServerTimeOffset) / 1000.0f);
+        return (int) Math.floor(Math.abs
+                (DateUtils.getTimeSinceDateInGMTAsMilliseconds(date) - mServerTimeOffset) / 1000.0f);
     }
 
     // endregion
