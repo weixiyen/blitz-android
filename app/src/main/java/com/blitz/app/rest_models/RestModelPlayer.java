@@ -1,10 +1,10 @@
 package com.blitz.app.rest_models;
 
 import android.app.Activity;
+import android.support.annotation.NonNull;
 
 import com.blitz.app.utilities.json.JsonHelper;
 import com.blitz.app.utilities.rest.RestAPICallback;
-import com.blitz.app.utilities.rest.RestAPIResult;
 import com.google.gson.JsonObject;
 import com.google.gson.annotations.SerializedName;
 
@@ -44,26 +44,17 @@ public class RestModelPlayer extends RestModel {
     // region REST Methods
     // ============================================================================================================
 
+    /**
+     * Fetch NFL Players.
+     */
     @SuppressWarnings("unused")
     public static void fetchPlayers(Activity activity,
                                     List<String> playerIds,
-                                    final CallbackPlayers callback) {
-
-        RestAPICallback<RestAPIResult<RestModelPlayer>> operation =
-                new RestAPICallback<RestAPIResult<RestModelPlayer>>(activity) {
-
-                    @Override
-                    public void success(RestAPIResult<RestModelPlayer> jsonObject) {
-
-                        // Now left queue.
-                        if (callback != null) {
-                            callback.onSuccess(jsonObject.getResults());
-                        }
-                    }
-                };
+                                    @NonNull CallbackPlayers callback) {
 
         // Make api call.
-        mRestAPI.nfl_players_get(playerIds, "id", operation);
+        mRestAPI.nfl_players_get(playerIds, "id", new RestAPICallback<>(activity,
+                result -> callback.onSuccess(result.getResults()), null));
     }
 
     /**
@@ -76,27 +67,15 @@ public class RestModelPlayer extends RestModel {
     @SuppressWarnings("unused")
     public static void fetchPlayer(Activity activity,
                                    String playerId,
-                                   final CallbackPlayer callback) {
+                                   @NonNull CallbackPlayer callback) {
 
         if (playerId == null) {
             return;
         }
 
-        RestAPICallback<RestAPIResult<RestModelPlayer>> operation =
-                new RestAPICallback<RestAPIResult<RestModelPlayer>>(activity) {
-
-                    @Override
-                    public void success(RestAPIResult<RestModelPlayer> jsonObject) {
-
-                        // Now left queue.
-                        if (callback != null) {
-                            callback.onSuccess(jsonObject.getResult());
-                        }
-                    }
-                };
-
         // Make api call.
-        mRestAPI.nfl_player_get(playerId, operation);
+        mRestAPI.nfl_player_get(playerId, new RestAPICallback<>(activity,
+                result -> callback.onSuccess(result.getResult()), null));
     }
 
     /**

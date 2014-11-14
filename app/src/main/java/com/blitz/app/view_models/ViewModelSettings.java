@@ -69,7 +69,13 @@ public class ViewModelSettings extends ViewModel {
     public void updateUserAvatar(String itemAvatarId) {
 
         // Silently update the users avatar.
-        RestModelUser.updateAvatar(null, itemAvatarId, null);
+        RestModelUser.updateAvatar(null, itemAvatarId, new RestModelCallback<RestModelUser>() {
+
+            @Override
+            public void onSuccess(RestModelUser object) {
+
+            }
+        });
     }
 
     // endregion

@@ -1,6 +1,7 @@
 package com.blitz.app.rest_models;
 
 import android.app.Activity;
+import android.support.annotation.NonNull;
 
 import com.blitz.app.utilities.authentication.AuthHelper;
 import com.blitz.app.utilities.date.DateUtils;
@@ -14,8 +15,6 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import retrofit.client.Response;
 
 /**
  * Created by mrkcsc on 7/27/14. Copyright 2014 Blitz Studios
@@ -541,35 +540,13 @@ public final class RestModelDraft extends RestModel {
      * @param callback Callback on completion.
      */
     @SuppressWarnings("unused")
-    public static void pickPlayer(final Activity activity, String draftId, String playerId,
-                                  final RestModelCallback<RestModelDraft> callback) {
+    public static void pickPlayer(Activity activity, String draftId, String playerId,
+                                  @NonNull RestModelCallback<RestModelDraft> callback) {
 
         if (draftId == null || playerId == null) {
 
             return;
         }
-
-        RestAPICallback<RestAPIResult<RestModelDraft>> operation =
-                new RestAPICallback<RestAPIResult<RestModelDraft>>(activity) {
-
-                    @Override
-                    public void success(RestAPIResult<RestModelDraft> result) {
-
-                        // Now left queue.
-                        if (callback != null) {
-                            callback.onSuccess(result.getResult());
-                        }
-                    }
-
-                    @Override
-                    public void failure(Response response, boolean networkError) {
-                        super.failure(response, networkError);
-
-                        if (callback != null) {
-                            callback.onFailure();
-                        }
-                    }
-                };
 
         // Create object holding values to replace.
         JsonObject jsonReplace   = new JsonObject();
@@ -581,7 +558,9 @@ public final class RestModelDraft extends RestModel {
         jsonReplace.add("append", jsonPicks);
 
         // Make api call.
-        mRestAPI.draft_patch(draftId, jsonReplace, operation);
+        mRestAPI.draft_patch(draftId, jsonReplace, new RestAPICallback<>(activity,
+                result -> callback.onSuccess(result.getResult()),
+                    (response, networkError) -> callback.onFailure()));
     }
 
     /**
@@ -591,33 +570,28 @@ public final class RestModelDraft extends RestModel {
      * @param callback Callback on completion.
      */
     @SuppressWarnings("unused")
-    public static void fetchSyncedDraft(final Activity activity, String draftId,
-                                        final RestModelCallback<RestModelDraft> callback) {
+    public static void fetchSyncedDraft(Activity activity, String draftId,
+                                        @NonNull RestModelCallback<RestModelDraft> callback) {
 
         if (draftId == null) {
             return;
         }
 
-        RestAPICallback<RestModelDraft> operation =
-                new RestAPICallback<RestModelDraft>(activity) {
-
-            @Override
-            public void success(RestModelDraft result) {
-
-                // Set the server time offset.
-                if (result != null) {
-                    result.setServerTimeOffset(getOperationTimeStart(), getOperationTimeEnd());
-                }
-
-                // Now left queue.
-                if (callback != null) {
-                    callback.onSuccess(result);
-                }
-            }
-        };
+        // Set the start time.
+        Date operationStartTime = DateUtils.getDateInGMT();
 
         // Make api call.
-        mRestAPI.draft_get(draftId, operation);
+        mRestAPI.draft_get(draftId, new RestAPICallback<>(activity, result -> {
+
+            // Set the server time offset.
+            if (result != null) {
+                result.setServerTimeOffset(operationStartTime, DateUtils.getDateInGMT());
+            }
+
+            // Now left queue.
+            callback.onSuccess(result);
+
+        }, null));
     }
 
     /**
@@ -629,19 +603,11 @@ public final class RestModelDraft extends RestModel {
      * @param callback Success callback, provides the list of drafts.
      */
     @SuppressWarnings("unused")
-    public static void fetchActiveDraftsForUser(
-            final Activity activity, String userId,
-            final RestModelCallbacks<RestModelDraft> callback) {
+    public static void fetchActiveDraftsForUser(Activity activity, String userId,
+            @NonNull RestModelCallbacks<RestModelDraft> callback) {
 
-        RestAPICallback<RestAPIResult<RestModelDraft>> operation =
-                new RestAPICallback<RestAPIResult<RestModelDraft>>(activity) {
-
-            @Override
-            public void success(RestAPIResult<RestModelDraft> jsonObject) {
-
-                callback.onSuccess(jsonObject.getResults());
-            }
-        };
+        RestAPICallback<RestAPIResult<RestModelDraft>> operation = new RestAPICallback<>(activity,
+                result -> callback.onSuccess(result.getResults()), null);
 
         // Logout on failure.
         operation.setLogoutOnFailure(true);
@@ -652,8 +618,7 @@ public final class RestModelDraft extends RestModel {
         // Sort by most recent.
         String orderBy = "{\"created\": \"ASC\"}";
 
-        mRestAPI.drafts_get(getKeys(userId), null, "users",
-                filter, orderBy, null, operation);
+        mRestAPI.drafts_get(getKeys(userId), null, "users", filter, orderBy, null, operation);
     }
 
     /**
@@ -672,17 +637,7 @@ public final class RestModelDraft extends RestModel {
                                           Integer week,
                                           Integer year,
                                           Integer limit,
-                                          final RestModelCallbacks<RestModelDraft> callback) {
-
-        RestAPICallback<RestAPIResult<RestModelDraft>> operation =
-                new RestAPICallback<RestAPIResult<RestModelDraft>>(activity) {
-
-            @Override
-            public void success(RestAPIResult<RestModelDraft> jsonObject) {
-
-                callback.onSuccess(jsonObject.getResults());
-            }
-        };
+                                          @NonNull RestModelCallbacks<RestModelDraft> callback) {
 
         // Create filter for current time frame.
         String filter = "{\"week\": " + week + ", \"year\": " +
@@ -692,7 +647,8 @@ public final class RestModelDraft extends RestModel {
         String orderBy = "{\"completed\": \"DESC\", \"created\": \"DESC\"}";
 
         mRestAPI.drafts_get(getKeys(userId), getPluck(), "users",
-                filter, orderBy, limit, operation);
+                filter, orderBy, limit, new RestAPICallback<>(activity,
+                        result -> callback.onSuccess(result.getResults()), null));
     }
 
     // endregion

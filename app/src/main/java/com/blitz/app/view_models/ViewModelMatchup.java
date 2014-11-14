@@ -13,7 +13,6 @@ import com.blitz.app.simple_models.Stat;
 import com.blitz.app.utilities.android.BaseActivity;
 import com.blitz.app.utilities.authentication.AuthHelper;
 import com.blitz.app.utilities.rest.RestAPICallback;
-import com.blitz.app.utilities.rest.RestAPIResult;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -169,26 +168,16 @@ public class ViewModelMatchup extends ViewModel {
         final int week = mDraft.getWeek();
         final int year = mDraft.getYear();
 
-        RestModelGame.fetchGames(year, week, new RestAPICallback<List<Game>>(null) {
-            @Override
-            public void success(List<Game> games) {
-
-                mGames = games;
-                onSyncComplete();
-            }
-        });
+        RestModelGame.fetchGames(year, week, new RestAPICallback<>(mActivity, result -> {
+            mGames = result;
+            onSyncComplete();
+        }, null));
 
         RestModelStats.fetchStatsForPlayers(playerIds, year, week,
-                new RestAPICallback<RestAPIResult<Stat>>(null) {
-
-                    @Override
-                    public void success(RestAPIResult<Stat> stats) {
-
-
-                        mPlayerStatsMap = buildPlayerStatsMap(stats.getResults());
-                        onSyncComplete();
-                    }
-                });
+                new RestAPICallback<>(mActivity, result -> {
+                    mPlayerStatsMap = buildPlayerStatsMap(result.getResults());
+                    onSyncComplete();
+                }, null));
     }
 
     private synchronized void onSyncComplete() {

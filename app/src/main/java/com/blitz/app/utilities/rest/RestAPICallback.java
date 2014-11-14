@@ -6,9 +6,6 @@ import android.os.Handler;
 import com.blitz.app.dialogs.error.DialogErrorSingleton;
 import com.blitz.app.dialogs.loading.DialogLoading;
 import com.blitz.app.utilities.blitz.BlitzDelay;
-import com.blitz.app.utilities.date.DateUtils;
-
-import java.util.Date;
 
 import retrofit.Callback;
 import retrofit.RetrofitError;
@@ -17,7 +14,7 @@ import retrofit.client.Response;
 /**
  * Created by Miguel Gaeta on 6/29/14. Copyright 2014 Blitz Studios
  */
-public abstract class RestAPICallback<T> implements Callback<T> {
+public class RestAPICallback<T> implements Callback<T> {
 
     // region Member Variables
     // ============================================================================================================
@@ -28,26 +25,19 @@ public abstract class RestAPICallback<T> implements Callback<T> {
     // Loading dialog.
     private DialogLoading mDialogLoading;
 
+    // Throttle rest calls.
     private static boolean mOperationThrottle;
     private static Handler mOperationThrottleHandler;
 
-    // Operation time.
-    private long mOperationTimeMilliseconds;
-    private Date mOperationTimeStart;
-    private Date mOperationTimeEnd;
-
-    // Is this an auth call.
+    // Is this an authentication call.
     private boolean mIsAuthentication;
 
     // Should log out on failure.
     private boolean mLogoutOnFailure;
 
-    // endregion
-
-    // region Abstract Methods
-    // ============================================================================================================
-
-    public abstract void success(T jsonObject);
+    // Callback interfaces.
+    private OnSuccess<T> mOnSuccess;
+    private OnFailure mOnFailure;
 
     // endregion
 
@@ -64,18 +54,22 @@ public abstract class RestAPICallback<T> implements Callback<T> {
     }
 
     /**
-     * Create callback class.
+     * Creates a rest API callback object (wrapper around retrofit).
      *
-     * @param activity Activity used for dialogs, can be null.
+     * @param activity Activity which is used for dialogs - TODO: Remove it.
+     *
+     * @param onSuccess On success interface.
+     * @param onFailure On failure interface.
      */
     @SuppressWarnings("unused")
-    public RestAPICallback(Activity activity) {
+    public RestAPICallback(Activity activity, OnSuccess<T> onSuccess, OnFailure onFailure) {
 
         // Set the activity.
         mActivity = activity;
 
-        // Set the start time.
-        mOperationTimeStart = DateUtils.getDateInGMT();
+        // Set callbacks.
+        mOnSuccess = onSuccess;
+        mOnFailure = onFailure;
 
         // Setup operation throttling.
         setOperationThrottle();
@@ -175,6 +169,57 @@ public abstract class RestAPICallback<T> implements Callback<T> {
         mLogoutOnFailure = logoutOnFailure;
     }
 
+    // endregion
+
+    // region Private Methods
+    // ============================================================================================================
+
+    /**
+     * Finish helper method that handles
+     * finishing the operation in sync with
+     * any dialogs/running UI events, etc.
+     *
+     * @param jsonObject Resulting JSON parsed object. object.
+     */
+    private void finish(final T jsonObject, final RetrofitError retrofitError) {
+
+        // Trigger operation callbacks after hide.
+        DialogLoading.HideListener hideListener = () -> {
+
+            // If no error, or error result from the REST call.
+            if (retrofitError == null) {
+
+                // Check for generic server error in the json object.
+                if (jsonObject != null &&
+                    jsonObject instanceof RestAPIResult
+                        && ((RestAPIResult) jsonObject).hasErrors()) {
+
+                    // Generic failure.
+                    failure(null, false);
+
+                } else if (mOnSuccess != null) {
+
+                    // Trigger interface.
+                    mOnSuccess.onSuccess(jsonObject);
+                }
+
+            } else {
+
+                // Pass failed response and network error flags.
+                failure(retrofitError.getResponse(), retrofitError.isNetworkError());
+            }
+        };
+
+        // Hide only if dialog present.
+        if (getLoadingDialog() != null) {
+            getLoadingDialog().hide(hideListener);
+
+        } else {
+
+            hideListener.didHide();
+        }
+    }
+
     /**
      * Triggered when a REST operation suffers
      * an error of some kind.
@@ -182,8 +227,7 @@ public abstract class RestAPICallback<T> implements Callback<T> {
      * @param response Response object (can be null).
      * @param networkError Network error flag.
      */
-    @SuppressWarnings("unused")
-    public void failure(Response response, boolean networkError) {
+    private void failure(Response response, boolean networkError) {
 
         if (mActivity != null) {
 
@@ -223,120 +267,9 @@ public abstract class RestAPICallback<T> implements Callback<T> {
                 DialogErrorSingleton.showGeneric();
             }
         }
-    }
 
-    // endregion
-
-    // region Protected Methods
-    // ============================================================================================================
-
-    /**
-     * Fetch how long it took to
-     * run this operation.
-     *
-     * @return Time in milliseconds.
-     */
-    @SuppressWarnings("unused")
-    protected Long getOperationTime() {
-
-        return mOperationTimeMilliseconds;
-    }
-
-    /**
-     * Fetch time the operation started.
-     *
-     * @return Operation start time.
-     */
-    @SuppressWarnings("unused")
-    protected Date getOperationTimeStart() {
-
-        return mOperationTimeStart;
-    }
-
-    /**
-     * Fetch time operation ended.
-     *
-     * @return Operation end time.
-     */
-    @SuppressWarnings("unused")
-    protected Date getOperationTimeEnd() {
-
-        return mOperationTimeEnd;
-    }
-
-    /**
-     * Lazy load the loading dialog.
-     *
-     * @return Loading dialog.
-     */
-    @SuppressWarnings("unused")
-    protected DialogLoading getLoadingDialog() {
-
-        if (mDialogLoading == null && mActivity != null) {
-            mDialogLoading = new DialogLoading(mActivity);
-        }
-
-        return mDialogLoading;
-    }
-
-    // endregion
-
-    // region Private Methods
-    // ============================================================================================================
-
-    /**
-     * Finish helper method that handles
-     * finishing the operation in sync with
-     * any dialogs/running UI events, etc.
-     *
-     * @param jsonObject Resulting JSON parsed object. object.
-     */
-    private void finish(final T jsonObject, final RetrofitError retrofitError) {
-
-        // Set the end time.
-        mOperationTimeEnd = DateUtils.getDateInGMT();
-
-        // Calculate operation time.
-        mOperationTimeMilliseconds = mOperationTimeEnd.getTime() - mOperationTimeStart.getTime();
-
-        // Trigger operation callbacks after hide.
-        DialogLoading.HideListener hideListener = new DialogLoading.HideListener() {
-
-            @Override
-            public void didHide() {
-
-                // If no error, or error result from the REST call.
-                if (retrofitError == null) {
-
-                    // Check for generic server error in the json object.
-                    if (jsonObject != null &&
-                        jsonObject instanceof RestAPIResult
-                            && ((RestAPIResult) jsonObject).hasErrors()) {
-
-                        // Generic failure.
-                        failure(null, false);
-
-                    } else {
-
-                        // Successful.
-                        success(jsonObject);
-                    }
-
-                } else {
-
-                    // Pass failed response and network error flags.
-                    failure(retrofitError.getResponse(), retrofitError.isNetworkError());
-                }
-            }
-        };
-
-        // Hide only if dialog present.
-        if (getLoadingDialog() != null) {
-            getLoadingDialog().hide(hideListener);
-
-        } else {
-
-            hideListener.didHide();
+        if (mOnFailure != null) {
+            mOnFailure.onFailure(response, networkError);
         }
     }
 
@@ -360,15 +293,34 @@ public abstract class RestAPICallback<T> implements Callback<T> {
         BlitzDelay.remove(mOperationThrottleHandler);
 
         // Init throttle callback.
-        mOperationThrottleHandler = BlitzDelay.postDelayed(new Runnable() {
+        mOperationThrottleHandler = BlitzDelay.postDelayed(() -> mOperationThrottle = false, 250);
+    }
 
-            @Override
-            public void run() {
+    /**
+     * Lazy load the loading dialog.
+     *
+     * @return Loading dialog.
+     */
+    private DialogLoading getLoadingDialog() {
 
-                // No longer throttling.
-                mOperationThrottle = false;
-            }
-        }, 250);
+        if (mDialogLoading == null && mActivity != null) {
+            mDialogLoading = new DialogLoading(mActivity);
+        }
+
+        return mDialogLoading;
+    }
+
+    // endregion
+
+    // region Interfaces
+    // ============================================================================================================
+
+    public interface OnSuccess<T> {
+        public void onSuccess(T result);
+    }
+
+    public interface OnFailure {
+        public void onFailure(Response response, boolean networkError);
     }
 
     // endregion

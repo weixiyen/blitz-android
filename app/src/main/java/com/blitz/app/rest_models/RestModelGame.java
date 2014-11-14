@@ -3,6 +3,7 @@ package com.blitz.app.rest_models;
 import android.util.Pair;
 
 import com.blitz.app.simple_models.Game;
+import com.blitz.app.utilities.rest.RestAPICallback;
 import com.blitz.app.utilities.rest.RestAPIResult;
 
 import java.util.List;
@@ -14,15 +15,17 @@ import retrofit.RetrofitError;
 import retrofit.client.Response;
 
 /**
- * Created by Nate on 9/21/14.
+ * Created by Nate on 9/21/14. Copyright 2014 Blitz Studios
+ *
+ * TODO: Revise
  */
 public class RestModelGame extends RestModel {
 
     private static Map<Pair<Integer, Integer>, List<Game>> mCache =
-            new ConcurrentHashMap<Pair<Integer, Integer>, List<Game>>();
+            new ConcurrentHashMap<>();
 
     public static void fetchGames(int year, int week,
-                                final Callback<List<Game>> callback) {
+                                final RestAPICallback<List<Game>> callback) {
 
         final Pair<Integer, Integer> cacheKey = Pair.create(year, week);
         if(mCache.containsKey(cacheKey)) {

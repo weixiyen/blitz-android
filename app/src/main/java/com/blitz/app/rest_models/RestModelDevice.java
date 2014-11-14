@@ -1,9 +1,9 @@
 package com.blitz.app.rest_models;
 
 import android.app.Activity;
+import android.support.annotation.NonNull;
 
 import com.blitz.app.utilities.rest.RestAPICallback;
-import com.blitz.app.utilities.rest.RestAPIResult;
 import com.google.gson.JsonObject;
 import com.google.gson.annotations.SerializedName;
 
@@ -66,26 +66,15 @@ public class RestModelDevice extends RestModel {
      * @param callback Completion callback.
      */
     @SuppressWarnings("unused")
-    public static void get(Activity activity, String deviceId, final CallbackDevice callback) {
+    public static void get(Activity activity, String deviceId, @NonNull CallbackDevice callback) {
 
         if (deviceId == null) {
             return;
         }
 
-        RestAPICallback<RestAPIResult<RestModelDevice>> operation =
-                new RestAPICallback<RestAPIResult<RestModelDevice>>(activity) {
-
-            @Override
-            public void success(RestAPIResult<RestModelDevice> jsonObject) {
-
-                if (callback != null) {
-                    callback.onSuccess(jsonObject.getResult());
-                }
-            }
-        };
-
         // Make rest call for code.
-        mRestAPI.device_get(deviceId, operation);
+        mRestAPI.device_get(deviceId, new RestAPICallback<>(activity,
+                result -> callback.onSuccess(result.getResult()), null));
     }
 
     /**
@@ -98,23 +87,11 @@ public class RestModelDevice extends RestModel {
      * @param callback Completion callback.
      */
     @SuppressWarnings("unused")
-    public static void create(Activity activity, String deviceId, final CallbackDevice callback) {
+    public static void create(Activity activity, String deviceId, @NonNull CallbackDevice callback) {
 
         if (deviceId == null) {
             return;
         }
-
-        RestAPICallback<RestAPIResult<RestModelDevice>> operation =
-                new RestAPICallback<RestAPIResult<RestModelDevice>>(activity) {
-
-            @Override
-            public void success(RestAPIResult<RestModelDevice> jsonObject) {
-
-                if (callback != null) {
-                    callback.onSuccess(jsonObject.getResult());
-                }
-            }
-        };
 
         // Create post body.
         JsonObject body = new JsonObject();
@@ -124,7 +101,8 @@ public class RestModelDevice extends RestModel {
         body.addProperty("push_notification_enabled", false);
 
         // Make rest call for code.
-        mRestAPI.devices_post(body, operation);
+        mRestAPI.devices_post(body, new RestAPICallback<>(activity,
+                result -> callback.onSuccess(result.getResult()), null));
     }
 
     /**
@@ -144,23 +122,11 @@ public class RestModelDevice extends RestModel {
                               String id,
                               String userId,
                               Boolean pushNotificationsEnabled,
-                              String pushNotificationToken, final CallbackDevice callback) {
+                              String pushNotificationToken, @NonNull CallbackDevice callback) {
 
         if (id == null) {
             return;
         }
-
-        RestAPICallback<RestAPIResult<RestModelDevice>> operation =
-                new RestAPICallback<RestAPIResult<RestModelDevice>>(activity) {
-
-            @Override
-            public void success(RestAPIResult<RestModelDevice> jsonObject) {
-
-                if (callback != null) {
-                    callback.onSuccess(jsonObject.getResult());
-                }
-            }
-        };
 
         // Create object holding values to replace.
         JsonObject replace = new JsonObject();
@@ -190,7 +156,8 @@ public class RestModelDevice extends RestModel {
         body.add("replace", replace);
 
         // Make rest call for code.
-        mRestAPI.device_patch(id, body, operation);
+        mRestAPI.device_patch(id, body, new RestAPICallback<>(activity,
+                result -> callback.onSuccess(result.getResult()), null));
     }
 
     // endregion

@@ -1,6 +1,7 @@
 package com.blitz.app.rest_models;
 
 import android.app.Activity;
+import android.support.annotation.NonNull;
 
 import com.blitz.app.utilities.app.AppConfig;
 import com.blitz.app.utilities.rest.RestAPICallback;
@@ -39,31 +40,24 @@ public class RestModelPreferences extends RestModel {
     /**
      * Fetch the current users preferences.
      */
-    public static void sync(Activity activity, final RestModelCallback<RestModelPreferences> callback) {
-
-        RestAPICallback<RestModelPreferences> operation =
-                new RestAPICallback<RestModelPreferences>(activity) {
-
-                    @Override
-                    public void success(RestModelPreferences jsonObject) {
-
-                        if (AppConfig.isDraftSimulationEnabled()) {
-
-                            // Drafts always on.
-                            jsonObject.mQueueAvailable = true;
-
-                            // Testing queue.
-                            jsonObject.mCurrentActiveQueue = "football_heads_up_draft_free";
-                        }
-
-                        if (callback != null) {
-                            callback.onSuccess(jsonObject);
-                        }
-                    }
-                };
+    @SuppressWarnings("unused")
+    public static void sync(Activity activity, @NonNull RestModelCallback<RestModelPreferences> callback) {
 
         // Make api call.
-        mRestAPI.preferences_get(operation);
+        mRestAPI.preferences_get(new RestAPICallback<>(activity, result -> {
+
+            if (AppConfig.isDraftSimulationEnabled()) {
+
+                // Drafts always on.
+                result.mQueueAvailable = true;
+
+                // Testing queue.
+                result.mCurrentActiveQueue = "football_heads_up_draft_free";
+            }
+
+            callback.onSuccess(result);
+
+        }, null));
     }
 
     // endregion
