@@ -1,7 +1,7 @@
 package com.blitz.app.view_models;
 
-import com.blitz.app.rest_models.RestCallback;
-import com.blitz.app.rest_models.RestCallbacks;
+import com.blitz.app.rest_models.RestResult;
+import com.blitz.app.rest_models.RestResults;
 import com.blitz.app.rest_models.RestModelDraft;
 import com.blitz.app.rest_models.RestModelGame;
 import com.blitz.app.rest_models.RestModelItem;
@@ -78,7 +78,7 @@ public class ViewModelMatchup extends ViewModel {
     public void initialize() {
 
         RestModelDraft.fetchSyncedDraft(mActivity, mDraftId,
-                new RestCallback<RestModelDraft>() {
+                new RestResult<RestModelDraft>() {
 
                     @Override
                     public void onSuccess(final RestModelDraft draft) {
@@ -99,7 +99,7 @@ public class ViewModelMatchup extends ViewModel {
 
     private void setupUserInfo() {
 
-        RestModelUser.getUsers(null, mDraft.getUsers(), new RestCallbacks<RestModelUser>() {
+        RestModelUser.getUsers(null, mDraft.getUsers(), new RestResults<RestModelUser>() {
 
             @Override
             public void onSuccess(List<RestModelUser> users) {
@@ -166,7 +166,7 @@ public class ViewModelMatchup extends ViewModel {
         final int week = mDraft.getWeek();
         final int year = mDraft.getYear();
 
-        RestModelGame.fetchGames(mActivity, year, week, new RestCallbacks<RestModelGame>() {
+        RestModelGame.fetchGames(mActivity, year, week, new RestResults<RestModelGame>() {
 
             @Override
             public void onSuccess(List<RestModelGame> object) {
@@ -176,7 +176,7 @@ public class ViewModelMatchup extends ViewModel {
             }
         });
 
-        RestModelStats.fetchStatsForPlayers(mActivity, playerIds, year, week, new RestCallbacks<RestModelStats>() {
+        RestModelStats.fetchStatsForPlayers(mActivity, playerIds, year, week, new RestResults<RestModelStats>() {
             @Override
             public void onSuccess(List<RestModelStats> object) {
 

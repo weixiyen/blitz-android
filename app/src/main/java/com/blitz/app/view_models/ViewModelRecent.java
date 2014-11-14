@@ -1,7 +1,7 @@
 package com.blitz.app.view_models;
 
-import com.blitz.app.rest_models.RestCallback;
-import com.blitz.app.rest_models.RestCallbacks;
+import com.blitz.app.rest_models.RestResult;
+import com.blitz.app.rest_models.RestResults;
 import com.blitz.app.rest_models.RestModelDraft;
 import com.blitz.app.rest_models.RestModelItem;
 import com.blitz.app.rest_models.RestModelPreferences;
@@ -68,7 +68,7 @@ public class ViewModelRecent extends ViewModel {
 
             // Fetch the current draft week and year if needed.
             AuthHelper.instance().getPreferences(mActivity, false,
-                    new RestCallback<RestModelPreferences>() {
+                    new RestResult<RestModelPreferences>() {
 
                         @Override
                         public void onSuccess(RestModelPreferences object) {
@@ -122,7 +122,7 @@ public class ViewModelRecent extends ViewModel {
         mWeekSelected = week;
 
         RestModelDraft.fetchDraftsForUser(mActivity, AuthHelper.instance().getUserId(),
-                week, mYearCurrent, null, new RestCallbacks<RestModelDraft>() {
+                week, mYearCurrent, null, new RestResults<RestModelDraft>() {
 
                     @Override
                     public void onSuccess(List<RestModelDraft> object) {

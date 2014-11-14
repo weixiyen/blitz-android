@@ -1,8 +1,8 @@
 package com.blitz.app.view_models;
 
 import com.blitz.app.R;
-import com.blitz.app.rest_models.RestCallback;
-import com.blitz.app.rest_models.RestCallbacks;
+import com.blitz.app.rest_models.RestResult;
+import com.blitz.app.rest_models.RestResults;
 import com.blitz.app.rest_models.RestModelGroup;
 import com.blitz.app.rest_models.RestModelUser;
 import com.blitz.app.utilities.android.BaseActivity;
@@ -73,7 +73,7 @@ public class ViewModelLeagues extends ViewModel {
     private void fetchUserLeaguesData() {
 
         RestModelGroup.getGroupsForUserId(mActivity, AuthHelper.instance().getUserId(),
-                new RestCallbacks<RestModelGroup>() {
+                new RestResults<RestModelGroup>() {
 
             @Override
             public void onSuccess(List<RestModelGroup> object) {
@@ -116,7 +116,7 @@ public class ViewModelLeagues extends ViewModel {
      */
     private void fetchUserLeagueData() {
 
-        RestModelGroup.getGroupWithId(null, mSelectedLeagueId, new RestCallback<RestModelGroup>() {
+        RestModelGroup.getGroupWithId(null, mSelectedLeagueId, new RestResult<RestModelGroup>() {
 
             @Override
             public void onSuccess(RestModelGroup object) {
@@ -183,7 +183,7 @@ public class ViewModelLeagues extends ViewModel {
 
         // Fetch groups that are recruiting, no blocked UI.
         RestModelGroup.getGroupsRecruitingWithLimit(null, MAX_RECRUITING_LEAGUES_TO_SHOW,
-                new RestCallbacks<RestModelGroup>() {
+                new RestResults<RestModelGroup>() {
 
             @Override
             public void onSuccess(List<RestModelGroup> object) {
@@ -268,7 +268,7 @@ public class ViewModelLeagues extends ViewModel {
 
         // Create a group with user inputted name.
         RestModelGroup.createGroupWithName(mActivity, leagueName,
-                new RestCallback<RestModelGroup>() {
+                new RestResult<RestModelGroup>() {
 
             @Override
             public void onSuccess(RestModelGroup object) {
@@ -298,7 +298,7 @@ public class ViewModelLeagues extends ViewModel {
         }
 
         // Try to join group with the provided league id.
-        RestModelGroup.joinGroupWithId(mActivity, leagueId, new RestCallback<RestModelGroup>() {
+        RestModelGroup.joinGroupWithId(mActivity, leagueId, new RestResult<RestModelGroup>() {
 
             @Override
             public void onSuccess(RestModelGroup object) {
@@ -328,7 +328,7 @@ public class ViewModelLeagues extends ViewModel {
         }
 
         RestModelGroup.getGroupWithName(mActivity, leagueName,
-                new RestCallback<RestModelGroup>() {
+                new RestResult<RestModelGroup>() {
 
             @Override
             public void onSuccess(RestModelGroup object) {
@@ -359,7 +359,7 @@ public class ViewModelLeagues extends ViewModel {
 
         // Toggle the recruiting status.
         RestModelGroup.updateRecruitingStatusForGroup(mActivity, leagueId, recruiting,
-                new RestCallback<RestModelGroup>() {
+                new RestResult<RestModelGroup>() {
 
             @Override
             public void onSuccess(RestModelGroup object) {

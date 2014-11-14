@@ -32,7 +32,7 @@ public class RestModelStats extends RestModel {
      * Fetch stats for a given list of players.
      */
     public static void fetchStatsForPlayers(Activity activity, List<String> playerIds, int year, int week,
-                                            @NonNull RestCallbacks<RestModelStats> callback) {
+                                            @NonNull RestResults<RestModelStats> callback) {
 
         List<String> keys = new ArrayList<>(playerIds.size());
 

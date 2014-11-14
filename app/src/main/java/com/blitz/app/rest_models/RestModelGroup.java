@@ -51,7 +51,7 @@ public class RestModelGroup extends RestModel {
      */
     @SuppressWarnings("unused")
     public static void getGroupWithId(Activity activity, String groupId,
-                                      @NonNull RestCallback<RestModelGroup> callback) {
+                                      @NonNull RestResult<RestModelGroup> callback) {
 
         mRestAPI.group_get(groupId, new RestAPICallback<>(activity,
                 result -> callback.onSuccess(result.getResult()), null));
@@ -66,7 +66,7 @@ public class RestModelGroup extends RestModel {
      */
     @SuppressWarnings("unused")
     public static void getGroupWithName(Activity activity, String groupName,
-                                        @NonNull RestCallback<RestModelGroup> callback) {
+                                        @NonNull RestResult<RestModelGroup> callback) {
 
         if (groupName == null) {
 
@@ -99,7 +99,7 @@ public class RestModelGroup extends RestModel {
      */
     @SuppressWarnings("unused")
     public static void getGroupsForUserId(Activity activity, String userId,
-                                          @NonNull RestCallbacks<RestModelGroup> callback) {
+                                          @NonNull RestResults<RestModelGroup> callback) {
 
         // Fetch by user id.
         List<String> keys = Arrays.asList(userId);
@@ -117,7 +117,7 @@ public class RestModelGroup extends RestModel {
      */
     @SuppressWarnings("unused")
     public static void getGroupsRecruitingWithLimit(Activity activity, Integer limit,
-                                                    @NonNull RestCallbacks<RestModelGroup> callback) {
+                                                    @NonNull RestResults<RestModelGroup> callback) {
 
         Date dateNow = DateUtils.getDateInGMT();
         Date dateNowOneWeekEarlier =  DateUtils.getDateWithOffsetInMilliseconds(dateNow, 604800000L * -2);
@@ -148,7 +148,7 @@ public class RestModelGroup extends RestModel {
      */
     @SuppressWarnings("unused")
     public static void getTopGroupsWithLimit(Activity activity, Integer limit,
-                                             @NonNull RestCallbacks<RestModelGroup> callback) {
+                                             @NonNull RestResults<RestModelGroup> callback) {
 
         // Pluck fields we need.
         List<String> pluck = Arrays.asList("name", "rating", "rank");
@@ -170,7 +170,7 @@ public class RestModelGroup extends RestModel {
      */
     @SuppressWarnings("unused")
     public static void createGroupWithName(Activity activity, String groupName,
-                                           @NonNull RestCallback<RestModelGroup> callback) {
+                                           @NonNull RestResult<RestModelGroup> callback) {
 
         // Construct POST body.
         JsonObject body = new JsonObject();
@@ -190,7 +190,7 @@ public class RestModelGroup extends RestModel {
      */
     @SuppressWarnings("unused")
     public static void joinGroupWithId(Activity activity, String groupId,
-                                       @NonNull RestCallback<RestModelGroup> callback) {
+                                       @NonNull RestResult<RestModelGroup> callback) {
 
         // Create object holding values to replace.
         JsonObject jsonAppend   = new JsonObject();
@@ -214,7 +214,7 @@ public class RestModelGroup extends RestModel {
      */
     @SuppressWarnings("unused")
     public static void updateRecruitingStatusForGroup(Activity activity, String groupId, Boolean recruiting,
-                                                      @NonNull RestCallback<RestModelGroup> callback) {
+                                                      @NonNull RestResult<RestModelGroup> callback) {
 
         // Create object holding values to replace.
         JsonObject jsonReplace     = new JsonObject();

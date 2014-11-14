@@ -539,7 +539,7 @@ public final class RestModelDraft extends RestModel {
      */
     @SuppressWarnings("unused")
     public static void pickPlayer(Activity activity, String draftId, String playerId,
-                                  @NonNull RestCallback<RestModelDraft> callback) {
+                                  @NonNull RestResult<RestModelDraft> callback) {
 
         if (draftId == null || playerId == null) {
 
@@ -569,7 +569,7 @@ public final class RestModelDraft extends RestModel {
      */
     @SuppressWarnings("unused")
     public static void fetchSyncedDraft(Activity activity, String draftId,
-                                        @NonNull RestCallback<RestModelDraft> callback) {
+                                        @NonNull RestResult<RestModelDraft> callback) {
 
         if (draftId == null) {
             return;
@@ -602,7 +602,7 @@ public final class RestModelDraft extends RestModel {
      */
     @SuppressWarnings("unused")
     public static void fetchActiveDraftsForUser(Activity activity, String userId,
-            @NonNull RestCallbacks<RestModelDraft> callback) {
+            @NonNull RestResults<RestModelDraft> callback) {
 
         RestAPICallback<RestAPIResult<RestModelDraft>> operation = new RestAPICallback<>(activity,
                 result -> callback.onSuccess(result.getResults()), null);
@@ -635,7 +635,7 @@ public final class RestModelDraft extends RestModel {
                                           Integer week,
                                           Integer year,
                                           Integer limit,
-                                          @NonNull RestCallbacks<RestModelDraft> callback) {
+                                          @NonNull RestResults<RestModelDraft> callback) {
 
         // Create filter for current time frame.
         String filter = "{\"week\": " + week + ", \"year\": " +

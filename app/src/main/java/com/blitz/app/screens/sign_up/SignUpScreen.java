@@ -4,7 +4,7 @@ import android.os.Bundle;
 import android.widget.EditText;
 
 import com.blitz.app.R;
-import com.blitz.app.rest_models.RestCallback;
+import com.blitz.app.rest_models.RestResult;
 import com.blitz.app.rest_models.RestModel;
 import com.blitz.app.rest_models.RestModelUser;
 import com.blitz.app.utilities.android.BaseActivity;
@@ -62,7 +62,7 @@ public class SignUpScreen extends BaseActivity {
         RestModelUser.signUp(this,
                 mEmail.getText().toString(),
                 mUsername.getText().toString(),
-                mPassword.getText().toString(), new RestCallback<RestModelUser>() {
+                mPassword.getText().toString(), new RestResult<RestModelUser>() {
 
                     @Override
                     public void onSuccess(RestModelUser object) {

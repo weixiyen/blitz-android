@@ -35,7 +35,7 @@ public class RestModelQueue extends RestModel {
 
         // First sync preferences to get the active draft key.
         AuthHelper.instance().getPreferences(activity, true,
-                new RestCallback<RestModelPreferences>() {
+                new RestResult<RestModelPreferences>() {
 
                     @Override
                     public void onSuccess(RestModelPreferences object) {

@@ -47,7 +47,7 @@ public class RestModelUser extends RestModel {
      */
     @SuppressWarnings("unused")
     public static void updateAvatar(Activity activity, String avatarId,
-                                    @NonNull RestCallback<RestModelUser> callback) {
+                                    @NonNull RestResult<RestModelUser> callback) {
         if (avatarId == null) {
             return;
         }
@@ -74,7 +74,7 @@ public class RestModelUser extends RestModel {
      */
     @SuppressWarnings("unused")
     public static void getUser(Activity activity, String userId,
-                               @NonNull RestCallback<RestModelUser> callback,
+                               @NonNull RestResult<RestModelUser> callback,
                                boolean logoutOnFailure) {
 
         // Rest operation.
@@ -96,7 +96,7 @@ public class RestModelUser extends RestModel {
      */
     @SuppressWarnings("unused")
     public static void getTopUsersWithLimit(Activity activity, final int limit,
-                                            @NonNull RestCallbacks<RestModelUser> callback) {
+                                            @NonNull RestResults<RestModelUser> callback) {
 
         // Only fetch relevant fields from the users table.
         List<String> pluck = Arrays.asList("id", "username", "wins",
@@ -118,7 +118,7 @@ public class RestModelUser extends RestModel {
      */
     @SuppressWarnings("unused")
     public static void getUsers(Activity activity, List<String> userIds,
-                                @NonNull RestCallbacks<RestModelUser> callback) {
+                                @NonNull RestResults<RestModelUser> callback) {
 
         // Pluck a subset of the fields.
         List<String> pluck = Arrays.asList("id", "username", "status", "avatar_id",
@@ -136,7 +136,7 @@ public class RestModelUser extends RestModel {
      */
     @SuppressWarnings("unused")
     public static void signUp(Activity activity, String email, String username, String password,
-                              @NonNull RestCallback<RestModelUser> callback) {
+                              @NonNull RestResult<RestModelUser> callback) {
 
         // Rest operation.
         RestAPICallback<RestAPIResult<RestModelUser>> operation = new RestAPICallback<>(activity, result -> {
@@ -173,7 +173,7 @@ public class RestModelUser extends RestModel {
      */
     @SuppressWarnings("unused")
     public static void signIn(Activity activity, String username, String password,
-                              @NonNull RestCallback<RestModelUser> callback) {
+                              @NonNull RestResult<RestModelUser> callback) {
 
         // Rest operation.
         RestAPICallback<RestAPIResult<RestModelUser>> operation = new RestAPICallback<>(activity, result -> {

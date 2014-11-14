@@ -1,6 +1,6 @@
 package com.blitz.app.view_models;
 
-import com.blitz.app.rest_models.RestCallback;
+import com.blitz.app.rest_models.RestResult;
 import com.blitz.app.rest_models.RestModel;
 import com.blitz.app.rest_models.RestModelUser;
 import com.blitz.app.utilities.android.BaseActivity;
@@ -60,7 +60,7 @@ public class ViewModelSignIn extends ViewModel {
         }
 
         RestModelUser.signIn(mActivity, usernameOrEmail, password,
-                new RestCallback<RestModelUser>() {
+                new RestResult<RestModelUser>() {
 
                     @Override
                     public void onSuccess(RestModelUser object) {

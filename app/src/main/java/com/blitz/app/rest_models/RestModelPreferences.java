@@ -40,7 +40,7 @@ public class RestModelPreferences extends RestModel {
      * Fetch the current users preferences.
      */
     @SuppressWarnings("unused")
-    public static void sync(Activity activity, @NonNull RestCallback<RestModelPreferences> callback) {
+    public static void sync(Activity activity, @NonNull RestResult<RestModelPreferences> callback) {
 
         // Make api call.
         mRestAPI.preferences_get(new RestAPICallback<>(activity, result -> {

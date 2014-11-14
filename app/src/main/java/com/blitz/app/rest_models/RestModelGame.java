@@ -45,7 +45,7 @@ public class RestModelGame extends RestModel {
      */
     @SuppressWarnings("unused")
     public static void fetchGames(Activity activity, int year, int week,
-                                  @NonNull RestCallbacks<RestModelGame> callback) {
+                                  @NonNull RestResults<RestModelGame> callback) {
 
         final Pair<Integer, Integer> cacheKey = Pair.create(year, week);
 
