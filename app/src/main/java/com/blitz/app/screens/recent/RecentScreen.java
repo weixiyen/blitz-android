@@ -29,11 +29,6 @@ public class RecentScreen extends BaseFragment implements ViewModelRecent.Callba
     // Total weeks in an NFL season.
     private static final int WEEKS_IN_SEASON = 17;
 
-    @InjectView(R.id.blitz_dropdown_container)  View mBlitzDropdownContainer;
-    @InjectView(R.id.blitz_dropdown_header) TextView mBlitzDropdownHeader;
-    @InjectView(R.id.blitz_dropdown_list)   ListView mBlitzDropdownList;
-    @InjectView(R.id.blitz_dropdown_list_wrap)  View mBlitzDropdownListWrap;
-
     @InjectView(R.id.recent_no_games)           TextView mRecentNoGames;
     @InjectView(R.id.recent_drafts_list)        ListView mRecentMatches;
     @InjectView(R.id.recent_week_wins)          TextView mRecentWeekWins;
@@ -77,10 +72,7 @@ public class RecentScreen extends BaseFragment implements ViewModelRecent.Callba
         mBlitzScrubber.setCallbacks(position -> mViewModel.updateWeek(position + 1));
 
         // Configure the dropdown.
-        mBlitzDropdown = new BlitzDropdown(getActivity(), headers);
-        mBlitzDropdown.setListView(mBlitzDropdownListWrap, mBlitzDropdownList);
-        mBlitzDropdown.setHeaderView(mBlitzDropdownHeader);
-        mBlitzDropdown.setContainerView(mBlitzDropdownContainer);
+        mBlitzDropdown = new BlitzDropdown(getActivity(), getView(), headers);
         mBlitzDropdown.setCallbacks(position -> mViewModel.updateWeek(position + 1));
     }
 

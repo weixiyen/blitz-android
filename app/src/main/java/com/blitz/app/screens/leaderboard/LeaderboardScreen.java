@@ -29,11 +29,6 @@ public class LeaderboardScreen extends BaseActivity implements ViewModelLeaderbo
     // region Member Variables
     // ============================================================================================================
 
-    @InjectView(R.id.blitz_dropdown_container)  View mBlitzDropdownContainer;
-    @InjectView(R.id.blitz_dropdown_header) TextView mBlitzDropdownHeader;
-    @InjectView(R.id.blitz_dropdown_list)   ListView mBlitzDropdownList;
-    @InjectView(R.id.blitz_dropdown_list_wrap)  View mBlitzDropdownListWrap;
-
     @InjectView(R.id.leaderboard_list) ListView mLeaderboardElementList;
     @InjectView(R.id.leaderboard_spinner) ProgressBar mLeaderboardSpinner;
 
@@ -71,10 +66,7 @@ public class LeaderboardScreen extends BaseActivity implements ViewModelLeaderbo
         mBlitzScrubber.setCallbacks(this::setSelected);
 
         // Configure the dropdown.
-        mBlitzDropdown = new BlitzDropdown(this, headers);
-        mBlitzDropdown.setListView(mBlitzDropdownListWrap, mBlitzDropdownList);
-        mBlitzDropdown.setHeaderView(mBlitzDropdownHeader);
-        mBlitzDropdown.setContainerView(mBlitzDropdownContainer);
+        mBlitzDropdown = new BlitzDropdown(this, getView(), headers);
         mBlitzDropdown.setCallbacks(this::setSelected);
 
         setSelected(ViewModelLeaderboard.TOP_150_PLAYERS);
