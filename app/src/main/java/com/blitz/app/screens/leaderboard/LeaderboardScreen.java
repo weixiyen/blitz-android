@@ -10,7 +10,6 @@ import com.blitz.app.R;
 import com.blitz.app.utilities.android.BaseActivity;
 import com.blitz.app.utilities.animations.AnimHelperFade;
 import com.blitz.app.utilities.dropdown.BlitzDropdown;
-import com.blitz.app.utilities.logging.LogHelper;
 import com.blitz.app.utilities.scrubber.BlitzScrubber;
 import com.blitz.app.view_models.ViewModel;
 import com.blitz.app.view_models.ViewModelLeaderboard;
@@ -103,8 +102,6 @@ public class LeaderboardScreen extends BaseActivity implements ViewModelLeaderbo
      * Item is selected (users or leagues).
      */
     private void setSelected(int position) {
-
-        LogHelper.log("Set selected: " + position);
 
         // Set the scrubber.
         mBlitzScrubber.setScrubberItemSelected(position);
