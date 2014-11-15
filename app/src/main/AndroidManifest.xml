@@ -30,7 +30,6 @@
 
     <application
         android:name=".utilities.android.BaseApplication"
-        android:allowBackup="true"
         android:hardwareAccelerated="true"
         android:icon="@drawable/icon_blitz"
         android:label="@string/app_name"
@@ -40,7 +39,7 @@
 
         <!-- Environment (affects AppConfig values) -->
         <meta-data android:name="com.blitz.app.config.environment"
-            android:resource="@string/environment_production"/>
+            android:resource="@string/environment_qa"/>
 
         <!-- Required for applications which use Google Play Services. -->
         <meta-data
@@ -99,6 +98,12 @@
             android:windowSoftInputMode="stateHidden" />
 
         <activity android:name=".screens.leaderboard.LeaderboardScreen"
+            android:windowSoftInputMode="stateHidden" />
+
+        <activity android:name=".screens.payments.DepositScreen"
+            android:windowSoftInputMode="stateHidden" />
+
+        <activity android:name=".screens.payments.TransactionListViewScreen"
             android:windowSoftInputMode="stateHidden" />
 
         <!--

@@ -1,0 +1,37 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="${packageName}.${activityClass}"
+    tools:ignore="ButtonStyle,UnusedAttribute,RelativeOverlap">
+
+        <TableLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/background_inner_dark">
+            <TableRow android:layout_width="match_parent"><TextView android:gravity="center"
+                android:text="Current Balance"/></TableRow>
+            <TableRow><TextView android:gravity="center"
+                android:text="$999"/></TableRow>
+            <TableRow><TextView android:gravity="center"
+                android:text="Add Money"/></TableRow>
+        </TableLayout>
+
+        <ListView
+            android:id="@+id/transaction_list"
+            android:layout_width="match_parent"
+            android:layout_height="500dp"
+            android:nestedScrollingEnabled="false"
+
+            android:cacheColorHint="@color/background_transparent"
+            android:divider="@null"
+            android:dividerHeight="0dp"
+            android:footerDividersEnabled="false"
+            android:gravity="center"
+            android:listSelector="@color/background_transparent"
+            android:visibility="visible"/>
+
+</LinearLayout>
+

@@ -49,6 +49,38 @@
         android:textSize="16sp"
         android:visibility="gone"/>
 
+    <Button
+        android:id="@+id/cash_balance"
+        style="@style/App.Button"
+        fontPath="@string/app_font_helvetica_condensed_bold"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_gravity="center_horizontal"
+        android:background="@drawable/drawable_bg_inner_dark"
+        android:gravity="center|left"
+        android:paddingLeft="25dp"
+        android:paddingRight="25dp"
+        android:text="@string/account_balance"
+        android:textColor="@color/text_color_dark"
+        android:textSize="16sp"/>
+
+
+    <Button
+        android:id="@+id/transaction_history"
+        style="@style/App.Button"
+        fontPath="@string/app_font_helvetica_condensed_bold"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_gravity="center_horizontal"
+        android:background="@drawable/drawable_bg_inner_dark"
+        android:gravity="center|left"
+        android:paddingLeft="25dp"
+        android:paddingRight="25dp"
+        android:text="@string/transaction_history"
+        android:textColor="@color/text_color_dark"
+        android:textSize="16sp"/>
+
+
     <Switch
         android:id="@+id/settings_toggle_sound"
         fontPath="@string/app_font_helvetica_condensed_bold"

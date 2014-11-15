@@ -143,6 +143,13 @@ interface RestAPI {
                    @Query("limit") Integer limit,        // Optional
         Callback<RestAPIResult<RestModelStats>> callback);
 
+    @GET("/transactions")
+    void transactions_get(@Query("keys[]") List<String> userIds,
+                          @Query("index") String index,
+                          @Query("order_by") String orderBy,
+                          @Query("limit") int limit,
+                          Callback<RestAPIResult<RestModelTransaction>> transaction);
+
     @GET("/user/{user_id}")
     void user_get(@Path("user_id") String userId,
         Callback<RestAPIResult<RestModelUser>> callback);
