@@ -1,11 +1,11 @@
 package com.blitz.app.view_models;
 
-import com.blitz.app.rest_models.RestModelCallback;
+import com.blitz.app.rest_models.RestResult;
+import com.blitz.app.rest_models.RestModel;
 import com.blitz.app.rest_models.RestModelUser;
 import com.blitz.app.utilities.android.BaseActivity;
 import com.blitz.app.utilities.app.AppDataObject;
 import com.blitz.app.utilities.authentication.AuthHelper;
-import com.blitz.app.utilities.rest.RestAPICallback;
 
 /**
  * Created by mrkcsc on 10/12/14. Copyright 2014 Blitz Studios
@@ -55,12 +55,12 @@ public class ViewModelSignIn extends ViewModel {
     @SuppressWarnings("unused")
     public void signIn(String usernameOrEmail, String password) {
 
-        if (RestAPICallback.shouldThrottle()) {
+        if (RestModel.shouldThrottle()) {
             return;
         }
 
         RestModelUser.signIn(mActivity, usernameOrEmail, password,
-                new RestModelCallback<RestModelUser>() {
+                new RestResult<RestModelUser>() {
 
                     @Override
                     public void onSuccess(RestModelUser object) {

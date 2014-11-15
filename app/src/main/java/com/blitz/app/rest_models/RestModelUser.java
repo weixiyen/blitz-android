@@ -1,10 +1,9 @@
 package com.blitz.app.rest_models;
 
 import android.app.Activity;
+import android.support.annotation.NonNull;
 
 import com.blitz.app.utilities.authentication.AuthHelper;
-import com.blitz.app.utilities.rest.RestAPICallback;
-import com.blitz.app.utilities.rest.RestAPIResult;
 import com.google.gson.JsonObject;
 import com.google.gson.annotations.SerializedName;
 
@@ -48,22 +47,10 @@ public class RestModelUser extends RestModel {
      */
     @SuppressWarnings("unused")
     public static void updateAvatar(Activity activity, String avatarId,
-                                    final RestModelCallback<RestModelUser> callback) {
+                                    @NonNull RestResult<RestModelUser> callback) {
         if (avatarId == null) {
             return;
         }
-
-        RestAPICallback<RestAPIResult<RestModelUser>> operation =
-                new RestAPICallback<RestAPIResult<RestModelUser>>(activity) {
-
-                    @Override
-                    public void success(RestAPIResult<RestModelUser> jsonObject) {
-
-                        if (callback != null) {
-                            callback.onSuccess(jsonObject.getResult());
-                        }
-                    }
-                };
 
         // Create object holding values to replace.
         JsonObject replace = new JsonObject();
@@ -77,7 +64,8 @@ public class RestModelUser extends RestModel {
         body.add("replace", replace);
 
         // Make rest call for code.
-        mRestAPI.user_patch(body, operation);
+        mRestAPI.user_patch(body, new RestAPICallback<>(activity,
+                result -> callback.onSuccess(result.getResult()), null));
     }
 
     /**
@@ -86,21 +74,12 @@ public class RestModelUser extends RestModel {
      */
     @SuppressWarnings("unused")
     public static void getUser(Activity activity, String userId,
-                               final RestModelCallback<RestModelUser> callback,
+                               @NonNull RestResult<RestModelUser> callback,
                                boolean logoutOnFailure) {
 
         // Rest operation.
-        RestAPICallback<RestAPIResult<RestModelUser>> operation =
-                new RestAPICallback<RestAPIResult<RestModelUser>>(activity) {
-
-                    @Override
-                    public void success(RestAPIResult<RestModelUser> jsonObject) {
-
-                        if (callback != null) {
-                            callback.onSuccess(jsonObject.getResult());
-                        }
-                    }
-                };
+        RestAPICallback<RestAPIResult<RestModelUser>> operation = new RestAPICallback<>(activity,
+                        result -> callback.onSuccess(result.getResult()), null);
 
         operation.setLogoutOnFailure(logoutOnFailure);
 
@@ -117,19 +96,7 @@ public class RestModelUser extends RestModel {
      */
     @SuppressWarnings("unused")
     public static void getTopUsersWithLimit(Activity activity, final int limit,
-                                            final RestModelCallbacks<RestModelUser> callback) {
-
-        RestAPICallback<RestAPIResult<RestModelUser>> operation =
-                new RestAPICallback<RestAPIResult<RestModelUser>>(activity) {
-
-                    @Override
-                    public void success(RestAPIResult<RestModelUser> result) {
-
-                        if (callback != null) {
-                            callback.onSuccess(result.getResults());
-                        }
-                    }
-                };
+                                            @NonNull RestResults<RestModelUser> callback) {
 
         // Only fetch relevant fields from the users table.
         List<String> pluck = Arrays.asList("id", "username", "wins",
@@ -138,7 +105,8 @@ public class RestModelUser extends RestModel {
         // Sort it by rating.
         String orderBy = "{\"rating\":\"DESC\"}";
 
-        mRestAPI.users_get(null, null, pluck, orderBy, limit, operation);
+        mRestAPI.users_get(null, null, pluck, orderBy, limit, new RestAPICallback<>(activity,
+                result -> callback.onSuccess(result.getResults()), null));
     }
 
     /**
@@ -150,25 +118,14 @@ public class RestModelUser extends RestModel {
      */
     @SuppressWarnings("unused")
     public static void getUsers(Activity activity, List<String> userIds,
-                                final RestModelCallbacks<RestModelUser> callback) {
-
-        RestAPICallback<RestAPIResult<RestModelUser>> operation =
-                new RestAPICallback<RestAPIResult<RestModelUser>>(activity) {
-
-                    @Override
-                    public void success(RestAPIResult<RestModelUser> jsonObject) {
-
-                        if (callback != null) {
-                            callback.onSuccess(jsonObject.getResults());
-                        }
-                    }
-                };
+                                @NonNull RestResults<RestModelUser> callback) {
 
         // Pluck a subset of the fields.
         List<String> pluck = Arrays.asList("id", "username", "status", "avatar_id",
                 "rating", "wins", "losses", "ties", "cash");
 
-        mRestAPI.users_get(userIds, "id", pluck, null, null, operation);
+        mRestAPI.users_get(userIds, "id", pluck, null, null, new RestAPICallback<>(activity,
+                result -> callback.onSuccess(result.getResults()), null));
     }
 
     /**
@@ -179,27 +136,21 @@ public class RestModelUser extends RestModel {
      */
     @SuppressWarnings("unused")
     public static void signUp(Activity activity, String email, String username, String password,
-                              final RestModelCallback<RestModelUser> callback) {
+                              @NonNull RestResult<RestModelUser> callback) {
 
         // Rest operation.
-        RestAPICallback<RestAPIResult<RestModelUser>> operation =
-                new RestAPICallback<RestAPIResult<RestModelUser>>(activity) {
+        RestAPICallback<RestAPIResult<RestModelUser>> operation = new RestAPICallback<>(activity, result -> {
 
-                    @Override
-                    public void success(RestAPIResult<RestModelUser> jsonObject) {
+            // Fetch user object.
+            RestModelUser user = result.getResult();
 
-                        // Fetch user object.
-                        RestModelUser user = jsonObject.getResult();
+            // Sign in the user.
+            AuthHelper.instance().signIn(user.mId, user.mUsername, user.mEmail);
 
-                        // Sign in the user.
-                        AuthHelper.instance().signIn(user.mId, user.mUsername, user.mEmail);
+            // Now signed up.
+            callback.onSuccess(user);
 
-                        // Now signed up.
-                        if (callback != null) {
-                            callback.onSuccess(user);
-                        }
-                    }
-                };
+        }, null);
 
         // Authentication operation.
         operation.setIsAuthentication(true);
@@ -222,27 +173,21 @@ public class RestModelUser extends RestModel {
      */
     @SuppressWarnings("unused")
     public static void signIn(Activity activity, String username, String password,
-                              final RestModelCallback<RestModelUser> callback) {
+                              @NonNull RestResult<RestModelUser> callback) {
 
         // Rest operation.
-        RestAPICallback<RestAPIResult<RestModelUser>> operation =
-                new RestAPICallback<RestAPIResult<RestModelUser>>(activity) {
+        RestAPICallback<RestAPIResult<RestModelUser>> operation = new RestAPICallback<>(activity, result -> {
 
-                    @Override
-                    public void success(RestAPIResult<RestModelUser> jsonObject) {
+            // Fetch user object.
+            RestModelUser user = result.getResult();
 
-                        // Fetch user object.
-                        RestModelUser user = jsonObject.getResult();
+            // Sign in the user.
+            AuthHelper.instance().signIn(user.mId, user.mUsername, user.mEmail);
 
-                        // Sign in the user.
-                        AuthHelper.instance().signIn(user.mId, user.mUsername, user.mEmail);
+            // Now signed in.
+            callback.onSuccess(user);
 
-                        // Now signed in.
-                        if (callback != null) {
-                            callback.onSuccess(user);
-                        }
-                    }
-                };
+        }, null);
 
         // Authentication operation.
         operation.setIsAuthentication(true);

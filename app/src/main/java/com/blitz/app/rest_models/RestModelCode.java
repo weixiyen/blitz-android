@@ -1,8 +1,8 @@
 package com.blitz.app.rest_models;
 
 import android.app.Activity;
+import android.support.annotation.NonNull;
 
-import com.blitz.app.utilities.rest.RestAPICallback;
 import com.google.gson.JsonObject;
 
 /**
@@ -52,32 +52,27 @@ public class RestModelCode extends RestModel {
      * @param activity Activity for dialogs.
      * @param callback Callback.
      */
-    public void redeemCode(Activity activity, final RedeemCodeCallback callback) {
-
-        RestAPICallback<JsonObject> operation =
-                new RestAPICallback<JsonObject>(activity) {
-
-            @Override
-            public void success(JsonObject jsonObject) {
-
-                if (jsonObject != null) {
-
-                    // Assign result.
-                    mCodeType = jsonObject.getAsJsonObject("result")
-                            .get("code_type").getAsString();
-                }
-
-                // Code redeemed.
-                callback.onRedeemCode();
-            }
-        };
+    @SuppressWarnings("unused")
+    public void redeemCode(Activity activity, @NonNull RedeemCodeCallback callback) {
 
         // Construct POST body.
         JsonObject body = new JsonObject();
                    body.addProperty("value", mValue);
 
         // Make rest call for code.
-        mRestAPI.code_post(body, operation);
+        mRestAPI.code_post(body, new RestAPICallback<>(activity, result -> {
+
+            if (result != null) {
+
+                // Assign result.
+                mCodeType = result.getAsJsonObject("result")
+                        .get("code_type").getAsString();
+            }
+
+            // Code redeemed.
+            callback.onRedeemCode();
+
+        }, null));
     }
 
     // endregion

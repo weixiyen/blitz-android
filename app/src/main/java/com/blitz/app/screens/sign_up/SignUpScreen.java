@@ -4,11 +4,11 @@ import android.os.Bundle;
 import android.widget.EditText;
 
 import com.blitz.app.R;
-import com.blitz.app.rest_models.RestModelCallback;
+import com.blitz.app.rest_models.RestResult;
+import com.blitz.app.rest_models.RestModel;
 import com.blitz.app.rest_models.RestModelUser;
 import com.blitz.app.utilities.android.BaseActivity;
 import com.blitz.app.utilities.authentication.AuthHelper;
-import com.blitz.app.utilities.rest.RestAPICallback;
 
 import butterknife.InjectView;
 import butterknife.OnClick;
@@ -55,14 +55,14 @@ public class SignUpScreen extends BaseActivity {
     @OnClick(R.id.sign_up_screen_sign_up) @SuppressWarnings("unused")
     public void sign_up() {
 
-        if (RestAPICallback.shouldThrottle()) {
+        if (RestModel.shouldThrottle()) {
             return;
         }
 
         RestModelUser.signUp(this,
                 mEmail.getText().toString(),
                 mUsername.getText().toString(),
-                mPassword.getText().toString(), new RestModelCallback<RestModelUser>() {
+                mPassword.getText().toString(), new RestResult<RestModelUser>() {
 
                     @Override
                     public void onSuccess(RestModelUser object) {

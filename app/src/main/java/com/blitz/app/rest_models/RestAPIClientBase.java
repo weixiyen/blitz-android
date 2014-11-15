@@ -1,4 +1,4 @@
-package com.blitz.app.utilities.rest;
+package com.blitz.app.rest_models;
 
 import com.blitz.app.utilities.app.AppConfig;
 import com.blitz.app.utilities.json.JsonHelper;
@@ -17,7 +17,7 @@ import retrofit.converter.GsonConverter;
 /**
  * Created by Miguel Gaeta on 6/25/14. Copyright 2014 Blitz Studios
  */
-public class RestAPIClientBase {
+class RestAPIClientBase {
 
     // region Member Variables
     // ============================================================================================================

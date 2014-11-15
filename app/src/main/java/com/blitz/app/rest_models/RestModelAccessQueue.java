@@ -1,9 +1,7 @@
 package com.blitz.app.rest_models;
 
 import android.app.Activity;
-
-import com.blitz.app.utilities.rest.RestAPICallback;
-import com.google.gson.JsonObject;
+import android.support.annotation.NonNull;
 
 /**
  * Created by mrkcsc on 8/9/14. Copyright 2014 Blitz Studios
@@ -68,34 +66,29 @@ public class RestModelAccessQueue extends RestModel {
      * @param activity Activity for UI changes.
      * @param callback Callback runnable.
      */
-    public void sync(Activity activity, final Runnable callback) {
-
-        RestAPICallback<JsonObject> operation =
-                new RestAPICallback<JsonObject>(activity) {
-
-            @Override
-            public void success(JsonObject jsonObject) {
-
-                if (jsonObject != null) {
-
-                    mAccessGranted = jsonObject.get("access_granted").getAsBoolean();
-
-                    if (jsonObject.get("people_ahead") != null) {
-                        mPeopleAhead = jsonObject.get("people_ahead").getAsInt();
-                    }
-
-                    if (jsonObject.get("people_behind") != null) {
-                        mPeopleBehind = jsonObject.get("people_behind").getAsInt();
-                    }
-                }
-
-                // Code redeemed.
-                callback.run();
-            }
-        };
+    @SuppressWarnings("unused")
+    public void sync(Activity activity, @NonNull Runnable callback) {
 
         // Make rest call for code.
-        mRestAPI.access_queue_get(mDeviceId, operation);
+        mRestAPI.access_queue_get(mDeviceId, new RestAPICallback<>(activity, result ->  {
+
+            if (result != null) {
+
+                mAccessGranted = result.get("access_granted").getAsBoolean();
+
+                if (result.get("people_ahead") != null) {
+                    mPeopleAhead = result.get("people_ahead").getAsInt();
+                }
+
+                if (result.get("people_behind") != null) {
+                    mPeopleBehind = result.get("people_behind").getAsInt();
+                }
+            }
+
+            // Code redeemed.
+            callback.run();
+
+        }, null));
     }
 
     // endregion

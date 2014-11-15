@@ -6,7 +6,6 @@
     <string name="add_money">Add Money</string>
     <string name="add_money_coming_soon">Cash games coming in Week 9</string>
     <string name="already_have_account">Already have an account? Login</string>
-    <string name="bet_money_copy">Bet $5 to win up to $25,000</string>
     <string name="blitz_access_code">Blitz Access Code</string>
     <string name="cancel">Cancel</string>
     <string name="change_password">Change Password</string>
@@ -22,7 +21,6 @@
     <string name="enter_league_name">Enter League name</string>
     <string name="email">Email</string>
     <string name="error">Error</string>
-    <string name="featured">Featured</string>
     <string name="forgot_password">Forgot password?</string>
     <string name="game_log">Game Log</string>
     <string name="get_ready">Get Ready!</string>
@@ -58,18 +56,14 @@
     <string name="players_behind_you">Players behind you</string>
     <string name="players_in_front">Players in front of you</string>
     <string name="play">Play</string>
-    <string name="play_coming_soon">Drafting is currently disabled on Android (early access program in place) - when drafting has been approved, you will receive a notification.  Thank you for downloading Blitz and stay tuned!</string>
     <string name="privacy_policy">Privacy Policy</string>
     <string name="push_notifications">Push Notifications</string>
     <string name="rank">Rank</string>
     <string name="rating">Rating</string>
-    <string name="recent">Recent</string>
     <string name="reset">Reset</string>
     <string name="rules">Rules</string>
     <string name="round_complete">Round\nComplete</string>
     <string name="send">Send</string>
-    <string name="send_reminder">Send me a reminder when Blitz is ready</string>
-    <string name="settings">Settings</string>
     <string name="sign_in">Sign In</string>
     <string name="sign_up">Sign Up</string>
     <string name="terms_of_use">Terms of Use</string>
@@ -81,24 +75,4 @@
     <string name="vs">vs</string>
     <string name="wins">wins</string>
     <string name="you_have_cash">You have $0.00</string>
-
-    <string-array name="weeks_array">
-        <item>Week 01</item>
-        <item>Week 02</item>
-        <item>Week 03</item>
-        <item>Week 04</item>
-        <item>Week 05</item>
-        <item>Week 06</item>
-        <item>Week 07</item>
-        <item>Week 08</item>
-        <item>Week 09</item>
-        <item>Week 10</item>
-        <item>Week 11</item>
-        <item>Week 12</item>
-        <item>Week 13</item>
-        <item>Week 14</item>
-        <item>Week 15</item>
-        <item>Week 16</item>
-        <item>Week 17</item>
-    </string-array>
 </resources>

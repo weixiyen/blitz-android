@@ -1,19 +1,15 @@
 package com.blitz.app.view_models;
 
-import com.blitz.app.rest_models.RestModelCallback;
-import com.blitz.app.rest_models.RestModelCallbacks;
+import com.blitz.app.rest_models.RestResult;
+import com.blitz.app.rest_models.RestResults;
 import com.blitz.app.rest_models.RestModelDraft;
 import com.blitz.app.rest_models.RestModelGame;
 import com.blitz.app.rest_models.RestModelItem;
 import com.blitz.app.rest_models.RestModelPlayer;
 import com.blitz.app.rest_models.RestModelStats;
 import com.blitz.app.rest_models.RestModelUser;
-import com.blitz.app.simple_models.Game;
-import com.blitz.app.simple_models.Stat;
 import com.blitz.app.utilities.android.BaseActivity;
 import com.blitz.app.utilities.authentication.AuthHelper;
-import com.blitz.app.utilities.rest.RestAPICallback;
-import com.blitz.app.utilities.rest.RestAPIResult;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -42,9 +38,10 @@ public class ViewModelMatchup extends ViewModel {
     List<RestModelPlayer>   mRoster1;
     List<RestModelPlayer>   mRoster2;
 
-    List<Game>                mGames;
+    List<RestModelGame> mGames;
+
     private RestModelDraft mDraft;
-    private Map<String, List<Stat>> mPlayerStatsMap;
+    private Map<String, List<RestModelStats>> mPlayerStatsMap;
 
     private String mDraftId;
 
@@ -81,7 +78,7 @@ public class ViewModelMatchup extends ViewModel {
     public void initialize() {
 
         RestModelDraft.fetchSyncedDraft(mActivity, mDraftId,
-                new RestModelCallback<RestModelDraft>() {
+                new RestResult<RestModelDraft>() {
 
                     @Override
                     public void onSuccess(final RestModelDraft draft) {
@@ -102,7 +99,7 @@ public class ViewModelMatchup extends ViewModel {
 
     private void setupUserInfo() {
 
-        RestModelUser.getUsers(null, mDraft.getUsers(), new RestModelCallbacks<RestModelUser>() {
+        RestModelUser.getUsers(null, mDraft.getUsers(), new RestResults<RestModelUser>() {
 
             @Override
             public void onSuccess(List<RestModelUser> users) {
@@ -169,26 +166,24 @@ public class ViewModelMatchup extends ViewModel {
         final int week = mDraft.getWeek();
         final int year = mDraft.getYear();
 
-        RestModelGame.fetchGames(year, week, new RestAPICallback<List<Game>>(null) {
-            @Override
-            public void success(List<Game> games) {
+        RestModelGame.fetchGames(mActivity, year, week, new RestResults<RestModelGame>() {
 
-                mGames = games;
+            @Override
+            public void onSuccess(List<RestModelGame> object) {
+
+                mGames = object;
                 onSyncComplete();
             }
         });
 
-        RestModelStats.fetchStatsForPlayers(playerIds, year, week,
-                new RestAPICallback<RestAPIResult<Stat>>(null) {
+        RestModelStats.fetchStatsForPlayers(mActivity, playerIds, year, week, new RestResults<RestModelStats>() {
+            @Override
+            public void onSuccess(List<RestModelStats> object) {
 
-                    @Override
-                    public void success(RestAPIResult<Stat> stats) {
-
-
-                        mPlayerStatsMap = buildPlayerStatsMap(stats.getResults());
-                        onSyncComplete();
-                    }
-                });
+                mPlayerStatsMap = buildPlayerStatsMap(object);
+                onSyncComplete();
+            }
+        });
     }
 
     private synchronized void onSyncComplete() {
@@ -202,8 +197,8 @@ public class ViewModelMatchup extends ViewModel {
             mPlayer1AvatarUrl != null && mPlayer2AvatarUrl != null &&
             mPlayerStatsMap != null) {
 
-            List<Game> p1Games = getPlayerGames(mRoster1, mGames);
-            List<Game> p2Games = getPlayerGames(mRoster2, mGames);
+            List<RestModelGame> p1Games = getPlayerGames(mRoster1, mGames);
+            List<RestModelGame> p2Games = getPlayerGames(mRoster2, mGames);
             float p1Score = getScore(mRoster1, mPlayerStatsMap);
             float p2Score = getScore(mRoster2, mPlayerStatsMap);
 
@@ -217,14 +212,14 @@ public class ViewModelMatchup extends ViewModel {
         }
     }
 
-    private static float getScore(List<RestModelPlayer> roster, Map<String, List<Stat>> playerStats) {
+    private static float getScore(List<RestModelPlayer> roster, Map<String, List<RestModelStats>> playerStats) {
 
         float total = 0;
 
         for (RestModelPlayer player: roster) {
             if (playerStats.containsKey(player.getId())) {
 
-                for (Stat stat: playerStats.get(player.getId())) {
+                for (RestModelStats stat: playerStats.get(player.getId())) {
                     total += stat.getPoints();
                 }
             }
@@ -263,13 +258,13 @@ public class ViewModelMatchup extends ViewModel {
         mRoster2 = opponentPicks;
     }
 
-    private List<Game> getPlayerGames(List<RestModelPlayer> roster, List<Game> games) {
+    private List<RestModelGame> getPlayerGames(List<RestModelPlayer> roster, List<RestModelGame> games) {
 
-        List<Game> gamesForPlayers = new ArrayList<>(roster.size());
+        List<RestModelGame> gamesForPlayers = new ArrayList<>(roster.size());
 
         for(RestModelPlayer player : roster) {
-            Game playerGame = new Game();
-            for(Game game: games) {
+            RestModelGame playerGame = new RestModelGame();
+            for(RestModelGame game: games) {
                 if(player.getTeam().equals(game.getAwayTeamName()) ||
                         player.getTeam().equals(game.getHomeTeamName())) {
                     playerGame = game;
@@ -282,14 +277,14 @@ public class ViewModelMatchup extends ViewModel {
         return gamesForPlayers;
     }
 
-    private Map<String, List<Stat>> buildPlayerStatsMap(List<Stat> stats) {
+    private Map<String, List<RestModelStats>> buildPlayerStatsMap(List<RestModelStats> stats) {
 
-        Map<String, List<Stat>> map = new HashMap<>();
+        Map<String, List<RestModelStats>> map = new HashMap<>();
 
-        for (Stat stat: stats) {
+        for (RestModelStats stat: stats) {
 
             if (stat.isSupported()) {
-                List<Stat> playerStats;
+                List<RestModelStats> playerStats;
 
                 if (map.containsKey(stat.getPlayerId())) {
                     playerStats = map.get(stat.getPlayerId());
@@ -316,9 +311,9 @@ public class ViewModelMatchup extends ViewModel {
      */
     public interface Callbacks extends ViewModel.Callbacks {
 
-        void onStuff(List<RestModelPlayer> p1roster, List<RestModelPlayer> p2Roster, List<Game> p1Games,
-                     List<Game> p2Games,
-                     Map<String, List<Stat>> playerStats, int week);
+        void onStuff(List<RestModelPlayer> p1roster, List<RestModelPlayer> p2Roster, List<RestModelGame> p1Games,
+                     List<RestModelGame> p2Games,
+                     Map<String, List<RestModelStats>> playerStats, int week);
 
         void onMatchup(String player1Name, float player1score, String player2Name, float player2Score);
 

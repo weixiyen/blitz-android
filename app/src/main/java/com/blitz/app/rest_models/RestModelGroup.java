@@ -1,11 +1,10 @@
 package com.blitz.app.rest_models;
 
 import android.app.Activity;
+import android.support.annotation.NonNull;
 
 import com.blitz.app.utilities.authentication.AuthHelper;
 import com.blitz.app.utilities.date.DateUtils;
-import com.blitz.app.utilities.rest.RestAPICallback;
-import com.blitz.app.utilities.rest.RestAPIResult;
 import com.google.gson.JsonObject;
 import com.google.gson.annotations.SerializedName;
 
@@ -52,18 +51,10 @@ public class RestModelGroup extends RestModel {
      */
     @SuppressWarnings("unused")
     public static void getGroupWithId(Activity activity, String groupId,
-                                      final RestModelCallback<RestModelGroup> callback) {
+                                      @NonNull RestResult<RestModelGroup> callback) {
 
-        mRestAPI.group_get(groupId, new RestAPICallback<RestAPIResult<RestModelGroup>>(activity) {
-
-            @Override
-            public void success(RestAPIResult<RestModelGroup> jsonObject) {
-
-                if (callback != null) {
-                    callback.onSuccess(jsonObject.getResult());
-                }
-            }
-        });
+        mRestAPI.group_get(groupId, new RestAPICallback<>(activity,
+                result -> callback.onSuccess(result.getResult()), null));
     }
 
     /**
@@ -75,7 +66,7 @@ public class RestModelGroup extends RestModel {
      */
     @SuppressWarnings("unused")
     public static void getGroupWithName(Activity activity, String groupName,
-                                        final RestModelCallback<RestModelGroup> callback) {
+                                        @NonNull RestResult<RestModelGroup> callback) {
 
         if (groupName == null) {
 
@@ -87,23 +78,16 @@ public class RestModelGroup extends RestModel {
 
         // Make api call.
         mRestAPI.groups_get("name_lowercase", keys, null, null, null, null, 1,
-                new RestAPICallback<RestAPIResult<RestModelGroup>>(activity) {
+                new RestAPICallback<>(activity, result -> {
 
-                    @Override
-                    public void success(RestAPIResult<RestModelGroup> jsonObject) {
+                    if (result.getResults() != null &&
+                            result.getResults().size() > 0) {
 
-                        if (callback != null) {
-
-                            if (jsonObject.getResults() != null &&
-                                jsonObject.getResults().size() > 0) {
-
-                                callback.onSuccess(jsonObject.getResults().get(0));
-                            } else {
-                                callback.onSuccess(null);
-                            }
-                        }
+                        callback.onSuccess(result.getResults().get(0));
+                    } else {
+                        callback.onSuccess(null);
                     }
-                });
+                }, null));
     }
 
     /**
@@ -115,34 +99,25 @@ public class RestModelGroup extends RestModel {
      */
     @SuppressWarnings("unused")
     public static void getGroupsForUserId(Activity activity, String userId,
-                                          final RestModelCallbacks<RestModelGroup> callback) {
+                                          @NonNull RestResults<RestModelGroup> callback) {
 
         // Fetch by user id.
         List<String> keys = Arrays.asList(userId);
-
-        // Pluck fields we need.
-        List<String> pluck = Arrays.asList("name", "rating", "rank");
 
         // Order descending.
         String orderBy = "{\"created\": \"ASC\"}";
 
         // Make api call.
         mRestAPI.groups_get("members", keys, null, null, null, orderBy, 10,
-                new RestAPICallback<RestAPIResult<RestModelGroup>>(activity) {
-
-            @Override
-            public void success(RestAPIResult<RestModelGroup> jsonObject) {
-
-                if (callback != null) {
-                    callback.onSuccess(jsonObject.getResults());
-                }
-            }
-        });
+                new RestAPICallback<>(activity, result -> callback.onSuccess(result.getResults()), null));
     }
 
+    /**
+     * Get groups that are recruiting.
+     */
     @SuppressWarnings("unused")
     public static void getGroupsRecruitingWithLimit(Activity activity, Integer limit,
-                                                    final RestModelCallbacks<RestModelGroup> callback) {
+                                                    @NonNull RestResults<RestModelGroup> callback) {
 
         Date dateNow = DateUtils.getDateInGMT();
         Date dateNowOneWeekEarlier =  DateUtils.getDateWithOffsetInMilliseconds(dateNow, 604800000L * -2);
@@ -161,16 +136,7 @@ public class RestModelGroup extends RestModel {
 
         // Make api call.
         mRestAPI.groups_get("last_updated", null, null, between, filter, orderBy, limit,
-                new RestAPICallback<RestAPIResult<RestModelGroup>>(activity) {
-
-            @Override
-            public void success(RestAPIResult<RestModelGroup> jsonObject) {
-
-                if (callback != null) {
-                    callback.onSuccess(jsonObject.getResults());
-                }
-            }
-        });
+                new RestAPICallback<>(activity, result -> callback.onSuccess(result.getResults()), null));
     }
 
     /**
@@ -182,7 +148,7 @@ public class RestModelGroup extends RestModel {
      */
     @SuppressWarnings("unused")
     public static void getTopGroupsWithLimit(Activity activity, Integer limit,
-                                             final RestModelCallbacks<RestModelGroup> callback) {
+                                             @NonNull RestResults<RestModelGroup> callback) {
 
         // Pluck fields we need.
         List<String> pluck = Arrays.asList("name", "rating", "rank");
@@ -192,16 +158,7 @@ public class RestModelGroup extends RestModel {
 
         // Make api call.
         mRestAPI.groups_get(null, null, pluck, null, null, orderBy, limit,
-                new RestAPICallback<RestAPIResult<RestModelGroup>>(activity) {
-
-            @Override
-            public void success(RestAPIResult<RestModelGroup> jsonObject) {
-
-                if (callback != null) {
-                    callback.onSuccess(jsonObject.getResults());
-                }
-            }
-        });
+                new RestAPICallback<>(activity, result -> callback.onSuccess(result.getResults()), null));
     }
 
     /**
@@ -213,23 +170,15 @@ public class RestModelGroup extends RestModel {
      */
     @SuppressWarnings("unused")
     public static void createGroupWithName(Activity activity, String groupName,
-                                           final RestModelCallback<RestModelGroup> callback) {
+                                           @NonNull RestResult<RestModelGroup> callback) {
 
         // Construct POST body.
         JsonObject body = new JsonObject();
         body.addProperty("name", groupName);
 
         // Make api call.
-        mRestAPI.groups_post(body, new RestAPICallback<RestAPIResult<RestModelGroup>>(activity) {
-
-            @Override
-            public void success(RestAPIResult<RestModelGroup> jsonObject) {
-
-                if (callback != null) {
-                    callback.onSuccess(jsonObject.getResult());
-                }
-            }
-        });
+        mRestAPI.groups_post(body, new RestAPICallback<>(activity,
+                result -> callback.onSuccess(result.getResult()), null));
     }
 
     /**
@@ -241,7 +190,7 @@ public class RestModelGroup extends RestModel {
      */
     @SuppressWarnings("unused")
     public static void joinGroupWithId(Activity activity, String groupId,
-                                       final RestModelCallback<RestModelGroup> callback) {
+                                       @NonNull RestResult<RestModelGroup> callback) {
 
         // Create object holding values to replace.
         JsonObject jsonAppend   = new JsonObject();
@@ -251,17 +200,8 @@ public class RestModelGroup extends RestModel {
         jsonAppend.add("append", jsonMembers);
 
         // Make api call.
-        mRestAPI.group_patch(groupId, jsonAppend,
-                new RestAPICallback<RestAPIResult<RestModelGroup>>(activity) {
-
-                    @Override
-                    public void success(RestAPIResult<RestModelGroup> result) {
-
-                        if (callback != null) {
-                            callback.onSuccess(result.getResult());
-                        }
-                    }
-                });
+        mRestAPI.group_patch(groupId, jsonAppend, new RestAPICallback<>(activity,
+                result -> callback.onSuccess(result.getResult()), null));
     }
 
     /**
@@ -274,7 +214,7 @@ public class RestModelGroup extends RestModel {
      */
     @SuppressWarnings("unused")
     public static void updateRecruitingStatusForGroup(Activity activity, String groupId, Boolean recruiting,
-                                                      final RestModelCallback<RestModelGroup> callback) {
+                                                      @NonNull RestResult<RestModelGroup> callback) {
 
         // Create object holding values to replace.
         JsonObject jsonReplace     = new JsonObject();
@@ -284,18 +224,8 @@ public class RestModelGroup extends RestModel {
         jsonReplace.add("replace", jsonRecruiting);
 
         // Make api call.
-        mRestAPI.group_patch(groupId, jsonReplace,
-                new RestAPICallback<RestAPIResult<RestModelGroup>>(activity) {
-
-            @Override
-            public void success(RestAPIResult<RestModelGroup> result) {
-
-                // Now left queue.
-                if (callback != null) {
-                    callback.onSuccess(result.getResult());
-                }
-            }
-        });
+        mRestAPI.group_patch(groupId, jsonReplace, new RestAPICallback<>(activity,
+                result -> callback.onSuccess(result.getResult()), null));
     }
 
     // endregion
@@ -444,14 +374,18 @@ public class RestModelGroup extends RestModel {
      */
     private boolean isRoleOfficer(String role) {
 
-        if ("OWNER".equals(role)) {
-            return true;
-        } else if ("GENERAL_MANAGER".equals(role)) {
-            return true;
-        } else if ("COACH".equals(role)) {
-            return true;
-        } else if ("ASSISTANT_COACH".equals(role)) {
-            return true;
+        if (role != null) {
+
+            switch (role) {
+                case "OWNER":
+                    return true;
+                case "GENERAL_MANAGER":
+                    return true;
+                case "COACH":
+                    return true;
+                case "ASSISTANT_COACH":
+                    return true;
+            }
         }
 
         return false;

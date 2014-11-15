@@ -3,8 +3,8 @@ package com.blitz.app.view_models;
 import android.os.Bundle;
 import android.os.Handler;
 
-import com.blitz.app.rest_models.RestModelCallback;
-import com.blitz.app.rest_models.RestModelCallbacks;
+import com.blitz.app.rest_models.RestResult;
+import com.blitz.app.rest_models.RestResults;
 import com.blitz.app.rest_models.RestModelDraft;
 import com.blitz.app.rest_models.RestModelItem;
 import com.blitz.app.rest_models.RestModelPlayer;
@@ -225,7 +225,7 @@ public class ViewModelDraft extends ViewModel {
             mPickingLocked = true;
 
             RestModelDraft.pickPlayer(null, mDraftModel.getId(), playerId,
-                    new RestModelCallback<RestModelDraft>() {
+                    new RestResult<RestModelDraft>() {
 
                         @Override
                         public void onSuccess(RestModelDraft object) {
@@ -258,7 +258,7 @@ public class ViewModelDraft extends ViewModel {
         mCurrentPlayerChoices = null;
 
         RestModelDraft.fetchSyncedDraft(mActivity, mDraftModel.getId(),
-                new RestModelCallback<RestModelDraft>() {
+                new RestResult<RestModelDraft>() {
 
                     @Override
                     public void onSuccess(RestModelDraft draft) {
@@ -307,7 +307,7 @@ public class ViewModelDraft extends ViewModel {
         List<String> draftUserIds = mDraftModel.getUsers();
 
         // Fetch associated user objects.
-        RestModelUser.getUsers(mActivity, draftUserIds, new RestModelCallbacks<RestModelUser>() {
+        RestModelUser.getUsers(mActivity, draftUserIds, new RestResults<RestModelUser>() {
 
             @Override
             public void onSuccess(final List<RestModelUser> users) {
@@ -436,7 +436,7 @@ public class ViewModelDraft extends ViewModel {
 
                 // Add to draft model.
                 mDraftModel.addChoice(RestModelPlayer
-                        .fetchPlayerFromCometJson(choiceJsonObject));
+                        .fetchPlayer(choiceJsonObject));
             }
 
             // Add to choices.

@@ -2,8 +2,6 @@ package com.blitz.app.rest_models;
 
 import android.app.Activity;
 
-import com.blitz.app.utilities.rest.RestAPICallback;
-import com.blitz.app.utilities.rest.RestAPIResult;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.ArrayList;
@@ -86,20 +84,8 @@ public class RestModelItem extends RestModel {
     @SuppressWarnings("unused")
     public static void fetchItem(Activity activity, String itemId, final CallbackItem callback) {
 
-        RestAPICallback<RestAPIResult<RestModelItem>> operation =
-                new RestAPICallback<RestAPIResult<RestModelItem>>(activity) {
-
-                    @Override
-                    public void success(RestAPIResult<RestModelItem> jsonObject) {
-
-                        // Now left queue.
-                        if (callback != null) {
-                            callback.onSuccess(jsonObject.getResult());
-                        }
-                    }
-                };
-
-        mRestAPI.item_get(itemId, operation);
+        mRestAPI.item_get(itemId, new RestAPICallback<>(activity,
+                result -> callback.onSuccess(result.getResult()), null));
     }
 
     /**
@@ -114,19 +100,8 @@ public class RestModelItem extends RestModel {
     public static void fetchItems(Activity activity, List<String> items, Integer limit,
                                   final CallbackItems callback) {
 
-        RestAPICallback<RestAPIResult<RestModelItem>> operation =
-                new RestAPICallback<RestAPIResult<RestModelItem>>(activity) {
-
-            @Override
-            public void success(RestAPIResult<RestModelItem> jsonObject) {
-
-                if (callback != null) {
-                    callback.onSuccess(jsonObject.getResults());
-                }
-            }
-        };
-
-        mRestAPI.items_get(items, "id", null, limit, operation);
+        mRestAPI.items_get(items, "id", null, limit, new RestAPICallback<>(activity,
+                result -> callback.onSuccess(result.getResults()), null));
     }
 
     /**
@@ -153,26 +128,15 @@ public class RestModelItem extends RestModel {
     @SuppressWarnings("unused")
     public static void fetchItemsOwnedByUser(Activity activity, String userId, final CallbackItems callback) {
 
-        RestAPICallback<RestAPIResult<RestModelItem>> operation =
-                new RestAPICallback<RestAPIResult<RestModelItem>>(activity) {
-
-                    @Override
-                    public void success(RestAPIResult<RestModelItem> jsonObject) {
-
-                        if (callback != null) {
-                            callback.onSuccess(jsonObject.getResults());
-                        }
-                    }
-                };
-
-        List<String> keys = new ArrayList<String>();
+        List<String> keys = new ArrayList<>();
 
         keys.add(userId);
 
         // Only get avatar types.
         String filter = "{ \"item_type\": \"AVATAR\"}";
 
-        mRestAPI.items_get(keys, "user_id", filter, null, operation);
+        mRestAPI.items_get(keys, "user_id", filter, null, new RestAPICallback<>(activity,
+                result -> callback.onSuccess(result.getResults()), null));
     }
 
     // endregion

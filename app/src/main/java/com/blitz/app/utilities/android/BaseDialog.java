@@ -61,7 +61,7 @@ public class BaseDialog {
 
     // List of all active popup windows.
     private static final ConcurrentHashMap<Integer, PopupWindow> mPopupWindows
-            = new ConcurrentHashMap<Integer, PopupWindow>();
+            = new ConcurrentHashMap<>();
 
     // endregion
 
@@ -187,29 +187,25 @@ public class BaseDialog {
 
             try {
 
-                mActivity.findViewById(android.R.id.content).post(new Runnable() {
+                mActivity.findViewById(android.R.id.content).post(() -> {
 
-                    @Override
-                    public void run() {
+                    // If we are jellybean or higher, check if activity is destroyed.
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
 
-                        // If we are jellybean or higher, check if activity is destroyed.
-                        if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
+                        if (mActivity.isDestroyed()) {
 
-                            if (mActivity.isDestroyed()) {
-
-                                return;
-                            }
+                            return;
                         }
+                    }
 
-                        if (getPopupWindow() != null || mActivity.isFinishing()) {
+                    if (getPopupWindow() != null && mActivity != null && !mActivity.isFinishing()) {
 
-                            // Show at top corner of the window.
-                            getPopupWindow().showAtLocation(mActivity.getWindow()
-                                    .getDecorView(), Gravity.NO_GRAVITY, 0, 0);
+                        // Show at top corner of the window.
+                        getPopupWindow().showAtLocation(mActivity.getWindow()
+                                .getDecorView(), Gravity.NO_GRAVITY, 0, 0);
 
-                            // Try to show dialog content.
-                            tryShowDialogContent(showContent);
-                        }
+                        // Try to show dialog content.
+                        tryShowDialogContent(showContent);
                     }
                 });
 
@@ -249,8 +245,7 @@ public class BaseDialog {
                         getPopupWindow().dismiss();
                     }
 
-                } catch (IllegalArgumentException ignored) { }
-                  catch (IllegalStateException    ignored) { }
+                } catch (IllegalArgumentException | IllegalStateException ignored) { }
 
                 // Execute callback.
                 if (mHideListener != null) {
@@ -343,31 +338,27 @@ public class BaseDialog {
         // Perform the animation.
         AnimHelperFade.setAlpha(mDialogContent,
                 visible ? 0f : 1f,
-                visible ? 1f : 0f, ANIMATION_TIME, new Runnable() {
+                visible ? 1f : 0f, ANIMATION_TIME, () -> {
 
-            @Override
-            public void run() {
+                    // Update the state flag.
+                    mDialogContentState = visible ?
+                            DialogContentState.VISIBLE :
+                            DialogContentState.HIDDEN;
 
-                // Update the state flag.
-                mDialogContentState = visible ?
-                        DialogContentState.VISIBLE :
-                        DialogContentState.HIDDEN;
+                    // If hide pending.
+                    if (mHidePending) {
 
-                // If hide pending.
-                if (mHidePending) {
+                        if (visible) {
 
-                    if (visible) {
+                            // Hide it, and leave pending flag on.
+                            toggleDialogContent(false);
 
-                        // Hide it, and leave pending flag on.
-                        toggleDialogContent(false);
+                        } else {
 
-                    } else {
-
-                        hide(mHideListener);
+                            hide(mHideListener);
+                        }
                     }
-                }
-            }
-        });
+                });
     }
 
     /**
@@ -392,18 +383,14 @@ public class BaseDialog {
         }
 
         mDialogContent.setVisibility(View.GONE);
-        mDialogContent.setOnClickListener(new View.OnClickListener() {
+        mDialogContent.setOnClickListener(view -> {
 
-            @Override
-            public void onClick(View view) {
+            // Only hide if dismissible, this is done by
+            // providing a background drawable to popup.
+            if (getPopupWindow() != null &&
+                getPopupWindow().getBackground() != null) {
 
-                // Only hide if dismissible, this is done by
-                // providing a background drawable to popup.
-                if (getPopupWindow() != null &&
-                    getPopupWindow().getBackground() != null) {
-
-                    hide(null);
-                }
+                hide(null);
             }
         });
 

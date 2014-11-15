@@ -1,9 +1,9 @@
 package com.blitz.app.rest_models;
 
 import android.app.Activity;
+import android.support.annotation.NonNull;
 
 import com.blitz.app.utilities.authentication.AuthHelper;
-import com.blitz.app.utilities.rest.RestAPICallback;
 import com.google.gson.JsonObject;
 
 /**
@@ -30,11 +30,12 @@ public class RestModelQueue extends RestModel {
      * @param activity Activity for dialogs.
      * @param callback Callback.
      */
-    public void queueUp(final Activity activity, final Runnable callback) {
+    @SuppressWarnings("unused")
+    public void queueUp(final Activity activity, @NonNull Runnable callback) {
 
         // First sync preferences to get the active draft key.
         AuthHelper.instance().getPreferences(activity, true,
-                new RestModelCallback<RestModelPreferences>() {
+                new RestResult<RestModelPreferences>() {
 
                     @Override
                     public void onSuccess(RestModelPreferences object) {
@@ -42,25 +43,12 @@ public class RestModelQueue extends RestModel {
                         // Set draft key to the active queue.
                         mDraftKey = object.getCurrentActiveQueue();
 
-                        // Define operation, call on queue up when complete.
-                        RestAPICallback<JsonObject> operation = new RestAPICallback<JsonObject>(activity) {
-
-                            @Override
-                            public void success(JsonObject jsonObject) {
-
-                                // Now in queue.
-                                if (callback != null) {
-                                    callback.run();
-                                }
-                            }
-                        };
-
                         // Construct POST body.
                         JsonObject body = new JsonObject();
                         body.addProperty("draft_key", mDraftKey);
 
                         // Make api call.
-                        mRestAPI.queue_post(body, operation);
+                        mRestAPI.queue_post(body, new RestAPICallback<>(activity, result -> callback.run(), null));
                     }
                 });
     }
@@ -72,28 +60,15 @@ public class RestModelQueue extends RestModel {
      * @param activity Activity for dialogs.
      * @param callback Callback.
      */
-    public void leaveQueue(Activity activity, final Runnable callback) {
+    @SuppressWarnings("unused")
+    public void leaveQueue(Activity activity, @NonNull Runnable callback) {
 
         if (mDraftKey == null) {
             return;
         }
 
-        // Operation callbacks.
-        RestAPICallback<JsonObject> operation =
-                new RestAPICallback<JsonObject>(activity) {
-
-            @Override
-            public void success(JsonObject jsonObject) {
-
-                // Now left queue.
-                if (callback != null) {
-                    callback.run();
-                }
-            }
-        };
-
         // Make api call.
-        mRestAPI.queue_delete(mDraftKey, operation);
+        mRestAPI.queue_delete(mDraftKey, new RestAPICallback<>(activity, result -> callback.run(), null));
     }
 
     /**
@@ -103,32 +78,19 @@ public class RestModelQueue extends RestModel {
      * @param activity Activity for dialogs.
      * @param callback Callback.
      */
-    public void confirmQueue(Activity activity, final Runnable callback) {
+    @SuppressWarnings("unused")
+    public void confirmQueue(Activity activity, @NonNull Runnable callback) {
 
         if (mDraftKey == null) {
             return;
         }
-
-        // Operation callbacks.
-        RestAPICallback<JsonObject> operation =
-                new RestAPICallback<JsonObject>(activity) {
-
-            @Override
-            public void success(JsonObject jsonObject) {
-
-                // Now confirmed queue.
-                if (callback != null) {
-                    callback.run();
-                }
-            }
-        };
 
         // Construct PUT body.
         JsonObject body = new JsonObject();
                    body.addProperty("draft_key", mDraftKey);
 
         // Make api call.
-        mRestAPI.queue_put(body, operation);
+        mRestAPI.queue_put(body, new RestAPICallback<>(activity, result -> callback.run(), null));
     }
 
     // endregion

@@ -3,7 +3,7 @@ package com.blitz.app.view_models;
 import android.os.Bundle;
 import android.os.Handler;
 
-import com.blitz.app.rest_models.RestModelCallback;
+import com.blitz.app.rest_models.RestResult;
 import com.blitz.app.rest_models.RestModelItem;
 import com.blitz.app.rest_models.RestModelPreferences;
 import com.blitz.app.rest_models.RestModelQueue;
@@ -13,7 +13,6 @@ import com.blitz.app.utilities.android.BaseActivity;
 import com.blitz.app.utilities.app.AppDataObject;
 import com.blitz.app.utilities.authentication.AuthHelper;
 import com.blitz.app.utilities.blitz.BlitzDelay;
-import com.blitz.app.utilities.comet.CometAPICallback;
 import com.blitz.app.utilities.comet.CometAPIManager;
 import com.google.gson.JsonObject;
 
@@ -149,12 +148,12 @@ public class ViewModelPlay extends ViewModel {
         if (mInQueue) {
 
             // Leave the queue.
-            mModelQueue.leaveQueue(mActivity, null);
+            mModelQueue.leaveQueue(mActivity, () -> { });
 
         } else {
 
             // Enter the queue.
-            mModelQueue.queueUp(mActivity, null);
+            mModelQueue.queueUp(mActivity, () -> { });
         }
 
         showQueueContainer(!mInQueue, true);
@@ -170,7 +169,7 @@ public class ViewModelPlay extends ViewModel {
         final String userId = AuthHelper.instance().getUserId();
 
         // Fetch the current user.
-        RestModelUser.getUser(mActivity, userId, new RestModelCallback<RestModelUser>() {
+        RestModelUser.getUser(mActivity, userId, new RestResult<RestModelUser>() {
 
             @Override
             public void onSuccess(RestModelUser user) {
@@ -211,14 +210,10 @@ public class ViewModelPlay extends ViewModel {
 
         // Fetch associated item model.
         RestModelItem.fetchItem(mActivity, mUserAvatarId,
-                new RestModelItem.CallbackItem() {
+                item -> {
 
-                    @Override
-                    public void onSuccess(RestModelItem item) {
-
-                        if (getCallbacks(Callbacks.class) != null) {
-                            getCallbacks(Callbacks.class).onAvatarUrl(item.getDefaultImgPath());
-                        }
+                    if (getCallbacks(Callbacks.class) != null) {
+                        getCallbacks(Callbacks.class).onAvatarUrl(item.getDefaultImgPath());
                     }
                 });
     }
@@ -280,16 +275,9 @@ public class ViewModelPlay extends ViewModel {
                 .subscribeToChannel(userCometChannel)
 
                         // Set callback action.
-                .addCallback(PlayScreen.class, new CometAPICallback<PlayScreen>() {
-
-                    @Override
-                    public void messageReceived(PlayScreen receivingClass, JsonObject message) {
-
-                        // Handle the action.
+                .addCallback(PlayScreen.class, (PlayScreen receivingClass, JsonObject message) ->
                         ((ViewModelPlay)receivingClass.onFetchViewModel())
-                                .handleDraftAction(receivingClass, message);
-                    }
-                }, "draftUserCallback");
+                                .handleDraftAction(receivingClass, message), "draftUserCallback");
     }
 
     /**
@@ -321,17 +309,13 @@ public class ViewModelPlay extends ViewModel {
         stopQueueTimer(true);
 
         // Start callback on a loop.
-        mSecondsInQueueHandler = BlitzDelay.postDelayed(new Runnable() {
+        mSecondsInQueueHandler = BlitzDelay.postDelayed(() -> {
 
-            @Override
-            public void run() {
+            mSecondsInQueue++;
 
-                mSecondsInQueue++;
-
-                // Queue timer has ticked.
-                getCallbacks(Callbacks.class).onQueueTick(String.format
-                        ("%02d:%02d", mSecondsInQueue / 100, mSecondsInQueue % 100));
-            }
+            // Queue timer has ticked.
+            getCallbacks(Callbacks.class).onQueueTick(String.format
+                    ("%02d:%02d", mSecondsInQueue / 100, mSecondsInQueue % 100));
         }, 1000, true, true);
     }
 
@@ -358,7 +342,7 @@ public class ViewModelPlay extends ViewModel {
     private void setupPreferences() {
 
         AuthHelper.instance().getPreferences(mActivity, false,
-                new RestModelCallback<RestModelPreferences>() {
+                new RestResult<RestModelPreferences>() {
 
                     @Override
                     public void onSuccess(RestModelPreferences object) {

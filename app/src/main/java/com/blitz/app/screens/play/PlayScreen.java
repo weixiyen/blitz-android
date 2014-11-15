@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import com.blitz.app.R;
 import com.blitz.app.dialogs.rules.DialogRules;
+import com.blitz.app.rest_models.RestModel;
 import com.blitz.app.screens.leaderboard.LeaderboardScreen;
 import com.blitz.app.utilities.android.BaseFragment;
 import com.blitz.app.utilities.animations.AnimHelper;
@@ -21,7 +22,6 @@ import com.blitz.app.utilities.app.AppConfig;
 import com.blitz.app.utilities.app.AppDataObject;
 import com.blitz.app.utilities.blitz.BlitzDelay;
 import com.blitz.app.utilities.image.BlitzImageView;
-import com.blitz.app.utilities.rest.RestAPICallback;
 import com.blitz.app.view_models.ViewModel;
 import com.blitz.app.view_models.ViewModelPlay;
 
@@ -385,7 +385,7 @@ public class PlayScreen extends BaseFragment implements ViewModelPlay.Callbacks 
     @OnClick(R.id.main_play_button) @SuppressWarnings("unused")
     public void playButtonClicked() {
 
-        if (RestAPICallback.shouldThrottle()) {
+        if (RestModel.shouldThrottle()) {
             return;
         }
 
