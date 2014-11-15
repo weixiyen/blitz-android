@@ -5,39 +5,29 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="${packageName}.${activityClass}"
-    tools:ignore="ButtonStyle,UnusedAttribute">
+    tools:ignore="ButtonStyle,UnusedAttribute,RelativeOverlap">
 
     <com.blitz.app.utilities.image.BlitzImageViewPlus
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:contentDescription="@string/empty_string"
-        android:scaleX="-1"
         android:src="@drawable/asset_bg_main_dark"
         app:scaleType="topCrop" />
 
     <TextView
-        android:id="@+id/leaderboard_header"
+        android:id="@+id/settings_header"
         style="@style/App.NavBar"
-        android:text="@string/transactions"/>
+        android:layout_height="@dimen/navbar_height_padding_included"
+        android:paddingTop="@dimen/navbar_height_padding"
+        android:text="@string/transactions" />
 
-    <View
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="@dimen/navbar_height"
-        android:background="@color/background_inner" />
+        android:layout_marginTop="@dimen/navbar_height_padding_included">
 
-    <ListView
-        android:id="@+id/transaction_list"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="@dimen/navbar_height"
-        android:cacheColorHint="@color/background_transparent"
-        android:divider="@null"
-        android:dividerHeight="0dp"
-        android:footerDividersEnabled="false"
-        android:gravity="center"
-        android:listSelector="@color/background_transparent"
-        android:visibility="visible"/>
+        <include layout="@layout/transaction_list_view_screen_content"/>
+    </ScrollView>
 
     <ProgressBar
         android:id="@+id/leaderboard_spinner"
@@ -46,5 +36,4 @@
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
         android:visibility="gone"/>
-
 </RelativeLayout>
