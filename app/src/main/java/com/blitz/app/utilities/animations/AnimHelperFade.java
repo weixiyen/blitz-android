@@ -110,6 +110,10 @@ public class AnimHelperFade extends AnimHelper {
         // Don't animate if already set.
         if (view.getVisibility() == visibility && !forceTransition) {
 
+            if (callback != null) {
+                callback.run();
+            }
+
             return;
         }
 
