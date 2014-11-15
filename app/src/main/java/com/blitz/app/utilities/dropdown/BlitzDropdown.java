@@ -170,11 +170,13 @@ public class BlitzDropdown extends ArrayAdapter<String> {
         mContainerView.setOnClickListener(view -> {
 
             if (mListView != null) {
-                mListView.setSelection(mSelectedPosition);
+
+                int visibility = mListViewWrap.getVisibility()
+                        == View.VISIBLE ? View.GONE : View.VISIBLE;
 
                 // Toggle the visibility of the list view.
-                AnimHelperFade.setVisibility(mListViewWrap, mListViewWrap.getVisibility()
-                        == View.VISIBLE ? View.GONE : View.VISIBLE);
+                AnimHelperFade.setVisibility(mListViewWrap, visibility,
+                        () -> mListView.setSelection(mSelectedPosition));
             }
         });
     }
