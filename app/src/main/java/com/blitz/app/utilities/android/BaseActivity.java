@@ -7,6 +7,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.FragmentActivity;
+import android.view.View;
 
 import com.blitz.app.R;
 import com.blitz.app.dialogs.error.DialogErrorSingleton;
@@ -257,6 +258,8 @@ public class BaseActivity extends FragmentActivity {
      */
     @SuppressWarnings("unused")
     public void setContentView(int layoutResID, CustomTransition customTransition) {
+
+        // First set the custom transitions.
         mCustomTransitions = customTransition;
 
         setContentView(layoutResID);
@@ -268,6 +271,7 @@ public class BaseActivity extends FragmentActivity {
      * @param customTransition Custom transition.
      */
     public void setCustomTransitions(CustomTransition customTransition) {
+
         mCustomTransitions = customTransition;
     }
 
@@ -279,6 +283,7 @@ public class BaseActivity extends FragmentActivity {
      */
     @SuppressWarnings("unused")
     public void setAdjustResize(boolean adjustResize) {
+
         mAdjustResize = adjustResize;
     }
 
@@ -290,7 +295,17 @@ public class BaseActivity extends FragmentActivity {
      */
     @SuppressWarnings("unused")
     public boolean getAdjustResize() {
+
         return mAdjustResize;
+    }
+
+    /**
+     * Get root view of activity.
+     */
+    @SuppressWarnings("unused")
+    public View getView() {
+
+        return getWindow().getDecorView().getRootView();
     }
 
     // endregion
