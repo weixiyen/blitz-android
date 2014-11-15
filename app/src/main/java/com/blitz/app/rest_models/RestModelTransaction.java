@@ -6,10 +6,7 @@ import android.support.annotation.NonNull;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.Arrays;
-
-import retrofit.Callback;
-import retrofit.RetrofitError;
-import retrofit.client.Response;
+import java.util.Map;
 
 /**
  * Transactions Deposits/Withdrawals
@@ -36,12 +33,27 @@ public class RestModelTransaction extends RestModel {
 
     }
 
+    public static void postTransactionWithParams(Activity activity, Map<String, String> params,
+                                                 @NonNull RestResult<RestModelTransaction> callback) {
+
+        mRestAPI.transaction_post(params, new RestAPICallback<>(activity,
+                transaction -> callback.onSuccess(transaction.getResult()), null));
+    }
+
     public int getAmount() {
         return mAmount;
     }
 
     public String getType() {
         return mType;
+    }
+
+    public boolean hasErrors() {
+       return "ERROR".equals(mStatus);
+    }
+
+    public String getErrorMessage() {
+        return mErrorMessage;
     }
 
 
