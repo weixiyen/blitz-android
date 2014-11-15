@@ -6,7 +6,6 @@ import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
-import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -32,6 +31,7 @@ public class BlitzScrubber extends LinearLayout {
 
     // Selected scrubber index.
     private Integer mScrubberItemSelected;
+    private Integer mScrubberItemSelectedCurrent;
 
     // Scrubber views.
     private List<TextView> mScrubberItems;
@@ -138,7 +138,7 @@ public class BlitzScrubber extends LinearLayout {
      */
     public void setScrubberItemSelected(int position) {
 
-        // if valid position is provided.
+        // If valid position is provided.
         if (position < mScrubberSize && position >= 0) {
 
             if (mScrubberItemSelected != null) {
@@ -224,7 +224,7 @@ public class BlitzScrubber extends LinearLayout {
     private void setupScrubberItems() {
 
         if (mScrubberItems == null) {
-            mScrubberItems = new ArrayList<TextView>();
+            mScrubberItems = new ArrayList<>();
         }
 
         // Remove older items.
@@ -255,54 +255,55 @@ public class BlitzScrubber extends LinearLayout {
      */
     private void setupTouchEvents() {
 
-        setOnTouchListener(new View.OnTouchListener() {
+        setOnTouchListener((view, motionEvent) -> {
 
-            @Override
-            public boolean onTouch(View view, MotionEvent motionEvent) {
+            if (motionEvent != null) {
 
-                if (motionEvent != null) {
+                try {
 
-                    try {
+                    switch (motionEvent.getAction()) {
 
-                        switch (motionEvent.getAction()) {
+                        case MotionEvent.ACTION_MOVE:
 
-                            case MotionEvent.ACTION_MOVE:
+                            // Show the text view.
+                            setScrubberTextViewVisibility(true);
 
-                                // Show the text view.
-                                setScrubberTextViewVisibility(true);
+                            // Process the scrub event.
+                            processScrubEvent(motionEvent.getX());
 
-                                // Process the scrub event.
-                                processScrubEvent(motionEvent.getX());
+                            // Disable view pager.
+                            if (mViewPager != null) {
+                                mViewPager.requestDisallowInterceptTouchEvent(true);
+                            }
 
-                                // Disable view pager.
-                                if (mViewPager != null) {
-                                    mViewPager.requestDisallowInterceptTouchEvent(true);
-                                }
+                            break;
+                        case MotionEvent.ACTION_UP:
+                        case MotionEvent.ACTION_CANCEL:
 
-                                break;
-                            case MotionEvent.ACTION_UP:
-                            case MotionEvent.ACTION_CANCEL:
+                            // Hide the text view.
+                            setScrubberTextViewVisibility(false);
 
-                                // Hide the text view.
-                                setScrubberTextViewVisibility(false);
+                            // Restore view pager.
+                            if (mViewPager != null) {
+                                mViewPager.requestDisallowInterceptTouchEvent(false);
+                            }
 
-                                // Restore view pager.
-                                if (mViewPager != null) {
-                                    mViewPager.requestDisallowInterceptTouchEvent(false);
-                                }
+                            if (mScrubberItemSelectedCurrent == null ||
+                               !mScrubberItemSelectedCurrent.equals(mScrubberItemSelected)) {
+                                mScrubberItemSelectedCurrent = mScrubberItemSelected;
 
                                 // Emit selection event.
                                 if (mCallbacks != null) {
                                     mCallbacks.onScrubberItemSelected(mScrubberItemSelected);
                                 }
+                            }
 
-                                break;
-                        }
-                    } catch (Exception ignored) { }
-                }
-
-                return true;
+                            break;
+                    }
+                } catch (Exception ignored) { }
             }
+
+            return true;
         });
     }
 

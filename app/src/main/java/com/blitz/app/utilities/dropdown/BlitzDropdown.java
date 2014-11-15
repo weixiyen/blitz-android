@@ -66,12 +66,17 @@ public class BlitzDropdown extends ArrayAdapter<String> {
         view.setTextColor(getContext().getResources().getColor(R.color.text_color_light));
         view.setOnClickListener(clickedView -> {
 
-            if (mContainerView != null) {
-                mContainerView.performClick();
-            }
+            int clickedPosition = (int)clickedView.getTag();
 
-            if (mCallbacks != null) {
-                mCallbacks.onDropdownItemSelected((int)clickedView.getTag());
+            if (clickedPosition != mSelectedPosition) {
+
+                if (mContainerView != null) {
+                    mContainerView.performClick();
+                }
+
+                if (mCallbacks != null) {
+                    mCallbacks.onDropdownItemSelected((int)clickedView.getTag());
+                }
             }
         });
 
