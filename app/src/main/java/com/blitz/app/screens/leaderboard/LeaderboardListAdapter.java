@@ -25,11 +25,11 @@ public class LeaderboardListAdapter extends ArrayAdapter<String> {
     // region Member Variables
     // ============================================================================================================
 
-    private List<String>  mUserNames;
-    private List<Integer> mUserWins;
-    private List<Integer> mUserLosses;
-    private List<Integer> mUserRating;
-    private List<String>  mUserAvatarUrls;
+    private List<String>  mElementNames;
+    private List<String>  mElementAvatarUrls;
+    private List<Integer> mElementWins;
+    private List<Integer> mElementLosses;
+    private List<Integer> mElementRating;
 
     // endregion
 
@@ -40,28 +40,28 @@ public class LeaderboardListAdapter extends ArrayAdapter<String> {
      * Create adapter.
      *
      * @param context Context.
-     * @param userIds User ids.
-     * @param userNames User names.
-     * @param userWins User wins.
-     * @param userLosses User losses.
-     * @param userRating User ratings.
-     * @param userAvatarUrls User avatars.
+     * @param elementIds User ids.
+     * @param elementNames User names.
+     * @param elementWins User wins.
+     * @param elementLosses User losses.
+     * @param elementRating User ratings.
+     * @param elementAvatarUrls User avatars.
      */
     public LeaderboardListAdapter(Context context,
-                                  List<String>  userIds,
-                                  List<String>  userNames,
-                                  List<Integer> userWins,
-                                  List<Integer> userLosses,
-                                  List<Integer> userRating,
-                                  List<String>  userAvatarUrls) {
-        super(context, R.layout.leaderboard_screen, userIds);
+                                  List<String>  elementIds,
+                                  List<String>  elementNames,
+                                  List<Integer> elementWins,
+                                  List<Integer> elementLosses,
+                                  List<Integer> elementRating,
+                                  List<String>  elementAvatarUrls) {
+        super(context, R.layout.leaderboard_screen, elementIds);
 
         // Set data source.
-        mUserNames      = userNames;
-        mUserWins       = userWins;
-        mUserLosses     = userLosses;
-        mUserRating      = userRating;
-        mUserAvatarUrls = userAvatarUrls;
+        mElementNames = elementNames;
+        mElementWins = elementWins;
+        mElementLosses = elementLosses;
+        mElementRating = elementRating;
+        mElementAvatarUrls = elementAvatarUrls;
     }
 
     // endregion
@@ -96,14 +96,17 @@ public class LeaderboardListAdapter extends ArrayAdapter<String> {
 
         // Set the text.
         viewHolder.mLeaderboardIndex.setText(Integer.toString(position + 1));
-        viewHolder.mLeaderboardUserName.setText(mUserNames.get(position));
-        viewHolder.mLeaderboardWins.setText("W" + String.format("%03d", mUserWins.get(position)));
-        viewHolder.mLeaderboardLosses.setText("L" + String.format("%03d", mUserLosses.get(position)));
-        viewHolder.mLeaderboardRating.setText(Integer.toString(mUserRating.get(position)));
+        viewHolder.mLeaderboardUserName.setText(mElementNames.get(position));
+        viewHolder.mLeaderboardWins.setText(mElementWins != null ?
+                "W" + String.format("%03d", mElementWins.get(position)) : null);
+        viewHolder.mLeaderboardLosses.setText(mElementLosses != null ?
+                "L" + String.format("%03d", mElementLosses.get(position)) : null);
+        viewHolder.mLeaderboardRating.setText(Integer.toString(mElementRating.get(position)));
 
         // Set the image.
         viewHolder.mLeaderboardHelmet.setImageBitmap(null);
-        viewHolder.mLeaderboardHelmet.setImageUrl(mUserAvatarUrls.get(position));
+        viewHolder.mLeaderboardHelmet.setImageUrl
+                (mElementAvatarUrls != null ? mElementAvatarUrls.get(position) : null);
 
         return convertView;
     }

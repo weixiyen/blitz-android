@@ -1,5 +1,6 @@
 package com.blitz.app.view_models;
 
+import com.blitz.app.rest_models.RestModelGroup;
 import com.blitz.app.rest_models.RestResults;
 import com.blitz.app.rest_models.RestModelItem;
 import com.blitz.app.rest_models.RestModelUser;
@@ -15,6 +16,18 @@ import java.util.Map;
  * Created by Nate on 9/30/14.
  */
 public class ViewModelLeaderboard extends ViewModel {
+
+    // region Member Variables
+    // ============================================================================================================
+
+    private static final int ELEMENTS_TO_FETCH = 150;
+
+    public final static int TOP_150_PLAYERS = 0;
+    public final static int TOP_150_LEAGUES = 1;
+
+    public Integer mSelected;
+
+    // endregion
 
     // region Constructor
     // ============================================================================================================
@@ -36,31 +49,61 @@ public class ViewModelLeaderboard extends ViewModel {
      * the relevant data for the leaderboard.
      */
     @Override
-    public void initialize() {
+    public void initialize() { }
 
-        final int usersToFetch = 150;
+    // endregion
+
+    // region Public Methods
+    // ============================================================================================================
+
+    /**
+     * Set selected leader board object type.
+     */
+    @SuppressWarnings("unused")
+    public void setSelected(int selected) {
+
+        if (mSelected != null && mSelected == selected) {
+
+            return;
+        }
+
+        mSelected = selected;
+
+        switch (mSelected) {
+
+            case TOP_150_PLAYERS:
+                fetchTopUsers();
+                break;
+            case TOP_150_LEAGUES:
+                fetchTopLeagues();
+                break;
+        }
+    }
+
+    // endregion
+
+    // region Private Methods
+    // ============================================================================================================
+
+    /**
+     * Fetch top users.
+     */
+    private void fetchTopUsers() {
 
         // First grab the user objects.
-        RestModelUser.getTopUsersWithLimit(null, usersToFetch,
+        RestModelUser.getTopUsersWithLimit(null, ELEMENTS_TO_FETCH,
                 new RestResults<RestModelUser>() {
 
                     @Override
                     public void onSuccess(final List<RestModelUser> object) {
 
-                        final List<String> userIds =
-                                new ArrayList<String>(object.size());
-                        final List<String> userNames =
-                                new ArrayList<String>(object.size());
-                        final List<Integer> userWins =
-                                new ArrayList<Integer>(object.size());
-                        final List<Integer> userLosses =
-                                new ArrayList<Integer>(object.size());
-                        final List<Integer> userRatings =
-                                new ArrayList<Integer>(object.size());
-                        final List<String> userAvatarIds =
-                                new ArrayList<String>(object.size());
-                        final List<String> userAvatarUrls =
-                                new ArrayList<String>(object.size());
+                        final List<String> userIds = new ArrayList<>(object.size());
+                        final List<String> userNames = new ArrayList<>(object.size());
+                        final List<Integer> userWins = new ArrayList<>(object.size());
+                        final List<Integer> userLosses = new ArrayList<>(object.size());
+                        final List<Integer> userRatings = new ArrayList<>(object.size());
+                        final List<String> userAvatarIds = new ArrayList<>(object.size());
+                        final List<String> userAvatarUrls = new ArrayList<>(object.size());
 
                         for (RestModelUser user: object) {
 
@@ -70,47 +113,79 @@ public class ViewModelLeaderboard extends ViewModel {
                             userWins.add(user.getWins());
                             userLosses.add(user.getLosses());
                             userRatings.add(user.getRating());
-
-                            // Add unique avatar id's.
-                            //if (!userAvatarIds.contains(user.getAvatarId())) {
-                                 userAvatarIds.add(user.getAvatarId());
-                            //}
+                            userAvatarIds.add(user.getAvatarId());
                         }
 
                         // Then fetch their item info (avatars).
-                        RestModelItem.fetchItems(mActivity, userAvatarIds, usersToFetch,
-                                new RestModelItem.CallbackItems() {
+                        RestModelItem.fetchItems(null, userAvatarIds, ELEMENTS_TO_FETCH,
+                                items -> {
 
-                            @Override
-                            public void onSuccess(List<RestModelItem> items) {
+                                    if (mSelected != TOP_150_PLAYERS) {
 
-                                Map<String, String> itemUrls = new HashMap<String, String>();
-
-                                // For each unique item.
-                                for (RestModelItem item: items) {
-
-                                    // Convert into a map of id to image path.
-                                    if (!itemUrls.containsKey(item.getId())) {
-                                         itemUrls.put(item.getId(), item.getDefaultImgPath());
+                                        return;
                                     }
-                                }
 
-                                // Now or each avatar id.
-                                for (String avatarId : userAvatarIds) {
+                                    Map<String, String> itemUrls = new HashMap<>();
 
-                                    // Populate associated avatar url.
-                                    userAvatarUrls.add(itemUrls.get(avatarId));
-                                }
+                                    // For each unique item.
+                                    for (RestModelItem item: items) {
 
-                                if (getCallbacks(Callbacks.class) != null) {
-                                    getCallbacks(Callbacks.class)
-                                            .onLeadersReceived(userIds, userNames, userWins,
-                                                    userLosses, userRatings, userAvatarUrls);
-                                }
-                            }
-                        });
+                                        // Convert into a map of id to image path.
+                                        if (!itemUrls.containsKey(item.getId())) {
+                                            itemUrls.put(item.getId(), item.getDefaultImgPath());
+                                        }
+                                    }
+
+                                    // Now or each avatar id.
+                                    for (String avatarId : userAvatarIds) {
+
+                                        // Populate associated avatar url.
+                                        userAvatarUrls.add(itemUrls.get(avatarId));
+                                    }
+
+                                    if (getCallbacks(Callbacks.class) != null) {
+                                        getCallbacks(Callbacks.class)
+                                                .onLeadersReceived(userIds, userNames, userWins,
+                                                        userLosses, userRatings, userAvatarUrls);
+                                    }
+                                });
                     }
                 });
+    }
+
+    /**
+     * Fetch the top leagues.
+     */
+    private void fetchTopLeagues() {
+
+        RestModelGroup.getTopGroupsWithLimit(null, ELEMENTS_TO_FETCH, new RestResults<RestModelGroup>() {
+
+            @Override
+            public void onSuccess(List<RestModelGroup> object) {
+
+                if (mSelected != TOP_150_LEAGUES) {
+
+                    return;
+                }
+
+                final List<String>  leagueIds     = new ArrayList<>(object.size());
+                final List<String>  leagueNames   = new ArrayList<>(object.size());
+                final List<Integer> leagueRatings = new ArrayList<>(object.size());
+
+                for (RestModelGroup group: object) {
+
+                    // Pluck relevant data.
+                    leagueIds.add(group.getId());
+                    leagueNames.add(group.getName());
+                    leagueRatings.add(group.getRating());
+                }
+
+                if (getCallbacks(Callbacks.class) != null) {
+                    getCallbacks(Callbacks.class)
+                            .onLeaguesReceived(leagueIds, leagueNames, leagueRatings);
+                }
+            }
+        });
     }
 
     // endregion
@@ -126,6 +201,10 @@ public class ViewModelLeaderboard extends ViewModel {
                                       List<Integer> userLosses,
                                       List<Integer> userRating,
                                       List<String>  userAvatarUrls);
+
+        public void onLeaguesReceived(List<String>  leagueIds,
+                                      List<String>  leagueNames,
+                                      List<Integer> leagueRating);
     }
 
     // endregion
