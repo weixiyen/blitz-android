@@ -16,6 +16,13 @@
         <item name="android:dropDownListViewStyle">@style/App.DropDown</item>
     </style>
 
+    <!-- BrainTree theme. -->
+    <style name="App.Theme.BrainTree" parent="@android:style/Theme.Holo">
+
+        <!-- Ensure fullscreen is enabled. -->
+        <item name="android:windowFullscreen">true</item>
+    </style>
+
     <!-- Drop down spinner style. -->
     <style name="App.DropDown" parent="android:Widget.ListView.DropDown">
         <item name="android:divider">@color/background_inner_divider</item>

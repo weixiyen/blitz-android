@@ -107,6 +107,22 @@
         <activity android:name=".screens.payments.TransactionListViewScreen"
             android:windowSoftInputMode="stateHidden" />
 
+        <!-- DropIn BrainTree Payment UI -->
+        <activity android:name="com.braintreepayments.api.dropin.BraintreePaymentActivity"
+            android:theme="@style/App.Theme.BrainTree" />
+
+        <!-- DropIn BrainTree PayPal UI -->
+        <activity android:name="com.paypal.android.sdk.payments.PayPalProfileSharingActivity" />
+        <activity android:name="com.paypal.android.sdk.payments.ProfileSharingConsentActivity" />
+        <activity android:name="com.paypal.android.sdk.payments.FuturePaymentInfoActivity" />
+        <activity android:name="com.paypal.android.sdk.payments.LoginActivity" />
+        <activity android:name="com.paypal.android.sdk.payments.PayPalTouchActivity"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+
+        <!-- DropIn BrainTree PayPal Service -->
+        <service android:name="com.paypal.android.sdk.payments.PayPalService"
+            android:exported="false" />
+
         <!--
           WakefulBroadcastReceiver that will receive intents from GCM
           services and hand them to the custom IntentService.
