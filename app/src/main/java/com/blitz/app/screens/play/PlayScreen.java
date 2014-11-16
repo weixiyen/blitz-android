@@ -143,15 +143,11 @@ public class PlayScreen extends BaseFragment implements ViewModelPlay.Callbacks 
         if (isVisibleToUser) {
 
             // Fetch on a slight delay.
-            mFragmentVisibleHandler = BlitzDelay.postDelayed(new Runnable() {
+            mFragmentVisibleHandler = BlitzDelay.postDelayed(() -> {
 
-                @Override
-                public void run() {
-
-                    // Try to update helmet if needed.
-                    if (mViewModelPlay != null) {
-                        mViewModelPlay.fetchUserInfo();
-                    }
+                // Try to update helmet if needed.
+                if (mViewModelPlay != null) {
+                    mViewModelPlay.fetchUserInfo();
                 }
             }, AnimHelper.getConfigAnimTimeStandard());
 
@@ -236,15 +232,7 @@ public class PlayScreen extends BaseFragment implements ViewModelPlay.Callbacks 
             // Show the play UI.
             AnimHelperFade.setVisibility(mPlayContainerFooter, View.VISIBLE, animationTime);
             AnimHelperFade.setVisibility(mPlayContainerAction, View.VISIBLE, animationTime,
-                    false, false, new Runnable() {
-
-                        @Override
-                        public void run() {
-
-                            // Play button so shiny.
-                            setupSpinningPlayButton(true);
-                        }
-                    });
+                    false, false, () -> setupSpinningPlayButton(true));
         } else {
 
             // Show the blocked container.
@@ -401,8 +389,7 @@ public class PlayScreen extends BaseFragment implements ViewModelPlay.Callbacks 
     public void addMoneyClicked() {
 
         // Navigate to deposit screen
-        Intent intent = new Intent(getActivity(), DepositScreen.class);
-        startActivity(intent);
+        startActivity(new Intent(getActivity(), DepositScreen.class));
     }
 
     /**
@@ -413,8 +400,7 @@ public class PlayScreen extends BaseFragment implements ViewModelPlay.Callbacks 
     public void rulesClicked() {
 
         // Show the rules dialog fragment.
-        new DialogRules().show(getChildFragmentManager(),
-                DialogRules.class.toString());
+        new DialogRules().show(getChildFragmentManager(), DialogRules.class.toString());
     }
 
     /**
@@ -424,8 +410,7 @@ public class PlayScreen extends BaseFragment implements ViewModelPlay.Callbacks 
     public void leaderboardClicked() {
 
         // Navigate to leaderboard.
-        Intent intent = new Intent(getActivity(), LeaderboardScreen.class);
-        startActivity(intent);
+        startActivity(new Intent(getActivity(), LeaderboardScreen.class));
     }
 
     // endregion
