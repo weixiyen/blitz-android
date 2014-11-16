@@ -154,7 +154,7 @@ public class DialogErrorSingleton {
                 if (mActivity != null) {
 
                     // Show the actual dialog.
-                    mDialogError.show(((FragmentActivity)mActivity).getSupportFragmentManager(), mActivity, type);
+                    mDialogError.show(((FragmentActivity)mActivity).getSupportFragmentManager(), type);
                     mDialogErrorShowing = true;
 
                     if (type == DialogError.Type.Unauthorized) {

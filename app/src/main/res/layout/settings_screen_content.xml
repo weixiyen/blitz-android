@@ -321,7 +321,7 @@
     </RelativeLayout>
 
     <TextView
-        android:id="@+id/settings_logout"
+        android:id="@+id/settings_sign_out"
         style="@style/App.SettingsItem"
         android:text="@string/logout"/>
 

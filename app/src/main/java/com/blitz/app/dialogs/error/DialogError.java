@@ -1,6 +1,5 @@
 package com.blitz.app.dialogs.error;
 
-import android.app.Activity;
 import android.support.v4.app.FragmentManager;
 import android.view.View;
 import android.widget.TextView;
@@ -35,6 +34,12 @@ public class DialogError extends BaseDialogFragment {
 
     // endregion
 
+    // region Overwritten Methods
+    // ============================================================================================================
+
+    /**
+     * Set default error text.
+     */
     @Override
     protected void onViewCreated(View view) {
 
@@ -44,6 +49,8 @@ public class DialogError extends BaseDialogFragment {
         }
     }
 
+    // endregion
+
     // region Public Methods
     // ============================================================================================================
 
@@ -51,19 +58,29 @@ public class DialogError extends BaseDialogFragment {
      * Show method for the error dialog.
      *
      * @param fragmentManager Fragment manager.
-     * @param activity Activity.
      * @param type Error type.
      */
     @SuppressWarnings("unused")
-    public void show(FragmentManager fragmentManager, final Activity activity, Type type) {
+    public void show(FragmentManager fragmentManager, Type type) {
 
         // Fetch the error message.
         mDialogErrorMessageResource = getErrorMessage(type);
 
         if (type == Type.Unauthorized) {
 
-            // Log out the user.
-            signOutUser(activity);
+            // Set dismiss action.
+            addOnDismissAction(new Runnable() {
+
+                @Override
+                public void run() {
+
+                    // Remove after being run.
+                    removeOnDismissAction(this);
+
+                    // Log out the user.
+                    AuthHelper.instance().signOut(getActivity());
+                }
+            });
         }
 
         show(fragmentManager);
@@ -73,35 +90,6 @@ public class DialogError extends BaseDialogFragment {
 
     // region Private Methods
     // ============================================================================================================
-
-    /**
-     * Sign out the user and re-flow the
-     * UI when this dialog is dismissed.
-     *
-     * @param activity Activity.
-     */
-    private void signOutUser(final Activity activity) {
-
-        // Sign out user.
-        AuthHelper.instance().signOut();
-
-        // Set dismiss action.
-        addOnDismissAction(new Runnable() {
-
-            @Override
-            public void run() {
-
-                // Remove after being run.
-                removeOnDismissAction(this);
-
-                if (activity != null) {
-
-                    // Bounce user back to the loading screen.
-                    AuthHelper.instance().tryEnterMainApp(activity);
-                }
-            }
-        });
-    }
 
     /**
      * Get error message for associated type.

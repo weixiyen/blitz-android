@@ -19,7 +19,6 @@ import com.blitz.app.utilities.android.BaseFragment;
 import com.blitz.app.utilities.animations.AnimHelper;
 import com.blitz.app.utilities.animations.AnimHelperCrossFade;
 import com.blitz.app.utilities.animations.AnimHelperFade;
-import com.blitz.app.utilities.app.AppConfig;
 import com.blitz.app.utilities.app.AppDataObject;
 import com.blitz.app.utilities.blitz.BlitzDelay;
 import com.blitz.app.utilities.image.BlitzImageView;
@@ -91,17 +90,6 @@ public class PlayScreen extends BaseFragment implements ViewModelPlay.Callbacks 
 
             // Manually show.
             rulesClicked();
-        }
-
-        if (AppConfig.isProduction()) {
-
-            // Disable cash games for the time being.
-            mCashAvailable.setText(R.string.add_money_coming_soon);
-
-            mPlayAddMoney
-                    .setVisibility(View.GONE);
-            mPlayAddMoneyDivider
-                    .setVisibility(View.GONE);
         }
     }
 
@@ -343,7 +331,7 @@ public class PlayScreen extends BaseFragment implements ViewModelPlay.Callbacks 
     @Override
     public void onCash(int cash) {
 
-        if (mCashAvailable != null && !AppConfig.isProduction()) {
+        if (mCashAvailable != null) {
             mCashAvailable.setText("You have $" + String.format("%.2f", cash / 100.0f));
         }
     }

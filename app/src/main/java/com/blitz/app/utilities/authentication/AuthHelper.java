@@ -236,10 +236,12 @@ public class AuthHelper {
      * Sign out the user.
      */
     @SuppressWarnings("unused")
-    public void signOut() {
+    public void signOut(Activity activity) {
 
         AppData.clear(AppDataObject.userId);
         AppData.clear(AppDataObject.userCookie);
+
+        AuthHelper.instance().tryEnterMainApp(activity);
     }
 
     /**

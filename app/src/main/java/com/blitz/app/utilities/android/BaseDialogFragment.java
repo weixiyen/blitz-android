@@ -29,7 +29,7 @@ public abstract class BaseDialogFragment extends DialogFragment {
     // ============================================================================================================
 
     // Initialize list of dismiss actions.
-    private List<Runnable> mOnDismissActions = new ArrayList<Runnable>();
+    private List<Runnable> mOnDismissActions = new ArrayList<>();
 
     // endregion
 
@@ -108,7 +108,7 @@ public abstract class BaseDialogFragment extends DialogFragment {
     public void dismiss() {
         super.dismiss();
 
-        for (Runnable onDismissAction : new ArrayList<Runnable>(mOnDismissActions)) {
+        for (Runnable onDismissAction : new ArrayList<>(mOnDismissActions)) {
 
             // Run custom dismiss action.
             if (onDismissAction != null) {

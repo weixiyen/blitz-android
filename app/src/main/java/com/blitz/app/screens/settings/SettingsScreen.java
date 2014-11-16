@@ -194,13 +194,10 @@ public class SettingsScreen extends BaseFragment implements ViewModelSettings.Ca
     /**
      * Log out user when clicked.
      */
-    @OnClick(R.id.settings_logout) @SuppressWarnings("unused")
-    public void logoutClicked() {
+    @OnClick(R.id.settings_sign_out) @SuppressWarnings("unused")
+    public void signOutClicked() {
 
-        // Sign out user.
-        AuthHelper.instance().signOut();
-
-        AuthHelper.instance().tryEnterMainApp(this.getActivity());
+        AuthHelper.instance().signOut(this.getActivity());
     }
 
     /**
