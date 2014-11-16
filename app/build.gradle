@@ -97,5 +97,5 @@ dependencies {
     compile 'com.facebook.rebound:rebound:0.3.6'
 
     // Library for payments.
-    compile 'com.braintreepayments.api:braintree:1.+'
+    compile 'com.braintreepayments.api:braintree:1.2.6'
 }
