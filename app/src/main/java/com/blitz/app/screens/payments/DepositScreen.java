@@ -28,10 +28,10 @@ public class DepositScreen extends BaseActivity implements ViewModel.Callbacks {
     private ViewModelDeposit mViewModel;
 
     @InjectViews({
-            R.id.deposit_amt_10,
-            R.id.deposit_amt_25,
-            R.id.deposit_amt_50,
-            R.id.deposit_amt_100
+            R.id.deposit_amount_10,
+            R.id.deposit_amount_25,
+            R.id.deposit_amount_50,
+            R.id.deposit_amount_100
 
     }) List<TextView> mDepositAmounts;
 
@@ -71,16 +71,21 @@ public class DepositScreen extends BaseActivity implements ViewModel.Callbacks {
     }
 
     @OnClick({
-            R.id.deposit_amt_10,
-            R.id.deposit_amt_25,
-            R.id.deposit_amt_50,
-            R.id.deposit_amt_100 }) @SuppressWarnings("unused")
+            R.id.deposit_amount_10,
+            R.id.deposit_amount_25,
+            R.id.deposit_amount_50,
+            R.id.deposit_amount_100}) @SuppressWarnings("unused")
     public void onDepositAmountClicked(TextView depositAmount) {
 
-        ButterKnife.apply(mDepositAmounts, (view, index) ->
-                view.setTextColor(getResources().getColor(R.color.text_color_light)));
+        ButterKnife.apply(mDepositAmounts, (view, index) -> {
 
+            view.setTextColor(getResources().getColor(R.color.text_color_dark));
+            view.setBackgroundResource(R.color.background_transparent);
+        });
+
+        // Set selected button state.
         depositAmount.setTextColor(getResources().getColor(R.color.active_blue));
+        depositAmount.setBackgroundResource(R.drawable.drawable_payments_inner_bg);
 
         // Set currently selected amount text.
         mDepositAmount.setText(depositAmount.getText());

@@ -3,6 +3,7 @@
     <string name="access_code">Access Code</string>
     <string name="access_code_copy">If you have an access code, please enter it now to join the future of Fantasy Football!</string>
     <string name="account">Account</string>
+    <string name="account_balance">Account Balance</string>
     <string name="add_money">Add Money</string>
     <string name="add_money_coming_soon">Cash games coming in Week 9</string>
     <string name="already_have_account">Already have an account? Login</string>
@@ -15,6 +16,14 @@
     <string name="create_or_join_a_league">Create or Join a League</string>
     <string name="create_league">Create League</string>
     <string name="create_league_description">What is your desired league name?</string>
+    <string name="current_balance">Current Balance</string>
+    <string name="deposit">Deposit</string>
+    <string name="deposit_10">$10</string>
+    <string name="deposit_25">$25</string>
+    <string name="deposit_50">$50</string>
+    <string name="deposit_100">$100</string>
+    <string name="deposit_text_1">To play Blitz for real money you need to add funds to your account.</string>
+    <string name="deposit_text_2">Don\'t worry, you can withdraw your money at any time for free.</string>
     <string name="desired_username">Desired Username</string>
     <string name="earnings">earnings</string>
     <string name="enter_access_code">Enter Access Code</string>
@@ -45,6 +54,7 @@
     <string name="members">Members</string>
     <string name="music_and_sounds">Music &amp; Sounds</string>
     <string name="my_account">My Account</string>
+    <string name="new_balance">New Balance</string>
     <string name="ok">OK</string>
     <string name="on_your_way">You\'re on your way to a whole new\nFantasy Football Experience!</string>
     <string name="open_recruiting">Open Recruiting</string>
@@ -69,16 +79,14 @@
     <string name="terms_of_use">Terms of Use</string>
     <string name="terms_of_use_combined">Terms of Use / Privacy Policy</string>
     <string name="top_players">Top 150 Players</string>
+    <string name="transactions">Transactions</string>
+    <string name="transaction_history">Transaction History</string>
     <string name="unlock_more_helmets">Unlock More Helmets</string>
     <string name="username_or_email">Username or Email</string>
     <string name="waiting_for_opponent">Waiting for\nopponent</string>
     <string name="vs">vs</string>
     <string name="wins">wins</string>
     <string name="you_have_cash">You have $0.00</string>
-    <string name="transactions">Transactions</string>
-    <string name="account_balance">Account Balance</string>
-    <string name="transaction_history">Transaction History</string>
-    <string name="deposit">Deposit</string>
 
     <string-array name="weeks_array">
         <item>Week 01</item>
