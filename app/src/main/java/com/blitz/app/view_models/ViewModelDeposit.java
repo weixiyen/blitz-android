@@ -24,6 +24,7 @@ public class ViewModelDeposit extends ViewModel {
 
     boolean mPaymentComplete;
 
+    @SuppressWarnings("unused")
     private String mErrorMessage;
 
     /**
@@ -50,6 +51,7 @@ public class ViewModelDeposit extends ViewModel {
         // TODO: initialize location manager
     }
 
+    @SuppressWarnings("unused")
     public void payDepositWithNonce(String nonce) {
 
         Map<String, String> params = new HashMap<>(3);
@@ -68,6 +70,20 @@ public class ViewModelDeposit extends ViewModel {
                 }
             }
         });
+    }
+
+    public void setDepositAmountInCents(int cents) {
+        mDepositAmountInCents = cents;
+        updateBalances();
+    }
+
+    public String getCurrentAmount() {
+        return mCurrentAmount;
+    }
+
+    @SuppressWarnings("unused")
+    public String getAmountAfterDeposit() {
+        return mAmountAfterDeposit;
     }
 
     private void updateBalances() {

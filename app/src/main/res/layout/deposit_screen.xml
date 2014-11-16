@@ -18,6 +18,43 @@
         style="@style/App.NavBar"
         android:text="Deposit"/>
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="20dp"
+        android:layout_marginLeft="20dp"
+        android:orientation="horizontal"
+        android:layout_alignParentBottom="true"
+        android:layout_centerInParent="true"
+        android:layout_marginBottom="100dp">
+        <TextView
+            android:id="@+id/deposit_amt_10"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text="$10"/>
+        <TextView
+            android:id="@+id/deposit_amt_25"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text="$25"/>
+        <TextView
+            android:id="@+id/deposit_amt_50"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text="$50"/>
+        <TextView
+            android:id="@+id/deposit_amt_100"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text="$100"/>
+
+        </LinearLayout>
+
+
     <TextView
         android:id="@+id/deposit_button"
         style="@style/StatInfoLabel"
