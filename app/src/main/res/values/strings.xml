@@ -22,6 +22,7 @@
     <string name="deposit_25">$25</string>
     <string name="deposit_50">$50</string>
     <string name="deposit_100">$100</string>
+    <string name="deposit_money">Deposit Money</string>
     <string name="deposit_text_1">To play Blitz for real money you need to add funds to your account.</string>
     <string name="deposit_text_2">Don\'t worry, you can withdraw your money at any time for free.</string>
     <string name="desired_username">Desired Username</string>
@@ -84,6 +85,7 @@
     <string name="unlock_more_helmets">Unlock More Helmets</string>
     <string name="username_or_email">Username or Email</string>
     <string name="waiting_for_opponent">Waiting for\nopponent</string>
+    <string name="widthdraw_money">Withdraw Money</string>
     <string name="vs">vs</string>
     <string name="wins">wins</string>
     <string name="you_have_cash">You have $0.00</string>

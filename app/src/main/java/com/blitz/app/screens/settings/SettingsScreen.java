@@ -8,6 +8,7 @@ import android.widget.Switch;
 import android.widget.TextView;
 
 import com.blitz.app.R;
+import com.blitz.app.screens.payments.DepositScreen;
 import com.blitz.app.screens.payments.TransactionListViewScreen;
 import com.blitz.app.screens.web.WebScreen;
 import com.blitz.app.utilities.android.BaseActivity;
@@ -40,11 +41,11 @@ public class SettingsScreen extends BaseFragment implements ViewModelSettings.Ca
     @InjectView(R.id.settings_toggle_sound) Switch mSettingsToggleSound;
 
     // Reset button.
-    @InjectView(R.id.settings_reset)        View mSettingsReset;
+    @InjectView(R.id.settings_reset) View mSettingsReset;
 
-    // Settings email button.
-    @InjectView(R.id.settings_email)   TextView mSettingsEmail;
-    @InjectView(R.id.cash_balance)  TextView mCashBalance;
+    // Misc settings elements.
+    @InjectView(R.id.settings_email) TextView mSettingsEmail;
+    @InjectView(R.id.cash_balance) TextView mCashBalance;
     @InjectView(R.id.settings_version) TextView mSettingsVersion;
 
     // Helmet view pager.
@@ -99,19 +100,37 @@ public class SettingsScreen extends BaseFragment implements ViewModelSettings.Ca
     // ============================================================================================================
 
     /**
+     * Deposit some dollars.
+     */
+    @OnClick(R.id.settings_deposit_money) @SuppressWarnings("unused")
+    public void depositMoneyClicked() {
+
+        startActivity(new Intent(getActivity(), DepositScreen.class));
+    }
+
+    /**
+     * Withdraw some dollars.
+     */
+    @OnClick(R.id.settings_withdraw_money) @SuppressWarnings("unused")
+    public void withdrawMoneyClicked() {
+
+        // TODO
+    }
+
+    /**
      * Navigate to transaction history
      */
-    @OnClick(R.id.transaction_history) @SuppressWarnings("unused")
+    @OnClick(R.id.settings_transaction_history) @SuppressWarnings("unused")
     public void transactionHistoryClicked() {
 
-        Intent intent = new Intent(getActivity(), TransactionListViewScreen.class);
-        startActivity(intent);
+        startActivity(new Intent(getActivity(), TransactionListViewScreen.class));
     }
+
     /**
      * Toggle music setting.
      */
     @OnClick(R.id.settings_toggle_music) @SuppressWarnings("unused")
-    public void toggleMusic() {
+    public void toggleMusicClicked() {
 
         // Update the music disabled flag.
         AppDataObject.settingsMusicDisabled.set(!mSettingsToggleMusic.isChecked());
@@ -218,8 +237,10 @@ public class SettingsScreen extends BaseFragment implements ViewModelSettings.Ca
     /**
      * User's cash balance
      */
+    @Override
     public void onCash(int balance) {
-        if(mCashBalance != null) {
+
+        if (mCashBalance != null) {
             mCashBalance.setText(String.format("Account Balance: $%.2f", balance / 100.0f));
         }
     }

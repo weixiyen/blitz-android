@@ -20,92 +20,46 @@
         android:layout_height="25dp"
         android:background="@drawable/drawable_bg_inner_dark"/>
 
-    <com.blitz.app.utilities.textview.BlitzTextView
+    <TextView
         android:id="@+id/settings_email"
-        style="@style/App.TextView"
-        fontPath="@string/app_font_helvetica_condensed_bold"
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:layout_gravity="center_horizontal"
-        android:background="@drawable/drawable_bg_inner_dark"
-        android:gravity="center|left"
-        android:paddingLeft="25dp"
-        android:paddingRight="25dp"
+        style="@style/App.SettingsItem.Dark"
         android:text="@string/lorum_ipsum_tiny"
-        android:textSize="16sp"/>
+        android:textColor="@color/text_color_light"/>
 
-    <Button
-        style="@style/App.Button"
-        fontPath="@string/app_font_helvetica_condensed_bold"
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:layout_gravity="center_horizontal"
-        android:background="@drawable/drawable_bg_inner_dark"
-        android:gravity="center|left"
-        android:paddingLeft="25dp"
-        android:paddingRight="25dp"
+    <TextView
+        style="@style/App.SettingsItem.Dark"
         android:text="@string/change_password"
-        android:textColor="@color/text_color_dark"
-        android:textSize="16sp"
         android:visibility="gone"/>
 
-    <Button
+    <TextView
         android:id="@+id/cash_balance"
-        style="@style/App.Button"
-        fontPath="@string/app_font_helvetica_condensed_bold"
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:layout_gravity="center_horizontal"
-        android:background="@drawable/drawable_bg_inner_dark"
-        android:gravity="center|left"
-        android:paddingLeft="25dp"
-        android:paddingRight="25dp"
-        android:text="@string/account_balance"
-        android:textColor="@color/text_color_dark"
-        android:textSize="16sp"/>
+        style="@style/App.SettingsItem.Dark"
+        android:text="@string/account_balance"/>
 
+    <TextView
+        android:id="@+id/settings_deposit_money"
+        style="@style/App.SettingsItem.Dark"
+        android:text="@string/deposit_money"/>
 
-    <Button
-        android:id="@+id/transaction_history"
-        style="@style/App.Button"
-        fontPath="@string/app_font_helvetica_condensed_bold"
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:layout_gravity="center_horizontal"
-        android:background="@drawable/drawable_bg_inner_dark"
-        android:gravity="center|left"
-        android:paddingLeft="25dp"
-        android:paddingRight="25dp"
-        android:text="@string/transaction_history"
-        android:textColor="@color/text_color_dark"
-        android:textSize="16sp"/>
+    <TextView
+        android:id="@+id/settings_withdraw_money"
+        style="@style/App.SettingsItem.Dark"
+        android:text="@string/widthdraw_money"/>
 
+    <TextView
+        android:id="@+id/settings_transaction_history"
+        style="@style/App.SettingsItem"
+        android:text="@string/transaction_history"/>
 
     <Switch
         android:id="@+id/settings_toggle_sound"
-        fontPath="@string/app_font_helvetica_condensed_bold"
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:layout_gravity="center_horizontal"
-        android:background="@drawable/drawable_bg_inner"
-        android:paddingLeft="25dp"
-        android:paddingRight="25dp"
-        android:text="@string/push_notifications"
-        android:textColor="@color/text_color_light_grey"
-        android:textSize="16sp"/>
+        style="@style/App.SettingsItem"
+        android:text="@string/push_notifications"/>
 
     <Switch
         android:id="@+id/settings_toggle_music"
-        fontPath="@string/app_font_helvetica_condensed_bold"
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:layout_gravity="center_horizontal"
-        android:background="@drawable/drawable_bg_inner"
-        android:paddingLeft="25dp"
-        android:paddingRight="25dp"
-        android:text="@string/music_and_sounds"
-        android:textColor="@color/text_color_light_grey"
-        android:textSize="16sp"/>
+        style="@style/App.SettingsItem"
+        android:text="@string/music_and_sounds"/>
 
     <LinearLayout
         style="@style/App.Button"
@@ -323,41 +277,19 @@
         </RelativeLayout>
     </LinearLayout>
 
-    <Button
+    <TextView
         android:id="@+id/settings_terms_of_use"
-        style="@style/App.Button"
-        fontPath="@string/app_font_helvetica_condensed_bold"
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:layout_gravity="center_horizontal"
-        android:background="@drawable/drawable_bg_inner"
-        android:gravity="center|left"
-        android:paddingLeft="25dp"
-        android:paddingRight="25dp"
-        android:text="@string/terms_of_use"
-        android:textColor="@color/text_color_light_grey"
-        android:textSize="16sp"/>
+        style="@style/App.SettingsItem"
+        android:text="@string/terms_of_use"/>
 
-    <Button
+    <TextView
         android:id="@+id/settings_privacy_policy"
-        style="@style/App.Button"
-        fontPath="@string/app_font_helvetica_condensed_bold"
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:layout_gravity="center_horizontal"
-        android:background="@drawable/drawable_bg_inner"
-        android:gravity="center|left"
-        android:paddingLeft="25dp"
-        android:paddingRight="25dp"
-        android:text="@string/privacy_policy"
-        android:textColor="@color/text_color_light_grey"
-        android:textSize="16sp"/>
+        style="@style/App.SettingsItem"
+        android:text="@string/privacy_policy"/>
 
     <RelativeLayout
         android:id="@+id/settings_support"
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:background="@drawable/drawable_bg_inner">
+        style="@style/App.SettingsItem">
 
         <TextView
             style="@style/App.TextView"
@@ -365,9 +297,8 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_gravity="center_horizontal"
+            android:layout_marginRight="25dp"
             android:gravity="center"
-            android:paddingLeft="25dp"
-            android:paddingRight="25dp"
             android:text="@string/contact_us"
             android:textColor="@color/text_color_light_grey"
             android:textSize="16sp"/>
@@ -380,41 +311,22 @@
             android:layout_height="match_parent"
             android:layout_alignParentRight="true"
             android:layout_gravity="center_horizontal"
+            android:layout_marginLeft="25dp"
             android:alpha=".75"
             android:gravity="center"
-            android:paddingLeft="25dp"
-            android:paddingRight="25dp"
             android:text="@string/version"
             android:textColor="@color/text_color_light_grey"
             android:textSize="12sp"
             app:clearInitialContent="true"/>
     </RelativeLayout>
 
-    <Button
+    <TextView
         android:id="@+id/settings_logout"
-        style="@style/App.Button"
-        fontPath="@string/app_font_helvetica_condensed_bold"
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:background="@drawable/drawable_bg_inner"
-        android:gravity="center|left"
-        android:paddingLeft="25dp"
-        android:paddingRight="25dp"
-        android:text="@string/logout"
-        android:textColor="@color/text_color_light_grey"
-        android:textSize="16sp"/>
+        style="@style/App.SettingsItem"
+        android:text="@string/logout"/>
 
-    <Button
+    <TextView
         android:id="@+id/settings_reset"
-        style="@style/App.Button"
-        fontPath="@string/app_font_helvetica_condensed_bold"
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:background="@drawable/drawable_bg_inner"
-        android:gravity="center|left"
-        android:paddingLeft="25dp"
-        android:paddingRight="25dp"
-        android:text="@string/reset"
-        android:textColor="@color/text_color_light_grey"
-        android:textSize="16sp"/>
+        style="@style/App.SettingsItem"
+        android:text="@string/reset"/>
 </LinearLayout>
