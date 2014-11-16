@@ -3,8 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:ignore="HardcodedText">
+    android:layout_height="match_parent">
 
     <com.blitz.app.utilities.image.BlitzImageViewPlus
         android:layout_width="match_parent"
@@ -20,50 +19,133 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginRight="20dp"
-        android:layout_marginLeft="20dp"
-        android:orientation="horizontal"
-        android:layout_alignParentBottom="true"
-        android:layout_centerInParent="true"
-        android:layout_marginBottom="100dp">
-        <TextView
-            android:id="@+id/deposit_amt_10"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="wrap_content"
-            android:text="$10"/>
-        <TextView
-            android:id="@+id/deposit_amt_25"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="wrap_content"
-            android:text="$25"/>
-        <TextView
-            android:id="@+id/deposit_amt_50"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="wrap_content"
-            android:text="$50"/>
-        <TextView
-            android:id="@+id/deposit_amt_100"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="wrap_content"
-            android:text="$100"/>
+        android:layout_height="match_parent"
+        android:layout_marginTop="@dimen/navbar_height"
+        android:orientation="vertical">
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/drawable_bg_inner_dark"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <TextView
+                style="@style/App.TextView"
+                fontPath="@string/app_font_helvetica_condensed_bold"
+                android:layout_width="@dimen/screen_width"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="20dp"
+                android:layout_marginTop="20dp"
+                android:paddingLeft="25dp"
+                android:paddingRight="25dp"
+                android:text="To play Blitz for real money you need to add funds to your account."
+                android:textColor="@color/text_color_dark"
+                android:textSize="16sp" />
+
+
+            <TextView
+                style="@style/App.TextView"
+                fontPath="@string/app_font_helvetica_condensed_bold"
+                android:layout_width="@dimen/screen_width"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="20dp"
+                android:paddingLeft="25dp"
+                android:paddingRight="25dp"
+                android:text="Don't worry, you can withdraw your money at any time for free."
+                android:textColor="@color/text_color_dark"
+                android:textSize="16sp" />
+
+            <LinearLayout
+                android:layout_width="@dimen/screen_width"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/deposit_amt_10"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:tag="1000"
+                    android:text="$10"/>
+                <TextView
+                    android:id="@+id/deposit_amt_25"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:tag="2500"
+                    android:text="$25"/>
+                <TextView
+                    android:id="@+id/deposit_amt_50"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:tag="5000"
+                    android:text="$50"/>
+                <TextView
+                    android:id="@+id/deposit_amt_100"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:tag="10000"
+                    android:text="$100"/>
+            </LinearLayout>
         </LinearLayout>
 
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:background="@drawable/drawable_bg_inner">
 
-    <TextView
-        android:id="@+id/deposit_button"
-        style="@style/StatInfoLabel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerInParent="true"
-        android:layout_marginBottom="50dp"
-        android:text="Deposit"/>
+            <com.blitz.app.utilities.image.BlitzImageView
+                android:id="@+id/main_play_stats_avatar"
+                android:layout_width="@dimen/helmet_size"
+                android:layout_height="@dimen/helmet_size"
+                android:layout_marginLeft="5dp"
+                android:layout_marginTop="-5dp"
+                android:contentDescription="@string/empty_string"
+                android:src="@drawable/asset_bg_helmet_sample"
+                app:cacheImageURL="true"
+                app:clearInitialContent="true"/>
+        </RelativeLayout>
 
+        <RelativeLayout
+            android:id="@+id/deposit_button"
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:background="@color/background_inner_dark">
 
+            <LinearLayout
+
+                style="@style/App.Button"
+                android:layout_width="200dp"
+                android:layout_height="45dp"
+                android:layout_centerInParent="true"
+                android:background="@drawable/drawable_button_dark"
+                android:orientation="horizontal"
+                android:paddingBottom="2dp">
+
+                <TextView
+                    style="@style/App.TextView"
+                    fontPath="@string/app_font_helvetica_condensed_bold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/deposit"
+                    android:textColor="@color/selector_text_link"/>
+
+                <TextView
+                    android:id="@+id/deposit_amount"
+                    style="@style/App.TextView"
+                    fontPath="@string/app_font_helvetica_condensed_bold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:text="$100"
+                    android:textColor="@color/selector_text_link"/>
+            </LinearLayout>
+        </RelativeLayout>
+    </LinearLayout>
 </RelativeLayout>

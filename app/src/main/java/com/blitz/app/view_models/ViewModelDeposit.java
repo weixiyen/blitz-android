@@ -88,7 +88,7 @@ public class ViewModelDeposit extends ViewModel {
 
     private void updateBalances() {
         mCurrentAmount = stringWithDollarFormat(mDepositAmountInCents);
-        mAmountAfterDeposit = stringWithDollarFormat(mUser.getCash() + mDepositAmountInCents);
+        mAmountAfterDeposit = "Lots of dollas"; //stringWithDollarFormat(mUser.getCash() + mDepositAmountInCents);
     }
 
     private static String stringWithDollarFormat(int cents) {
