@@ -22,8 +22,6 @@ public class ViewModelDeposit extends ViewModel {
     private String mDepositAmount;
     private String mAmountAfterDeposit;
 
-    private Consumer<ViewModelDeposit> mConsumer;
-
     @SuppressWarnings("unused")
     private String mTransactionToken;
 
@@ -36,13 +34,10 @@ public class ViewModelDeposit extends ViewModel {
      * Creating a new view model requires an activity and a callback.
      *
      * @param activity  Activity is used for any android context actions.\
-     * @param consumer  Consumer that does something with this ViewModel once it has been fully
-     *                  initialized.
      * @param callbacks Callbacks so that the view model can communicate changes.
      */
-    public ViewModelDeposit(BaseActivity activity, Consumer<ViewModelDeposit> consumer, Callbacks callbacks) {
+    public ViewModelDeposit(BaseActivity activity, Callbacks callbacks) {
         super(activity, callbacks);
-        mConsumer = consumer;
     }
 
     @Override
@@ -67,7 +62,10 @@ public class ViewModelDeposit extends ViewModel {
 
     private void onInitialized() {
         if(mUser != null && mTransactionToken != null) { // finished initializing
-            mConsumer.consume(this);
+
+            if (getCallbacks(Callbacks.class) != null) {
+                getCallbacks(Callbacks.class).consume();
+            }
         }
     }
 
@@ -121,14 +119,7 @@ public class ViewModelDeposit extends ViewModel {
         return String.format("$%.02f", cents / 100.0);
     }
 
-    /**
-     * Lambda interface for consuming generic resources.
-      */
-    public static interface Consumer<T> {
-        /**
-         * Do something with the resource when it is ready to be consumed.
-         * @param resource
-         */
-        void consume(T resource);
+    public interface Callbacks extends ViewModel.Callbacks {
+        void consume();
     }
 }

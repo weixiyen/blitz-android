@@ -24,7 +24,7 @@ import butterknife.OnClick;
  *
  * Created by Nate on 11/5/14.
  */
-public class DepositScreen extends BaseActivity implements ViewModel.Callbacks {
+public class DepositScreen extends BaseActivity implements ViewModelDeposit.Callbacks {
 
     private ViewModelDeposit mViewModel;
 
@@ -47,9 +47,7 @@ public class DepositScreen extends BaseActivity implements ViewModel.Callbacks {
     public ViewModel onFetchViewModel() {
 
         if (mViewModel == null) {
-            mViewModel = new ViewModelDeposit(this,
-                    resource ->
-                            mDepositAmounts.get(0).performClick(), null);
+            mViewModel = new ViewModelDeposit(this, this);
         }
 
         return mViewModel;
@@ -107,5 +105,10 @@ public class DepositScreen extends BaseActivity implements ViewModel.Callbacks {
         mNewBalance.setText(mViewModel.getAmountAfterDeposit());
 
         mDepositButton.setClickable(true);
+    }
+
+    @Override
+    public void consume() {
+        mDepositAmounts.get(0).performClick();
     }
 }
