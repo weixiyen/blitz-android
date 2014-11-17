@@ -22,6 +22,9 @@ public class ViewModelDeposit extends ViewModel {
     private String mCurrentAmount;
     private String mAmountAfterDeposit;
 
+    @SuppressWarnings("unused")
+    private String mTransactionToken;
+
     boolean mPaymentComplete;
 
     @SuppressWarnings("unused")
@@ -47,6 +50,9 @@ public class ViewModelDeposit extends ViewModel {
                 updateBalances();
             }
         }, true);
+
+        RestModelTransaction.getTransactionToken(
+                token -> { mTransactionToken = token; }, null);
 
         // TODO: initialize location manager
     }
@@ -81,9 +87,17 @@ public class ViewModelDeposit extends ViewModel {
         return mCurrentAmount;
     }
 
+    public String getTransactionToken() {
+        return mTransactionToken;
+    }
+
     @SuppressWarnings("unused")
     public String getAmountAfterDeposit() {
         return mAmountAfterDeposit;
+    }
+
+    public boolean isReady() {
+        return mUser != null && mTransactionToken != null;
     }
 
     private void updateBalances() {

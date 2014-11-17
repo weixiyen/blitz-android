@@ -156,6 +156,10 @@ interface RestAPI {
     void transaction_post(@FieldMap Map<String,String> params,
                           Callback<RestAPIResult<RestModelTransaction>> callback);
 
+
+    @GET("/transaction_token")
+    void transaction_token_get(Callback<RestAPIResult<RestModelTransaction>> transaction);
+
     @GET("/user/{user_id}")
     void user_get(@Path("user_id") String userId,
         Callback<RestAPIResult<RestModelUser>> callback);
