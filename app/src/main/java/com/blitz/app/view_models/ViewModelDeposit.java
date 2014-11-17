@@ -19,8 +19,10 @@ public class ViewModelDeposit extends ViewModel {
     private RestModelUser mUser;
     private int mDepositAmountInCents;
 
-    private String mCurrentAmount;
+    private String mDepositAmount;
     private String mAmountAfterDeposit;
+
+    private Consumer<ViewModelDeposit> mConsumer;
 
     @SuppressWarnings("unused")
     private String mTransactionToken;
@@ -33,11 +35,14 @@ public class ViewModelDeposit extends ViewModel {
     /**
      * Creating a new view model requires an activity and a callback.
      *
-     * @param activity  Activity is used for any android context actions.
+     * @param activity  Activity is used for any android context actions.\
+     * @param consumer  Consumer that does something with this ViewModel once it has been fully
+     *                  initialized.
      * @param callbacks Callbacks so that the view model can communicate changes.
      */
-    public ViewModelDeposit(BaseActivity activity, Callbacks callbacks) {
+    public ViewModelDeposit(BaseActivity activity, Consumer<ViewModelDeposit> consumer, Callbacks callbacks) {
         super(activity, callbacks);
+        mConsumer = consumer;
     }
 
     @Override
@@ -47,14 +52,23 @@ public class ViewModelDeposit extends ViewModel {
             @Override
             public void onSuccess(RestModelUser object) {
                 mUser = object;
-                updateBalances();
+                onInitialized();
             }
         }, true);
 
         RestModelTransaction.getTransactionToken(
-                token -> { mTransactionToken = token; }, null);
+                token -> {
+                    mTransactionToken = token;
+                    onInitialized();
+                }, null);
 
         // TODO: initialize location manager
+    }
+
+    private void onInitialized() {
+        if(mUser != null && mTransactionToken != null) { // finished initializing
+            mConsumer.consume(this);
+        }
     }
 
     @SuppressWarnings("unused")
@@ -80,32 +94,41 @@ public class ViewModelDeposit extends ViewModel {
 
     public void setDepositAmountInCents(int cents) {
         mDepositAmountInCents = cents;
-        updateBalances();
     }
 
-    public String getCurrentAmount() {
-        return mCurrentAmount;
+    public String getCurrentBalance() {
+        return stringWithDollarFormat(mUser.getCash());
+    }
+
+    @SuppressWarnings("unused")
+    public String getDepositAmount() {
+        return stringWithDollarFormat(mDepositAmountInCents);
     }
 
     public String getTransactionToken() {
         return mTransactionToken;
     }
 
-    @SuppressWarnings("unused")
     public String getAmountAfterDeposit() {
-        return mAmountAfterDeposit;
+        return stringWithDollarFormat(mUser.getCash() + mDepositAmountInCents);
     }
 
     public boolean isReady() {
         return mUser != null && mTransactionToken != null;
     }
 
-    private void updateBalances() {
-        mCurrentAmount = stringWithDollarFormat(mDepositAmountInCents);
-        mAmountAfterDeposit = "Lots of dollas"; //stringWithDollarFormat(mUser.getCash() + mDepositAmountInCents);
-    }
-
     private static String stringWithDollarFormat(int cents) {
         return String.format("$%.02f", cents / 100.0);
+    }
+
+    /**
+     * Lambda interface for consuming generic resources.
+      */
+    public static interface Consumer<T> {
+        /**
+         * Do something with the resource when it is ready to be consumed.
+         * @param resource
+         */
+        void consume(T resource);
     }
 }

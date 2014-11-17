@@ -38,11 +38,18 @@ public class DepositScreen extends BaseActivity implements ViewModel.Callbacks {
 
     @InjectView(R.id.deposit_amount) TextView mDepositAmount;
 
+    @InjectView(R.id.deposit_current_balance) TextView mCurrentBalance;
+    @InjectView(R.id.deposit_new_balance) TextView mNewBalance;
+
+    @InjectView(R.id.deposit_button) View mDepositButton;
+
     @Override
     public ViewModel onFetchViewModel() {
 
         if (mViewModel == null) {
-            mViewModel = new ViewModelDeposit(this, null);
+            mViewModel = new ViewModelDeposit(this,
+                    resource ->
+                            mDepositAmounts.get(0).performClick(), null);
         }
 
         return mViewModel;
@@ -59,9 +66,6 @@ public class DepositScreen extends BaseActivity implements ViewModel.Callbacks {
 
         // Modal presentation style.
         setCustomTransitions(CustomTransition.T_SLIDE_VERTICAL);
-
-        // Select the first deposit amount.
-        mDepositAmounts.get(0).performClick();
     }
 
     @OnClick(R.id.deposit_button) @SuppressWarnings("unused")
@@ -93,9 +97,15 @@ public class DepositScreen extends BaseActivity implements ViewModel.Callbacks {
         // Set currently selected amount text.
         mDepositAmount.setText(depositAmount.getText());
 
-
-        // Set the deposit amount in cents.
+        // Set the ViewModel deposit amount in cents.
         mViewModel.setDepositAmountInCents
                 (Integer.valueOf((String)depositAmount.getTag()));
+
+        // Set current balance text.
+        mCurrentBalance.setText(mViewModel.getCurrentBalance());
+        // Set new balance (after deposit) text.
+        mNewBalance.setText(mViewModel.getAmountAfterDeposit());
+
+        mDepositButton.setClickable(true);
     }
 }

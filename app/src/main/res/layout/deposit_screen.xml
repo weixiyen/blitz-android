@@ -171,12 +171,11 @@
                         fontPath="@string/app_font_helvetica_condensed_bold"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="$9.50"
+                        android:text="Loading..."
                         android:textColor="@color/text_color_light"
                         android:textSize="24sp" />
 
                     <TextView
-                        android:id="@+id/deposit_new_balance"
                         style="@style/App.TextView"
                         fontPath="@string/app_font_helvetica_condensed_bold"
                         android:layout_width="match_parent"
@@ -187,11 +186,11 @@
                         android:textSize="14sp" />
 
                     <TextView
+                        android:id="@+id/deposit_new_balance"
                         style="@style/App.TextView"
                         fontPath="@string/app_font_helvetica_condensed_bold"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="$19.50"
                         android:textColor="@color/text_color_light"
                         android:textSize="24sp" />
                 </LinearLayout>
@@ -206,6 +205,7 @@
             <LinearLayout
                 android:id="@+id/deposit_button"
                 style="@style/App.Button"
+                android:clickable="false"
                 android:layout_width="200dp"
                 android:layout_height="45dp"
                 android:layout_centerInParent="true"
@@ -228,7 +228,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
-                    android:text="@string/deposit_100"
                     android:textColor="@color/selector_text_link"/>
             </LinearLayout>
         </RelativeLayout>
