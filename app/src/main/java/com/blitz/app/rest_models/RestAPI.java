@@ -3,12 +3,10 @@ package com.blitz.app.rest_models;
 import com.google.gson.JsonObject;
 
 import java.util.List;
-import java.util.Map;
 
 import retrofit.Callback;
 import retrofit.http.Body;
 import retrofit.http.DELETE;
-import retrofit.http.FieldMap;
 import retrofit.http.GET;
 import retrofit.http.PATCH;
 import retrofit.http.POST;
@@ -152,9 +150,9 @@ interface RestAPI {
                           @Query("limit") int limit,
                           Callback<RestAPIResult<RestModelTransaction>> transaction);
 
-    @POST("/transaction")
-    void transaction_post(@FieldMap Map<String,String> params,
-                          Callback<RestAPIResult<RestModelTransaction>> callback);
+    @POST("/transactions")
+    void transactions_post(@Body JsonObject body,
+                           Callback<RestAPIResult<RestModelTransaction>> callback);
 
 
     @GET("/transaction_token")

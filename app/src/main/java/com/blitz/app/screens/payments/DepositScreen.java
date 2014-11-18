@@ -6,7 +6,9 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.blitz.app.R;
+import com.blitz.app.dialogs.error.DialogErrorSingleton;
 import com.blitz.app.utilities.android.BaseActivity;
+import com.blitz.app.utilities.logging.LogHelper;
 import com.blitz.app.view_models.ViewModel;
 import com.blitz.app.view_models.ViewModelDeposit;
 import com.braintreepayments.api.dropin.BraintreePaymentActivity;
@@ -25,6 +27,9 @@ import butterknife.OnClick;
  * Created by Nate on 11/5/14.
  */
 public class DepositScreen extends BaseActivity implements ViewModelDeposit.Callbacks {
+
+    // arbitrary code to identity Braintree payment activity
+    private static final int PAYMENT_REQUEST_CODE = 1111;
 
     private ViewModelDeposit mViewModel;
 
@@ -71,7 +76,7 @@ public class DepositScreen extends BaseActivity implements ViewModelDeposit.Call
         if(mViewModel != null && mViewModel.isReady()) {
             Intent intent = new Intent(DepositScreen.this, BraintreePaymentActivity.class);
             intent.putExtra(BraintreePaymentActivity.EXTRA_CLIENT_TOKEN, mViewModel.getTransactionToken());
-            startActivityForResult(intent, 100);
+            startActivityForResult(intent, PAYMENT_REQUEST_CODE);
         }
     }
 
@@ -110,5 +115,37 @@ public class DepositScreen extends BaseActivity implements ViewModelDeposit.Call
     @Override
     public void consume() {
         mDepositAmounts.get(0).performClick();
+    }
+
+    /**
+     * Handle result from the Braintree payments screen.
+     * See https://developers.braintreepayments.com/android+python/sdk/client/drop-in
+     *
+     * TODO: test payment sandbox with special values to trigger error handling
+     * https://developers.braintreepayments.com/android+python/reference/general/testing
+     *
+     */
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == PAYMENT_REQUEST_CODE) {
+            switch (resultCode) {
+                case BraintreePaymentActivity.RESULT_OK:
+                    String paymentMethodNonce = data
+                            .getStringExtra(BraintreePaymentActivity.EXTRA_PAYMENT_METHOD_NONCE);
+                    mViewModel.payDepositWithNonce(paymentMethodNonce);
+                    break;
+                case BraintreePaymentActivity.BRAINTREE_RESULT_DEVELOPER_ERROR:
+                case BraintreePaymentActivity.BRAINTREE_RESULT_SERVER_ERROR:
+                case BraintreePaymentActivity.BRAINTREE_RESULT_SERVER_UNAVAILABLE:
+                    DialogErrorSingleton.showGeneric();
+                    Object error = data.getSerializableExtra(BraintreePaymentActivity.EXTRA_ERROR_MESSAGE);
+                    if (error instanceof Throwable) {
+                        LogHelper.log(((Throwable) error).getMessage());
+                    }
+                    break;
+                default:
+                    break;
+            }
+        }
     }
 }

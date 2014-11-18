@@ -3,10 +3,10 @@ package com.blitz.app.rest_models;
 import android.app.Activity;
 import android.support.annotation.NonNull;
 
+import com.google.gson.JsonObject;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.Arrays;
-import java.util.Map;
 
 import retrofit.Callback;
 import retrofit.RetrofitError;
@@ -46,11 +46,17 @@ public class RestModelTransaction extends RestModel {
 
     }
 
-    public static void postTransactionWithParams(Activity activity, Map<String, String> params,
+    public static void postTransactionWithParams(Activity activity, String type, int amount, String nonce,
                                                  @NonNull RestResult<RestModelTransaction> callback) {
 
-        mRestAPI.transaction_post(params, new RestAPICallback<>(activity,
-                transaction -> callback.onSuccess(transaction.getResult()), null));
+
+        JsonObject params = new JsonObject();
+        params.addProperty("type", type);
+        params.addProperty("amount", amount);
+        params.addProperty("nonce", nonce);
+
+        mRestAPI.transactions_post(params, new RestAPICallback<>(activity,
+                (result) -> callback.onSuccess(result.getResult()), null));
     }
 
     public static void getTransactionToken(@NonNull RestAPICallback.OnSuccess<String> success,
@@ -79,10 +85,14 @@ public class RestModelTransaction extends RestModel {
         return mType;
     }
 
+    // TODO: add explicit error handling for errors returned from the server.
+    @SuppressWarnings("unused")
     public boolean hasErrors() {
        return "ERROR".equals(mStatus);
     }
 
+    // TODO: add explicit error handling for errors returned from the server.
+    @SuppressWarnings("unused")
     public String getErrorMessage() {
         return mErrorMessage;
     }
