@@ -62,7 +62,6 @@ public class ViewModelDeposit extends ViewModel {
         }
     }
 
-    @SuppressWarnings("unused")
     public void payDepositWithNonce(String nonce) {
 
         RestModelTransaction.postTransactionWithParams(mActivity, "DEPOSIT", mDepositAmountInCents,
@@ -71,7 +70,19 @@ public class ViewModelDeposit extends ViewModel {
             public void onSuccess(RestModelTransaction object) {
                 mPaymentComplete = true;
 
+
+                if (getCallbacks(Callbacks.class) != null) {
+                    getCallbacks(Callbacks.class).onDepositSuccess();
+                }
+
                 LogHelper.log("PAY DEPOSIT WITH NONCE PAID");
+            }
+
+            @Override
+            public void onFailure() {
+                if (getCallbacks(Callbacks.class) != null) {
+                    getCallbacks(Callbacks.class).onDepositFailure();
+                }
             }
         });
     }
@@ -107,5 +118,7 @@ public class ViewModelDeposit extends ViewModel {
 
     public interface Callbacks extends ViewModel.Callbacks {
         void consume();
+        void onDepositSuccess();
+        void onDepositFailure();
     }
 }

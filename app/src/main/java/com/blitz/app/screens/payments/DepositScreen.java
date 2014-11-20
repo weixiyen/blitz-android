@@ -7,6 +7,7 @@ import android.widget.TextView;
 
 import com.blitz.app.R;
 import com.blitz.app.dialogs.error.DialogErrorSingleton;
+import com.blitz.app.dialogs.info.DialogInfo;
 import com.blitz.app.utilities.android.BaseActivity;
 import com.blitz.app.utilities.logging.LogHelper;
 import com.blitz.app.view_models.ViewModel;
@@ -32,6 +33,7 @@ public class DepositScreen extends BaseActivity implements ViewModelDeposit.Call
     private static final int PAYMENT_REQUEST_CODE = 1111;
 
     private ViewModelDeposit mViewModel;
+    private DialogInfo mDepositResultDialog;
 
     @InjectViews({
             R.id.deposit_amount_10,
@@ -115,6 +117,30 @@ public class DepositScreen extends BaseActivity implements ViewModelDeposit.Call
     @Override
     public void consume() {
         mDepositAmounts.get(0).performClick();
+    }
+
+    @Override
+    public void onDepositSuccess() {
+
+        showInfoDialog(R.string.deposit_success_dialog_text);
+    }
+
+    @Override
+    public void onDepositFailure() {
+
+        showInfoDialog(R.string.deposit_failure_dialog_text);
+    }
+
+    private void showInfoDialog(int textResourceId) {
+
+        if (mDepositResultDialog != null) {
+            mDepositResultDialog.hide(null);
+        }
+
+        mDepositResultDialog = new DialogInfo(this);
+        mDepositResultDialog.setInfoText(textResourceId);
+        mDepositResultDialog.setDismissible(true);
+        mDepositResultDialog.show(true);
     }
 
     /**

@@ -88,6 +88,8 @@
     <string name="vs">vs</string>
     <string name="wins">wins</string>
     <string name="you_have_cash">You have $0.00</string>
+    <string name="deposit_success_dialog_text">Thank You! The funds are now updated in your account. Happy drafting!</string>
+    <string name="deposit_failure_dialog_text">Sorry, something went wrong with your deposit. Please check the information you entered and try again.</string>
 
     <string-array name="weeks_array">
         <item>Week 01</item>
