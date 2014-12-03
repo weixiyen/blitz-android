@@ -32,6 +32,12 @@ repositories {
 android {
     compileSdkVersion 21
     buildToolsVersion '20.0.0'
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
     defaultConfig {
         applicationId 'com.blitz.app'
         minSdkVersion 15
@@ -39,11 +45,11 @@ android {
         versionCode 11
         versionName '1.2.6'
     }
+
     buildTypes {
         release {
-
-            // Proguard minimization.
             minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
 }
