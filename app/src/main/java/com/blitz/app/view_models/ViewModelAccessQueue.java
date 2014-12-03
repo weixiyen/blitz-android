@@ -1,6 +1,7 @@
 package com.blitz.app.view_models;
 
 import com.blitz.app.rest_models.RestModelAccessQueue;
+import com.blitz.app.rest_models.RestResult;
 import com.blitz.app.utilities.android.BaseActivity;
 import com.blitz.app.utilities.gcm.GcmRegistrationHelper;
 
@@ -8,13 +9,6 @@ import com.blitz.app.utilities.gcm.GcmRegistrationHelper;
  * Created by mrkcsc on 8/9/14. Copyright 2014 Blitz Studios
  */
 public class ViewModelAccessQueue extends ViewModel {
-
-    // region Member Variables
-    // ============================================================================================================
-
-    private RestModelAccessQueue mModelAccessQueue;
-
-    // endregion
 
     // region Constructor
     // ============================================================================================================
@@ -40,24 +34,21 @@ public class ViewModelAccessQueue extends ViewModel {
     @Override
     public void initialize() {
 
-        // Initialize access queue model.
-        mModelAccessQueue = new RestModelAccessQueue();
-
-        // Set the device id and sync.
-        mModelAccessQueue.setDeviceId(GcmRegistrationHelper.getDeviceId(mActivity));
-        mModelAccessQueue.sync(mActivity, new Runnable() {
+        // Sync access queue state.
+        RestModelAccessQueue.sync(mActivity, GcmRegistrationHelper.getDeviceId(mActivity),
+                new RestResult<RestModelAccessQueue>() {
 
             @Override
-            public void run() {
+            public void onSuccess(RestModelAccessQueue object) {
 
                 Callbacks callbacks = getCallbacks(Callbacks.class);
 
                 if (callbacks != null) {
 
                     // Run callbacks.
-                    callbacks.onAccessGranted(mModelAccessQueue.getAccessGranted());
-                    callbacks.onPeopleAhead  (mModelAccessQueue.getPeopleAhead());
-                    callbacks.onPeopleBehind (mModelAccessQueue.getPeopleBehind());
+                    callbacks.onAccessGranted(object.isAccessGranted());
+                    callbacks.onPeopleAhead  (object.getPeopleAhead());
+                    callbacks.onPeopleBehind (object.getPeopleBehind());
                 }
             }
         });

@@ -25,7 +25,7 @@ interface RestAPI {
 
     @GET("/access_queue/{device_id}")
     void access_queue_get(@Path("device_id") String deviceId,
-        Callback<JsonObject> callback);
+        Callback<RestModelAccessQueue> callback);
 
     @GET("/achievements")
     void achievements_get(
@@ -45,7 +45,7 @@ interface RestAPI {
 
     @POST("/code")
     void code_post(@Body JsonObject body,
-        Callback<JsonObject> callback);
+        Callback<RestAPIResult<RestModelCode>> callback);
 
     @GET("/device/{device_id}")
     void device_get(@Path("device_id") String deviceId,

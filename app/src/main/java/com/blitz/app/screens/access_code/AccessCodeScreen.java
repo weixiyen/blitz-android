@@ -7,6 +7,7 @@ import android.widget.EditText;
 import com.blitz.app.R;
 import com.blitz.app.rest_models.RestModel;
 import com.blitz.app.rest_models.RestModelCode;
+import com.blitz.app.rest_models.RestResult;
 import com.blitz.app.utilities.android.BaseActivity;
 import com.blitz.app.utilities.animations.AnimHelperSpringsGroup;
 import com.blitz.app.utilities.animations.AnimHelperSpringsPresets;
@@ -33,9 +34,6 @@ public class AccessCodeScreen extends BaseActivity {
 
     // Page animations.
     private AnimHelperSpringsGroup mAnimations;
-
-    // Model.
-    private RestModelCode mObjectModelCode;
 
     // endregion
 
@@ -70,14 +68,7 @@ public class AccessCodeScreen extends BaseActivity {
                 .addHelperView(AnimHelperSpringsView.from(mPlayer, AnimHelperSpringsPresets.SLIDE_LEFT));
 
         // Open the keyboard when done.
-        mAnimations.setOnCompleteListener(new Runnable() {
-
-            @Override
-            public void run() {
-
-                KeyboardUtility.showKeyboard(AccessCodeScreen.this, mCode);
-            }
-        });
+        mAnimations.setOnCompleteListener(() -> KeyboardUtility.showKeyboard(AccessCodeScreen.this, mCode));
     }
 
     @Override
@@ -106,21 +97,14 @@ public class AccessCodeScreen extends BaseActivity {
             return;
         }
 
-        if (mObjectModelCode == null) {
-            mObjectModelCode = new RestModelCode();
-        }
-
-        // Provide code user inputted.
-        mObjectModelCode.setValue(mCode.getText().toString());
-
-        // Attempt to redeem it.
-        mObjectModelCode.redeemCode(this, new RestModelCode.RedeemCodeCallback() {
+        // Attempt to redeem access code.
+        RestModelCode.redeemCode(this, mCode.getText().toString(), new RestResult<RestModelCode>() {
 
             @Override
-            public void onRedeemCode() {
+            public void onSuccess(RestModelCode object) {
 
                 // If code is valid.
-                if (mObjectModelCode.isValidCode()) {
+                if (object.isValidCode()) {
 
                     // User has now confirmed access state.
                     AppDataObject.hasAccessConfirmed.set(true);

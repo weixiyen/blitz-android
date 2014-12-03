@@ -3,6 +3,10 @@ package com.blitz.app.rest_models;
 import android.app.Activity;
 import android.support.annotation.NonNull;
 
+import com.google.gson.annotations.SerializedName;
+
+import lombok.Getter;
+
 /**
  * Created by mrkcsc on 8/9/14. Copyright 2014 Blitz Studios
  */
@@ -11,53 +15,18 @@ public class RestModelAccessQueue extends RestModel {
     // region Member Variables
     // ============================================================================================================
 
-    private String mDeviceId;
+    @SuppressWarnings("unused") @SerializedName("people_ahead") @Getter
+    private int peopleAhead;
+    @SuppressWarnings("unused") @SerializedName("people_behind") @Getter
+    private int peopleBehind;
 
-    private int mPeopleAhead;
-    private int mPeopleBehind;
-
-    private boolean mAccessGranted;
+    @SuppressWarnings("unused") @SerializedName("access_granted") @Getter
+    private boolean accessGranted;
 
     // endregion
 
     // region Public Methods
     // ============================================================================================================
-
-    /**
-     * Set the device id.
-     *
-     * @param deviceId Device id.
-     */
-    public void setDeviceId(String deviceId) {
-        mDeviceId = deviceId;
-    }
-
-    /**
-     * People ahead in queue.
-     *
-     * @return People ahead.
-     */
-    public int getPeopleAhead() {
-        return mPeopleAhead;
-    }
-
-    /**
-     * People behind in queue.
-     *
-     * @return People behind.
-     */
-    public int getPeopleBehind() {
-        return mPeopleBehind;
-    }
-
-    /**
-     * Get access granted status.
-     *
-     * @return Is access granted.
-     */
-    public boolean getAccessGranted() {
-        return mAccessGranted;
-    }
 
     /**
      * Synchronize with the access queue
@@ -67,28 +36,13 @@ public class RestModelAccessQueue extends RestModel {
      * @param callback Callback runnable.
      */
     @SuppressWarnings("unused")
-    public void sync(Activity activity, @NonNull Runnable callback) {
+    public static void sync(Activity activity,
+                            @NonNull String deviceId,
+                            @NonNull RestResult<RestModelAccessQueue> callback) {
 
         // Make rest call for code.
-        mRestAPI.access_queue_get(mDeviceId, new RestAPICallback<>(activity, result ->  {
-
-            if (result != null) {
-
-                mAccessGranted = result.get("access_granted").getAsBoolean();
-
-                if (result.get("people_ahead") != null) {
-                    mPeopleAhead = result.get("people_ahead").getAsInt();
-                }
-
-                if (result.get("people_behind") != null) {
-                    mPeopleBehind = result.get("people_behind").getAsInt();
-                }
-            }
-
-            // Code redeemed.
-            callback.run();
-
-        }, null));
+        mRestAPI.access_queue_get(deviceId, new RestAPICallback<>(activity,
+                callback::onSuccess, null));
     }
 
     // endregion
