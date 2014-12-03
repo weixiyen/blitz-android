@@ -3,17 +3,16 @@ package com.blitz.app.view_models;
 import android.os.Bundle;
 import android.os.Handler;
 
-import com.blitz.app.rest_models.RestResult;
-import com.blitz.app.rest_models.RestResults;
 import com.blitz.app.rest_models.RestModelDraft;
 import com.blitz.app.rest_models.RestModelItem;
 import com.blitz.app.rest_models.RestModelPlayer;
 import com.blitz.app.rest_models.RestModelUser;
+import com.blitz.app.rest_models.RestResult;
+import com.blitz.app.rest_models.RestResults;
 import com.blitz.app.screens.draft.DraftScreen;
 import com.blitz.app.utilities.android.BaseActivity;
 import com.blitz.app.utilities.authentication.AuthHelper;
 import com.blitz.app.utilities.blitz.BlitzDelay;
-import com.blitz.app.utilities.comet.CometAPICallback;
 import com.blitz.app.utilities.comet.CometAPIManager;
 import com.blitz.app.utilities.date.DateUtils;
 import com.blitz.app.utilities.json.JsonHelper;
@@ -116,16 +115,7 @@ public class ViewModelDraft extends ViewModel {
         if (mWasPaused) {
             mWasPaused = false;
 
-            syncDraft(new Runnable() {
-
-                @Override
-                public void run() {
-
-                    // Make another call to initialize
-                    // once we are synced with server.
-                    initialize();
-                }
-            });
+            syncDraft(this::initialize);
         } else {
 
             // Start comet.
@@ -276,7 +266,7 @@ public class ViewModelDraft extends ViewModel {
                             // If picks are available.
                             if (mDraftModel.getPicks() != null) {
 
-                                List<String> playerIds = new ArrayList<String>();
+                                List<String> playerIds = new ArrayList<>();
 
                                 for (RestModelDraft.Pick pick : mDraftModel.getPicks()) {
 
@@ -312,7 +302,7 @@ public class ViewModelDraft extends ViewModel {
             @Override
             public void onSuccess(final List<RestModelUser> users) {
 
-                final List<String> userAvatarItemIds = new ArrayList<String>();
+                final List<String> userAvatarItemIds = new ArrayList<>();
 
                 // Get list of item ids.
                 for (RestModelUser user : users) {
@@ -321,30 +311,25 @@ public class ViewModelDraft extends ViewModel {
                 }
 
                 // Need to fetch each users item object to complete the sync.
-                RestModelItem.fetchItems(mActivity, userAvatarItemIds,
-                        new RestModelItem.CallbackItems() {
+                RestModelItem.fetchItems(mActivity, userAvatarItemIds, items -> {
 
-                            @Override
-                            public void onSuccess(List<RestModelItem> items) {
+                    Map<String, RestModelItem> itemsIds =
+                            new HashMap<>();
 
-                                Map<String, RestModelItem> itemsIds =
-                                        new HashMap<String, RestModelItem>();
+                    for (RestModelItem item : items) {
 
-                                for (RestModelItem item : items) {
+                        itemsIds.put(item.getId(), item);
+                    }
 
-                                    itemsIds.put(item.getId(), item);
-                                }
+                    for (RestModelUser user : users) {
 
-                                for (RestModelUser user : users) {
-
-                                    // User is synced, may have avatar
-                                    // information as well.
-                                    syncUsersCallback(user,
-                                            itemsIds.containsKey(user.getAvatarId()) ?
-                                                    itemsIds.get(user.getAvatarId()) : null);
-                                }
-                            }
-                        });
+                        // User is synced, may have avatar
+                        // information as well.
+                        syncUsersCallback(user,
+                                itemsIds.containsKey(user.getAvatarId()) ?
+                                        itemsIds.get(user.getAvatarId()) : null);
+                    }
+                });
             }
         });
     }
@@ -378,16 +363,9 @@ public class ViewModelDraft extends ViewModel {
             // Subscribe.
             CometAPIManager
                     .subscribeToChannel("draft:" + mDraftModel.getId())
-                    .addCallback(DraftScreen.class, new CometAPICallback<DraftScreen>() {
-
-                        @Override
-                        public void messageReceived(DraftScreen receivingClass, JsonObject message) {
-
-                            // Handle the action.
+                    .addCallback(DraftScreen.class, (DraftScreen receivingClass, JsonObject message) ->
                             ((ViewModelDraft) receivingClass.onFetchViewModel())
-                                    .cometCallbacksHandleAction(message);
-                        }
-                    }, "draftGameCallback");
+                                    .cometCallbacksHandleAction(message), "draftGameCallback");
     }
 
     /**
@@ -410,46 +388,50 @@ public class ViewModelDraft extends ViewModel {
         // Get the action identifier.
         String action = message.get("action").getAsString();
 
-        if (action.equals("sync_to_server_time")) {
+        switch (action) {
+            case "sync_to_server_time":
 
-            // Fetch last server time.
-            Date lastServerTime = DateUtils.getDateInGMT
-                    (message.get("last_server_time").getAsString());
+                // Fetch last server time.
+                Date lastServerTime = DateUtils.getDateInGMT
+                        (message.get("last_server_time").getAsString());
 
-            mDraftModel.setLastServerTime(lastServerTime);
+                mDraftModel.setLastServerTime(lastServerTime);
 
-        } else if (action.equals("show_choices")) {
+                break;
+            case "show_choices":
 
-            // Get array of choices.
-            JsonArray choicesJson = message.get("choices").getAsJsonArray();
+                // Get array of choices.
+                JsonArray choicesJson = message.get("choices").getAsJsonArray();
 
-            // List of choice ids.
-            List<String> choiceIds = new ArrayList<String>();
+                // List of choice ids.
+                List<String> choiceIds = new ArrayList<>();
 
-            for (JsonElement choiceJson : choicesJson) {
+                for (JsonElement choiceJson : choicesJson) {
 
-                // Fetch as json object.
-                JsonObject choiceJsonObject = choiceJson.getAsJsonObject();
+                    // Fetch as json object.
+                    JsonObject choiceJsonObject = choiceJson.getAsJsonObject();
 
-                // Add to list of choice ids.
-                choiceIds.add(JsonHelper.parseString(choiceJsonObject.get("id")));
+                    // Add to list of choice ids.
+                    choiceIds.add(JsonHelper.parseString(choiceJsonObject.get("id")));
 
-                // Add to draft model.
-                mDraftModel.addChoice(RestModelPlayer
-                        .fetchPlayer(choiceJsonObject));
-            }
+                    // Add to draft model.
+                    mDraftModel.addChoice(RestModelPlayer
+                            .fetchPlayer(choiceJsonObject));
+                }
 
-            // Add to choices.
-            mDraftModel.addChoices(choiceIds);
+                // Add to choices.
+                mDraftModel.addChoices(choiceIds);
 
-        } else if (action.equals("pick_player")) {
+                break;
+            case "pick_player":
 
-            // Create a new pick object.
-            RestModelDraft.Pick pick = new RestModelDraft.Pick(
-                    message.get("player_id").getAsString(),
-                    message.get("user_id").getAsString());
+                // Create a new pick object.
+                RestModelDraft.Pick pick = new RestModelDraft.Pick(
+                        message.get("player_id").getAsString(),
+                        message.get("user_id").getAsString());
 
-            mDraftModel.addPick(pick);
+                mDraftModel.addPick(pick);
+                break;
         }
 
         // Look for last round complete time json.
@@ -480,15 +462,7 @@ public class ViewModelDraft extends ViewModel {
     private void gameLoopStart() {
 
         // Start the loop.
-        mGameLoopHandler = BlitzDelay.postDelayed(new Runnable() {
-
-            @Override
-            public void run() {
-
-                // Sync state.
-                gameLoopExecute();
-            }
-        }, 100, true, true);
+        mGameLoopHandler = BlitzDelay.postDelayed(this::gameLoopExecute, 100, true, true);
     }
 
     /**
@@ -650,9 +624,9 @@ public class ViewModelDraft extends ViewModel {
 
         if (playerChoiceIds != null) {
 
-            List<RestModelPlayer> playerChoices = new ArrayList<RestModelPlayer>();
+            List<RestModelPlayer> playerChoices = new ArrayList<>();
 
-            List<String> playerChoicesToSync = new ArrayList<String>();
+            List<String> playerChoicesToSync = new ArrayList<>();
 
             for (String playerId : playerChoiceIds) {
 
@@ -690,7 +664,7 @@ public class ViewModelDraft extends ViewModel {
             return;
         }
 
-        List<RestModelDraft.Pick> currentPicks = new ArrayList<RestModelDraft.Pick>();
+        List<RestModelDraft.Pick> currentPicks = new ArrayList<>();
 
         // If both round picks have been made.
         if (mDraftModel.getChoices().size() ==
@@ -827,12 +801,12 @@ public class ViewModelDraft extends ViewModel {
             // Update player choices and timestamp.
             mCurrentPlayerChoices= playerChoices;
 
-            List<String> playerIds       = new ArrayList<String>();
-            List<String> playerPhotoUrls = new ArrayList<String>();
-            List<String> playerFullNames = new ArrayList<String>();
-            List<String> playerTeams     = new ArrayList<String>();
-            List<String> playerPositions = new ArrayList<String>();
-            List<String> playerOpponents = new ArrayList<String>();
+            List<String> playerIds       = new ArrayList<>();
+            List<String> playerPhotoUrls = new ArrayList<>();
+            List<String> playerFullNames = new ArrayList<>();
+            List<String> playerTeams     = new ArrayList<>();
+            List<String> playerPositions = new ArrayList<>();
+            List<String> playerOpponents = new ArrayList<>();
 
             for (RestModelPlayer playerChoice : mCurrentPlayerChoices) {
 
@@ -884,15 +858,10 @@ public class ViewModelDraft extends ViewModel {
         if (!mSyncingChoicesLocked) {
              mSyncingChoicesLocked = true;
 
-            RestModelPlayer.fetchPlayers(null, choices,
-                    new RestModelPlayer.CallbackPlayers() {
+            RestModelPlayer.fetchPlayers(null, choices, players -> {
 
-                        @Override
-                        public void onSuccess(List<RestModelPlayer> players) {
-
-                            // TODO: Implement me.
-                        }
-                    });
+                // TODO: Implement me.
+            });
         }
     }
 
@@ -913,8 +882,8 @@ public class ViewModelDraft extends ViewModel {
             // Update current picks.
             mCurrentPicks = currentPicks;
 
-            List<String> playerIds = new ArrayList<String>();
-            List<String> userIds = new ArrayList<String>();
+            List<String> playerIds = new ArrayList<>();
+            List<String> userIds = new ArrayList<>();
 
             // Serialize the player and user ids.
             for (RestModelDraft.Pick pick : currentPicks) {

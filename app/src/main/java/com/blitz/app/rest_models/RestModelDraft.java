@@ -14,6 +14,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import lombok.Getter;
+import lombok.Setter;
+
 /**
  * Created by mrkcsc on 7/27/14. Copyright 2014 Blitz Studios
  */
@@ -24,103 +27,81 @@ public final class RestModelDraft extends RestModel {
     // ============================================================================================================
 
     // More accurate client times.
-    private long mServerTimeOffset;
+    private long serverTimeOffset;
 
     // Map of players, used for live drafts only.
-    private HashMap<String, RestModelPlayer> mPlayerDataMap;
+    private HashMap<String, RestModelPlayer> playerDataMap;
 
-    @SuppressWarnings("unused") @SerializedName("draft_start_buffer")
-    private int mDraftStartBuffer;
-    @SuppressWarnings("unused") @SerializedName("time_per_pick")
-    private int mTimePerPick;
-    @SuppressWarnings("unused") @SerializedName("time_per_postview")
-    private int mTimePerPostview;
-    @SuppressWarnings("unused") @SerializedName("time_per_preview")
-    private int mTimePerPreview;
-    @SuppressWarnings("unused") @SerializedName("rounds")
-    private int mRounds;
+    @SuppressWarnings("unused") @SerializedName("draft_start_buffer") @Getter
+    private int draftStartBuffer;
+    @SuppressWarnings("unused") @SerializedName("time_per_pick") @Getter
+    private int timePerPick;
+    @SuppressWarnings("unused") @SerializedName("time_per_postview") @Getter
+    private int timePerPostview;
+    @SuppressWarnings("unused") @SerializedName("time_per_preview") @Getter
+    private int timePerPreview;
+    @SuppressWarnings("unused") @SerializedName("rounds") @Getter
+    private int rounds;
     @SuppressWarnings("unused") @SerializedName("users_needed")
-    private int mUsersNeeded;
-    @SuppressWarnings("unused") @SerializedName("week")
-    private int mWeek;
-    @SuppressWarnings("unused") @SerializedName("year")
-    private int mYear;
+    private int usersNeeded;
+    @SuppressWarnings("unused") @SerializedName("week") @Getter
+    private int week;
+    @SuppressWarnings("unused") @SerializedName("year") @Getter
+    private int year;
 
-    @SuppressWarnings("unused") @SerializedName("id")
-    private String mId;
+    @SuppressWarnings("unused") @SerializedName("id") @Getter
+    private String id;
     @SuppressWarnings("unused") @SerializedName("chat_id")
-    private String mChatId;
+    private String chatId;
     @SuppressWarnings("unused") @SerializedName("model")
-    private String mModel;
+    private String model;
     @SuppressWarnings("unused") @SerializedName("owner")
-    private String mOwner;
-    @SuppressWarnings("unused") @SerializedName("game_status")
-    private String mGameStatus;
+    private String owner;
+    @SuppressWarnings("unused") @SerializedName("game_status") @Getter
+    private String gameStatus;
     @SuppressWarnings("unused") @SerializedName("type")
-    private String mType;
+    private String type;
     @SuppressWarnings("unused") @SerializedName("status")
-    private String mStatus;
+    private String status;
 
     @SuppressWarnings("unused") @SerializedName("user_confirmed")
-    private boolean mUserConfirmed;
+    private boolean userConfirmed;
 
     @SuppressWarnings("unused") @SerializedName("completed")
-    private Date mCompleted;
+    private Date completed;
     @SuppressWarnings("unused") @SerializedName("created")
-    private Date mCreated;
+    private Date created;
     @SuppressWarnings("unused") @SerializedName("last_server_time")
-    private Date mLastServerTime;
+    private Date lastServerTime;
     @SuppressWarnings("unused") @SerializedName("last_updated")
-    private Date mLastUpdated;
+    private Date lastUpdated;
     @SuppressWarnings("unused") @SerializedName("started")
-    private Date mStarted;
-    @SuppressWarnings("unused") @SerializedName("last_round_complete_time")
-    private Date mLastRoundCompleteTime;
+    private Date started;
+    @SuppressWarnings("unused") @SerializedName("last_round_complete_time") @Getter @Setter
+    private Date lastRoundCompleteTime;
 
     @SuppressWarnings("unused") @SerializedName("points")
-    private Map<String, Float> mPoints;
+    private Map<String, Float> points;
     @SuppressWarnings("unused") @SerializedName("rating_change")
-    private Map<String, Integer> mRatingChange;
-    @SuppressWarnings("unused") @SerializedName("rosters")
-    private Map<String, List<String>> mRosters;
-    @SuppressWarnings("unused") @SerializedName("user_info")
-    private Map<String, RestModelUser> mUserInfo;
+    private Map<String, Integer> ratingChange;
+    @SuppressWarnings("unused") @SerializedName("rosters") @Getter
+    private Map<String, List<String>> rosters;
+    @SuppressWarnings("unused") @SerializedName("user_info") @Getter
+    private Map<String, RestModelUser> userInfo;
 
-    @SuppressWarnings("unused") @SerializedName("positions_required")
-    private List<String> mPositionsRequired;
-    @SuppressWarnings("unused") @SerializedName("users")
-    private List<String> mUsers;
-    @SuppressWarnings("unused") @SerializedName("picks")
-    private List<Pick> mPicks;
-    @SuppressWarnings("unused") @SerializedName("choices")
-    private List<List<String>> mChoices;
+    @SuppressWarnings("unused") @SerializedName("positions_required") @Getter
+    private List<String> positionsRequired;
+    @SuppressWarnings("unused") @SerializedName("users") @Getter
+    private List<String> users;
+    @SuppressWarnings("unused") @SerializedName("picks") @Getter
+    private List<Pick> picks;
+    @SuppressWarnings("unused") @SerializedName("choices") @Getter
+    private List<List<String>> choices;
 
     // endregion
 
     // region Public Methods
     // ============================================================================================================
-
-    /**
-     * Fetch the draft id.
-     *
-     * @return Draft id.
-     */
-    @SuppressWarnings("unused")
-    public String getId() {
-
-        return mId;
-    }
-
-    /**
-     * Fetch draft status.
-     *
-     * @return Draft status.
-     */
-    @SuppressWarnings("unused")
-    public String getStatus() {
-
-        return mGameStatus;
-    }
 
     /**
      * Fetch the team name.
@@ -132,11 +113,11 @@ public final class RestModelDraft extends RestModel {
     @SuppressWarnings("unused")
     public String getTeamName(int team) {
 
-        if (mUsers != null &&
-                mUserInfo != null &&
-                mUserInfo.get(mUsers.get(team)) != null) {
+        if (users != null &&
+                userInfo != null &&
+                userInfo.get(users.get(team)) != null) {
 
-            return mUserInfo.get(mUsers.get(team)).getUsername();
+            return userInfo.get(users.get(team)).getUsername();
         }
 
         return null;
@@ -152,7 +133,7 @@ public final class RestModelDraft extends RestModel {
     @SuppressWarnings("unused")
     public float getTeamPoints(int team) {
 
-        return mPoints.get(mUsers.get(team));
+        return points.get(users.get(team));
     }
 
     /**
@@ -165,18 +146,18 @@ public final class RestModelDraft extends RestModel {
     public boolean getCanUserDraft() {
 
         // Are any player picks available.
-        boolean picksAvailable = mChoices != null &&
-                (mPicks == null || mChoices.size() > (mPicks.size() / 2));
+        boolean picksAvailable = choices != null &&
+                (picks == null || choices.size() > (picks.size() / 2));
 
         if (picksAvailable) {
 
             // If a single pick has already been made.
-            if (mPicks != null && mPicks.size() % 2 == 1) {
+            if (picks != null && picks.size() % 2 == 1) {
 
-                Pick latestPick = mPicks.get(mPicks.size() - 1);
+                Pick latestPick = picks.get(picks.size() - 1);
 
                 // If this user made the latest pick, can't pick again!
-                if (AuthHelper.instance().getUserId().equals(latestPick.mUserId)) {
+                if (AuthHelper.instance().getUserId().equals(latestPick.userId)) {
 
                     return false;
                 }
@@ -194,41 +175,8 @@ public final class RestModelDraft extends RestModel {
     @SuppressWarnings("unused")
     public boolean getIsDraftComplete() {
 
-        return mStatus != null &&
-               mStatus.equals("completed");
-    }
-
-    /**
-     * Fetch total rounds in the draft.
-     *
-     * @return Total rounds.
-     */
-    @SuppressWarnings("unused")
-    public int getRounds() {
-
-        return mRounds;
-    }
-
-    /**
-     * Fetch draft year.
-     *
-     * @return Draft year.
-     */
-    @SuppressWarnings("unused")
-    public int getYear() {
-
-        return mYear;
-    }
-
-    /**
-     * Fetch draft week.
-     *
-     * @return Draft week.
-     */
-    @SuppressWarnings("unused")
-    public int getWeek() {
-
-        return mWeek;
+        return status != null &&
+               status.equals("completed");
     }
 
     /**
@@ -241,49 +189,16 @@ public final class RestModelDraft extends RestModel {
     @SuppressWarnings("unused")
     public int getTeamRatingChange(int team) {
 
-        String key = mUsers.get(team);
+        String key = users.get(team);
 
         final int change;
-        if(mRatingChange.containsKey(key)) {
-            change = mRatingChange.get(key);
+        if(ratingChange.containsKey(key)) {
+            change = ratingChange.get(key);
         } else {
             change = 0;
         }
 
         return change;
-    }
-
-    /**
-     * Time per preview in seconds.
-     *
-     * @return Time in seconds.
-     */
-    @SuppressWarnings("unused")
-    public int getTimePerPreview() {
-
-        return mTimePerPreview;
-    }
-
-    /**
-     * Time per post view in seconds.
-     *
-     * @return Time in seconds.
-     */
-    @SuppressWarnings("unused")
-    public int getTimePerPostview() {
-
-        return mTimePerPostview;
-    }
-
-    /**
-     * Fetch amount of time for a given pick.
-     *
-     * @return Time per pick.
-     */
-    @SuppressWarnings("unused")
-    public int getTimePerPick() {
-
-        return mTimePerPick;
     }
 
     /**
@@ -294,7 +209,7 @@ public final class RestModelDraft extends RestModel {
     @SuppressWarnings("unused")
     public int getSecondsSinceStarted() {
 
-        return getSecondsSince(mStarted);
+        return getSecondsSince(started);
     }
 
     /**
@@ -305,18 +220,7 @@ public final class RestModelDraft extends RestModel {
     @SuppressWarnings("unused")
     public int getSecondsSinceLastRoundCompleteTime() {
 
-        return getSecondsSince(mLastRoundCompleteTime);
-    }
-
-    /**
-     * Buffer time before draft starts.
-     *
-     * @return Buffer time in seconds.
-     */
-    @SuppressWarnings("unused")
-    public int getDraftStartBuffer() {
-
-        return mDraftStartBuffer;
+        return getSecondsSince(lastRoundCompleteTime);
     }
 
     /**
@@ -328,18 +232,7 @@ public final class RestModelDraft extends RestModel {
     public int getCurrentRound() {
 
         // The round is derived based on the picks so far.
-        return (mPicks == null ? 1 : mPicks.size() / 2) + 1;
-    }
-
-    /**
-     * Fetch list of users associated with this draft.
-     *
-     * @return List of user ids.
-     */
-    @SuppressWarnings("unused")
-    public List<String> getUsers() {
-
-        return mUsers;
+        return (picks == null ? 1 : picks.size() / 2) + 1;
     }
 
     /**
@@ -351,18 +244,8 @@ public final class RestModelDraft extends RestModel {
      */
     @SuppressWarnings("unused")
     public List<String> getTeamRoster(int team) {
-        return mRosters.get(mUsers.get(team));
-    }
 
-    /**
-     * Get picks made so far.
-     *
-     * @return List of picks.
-     */
-    @SuppressWarnings("unused")
-    public List<Pick> getPicks() {
-
-        return mPicks;
+        return rosters.get(users.get(team));
     }
 
     /**
@@ -373,34 +256,12 @@ public final class RestModelDraft extends RestModel {
     @SuppressWarnings("unused")
     public List<String> getCurrentPlayerChoices() {
 
-        if (mChoices != null && mChoices.size() > 0) {
+        if (choices != null && choices.size() > 0) {
 
-            return mChoices.get(mChoices.size() - 1);
+            return choices.get(choices.size() - 1);
         }
 
         return null;
-    }
-
-    /**
-     * Get list of all round choices.
-     *
-     * @return List of choices for each round.
-     */
-    @SuppressWarnings("unused")
-    public List<List<String>> getChoices() {
-
-        return mChoices;
-    }
-
-    /**
-     * Fetch positions required for this draft.
-     *
-     * @return Positions required for this draft.
-     */
-    @SuppressWarnings("unused")
-    public List<String> getPositionsRequired() {
-
-        return mPositionsRequired;
     }
 
     /**
@@ -411,55 +272,11 @@ public final class RestModelDraft extends RestModel {
     @SuppressWarnings("unused")
     public Map<String, RestModelPlayer> getPlayerDataMap() {
 
-        if (mPlayerDataMap == null) {
-            mPlayerDataMap = new HashMap<>();
+        if (playerDataMap == null) {
+            playerDataMap = new HashMap<>();
         }
 
-        return mPlayerDataMap;
-    }
-
-    /**
-     * Get player rosters.
-     *
-     * @return List of player rosters.
-     */
-    @SuppressWarnings("unused")
-    public Map<String, List<String>> getRosters() {
-
-        return mRosters;
-    }
-
-    /**
-     * Fetch user info dictionary.
-     *
-     * @return User info dictionary.
-     */
-    @SuppressWarnings("unused")
-    public Map<String, RestModelUser> getUserInfo() {
-
-        return mUserInfo;
-    }
-
-    /**
-     * Get last round complete time.
-     *
-     * @return Last round complete time.
-     */
-    @SuppressWarnings("unused")
-    public Date getLastRoundCompleteTime() {
-
-        return mLastRoundCompleteTime;
-    }
-
-    /**
-     * Set the last round complete time.
-     *
-     * @param lastRoundCompleteTime Last round complete time.
-     */
-    @SuppressWarnings("unused")
-    public void setLastRoundCompleteTime(Date lastRoundCompleteTime) {
-
-        mLastRoundCompleteTime = lastRoundCompleteTime;
+        return playerDataMap;
     }
 
     /**
@@ -471,11 +288,11 @@ public final class RestModelDraft extends RestModel {
     public void setLastServerTime(Date lastServerTime) {
 
         // Update the last server time.
-        mLastServerTime = lastServerTime;
+        this.lastServerTime = lastServerTime;
 
         // Set the offset based on the current client time.
-        mServerTimeOffset = DateUtils
-                .getTimeSinceDateInGMTAsMilliseconds(mLastServerTime);
+        serverTimeOffset = DateUtils
+                .getTimeSinceDateInGMTAsMilliseconds(this.lastServerTime);
     }
 
     /**
@@ -486,12 +303,12 @@ public final class RestModelDraft extends RestModel {
     @SuppressWarnings("unused")
     public void addChoice(RestModelPlayer choice) {
 
-        if (mPlayerDataMap == null) {
-            mPlayerDataMap = new HashMap<>();
+        if (playerDataMap == null) {
+            playerDataMap = new HashMap<>();
         }
 
         // Add to player data map.
-        mPlayerDataMap.put(choice.getId(), choice);
+        playerDataMap.put(choice.getId(), choice);
     }
 
     /**
@@ -502,11 +319,11 @@ public final class RestModelDraft extends RestModel {
     @SuppressWarnings("unused")
     public void addChoices(List<String> choices) {
 
-        if (mChoices == null) {
-            mChoices = new ArrayList<>();
+        if (this.choices == null) {
+            this.choices = new ArrayList<>();
         }
 
-        mChoices.add(choices);
+        this.choices.add(choices);
     }
 
     /**
@@ -517,11 +334,11 @@ public final class RestModelDraft extends RestModel {
     @SuppressWarnings("unused")
     public void addPick(Pick pick) {
 
-        if (mPicks == null) {
-            mPicks = new ArrayList<>();
+        if (picks == null) {
+            picks = new ArrayList<>();
         }
 
-        mPicks.add(pick);
+        picks.add(pick);
     }
 
     // endregion
@@ -703,7 +520,7 @@ public final class RestModelDraft extends RestModel {
     private void setServerTimeOffset(Date clientTimeBeforeRequest, Date clientTimeAfterRequest) {
 
         // Use either the started or last received server time.
-        Date serverTime = mLastServerTime != null ? mLastServerTime : mStarted;
+        Date serverTime = lastServerTime != null ? lastServerTime : started;
 
         if (serverTime != null) {
 
@@ -715,11 +532,11 @@ public final class RestModelDraft extends RestModel {
             long timeAtMidpointOfRequest = clientTimeBeforeRequest.getTime() +
                     halfOfRequestTime;
 
-            mServerTimeOffset = Math.abs(serverTime.getTime() - timeAtMidpointOfRequest);
+            serverTimeOffset = Math.abs(serverTime.getTime() - timeAtMidpointOfRequest);
 
         } else {
 
-            mServerTimeOffset = 0;
+            serverTimeOffset = 0;
         }
     }
 
@@ -734,7 +551,7 @@ public final class RestModelDraft extends RestModel {
     private int getSecondsSince(Date date) {
 
         return (int) Math.floor(Math.abs
-                (DateUtils.getTimeSinceDateInGMTAsMilliseconds(date) - mServerTimeOffset) / 1000.0f);
+                (DateUtils.getTimeSinceDateInGMTAsMilliseconds(date) - serverTimeOffset) / 1000.0f);
     }
 
     // endregion
@@ -747,25 +564,17 @@ public final class RestModelDraft extends RestModel {
      */
     public static class Pick {
 
-        @SuppressWarnings("unused") @SerializedName("player_id")
-        private String mPlayerId;
-        @SuppressWarnings("unused") @SerializedName("user_id")
-        private String mUserId;
+        @SuppressWarnings("unused") @SerializedName("player_id") @Getter
+        private String playerId;
+        @SuppressWarnings("unused") @SerializedName("user_id") @Getter
+        private String userId;
         @SuppressWarnings("unused") @SerializedName("position")
-        private String mPosition;
+        private String position;
         @SuppressWarnings("unused") @SerializedName("timestamp")
-        private String mTimestamp;
+        private String timestamp;
 
         @SuppressWarnings("unused") @SerializedName("round")
-        private int mRound;
-
-        /**
-         * Used for JSON parsing into object.
-         */
-        @SuppressWarnings("unused")
-        public Pick() {
-
-        }
+        private int round;
 
         /**
          * Create a pick object manually with
@@ -777,30 +586,8 @@ public final class RestModelDraft extends RestModel {
         @SuppressWarnings("unused")
         public Pick(String playerId, String userId) {
 
-            mPlayerId = playerId;
-              mUserId =   userId;
-        }
-
-        /**
-         * Get player Id.
-         *
-         * @return Player id.
-         */
-        @SuppressWarnings("unused")
-        public String getPlayerId() {
-
-            return mPlayerId;
-        }
-
-        /**
-         * Get user id associated with pick.
-         *
-         * @return User id.
-         */
-        @SuppressWarnings("unused")
-        public String getUserId() {
-
-            return mUserId;
+            this.playerId = playerId;
+            this.userId = userId;
         }
     }
 

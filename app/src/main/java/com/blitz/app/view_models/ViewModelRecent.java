@@ -152,10 +152,10 @@ public class ViewModelRecent extends ViewModel {
         }
 
         // Initialize list of matches.
-        List<SummaryDraft> matches = new ArrayList<SummaryDraft>();
+        List<SummaryDraft> matches = new ArrayList<>();
 
         // Initialize list of associated avatar ids.
-        List<String> userAvatarIds = new ArrayList<String>();
+        List<String> userAvatarIds = new ArrayList<>();
 
         for (RestModelDraft draft : drafts) {
 
@@ -196,41 +196,36 @@ public class ViewModelRecent extends ViewModel {
     private void processUserItems(final List<SummaryDraft> matches,
                                   final List<String> userAvatarIds, final int week) {
 
-        RestModelItem.fetchItems(mActivity, userAvatarIds, userAvatarIds.size(),
-                new RestModelItem.CallbackItems() {
+        RestModelItem.fetchItems(mActivity, userAvatarIds, userAvatarIds.size(), items -> {
 
-                    @Override
-                    public void onSuccess(List<RestModelItem> items) {
+            // If the week has since changed,
+            // ignore these results.
+            if (mWeekSelected != week) {
 
-                        // If the week has since changed,
-                        // ignore these results.
-                        if (mWeekSelected != week) {
+                return;
+            }
 
-                            return;
-                        }
+            Map<String, String> itemUrls = new HashMap<>();
 
-                        Map<String, String> itemUrls = new HashMap<String, String>();
+            // For each unique item.
+            for (RestModelItem item : items) {
 
-                        // For each unique item.
-                        for (RestModelItem item : items) {
+                // Convert into a map of id to image path.
+                if (!itemUrls.containsKey(item.getId())) {
+                    itemUrls.put(item.getId(), item.getDefaultImgPath());
+                }
+            }
 
-                            // Convert into a map of id to image path.
-                            if (!itemUrls.containsKey(item.getId())) {
-                                itemUrls.put(item.getId(), item.getDefaultImgPath());
-                            }
-                        }
+            // Populate avatar urls.
+            for (SummaryDraft draft : matches) {
 
-                        // Populate avatar urls.
-                        for (SummaryDraft draft : matches) {
+                draft.setAvatarUrls(itemUrls);
+            }
 
-                            draft.setAvatarUrls(itemUrls);
-                        }
-
-                        if (mCallbacks != null) {
-                            mCallbacks.onDrafts(matches, new SummaryDrafts(matches), week);
-                        }
-                    }
-                });
+            if (mCallbacks != null) {
+                mCallbacks.onDrafts(matches, new SummaryDrafts(matches), week);
+            }
+        });
     }
 
     // endregion
@@ -396,7 +391,7 @@ public class ViewModelRecent extends ViewModel {
 
         public String getStatus() {
 
-            return mDraft.getStatus().replace('_', ' ');
+            return mDraft.getGameStatus().replace('_', ' ');
         }
 
         public int getWeek() {

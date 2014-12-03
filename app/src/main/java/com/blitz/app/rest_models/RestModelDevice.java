@@ -8,6 +8,8 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.Date;
 
+import lombok.Getter;
+
 /**
  * Created by mrkcsc on 8/10/14. Copyright 2014 Blitz Studios
  */
@@ -16,40 +18,24 @@ public class RestModelDevice extends RestModel {
     // region Member Variables
     // ============================================================================================================
 
-    @SuppressWarnings("unused") @SerializedName("id")
-    private String mId;
+    @SuppressWarnings("unused") @SerializedName("id") @Getter
+    private String id;
     @SuppressWarnings("unused") @SerializedName("device_id")
-    private String mDeviceId;
+    private String deviceId;
     @SuppressWarnings("unused") @SerializedName("device_type")
-    private String mDeviceType;
+    private String deviceType;
     @SuppressWarnings("unused") @SerializedName("user_id")
-    private String mUserId;
+    private String userId;
     @SuppressWarnings("unused") @SerializedName("push_notification_token")
-    private String mPushNotificationToken;
+    private String pushNotificationToken;
 
     @SuppressWarnings("unused") @SerializedName("push_notification_enabled")
-    private boolean mPushNotificationsEnabled;
+    private boolean pushNotificationsEnabled;
 
     @SuppressWarnings("unused") @SerializedName("created")
-    private Date mCreated;
+    private Date created;
     @SuppressWarnings("unused") @SerializedName("last_updated")
-    private Date mLastUpdated;
-
-    // endregion
-
-    // region Public Methods
-    // ============================================================================================================
-
-    /**
-     * Fetch the id of the device model.  This is NOT
-     * the same as the device id associated to a device.
-     *
-     * @return Id.
-     */
-    public String getId() {
-
-        return mId;
-    }
+    private Date lastUpdated;
 
     // endregion
 
@@ -65,11 +51,9 @@ public class RestModelDevice extends RestModel {
      * @param callback Completion callback.
      */
     @SuppressWarnings("unused")
-    public static void get(Activity activity, String deviceId, @NonNull CallbackDevice callback) {
-
-        if (deviceId == null) {
-            return;
-        }
+    public static void get(Activity activity,
+                           @NonNull String deviceId,
+                           @NonNull RestResult<RestModelDevice> callback) {
 
         // Make rest call for code.
         restAPI.device_get(deviceId, new RestAPICallback<>(activity,
@@ -86,11 +70,9 @@ public class RestModelDevice extends RestModel {
      * @param callback Completion callback.
      */
     @SuppressWarnings("unused")
-    public static void create(Activity activity, String deviceId, @NonNull CallbackDevice callback) {
-
-        if (deviceId == null) {
-            return;
-        }
+    public static void create(Activity activity,
+                              @NonNull String deviceId,
+                              @NonNull RestResult<RestModelDevice> callback) {
 
         // Create post body.
         JsonObject body = new JsonObject();
@@ -121,7 +103,7 @@ public class RestModelDevice extends RestModel {
                               String id,
                               String userId,
                               Boolean pushNotificationsEnabled,
-                              String pushNotificationToken, @NonNull CallbackDevice callback) {
+                              String pushNotificationToken, @NonNull RestResult<RestModelDevice> callback) {
 
         if (id == null) {
             return;
@@ -157,19 +139,6 @@ public class RestModelDevice extends RestModel {
         // Make rest call for code.
         restAPI.device_patch(id, body, new RestAPICallback<>(activity,
                 result -> callback.onSuccess(result.getResult()), null));
-    }
-
-    // endregion
-
-    // region Callbacks
-    // ============================================================================================================
-
-    /**
-     * Single device returned.
-     */
-    public interface CallbackDevice {
-
-        public void onSuccess(RestModelDevice device);
     }
 
     // endregion
