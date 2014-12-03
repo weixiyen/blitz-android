@@ -151,8 +151,7 @@ interface RestAPI {
 
     @POST("/transactions")
     void transactions_post(@Body JsonObject body,
-                           Callback<RestAPIResult<RestModelTransaction>> callback);
-
+        RestAPICallback<RestAPIResult<RestModelTransaction>> callback);
 
     @GET("/transaction_token")
     void transaction_token_get(
