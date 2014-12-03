@@ -315,11 +315,11 @@ class RestAPICallback<T> implements Callback<T> {
     // region Interfaces
     // ============================================================================================================
 
-    public interface OnSuccess<T> {
+    interface OnSuccess<T> {
         public void onSuccess(T result);
     }
 
-    public interface OnFailure {
+    interface OnFailure {
         public void onFailure(Response response, boolean networkError);
     }
 
