@@ -24,7 +24,7 @@ import java.util.Map;
  *
  * Created by spiff on 9/10/14.
  */
-public class PlayerListAdapter extends ArrayAdapter {
+public class PlayerListAdapter extends ArrayAdapter<RestModelPlayer> {
 
     public static final String STAT_NAMES = "PlayerListAdapter.statNames";
     public static final String STAT_VALUES = "PlayerListAdapter.statValues";
@@ -124,9 +124,9 @@ public class PlayerListAdapter extends ArrayAdapter {
                 int i = -1;
                 for (RestModelStats stat : stats) {
                     i += 1;
-                    statNames[i] = stat.getStatName();
+                    statNames[i] = stat.getTypeName();
                     statValues[i] = stat.getValue();
-                    statPoints[i] = stat.getPoints();
+                    statPoints[i] = stat.getTypePoints();
                 }
                 intent.putExtra(StatsBreakdownScreen.FIRST_NAME, player.getFirstName());
                 intent.putExtra(StatsBreakdownScreen.LAST_NAME, player.getLastName());
@@ -175,7 +175,7 @@ public class PlayerListAdapter extends ArrayAdapter {
         if (stats.containsKey(playerId)) {
 
             for (RestModelStats stat: stats.get(playerId)) {
-                scoreTotal += stat.getPoints();
+                scoreTotal += stat.getTypePoints();
             }
         }
 

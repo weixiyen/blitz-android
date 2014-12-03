@@ -220,7 +220,7 @@ public class ViewModelMatchup extends ViewModel {
             if (playerStats.containsKey(player.getId())) {
 
                 for (RestModelStats stat: playerStats.get(player.getId())) {
-                    total += stat.getPoints();
+                    total += stat.getTypePoints();
                 }
             }
         }

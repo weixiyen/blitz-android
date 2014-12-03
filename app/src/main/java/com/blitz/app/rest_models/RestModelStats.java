@@ -8,20 +8,27 @@ import com.google.gson.annotations.SerializedName;
 import java.util.ArrayList;
 import java.util.List;
 
+import lombok.Getter;
+
 /**
  * Created by Nate on 9/18/14. Copyright 2014 Blitz Studios
  */
+@SuppressWarnings("UnusedDeclaration")
 public class RestModelStats extends RestModel {
 
     // region Member Variables
     // ============================================================================================================
-    @SuppressWarnings("unused") @SerializedName("player_id") private String mPlayerId;
-    @SuppressWarnings("unused") @SerializedName("type")      private String mType;
-    @SuppressWarnings("unused") @SerializedName("value")     private float mValue;
-    @SuppressWarnings("unused") @SerializedName("week")      private int mWeek;
-    @SuppressWarnings("unused") @SerializedName("year")      private int mYear;
 
+    // Constant for unsupported stat.
     private static final String UNSUPPORTED = "Unsupported";
+
+    @SerializedName("player_id") @Getter private String playerId;
+    @SerializedName("type")      @Getter private String type;
+
+    @SerializedName("value")     @Getter private float value;
+
+    @SerializedName("week")      @Getter private int week;
+    @SerializedName("year")      @Getter private int year;
 
     // endregion
 
@@ -36,7 +43,7 @@ public class RestModelStats extends RestModel {
 
         List<String> keys = new ArrayList<>(playerIds.size());
 
-        for (String id: playerIds) {
+        for (String id : playerIds) {
 
             keys.add(id + "_" + year + "_" + week);
         }
@@ -51,15 +58,9 @@ public class RestModelStats extends RestModel {
     // ============================================================================================================
 
     @SuppressWarnings("unused")
-    public String getPlayerId() {
+    public String getTypeName() {
 
-        return mPlayerId;
-    }
-
-    @SuppressWarnings("unused")
-    public String getStatName() {
-
-        switch (mType) {
+        switch (type) {
             case "PASS_YDS":
                 return "Pass Yards";
             case "PASS_TDS":
@@ -114,86 +115,80 @@ public class RestModelStats extends RestModel {
     }
 
     @SuppressWarnings("unused")
-    public float getPoints() {
+    public float getTypePoints() {
 
-        switch (mType) {
+        switch (type) {
             case "PASS_YDS":
-                return 0.04f * mValue;
+                return 0.04f * value;
             case "PASS_TDS":
-                return 6.0f * mValue;
+                return 6.0f * value;
             case "PASS_INT":
-                return -2.0f * mValue;
+                return -2.0f * value;
             case "PASS_2PM":
-                return 2.0f * mValue;
+                return 2.0f * value;
             case "RUSH_YDS":
-                return 0.10f * mValue;
+                return 0.10f * value;
             case "RUSH_TDS":
-                return 6.0f * mValue;
+                return 6.0f * value;
             case "RUSH_2PM":
-                return 2.0f * mValue;
+                return 2.0f * value;
             case "REC_CAT":
-                return 1.0f * mValue;
+                return 1.0f * value;
             case "REC_YDS":
-                return 0.10f * mValue;
+                return 0.10f * value;
             case "REC_TDS":
-                return 6.0f * mValue;
+                return 6.0f * value;
             case "REC_2PM":
-                return 2.0f * mValue;
+                return 2.0f * value;
             case "FG_MADE":
-                return 3.0f * mValue;
+                return 3.0f * value;
             case "FG_MISS":
-                return -1.0f * mValue;
+                return -1.0f * value;
             case "XP_MADE":
-                return 1.0f * mValue;
+                return 1.0f * value;
             case "XP_MISS":
-                return -1.0f * mValue;
+                return -1.0f * value;
             case "FUMBLES_LOST":
-                return -2.0f * mValue;
+                return -2.0f * value;
             case "DEF_SACK":
-                return 1.0f * mValue;
+                return 1.0f * value;
             case "DEF_INT":
-                return 2.0f * mValue;
+                return 2.0f * value;
             case "DEF_FUM_REC":
-                return 2.0f * mValue;
+                return 2.0f * value;
             case "DEF_TDS":
-                return 6.0f * mValue;
+                return 6.0f * value;
             case "DEF_SAFE":
-                return 2.0f * mValue;
+                return 2.0f * value;
             case "KICK_RET_TDS":
-                return 6.0f * mValue;
+                return 6.0f * value;
             case "PUNT_RET_TDS":
-                return 6.0f * mValue;
+                return 6.0f * value;
             case "DEF_PTS_ALLOW":
-                if (mValue >= 35.0f) {
+                if (value >= 35.0f) {
                     return -4.0f;
-                } else if (mValue >= 28.0f) {
+                } else if (value >= 28.0f) {
                     return -1.0f;
-                } else if (mValue >= 21.0f) {
+                } else if (value >= 21.0f) {
                     return 0.f;
-                } else if (mValue >= 14.0f) {
+                } else if (value >= 14.0f) {
                     return 1.0f;
-                } else if (mValue >= 7.0f) {
+                } else if (value >= 7.0f) {
                     return 4.0f;
-                } else if (mValue >= 1.0f) {
+                } else if (value >= 1.0f) {
                     return 7.0f;
                 } else {
                     return 10.f;
                 }
             default:
-                return 0.f * mValue;
+                return 0.f * value;
         }
-    }
-
-    @SuppressWarnings("unused")
-    public float getValue() {
-
-        return mValue;
     }
 
     @SuppressWarnings("unused")
     public boolean isSupported() {
 
-        return !UNSUPPORTED.equals(getStatName());
+        return !UNSUPPORTED.equals(getTypeName());
     }
 
     // endregion
