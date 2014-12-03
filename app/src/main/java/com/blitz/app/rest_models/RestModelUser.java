@@ -153,7 +153,7 @@ public class RestModelUser extends RestModel {
         }, null);
 
         // Authentication operation.
-        operation.setIsAuthentication(true);
+        operation.setAuthenticating(true);
 
         // Construct POST body.
         JsonObject body = new JsonObject();
@@ -190,7 +190,7 @@ public class RestModelUser extends RestModel {
         }, null);
 
         // Authentication operation.
-        operation.setIsAuthentication(true);
+        operation.setAuthenticating(true);
 
         // Construct POST body.
         JsonObject body = new JsonObject();

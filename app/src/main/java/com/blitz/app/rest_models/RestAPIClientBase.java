@@ -6,7 +6,6 @@ import com.blitz.app.utilities.ssl.SSLHelper;
 import com.squareup.okhttp.OkHttpClient;
 
 import javax.net.ssl.HostnameVerifier;
-import javax.net.ssl.SSLSession;
 import javax.net.ssl.SSLSocketFactory;
 
 import retrofit.RestAdapter;
@@ -111,14 +110,7 @@ class RestAPIClientBase {
     private void setupHostnameVerifier(OkHttpClient okHttpClient) {
 
         // Create a verifier that does not verify host-names.
-        HostnameVerifier hostnameVerifier = new HostnameVerifier() {
-
-            @Override
-            public boolean verify(String hostname, SSLSession session) {
-
-                return true;
-            }
-        };
+        HostnameVerifier hostnameVerifier = (hostname, session) -> true;
 
         // Assign it to the client.
         okHttpClient.setHostnameVerifier(hostnameVerifier);

@@ -7,6 +7,7 @@ import com.blitz.app.dialogs.error.DialogErrorSingleton;
 import com.blitz.app.dialogs.loading.DialogLoading;
 import com.blitz.app.utilities.blitz.BlitzDelay;
 
+import lombok.Setter;
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
@@ -20,24 +21,26 @@ class RestAPICallback<T> implements Callback<T> {
     // ============================================================================================================
 
     // Parent activity.
-    private Activity mActivity;
+    private Activity activity;
 
     // Loading dialog.
-    private DialogLoading mDialogLoading;
+    private DialogLoading dialogLoading;
 
     // Throttle rest calls.
-    private static boolean mOperationThrottle;
-    private static Handler mOperationThrottleHandler;
+    private static boolean operationThrottle;
+    private static Handler operationThrottleHandler;
 
     // Is this an authentication call.
-    private boolean mIsAuthentication;
+    @Setter
+    private boolean authenticating;
 
     // Should log out on failure.
-    private boolean mLogoutOnFailure;
+    @Setter
+    private boolean logoutOnFailure;
 
     // Callback interfaces.
-    private OnSuccess<T> mOnSuccess;
-    private OnFailure mOnFailure;
+    private OnSuccess<T> onSuccess;
+    private OnFailure onFailure;
 
     // endregion
 
@@ -65,11 +68,11 @@ class RestAPICallback<T> implements Callback<T> {
     public RestAPICallback(Activity activity, OnSuccess<T> onSuccess, OnFailure onFailure) {
 
         // Set the activity.
-        mActivity = activity;
+        this.activity = activity;
 
         // Set callbacks.
-        mOnSuccess = onSuccess;
-        mOnFailure = onFailure;
+        this.onSuccess = onSuccess;
+        this.onFailure = onFailure;
 
         // Setup operation throttling.
         setOperationThrottle();
@@ -100,7 +103,7 @@ class RestAPICallback<T> implements Callback<T> {
     @Override
     public void success(T jsonObject, Response response) {
 
-        if (mIsAuthentication) {
+        if (authenticating) {
 
             // Set user cookies if they exist.
             RestAPIClient.trySetUserCookies(response);
@@ -144,29 +147,7 @@ class RestAPICallback<T> implements Callback<T> {
     public static boolean shouldThrottle() {
 
         // In progress if loading or error dialog is on screen.
-        return mOperationThrottle;
-    }
-
-    /**
-     * Is this an authentication callback.
-     *
-     * @param isAuthentication Is this an authentication call.
-     */
-    @SuppressWarnings("unused")
-    public void setIsAuthentication(boolean isAuthentication) {
-
-        mIsAuthentication = isAuthentication;
-    }
-
-    /**
-     * Should we logout on general failure.
-     *
-     * @param logoutOnFailure Logout on failure.
-     */
-    @SuppressWarnings("unused")
-    public void setLogoutOnFailure(boolean logoutOnFailure) {
-
-        mLogoutOnFailure = logoutOnFailure;
+        return operationThrottle;
     }
 
     // endregion
@@ -197,10 +178,10 @@ class RestAPICallback<T> implements Callback<T> {
                     // Generic failure.
                     failure(null, false);
 
-                } else if (mOnSuccess != null) {
+                } else if (onSuccess != null) {
 
                     // Trigger interface.
-                    mOnSuccess.onSuccess(jsonObject);
+                    onSuccess.onSuccess(jsonObject);
                 }
 
             } else {
@@ -229,9 +210,9 @@ class RestAPICallback<T> implements Callback<T> {
      */
     private void failure(Response response, boolean networkError) {
 
-        if (mActivity != null) {
+        if (activity != null) {
 
-            if (mLogoutOnFailure) {
+            if (logoutOnFailure) {
 
                 // Not authorized bro.
                 DialogErrorSingleton.showUnauthorized();
@@ -268,8 +249,8 @@ class RestAPICallback<T> implements Callback<T> {
             }
         }
 
-        if (mOnFailure != null) {
-            mOnFailure.onFailure(response, networkError);
+        if (onFailure != null) {
+            onFailure.onFailure(response, networkError);
         }
     }
 
@@ -281,19 +262,19 @@ class RestAPICallback<T> implements Callback<T> {
 
         // If this operation does not have an activity (and thus no
         // dialog support) there is no need to throttle it.
-        if (mActivity == null) {
+        if (activity == null) {
 
             return;
         }
 
         // Enable the throttle.
-        mOperationThrottle = true;
+        operationThrottle = true;
 
         // Clear any existing callbacks.
-        BlitzDelay.remove(mOperationThrottleHandler);
+        BlitzDelay.remove(operationThrottleHandler);
 
         // Init throttle callback.
-        mOperationThrottleHandler = BlitzDelay.postDelayed(() -> mOperationThrottle = false, 250);
+        operationThrottleHandler = BlitzDelay.postDelayed(() -> operationThrottle = false, 250);
     }
 
     /**
@@ -303,11 +284,11 @@ class RestAPICallback<T> implements Callback<T> {
      */
     private DialogLoading getLoadingDialog() {
 
-        if (mDialogLoading == null && mActivity != null) {
-            mDialogLoading = new DialogLoading(mActivity);
+        if (dialogLoading == null && activity != null) {
+            dialogLoading = new DialogLoading(activity);
         }
 
-        return mDialogLoading;
+        return dialogLoading;
     }
 
     // endregion

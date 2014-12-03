@@ -35,21 +35,17 @@ class RestAPIClient extends RestAPIClientBase {
         RestAdapter.Builder builder = super.getRestBuilder();
 
         // Intercept requests and add user cookie if available.
-        builder.setRequestInterceptor(new retrofit.RequestInterceptor() {
+        builder.setRequestInterceptor(request -> {
 
-            @Override
-            public void intercept(RequestFacade request) {
+            // Attempt to fetch the app data cookie.
+            String cookie = AppDataObject.userCookie.get();
 
-                // Attempt to fetch the app data cookie.
-                String cookie = AppDataObject.userCookie.get();
+            if (cookie != null) {
 
-                if (cookie != null) {
-
-                    // Add to header if exists.
-                    request.addHeader("Cookie", cookie);
-                }
+                // Add to header if exists.
+                request.addHeader("Cookie", cookie);
             }
-        });
+    });
 
         // Return builder.
         return builder;

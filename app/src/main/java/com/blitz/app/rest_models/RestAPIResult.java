@@ -8,24 +8,25 @@ import java.util.List;
 /**
  * Created by Nate on 9/18/14. Copyright 2014 Blitz Studios
  */
+@SuppressWarnings("unused")
 class RestAPIResult<T> {
 
     // region Member Variables
     // ============================================================================================================
 
     // Results field.
-    @SerializedName("results") @SuppressWarnings("unused")
+    @SerializedName("results")
     private List<T> mResults;
 
     // Result field (only one result).
-    @SerializedName("result") @SuppressWarnings("unused")
+    @SerializedName("result")
     private T mResult;
 
     // Result can also be keyed as a user.
-    @SerializedName("user") @SuppressWarnings("unused")
+    @SerializedName("user")
     private T mResultUser;
 
-    @SerializedName("errors") @SuppressWarnings("unused")
+    @SerializedName("errors")
     private JsonObject mErrors;
 
     // endregion
