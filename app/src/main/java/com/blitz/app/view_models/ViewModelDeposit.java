@@ -44,11 +44,13 @@ public class ViewModelDeposit extends ViewModel {
             }
         }, true);
 
-        RestModelTransaction.getTransactionToken(
-                token -> {
-                    mTransactionToken = token;
-                    onInitialized();
-                }, null);
+        RestModelTransaction.getTransactionToken(mActivity, new RestResult<RestModelTransaction>() {
+            @Override
+            public void onSuccess(RestModelTransaction object) {
+                mTransactionToken = object.getToken();
+                onInitialized();
+            }
+        });
 
         // TODO: initialize location manager
     }

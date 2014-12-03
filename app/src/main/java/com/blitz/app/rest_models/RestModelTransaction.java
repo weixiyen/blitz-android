@@ -8,10 +8,6 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.Arrays;
 
-import retrofit.Callback;
-import retrofit.RetrofitError;
-import retrofit.client.Response;
-
 /**
  * Transactions Deposits/Withdrawals
  * Created by Nate on 11/10/14.
@@ -59,22 +55,11 @@ public class RestModelTransaction extends RestModel {
                 (result) -> callback.onSuccess(result.getResult()), null));
     }
 
-    public static void getTransactionToken(@NonNull RestAPICallback.OnSuccess<String> success,
-                                           RestAPICallback.OnFailure failure) {
+    public static void getTransactionToken(Activity activity,
+                                           @NonNull RestResult<RestModelTransaction> callback) {
 
-        restAPI.transaction_token_get(new Callback<RestAPIResult<RestModelTransaction>>() {
-            @Override
-            public void success(RestAPIResult<RestModelTransaction> result, Response response) {
-                success.onSuccess(result.getResult().mToken);
-            }
-
-            @Override
-            public void failure(RetrofitError error) {
-                if (failure != null) {
-                    failure.onFailure(error.getResponse(), error.isNetworkError());
-                }
-            }
-        });
+        mRestAPI.transaction_token_get(new RestAPICallback<>(activity,
+                result -> callback.onSuccess(result.getResult()), null));
     }
 
     public int getAmount() {
@@ -97,5 +82,7 @@ public class RestModelTransaction extends RestModel {
         return mErrorMessage;
     }
 
-
+    public String getToken() {
+        return mToken;
+    }
 }
