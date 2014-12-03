@@ -5,9 +5,7 @@ import com.blitz.app.rest_models.RestModelUser;
 import com.blitz.app.rest_models.RestResult;
 import com.blitz.app.utilities.android.BaseActivity;
 import com.blitz.app.utilities.authentication.AuthHelper;
-
-import java.util.HashMap;
-import java.util.Map;
+import com.blitz.app.utilities.logging.LogHelper;
 
 /**
  * Deposit view model.
@@ -18,13 +16,7 @@ public class ViewModelDeposit extends ViewModel {
 
     private RestModelUser mUser;
     private int mDepositAmountInCents;
-
-    private String mDepositAmount;
-    private String mAmountAfterDeposit;
-
-    @SuppressWarnings("unused")
     private String mTransactionToken;
-
     boolean mPaymentComplete;
 
     @SuppressWarnings("unused")
@@ -42,6 +34,7 @@ public class ViewModelDeposit extends ViewModel {
 
     @Override
     public void initialize() {
+
         // initialize user
         RestModelUser.getUser(mActivity, AuthHelper.instance().getUserId(), new RestResult<RestModelUser>() {
             @Override
@@ -71,22 +64,26 @@ public class ViewModelDeposit extends ViewModel {
         }
     }
 
-    @SuppressWarnings("unused")
     public void payDepositWithNonce(String nonce) {
 
-        Map<String, String> params = new HashMap<>(3);
-        params.put("nonce", nonce);
-        params.put("amount", Integer.toString(mDepositAmountInCents));
-        params.put("type", "DEPOSIT");
-
-
-        RestModelTransaction.postTransactionWithParams(mActivity, params, new RestResult<RestModelTransaction>() {
+        RestModelTransaction.postTransactionWithParams(mActivity, "DEPOSIT", mDepositAmountInCents,
+                nonce, new RestResult<RestModelTransaction>() {
             @Override
             public void onSuccess(RestModelTransaction object) {
-                if(object.hasErrors()) {
-                    mErrorMessage = object.getErrorMessage();
-                } else {
-                    mPaymentComplete = true;
+                mPaymentComplete = true;
+
+
+                if (getCallbacks(Callbacks.class) != null) {
+                    getCallbacks(Callbacks.class).onDepositSuccess();
+                }
+
+                LogHelper.log("PAY DEPOSIT WITH NONCE PAID");
+            }
+
+            @Override
+            public void onFailure() {
+                if (getCallbacks(Callbacks.class) != null) {
+                    getCallbacks(Callbacks.class).onDepositFailure();
                 }
             }
         });
@@ -123,5 +120,7 @@ public class ViewModelDeposit extends ViewModel {
 
     public interface Callbacks extends ViewModel.Callbacks {
         void consume();
+        void onDepositSuccess();
+        void onDepositFailure();
     }
 }
