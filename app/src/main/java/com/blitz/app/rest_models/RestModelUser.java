@@ -10,28 +10,31 @@ import com.google.gson.annotations.SerializedName;
 import java.util.Arrays;
 import java.util.List;
 
+import lombok.Getter;
+
 /**
  * Created by mrkcsc on 7/9/14. Copyright 2014 Blitz Studios
  */
+@SuppressWarnings("UnusedDeclaration")
 public class RestModelUser extends RestModel {
 
     // region Member Variables
     // ============================================================================================================
 
-    @SuppressWarnings("unused") @SerializedName("banned") private Boolean mBanned;
+    @SerializedName("banned")         @Getter private Boolean banned;
 
-    @SuppressWarnings("unused") @SerializedName("losses")         private int mLosses;
-    @SuppressWarnings("unused") @SerializedName("wins")           private int mWins;
-    @SuppressWarnings("unused") @SerializedName("matches_played") private int mMatchesPlayed;
-    @SuppressWarnings("unused") @SerializedName("rating")         private int mRating;
-    @SuppressWarnings("unused") @SerializedName("ties")           private int mTies;
-    @SuppressWarnings("unused") @SerializedName("cash")           private int mCash;
+    @SerializedName("losses")         @Getter private int losses;
+    @SerializedName("wins")           @Getter private int wins;
+    @SerializedName("matches_played") @Getter private int matchesPlayed;
+    @SerializedName("rating")         @Getter private int rating;
+    @SerializedName("ties")           @Getter private int ties;
+    @SerializedName("cash")           @Getter private int cash;
 
-    @SuppressWarnings("unused") @SerializedName("id")        private String mId;
-    @SuppressWarnings("unused") @SerializedName("username")  private String mUsername;
-    @SuppressWarnings("unused") @SerializedName("avatar_id") private String mAvatarId;
-    @SuppressWarnings("unused") @SerializedName("full_name") private String mFullName;
-    @SuppressWarnings("unused") @SerializedName("email")     private String mEmail;
+    @SerializedName("id")        @Getter private String id;
+    @SerializedName("username")  @Getter private String username;
+    @SerializedName("avatar_id") @Getter private String avatarId;
+    @SerializedName("full_name") @Getter private String fullName;
+    @SerializedName("email")     @Getter private String email;
 
     // endregion
 
@@ -145,7 +148,7 @@ public class RestModelUser extends RestModel {
             RestModelUser user = result.getResult();
 
             // Sign in the user.
-            AuthHelper.instance().signIn(user.mId, user.mUsername, user.mEmail);
+            AuthHelper.instance().signIn(user.id, user.username, user.email);
 
             // Now signed up.
             callback.onSuccess(user);
@@ -182,7 +185,7 @@ public class RestModelUser extends RestModel {
             RestModelUser user = result.getResult();
 
             // Sign in the user.
-            AuthHelper.instance().signIn(user.mId, user.mUsername, user.mEmail);
+            AuthHelper.instance().signIn(user.id, user.username, user.email);
 
             // Now signed in.
             callback.onSuccess(user);
@@ -199,86 +202,6 @@ public class RestModelUser extends RestModel {
 
         // Make auth rest call.
         restAPI.auth_post(body, operation);
-    }
-
-    // endregion
-
-    // region Public Methods
-    // ============================================================================================================
-
-    /**
-     * Fetch id of this user.
-     *
-     * @return User id.
-     */
-    public String getId() {
-
-        return mId;
-    }
-
-    /**
-     * Fetch username.
-     */
-    public String getUsername() {
-
-        return mUsername;
-    }
-
-    /**
-     * Fetch rating.
-     */
-    public int getRating() {
-
-        return mRating;
-    }
-
-    /**
-     * Fetch wins.
-     */
-    public int getWins() {
-
-        return mWins;
-    }
-
-    /**
-     * Fetch losses.
-     */
-    public int getLosses() {
-
-        return mLosses;
-    }
-
-    /**
-     * Fetch ties.
-     *
-     * @return Ties.
-     */
-    public int getTies() {
-
-        return mTies;
-    }
-
-    /**
-     * Fetch cash.
-     */
-    public int getCash() {
-
-        return mCash;
-    }
-
-    /**
-     * Fetch avatar id.
-     */
-    public String getAvatarId() {
-
-        return mAvatarId;
-    }
-
-    /**
-     * Fetch email.
-     */
-    public String getEmail() {
-        return mEmail;
     }
 
     // endregion
