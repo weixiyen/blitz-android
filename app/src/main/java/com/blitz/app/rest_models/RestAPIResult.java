@@ -16,18 +16,18 @@ class RestAPIResult<T> {
 
     // Results field.
     @SerializedName("results")
-    private List<T> mResults;
+    private List<T> results;
 
     // Result field (only one result).
     @SerializedName("result")
-    private T mResult;
+    private T result;
 
     // Result can also be keyed as a user.
     @SerializedName("user")
-    private T mResultUser;
+    private T resultUser;
 
     @SerializedName("errors")
-    private JsonObject mErrors;
+    private JsonObject errors;
 
     // endregion
 
@@ -42,7 +42,7 @@ class RestAPIResult<T> {
      */
     public List<T> getResults() {
 
-        return mResults;
+        return results;
     }
 
     /**
@@ -52,7 +52,7 @@ class RestAPIResult<T> {
      */
     public T getResult() {
 
-        return mResult != null ? mResult : mResultUser;
+        return result != null ? result : resultUser;
     }
 
     /**
@@ -62,7 +62,7 @@ class RestAPIResult<T> {
      */
     public boolean hasErrors() {
 
-        return mErrors != null && !mErrors.isJsonNull();
+        return errors != null && !errors.isJsonNull();
     }
 
     // endregion

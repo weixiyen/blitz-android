@@ -72,7 +72,7 @@ public class RestModelDevice extends RestModel {
         }
 
         // Make rest call for code.
-        mRestAPI.device_get(deviceId, new RestAPICallback<>(activity,
+        restAPI.device_get(deviceId, new RestAPICallback<>(activity,
                 result -> callback.onSuccess(result.getResult()), null));
     }
 
@@ -100,7 +100,7 @@ public class RestModelDevice extends RestModel {
         body.addProperty("push_notification_enabled", false);
 
         // Make rest call for code.
-        mRestAPI.devices_post(body, new RestAPICallback<>(activity,
+        restAPI.devices_post(body, new RestAPICallback<>(activity,
                 result -> callback.onSuccess(result.getResult()), null));
     }
 
@@ -155,7 +155,7 @@ public class RestModelDevice extends RestModel {
         body.add("replace", replace);
 
         // Make rest call for code.
-        mRestAPI.device_patch(id, body, new RestAPICallback<>(activity,
+        restAPI.device_patch(id, body, new RestAPICallback<>(activity,
                 result -> callback.onSuccess(result.getResult()), null));
     }
 

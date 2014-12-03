@@ -53,7 +53,7 @@ public class RestModelGroup extends RestModel {
     public static void getGroupWithId(Activity activity, String groupId,
                                       @NonNull RestResult<RestModelGroup> callback) {
 
-        mRestAPI.group_get(groupId, new RestAPICallback<>(activity,
+        restAPI.group_get(groupId, new RestAPICallback<>(activity,
                 result -> callback.onSuccess(result.getResult()), null));
     }
 
@@ -77,7 +77,7 @@ public class RestModelGroup extends RestModel {
         List<String> keys = Arrays.asList(groupName.toLowerCase());
 
         // Make api call.
-        mRestAPI.groups_get("name_lowercase", keys, null, null, null, null, 1,
+        restAPI.groups_get("name_lowercase", keys, null, null, null, null, 1,
                 new RestAPICallback<>(activity, result -> {
 
                     if (result.getResults() != null &&
@@ -108,7 +108,7 @@ public class RestModelGroup extends RestModel {
         String orderBy = "{\"created\": \"ASC\"}";
 
         // Make api call.
-        mRestAPI.groups_get("members", keys, null, null, null, orderBy, 10,
+        restAPI.groups_get("members", keys, null, null, null, orderBy, 10,
                 new RestAPICallback<>(activity, result -> callback.onSuccess(result.getResults()), null));
     }
 
@@ -135,7 +135,7 @@ public class RestModelGroup extends RestModel {
         String orderBy = "{\"last_updated\": \"DESC\"}";
 
         // Make api call.
-        mRestAPI.groups_get("last_updated", null, null, between, filter, orderBy, limit,
+        restAPI.groups_get("last_updated", null, null, between, filter, orderBy, limit,
                 new RestAPICallback<>(activity, result -> callback.onSuccess(result.getResults()), null));
     }
 
@@ -157,7 +157,7 @@ public class RestModelGroup extends RestModel {
         String orderBy = "{\"rating\": \"DESC\"}";
 
         // Make api call.
-        mRestAPI.groups_get(null, null, pluck, null, null, orderBy, limit,
+        restAPI.groups_get(null, null, pluck, null, null, orderBy, limit,
                 new RestAPICallback<>(activity, result -> callback.onSuccess(result.getResults()), null));
     }
 
@@ -177,7 +177,7 @@ public class RestModelGroup extends RestModel {
         body.addProperty("name", groupName);
 
         // Make api call.
-        mRestAPI.groups_post(body, new RestAPICallback<>(activity,
+        restAPI.groups_post(body, new RestAPICallback<>(activity,
                 result -> callback.onSuccess(result.getResult()), null));
     }
 
@@ -200,7 +200,7 @@ public class RestModelGroup extends RestModel {
         jsonAppend.add("append", jsonMembers);
 
         // Make api call.
-        mRestAPI.group_patch(groupId, jsonAppend, new RestAPICallback<>(activity,
+        restAPI.group_patch(groupId, jsonAppend, new RestAPICallback<>(activity,
                 result -> callback.onSuccess(result.getResult()), null));
     }
 
@@ -224,7 +224,7 @@ public class RestModelGroup extends RestModel {
         jsonReplace.add("replace", jsonRecruiting);
 
         // Make api call.
-        mRestAPI.group_patch(groupId, jsonReplace, new RestAPICallback<>(activity,
+        restAPI.group_patch(groupId, jsonReplace, new RestAPICallback<>(activity,
                 result -> callback.onSuccess(result.getResult()), null));
     }
 

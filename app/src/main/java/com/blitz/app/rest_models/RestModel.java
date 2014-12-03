@@ -9,7 +9,7 @@ public class RestModel {
     // ============================================================================================================
 
     // Object models have a final static instance of the rest API.
-    protected static final RestAPI mRestAPI = RestAPIClient.getAPI();
+    protected static final RestAPI restAPI = RestAPIClient.getAPI();
 
     // endregion
 

@@ -48,7 +48,7 @@ public class RestModelQueue extends RestModel {
                         body.addProperty("draft_key", mDraftKey);
 
                         // Make api call.
-                        mRestAPI.queue_post(body, new RestAPICallback<>(activity, result -> callback.run(), null));
+                        restAPI.queue_post(body, new RestAPICallback<>(activity, result -> callback.run(), null));
                     }
                 });
     }
@@ -68,7 +68,7 @@ public class RestModelQueue extends RestModel {
         }
 
         // Make api call.
-        mRestAPI.queue_delete(mDraftKey, new RestAPICallback<>(activity, result -> callback.run(), null));
+        restAPI.queue_delete(mDraftKey, new RestAPICallback<>(activity, result -> callback.run(), null));
     }
 
     /**
@@ -90,7 +90,7 @@ public class RestModelQueue extends RestModel {
                    body.addProperty("draft_key", mDraftKey);
 
         // Make api call.
-        mRestAPI.queue_put(body, new RestAPICallback<>(activity, result -> callback.run(), null));
+        restAPI.queue_put(body, new RestAPICallback<>(activity, result -> callback.run(), null));
     }
 
     // endregion

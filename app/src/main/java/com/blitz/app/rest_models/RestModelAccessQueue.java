@@ -41,7 +41,7 @@ public class RestModelAccessQueue extends RestModel {
                             @NonNull RestResult<RestModelAccessQueue> callback) {
 
         // Make rest call for code.
-        mRestAPI.access_queue_get(deviceId, new RestAPICallback<>(activity,
+        restAPI.access_queue_get(deviceId, new RestAPICallback<>(activity,
                 callback::onSuccess, null));
     }
 

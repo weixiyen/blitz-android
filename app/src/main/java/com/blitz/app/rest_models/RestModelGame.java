@@ -54,7 +54,7 @@ public class RestModelGame extends RestModel {
 
         } else {
 
-            mRestAPI.games_get(String.valueOf(year) + "_" + week, new RestAPICallback<>(activity, result -> {
+            restAPI.games_get(String.valueOf(year) + "_" + week, new RestAPICallback<>(activity, result -> {
 
                 // Insert into cache.
                 mCache.put(cacheKey, result.getResults());

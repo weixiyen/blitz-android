@@ -43,7 +43,7 @@ public class RestModelPreferences extends RestModel {
     public static void sync(Activity activity, @NonNull RestResult<RestModelPreferences> callback) {
 
         // Make api call.
-        mRestAPI.preferences_get(new RestAPICallback<>(activity, result -> {
+        restAPI.preferences_get(new RestAPICallback<>(activity, result -> {
 
             if (AppConfig.isDraftSimulationEnabled()) {
 

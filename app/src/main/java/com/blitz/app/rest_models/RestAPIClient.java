@@ -15,8 +15,8 @@ class RestAPIClient extends RestAPIClientBase {
     // ============================================================================================================
 
     // Singleton instance for API and client.
-    private static RestAPI       mInstanceApi = null;
-    private static RestAPIClient mInstance;
+    private static RestAPI       instanceApi = null;
+    private static RestAPIClient instance;
 
     // endregion
 
@@ -97,15 +97,15 @@ class RestAPIClient extends RestAPIClientBase {
      */
     public static RestAPIClient instance() {
 
-        if (mInstance == null) {
+        if (instance == null) {
             synchronized (RestAPIClient.class) {
-                if (mInstance == null) {
-                    mInstance = new RestAPIClient();
+                if (instance == null) {
+                    instance = new RestAPIClient();
                 }
             }
         }
 
-        return mInstance;
+        return instance;
     }
 
     /**
@@ -113,15 +113,15 @@ class RestAPIClient extends RestAPIClientBase {
      */
     public static RestAPI getAPI() {
 
-        if (mInstanceApi == null) {
+        if (instanceApi == null) {
             synchronized (RestAPI.class) {
-                if (mInstanceApi == null) {
-                    mInstanceApi = new RestAPIClient().getRestAdapter().create(RestAPI.class);
+                if (instanceApi == null) {
+                    instanceApi = new RestAPIClient().getRestAdapter().create(RestAPI.class);
                 }
             }
         }
 
-        return mInstanceApi;
+        return instanceApi;
     }
 
     // endregion

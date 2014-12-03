@@ -52,7 +52,7 @@ public class RestModelPlayer extends RestModel {
                                     @NonNull CallbackPlayers callback) {
 
         // Make api call.
-        mRestAPI.nfl_players_get(playerIds, "id", new RestAPICallback<>(activity,
+        restAPI.nfl_players_get(playerIds, "id", new RestAPICallback<>(activity,
                 result -> callback.onSuccess(result.getResults()), null));
     }
 
@@ -73,7 +73,7 @@ public class RestModelPlayer extends RestModel {
         }
 
         // Make api call.
-        mRestAPI.nfl_player_get(playerId, new RestAPICallback<>(activity,
+        restAPI.nfl_player_get(playerId, new RestAPICallback<>(activity,
                 result -> callback.onSuccess(result.getResult()), null));
     }
 

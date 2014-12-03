@@ -50,7 +50,7 @@ public class RestModelCode extends RestModel {
                    body.addProperty("value", value);
 
         // Make rest call for code.
-        mRestAPI.code_post(body, new RestAPICallback<>(activity,
+        restAPI.code_post(body, new RestAPICallback<>(activity,
                 result -> callback.onSuccess(result.getResult()), null));
     }
 

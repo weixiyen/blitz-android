@@ -41,7 +41,7 @@ public class RestModelTransaction extends RestModel {
     public static void listTransactionsForUserId(Activity activity, String userId, int limit,
                                                  @NonNull RestResults<RestModelTransaction> callback) {
 
-        mRestAPI.transactions_get(Arrays.asList(userId), "user_id", "{\"created\": \"DESC\"}", limit,
+        restAPI.transactions_get(Arrays.asList(userId), "user_id", "{\"created\": \"DESC\"}", limit,
                 new RestAPICallback<>(activity, result -> callback.onSuccess(result.getResults()), null));
 
     }
@@ -55,14 +55,14 @@ public class RestModelTransaction extends RestModel {
         params.addProperty("amount", amount);
         params.addProperty("nonce", nonce);
 
-        mRestAPI.transactions_post(params, new RestAPICallback<>(activity,
+        restAPI.transactions_post(params, new RestAPICallback<>(activity,
                 (result) -> callback.onSuccess(result.getResult()), null));
     }
 
     public static void getTransactionToken(@NonNull RestAPICallback.OnSuccess<String> success,
                                            RestAPICallback.OnFailure failure) {
 
-        mRestAPI.transaction_token_get(new Callback<RestAPIResult<RestModelTransaction>>() {
+        restAPI.transaction_token_get(new Callback<RestAPIResult<RestModelTransaction>>() {
             @Override
             public void success(RestAPIResult<RestModelTransaction> result, Response response) {
                 success.onSuccess(result.getResult().mToken);

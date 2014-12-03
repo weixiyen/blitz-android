@@ -64,7 +64,7 @@ public class RestModelUser extends RestModel {
         body.add("replace", replace);
 
         // Make rest call for code.
-        mRestAPI.user_patch(body, new RestAPICallback<>(activity,
+        restAPI.user_patch(body, new RestAPICallback<>(activity,
                 result -> callback.onSuccess(result.getResult()), null));
     }
 
@@ -84,7 +84,7 @@ public class RestModelUser extends RestModel {
         operation.setLogoutOnFailure(logoutOnFailure);
 
         // Make api call to fetch user data.
-        mRestAPI.user_get(userId, operation);
+        restAPI.user_get(userId, operation);
     }
 
     /**
@@ -105,7 +105,7 @@ public class RestModelUser extends RestModel {
         // Sort it by rating.
         String orderBy = "{\"rating\":\"DESC\"}";
 
-        mRestAPI.users_get(null, null, pluck, orderBy, limit, new RestAPICallback<>(activity,
+        restAPI.users_get(null, null, pluck, orderBy, limit, new RestAPICallback<>(activity,
                 result -> callback.onSuccess(result.getResults()), null));
     }
 
@@ -124,7 +124,7 @@ public class RestModelUser extends RestModel {
         List<String> pluck = Arrays.asList("id", "username", "status", "avatar_id",
                 "rating", "wins", "losses", "ties", "cash");
 
-        mRestAPI.users_get(userIds, "id", pluck, null, null, new RestAPICallback<>(activity,
+        restAPI.users_get(userIds, "id", pluck, null, null, new RestAPICallback<>(activity,
                 result -> callback.onSuccess(result.getResults()), null));
     }
 
@@ -162,7 +162,7 @@ public class RestModelUser extends RestModel {
         body.addProperty("password", password);
 
         // Make rest call for code.
-        mRestAPI.users_post(body, operation);
+        restAPI.users_post(body, operation);
     }
 
     /**
@@ -198,7 +198,7 @@ public class RestModelUser extends RestModel {
         body.addProperty("password", password);
 
         // Make auth rest call.
-        mRestAPI.auth_post(body, operation);
+        restAPI.auth_post(body, operation);
     }
 
     // endregion

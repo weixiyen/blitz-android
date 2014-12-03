@@ -25,7 +25,7 @@ class RestAPIClientBase {
     private static final String API_URL = AppConfig.getApiUrl();
 
     // Adapter for REST client.
-    private RestAdapter mRestAdapter;
+    private RestAdapter restAdapter;
 
     // endregion
 
@@ -39,16 +39,16 @@ class RestAPIClientBase {
      */
     protected RestAdapter getRestAdapter() {
 
-        if (mRestAdapter == null) {
+        if (restAdapter == null) {
 
             // Initialize the builder.
             RestAdapter.Builder builder = getRestBuilder();
 
             // Create the adapter.
-            mRestAdapter = builder.build();
+            restAdapter = builder.build();
         }
 
-        return mRestAdapter;
+        return restAdapter;
     }
 
     /**

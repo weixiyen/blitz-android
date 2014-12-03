@@ -84,7 +84,7 @@ public class RestModelItem extends RestModel {
     @SuppressWarnings("unused")
     public static void fetchItem(Activity activity, String itemId, final CallbackItem callback) {
 
-        mRestAPI.item_get(itemId, new RestAPICallback<>(activity,
+        restAPI.item_get(itemId, new RestAPICallback<>(activity,
                 result -> callback.onSuccess(result.getResult()), null));
     }
 
@@ -100,7 +100,7 @@ public class RestModelItem extends RestModel {
     public static void fetchItems(Activity activity, List<String> items, Integer limit,
                                   final CallbackItems callback) {
 
-        mRestAPI.items_get(items, "id", null, limit, new RestAPICallback<>(activity,
+        restAPI.items_get(items, "id", null, limit, new RestAPICallback<>(activity,
                 result -> callback.onSuccess(result.getResults()), null));
     }
 
@@ -135,7 +135,7 @@ public class RestModelItem extends RestModel {
         // Only get avatar types.
         String filter = "{ \"item_type\": \"AVATAR\"}";
 
-        mRestAPI.items_get(keys, "user_id", filter, null, new RestAPICallback<>(activity,
+        restAPI.items_get(keys, "user_id", filter, null, new RestAPICallback<>(activity,
                 result -> callback.onSuccess(result.getResults()), null));
     }
 

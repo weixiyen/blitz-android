@@ -556,7 +556,7 @@ public final class RestModelDraft extends RestModel {
         jsonReplace.add("append", jsonPicks);
 
         // Make api call.
-        mRestAPI.draft_patch(draftId, jsonReplace, new RestAPICallback<>(activity,
+        restAPI.draft_patch(draftId, jsonReplace, new RestAPICallback<>(activity,
                 result -> callback.onSuccess(result.getResult()),
                     (response, networkError) -> callback.onFailure()));
     }
@@ -579,7 +579,7 @@ public final class RestModelDraft extends RestModel {
         Date operationStartTime = DateUtils.getDateInGMT();
 
         // Make api call.
-        mRestAPI.draft_get(draftId, new RestAPICallback<>(activity, result -> {
+        restAPI.draft_get(draftId, new RestAPICallback<>(activity, result -> {
 
             // Set the server time offset.
             if (result != null) {
@@ -616,7 +616,7 @@ public final class RestModelDraft extends RestModel {
         // Sort by most recent.
         String orderBy = "{\"created\": \"ASC\"}";
 
-        mRestAPI.drafts_get(getKeys(userId), null, "users", filter, orderBy, null, operation);
+        restAPI.drafts_get(getKeys(userId), null, "users", filter, orderBy, null, operation);
     }
 
     /**
@@ -644,7 +644,7 @@ public final class RestModelDraft extends RestModel {
         // Order by completed and created descending.
         String orderBy = "{\"completed\": \"DESC\", \"created\": \"DESC\"}";
 
-        mRestAPI.drafts_get(getKeys(userId), getPluck(), "users",
+        restAPI.drafts_get(getKeys(userId), getPluck(), "users",
                 filter, orderBy, limit, new RestAPICallback<>(activity,
                         result -> callback.onSuccess(result.getResults()), null));
     }

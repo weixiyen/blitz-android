@@ -41,7 +41,7 @@ public class RestModelStats extends RestModel {
             keys.add(id + "_" + year + "_" + week);
         }
 
-        mRestAPI.stats_get(keys, "player_year_week_index", null, 100, new RestAPICallback<>(activity,
+        restAPI.stats_get(keys, "player_year_week_index", null, 100, new RestAPICallback<>(activity,
                 result -> callback.onSuccess(result.getResults()), null));
     }
 
