@@ -23,8 +23,9 @@ Thumbs.db
 
 #built application files
 *.apk
-*.ap_
 
 # Java class files
 *.class
 
+# Crashlytics
+*/com_crashlytics_export_strings.xml
