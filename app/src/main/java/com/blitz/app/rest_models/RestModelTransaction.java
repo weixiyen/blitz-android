@@ -58,7 +58,7 @@ public class RestModelTransaction extends RestModel {
     public static void getTransactionToken(Activity activity,
                                            @NonNull RestResult<RestModelTransaction> callback) {
 
-        mRestAPI.transaction_token_get(new RestAPICallback<>(activity,
+        restAPI.transaction_token_get(new RestAPICallback<>(activity,
                 result -> callback.onSuccess(result.getResult()), null));
     }
 
