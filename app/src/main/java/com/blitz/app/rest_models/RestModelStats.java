@@ -24,9 +24,7 @@ public class RestModelStats extends RestModel {
 
     @SerializedName("player_id") @Getter private String playerId;
     @SerializedName("type")      @Getter private String type;
-
     @SerializedName("value")     @Getter private float value;
-
     @SerializedName("week")      @Getter private int week;
     @SerializedName("year")      @Getter private int year;
 
@@ -57,7 +55,9 @@ public class RestModelStats extends RestModel {
     // region Public Methods
     // ============================================================================================================
 
-    @SuppressWarnings("unused")
+    /**
+     * Fetch stat type string formatted.
+     */
     public String getTypeName() {
 
         switch (type) {
@@ -114,7 +114,9 @@ public class RestModelStats extends RestModel {
         return UNSUPPORTED;
     }
 
-    @SuppressWarnings("unused")
+    /**
+     * Fetch the points associated for each type.
+     */
     public float getTypePoints() {
 
         switch (type) {
@@ -185,7 +187,9 @@ public class RestModelStats extends RestModel {
         }
     }
 
-    @SuppressWarnings("unused")
+    /**
+     * Fetch if this type is supported.
+     */
     public boolean isSupported() {
 
         return !UNSUPPORTED.equals(getTypeName());

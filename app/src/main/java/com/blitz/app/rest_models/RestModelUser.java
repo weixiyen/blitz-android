@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.support.annotation.NonNull;
 
 import com.blitz.app.utilities.authentication.AuthHelper;
+import com.blitz.app.utilities.json.JsonHelperObject;
 import com.google.gson.JsonObject;
 import com.google.gson.annotations.SerializedName;
 
@@ -22,19 +23,17 @@ public class RestModelUser extends RestModel {
     // ============================================================================================================
 
     @SerializedName("banned")         @Getter private Boolean banned;
-
     @SerializedName("losses")         @Getter private int losses;
     @SerializedName("wins")           @Getter private int wins;
     @SerializedName("matches_played") @Getter private int matchesPlayed;
     @SerializedName("rating")         @Getter private int rating;
     @SerializedName("ties")           @Getter private int ties;
     @SerializedName("cash")           @Getter private int cash;
-
-    @SerializedName("id")        @Getter private String id;
-    @SerializedName("username")  @Getter private String username;
-    @SerializedName("avatar_id") @Getter private String avatarId;
-    @SerializedName("full_name") @Getter private String fullName;
-    @SerializedName("email")     @Getter private String email;
+    @SerializedName("id")             @Getter private String id;
+    @SerializedName("username")       @Getter private String username;
+    @SerializedName("avatar_id")      @Getter private String avatarId;
+    @SerializedName("full_name")      @Getter private String fullName;
+    @SerializedName("email")          @Getter private String email;
 
     // endregion
 
@@ -48,23 +47,11 @@ public class RestModelUser extends RestModel {
      * @param avatarId Avatar id.
      * @param callback Callback.
      */
-    @SuppressWarnings("unused")
-    public static void updateAvatar(Activity activity, String avatarId,
+    public static void updateAvatar(Activity activity, @NonNull String avatarId,
                                     @NonNull RestResult<RestModelUser> callback) {
-        if (avatarId == null) {
-            return;
-        }
 
-        // Create object holding values to replace.
-        JsonObject replace = new JsonObject();
-
-        replace.addProperty("avatar_id", avatarId);
-
-        // Create body.
-        JsonObject body = new JsonObject();
-
-        // Add replace object.
-        body.add("replace", replace);
+        JsonObject body = JsonHelperObject.add("replace",
+                JsonHelperObject.addProperty("avatar_id", avatarId));
 
         // Make rest call for code.
         restAPI.user_patch(body, new RestAPICallback<>(activity,
@@ -75,7 +62,6 @@ public class RestModelUser extends RestModel {
      * Get and populate the user model - requires a user
      * id which means the user must be logged in.
      */
-    @SuppressWarnings("unused")
     public static void getUser(Activity activity, String userId,
                                @NonNull RestResult<RestModelUser> callback,
                                boolean logoutOnFailure) {
@@ -97,7 +83,6 @@ public class RestModelUser extends RestModel {
      * @param limit Limit of players.
      * @param callback Callback.
      */
-    @SuppressWarnings("unused")
     public static void getTopUsersWithLimit(Activity activity, final int limit,
                                             @NonNull RestResults<RestModelUser> callback) {
 
@@ -119,7 +104,6 @@ public class RestModelUser extends RestModel {
      * @param userIds List of user id's.
      * @param callback Callback.
      */
-    @SuppressWarnings("unused")
     public static void getUsers(Activity activity, List<String> userIds,
                                 @NonNull RestResults<RestModelUser> callback) {
 
@@ -137,7 +121,6 @@ public class RestModelUser extends RestModel {
      * @param activity Activity for dialogs.
      * @param callback Callback.
      */
-    @SuppressWarnings("unused")
     public static void signUp(Activity activity, String email, String username, String password,
                               @NonNull RestResult<RestModelUser> callback) {
 
@@ -158,11 +141,9 @@ public class RestModelUser extends RestModel {
         // Authentication operation.
         operation.setAuthenticating(true);
 
-        // Construct POST body.
-        JsonObject body = new JsonObject();
-        body.addProperty("email", email);
-        body.addProperty("username", username);
-        body.addProperty("password", password);
+        JsonObject body = JsonHelperObject.addProperties(
+                Arrays.asList("email", "username", "password"),
+                Arrays.asList(email, username, password));
 
         // Make rest call for code.
         restAPI.users_post(body, operation);
@@ -174,7 +155,6 @@ public class RestModelUser extends RestModel {
      * @param activity Activity for dialogs.
      * @param callback Callback.
      */
-    @SuppressWarnings("unused")
     public static void signIn(Activity activity, String username, String password,
                               @NonNull RestResult<RestModelUser> callback) {
 
@@ -195,10 +175,9 @@ public class RestModelUser extends RestModel {
         // Authentication operation.
         operation.setAuthenticating(true);
 
-        // Construct POST body.
-        JsonObject body = new JsonObject();
-        body.addProperty("username", username);
-        body.addProperty("password", password);
+        JsonObject body = JsonHelperObject.addProperties(
+                Arrays.asList("username", "password"),
+                Arrays.asList(username, password));
 
         // Make auth rest call.
         restAPI.auth_post(body, operation);
