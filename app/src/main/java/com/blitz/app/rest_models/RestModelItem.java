@@ -1,6 +1,7 @@
 package com.blitz.app.rest_models;
 
 import android.app.Activity;
+import android.support.annotation.NonNull;
 
 import com.google.gson.annotations.SerializedName;
 
@@ -8,52 +9,31 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import lombok.Getter;
+
 /**
  * Created by mrkcsc on 9/9/14. Copyright 2014 Blitz Studios
  */
-@SuppressWarnings("MismatchedQueryAndUpdateOfCollection")
+@SuppressWarnings("UnusedDeclaration, MismatchedQueryAndUpdateOfCollection")
 public class RestModelItem extends RestModel {
 
     // region Member Variables
     // ============================================================================================================
 
-    @SuppressWarnings("unused") @SerializedName("id")
-    private String mId;
-    @SuppressWarnings("unused") @SerializedName("title")
-    private String mTitle;
-    @SuppressWarnings("unused") @SerializedName("description")
-    private String mDescription;
-    @SuppressWarnings("unused") @SerializedName("item_type")
-    private String mItemType;
-
-    @SuppressWarnings("unused") @SerializedName("is_restricted")
-    private Boolean mIsRestricted;
-
-    @SuppressWarnings("unused") @SerializedName("price")
-    private Integer mPrice;
-
-    @SuppressWarnings("unused") @SerializedName("img_paths")
-    private ArrayList<String> imgPaths;
-
-    @SuppressWarnings("unused") @SerializedName("last_updated")
-    private Date mLastUpdated;
-    @SuppressWarnings("unused") @SerializedName("created")
-    private Date mCreated;
+    @SerializedName("id")            @Getter private String id;
+    @SerializedName("title")         @Getter private String title;
+    @SerializedName("description")   @Getter private String description;
+    @SerializedName("item_type")     @Getter private String itemType;
+    @SerializedName("is_restricted") @Getter private Boolean isRestricted;
+    @SerializedName("price")         @Getter private Integer price;
+    @SerializedName("img_paths")     @Getter private ArrayList<String> imgPaths;
+    @SerializedName("last_updated")  @Getter private Date lastUpdated;
+    @SerializedName("created")       @Getter private Date created;
 
     // endregion
 
     // region Public Methods
     // ============================================================================================================
-
-    /**
-     * Fetch item id.
-     *
-     * @return Item id.
-     */
-    public String getId() {
-
-        return mId;
-    }
 
     /**
      * Get a default image path.
@@ -71,7 +51,7 @@ public class RestModelItem extends RestModel {
 
     // endregion
 
-    // region Rest Methods
+    // region REST Methods
     // ============================================================================================================
 
     /**
@@ -81,8 +61,7 @@ public class RestModelItem extends RestModel {
      * @param itemId Requested item.
      * @param callback Callback for success.
      */
-    @SuppressWarnings("unused")
-    public static void fetchItem(Activity activity, String itemId, final CallbackItem callback) {
+    public static void fetchItem(Activity activity, String itemId, final RestResult<RestModelItem> callback) {
 
         restAPI.item_get(itemId, new RestAPICallback<>(activity,
                 result -> callback.onSuccess(result.getResult()), null));
@@ -96,9 +75,8 @@ public class RestModelItem extends RestModel {
      * @param limit Number of results.
      * @param callback Callback for success.
      */
-    @SuppressWarnings("unused")
     public static void fetchItems(Activity activity, List<String> items, Integer limit,
-                                  final CallbackItems callback) {
+                                  @NonNull RestResults<RestModelItem> callback) {
 
         restAPI.items_get(items, "id", null, limit, new RestAPICallback<>(activity,
                 result -> callback.onSuccess(result.getResults()), null));
@@ -111,9 +89,8 @@ public class RestModelItem extends RestModel {
      * @param items Requested items.
      * @param callback Callback for success.
      */
-    @SuppressWarnings("unused")
     public static void fetchItems(Activity activity, List<String> items,
-                                  final CallbackItems callback) {
+                                  final RestResults<RestModelItem> callback) {
 
         fetchItems(activity, items, null, callback);
     }
@@ -125,8 +102,7 @@ public class RestModelItem extends RestModel {
      * @param userId User id.
      * @param callback Callback for success.
      */
-    @SuppressWarnings("unused")
-    public static void fetchItemsOwnedByUser(Activity activity, String userId, final CallbackItems callback) {
+    public static void fetchItemsOwnedByUser(Activity activity, String userId, final RestResults<RestModelItem> callback) {
 
         List<String> keys = new ArrayList<>();
 
@@ -137,21 +113,6 @@ public class RestModelItem extends RestModel {
 
         restAPI.items_get(keys, "user_id", filter, null, new RestAPICallback<>(activity,
                 result -> callback.onSuccess(result.getResults()), null));
-    }
-
-    // endregion
-
-    // region Callbacks
-    // ============================================================================================================
-
-    public interface CallbackItem {
-
-        public void onSuccess(RestModelItem item);
-    }
-
-    public interface CallbackItems {
-
-        public void onSuccess(List<RestModelItem> items);
     }
 
     // endregion

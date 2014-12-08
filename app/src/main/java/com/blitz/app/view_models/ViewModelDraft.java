@@ -818,7 +818,7 @@ public class ViewModelDraft extends ViewModel {
                 playerFullNames.add(playerChoice.getFullName());
 
                 // Create opponent prefix.
-                String opponentPrefix = playerChoice.getIsHomeTeam() ? "@ " : "vs ";
+                String opponentPrefix = playerChoice.isHomeTeam() ? "@ " : "vs ";
 
                 // Add opponent string.
                 playerOpponents.add(opponentPrefix + playerChoice.getOpponent().toUpperCase());
@@ -858,9 +858,13 @@ public class ViewModelDraft extends ViewModel {
         if (!mSyncingChoicesLocked) {
              mSyncingChoicesLocked = true;
 
-            RestModelPlayer.fetchPlayers(null, choices, players -> {
+            RestModelPlayer.fetchPlayers(null, choices, new RestResults<RestModelPlayer>() {
 
-                // TODO: Implement me.
+                @Override
+                public void onSuccess(List<RestModelPlayer> object) {
+
+                    // TODO: Implement me.
+                }
             });
         }
     }

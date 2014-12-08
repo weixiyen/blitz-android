@@ -9,34 +9,26 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
+import lombok.Getter;
+
 /**
  * Created by Miguel on 9/27/2014. Copyright 2014 Blitz Studios
  */
+@SuppressWarnings("UnusedDeclaration")
 public class RestModelPlayer extends RestModel {
 
     // region Member Variables
     // ============================================================================================================
 
-    @SuppressWarnings("unused") @SerializedName("id")
-    private String mId;
-    @SuppressWarnings("unused") @SerializedName("full_name")
-    private String mFullName;
-    @SuppressWarnings("unused") @SerializedName("first_name")
-    private String mFirstName;
-    @SuppressWarnings("unused") @SerializedName("last_name")
-    private String mLastName;
-    @SuppressWarnings("unused") @SerializedName("team")
-    private String mTeam;
-    @SuppressWarnings("unused") @SerializedName("position")
-    private String mPosition;
-    @SuppressWarnings("unused") @SerializedName("opponent")
-    private String mOpponent;
-
-    @SuppressWarnings("unused") @SerializedName("abbr")
-    private String mTeamAbbreviation;
-
-    @SuppressWarnings("unused") @SerializedName("is_home_team")
-    private boolean mIsHomeTeam;
+    @SerializedName("id")           @Getter private String id;
+    @SerializedName("full_name")    @Getter private String fullName;
+    @SerializedName("first_name")   @Getter private String firstName;
+    @SerializedName("last_name")    @Getter private String lastName;
+    @SerializedName("team")         @Getter private String team;
+    @SerializedName("position")     @Getter private String position;
+    @SerializedName("opponent")     @Getter private String opponent;
+    @SerializedName("abbr")         @Getter private String teamAbbreviation;
+    @SerializedName("is_home_team") @Getter private boolean isHomeTeam;
 
     // endregion
 
@@ -48,10 +40,9 @@ public class RestModelPlayer extends RestModel {
      */
     @SuppressWarnings("unused")
     public static void fetchPlayers(Activity activity,
-                                    List<String> playerIds,
-                                    @NonNull CallbackPlayers callback) {
+                                    @NonNull List<String> playerIds,
+                                    @NonNull RestResults<RestModelPlayer> callback) {
 
-        // Make api call.
         restAPI.nfl_players_get(playerIds, "id", new RestAPICallback<>(activity,
                 result -> callback.onSuccess(result.getResults()), null));
     }
@@ -65,14 +56,9 @@ public class RestModelPlayer extends RestModel {
      */
     @SuppressWarnings("unused")
     public static void fetchPlayer(Activity activity,
-                                   String playerId,
-                                   @NonNull CallbackPlayer callback) {
+                                   @NonNull String playerId,
+                                   @NonNull RestResult<RestModelPlayer> callback) {
 
-        if (playerId == null) {
-            return;
-        }
-
-        // Make api call.
         restAPI.nfl_player_get(playerId, new RestAPICallback<>(activity,
                 result -> callback.onSuccess(result.getResult()), null));
     }
@@ -91,15 +77,15 @@ public class RestModelPlayer extends RestModel {
 
         RestModelPlayer player = new RestModelPlayer();
 
-        player.mId         = JsonHelper.parseString(cometJson.get("id"));
-        player.mOpponent   = JsonHelper.parseString(cometJson.get("opponent"));
-        player.mPosition   = JsonHelper.parseString(cometJson.get("position"));
-        player.mTeam       = JsonHelper.parseString(cometJson.get("team"));
-        player.mFullName   = JsonHelper.parseString(cometJson.get("full_name"));
-        player.mIsHomeTeam = JsonHelper.parseBool(cometJson.get("is_home_team"));
+        player.id         = JsonHelper.parseString(cometJson.get("id"));
+        player.opponent   = JsonHelper.parseString(cometJson.get("opponent"));
+        player.position   = JsonHelper.parseString(cometJson.get("position"));
+        player.team       = JsonHelper.parseString(cometJson.get("team"));
+        player.fullName   = JsonHelper.parseString(cometJson.get("full_name"));
+        player.isHomeTeam = JsonHelper.parseBool(cometJson.get("is_home_team"));
 
         // Team abbreviation.
-        player.mTeamAbbreviation = JsonHelper.parseString(cometJson.get("abbr"));
+        player.teamAbbreviation = JsonHelper.parseString(cometJson.get("abbr"));
 
         return player;
     }
@@ -110,103 +96,25 @@ public class RestModelPlayer extends RestModel {
     // ============================================================================================================
 
     /**
-     * Fetch player id.
-     *
-     * @return Player id.
-     */
-    @SuppressWarnings("unused")
-    public String getId() {
-
-        return mId;
-    }
-
-    /**
-     * Fetch full name of player or team.
-     *
-     * @return Full name.
-     */
-    @SuppressWarnings("unused")
-    public String getFullName() {
-
-        return mFullName;
-    }
-
-    /**
-     * Fetch first name.
-     *
-     * @return First name.
-     */
-    @SuppressWarnings("unused")
-    public String getFirstName() {
-
-        return mFirstName;
-    }
-
-    /**
-     * Fetch last name.
-     *
-     * @return Last name.
-     */
-    @SuppressWarnings("unused")
-    public String getLastName() {
-
-        return mLastName;
-    }
-
-    /**
-     * Fetch team name.
-     *
-     * @return Team name.
-     */
-    @SuppressWarnings("unused")
-    public String getTeam() {
-        return mTeam;
-    }
-
-    /**
-     * Fetch player position.
-     *
-     * @return Player position.
-     */
-    @SuppressWarnings("unused")
-    public String getPosition() {
-
-        return mPosition;
-    }
-
-    /**
-     * Fetch opponent.
-     *
-     * @return Opponent.
-     */
-    @SuppressWarnings("unused")
-    public String getOpponent() {
-
-        return mOpponent;
-    }
-
-    /**
      * Fetch url of player photo.
-     *
-     * @return Player photo url.
      */
     @SuppressWarnings("unused")
     public String getPhotoUrl() {
 
         String baseUrl = "players/";
 
-        if (mTeamAbbreviation != null) {
+        if (teamAbbreviation != null) {
 
             // Url for teams.
-            return baseUrl + "def/" + mTeamAbbreviation.toLowerCase() + ".jpg";
+            return baseUrl + "def/" + teamAbbreviation.toLowerCase() + ".jpg";
         }
 
-        if (mFullName != null && mPosition != null && mTeam != null) {
+        if (fullName != null && position != null && team != null) {
 
             // Fetch photo url components.
-            String componentName = mFullName.replace(" ", "_").replace(".", "").toLowerCase();
-            String componentPosition = mPosition.toLowerCase();
-            String componentTeam = mTeam.toLowerCase();
+            String componentName = fullName.replace(" ", "_").replace(".", "").toLowerCase();
+            String componentPosition = position.toLowerCase();
+            String componentTeam = team.toLowerCase();
 
             // Construct path.
             String path = componentName + "_" + componentPosition + "_" + componentTeam;
@@ -215,32 +123,6 @@ public class RestModelPlayer extends RestModel {
         }
 
         return null;
-    }
-
-    /**
-     * Is this a home team.
-     *
-     * @return Is home team.
-     */
-    @SuppressWarnings("unused")
-    public boolean getIsHomeTeam() {
-
-        return mIsHomeTeam;
-    }
-
-    // endregion
-
-    // region Callbacks
-    // ============================================================================================================
-
-    public interface CallbackPlayer {
-
-        public void onSuccess(RestModelPlayer player);
-    }
-
-    public interface CallbackPlayers {
-
-        public void onSuccess(List<RestModelPlayer> players);
     }
 
     // endregion

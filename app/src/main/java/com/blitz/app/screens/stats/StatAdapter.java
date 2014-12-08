@@ -13,7 +13,7 @@ import com.blitz.app.R;
 /**
  * Created by Nate on 9/24/14. Copyright 2014 Blitz Studios
  */
-public class StatAdapter extends ArrayAdapter {
+public class StatAdapter extends ArrayAdapter<String> {
 
     final String[] mStatNames;
     final float[] mStatValues;

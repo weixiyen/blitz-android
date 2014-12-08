@@ -117,38 +117,41 @@ public class ViewModelLeaderboard extends ViewModel {
                         }
 
                         // Then fetch their item info (avatars).
-                        RestModelItem.fetchItems(null, userAvatarIds, ELEMENTS_TO_FETCH,
-                                items -> {
+                        RestModelItem.fetchItems(null, userAvatarIds, ELEMENTS_TO_FETCH, new RestResults<RestModelItem>() {
 
-                                    if (mSelected != TOP_150_PLAYERS) {
+                            @Override
+                            public void onSuccess(List<RestModelItem> object) {
 
-                                        return;
+                                if (mSelected != TOP_150_PLAYERS) {
+
+                                    return;
+                                }
+
+                                Map<String, String> itemUrls = new HashMap<>();
+
+                                // For each unique item.
+                                for (RestModelItem item: object) {
+
+                                    // Convert into a map of id to image path.
+                                    if (!itemUrls.containsKey(item.getId())) {
+                                        itemUrls.put(item.getId(), item.getDefaultImgPath());
                                     }
+                                }
 
-                                    Map<String, String> itemUrls = new HashMap<>();
+                                // Now or each avatar id.
+                                for (String avatarId : userAvatarIds) {
 
-                                    // For each unique item.
-                                    for (RestModelItem item: items) {
+                                    // Populate associated avatar url.
+                                    userAvatarUrls.add(itemUrls.get(avatarId));
+                                }
 
-                                        // Convert into a map of id to image path.
-                                        if (!itemUrls.containsKey(item.getId())) {
-                                            itemUrls.put(item.getId(), item.getDefaultImgPath());
-                                        }
-                                    }
-
-                                    // Now or each avatar id.
-                                    for (String avatarId : userAvatarIds) {
-
-                                        // Populate associated avatar url.
-                                        userAvatarUrls.add(itemUrls.get(avatarId));
-                                    }
-
-                                    if (getCallbacks(Callbacks.class) != null) {
-                                        getCallbacks(Callbacks.class)
-                                                .onLeadersReceived(userIds, userNames, userWins,
-                                                        userLosses, userRatings, userAvatarUrls);
-                                    }
-                                });
+                                if (getCallbacks(Callbacks.class) != null) {
+                                    getCallbacks(Callbacks.class)
+                                            .onLeadersReceived(userIds, userNames, userWins,
+                                                    userLosses, userRatings, userAvatarUrls);
+                                }
+                            }
+                        });
                     }
                 });
     }

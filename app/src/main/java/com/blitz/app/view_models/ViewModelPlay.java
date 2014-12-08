@@ -209,13 +209,16 @@ public class ViewModelPlay extends ViewModel {
     private void updateHelmet() {
 
         // Fetch associated item model.
-        RestModelItem.fetchItem(mActivity, mUserAvatarId,
-                item -> {
+        RestModelItem.fetchItem(mActivity, mUserAvatarId, new RestResult<RestModelItem>() {
 
-                    if (getCallbacks(Callbacks.class) != null) {
-                        getCallbacks(Callbacks.class).onAvatarUrl(item.getDefaultImgPath());
-                    }
-                });
+            @Override
+            public void onSuccess(RestModelItem object) {
+
+                if (getCallbacks(Callbacks.class) != null) {
+                    getCallbacks(Callbacks.class).onAvatarUrl(object.getDefaultImgPath());
+                }
+            }
+        });
     }
 
     /**
@@ -348,7 +351,7 @@ public class ViewModelPlay extends ViewModel {
                     public void onSuccess(RestModelPreferences object) {
 
                         // Get the queue availability.
-                        mQueueAvailable = object.getIsQueueAvailable();
+                        mQueueAvailable = object.isQueueAvailable();
 
                         if (getCallbacks(Callbacks.class) != null) {
                             getCallbacks(Callbacks.class).onQueueAvailable(mQueueAvailable);

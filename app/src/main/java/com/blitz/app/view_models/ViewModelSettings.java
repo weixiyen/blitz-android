@@ -6,6 +6,7 @@ import android.content.pm.PackageManager;
 import com.blitz.app.rest_models.RestResult;
 import com.blitz.app.rest_models.RestModelItem;
 import com.blitz.app.rest_models.RestModelUser;
+import com.blitz.app.rest_models.RestResults;
 import com.blitz.app.utilities.android.BaseActivity;
 import com.blitz.app.utilities.authentication.AuthHelper;
 
@@ -90,16 +91,16 @@ public class ViewModelSettings extends ViewModel {
 
         // Fetch avatars owned by this user.
         RestModelItem.fetchItemsOwnedByUser(mActivity, AuthHelper.instance().getUserId(),
-                new RestModelItem.CallbackItems() {
+                new RestResults<RestModelItem>() {
 
-                    @Override
-                    public void onSuccess(List<RestModelItem> items) {
+            @Override
+            public void onSuccess(List<RestModelItem> object) {
 
-                        mUserAvatars = items;
+                mUserAvatars = object;
 
-                        trySyncAvatars();
-                    }
-                });
+                trySyncAvatars();
+            }
+        });
     }
 
     /**
@@ -122,12 +123,10 @@ public class ViewModelSettings extends ViewModel {
 
                         // Fetch associated item model.
                         RestModelItem.fetchItem(mActivity, user.getAvatarId(),
-                                new RestModelItem.CallbackItem() {
-
+                                new RestResult<RestModelItem>() {
                                     @Override
-                                    public void onSuccess(RestModelItem item) {
-
-                                        mUserAvatarIdCurrent = item.getId();
+                                    public void onSuccess(RestModelItem object) {
+                                        mUserAvatarIdCurrent = object.getId();
 
                                         trySyncAvatars();
                                     }

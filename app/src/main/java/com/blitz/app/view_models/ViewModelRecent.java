@@ -196,34 +196,39 @@ public class ViewModelRecent extends ViewModel {
     private void processUserItems(final List<SummaryDraft> matches,
                                   final List<String> userAvatarIds, final int week) {
 
-        RestModelItem.fetchItems(mActivity, userAvatarIds, userAvatarIds.size(), items -> {
+        RestModelItem.fetchItems(mActivity, userAvatarIds, userAvatarIds.size(),
+                new RestResults<RestModelItem>() {
 
-            // If the week has since changed,
-            // ignore these results.
-            if (mWeekSelected != week) {
+            @Override
+            public void onSuccess(List<RestModelItem> object) {
 
-                return;
-            }
+                // If the week has since changed,
+                // ignore these results.
+                if (mWeekSelected != week) {
 
-            Map<String, String> itemUrls = new HashMap<>();
-
-            // For each unique item.
-            for (RestModelItem item : items) {
-
-                // Convert into a map of id to image path.
-                if (!itemUrls.containsKey(item.getId())) {
-                    itemUrls.put(item.getId(), item.getDefaultImgPath());
+                    return;
                 }
-            }
 
-            // Populate avatar urls.
-            for (SummaryDraft draft : matches) {
+                Map<String, String> itemUrls = new HashMap<>();
 
-                draft.setAvatarUrls(itemUrls);
-            }
+                // For each unique item.
+                for (RestModelItem item : object) {
 
-            if (mCallbacks != null) {
-                mCallbacks.onDrafts(matches, new SummaryDrafts(matches), week);
+                    // Convert into a map of id to image path.
+                    if (!itemUrls.containsKey(item.getId())) {
+                        itemUrls.put(item.getId(), item.getDefaultImgPath());
+                    }
+                }
+
+                // Populate avatar urls.
+                for (SummaryDraft draft : matches) {
+
+                    draft.setAvatarUrls(itemUrls);
+                }
+
+                if (mCallbacks != null) {
+                    mCallbacks.onDrafts(matches, new SummaryDrafts(matches), week);
+                }
             }
         });
     }

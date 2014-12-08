@@ -6,30 +6,21 @@ import android.support.annotation.NonNull;
 import com.blitz.app.utilities.app.AppConfig;
 import com.google.gson.annotations.SerializedName;
 
+import lombok.Getter;
+
 /**
  * Created by Miguel Gaeta on 6/26/14. Copyright 2014 Blitz Studios
  */
-@SuppressWarnings("unused")
+@SuppressWarnings("UnusedDeclaration")
 public class RestModelPreferences extends RestModel {
 
     // region Member Variables
     // ============================================================================================================
 
-    // Current year.
-    @SerializedName("current_year")
-    private int mCurrentYear;
-
-    // Current draft week.
-    @SerializedName("current_week")
-    private int mCurrentWeek;
-
-    // Is a queue available.
-    @SerializedName("queue_available")
-    private boolean mQueueAvailable;
-
-    // What queue are we in.
-    @SerializedName("current_active_queue")
-    private String mCurrentActiveQueue;
+    @SerializedName("current_year") @Getter         private int currentYear;
+    @SerializedName("current_week") @Getter         private int currentWeek;
+    @SerializedName("queue_available") @Getter      private boolean queueAvailable;
+    @SerializedName("current_active_queue") @Getter private String currentActiveQueue;
 
     // endregion
 
@@ -48,64 +39,15 @@ public class RestModelPreferences extends RestModel {
             if (AppConfig.isDraftSimulationEnabled()) {
 
                 // Drafts always on.
-                result.mQueueAvailable = true;
+                result.queueAvailable = true;
 
                 // Testing queue.
-                result.mCurrentActiveQueue = "football_heads_up_draft_free";
+                result.currentActiveQueue = "football_heads_up_draft_free";
             }
 
             callback.onSuccess(result);
 
         }, null));
-    }
-
-    // endregion
-
-    // region Public Methods
-    // ============================================================================================================
-
-    /**
-     * Fetch active queue (time based).
-     *
-     * @return Active queue.
-     */
-    @SuppressWarnings("unused")
-    public String getCurrentActiveQueue() {
-
-        return mCurrentActiveQueue;
-    }
-
-    /**
-     * Get current drafting week.
-     *
-     * @return Current drafting week.
-     */
-    @SuppressWarnings("unused")
-    public int getCurrentWeek() {
-
-        return mCurrentWeek;
-    }
-
-    /**
-     * Get current drafting year.
-     *
-     * @return Current drafting year.
-     */
-    @SuppressWarnings("unused")
-    public int getCurrentYear() {
-
-        return mCurrentYear;
-    }
-
-    /**
-     * Is the queue available.
-     *
-     * @return Yes or no.
-     */
-    @SuppressWarnings("unused")
-    public boolean getIsQueueAvailable() {
-
-        return mQueueAvailable;
     }
 
     // endregion

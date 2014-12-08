@@ -148,20 +148,22 @@ public class ViewModelMatchup extends ViewModel {
             playerIds.add(pick.getPlayerId());
         }
 
-        RestModelPlayer.fetchPlayers(null, playerIds,
-                players -> {
+        RestModelPlayer.fetchPlayers(null, playerIds, new RestResults<RestModelPlayer>() {
 
-                    Map<String, RestModelPlayer> playerMap = new HashMap<>();
+            @Override
+            public void onSuccess(List<RestModelPlayer> object) {
 
-                    for (RestModelPlayer player : players) {
+                Map<String, RestModelPlayer> playerMap = new HashMap<>();
 
-                        playerMap.put(player.getId(), player);
-                    }
+                for (RestModelPlayer player : object) {
 
-                    populateRosters(playerMap);
-                    onSyncComplete();
-                });
+                    playerMap.put(player.getId(), player);
+                }
 
+                populateRosters(playerMap);
+                onSyncComplete();
+            }
+        });
 
         final int week = mDraft.getWeek();
         final int year = mDraft.getYear();
