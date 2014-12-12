@@ -125,15 +125,15 @@ interface RestAPI {
 
     @POST("/queue")
     void queue_post(@Body JsonObject body,
-        RestAPICallback<JsonObject> callback);
+        RestAPICallback<RestModelQueue> callback);
 
     @DELETE("/queue/{draft_key}")
     void queue_delete(@Path("draft_key") String draftKey,
-        RestAPICallback<JsonObject> callback);
+        RestAPICallback<RestModelQueue> callback);
 
     @PUT("/queue")
     void queue_put(@Body JsonObject body,
-        RestAPICallback<JsonObject> callback);
+        RestAPICallback<RestModelQueue> callback);
 
     @GET("/stats")
     void stats_get(@Query("keys[]") List<String> keys,   // Required

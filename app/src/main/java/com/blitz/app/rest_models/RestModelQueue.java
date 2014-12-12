@@ -3,94 +3,71 @@ package com.blitz.app.rest_models;
 import android.app.Activity;
 import android.support.annotation.NonNull;
 
-import com.blitz.app.utilities.authentication.AuthHelper;
+import com.blitz.app.libraries.general.gson.MGGson;
 import com.google.gson.JsonObject;
+import com.google.gson.annotations.SerializedName;
+
+import lombok.Getter;
 
 /**
  * Created by mrkcsc on 7/20/14. Copyright 2014 Blitz Studios
  */
+@SuppressWarnings("UnusedDeclaration")
 public class RestModelQueue extends RestModel {
 
     // region Member Variables
     // ============================================================================================================
 
-    // Current active draft key,
-    // static to preserve state.
-    private static String mDraftKey;
+    @SerializedName("success") @Getter private boolean success;
 
     // endregion
 
-    // region Public Methods
+    // region REST Calls
     // ============================================================================================================
 
     /**
      * Add user to draft queue.  Requires a draft
      * key to be set.
-     *
-     * @param activity Activity for dialogs.
-     * @param callback Callback.
      */
-    @SuppressWarnings("unused")
-    public void queueUp(final Activity activity, @NonNull Runnable callback) {
+    public static void queueUp(Activity activity,
+                               @NonNull String draftKey,
+                               @NonNull RestResult<RestModelQueue> callback) {
 
-        // First sync preferences to get the active draft key.
-        AuthHelper.instance().getPreferences(activity, true,
-                new RestResult<RestModelPreferences>() {
+        // Construct POST body.
+        JsonObject body = MGGson.addProperty("draft_key", draftKey);
 
-                    @Override
-                    public void onSuccess(RestModelPreferences object) {
-
-                        // Set draft key to the active queue.
-                        mDraftKey = object.getCurrentActiveQueue();
-
-                        // Construct POST body.
-                        JsonObject body = new JsonObject();
-                        body.addProperty("draft_key", mDraftKey);
-
-                        // Make api call.
-                        restAPI.queue_post(body, new RestAPICallback<>(activity, result -> callback.run(), null));
-                    }
-                });
+        // Make api call.
+        restAPI.queue_post(body, new RestAPICallback<>(activity,
+                callback::onSuccess, null));
     }
 
     /**
      * Remove user from the draft queue.  Requires a
      * draft key to be set.
-     *
-     * @param activity Activity for dialogs.
-     * @param callback Callback.
      */
-    @SuppressWarnings("unused")
-    public void leaveQueue(Activity activity, @NonNull Runnable callback) {
-
-        if (mDraftKey == null) {
-            return;
-        }
+    public static void leaveQueue(Activity activity,
+                                  @NonNull String draftKey,
+                                  @NonNull RestResult<RestModelQueue> callback) {
 
         // Make api call.
-        restAPI.queue_delete(mDraftKey, new RestAPICallback<>(activity, result -> callback.run(), null));
+        restAPI.queue_delete(draftKey, new RestAPICallback<>(activity,
+                callback::onSuccess, null));
     }
 
     /**
      * Confirm user match in the draft queue. Requires
      * a draft key to be set.
-     *
-     * @param activity Activity for dialogs.
-     * @param callback Callback.
      */
-    @SuppressWarnings("unused")
-    public void confirmQueue(Activity activity, @NonNull Runnable callback) {
-
-        if (mDraftKey == null) {
-            return;
-        }
+    public static void confirmQueue(Activity activity,
+                             @NonNull String draftKey,
+                             @NonNull RestResult<RestModelQueue> callback) {
 
         // Construct PUT body.
-        JsonObject body = new JsonObject();
-                   body.addProperty("draft_key", mDraftKey);
+        JsonObject body = MGGson.addProperty("draft_key", draftKey);
 
         // Make api call.
-        restAPI.queue_put(body, new RestAPICallback<>(activity, result -> callback.run(), null));
+        restAPI.queue_put(body, new RestAPICallback<>(activity,
+                callback::onSuccess, null));
     }
 
     // endregion

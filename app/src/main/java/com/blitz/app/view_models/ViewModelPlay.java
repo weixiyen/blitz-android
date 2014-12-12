@@ -29,9 +29,6 @@ public class ViewModelPlay extends ViewModel {
     private int      mSecondsInQueue = -1;
     private Handler  mSecondsInQueueHandler;
 
-    // Object model.
-    private RestModelQueue mModelQueue = new RestModelQueue();
-
     // Are we in queue.
     private boolean mInQueue;
 
@@ -148,12 +145,44 @@ public class ViewModelPlay extends ViewModel {
         if (mInQueue) {
 
             // Leave the queue.
-            mModelQueue.leaveQueue(mActivity, () -> { });
+            AuthHelper.instance().getPreferences(mActivity, false,
+                new RestResult<RestModelPreferences>() {
+
+                    @Override
+                    public void onSuccess(RestModelPreferences object) {
+
+                        // Join the draft.
+                        RestModelQueue.leaveQueue(mActivity, object.getCurrentActiveQueue(),
+                            new RestResult<RestModelQueue>() {
+
+                                @Override
+                                public void onSuccess(RestModelQueue object) {
+
+                                }
+                            });
+                    }
+                });
 
         } else {
 
             // Enter the queue.
-            mModelQueue.queueUp(mActivity, () -> { });
+            AuthHelper.instance().getPreferences(mActivity, true,
+                new RestResult<RestModelPreferences>() {
+
+                    @Override
+                    public void onSuccess(RestModelPreferences object) {
+
+                        // Join the draft.
+                        RestModelQueue.queueUp(mActivity, object.getCurrentActiveQueue(),
+                            new RestResult<RestModelQueue>() {
+
+                                @Override
+                                public void onSuccess(RestModelQueue object) {
+
+                                }
+                            });
+                    }
+                });
         }
 
         showQueueContainer(!mInQueue, true);

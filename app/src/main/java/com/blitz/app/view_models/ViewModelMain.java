@@ -1,6 +1,7 @@
 package com.blitz.app.view_models;
 
 import com.blitz.app.rest_models.RestModelDraft;
+import com.blitz.app.rest_models.RestModelPreferences;
 import com.blitz.app.rest_models.RestModelQueue;
 import com.blitz.app.rest_models.RestResult;
 import com.blitz.app.screens.main.MainScreen;
@@ -14,14 +15,6 @@ import com.google.gson.JsonObject;
  * Created by mrkcsc on 7/27/14. Copyright 2014 Blitz Studios
  */
 public class ViewModelMain extends ViewModel {
-
-    // region Member Variables
-    // ============================================================================================================
-
-    // Queue model.
-    private RestModelQueue mModelQueue;
-
-    // endregion
 
     // region Constructor
     // ============================================================================================================
@@ -61,8 +54,23 @@ public class ViewModelMain extends ViewModel {
      */
     public void leaveQueue() {
 
-        // Leave the queue.
-        getModelQueue().leaveQueue(mActivity, () -> { });
+        AuthHelper.instance().getPreferences(mActivity, false,
+            new RestResult<RestModelPreferences>() {
+
+                @Override
+                public void onSuccess(RestModelPreferences object) {
+
+                    // Leave the draft.
+                    RestModelQueue.leaveQueue(mActivity, object.getCurrentActiveQueue(),
+                        new RestResult<RestModelQueue>() {
+
+                            @Override
+                            public void onSuccess(RestModelQueue object) {
+
+                            }
+                        });
+                }
+            });
     }
 
     /**
@@ -70,13 +78,26 @@ public class ViewModelMain extends ViewModel {
      */
     public void confirmQueue() {
 
-        // Join the draft.
-        getModelQueue().confirmQueue(mActivity, () -> {
+        AuthHelper.instance().getPreferences(mActivity, false,
+            new RestResult<RestModelPreferences>() {
 
-            if (getCallbacks(Callbacks.class) != null) {
-                getCallbacks(Callbacks.class).onConfirmQueue(ViewModelMain.this);
-            }
-        });
+                @Override
+                public void onSuccess(RestModelPreferences object) {
+
+                    // Join the draft.
+                    RestModelQueue.confirmQueue(mActivity, object.getCurrentActiveQueue(),
+                        new RestResult<RestModelQueue>() {
+
+                            @Override
+                            public void onSuccess(RestModelQueue object) {
+
+                                if (getCallbacks(Callbacks.class) != null) {
+                                    getCallbacks(Callbacks.class).onConfirmQueue(ViewModelMain.this);
+                                }
+                            }
+                        });
+                }
+            });
     }
 
     // endregion
@@ -159,21 +180,6 @@ public class ViewModelMain extends ViewModel {
                     break;
             }
         }
-    }
-
-    /**
-     * Fetch queue model instance.
-     *
-     * @return Queue model instance.
-     */
-    private RestModelQueue getModelQueue() {
-
-        // Lazy load the model.
-        if (mModelQueue == null) {
-            mModelQueue = new RestModelQueue();
-        }
-
-        return mModelQueue;
     }
 
     // endregion
