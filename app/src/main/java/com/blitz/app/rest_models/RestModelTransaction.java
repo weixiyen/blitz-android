@@ -3,7 +3,6 @@ package com.blitz.app.rest_models;
 import android.app.Activity;
 import android.support.annotation.NonNull;
 
-import com.blitz.app.utilities.json.JsonHelperObject;
 import com.google.gson.JsonObject;
 import com.google.gson.annotations.SerializedName;
 
@@ -49,9 +48,11 @@ public class RestModelTransaction extends RestModel {
     public static void postTransactionWithParams(Activity activity, String type, int amount, String nonce,
                                                  @NonNull RestResult<RestModelTransaction> callback) {
 
-        JsonObject body = JsonHelperObject.addProperties(
-                Arrays.asList("type", "amount", "nonce"),
-                Arrays.asList(type, Integer.toString(amount), nonce));
+        JsonObject body = new JsonObject();
+
+        body.addProperty("type", type);
+        body.addProperty("amount", amount);
+        body.addProperty("nonce", nonce);
 
         restAPI.transactions_post(body, new RestAPICallback<>(activity,
                 (result) -> callback.onSuccess(result.getResult()), null));

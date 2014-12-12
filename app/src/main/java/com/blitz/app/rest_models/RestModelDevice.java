@@ -3,11 +3,10 @@ package com.blitz.app.rest_models;
 import android.app.Activity;
 import android.support.annotation.NonNull;
 
-import com.blitz.app.utilities.json.JsonHelperObject;
+import com.blitz.app.libraries.general.json.MGJsonObjectBuilder;
 import com.google.gson.JsonObject;
 import com.google.gson.annotations.SerializedName;
 
-import java.util.Arrays;
 import java.util.Date;
 
 import lombok.Getter;
@@ -67,9 +66,10 @@ public class RestModelDevice extends RestModel {
                               @NonNull String deviceId,
                               @NonNull RestResult<RestModelDevice> callback) {
 
-        JsonObject body = JsonHelperObject.addProperties(
-                Arrays.asList("device_id",  "device_type", "push_notification_enabled"),
-                Arrays.asList(deviceId, "ANDROID", Boolean.toString(false)));
+        JsonObject body = MGJsonObjectBuilder.create()
+                .addProperty("device_id", deviceId)
+                .addProperty("device_type", "ANDROID")
+                .addProperty("push_notification_enabled", false).get();
 
         // Make rest call for code.
         restAPI.devices_post(body, new RestAPICallback<>(activity,
@@ -118,10 +118,7 @@ public class RestModelDevice extends RestModel {
         }
 
         // Create body.
-        JsonObject body = new JsonObject();
-
-        // Add replace object.
-        body.add("replace", replace);
+        JsonObject body = MGJsonObjectBuilder.create().add("replace", replace).get();
 
         // Make rest call for code.
         restAPI.device_patch(id, body, new RestAPICallback<>(activity,

@@ -3,7 +3,7 @@ package com.blitz.app.rest_models;
 import android.app.Activity;
 import android.support.annotation.NonNull;
 
-import com.blitz.app.libraries.general.gson.MGGson;
+import com.blitz.app.libraries.general.json.MGJsonObjectBuilder;
 import com.google.gson.JsonObject;
 import com.google.gson.annotations.SerializedName;
 
@@ -34,7 +34,7 @@ public class RestModelQueue extends RestModel {
                                @NonNull RestResult<RestModelQueue> callback) {
 
         // Construct POST body.
-        JsonObject body = MGGson.addProperty("draft_key", draftKey);
+        JsonObject body = MGJsonObjectBuilder.create().addProperty("draft_key", draftKey).get();
 
         // Make api call.
         restAPI.queue_post(body, new RestAPICallback<>(activity,
@@ -63,7 +63,7 @@ public class RestModelQueue extends RestModel {
                              @NonNull RestResult<RestModelQueue> callback) {
 
         // Construct PUT body.
-        JsonObject body = MGGson.addProperty("draft_key", draftKey);
+        JsonObject body = MGJsonObjectBuilder.create().addProperty("draft_key", draftKey).get();
 
         // Make api call.
         restAPI.queue_put(body, new RestAPICallback<>(activity,

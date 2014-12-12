@@ -3,8 +3,8 @@ package com.blitz.app.rest_models;
 import android.app.Activity;
 import android.support.annotation.NonNull;
 
+import com.blitz.app.libraries.general.json.MGJsonObjectBuilder;
 import com.blitz.app.utilities.authentication.AuthHelper;
-import com.blitz.app.utilities.json.JsonHelperObject;
 import com.google.gson.JsonObject;
 import com.google.gson.annotations.SerializedName;
 
@@ -50,8 +50,9 @@ public class RestModelUser extends RestModel {
     public static void updateAvatar(Activity activity, @NonNull String avatarId,
                                     @NonNull RestResult<RestModelUser> callback) {
 
-        JsonObject body = JsonHelperObject.add("replace",
-                JsonHelperObject.addProperty("avatar_id", avatarId));
+        JsonObject body = MGJsonObjectBuilder.create()
+                .add("replace", MGJsonObjectBuilder.create()
+                        .addProperty("avatar_id", avatarId).get()).get();
 
         // Make rest call for code.
         restAPI.user_patch(body, new RestAPICallback<>(activity,
@@ -141,9 +142,10 @@ public class RestModelUser extends RestModel {
         // Authentication operation.
         operation.setAuthenticating(true);
 
-        JsonObject body = JsonHelperObject.addProperties(
-                Arrays.asList("email", "username", "password"),
-                Arrays.asList(email, username, password));
+        JsonObject body = MGJsonObjectBuilder.create()
+                .addProperty("email", email)
+                .addProperty("username", username)
+                .addProperty("password", password).get();
 
         // Make rest call for code.
         restAPI.users_post(body, operation);
@@ -175,9 +177,9 @@ public class RestModelUser extends RestModel {
         // Authentication operation.
         operation.setAuthenticating(true);
 
-        JsonObject body = JsonHelperObject.addProperties(
-                Arrays.asList("username", "password"),
-                Arrays.asList(username, password));
+        JsonObject body = MGJsonObjectBuilder.create()
+                .addProperty("username", username)
+                .addProperty("password", password).get();
 
         // Make auth rest call.
         restAPI.auth_post(body, operation);
