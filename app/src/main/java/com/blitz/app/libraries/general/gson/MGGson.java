@@ -65,4 +65,27 @@ public class MGGson {
 
         return addProperties(new JsonObject(), properties);
     }
+
+    /**
+     * Add a json object property, creating
+     * a new object and returning it.
+     */
+    public static JsonObject addProperty(@NonNull String property,
+                                         @NonNull String value) {
+
+        return addProperty(new JsonObject(), property, value);
+    }
+
+    /**
+     * Add a property to an existing json object
+     * and return it for chaining purposes.S
+     */
+    public static JsonObject addProperty(@NonNull JsonObject jsonObject,
+                                         @NonNull String property,
+                                         @NonNull String value) {
+
+        jsonObject.addProperty(property, value);
+
+        return jsonObject;
+    }
 }
