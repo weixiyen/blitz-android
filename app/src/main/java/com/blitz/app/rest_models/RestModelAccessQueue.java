@@ -10,18 +10,15 @@ import lombok.Getter;
 /**
  * Created by mrkcsc on 8/9/14. Copyright 2014 Blitz Studios
  */
+@SuppressWarnings("UnusedDeclaration")
 public class RestModelAccessQueue extends RestModel {
 
     // region Member Variables
     // ============================================================================================================
 
-    @SuppressWarnings("unused") @SerializedName("people_ahead") @Getter
-    private int peopleAhead;
-    @SuppressWarnings("unused") @SerializedName("people_behind") @Getter
-    private int peopleBehind;
-
-    @SuppressWarnings("unused") @SerializedName("access_granted") @Getter
-    private boolean accessGranted;
+    @SerializedName("people_ahead")   @Getter private int peopleAhead;
+    @SerializedName("people_behind")  @Getter private int peopleBehind;
+    @SerializedName("access_granted") @Getter private boolean accessGranted;
 
     // endregion
 

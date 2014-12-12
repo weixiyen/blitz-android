@@ -13,29 +13,27 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
+import lombok.Getter;
+
 /**
  * Created by mrkcsc on 10/27/14. Copyright 2014 Blitz Studios
  */
-@SuppressWarnings("MismatchedQueryAndUpdateOfCollection")
+@SuppressWarnings("UnusedDeclaration, MismatchedQueryAndUpdateOfCollection")
 public class RestModelGroup extends RestModel {
 
     // region Member Variables
     // ============================================================================================================
 
-    @SuppressWarnings("unused") @SerializedName("id")             private String mId;
-    @SuppressWarnings("unused") @SerializedName("chat_id")        private String mChatId;
-    @SuppressWarnings("unused") @SerializedName("name")           private String mName;
-    @SuppressWarnings("unused") @SerializedName("name_lowercase") private String mNameLowercase;
-
-    @SuppressWarnings("unused") @SerializedName("rank")   private Integer mRank;
-    @SuppressWarnings("unused") @SerializedName("rating") private Integer mRating;
-
-    @SuppressWarnings("unused") @SerializedName("recruiting") private Boolean mRecruiting;
-
-    @SuppressWarnings("unused") @SerializedName("members") private List<String> mMemberIds;
-
-    @SuppressWarnings("unused") @SerializedName("user_info") private Map<String, RestModelUser> mMembers;
-    @SuppressWarnings("unused") @SerializedName("role_map")  private Map<String, String> mRoleMap;
+    @SerializedName("id")             @Getter private String id;
+    @SerializedName("chat_id")        @Getter private String chatId;
+    @SerializedName("name")           @Getter private String name;
+    @SerializedName("name_lowercase") @Getter private String nameLowercase;
+    @SerializedName("rank")           @Getter private Integer rank;
+    @SerializedName("rating")         @Getter private Integer rating;
+    @SerializedName("recruiting")     @Getter private boolean recruiting;
+    @SerializedName("members")        @Getter private List<String> memberIds;
+    @SerializedName("user_info")      @Getter private Map<String, RestModelUser> members;
+    @SerializedName("role_map")       @Getter private Map<String, String> roleMap;
 
     // endregion
 
@@ -49,7 +47,6 @@ public class RestModelGroup extends RestModel {
      * @param groupId Group id.
      * @param callback Callback.
      */
-    @SuppressWarnings("unused")
     public static void getGroupWithId(Activity activity, String groupId,
                                       @NonNull RestResult<RestModelGroup> callback) {
 
@@ -64,14 +61,9 @@ public class RestModelGroup extends RestModel {
      * @param groupName Group name.
      * @param callback Callback.
      */
-    @SuppressWarnings("unused")
-    public static void getGroupWithName(Activity activity, String groupName,
+    public static void getGroupWithName(Activity activity,
+                                        @NonNull String groupName,
                                         @NonNull RestResult<RestModelGroup> callback) {
-
-        if (groupName == null) {
-
-            return;
-        }
 
         // Fetch by user id.
         List<String> keys = Arrays.asList(groupName.toLowerCase());
@@ -97,7 +89,6 @@ public class RestModelGroup extends RestModel {
      * @param userId User id.
      * @param callback Callback.
      */
-    @SuppressWarnings("unused")
     public static void getGroupsForUserId(Activity activity, String userId,
                                           @NonNull RestResults<RestModelGroup> callback) {
 
@@ -115,7 +106,6 @@ public class RestModelGroup extends RestModel {
     /**
      * Get groups that are recruiting.
      */
-    @SuppressWarnings("unused")
     public static void getGroupsRecruitingWithLimit(Activity activity, Integer limit,
                                                     @NonNull RestResults<RestModelGroup> callback) {
 
@@ -146,7 +136,6 @@ public class RestModelGroup extends RestModel {
      * @param limit Limit.
      * @param callback Callback.
      */
-    @SuppressWarnings("unused")
     public static void getTopGroupsWithLimit(Activity activity, Integer limit,
                                              @NonNull RestResults<RestModelGroup> callback) {
 
@@ -168,7 +157,6 @@ public class RestModelGroup extends RestModel {
      * @param groupName Group name.
      * @param callback Callback.
      */
-    @SuppressWarnings("unused")
     public static void createGroupWithName(Activity activity, String groupName,
                                            @NonNull RestResult<RestModelGroup> callback) {
 
@@ -188,7 +176,6 @@ public class RestModelGroup extends RestModel {
      * @param groupId Group id.
      * @param callback Callback.
      */
-    @SuppressWarnings("unused")
     public static void joinGroupWithId(Activity activity, String groupId,
                                        @NonNull RestResult<RestModelGroup> callback) {
 
@@ -212,7 +199,6 @@ public class RestModelGroup extends RestModel {
      * @param recruiting Recruiting enabled.
      * @param callback Callback.
      */
-    @SuppressWarnings("unused")
     public static void updateRecruitingStatusForGroup(Activity activity, String groupId, Boolean recruiting,
                                                       @NonNull RestResult<RestModelGroup> callback) {
 
@@ -234,110 +220,10 @@ public class RestModelGroup extends RestModel {
     // ============================================================================================================
 
     /**
-     * Get id.
-     *
-     * @return Id.
-     */
-    @SuppressWarnings("unused")
-    public String getId() {
-
-        return mId;
-    }
-
-    /**
-     * Get chat id.
-     *
-     * @return Chat id.
-     */
-    @SuppressWarnings("unused")
-    public String getChatId() {
-
-        return mChatId;
-    }
-
-    /**
-     * Get group name.
-     *
-     * @return Group name.
-     */
-    @SuppressWarnings("unused")
-    public String getName() {
-
-        return mName;
-    }
-
-    /**
-     * Group name lowercase.
-     *
-     * @return Group name lowercase.
-     */
-    @SuppressWarnings("unused")
-    public String getNameLowercase() {
-
-        return mNameLowercase;
-    }
-
-    /**
-     * Get group rank.
-     *
-     * @return Group rank.
-     */
-    @SuppressWarnings("unused")
-    public int getRank() {
-
-        return mRank != null ? mRank : 0;
-    }
-
-    /**
-     * Get group rating.
-     *
-     * @return Group rating.
-     */
-    @SuppressWarnings("unused")
-    public int getRating() {
-
-        return mRating;
-    }
-
-    /**
-     * Group member ids.
-     *
-     * @return Member ids.
-     */
-    @SuppressWarnings("unused")
-    public List<String> getMemberIds() {
-
-        return mMemberIds;
-    }
-
-    /**
-     * Get group members.
-     *
-     * @return Group members.
-     */
-    @SuppressWarnings("unused")
-    public Map<String, RestModelUser> getMembers() {
-
-        return mMembers;
-    }
-
-    /**
-     * Is this group recruiting.
-     *
-     * @return Is recruiting.
-     */
-    @SuppressWarnings("unused")
-    public boolean isRecruiting() {
-
-        return mRecruiting;
-    }
-
-    /**
      * Is the current user an officer.
      *
      * @return Is officer.
      */
-    @SuppressWarnings("unused")
     public boolean isCurrentUserOfficer() {
 
         return isUserOfficer(AuthHelper.instance().getUserId());
@@ -357,9 +243,9 @@ public class RestModelGroup extends RestModel {
      */
     private String getRoleForUserId(String userId) {
 
-        if (mRoleMap.containsKey(userId)) {
+        if (roleMap.containsKey(userId)) {
 
-            return mRoleMap.get(userId);
+            return roleMap.get(userId);
         }
 
         return null;

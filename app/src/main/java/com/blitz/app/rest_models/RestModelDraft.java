@@ -20,7 +20,7 @@ import lombok.Setter;
 /**
  * Created by mrkcsc on 7/27/14. Copyright 2014 Blitz Studios
  */
-@SuppressWarnings("MismatchedQueryAndUpdateOfCollection")
+@SuppressWarnings("MismatchedQueryAndUpdateOfCollection, UnusedDeclaration")
 public final class RestModelDraft extends RestModel {
 
     // region Member Variables
@@ -32,71 +32,36 @@ public final class RestModelDraft extends RestModel {
     // Map of players, used for live drafts only.
     private HashMap<String, RestModelPlayer> playerDataMap;
 
-    @SuppressWarnings("unused") @SerializedName("draft_start_buffer") @Getter
-    private int draftStartBuffer;
-    @SuppressWarnings("unused") @SerializedName("time_per_pick") @Getter
-    private int timePerPick;
-    @SuppressWarnings("unused") @SerializedName("time_per_postview") @Getter
-    private int timePerPostview;
-    @SuppressWarnings("unused") @SerializedName("time_per_preview") @Getter
-    private int timePerPreview;
-    @SuppressWarnings("unused") @SerializedName("rounds") @Getter
-    private int rounds;
-    @SuppressWarnings("unused") @SerializedName("users_needed")
-    private int usersNeeded;
-    @SuppressWarnings("unused") @SerializedName("week") @Getter
-    private int week;
-    @SuppressWarnings("unused") @SerializedName("year") @Getter
-    private int year;
-
-    @SuppressWarnings("unused") @SerializedName("id") @Getter
-    private String id;
-    @SuppressWarnings("unused") @SerializedName("chat_id")
-    private String chatId;
-    @SuppressWarnings("unused") @SerializedName("model")
-    private String model;
-    @SuppressWarnings("unused") @SerializedName("owner")
-    private String owner;
-    @SuppressWarnings("unused") @SerializedName("game_status") @Getter
-    private String gameStatus;
-    @SuppressWarnings("unused") @SerializedName("type")
-    private String type;
-    @SuppressWarnings("unused") @SerializedName("status")
-    private String status;
-
-    @SuppressWarnings("unused") @SerializedName("user_confirmed")
-    private boolean userConfirmed;
-
-    @SuppressWarnings("unused") @SerializedName("completed")
-    private Date completed;
-    @SuppressWarnings("unused") @SerializedName("created")
-    private Date created;
-    @SuppressWarnings("unused") @SerializedName("last_server_time")
-    private Date lastServerTime;
-    @SuppressWarnings("unused") @SerializedName("last_updated")
-    private Date lastUpdated;
-    @SuppressWarnings("unused") @SerializedName("started")
-    private Date started;
-    @SuppressWarnings("unused") @SerializedName("last_round_complete_time") @Getter @Setter
-    private Date lastRoundCompleteTime;
-
-    @SuppressWarnings("unused") @SerializedName("points")
-    private Map<String, Float> points;
-    @SuppressWarnings("unused") @SerializedName("rating_change")
-    private Map<String, Integer> ratingChange;
-    @SuppressWarnings("unused") @SerializedName("rosters") @Getter
-    private Map<String, List<String>> rosters;
-    @SuppressWarnings("unused") @SerializedName("user_info") @Getter
-    private Map<String, RestModelUser> userInfo;
-
-    @SuppressWarnings("unused") @SerializedName("positions_required") @Getter
-    private List<String> positionsRequired;
-    @SuppressWarnings("unused") @SerializedName("users") @Getter
-    private List<String> users;
-    @SuppressWarnings("unused") @SerializedName("picks") @Getter
-    private List<Pick> picks;
-    @SuppressWarnings("unused") @SerializedName("choices") @Getter
-    private List<List<String>> choices;
+    @SerializedName("draft_start_buffer")       @Getter private int draftStartBuffer;
+    @SerializedName("time_per_pick")            @Getter private int timePerPick;
+    @SerializedName("time_per_postview")        @Getter private int timePerPostview;
+    @SerializedName("time_per_preview")         @Getter private int timePerPreview;
+    @SerializedName("rounds")                   @Getter private int rounds;
+    @SerializedName("users_needed")             @Getter private int usersNeeded;
+    @SerializedName("week")                     @Getter private int week;
+    @SerializedName("year")                     @Getter private int year;
+    @SerializedName("id")                       @Getter private String id;
+    @SerializedName("chat_id")                  @Getter private String chatId;
+    @SerializedName("model")                    @Getter private String model;
+    @SerializedName("owner")                    @Getter private String owner;
+    @SerializedName("game_status")              @Getter private String gameStatus;
+    @SerializedName("type")                     @Getter private String type;
+    @SerializedName("status")                   @Getter private String status;
+    @SerializedName("user_confirmed")           @Getter private boolean userConfirmed;
+    @SerializedName("completed")                @Getter private Date completed;
+    @SerializedName("created")                  @Getter private Date created;
+    @SerializedName("last_server_time")         @Getter  private Date lastServerTime;
+    @SerializedName("last_updated")             @Getter private Date lastUpdated;
+    @SerializedName("started")                  @Getter private Date started;
+    @SerializedName("last_round_complete_time") @Getter @Setter private Date lastRoundCompleteTime;
+    @SerializedName("points")                   @Getter private Map<String, Float> points;
+    @SerializedName("rating_change")            @Getter private Map<String, Integer> ratingChange;
+    @SerializedName("rosters")                  @Getter private Map<String, List<String>> rosters;
+    @SerializedName("user_info")                @Getter private Map<String, RestModelUser> userInfo;
+    @SerializedName("positions_required")       @Getter private List<String> positionsRequired;
+    @SerializedName("users")                    @Getter private List<String> users;
+    @SerializedName("picks")                    @Getter private List<Pick> picks;
+    @SerializedName("choices")                  @Getter private List<List<String>> choices;
 
     // endregion
 
@@ -564,16 +529,16 @@ public final class RestModelDraft extends RestModel {
      */
     public static class Pick {
 
-        @SuppressWarnings("unused") @SerializedName("player_id") @Getter
+        @SerializedName("player_id") @Getter
         private String playerId;
-        @SuppressWarnings("unused") @SerializedName("user_id") @Getter
+        @SerializedName("user_id") @Getter
         private String userId;
-        @SuppressWarnings("unused") @SerializedName("position")
+        @SerializedName("position")
         private String position;
-        @SuppressWarnings("unused") @SerializedName("timestamp")
+        @SerializedName("timestamp")
         private String timestamp;
 
-        @SuppressWarnings("unused") @SerializedName("round")
+        @SerializedName("round")
         private int round;
 
         /**

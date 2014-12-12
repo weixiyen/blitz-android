@@ -1,16 +1,15 @@
 package com.blitz.app.view_models;
 
 import com.blitz.app.R;
-import com.blitz.app.rest_models.RestResult;
-import com.blitz.app.rest_models.RestResults;
 import com.blitz.app.rest_models.RestModelGroup;
 import com.blitz.app.rest_models.RestModelUser;
+import com.blitz.app.rest_models.RestResult;
+import com.blitz.app.rest_models.RestResults;
 import com.blitz.app.utilities.android.BaseActivity;
 import com.blitz.app.utilities.authentication.AuthHelper;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 
 /**
@@ -81,7 +80,7 @@ public class ViewModelLeagues extends ViewModel {
                 if (object == null) {
 
                     // Empty user leagues array.
-                    mUserLeagues = new ArrayList<RestModelGroup>();
+                    mUserLeagues = new ArrayList<>();
 
                 } else {
 
@@ -90,8 +89,8 @@ public class ViewModelLeagues extends ViewModel {
                             MAX_LEAGUES_TO_SHOW : object.size());
                 }
 
-                List<String> leagueIds = new ArrayList<String>();
-                List<String> leagueNames = new ArrayList<String>();
+                List<String> leagueIds = new ArrayList<>();
+                List<String> leagueNames = new ArrayList<>();
 
                 for (RestModelGroup league : mUserLeagues) {
 
@@ -129,27 +128,23 @@ public class ViewModelLeagues extends ViewModel {
                 }
 
                 // Fetch associated user objects.
-                List<RestModelUser> users = new ArrayList<RestModelUser>(object.getMembers().values());
+                List<RestModelUser> users = new ArrayList<>(object.getMembers().values());
 
                 // Sort the by rating.
-                Collections.sort(users, new Comparator<RestModelUser>() {
+                Collections.sort(users, (restModelUser1, restModelUser2) -> {
+                    int user1Rating = restModelUser1.getRating();
+                    int user2Rating = restModelUser2.getRating();
 
-                    @Override
-                    public int compare(RestModelUser restModelUser1, RestModelUser restModelUser2) {
-                        int user1Rating = restModelUser1.getRating();
-                        int user2Rating = restModelUser2.getRating();
-
-                        return user1Rating < user2Rating ?  1 :
-                               user1Rating > user2Rating ? -1 : 0;
-                    }
+                    return user1Rating < user2Rating ?  1 :
+                           user1Rating > user2Rating ? -1 : 0;
                 });
 
                 // Member information arrays.
-                List<String>  memberUserIds   = new ArrayList<String>();
-                List<String>  memberUserNames = new ArrayList<String>();
-                List<Integer> memberWins      = new ArrayList<Integer>();
-                List<Integer> memberLosses    = new ArrayList<Integer>();
-                List<Integer> memberRating    = new ArrayList<Integer>();
+                List<String>  memberUserIds   = new ArrayList<>();
+                List<String>  memberUserNames = new ArrayList<>();
+                List<Integer> memberWins      = new ArrayList<>();
+                List<Integer> memberLosses    = new ArrayList<>();
+                List<Integer> memberRating    = new ArrayList<>();
 
                 for (RestModelUser user : users) {
 
@@ -197,10 +192,10 @@ public class ViewModelLeagues extends ViewModel {
                 // Fetch the current user id.
                 String userId = AuthHelper.instance().getUserId();
 
-                List<String>  leagueIds          = new ArrayList<String>();
-                List<String>  leagueNames        = new ArrayList<String>();
-                List<Integer> leagueRatings      = new ArrayList<Integer>();
-                List<Integer> leagueMemberCounts = new ArrayList<Integer>();
+                List<String>  leagueIds          = new ArrayList<>();
+                List<String>  leagueNames        = new ArrayList<>();
+                List<Integer> leagueRatings      = new ArrayList<>();
+                List<Integer> leagueMemberCounts = new ArrayList<>();
 
                 for (RestModelGroup league : object) {
 

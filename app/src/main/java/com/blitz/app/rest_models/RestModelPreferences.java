@@ -17,9 +17,9 @@ public class RestModelPreferences extends RestModel {
     // region Member Variables
     // ============================================================================================================
 
-    @SerializedName("current_year") @Getter         private int currentYear;
-    @SerializedName("current_week") @Getter         private int currentWeek;
-    @SerializedName("queue_available") @Getter      private boolean queueAvailable;
+    @SerializedName("current_year")         @Getter private int currentYear;
+    @SerializedName("current_week")         @Getter private int currentWeek;
+    @SerializedName("queue_available")      @Getter private boolean queueAvailable;
     @SerializedName("current_active_queue") @Getter private String currentActiveQueue;
 
     // endregion

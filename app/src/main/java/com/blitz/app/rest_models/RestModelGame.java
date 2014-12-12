@@ -10,21 +10,24 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
+import lombok.Getter;
+
 /**
  * Created by Nate on 9/21/14. Copyright 2014 Blitz Studios
  *
  * TODO: Revise
  */
+@SuppressWarnings("UnusedDeclaration")
 public class RestModelGame extends RestModel {
 
     // region Member Variables
     // ============================================================================================================
 
-    @SuppressWarnings("unused") @SerializedName("home_team")  private String mHomeTeam;
-    @SuppressWarnings("unused") @SerializedName("away_team")  private String mAwayTeam;
-    @SuppressWarnings("unused") @SerializedName("status")     private String mStatus;
-    @SuppressWarnings("unused") @SerializedName("score_home") private int mScoreHome;
-    @SuppressWarnings("unused") @SerializedName("score_away") private int mScoreAway;
+    @SerializedName("home_team")  @Getter private String homeTeam;
+    @SerializedName("away_team")  @Getter private String awayTeam;
+    @SerializedName("status")     @Getter private String status;
+    @SerializedName("score_home") @Getter private int scoreHome;
+    @SerializedName("score_away") @Getter private int scoreAway;
 
     private static Map<Pair<Integer, Integer>, List<RestModelGame>> mCache =
             new ConcurrentHashMap<>();
@@ -43,7 +46,6 @@ public class RestModelGame extends RestModel {
     /**
      * Fetch games for a given time.
      */
-    @SuppressWarnings("unused")
     public static void fetchGames(Activity activity, int year, int week,
                                   @NonNull RestResults<RestModelGame> callback) {
 
@@ -71,31 +73,14 @@ public class RestModelGame extends RestModel {
     // region Public Methods
     // ============================================================================================================
 
-    @SuppressWarnings("unused")
-    public String getHomeTeamName() {
-        return mHomeTeam;
-    }
+    /**
+     * Fetch game status string.
+     */
+    public GameStatus getStatusEnum() {
 
-    @SuppressWarnings("unused")
-    public String getAwayTeamName() {
-        return mAwayTeam;
-    }
-
-    @SuppressWarnings("unused")
-    public int getHomeTeamScore() {
-        return mScoreHome;
-    }
-
-    @SuppressWarnings("unused")
-    public int getAwayTeamScore() {
-        return mScoreAway;
-    }
-
-    @SuppressWarnings("unused")
-    public GameStatus getStatus() {
-        if (mStatus.equals(GameStatus.STATUS_FINAL.name())) {
+        if (status.equals(GameStatus.STATUS_FINAL.name())) {
             return GameStatus.STATUS_FINAL;
-        } else if (mStatus.equals(GameStatus.STATUS_IN_PROGRESS.name())) {
+        } else if (status.equals(GameStatus.STATUS_IN_PROGRESS.name())) {
             return GameStatus.STATUS_IN_PROGRESS;
         } else {
             return GameStatus.STATUS_PREGAME;

@@ -3,9 +3,11 @@ package com.blitz.app.rest_models;
 import android.app.Activity;
 import android.support.annotation.NonNull;
 
+import com.blitz.app.utilities.json.JsonHelperObject;
 import com.google.gson.JsonObject;
 import com.google.gson.annotations.SerializedName;
 
+import java.util.Arrays;
 import java.util.Date;
 
 import lombok.Getter;
@@ -13,29 +15,20 @@ import lombok.Getter;
 /**
  * Created by mrkcsc on 8/10/14. Copyright 2014 Blitz Studios
  */
+@SuppressWarnings("UnusedDeclaration")
 public class RestModelDevice extends RestModel {
 
     // region Member Variables
     // ============================================================================================================
 
-    @SuppressWarnings("unused") @SerializedName("id") @Getter
-    private String id;
-    @SuppressWarnings("unused") @SerializedName("device_id")
-    private String deviceId;
-    @SuppressWarnings("unused") @SerializedName("device_type")
-    private String deviceType;
-    @SuppressWarnings("unused") @SerializedName("user_id")
-    private String userId;
-    @SuppressWarnings("unused") @SerializedName("push_notification_token")
-    private String pushNotificationToken;
-
-    @SuppressWarnings("unused") @SerializedName("push_notification_enabled")
-    private boolean pushNotificationsEnabled;
-
-    @SuppressWarnings("unused") @SerializedName("created")
-    private Date created;
-    @SuppressWarnings("unused") @SerializedName("last_updated")
-    private Date lastUpdated;
+    @SerializedName("id")                        @Getter private String id;
+    @SerializedName("device_id")                 @Getter private String deviceId;
+    @SerializedName("device_type")               @Getter private String deviceType;
+    @SerializedName("user_id")                   @Getter private String userId;
+    @SerializedName("push_notification_token")   @Getter private String pushNotificationToken;
+    @SerializedName("push_notification_enabled") @Getter private boolean pushNotificationsEnabled;
+    @SerializedName("created")                   @Getter private Date created;
+    @SerializedName("last_updated")              @Getter private Date lastUpdated;
 
     // endregion
 
@@ -74,12 +67,9 @@ public class RestModelDevice extends RestModel {
                               @NonNull String deviceId,
                               @NonNull RestResult<RestModelDevice> callback) {
 
-        // Create post body.
-        JsonObject body = new JsonObject();
-
-        body.addProperty("device_id", deviceId);
-        body.addProperty("device_type", "ANDROID");
-        body.addProperty("push_notification_enabled", false);
+        JsonObject body = JsonHelperObject.addProperties(
+                Arrays.asList("device_id",  "device_type", "push_notification_enabled"),
+                Arrays.asList(deviceId, "ANDROID", Boolean.toString(false)));
 
         // Make rest call for code.
         restAPI.devices_post(body, new RestAPICallback<>(activity,
@@ -100,14 +90,11 @@ public class RestModelDevice extends RestModel {
      */
     @SuppressWarnings("unused")
     public static void update(Activity activity,
-                              String id,
+                              @NonNull String id,
                               String userId,
                               Boolean pushNotificationsEnabled,
-                              String pushNotificationToken, @NonNull RestResult<RestModelDevice> callback) {
-
-        if (id == null) {
-            return;
-        }
+                              String pushNotificationToken,
+                              @NonNull RestResult<RestModelDevice> callback) {
 
         // Create object holding values to replace.
         JsonObject replace = new JsonObject();

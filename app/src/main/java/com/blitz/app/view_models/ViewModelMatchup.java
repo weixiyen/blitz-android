@@ -118,19 +118,23 @@ public class ViewModelMatchup extends ViewModel {
                         mPlayer2.getAvatarId());
 
                 // Fetch associated items.
-                RestModelItem.fetchItems(null, playerAvatarIds,
-                        items -> {
-                            for (RestModelItem item : items) {
+                RestModelItem.fetchItems(null, playerAvatarIds, new RestResults<RestModelItem>() {
 
-                                if (mPlayer1.getAvatarId().equals(item.getId())) {
-                                    mPlayer1AvatarUrl = item.getDefaultImgPath();
-                                } else {
-                                    mPlayer2AvatarUrl = item.getDefaultImgPath();
-                                }
+                    @Override
+                    public void onSuccess(List<RestModelItem> object) {
 
-                                onSyncComplete();
+                        for (RestModelItem item : object) {
+
+                            if (mPlayer1.getAvatarId().equals(item.getId())) {
+                                mPlayer1AvatarUrl = item.getDefaultImgPath();
+                            } else {
+                                mPlayer2AvatarUrl = item.getDefaultImgPath();
                             }
-                        });
+
+                            onSyncComplete();
+                        }
+                    }
+                });
             }
         });
     }
@@ -267,8 +271,8 @@ public class ViewModelMatchup extends ViewModel {
         for(RestModelPlayer player : roster) {
             RestModelGame playerGame = new RestModelGame();
             for(RestModelGame game: games) {
-                if(player.getTeam().equals(game.getAwayTeamName()) ||
-                        player.getTeam().equals(game.getHomeTeamName())) {
+                if(player.getTeam().equals(game.getAwayTeam()) ||
+                        player.getTeam().equals(game.getHomeTeam())) {
                     playerGame = game;
                     break;
                 }

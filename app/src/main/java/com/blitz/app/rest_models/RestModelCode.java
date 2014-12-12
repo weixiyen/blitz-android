@@ -6,16 +6,18 @@ import android.support.annotation.NonNull;
 import com.google.gson.JsonObject;
 import com.google.gson.annotations.SerializedName;
 
+import lombok.Getter;
+
 /**
  * Created by Miguel Gaeta on 6/28/14. Copyright 2014 Blitz Studios
  */
+@SuppressWarnings("UnusedDeclaration")
 public class RestModelCode extends RestModel {
 
     // region Member Variables
     // ============================================================================================================
 
-    @SuppressWarnings("unused") @SerializedName("code_type")
-    private String codeType;
+    @SerializedName("code_type") @Getter private String codeType;
 
     // endregion
 

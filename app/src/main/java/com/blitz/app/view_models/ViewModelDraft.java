@@ -311,23 +311,27 @@ public class ViewModelDraft extends ViewModel {
                 }
 
                 // Need to fetch each users item object to complete the sync.
-                RestModelItem.fetchItems(mActivity, userAvatarItemIds, items -> {
+                RestModelItem.fetchItems(mActivity, userAvatarItemIds, new RestResults<RestModelItem>() {
 
-                    Map<String, RestModelItem> itemsIds =
-                            new HashMap<>();
+                    @Override
+                    public void onSuccess(List<RestModelItem> object) {
 
-                    for (RestModelItem item : items) {
+                        Map<String, RestModelItem> itemsIds =
+                                new HashMap<>();
 
-                        itemsIds.put(item.getId(), item);
-                    }
+                        for (RestModelItem item : object) {
 
-                    for (RestModelUser user : users) {
+                            itemsIds.put(item.getId(), item);
+                        }
 
-                        // User is synced, may have avatar
-                        // information as well.
-                        syncUsersCallback(user,
-                                itemsIds.containsKey(user.getAvatarId()) ?
-                                        itemsIds.get(user.getAvatarId()) : null);
+                        for (RestModelUser user : users) {
+
+                            // User is synced, may have avatar
+                            // information as well.
+                            syncUsersCallback(user,
+                                    itemsIds.containsKey(user.getAvatarId()) ?
+                                            itemsIds.get(user.getAvatarId()) : null);
+                        }
                     }
                 });
             }

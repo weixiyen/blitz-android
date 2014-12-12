@@ -146,14 +146,14 @@ public class PlayerListAdapter extends ArrayAdapter<RestModelPlayer> {
         final int opponentScore;
         final String prefix;
         final String suffix;
-        if(game.getHomeTeamName().equals(player.getTeam())) {
-            playerScore = game.getHomeTeamScore();
-            opponentScore = game.getAwayTeamScore();
-            suffix = " vs " + game.getAwayTeamName();
+        if(game.getHomeTeam().equals(player.getTeam())) {
+            playerScore = game.getScoreHome();
+            opponentScore = game.getScoreAway();
+            suffix = " vs " + game.getAwayTeam();
         } else {
-            playerScore = game.getAwayTeamScore();
-            opponentScore = game.getHomeTeamScore();
-            suffix = " @ " + game.getHomeTeamName();
+            playerScore = game.getScoreAway();
+            opponentScore = game.getScoreHome();
+            suffix = " @ " + game.getHomeTeam();
         }
 
         if(playerScore < opponentScore) {
